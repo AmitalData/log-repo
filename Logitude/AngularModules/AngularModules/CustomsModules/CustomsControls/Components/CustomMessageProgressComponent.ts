@@ -14,7 +14,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'custom-message-progress',
-    moduleId: module.id,
+    
     templateUrl: './CustomMessageProgressComponent.html',
 })
 

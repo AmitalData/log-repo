@@ -20,17 +20,397 @@ namespace Logitude.Customs.BL
    {
        public List<PaymentMethodTypeDetails> GetAll()
        {
-		    var all = new List<PaymentMethodTypeDetails>(); 
+		    var all = new List<PaymentMethodTypeDetails>();  
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,מס''ב הכנסה", 
+                Inactive = false, 
+                LocalName = "מס''ב הכנסה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,רכב נכים אוצר", 
+                Inactive = false, 
+                LocalName = "רכב נכים אוצר", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "100", 
+                SearchFields = "100,העברה בנקאית - אשראי", 
+                Inactive = false, 
+                LocalName = "העברה בנקאית - אשראי", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "101", 
+                SearchFields = "101,ניצול פקדון", 
+                Inactive = false, 
+                LocalName = "ניצול פקדון", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "102", 
+                SearchFields = "102,החזר בסילוקין דרך חשכ''ל", 
+                Inactive = false, 
+                LocalName = "החזר בסילוקין דרך חשכ''ל", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "103", 
+                SearchFields = "103,החזר ערבות ממומשת", 
+                Inactive = false, 
+                LocalName = "החזר ערבות ממומשת", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "104", 
+                SearchFields = "104,אשראי אינטרנט", 
+                Inactive = false, 
+                LocalName = "אשראי אינטרנט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "105", 
+                SearchFields = "105,ניצול עיקול", 
+                Inactive = false, 
+                LocalName = "ניצול עיקול", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,רכב נכים ביטוח לאומי", 
+                Inactive = false, 
+                LocalName = "רכב נכים ביטוח לאומי", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,חילוט פיקדון", 
+                Inactive = false, 
+                LocalName = "חילוט פיקדון", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,משרד הבטחון", 
+                Inactive = false, 
+                LocalName = "משרד הבטחון", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,רכב נכים-פ.איבה", 
+                Inactive = false, 
+                LocalName = "רכב נכים-פ.איבה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,כרטיס אשראי", 
+                Inactive = false, 
+                LocalName = "כרטיס אשראי", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,יצירת תב. מזורזת", 
+                Inactive = false, 
+                LocalName = "יצירת תב. מזורזת", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,קופה", 
+                Inactive = false, 
+                LocalName = "קופה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,החזר הנהלה", 
+                Inactive = false, 
+                LocalName = "החזר הנהלה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,החזר מס''ב", 
+                Inactive = false, 
+                LocalName = "החזר מס''ב", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,אולם נוסעים", 
+                Inactive = false, 
+                LocalName = "אולם נוסעים", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,א. נוסעים", 
+                Inactive = false, 
+                LocalName = "א. נוסעים", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "28", 
+                SearchFields = "28,ממ''ן החזרים", 
+                Inactive = false, 
+                LocalName = "ממ''ן החזרים", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "29", 
+                SearchFields = "29,ממ''ן הכנסה", 
+                Inactive = false, 
+                LocalName = "ממ''ן הכנסה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,פקודות להעברה", 
+                Inactive = false, 
+                LocalName = "פקודות להעברה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,עיקול לחובת גורם", 
+                Inactive = false, 
+                LocalName = "עיקול לחובת גורם", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,עיקול לזכות גורם", 
+                Inactive = false, 
+                LocalName = "עיקול לזכות גורם", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,הלוואות מע''מ", 
+                Inactive = false, 
+                LocalName = "הלוואות מע''מ", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,קרן מיוחדת", 
+                Inactive = false, 
+                LocalName = "קרן מיוחדת", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "50", 
+                SearchFields = "50,רטרו/חילוט", 
+                Inactive = false, 
+                LocalName = "רטרו/חילוט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "51", 
+                SearchFields = "51,ניצול מימוש ערבות (שיוך)", 
+                Inactive = false, 
+                LocalName = "ניצול מימוש ערבות (שיוך)", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "52", 
+                SearchFields = "52,מימוש ערבות", 
+                Inactive = false, 
+                LocalName = "מימוש ערבות", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "55", 
+                SearchFields = "55,חבילת שי", 
+                Inactive = false, 
+                LocalName = "חבילת שי", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "56", 
+                SearchFields = "56,נעמן החזרים", 
+                Inactive = false, 
+                LocalName = "נעמן החזרים", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "57", 
+                SearchFields = "57,נעמן הכנסה", 
+                Inactive = false, 
+                LocalName = "נעמן הכנסה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "70", 
+                SearchFields = "70,ויזה", 
+                Inactive = false, 
+                LocalName = "ויזה", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "71", 
+                SearchFields = "71,ישרכארט", 
+                Inactive = false, 
+                LocalName = "ישרכארט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "72", 
+                SearchFields = "72,לאומי קארד", 
+                Inactive = false, 
+                LocalName = "לאומי קארד", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "73", 
+                SearchFields = "73,דינרס", 
+                Inactive = false, 
+                LocalName = "דינרס", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "74", 
+                SearchFields = "74,ויזה-אינטרנט", 
+                Inactive = false, 
+                LocalName = "ויזה-אינטרנט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "75", 
+                SearchFields = "75,ישרכארט אינטרנט", 
+                Inactive = false, 
+                LocalName = "ישרכארט אינטרנט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "76", 
+                SearchFields = "76,לאומי אינטרנט", 
+                Inactive = false, 
+                LocalName = "לאומי אינטרנט", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "77", 
+                SearchFields = "77,העברה בנקאית", 
+                Inactive = false, 
+                LocalName = "העברה בנקאית", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "78", 
+                SearchFields = "78,העברת זהב", 
+                Inactive = false, 
+                LocalName = "העברת זהב", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "79", 
+                SearchFields = "79,ניצול העברת זהב", 
+                Inactive = false, 
+                LocalName = "ניצול העברת זהב", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,קרן הבאהיים", 
+                Inactive = false, 
+                LocalName = "קרן הבאהיים", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "88", 
+                SearchFields = "88,יצירת קרן", 
+                Inactive = false, 
+                LocalName = "יצירת קרן", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,רכב נכים ביטחון", 
+                Inactive = false, 
+                LocalName = "רכב נכים ביטחון", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "99", 
+                SearchFields = "99,לאישור הסוכן", 
+                Inactive = false, 
+                LocalName = "לאישור הסוכן", 
+			});
+			 
+            all.Add(new PaymentMethodTypeDetails()
+            {    
+                Code = "999", 
+                SearchFields = "999,סעיף טכני", 
+                Inactive = false, 
+                LocalName = "סעיף טכני", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentMethodType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PaymentMethodType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

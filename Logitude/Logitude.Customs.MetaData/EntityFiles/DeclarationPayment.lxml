@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;caa4f590-a215-4b11-b8f5-606f87933a0e&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -697,7 +699,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1185,14 +1187,19 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.DeclarationPayment&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1202,10 +1209,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.DeclarationPayment&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1213,8 +1221,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

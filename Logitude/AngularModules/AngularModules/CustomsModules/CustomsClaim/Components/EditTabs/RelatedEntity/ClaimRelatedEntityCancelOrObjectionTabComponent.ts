@@ -18,7 +18,6 @@ import { ClaimWebService } from '../../../../../Customs/Services/WebServices/Cla
 
 @Component({
     selector: 'ClaimRelatedEntityCancelOrObjectionTabComponent',
-    moduleId: module.id,
     templateUrl: './ClaimRelatedEntityCancelOrObjectionTabComponent.html',
 })
 

@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Certificate Exemption Type&quot;"
-  Code="&quot;9e31&quot;"
-  Name="&quot;Customs.CertificateExemptionType Query Group&quot;"
+  Code="&quot;CEET&quot;"
+  Name="&quot;Customs.CertificateExemptionType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;77c13459-96bc-48b1-9e76-d6ef7f224510&quot;"
     FieldName="&quot;Code&quot;"
@@ -305,21 +307,114 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;91&quot;"
+      SearchFields="&quot;91,פטור מאישור על סמך צו שטרם אושר ביצוא&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור מאישור על סמך צו שטרם אושר ביצוא&quot;" />
+    <Record
+      Code="&quot;92&quot;"
+      SearchFields="&quot;92,חובת רשיון/תקן לא חלה על המוצר&quot;"
+      Inactive="false"
+      LocalName="&quot;חובת רשיון/תקן לא חלה על המוצר&quot;" />
+    <Record
+      Code="&quot;94&quot;"
+      SearchFields="&quot;94,פטור מדרישת חוקיות לקוד הנחה 810&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור מדרישת חוקיות לקוד הנחה 810&quot;" />
+    <Record
+      Code="&quot;95&quot;"
+      SearchFields="&quot;95,פטור מתקן לאוטונומיה&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור מתקן לאוטונומיה&quot;" />
+    <Record
+      Code="&quot;96&quot;"
+      SearchFields="&quot;96,תוספת חמישית סעיף א (דוגמאות)&quot;"
+      Inactive="false"
+      LocalName="&quot;תוספת חמישית סעיף א (דוגמאות)&quot;" />
+    <Record
+      Code="&quot;97&quot;"
+      SearchFields="&quot;97,תוספת חמישית סעיף ב (חלקי חילוף)&quot;"
+      Inactive="false"
+      LocalName="&quot;תוספת חמישית סעיף ב (חלקי חילוף)&quot;" />
+    <Record
+      Code="&quot;99&quot;"
+      SearchFields="&quot;99,פטור לשימוש מעריך&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור לשימוש מעריך&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CertificateExemptionType&quot;"
+    ObjectTableName="&quot;Customs.CertificateExemptionType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CertificateExemptionType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CEET&quot;"
+    QueryGroupName="&quot;Customs.CertificateExemptionType&quot;"
+    LocalTextCode="&quot;קוד פטור מאישור&quot;"
+    TextCode="&quot;Certificate Exemption Codes&quot;"
+    TextCodeCode="&quot;Customs.CertificateExemptionType.Q.CertificateExemptionTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CERTIFICATEEXEMPTIONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CertificateExemptionType.Features.CertificateExemptionTypes&quot;"
+    FeatureDefaultText="&quot;Certificate Exemption Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CertificateExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CertificateExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CertificateExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CertificateExemptionType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CertificateExemptionType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CertificateExemptionType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

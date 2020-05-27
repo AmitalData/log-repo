@@ -131,7 +131,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
-            modelBuilder.Configurations.Add(new AirlineAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreaMap());
+            modelBuilder.Configurations.Add(new CarrierAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -326,6 +327,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -441,15 +443,24 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new TemperatureUnitMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
-            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnerMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
             modelBuilder.Configurations.Add(new CardContactProductMap());
+            modelBuilder.Configurations.Add(new DWHBuildStatusMap());
+            modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
+            modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
+            modelBuilder.Configurations.Add(new UserLastSettingsMap());
+            modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
+            modelBuilder.Configurations.Add(new CustomsInterfaceMap());
+            modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
+
             base.OnModelCreating(modelBuilder);
         }
 
+        public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; set; }
         public IDbSet<VatFormatType> VatFormatTypes { get; set; }
         public IDbSet<EmailProvider> EmailProviders { get; set; }
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
@@ -475,8 +486,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
         public IDbSet<Airline> Airlines { get; set; }
-        public IDbSet<AirlineArea> AirlineAreas { get; set; }
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts { get; set; }
+        public IDbSet<CarrierArea> CarrierAreas { get; set; }
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts { get; set; }
 
         public IDbSet<ShippingLine> ShippingLines { get; set; }
         public IDbSet<Trucker> Truckers { get; set; }
@@ -512,6 +523,9 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
+        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
+        public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+        public IDbSet<UserLastSettings> UserLastSettings { get; set; }
 
 
         public IDbSet<Warehouse> Warehouses
@@ -987,13 +1001,19 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         public IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
-        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
+        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners { get; set; }
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<CardContactProduct> CardContactProducts { get; set; }
+        public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; } 
+        public IDbSet<AccountingPartner> AccountingPartners { get; set; }
+        public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
 
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         public DbConnection GetConnection()
         {
             return this.Database.Connection;

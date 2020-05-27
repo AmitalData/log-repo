@@ -13,7 +13,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SearchFields { get; set; }
         public int Tenant { get; set; }
         public string LocalName { get; set; }
-
+        public int ViewOrder { get; set; }
         //public List<IATACode> IATACodes { get; set; }
     }
 }

@@ -10,5 +10,8 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface IJournalQueryServiceExt
     {
         JournalPM GetJournalIdByAccountingEntityId(string entityId, int tenant);
+        JournalPM GetJournalByAccountingEntityIdAndCode(string accountingEntityId, string accountingEntityCode, int tenant);
+        JournalPM GetApprovedJournalByAccountingEntityId(string accountingEntityId, string accountingEntityCode, int tenant);
+
     }
 }

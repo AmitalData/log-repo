@@ -91,6 +91,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? FirstShipmentDate { get; set; }
         public DateTime? FirstInvoiceDate { get; set; }
         public DateTime? LastOpportunityDate { get; set; }
+        public string LastOpportunitySubject { get; set; }
+        public string LastOpportunityStatus { get; set; }
         public DateTime? LastMeetingDate { get; set; }
         public DateTime? LastCallDate { get; set; }
         public DateTime? LastQuoteDate { get; set; }
@@ -133,5 +135,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SetAsInactiveByName { get; set; }
         public string ActivationRequestedByUserName { get; set; }
         public string LeadSourceName { get; set; }
+        public string CreatedByPartner { get; set; }
+        public string StateName { get; set; }
     }
 }

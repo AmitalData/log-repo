@@ -21,13 +21,12 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'PrintRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './PrintRequestComponent.html',
 })
 
-export class PrintRequestComponent
-    extends BaseRequestsSheetMassaging
-    implements AfterViewInit,IRequestsSheetMassagingComponent {
+export class PrintRequestComponent    extends BaseRequestsSheetMassaging    implements AfterViewInit,IRequestsSheetMassagingComponent {
+  public IsDisplayOnly: boolean = false;
 
     public DataContext: PrintRequestComponent = this;
     public ObjectTableName: string = "Customs.Declaration";

@@ -19,11 +19,13 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 
 @Component({
     selector: 'DailyTimeSheetComponent',
-    moduleId: module.id,
+    
     templateUrl: './DailyTimeSheetComponent.html',
 })
 
 export class DailyTimeSheetComponent extends BaseComponent {
+  public LeftCenter: any;
+  public itemLocationCode: any;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
@@ -71,7 +73,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

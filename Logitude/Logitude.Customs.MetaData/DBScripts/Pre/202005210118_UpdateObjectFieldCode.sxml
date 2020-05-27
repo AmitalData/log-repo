@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+    update objectfields set code = fieldname where length(code) is null;
+    ]]>
+  </Oracle>
+</Script>

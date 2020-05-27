@@ -239,29 +239,39 @@ export class CardPM {
     public set StateName(newValue: string) { if (this.stateName != newValue) { this.stateName = newValue; this.MarkAsDirty("StateName"); } }
        
 	 
-    private customAgent: string;
+    private rankId: string;
+    public get RankId() { return this.rankId; }
+    public set RankId(newValue: string) { if (this.rankId != newValue) { this.rankId = newValue; this.MarkAsDirty("RankId"); } }
+       
+	 
+    private industryId: string;
+    public get IndustryId() { return this.industryId; }
+    public set IndustryId(newValue: string) { if (this.industryId != newValue) { this.industryId = newValue; this.MarkAsDirty("IndustryId"); } }
+       
+	 
+    private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
-    public set CustomAgent(newValue: string) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
+    public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
        
 	 
-    private shippingAgent: string;
+    private shippingAgent: any;
     public get ShippingAgent() { return this.shippingAgent; }
-    public set ShippingAgent(newValue: string) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
+    public set ShippingAgent(newValue: any) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
        
 	 
-    private customer: string;
+    private customer: any;
     public get Customer() { return this.customer; }
-    public set Customer(newValue: string) { if (this.customer != newValue) { this.customer = newValue; this.MarkAsDirty("Customer"); } }
+    public set Customer(newValue: any) { if (this.customer != newValue) { this.customer = newValue; this.MarkAsDirty("Customer"); } }
        
 	 
-    private agent: string;
+    private agent: any;
     public get Agent() { return this.agent; }
-    public set Agent(newValue: string) { if (this.agent != newValue) { this.agent = newValue; this.MarkAsDirty("Agent"); } }
+    public set Agent(newValue: any) { if (this.agent != newValue) { this.agent = newValue; this.MarkAsDirty("Agent"); } }
        
 	 
-    private vendor: string;
+    private vendor: any;
     public get Vendor() { return this.vendor; }
-    public set Vendor(newValue: string) { if (this.vendor != newValue) { this.vendor = newValue; this.MarkAsDirty("Vendor"); } }
+    public set Vendor(newValue: any) { if (this.vendor != newValue) { this.vendor = newValue; this.MarkAsDirty("Vendor"); } }
        
 	 
     private countryId: string;
@@ -419,6 +429,11 @@ export class CardPM {
     public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
+    private customerStatusCode: string;
+    public get CustomerStatusCode() { return this.customerStatusCode; }
+    public set CustomerStatusCode(newValue: string) { if (this.customerStatusCode != newValue) { this.customerStatusCode = newValue; this.MarkAsDirty("CustomerStatusCode"); } }
+       
+	 
     private calculatedLocalName: string;
     public get CalculatedLocalName() { return this.calculatedLocalName; }
     public set CalculatedLocalName(newValue: string) { if (this.calculatedLocalName != newValue) { this.calculatedLocalName = newValue; this.MarkAsDirty("CalculatedLocalName"); } }
@@ -427,6 +442,21 @@ export class CardPM {
     private calculatedEnglishName: string;
     public get CalculatedEnglishName() { return this.calculatedEnglishName; }
     public set CalculatedEnglishName(newValue: string) { if (this.calculatedEnglishName != newValue) { this.calculatedEnglishName = newValue; this.MarkAsDirty("CalculatedEnglishName"); } }
+       
+	 
+    private isDisconnectedFromGLAccount: boolean;
+    public get IsDisconnectedFromGLAccount() { return this.isDisconnectedFromGLAccount; }
+    public set IsDisconnectedFromGLAccount(newValue: boolean) { if (this.isDisconnectedFromGLAccount != newValue) { this.isDisconnectedFromGLAccount = newValue; this.MarkAsDirty("IsDisconnectedFromGLAccount"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
+    private storageFreeDays: number;
+    public get StorageFreeDays() { return this.storageFreeDays; }
+    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
 

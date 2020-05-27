@@ -9,6 +9,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -166,7 +167,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 };
             return currencies;
         }
+        public List<string> GetCurencyCodesByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
+        {
+            List<string> entityCurencyIds = interestTransactionLists.Select(d => d.CurrencyId).ToList();
 
+            List<string> CurencyCodes = (from a in repository.context.Currencies
+                                           where entityCurencyIds.Contains(a.Id) && a.Tenant == tenant
+                                           select a.Id+","+a.Code).ToList();
+ 
+            return CurencyCodes;
+        }
 
         public IQueryable<CurrencyPM> GetCurrencyPMsByTenant(int tenant)
         {

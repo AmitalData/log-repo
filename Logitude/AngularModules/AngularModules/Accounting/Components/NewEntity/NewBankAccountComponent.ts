@@ -15,7 +15,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewBankAccountComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewBankAccountComponent.html',
 })
@@ -177,7 +177,7 @@ public isRTL: boolean = false;
     }
 
     SubmitChanges() {
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

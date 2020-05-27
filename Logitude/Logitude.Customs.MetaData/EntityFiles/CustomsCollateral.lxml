@@ -36,8 +36,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Collateral&quot;"
-  Code="&quot;0d13&quot;"
-  Name="&quot;Customs.CustomsCollateral Query Group&quot;"
+  Code="&quot;CCQG&quot;"
+  Name="&quot;Customs.CustomsCollateral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;6bc02f6f-6e56-4943-9276-cb002386b209&quot;"
     FieldName="&quot;Id&quot;"
@@ -113,7 +115,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -183,7 +185,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -2438,14 +2440,398 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.CollateralRequest&quot;"
+      DefaultText="&quot;Collateral Request&quot;"
+      LocalDefaultText="&quot;קיימת דרישה לבטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.RequestedAmount&quot;"
+      DefaultText="&quot;Requested Amount&quot;"
+      LocalDefaultText="&quot;סכום מבוקש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.HasRequestedDoc&quot;"
+      DefaultText="&quot;there's a requested document&quot;"
+      LocalDefaultText="&quot;קיימת דרישה למסמך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.AgentObjection&quot;"
+      DefaultText="&quot;Agent Objection&quot;"
+      LocalDefaultText="&quot;נשלח ערעור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.CollateralAnswerSent&quot;"
+      DefaultText="&quot;Collateral answer was sent&quot;"
+      LocalDefaultText="&quot;נשלח מענה לבטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.DenialReason&quot;"
+      DefaultText="&quot;Denial Reason&quot;"
+      LocalDefaultText="&quot;סיבת דחייה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.ApprovalReason&quot;"
+      DefaultText="&quot;Approval Reason&quot;"
+      LocalDefaultText="&quot;הערות לאישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.EnterCollateral&quot;"
+      DefaultText="&quot;Enter Collateral&quot;"
+      LocalDefaultText="&quot;הזן בטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.CollateralRequestStatusCode&quot;"
+      DefaultText="&quot;Collateral Request Status Code&quot;"
+      LocalDefaultText="&quot;סטטוס בטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.Close&quot;"
+      DefaultText="&quot;Close&quot;"
+      LocalDefaultText="&quot;סגירת בטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.UnClose&quot;"
+      DefaultText="&quot;UnClose&quot;"
+      LocalDefaultText="&quot;ביטול סגירת בטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.CloseCollateral&quot;"
+      DefaultText="&quot;Close Collateral?&quot;"
+      LocalDefaultText="&quot;לסגור את הבטוחה?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.ReOpenCollateral&quot;"
+      DefaultText="&quot;ReOpen Collateral?&quot;"
+      LocalDefaultText="&quot;לפתוח הבטוחה מחדש ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeleteCollateralAnswer&quot;"
+      DefaultText="&quot;Delete this answer?&quot;"
+      LocalDefaultText="&quot;מחק את תשובה הזה?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeleteCollateral&quot;"
+      DefaultText="&quot;Delete Collateral reply data ?&quot;"
+      LocalDefaultText="&quot;האם למחוק את נתוני המענה ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.EditCondition&quot;"
+      DefaultText="&quot;EditCondition data&quot;"
+      LocalDefaultText="&quot;עריכת נתוני בטוחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.RequestNewFile&quot;"
+      DefaultText="&quot;Request New File&quot;"
+      LocalDefaultText="&quot;בקשה לתיק תפ&quot;ג חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.UseExistingTapagFile&quot;"
+      DefaultText="&quot;Use Existing Tapag File&quot;"
+      LocalDefaultText="&quot;מענה באמצעות תיק תפ&quot;ג קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeleteCondition&quot;"
+      DefaultText="&quot;Delete this condition?&quot;"
+      LocalDefaultText="&quot;שורה זו תמחק, האם להמשיך?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.RequestNumber&quot;"
+      DefaultText="&quot;Request Number&quot;"
+      LocalDefaultText="&quot;מספר בקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CopyNow&quot;"
+      DefaultText="&quot;Copy Now&quot;"
+      LocalDefaultText="&quot;עדכן סוג יח’&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CopyStatistic&quot;"
+      DefaultText="&quot;Copy Statistic Qty to Invoice Qty during typing&quot;"
+      LocalDefaultText="&quot;עדכן סוג יח’ בחשבון במהלך הקלדה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.TapagFile&quot;"
+      DefaultText="&quot;Tapag File&quot;"
+      LocalDefaultText="&quot;מספר תיק תפ”ג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsCollateral.O.ClosedCollateral&quot;"
+      DefaultText="&quot;Collateral is closed - screen is display only&quot;"
+      LocalDefaultText="&quot;הבטוחה סגורה - המסך לתצוגה בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="false"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+    <Feature
+      Code="&quot;CLOSEDCOLLATERALS&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
+      FeatureDefaultText="&quot;Closed Collaterals&quot;" />
+  </AdditionalFeatures>
+  <Query
+    Code="&quot;AllCollaterals&quot;"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CCQG&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    LocalTextCode="&quot;כל הבטוחות&quot;"
+    TextCode="&quot;All Collaterals&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.AllCollaterals&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ALLCOLLATERALS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.AllCollaterals&quot;"
+    FeatureDefaultText="&quot;All Collaterals&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;AllCollaterals&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;OpenCollaterals&quot;"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    IndexOrder="1"
+    QueryGroupCode="&quot;CCQG&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    LocalTextCode="&quot;בטוחות פתוחות&quot;"
+    TextCode="&quot;Open Collaterals&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.OpenCollaterals&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;OPENCOLLATERALS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.OpenCollaterals&quot;"
+    FeatureDefaultText="&quot;Open Collaterals&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;OpenCollaterals&quot;" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenCollaterals&quot;"
+        IndexOrder="0"
+        IsPredefined="true"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        PredefinedValue="&quot;false&quot;" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedCollaterals&quot;"
+    ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsCollateral&quot;"
+    IndexOrder="2"
+    QueryGroupCode="&quot;CCQG&quot;"
+    QueryGroupName="&quot;Customs.CustomsCollateral&quot;"
+    LocalTextCode="&quot;בטוחות סגורות&quot;"
+    TextCode="&quot;Closed Collaterals&quot;"
+    TextCodeCode="&quot;Customs.CustomsCollateral.Q.ClosedCollaterals&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CLOSEDCOLLATERALS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsCollateral.Features.ClosedCollaterals&quot;"
+    FeatureDefaultText="&quot;Closed Collaterals&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestNumber&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CollateralRequestStatusName&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestValidityDate&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomsEntityTypeName&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey1&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey2&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EntityIdKey3&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;ClosedCollaterals&quot;" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedCollaterals&quot;"
+        IndexOrder="0"
+        IsPredefined="true"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        PredefinedValue="&quot;true&quot;" />
+    </QueryFilters>
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -2455,10 +2841,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsCollateral&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -2466,8 +2853,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

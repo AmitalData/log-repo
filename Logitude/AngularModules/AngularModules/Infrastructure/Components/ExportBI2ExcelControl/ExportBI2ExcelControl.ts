@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import { Http } from '@angular/http';
 import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -9,14 +8,15 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { BIReportXMLData} from '../../../Infrastructure/Services/InfrastructureDomainService';
+import { BIReportXMLData } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { Observable } from 'rxjs/Rx';
-import { DateTool } from '../../Tools';
+import { HttpClient } from '@angular/common/http';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExportBI2ExcelControl.html',
 })
 
@@ -30,21 +30,22 @@ export class ExportBI2ExcelControl {
     private CurrentSession = SessionLocator.SelectedSession;
     private WebFreightDomainService: WebFreightDomainService;
 
-    constructor(private http: Http) {
-        this.WebFreightDomainService = new WebFreightDomainService();
-        ServiceHelper.Http = http;
+  constructor(private http: HttpClient) {
+        this.WebFreightDomainService = new WebFreightDomainService();        
     }
     ObjectTableName: string;
     FileName: string;
     tenant: number;
     queryName: string;
     queryId: string;
+    queryCode: string;
     reportId: string;
     userid: string;
     BIReportXMLData: BIReportXMLData = null;
-
     SetWindowArgs(args: any) {
         this.queryId = args.queryId;
+        this.queryCode = args.queryCode;
+
         this.reportId = args.reportId;
         this.queryName = args.reportName;
         this.BIReportXMLData = args.BIReportXMLData;
@@ -53,7 +54,7 @@ export class ExportBI2ExcelControl {
     }
 
     StartBuildStimulReportViaWorkerRole() {
-     
+
         this.StartBusyIndicator("Generating...");
         this.StartTimerChangeBusyIndicatorMessageAfter50Sec();
 
@@ -62,7 +63,8 @@ export class ExportBI2ExcelControl {
         }
         this.WebFreightDomainService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                this.FileName = myResponse.Result.BIReportKey;
+                this.StartCheckBIReportBliudViaWorkerRoleTimer();
             } else {
                 this.StopBusyIndicator();
                 if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
@@ -70,33 +72,17 @@ export class ExportBI2ExcelControl {
                     messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
             }
-
-            //if (!myResponse.HasError) {
-            //    if (myResponse.Result == "Faild") {
-            //        this.btnRetryVisibile = true;
-            //        this.busyExportingVisibile = false;
-            //        this.btnSaveToFileVisibile = false;
-            //    }
-            //    else {
-            //        this.FileName = myResponse.Result;
-            //        this.btnRetryVisibile = false;
-            //        this.busyExportingVisibile = false;
-            //        this.btnSaveToFileVisibile = true;
-            //    }
-            //}
-        
         });
     }
 
-    //Stimul Soft Report Timer
-    initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-        return Observable.interval(2000).timeInterval();
+    //BI Report Timer
+    initializeStartCheckBIReportBliudViaWorkerRoleTimer() {
+        return interval(2000).pipe(timeInterval());
     }
-
 
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
-        return Observable.interval(50000).timeInterval();
+        return interval(50000).pipe(timeInterval());
     }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
@@ -104,7 +90,7 @@ export class ExportBI2ExcelControl {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
         }
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
-        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
                 this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
@@ -118,48 +104,44 @@ export class ExportBI2ExcelControl {
         });
     }
 
-    private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
-    IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer: boolean = false;
-    StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+    private StartCheckBIReportBliudViaWorkerRoleTimersub: any = null;
+    IsStartCheckBIReportBliudViaWorkerRoleTimer: boolean = false;
+    StartCheckBIReportBliudViaWorkerRoleTimer() {
+        if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
         }
 
-        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
-        this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
+        this.IsStartCheckBIReportBliudViaWorkerRoleTimer = true;
+        this.StartCheckBIReportBliudViaWorkerRoleTimersub = this.initializeStartCheckBIReportBliudViaWorkerRoleTimer().subscribe(respose => {
 
-            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-                this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+                this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
+                this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
                 return;
             }
 
-            if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
                 if (this.WebFreightDomainService == null) {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
-                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
-                    if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
-                            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-                            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+                    if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
+                            this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
+                            this.btnRetryVisibile = false;
+                            this.busyExportingVisibile = false;
+                            this.btnSaveToFileVisibile = true;
                         }
                         if (!pmResponse.HasError) {
                             var result = pmResponse.Result;
                             if (result) {
-                                if (result.HasError) {
+                                if (result.ExceptionMessage) {
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
-                                }
-                                else if (result.StatusCode == "D") {
-                                    // Work
-                                    this.FileName = "BIReport" + DateTool.GetCurrentDateTimeAsUtc();
-                                    this.btnRetryVisibile = false;
-                                    this.busyExportingVisibile = false;
-                                    this.btnSaveToFileVisibile = true;
                                 }
                             }
                         }
@@ -177,8 +159,8 @@ export class ExportBI2ExcelControl {
 
     //Wait Result Stimul Timer
     IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
-    initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
-        return Observable.interval(50000).timeInterval();
+  initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
+    return interval(50000).pipe(timeInterval());
     }
     private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {
@@ -188,7 +170,7 @@ export class ExportBI2ExcelControl {
         }
 
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
-        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
                 this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
@@ -223,9 +205,9 @@ export class ExportBI2ExcelControl {
             this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
         }
 
-        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+        if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
+            this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
         }
         this.ShowBusyIndicator = false;
     }
@@ -250,21 +232,20 @@ export class ExportBI2ExcelControl {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                if (myResponse.Result == "Faild") {
-                    this.btnRetryVisibile = true;
-                    this.busyExportingVisibile = false;
-                    this.btnSaveToFileVisibile = false;
-                }
-                else {
-                    this.FileName = myResponse.Result;
+
+                if (myResponse.Result) {
+                    this.FileName = myResponse.Result.BIReportKey;
                     this.btnRetryVisibile = false;
                     this.busyExportingVisibile = false;
                     this.btnSaveToFileVisibile = true;
                 }
+            } else {
+                this.btnRetryVisibile = true;
+                this.busyExportingVisibile = false;
+                this.btnSaveToFileVisibile = false;
             }
         });
     }
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

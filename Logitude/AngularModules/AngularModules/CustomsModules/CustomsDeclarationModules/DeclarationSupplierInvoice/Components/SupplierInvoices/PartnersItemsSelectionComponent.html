@@ -32,46 +32,56 @@
 
 
                     <log-column [header]="'Customs.CustomsPartnersItem.F.ItemCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.ItemCode}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <log-column [header]="'תאור פריט'" [width]="'250'" [Alignment]="'right'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.Name}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
 
                     <log-column [header]="'Customs.CustomsPartnersItem.F.ClassificationCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.ClassificationCode}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
 
                     <log-column [header]="'Customs.CustomsPartnersItem.F.VendorId' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.VendorId}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
 
                     <!--<log-column [header]="'Customs.CustomsPartnersItem.F.VendorName' | TextCodeTranslationPipe" [width]="'105'" [Alignment]="'right'">
-                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.VendorName}}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>-->
 
 

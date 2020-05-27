@@ -14,7 +14,7 @@ import { BaseComponent } from '../../../../../../Infrastructure/Components/Logit
 
 @Component({
 
-    moduleId: module.id,
+    
     templateUrl: './ExportConsigmentContentComponent.html',
     selector: 'ExportConsigmentContentComponent',
 

@@ -37,6 +37,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string PaymentMethodCode { get; set; }
         public string PaymentChannelCode { get; set; }
         public double? LicensePrice { get; set; }
+        public double? TotalPrice { get; set; }
         public string Notes { get; set; }
         public string TTY { get; set; }
         public DateTime? LastFWBSentDate { get; set; }
@@ -177,12 +178,16 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsINTTRAStockPrepaid { get; set; }
 
-
         public string PackageCodeSearchField { get; set; }
 
         public bool IsINTTRAOnlyDemo { get; set; }
 
         public bool MainAdditionalPackageApplied { get; set; }
+        public string SupportDomain { get; set; }
 
+        public int? TotalNumberOfUsers { get; set; }
+        public int? TotalFreeUsers { get; set; }
+        public double? AveragePrice { get; set; }
+        public double? TotalPaymentamount { get; set; }
     }
 }

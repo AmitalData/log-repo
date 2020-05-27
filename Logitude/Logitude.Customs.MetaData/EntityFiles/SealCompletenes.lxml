@@ -418,40 +418,49 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
   <Query
     Code="&quot;SealCompletenes&quot;"
-    TextCode="&quot;SealCompletenesQuery&quot;"
-    QueryGroupCode="&quot;bc45&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.SealCompletenes&quot;"
-    QuerySection="&quot;Customs.SealCompletenes&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SealCompletenes&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;bc45&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    TextCode="&quot;SealCompletenesQuery&quot;"
+    TextCodeCode="&quot;SealCompletenes.Q.SealCompletenes&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SealCompletenes.Q.SealCompletenes&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;SealCompletenes.Features.SealCompletenes&quot;"
+    FeatureDefaultText="&quot;SealCompletenes&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;SealCompletenes&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SealCompletenes&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealCompletenes&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SealCompletenes&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealCompletenes&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SealCompletenes&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealCompletenes&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SealCompletenes&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -459,10 +468,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SealCompletenes&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -472,10 +482,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SealCompletenes&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -483,8 +494,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

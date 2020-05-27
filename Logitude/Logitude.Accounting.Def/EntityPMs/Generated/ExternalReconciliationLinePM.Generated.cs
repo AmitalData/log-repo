@@ -160,6 +160,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string ledgerGLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LedgerGLAccountId  
+	   {
+	    
+	     get
+		{
+		   return ledgerGLAccountId;
+		 }
+		 set
+		 {
+		   if(ledgerGLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LedgerGLAccountId",OldValue=ledgerGLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ledgerGLAccountId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

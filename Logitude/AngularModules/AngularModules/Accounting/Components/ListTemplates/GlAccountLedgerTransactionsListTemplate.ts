@@ -13,7 +13,7 @@ import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
 })
 export class GlAccountLedgerTransactionsListTemplate {
@@ -80,70 +80,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         // Id:      SourceId
         // Display: SourceNumber
 
-        var tableName = "Journal";
-
-        switch (this.rowData.SourceTypeCode) {
-            // 1-Journal
-            case "1": {
-                tableName = "Journal";
-                break;
-            }
-
-            // 2-ARInvoice
-            case "2": {
-                tableName = "ARInvoice";
-                break;
-            }
-
-            // 3-ARPayment
-            case "3": {
-                tableName = "ARPayment";
-
-                break;
-            }
-
-            // 4-APInvoice
-            case "4": {
-                tableName = "APInvoice";
-
-                break;
-            }
-
-            // 5-APPayment
-            case "5": {
-                tableName = "APPayment";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case "6": {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case "7": {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case "8": {
-                tableName = "Revaluation";
-
-                break;
-            }
-
-            // 9-PaymentCheque
-            case "9": {
-                tableName = "PaymentCheque";
-
-                break;
-            }
-        }
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(this.rowData.SourceTypeCode);
 
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
@@ -238,7 +175,13 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     GetIndicatorText() {
-        if (this.rowData["OpenAmount"] != this.CalculateOriginalAmount())
+        if ((this.rowData['LocalAmountDebit'] > 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] > 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
+            return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
+        else return this.showLocal ? "סכום פתוח " : "Open transaction";
+    }
+
+    GetGLAccountIndicatorText() {
+        if ((this.rowData['LocalAmountDebit'] != 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] != 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }

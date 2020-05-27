@@ -15,7 +15,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './GatepassRequestComponent.html',
 })
 

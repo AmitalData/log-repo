@@ -12,7 +12,7 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainerFollowupWindowComponent.html',
 })
 
@@ -25,7 +25,7 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
     public ValidationErrorsList: string[];
     public IsNewFollowup: boolean;
     private IsNewFollowup_Totango: boolean;
-    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
@@ -82,7 +82,7 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

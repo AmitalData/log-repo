@@ -41,7 +41,7 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.InActive).HasColumnName("InActive");
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(250).IsUnicode(true);
 
             this.Property(t => t.SellerId).HasColumnName("SellerId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -106,6 +106,20 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Surcharge10UOM).HasColumnName("Surcharge10UOM").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ContainerType1Id).HasColumnName("ContainerType1Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainerType2Id).HasColumnName("ContainerType2Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainerType3Id).HasColumnName("ContainerType3Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainerType4Id).HasColumnName("ContainerType4Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainerType5Id).HasColumnName("ContainerType5Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TariffProductId).HasColumnName("TariffProductId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LastUsedDate).HasColumnName("LastUsedDate");
         }
     }
 }

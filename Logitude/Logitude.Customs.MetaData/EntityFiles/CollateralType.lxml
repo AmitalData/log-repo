@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Collateral Type&quot;"
-  Code="&quot;da81&quot;"
-  Name="&quot;Customs.CollateralType Query Group&quot;"
+  Code="&quot;COLT&quot;"
+  Name="&quot;Customs.CollateralType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;8b789547-9dfc-41d8-b738-2676c99e9609&quot;"
     FieldName="&quot;Code&quot;"
@@ -301,21 +303,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,ערבות&quot;"
+      Inactive="false"
+      LocalName="&quot;ערבות&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;פיקדון&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,ערבות או פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;ערבות או פיקדון&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CollateralType&quot;"
+    ObjectTableName="&quot;Customs.CollateralType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CollateralType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;COLT&quot;"
+    QueryGroupName="&quot;Customs.CollateralType&quot;"
+    LocalTextCode="&quot;סוג בטוחה&quot;"
+    TextCode="&quot;Collateral Types&quot;"
+    TextCodeCode="&quot;Customs.CollateralType.Q.CollateralTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;COLLATERALTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CollateralType.Features.CollateralTypes&quot;"
+    FeatureDefaultText="&quot;Collateral Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CollateralType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CollateralType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CollateralType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CollateralType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CollateralType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CollateralType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

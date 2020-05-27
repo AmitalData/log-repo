@@ -10,7 +10,7 @@ import {CustomerForwarderByProductPM} from '../../../../../Common/EntityPMs/Cust
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerForwarderByProductSplitComponent.html',
 })
 

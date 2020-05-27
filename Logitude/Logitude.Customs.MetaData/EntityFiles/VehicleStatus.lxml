@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ee2a4adb-a3a6-4b5d-8dfd-d2e0530a0f04&quot;"
     FieldName="&quot;Code&quot;"
@@ -297,21 +299,62 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;Open&quot;"
+      SearchFields="&quot;1,open,פתוח &quot;"
+      Inactive="false"
+      LocalName="&quot;פתוח &quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      EnglishName="&quot;Car Built&quot;"
+      SearchFields="&quot;2,car built, רכב הוקם&quot;"
+      Inactive="false"
+      LocalName="&quot; רכב הוקם&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;Error&quot;"
+      SearchFields="&quot;3,error,שגוי&quot;"
+      Inactive="false"
+      LocalName="&quot;שגוי&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Cancel&quot;"
+      SearchFields="&quot;4,cancel,בוטל &quot;"
+      Inactive="false"
+      LocalName="&quot;בוטל &quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.VehicleStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.VehicleStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

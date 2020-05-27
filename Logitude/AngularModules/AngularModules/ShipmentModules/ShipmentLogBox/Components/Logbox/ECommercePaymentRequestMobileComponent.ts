@@ -6,7 +6,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,30 +27,39 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+//import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DatePipe } from '@angular/common';
+
+
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public DimDenyButton: boolean = false;
+  public DimApproveButton: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
-    private messageWindow: MessageWindow = new MessageWindow();
+    //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
-    AdditionalData: any = {};
+    AdditionalData: any = {
+        RequestPaymentData: {}, PaymentData: {}
+    };
     externalDocs: any[] = [];
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
+    private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -60,7 +68,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
-        this.AdditionalData.RequestPaymentData = {};
+        this.datePipe = new DatePipe("en-US");
+        //this.AdditionalData.RequestPaymentData = {};
+        //this.AdditionalData.PaymentData = {};
+
         //this.AdditionalData.RequestPaymentData.ServiceTypes = [];
     }
 
@@ -68,20 +79,26 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
 
     }
     ShowFinalMessage: boolean = false;
-    SecurityKey:string = "";
-    Tenant : number = null;
+    ShowErrorMessage: boolean = false;
+    SecurityKey: string = "";
+    Tenant: number = null;
     RunComponent() {
-        
+
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq") {
@@ -103,15 +120,16 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 }
             }
         }
-        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+        this.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
-                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-
+                        
                         var ammount = 0;
 
                         this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
@@ -122,7 +140,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
+                    if (this.AdditionalData.PaymentDateTime != null) {
+                        var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                        myMessage = myMessage + " " + formatedPaymentDateTime;
+                    }
+                    this.FinalMessage = myMessage;
                     this.ShowFinalMessage = true;
                 }
 
@@ -132,6 +155,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
+                    this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
@@ -143,12 +167,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-                
+                //this.StopBusyIndicator();
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
                 this.FinalMessage = "התיק לא קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
+                this.ShowErrorMessage = true;
+                this.StopBusyIndicator();
             }
         });
 
@@ -159,10 +185,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             if (this.RefreshTimer) {
                 clearTimeout(this.RefreshTimer);
             }
-            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
-                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                     this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                     if (this.AdditionalData.IsPaymentRequired) {
@@ -173,12 +199,17 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                             this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
                                 ammount += +(item.AmountInNIS);
                             });
-
+                            
                             this.TotalAmount = ammount;
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                        var myMessage = "משלוח זה כבר שולם בתאריך";
+                        if (this.AdditionalData.PaymentDateTime != null) {
+                            var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                            myMessage = myMessage + " " + formatedPaymentDateTime;
+                        }
+                        this.FinalMessage = myMessage;
                         this.ShowFinalMessage = true;
                     }
 
@@ -187,9 +218,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 else {
                     this.FinalMessage = "התיק לא קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
+                    this.ShowErrorMessage = true;
                 }
             });
-        } 
+        }
     }
     private companyLogo: string = "";
     public get CompanyLogo() { return this.companyLogo }
@@ -198,7 +230,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו אושרה";
+    public FinalMessage: string = "גרסה זו םושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
@@ -221,6 +253,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
+
+    public get ForeignCurrencyValue() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
+
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
 
     public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
@@ -258,6 +296,29 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get thtk() { return this.AdditionalData.PaymentData.thtk }
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
+    public get TargetEnv() {
+        var Env = "https://direct.tranzila.com/" + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
+        return Env;
+    }
+    public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
+
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -276,7 +337,23 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     OnPayClick() {
         //alert("Yes");
+        document.forms["form"].action = this.TargetEnv
         document.forms["form"].submit();
+    }
+    IsAgreed: boolean = false;
+    IsAggreeChicked(isAgreed) {
+        this.IsAgreed = isAgreed;
+    }
+
+    ViewAggreement() {
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe((myResult:any) => {
+
+        //if (myResult.Result) { 
+        //var securityId = myResult.Result.SecurityId;
+        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+        //  }
+        //});
+
     }
 
 

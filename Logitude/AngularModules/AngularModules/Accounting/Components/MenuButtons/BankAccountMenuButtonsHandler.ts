@@ -76,7 +76,7 @@ export class BankAccountMenuButtonsHandler {
                             this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
                                 if (serviceResponse.Result) {
                                     var result = serviceResponse.Result;
-                                    var transaction = result.Result; // get the data
+                                    var transaction = result; // get the data
                                     var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                                     this.showReconcileWindow(openAmountCurrency);
 
@@ -86,13 +86,13 @@ export class BankAccountMenuButtonsHandler {
                         }
                         else
                         {
-                            this._CurrencyPMService.get(this.EntityPM.GLAccountCurrencyId).subscribe((myResult) => {
+                            this._CurrencyPMService.get(this.EntityPM.GLAccountCurrencyId).subscribe((myResult:any) => {
                                 var currency = myResult.Result;
                                 var openAmountCurrency = currency ? currency.Sign : "";
                                 this.showReconcileWindow(openAmountCurrency);
                                 this.CurrentSession.StopBusyIndicator();
                             });
-                        } 
+                        }
 
                         break;
                     }
@@ -139,7 +139,9 @@ export class BankAccountMenuButtonsHandler {
 
         var windowArgs: any = {};
         windowArgs.BankAccountPM = this.EntityPM;
+        windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
+        windowArgs.ObjectTableName = "BankAccount";
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
@@ -147,6 +149,7 @@ export class BankAccountMenuButtonsHandler {
 
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
 
+        logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {

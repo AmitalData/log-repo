@@ -1,53 +1,30 @@
-﻿
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
-import {ServiceArgs} from '../../DataContracts/ServiceArgs';
-import {EntityPMServiceResponse} from '../../DataContracts/EntityPMServiceResponse';
-import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {Guid} from '../../Utilities/Guid';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {TipsVisibilityPM} from '../../EntityPMs/TipsVisibilityPM';
-
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TraceEventExtendedPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
-    private _serviceArgs: ServiceArgs;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TraceEventExtended';
-
     }
 
-
     PutTraceEventGroup(eventTypeArgs: any) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+        var url = this._apiUrl + '/puttraceeventgroup';
+
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/puttraceeventgroup', JSON.stringify(eventTypeArgs),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
-                    return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
-        }
-        );
-
+            return this._http.put(url, JSON.stringify(eventTypeArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                //var pm = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
-
-
-
-
-
-
-
-
-
 }

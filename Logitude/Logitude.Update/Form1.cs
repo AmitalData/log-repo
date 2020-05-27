@@ -75,6 +75,17 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Customs.BL.PatchDistribution;
 using Logitude.Update.PatchDistribution;
+using System.Collections;
+using WebFreight.Web.WebServices;
+using Logitude.Server.Tools.StorageService;
+using System.Web;
+using Logitude.Server.Tools.Resolvers;
+using Logitude.BL.Resolvers;
+using WebFreight.Web.AccountingModel;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 
 namespace Logitude.Update
 {
@@ -126,18 +137,18 @@ namespace Logitude.Update
             LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
             LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
 
-            //if (LogitudeSettings.IsCostomsDeploy) 
-            LogitudeSettings.ABMProductId = setting.ABMProductId;
-            LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-            //if (LogitudeSettings.IsCostomsDeploy)
-            {
-                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
-                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-            }
-            string storageServiceMode = "fs";
-            string queueServiceMode = "azure";
-            Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
+                //if (LogitudeSettings.IsCostomsDeploy) 
+                LogitudeSettings.ABMProductId = setting.ABMProductId;
+                LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                //if (LogitudeSettings.IsCostomsDeploy)
+                {
+                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+                }
+                string storageServiceMode = "fs";
+                string queueServiceMode = "azure";
+                Logitude.Server.Tools.ContainerAccessor.InitContainer();
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
 
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
@@ -174,13 +185,14 @@ namespace Logitude.Update
             timer1.Enabled = true;
             timer1.Start();
 
-            TenantsUpdateClass.UpdateDataForTenant(tenant, name);
+            TenantsUpdateClass.UpdateDataForTenant(tenant, name, cbxOldUpdateCode.Checked);
 
             // for timer
             globalStopwatch = null;
             generalLabel = null;
             timer1.Start();
-
+            if (name == "UpdateTenantZeroNew")
+                UpdateRules();
             if (name == "accounting" || name == "UpdateTenantZeroNew")
                 UpdateZipFiles();
 
@@ -195,7 +207,7 @@ namespace Logitude.Update
 
         public void UpdateModule(int tenant, string name)
         {
-            TenantsUpdateClass.UpdateDataForTenant(tenant, name);
+            TenantsUpdateClass.UpdateDataForTenant(tenant, name, cbxOldUpdateCode.Checked);
         }
 
         delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
@@ -430,85 +442,67 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            DateTimeUtilResolver.RegisterDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterIdCounterUtil();
+            AccountingRegistrations.Register();
 
-            SupplierInvoicePM invoice = new SupplierInvoicePM()
-            { DeclarationId = "1-104235", InvoiceCounterKey = 1, Tenant = 1, SequenceNumeric = 1, InvoiceNumber = "1000", ChangeSetOp = ChangeSetOperation.Insert };
-            for (int a = 1; a < 15000; a = a + 1)
-            {
-                SupplierInvoiceItemPM item = new SupplierInvoiceItemPM()
-                {
-                    DeclarationId = "1-104235",
-                    CounterKey = 1,
-                    LineNumber = a,
-                    ItemCode = "a",
-                    Tenant = 1,
-                    SequenceNumeric = a,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                };
+            //CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
+            //btwr.ExecuteQueue(null);
 
-                SupplierInvioceItemCertificatPM certificate = new SupplierInvioceItemCertificatPM()
-                {
+            ////DateTime date = DateTime.Now.AddDays(-180);
+            ////DateTime last180days = new DateTime(date.Year, date.Month, 1);
+            ////DateTime referenceDate = new DateTime(2019, 3, 1);
+            ////if (referenceDate <= last180days)
+            ////{
 
-                    DeclarationId = "1-104235",
-                    InvoiceCounterKey = 1,
-                    LineNumber = a,
-                    ItemCertificateCounterKey = a,
-                    AttachmentTypeCode = "3",
-                    Tenant = 1,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    SequenceNumeric = a,
-
-                };
-                item.SupplierInvioceItemCertificats.Add(certificate);
-                invoice.SupplierInvoiceItems.Add(item);
-            }
-            ICustomContext context = CustomContext.GetContext(1);
-            SupplierInvoiceUpdateService serivce = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), 1);
-            serivce.Update(invoice, true);
-
-
-            //public EntitySet GetMetaDataEntitySet<TEntity>(DbContext dbCtx)
+            //string Reference = "BB4CL888";
+            //string referenceGroup = null;
+            //string reference = null;
+            //Regex isMatche = new Regex("([A-Za-z])");
+            //bool letters = isMatche.IsMatch(Reference);
+            //if (letters)
             //{
-            //    Type entityType = typeof(TEntity);
-            //    string entityName = entityType.Name;
-            //    MetadataWorkspace metaDataWS = ((IObjectContextAdapter)dbCtx).ObjectContext.MetadataWorkspace;
-
-            //    //IEnumerable<EntitySet> entitySets;
-            //    var entitySets = metaDataWS.GetItemCollection(DataSpace.SSpace)
-            //                     .GetItems<EntityContainer>()
-            //                     .Single()
-            //                     .BaseEntitySets
-            //                     .OfType<EntitySet>()
-            //                     .Where(entitySet => !entitySet.MetadataProperties.Contains("Type")
-            //                                        || entitySet.MetadataProperties["Type"].ToString() == "Tables");
-
-            //    List<EntitySet> provisionedTables = entitySets.ToList();
-            //    EntitySet returnValue = provisionedTables.FirstOrDefault(t => t.Name == entityName);
-            //    //When an Entity inherits a base class, the corresponding
-            //    //table is sometimes named for the base class
-            //    while (null == returnValue && null != entityType)
+            //    for (int i= 0; i < Reference.Length; i++)
             //    {
-            //        entityType = entityType.BaseType;
-            //        entityName = entityType.Name;
-            //        returnValue = provisionedTables.FirstOrDefault(t => t.Name == entityName);
+            //        string d = Reference.Substring(i , 1);
+            //        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
+            //        if (match.Count != 0)
+            //        {
+            //            referenceGroup =referenceGroup+d;// Reference.Substring(0, i);
+
+            //        }
+            //        else
+            //        {
+            //            reference = Reference.Substring(i, Reference.Length -i);
+            //            break;
+            //        }
+            //        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
+            //        //.Cast<Match>()
+            //        //.Select(m => m.Value)
+            //        //.ToArray();
             //    }
-            //    return returnValue;
+            //}
+            //else
+            //{
+            //    reference = Reference;
+            //    referenceGroup = "0000";
             //}
 
+            double value = 45.49;
+            //   value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = Math.Round(value * 2, MidpointRounding.AwayFromZero) / 2;
+            value = Math.Round(value, 1);
 
-            //    entities.Add(entity1);
-            //    entities.Add(entity2);
-            //    entities.Add(entity3);
-
-            //    dError.Entitites = entities;
-
-            //    MemoryStream memstream = new MemoryStream();
-            //    XmlSerializer ser = new XmlSerializer(typeof(DeclarationError));
-            //    ser.Serialize(memstream, dError);
-            //    memstream.Seek(0, SeekOrigin.Begin);
-            //    var reader = new StreamReader(memstream);
-            //    string content = reader.ReadToEnd();
-            //    byte[] bytearray = memstream.ToArray();
+            value = 45.5;
+            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = 45.97;
+            value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = 45.49;
+            value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+            value = 45.49;
+            value = Math.Round(value * 2, 2, MidpointRounding.AwayFromZero);
 
 
         }
@@ -1941,13 +1935,13 @@ User/Pass",
             new CopyData().Show();
         }
 
-        private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
-        {
+        //private void ConvertXmalTemplateToHtmlButton_Click(object sender, EventArgs e)
+        //{
 
-            Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
-            thread.IsBackground = true;
-            thread.Start();
-        }
+        //    Thread thread = new Thread(() => UpdateModule(0, "converttemplatefromxmaltohtml", ConvertXmalTemplateLable));
+        //    thread.IsBackground = true;
+        //    thread.Start();
+        //}
 
         private void WarehouseButton_Click(object sender, EventArgs e)
         {
@@ -3836,9 +3830,719 @@ User/Pass",
             }
 
         }
+
+        //label3
+        private void button45_Click(object sender, EventArgs e)
+        {
+            SetControlPropertyValue(label3, "ForeColor", Color.Black);
+            SetControlPropertyValue(label3, "Text", "Updating...");
+
+            PackageRepository packageRepository = new PackageRepository(0);
+            List<Package> packages = packageRepository.GetPackages().ToList();
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();
+
+                foreach (TenantManagement tenantManagement in allTenants)
+                {
+                    if (!tenantManagement.MainAdditionalPackageApplied && tenantManagement.IsMultiPackage)
+                    {
+                        tenantManagement.PackageName = "Multi Package";
+                        tenantManagementRepository.Update(tenantManagement);
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(tenantManagement.PackageCode))
+                        {
+                            Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                            if (tenantPackage != null)
+                            {
+                                tenantManagement.PackageName = tenantPackage.Name;
+                                tenantManagementRepository.Update(tenantManagement);
+                            }
+                        }
+                    }
+                }
+
+                tenantManagementRepository.SubmitChanges();
+                scope.Complete();
+            }
+
+            SetControlPropertyValue(label3, "ForeColor", Color.Green);
+            SetControlPropertyValue(label3, "Text", "Done");
+        }
+
+        private void button46_Click_1(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(FilePathTextBox.Text) && !string.IsNullOrEmpty(this.AirlineLogoTenantTextBox.Text))
+            {
+                Thread thread = new Thread(() => UpdateLogos());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+
+            else if (this.AirlineLogosCheckBox.Checked == true)
+            {
+                Thread thread = new Thread(() => UpdateLogosForAllTenants());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        private void UpdateLogos()
+        {
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            int tenant = Convert.ToInt32(this.AirlineLogoTenantTextBox.Text);
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> airlines = cardRepository.GetAirlineCards(tenant).ToList();
+
+            if (airlines.Count > 0)
+            {
+                Uploader uploaderService = new Uploader();
+                DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
+                FileInfo[] images = di.GetFiles("*.png");
+
+                foreach (Card airline in airlines)
+                {
+                    string result = "";
+                    FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
+
+                    if (image != null)
+                    {
+                        byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
+
+                        if (bytesData != null)
+                        {
+                            string extension = image.Extension.TrimStart('.');
+                            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, extension, airline.Id, null);
+
+                            if (!string.IsNullOrEmpty(result))
+                            {
+                                airline.ImageDetailId = result;
+                                cardRepository.Update(airline);
+                            }
+                        }
+                    }
+                }
+
+                cardRepository.SubmitChanges();
+            }
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void UpdateLogosForAllTenants()
+        {
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            Uploader uploaderService = new Uploader();
+            DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
+            FileInfo[] images = di.GetFiles("*.png");
+
+            if (images.Count() > 0)
+            {
+                List<string> imagesNames = images.Select(d => d.Name).ToList();
+                List<string> airlineCodes = new List<string>();
+                foreach (string name in imagesNames)
+                {
+                    string[] namesArray = name.Split('.');
+                    airlineCodes.Add(namesArray[0]);
+                }
+
+                ICommonDataContext context = CommonDataContext.GetContext(0);
+                CardRepository cardRepository = new CardRepository(context);
+                List<Card> airlines = context.Cards.Where(d => d.PartnerTypeId == "AL" && airlineCodes.Contains(d.Code)).ToList();
+
+                int myCount = 0;
+                var isUpdated = false;
+                foreach (Card airline in airlines)
+                {
+                    string result = "";
+                    FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
+
+                    if (image != null)
+                    {
+                        byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
+
+                        if (bytesData != null)
+                        {
+                            string extension = image.Extension.TrimStart('.');
+                            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, airline.Tenant, extension, airline.Id, null);
+
+                            if (!string.IsNullOrEmpty(result))
+                            {
+                                if (airline.Tenant == 0)
+                                {
+                                    airline.ImageDetailId = result;
+                                    isUpdated = true;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(airline.ImageDetailId))
+                                    {
+                                        airline.ImageDetailId = result;
+                                        isUpdated = true;
+                                    }
+                                }
+
+                                if (isUpdated)
+                                {
+                                    cardRepository.Update(airline);
+                                }
+                            }
+                        }
+                    }
+
+                    if (myCount == 1000)
+                    {
+                        if (isUpdated)
+                        {
+                            cardRepository.SubmitChanges();
+                        }
+                        myCount = 0;
+                        isUpdated = false;
+                    }
+
+                    myCount++;
+                }
+
+                cardRepository.SubmitChanges();
+            }
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private static string fileName;
+        private string fileNameAndExtension;
+        private long ReceivedBytes;
+        private string documentIdAndExtension;
+        public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string imageDetalId)
+        {
+            string filelocation = "images";
+            fileName = filename.ToLower();
+            string filePath = "tenant" + tenant.ToString() + "/";
+            string imagedetailid = null;
+
+            try
+            {
+                ImageDetailRepository imageDetailRep = new ImageDetailRepository(tenant);
+                ImageDetail imagedetail = new ImageDetail() { Id = IdCounter.GetNumber("ImageDetail", tenant), Tenant = tenant, Extension = extension, Size = fileSize };
+                imageDetailRep.Add(imagedetail);
+                imageDetailRep.SubmitChanges();
+                imagedetailid = imagedetail.Id;
+                fileName = imagedetailid;
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                ReceivedBytes += buffer.Length;
+                fileNameAndExtension = fileName + "." + extension;
+
+                MemoryStream memorystream = new MemoryStream(buffer);
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = filelocation,
+                    Extension = extension,
+                    Tenant = tenant,
+                    FileSize = fileSize,
+                };
+
+                storageservice.WriteBlock(buffer, sentBytes, blockIdsList, bufferNumber, fileInfo);
+
+                if (sentBytes == fileSize)
+                {
+                    fileNameAndExtension = fileName + "." + extension;
+                }
+
+                documentIdAndExtension = fileNameAndExtension;
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+            return imagedetailid;
+        }
+
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BatchTaskTester batchTaskTester = new BatchTaskTester();
+            batchTaskTester.Show();
+        }
+
+        private void button48_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateRules());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void UpdateRules()
+        {
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            SetControlPropertyValue(CopyReportButtonLable, "Text", "Updating...");
+            SetControlPropertyValue(CopyReportButtonLable, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            this.FillTenantManagementSupportDomain();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(CopyReportButtonLable, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(CopyReportButtonLable, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void FillTenantManagementSupportDomain()
+        {
+            List<TenantMailBox> tenantsToCreatMailBox = new List<TenantMailBox>();
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();
+                allTenants = allTenants.Where(d => d.SupportActivated && !string.IsNullOrEmpty(d.SupportEmail));
+
+                foreach (TenantManagement tenantManagement in allTenants)
+                {
+                    string[] splittedEmail = tenantManagement.SupportEmail.Split('@');
+
+                    if (splittedEmail.Length > 0)
+                    {
+                        tenantsToCreatMailBox.Add(new TenantMailBox() { Tenant = tenantManagement.Id, Mail = splittedEmail[0] });
+                        tenantManagement.SupportDomain = splittedEmail[1];
+                    }
+                }
+
+                tenantManagementRepository.SubmitChanges();
+                scope.Complete();
+            }
+
+            if (tenantsToCreatMailBox.Count > 0)
+            {
+                UserRepository userRepository;
+                SupportMailboxRepository mailboxRepository;
+                foreach (TenantMailBox mail in tenantsToCreatMailBox)
+                {
+                    userRepository = new UserRepository(mail.Tenant);
+                    mailboxRepository = new SupportMailboxRepository(mail.Tenant);
+
+                    string userEmail = "system@tenant" + mail.Tenant + ".com";
+                    User user = userRepository.GetSingleUserByEmail(userEmail, mail.Tenant);
+
+                    bool exists = mailboxRepository.CheckIfDefaultMailBoxCreated(mail.Tenant);
+
+                    if (!exists)
+                    {
+                        SupportMailbox supportMailbox = new SupportMailbox()
+                        {
+                            Id = IdCounter.GetNumber("SupportMailbox", mail.Tenant),
+                            Tenant = mail.Tenant,
+                            CreateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            UpdateDate = TenantServerConfigration.GetCurrentDateTime(mail.Tenant),
+                            IsDefault = true,
+                            Inactive = false,
+                            Mailbox = mail.Mail,
+                            CreatedByUserId = user.Id,
+                            UpdatedByUserId = user.Id,
+                        };
+
+                        mailboxRepository.Add(supportMailbox);
+                        mailboxRepository.SubmitChanges();
+                    }
+                }
+            }
+
+            FillTicketSupportMailBox(tenantsToCreatMailBox);
+        }
+
+        private void FillTicketSupportMailBox(List<TenantMailBox> tenantsToCreatMailBox)
+        {
+            SupportMailboxRepository mailboxRepository;
+            TicketRepository ticketRepository;
+            IQueryable<Ticket> allTickets;
+            foreach (TenantMailBox tenant in tenantsToCreatMailBox)
+            {
+                ticketRepository = new TicketRepository(tenant.Tenant);
+                allTickets = ticketRepository.GetAll(tenant.Tenant);
+                mailboxRepository = new SupportMailboxRepository(tenant.Tenant);
+                var mailbox = mailboxRepository.GetDefaultMailBox(tenant.Tenant);
+                foreach (Ticket ticket in allTickets)
+                {
+                    ticket.SupportMailboxId = mailbox.Id;
+                    ticketRepository.Update(ticket);
+                }
+                ticketRepository.SubmitChanges();
+            }
+        }
+
+        private void UpdateAutomationMetadataButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "updateautomationmetadata", ConvertXmalTemplateLable));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void btnCallOldUpdate_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "nonegeneratedcode", lblUShipment));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void button49_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => LoadClosedTables());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void LoadClosedTables()
+        {
+            //LoadClosedTablesLabel
+            SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Updating...");
+            SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Black);
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            // for timer
+            if (generalLabel != null) SetControlPropertyValue(generalLabel, "Text", "Updating...");
+            globalStopwatch = stopWatch;
+            generalLabel = LoadClosedTablesLabel;
+            timer1.Enabled = true;
+            timer1.Start();
+
+            IWebFreightContext context = WebFreightContext.GetContext(0);
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.UpgradeClosedTablesForTenantZero();
+
+            globalStopwatch = null;
+            generalLabel = null;
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(LoadClosedTablesLabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+        private void button50_Click(object sender, EventArgs e)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadDefaultReports();
+
+        }
+
+        private void uploadMexicoCitiesBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.UploadMexicoCitiesMethod(streamReader);
+            }
+        }
+
+        private void UploadMexicoCitiesMethod(StreamReader streamReader)
+        {
+            List<MexicoCityDataItem> AllDataLines = new List<MexicoCityDataItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 3)
+                {
+                    string cityCode = this.GetText(lineParts, 0);
+                    string cityName = this.GetText(lineParts, 1);
+                    string stateCode = this.GetText(lineParts, 2);
+                   
+                    if (cityCode != null)
+                    {
+                        cityCode = cityCode.ToUpper();
+                        stateCode = stateCode.ToUpper();
+
+                        if (cityName.Length >= 40)
+                        {
+                            cityName = cityName.Substring(0, 40);
+                        }
+
+                        MexicoCityDataItem mexicoCity = new MexicoCityDataItem();
+                        mexicoCity.StateCode = stateCode;
+                        mexicoCity.CityCode = cityCode;
+                        mexicoCity.CityName = cityName;
+                        mexicoCity.CountryCode = "MX";
+                        AllDataLines.Add(mexicoCity);
+                    }
+                }
+            }
+
+            List<MexicoCityDataItem> distinctItems = AllDataLines.GroupBy(p => new { p.CityCode }).Select(g => g.First()).ToList();
+            Thread thread = new Thread(() => this.RunUploadMexicoCities(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        string missedStates = "";
+
+        private void RunUploadMexicoCities(List<MexicoCityDataItem> allDataLines)
+        {
+            if (allDataLines.Count > 0)
+            {
+
+                SetControlPropertyValue(UpdatePortslbl, "Text", "Updating...");
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                TenantRepository tenantRep = new TenantRepository(0);
+                List<Tenant> tenants = tenantRep.GetTenants().ToList();
+
+               
+                foreach (Tenant tenant in tenants)
+                {
+                    this.AddMexicoCitiesByTenant(allDataLines, tenant);
+                }
+
+                stopWatch.Stop();
+                if (!string.IsNullOrEmpty(missedStates))
+                {
+                    MessageBox.Show("All missing States are: " + missedStates, "Missing States", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                TimeSpan ts = stopWatch.Elapsed;
+                SetControlPropertyValue(UpdatePortslbl, "Text", "Done in " + ts.ToString());
+            }
+        }
+
+        private void AddMexicoCitiesByTenant(List<MexicoCityDataItem> allDataLines, Tenant tenantPOCO)
+        {
+            int tenant = tenantPOCO.Id;
+            string addressId = tenantPOCO.AddressId;
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            Address address = myCommonContext.Addresses.Where(a => a.Id == addressId && a.AddressTypeId == "M" && a.Tenant == tenant).FirstOrDefault();
+
+            if (address != null || tenant == 0)
+            {
+                Country mexicoCountry;
+                if (tenant == 0)
+                {
+                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == tenant).FirstOrDefault();
+                }
+                else
+                {
+                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
+                }
+
+                if (mexicoCountry != null)
+                {
+                    List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
+                    List<State> allStates = (from d in myCommonContext.States
+                                             where d.Tenant == tenant
+                                             && statesCodes.Contains(d.Code)
+                                             select d).ToList();
+                    var myCount = 0;
+                    foreach (MexicoCityDataItem item in allDataLines)
+                    {
+                        State state = allStates.Where(a => a.Code == item.StateCode).FirstOrDefault();
+
+                        if (state != null)
+                        {
+                            CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == mexicoCountry.Id).FirstOrDefault();
+                            if (newCity == null)
+                            {
+                                newCity = new CountryCity()
+                                {
+                                    Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
+                                    Tenant = tenant,
+                                    Code = item.CityCode,
+                                    EnglishName = item.CityName,
+                                    LocalName = item.CityName,
+                                    StateId = state.Id,
+                                    CountryId = mexicoCountry.Id,
+                                };
+
+                                newCity.SearchFields = BuildCityCountrySearchFields(newCity);
+                                myCommonContext.CountryCities.Add(newCity);
+                                myCount++;
+                            }
+                           else
+                            {
+                                newCity.EnglishName = item.CityName;
+                                newCity.LocalName = item.CityName;
+                            }
+                            if (myCount == 1000)
+                            {
+                                myCommonContext.SaveChanges();
+                                myCount = 0;
+                            }
+                        }
+                        else
+                        {
+                            missedStates = missedStates + "Code/Tenant:" + item.StateCode + "/ " + tenant + ", ";
+                        }
+                    }
+
+                    myCommonContext.SaveChanges();
+                }
+            }
+        }
+
+        private void AddMexicoStates(ICommonDataContext myCommonContext, string countryId, int tenant)
+        {
+
+            State state = myCommonContext.States.Where(p => p.Code == "05" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+
+            if (state == null)
+            {
+                state = new State()
+                {
+                    Id = IdCounter.GetNumber("State", 0).ToString(),
+                    Tenant = tenant,
+                    Code = "05",
+                    EnglishName = "Coahuila de Zaragoza",
+                    LocalName = "Coahuila de Zaragoza",
+                    CountryId = countryId,
+                    SearchFields = "05" + "," + "Coahuila de Zaragoza",
+                };
+                myCommonContext.States.Add(state);
+            }
+
+            state  = myCommonContext.States.Where(p => p.Code == "09" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            if (state == null)
+            {
+                state = new State()
+                {
+                    Id = IdCounter.GetNumber("State", 0).ToString(),
+                    Tenant = tenant,
+                    Code = "09",
+                    EnglishName = "Distrito Federal",
+                    LocalName = "Distrito Federal",
+                    CountryId = countryId,
+                    SearchFields = "09" + "," + "Distrito Federal",
+                };
+                myCommonContext.States.Add(state);
+            }
+
+            state = myCommonContext.States.Where(p => p.Code == "16" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            if (state == null)
+            {
+                state = new State()
+                {
+                    Id = IdCounter.GetNumber("State", 0).ToString(),
+                    Tenant = tenant,
+                    Code = "16",
+                    EnglishName = "Michoacán de Ocampo",
+                    LocalName = "Michoacán de Ocampo",
+                    CountryId = countryId,
+                    SearchFields = "16" + "," + "Michoacán de Ocampo",
+                };
+                myCommonContext.States.Add(state);
+            }
+
+            state  = myCommonContext.States.Where(p => p.Code == "30" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            if (state == null)
+            {
+                state = new State()
+                {
+                    Id = IdCounter.GetNumber("State", 0).ToString(),
+                    Tenant = tenant,
+                    Code = "30",
+                    EnglishName = "Veracruz de Ignacio de la Llave",
+                    LocalName = "Veracruz de Ignacio de la Llave",
+                    CountryId = countryId,
+                    SearchFields = "30" + "," + "Veracruz de Ignacio de la Llave",
+                };
+                myCommonContext.States.Add(state);
+            }
+
+            myCommonContext.SaveChanges();
+        }
+
+        private string BuildCityCountrySearchFields(CountryCity entity)
+        {
+            string mySearchFields = "";
+
+            if (!string.IsNullOrEmpty(entity.Code))
+            {
+                mySearchFields = string.IsNullOrEmpty(mySearchFields) ? entity.Code : mySearchFields + "," + entity.Code;
+            }
+
+            if (!string.IsNullOrEmpty(entity.EnglishName))
+            {
+                mySearchFields = string.IsNullOrEmpty(mySearchFields) ? entity.EnglishName : mySearchFields + "," + entity.EnglishName;
+            }
+
+            if (!string.IsNullOrEmpty(entity.LocalName))
+            {
+                mySearchFields = string.IsNullOrEmpty(mySearchFields) ? entity.LocalName : mySearchFields + "," + entity.LocalName;
+            }
+
+            return mySearchFields;
+        }
+
     }
 
-
+    public class TenantMailBox
+    {
+        public int Tenant { get; set; }
+        public string Mail { get; set; }
+    }
 
     public class MyFeature
     {
@@ -3896,5 +4600,12 @@ User/Pass",
         public string OurCode { get; set; }
         public string PartnerCode { get; set; }
     }
-}
 
+    public class MexicoCityDataItem
+    {
+        public string CityCode { get; set; }
+        public string CityName { get; set; }
+        public string StateCode { get; set; }
+        public string CountryCode { get; set; }
+    }
+}

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9996/WcfApi/UserWcfService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+  <xs:complexType name="UserPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveModified" type="xs:int" />
+      <xs:element minOccurs="0" name="AdditionalPackagesOnly" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Anniversary" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Birthday" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="BranchId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BranchName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BusinessPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BusinessUnitId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComputedLocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Contact" nillable="true" type="tns:ContactPM" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DepartmentId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartmentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayGettingStarted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DistributorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentFilingInbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DontShowLocal" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpirationDaysLeft" type="xs:int" />
+      <xs:element minOccurs="0" name="FacebookId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreelancerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreelancerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InternetAccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsBranchRestricted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCustomerCare" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDistributor" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsFreelancer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsProductRestricted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSalesman" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsShowContactDetailsInTheMobileApp" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTwoFactorAuthenticationEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LicencedUser" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PersonalId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoleCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RolePMLists" nillable="true" type="tns:ArrayOfRolePM" />
+      <xs:element minOccurs="0" name="Roles" nillable="true" type="tns:ArrayOfUserRolesPM" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SetAngularAsDefault" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShowInboxToolTip" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShowLocalNameInLOV" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShowLogBoxToolTip" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SignupRole" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Technology" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UserLastLogin" nillable="true" type="tns:UserLastLoginPM" />
+      <xs:element minOccurs="0" name="UserPermittedBranches" nillable="true" type="tns:ArrayOfUserPermittedBranchPM" />
+      <xs:element minOccurs="0" name="UserPermittedProducts" nillable="true" type="tns:ArrayOfUserPermittedProductPM" />
+      <xs:element minOccurs="0" name="UserRoles" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserRolesNamesList" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserRolesNamesList_db" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserPM" nillable="true" type="tns:UserPM" />
+  <xs:complexType name="ContactPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Anniversary" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AnniversaryReminder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BirthDayOfYear" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Birthday" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="BirthdayReminder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BusinessPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardContactAdditionalServices" nillable="true" type="tns:ArrayOfCardContactAdditionalServicePM" />
+      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComputedLocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactDoneMethodCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactDoneMethodName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisconectFromCard" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DisplayGettingStarted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DoneDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DontShowLocal" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FacebookId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FieldsChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasCardContact" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasPassword" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageDetailId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IndexColor" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IsAirExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAirImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAll" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsChangeSignatur" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCreatedWithPartner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCustomsImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandDomestic" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLicencedUser" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLocked" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOceanExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOceanImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUser" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUserAdditionalPackagesOnly" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MustChangePassword" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfRetries" type="xs:int" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SetAsPrimaryForCard" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Signature" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="SignatureHtml" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="SignupRole" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContactPM" nillable="true" type="tns:ContactPM" />
+  <xs:complexType name="ArrayOfCardContactAdditionalServicePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardContactAdditionalServicePM" nillable="true" type="tns:CardContactAdditionalServicePM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCardContactAdditionalServicePM" nillable="true" type="tns:ArrayOfCardContactAdditionalServicePM" />
+  <xs:complexType name="CardContactAdditionalServicePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalServiceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q1:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="ContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardContactAdditionalServicePM" nillable="true" type="tns:CardContactAdditionalServicePM" />
+  <xs:complexType name="ArrayOfRolePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RolePM" nillable="true" type="tns:RolePM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRolePM" nillable="true" type="tns:ArrayOfRolePM" />
+  <xs:complexType name="RolePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Added" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentTenant" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Exists" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsCustomRole" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentRoleId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Removed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RoleTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RolePM" nillable="true" type="tns:RolePM" />
+  <xs:complexType name="ArrayOfUserRolesPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserRolesPM" nillable="true" type="tns:UserRolesPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserRolesPM" nillable="true" type="tns:ArrayOfUserRolesPM" />
+  <xs:complexType name="UserRolesPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Added" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Exists" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Removed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserRolesPM" nillable="true" type="tns:UserRolesPM" />
+  <xs:complexType name="UserLastLoginPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ComputerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoginDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:UserPM" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserLastLoginPM" nillable="true" type="tns:UserLastLoginPM" />
+  <xs:complexType name="ArrayOfUserPermittedBranchPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserPermittedBranchPM" nillable="true" type="tns:UserPermittedBranchPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserPermittedBranchPM" nillable="true" type="tns:ArrayOfUserPermittedBranchPM" />
+  <xs:complexType name="UserPermittedBranchPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BranchId" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q2:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserPermittedBranchPM" nillable="true" type="tns:UserPermittedBranchPM" />
+  <xs:complexType name="ArrayOfUserPermittedProductPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserPermittedProductPM" nillable="true" type="tns:UserPermittedProductPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserPermittedProductPM" nillable="true" type="tns:ArrayOfUserPermittedProductPM" />
+  <xs:complexType name="UserPermittedProductPM">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q3:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserPermittedProductPM" nillable="true" type="tns:UserPermittedProductPM" />
+</xs:schema>

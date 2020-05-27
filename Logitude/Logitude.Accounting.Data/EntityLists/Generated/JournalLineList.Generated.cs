@@ -88,6 +88,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ExternalReconcileNumber  { get; set; }
        [DataMember]
        public bool IsExternalReconcile  { get; set; }
+       [DataMember]
+       public string ActionId  { get; set; }
    }
 
 }

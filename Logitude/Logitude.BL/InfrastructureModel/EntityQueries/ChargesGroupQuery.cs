@@ -42,7 +42,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields
+                        SearchFields = a.SearchFields,
+                        ViewOrder = a.ViewOrder,
+
                     }).FirstOrDefault();
         }
 
@@ -57,7 +59,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields
+                        SearchFields = a.SearchFields,
+                        ViewOrder = a.ViewOrder,
                     }).FirstOrDefault();
         }
 
@@ -74,7 +77,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields
+                        SearchFields = a.SearchFields,
+                        ViewOrder = a.ViewOrder,
                     }).FirstOrDefault();
         }
 
@@ -93,7 +97,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       LocalName = entity.LocalName,
                                                       Code = entity.Code,
                                                       Name = entity.Name,
-                                                      SearchFields = entity.SearchFields
+                                                      SearchFields = entity.SearchFields,
+                                                      ViewOrder = entity.ViewOrder,
                                                   };
             return result;
         }
@@ -110,10 +115,31 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     LocalName = a.LocalName,
                                                     Code = a.Code,
                                                     Name = a.Name,
-                                                    SearchFields = a.SearchFields
-                                                };
+                                                    SearchFields = a.SearchFields,
+                                                     ViewOrder = a.ViewOrder,
+                                                 };
             return charges;
         }
-       
+
+
+
+        public IQueryable<ChargesGroupList> GetChargesGroupListsByTenant(int tenant)
+        {
+
+            IQueryable<ChargesGroupList> charges = from a in repository.context.ChargesGroups
+                                                 where a.Tenant == tenant
+                                                 select new ChargesGroupList()
+                                                 {
+                                                     Id = a.Id,
+                                                     Tenant = a.Tenant,
+                                                     LocalName = a.LocalName,
+                                                     Code = a.Code,
+                                                     Name = a.Name,
+                                                     SearchFields = a.SearchFields,
+                                                     ViewOrder = a.ViewOrder,
+                                                 };
+            return charges;
+        }
+
     }
 }

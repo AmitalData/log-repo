@@ -295,6 +295,7 @@ namespace Logitude.XSD.INTTRA.BL
         private void UpdateShipmentStatus()
         {
             this.DataContext.Shipment.INTTRASIStatusCode = "SENT";
+            this.DataContext.Shipment.INTTRABookingStatusCode = "SI";
             this.DataContext.Shipment.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }

@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;0594dc03-f66f-4e6f-979a-582173f170f2&quot;"
     FieldName="&quot;Code&quot;"
@@ -302,34 +304,43 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;ImporterDeclarationType&quot;"
-    TextCode="&quot;ImporterDeclarationTypeQuery&quot;"
-    QueryGroupCode="&quot;4486&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.ImporterDeclarationType&quot;"
-    QuerySection="&quot;Customs.ImporterDeclarationType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ImporterDeclarationType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;4486&quot;"
+    QueryGroupName="&quot;Customs.ImporterDeclarationType Query Group&quot;"
+    TextCode="&quot;ImporterDeclarationTypeQuery&quot;"
+    TextCodeCode="&quot;ImporterDeclarationType.Q.ImporterDeclarationType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ImporterDeclarationType.Q.ImporterDeclarationType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;ImporterDeclarationType.Features.ImporterDeclarationType&quot;"
+    FeatureDefaultText="&quot;ImporterDeclarationType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ImporterDeclarationType&quot;"
         IndexOrder="0"
+        ColumnWidth="10"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="10" />
+        QueryCode="&quot;ImporterDeclarationType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ImporterDeclarationType&quot;"
         IndexOrder="1"
+        ColumnWidth="200"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="200" />
+        QueryCode="&quot;ImporterDeclarationType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ImporterDeclarationType&quot;"
         IndexOrder="2"
+        ColumnWidth="200"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="200" />
+        QueryCode="&quot;ImporterDeclarationType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -337,17 +348,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ImporterDeclarationType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ImporterDeclarationType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

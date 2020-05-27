@@ -37,8 +37,7 @@ namespace WebFreight.Web.DataProviders
             public int LCLShipments { get; set; }
             public int TotalShipments { get; set; }
             public double PercentageFromTotalShipment { get; set; }
-        }
-
-        
+            public double? VolumeInCBM { get; set; }
+        } 
     }
 }

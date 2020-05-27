@@ -585,7 +585,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                               IsActive = a.IsActive,
                                               //IsDisabled
                                               LabelTextCodeId = a.LabelTextCodeId,
-                                              LabelTextCodeCode = a.TextCode.Code,
+                                              LabelTextCodeCode = a.LabelTextCodeCode,
                                               MenuButtonGroupId = a.MenuButtonGroupId,
                                               MenuButtonType = a.MenuButtonType,
                                               ParentMenuButtonId = a.ParentMenuButtonId,
@@ -661,12 +661,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryid}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryid, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
         {
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, queryid);
+            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode);
 
             if (querycolumns != null && querycolumns.Count() > 0)
             {
@@ -674,7 +674,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
             else
             {
-                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(0, null, queryid);
+                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(0, null, queryCode);
                 return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
             }
         }
@@ -725,7 +725,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             if (privatelabel != null)
             {
                 TextCode textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.Importers", translationTenant);
-                Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {
                     tra.TranslatedText = privatelabel.PrivateLabelName;
@@ -740,13 +740,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         Tenant = translationTenant,
                         TranslatedText = privatelabel.PrivateLabelName,
                         TranslationHeaderCode = tenantPoco.Language,
+                        TextCodeCode = textCode.Code,
 
                     };
 
                     AllTranslations.Add(tra);
                 }
                 textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.ActivationWizard", translationTenant);
-                tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {
                     tra.TranslatedText = privatelabel.PrivateLabelShortName + " Services";
@@ -761,6 +762,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         Tenant = translationTenant,
                         TranslatedText = privatelabel.PrivateLabelShortName + " Services",
                         TranslationHeaderCode = tenantPoco.Language,
+                        TextCodeCode = textCode.Code,
                     };
 
                     AllTranslations.Add(tra);
@@ -798,7 +800,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (privatelabel != null)
                 {
                     TextCode textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.Importers", tenant);
-                    Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                    Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                     if (tra != null)
                     {
                         tra.TranslatedText = privatelabel.PrivateLabelName;
@@ -813,13 +815,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             Tenant = tenant,
                             TranslatedText = privatelabel.PrivateLabelName,
                             TranslationHeaderCode = tenantPoco.Language,
+                            TextCodeCode = textCode.Code,
 
                         };
 
                         AllTranslations.Add(tra);
                     }
                     textCode = txtCodeRep.GetTextCodeByTenantAndCode("General.MH.ActivationWizard", tenant);
-                    tra = AllTranslations.FirstOrDefault(t => t.TextCodeId == textCode.Id);
+                    tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                     if (tra != null)
                     {
                         tra.TranslatedText = privatelabel.PrivateLabelShortName + " Services";
@@ -834,6 +837,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             Tenant = tenant,
                             TranslatedText = privatelabel.PrivateLabelShortName + " Services",
                             TranslationHeaderCode = tenantPoco.Language,
+                            TextCodeCode = textCode.Code,
                         };
 
                         AllTranslations.Add(tra);

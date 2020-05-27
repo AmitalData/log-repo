@@ -85,6 +85,10 @@ export class ShipmentPM {
     public get CarrierTransportDocumentNumber() { return this.carrierTransportDocumentNumber; }
     public set CarrierTransportDocumentNumber(newValue: string) { if (this.carrierTransportDocumentNumber != newValue) { this.carrierTransportDocumentNumber = newValue; this.MarkAsDirty("CarrierTransportDocumentNumber"); } }
 
+    private notInvoicedReceivablesAmount: number;
+    public get NotInvoicedReceivablesAmount() { return this.notInvoicedReceivablesAmount; }
+    public set NotInvoicedReceivablesAmount(newValue: number) { if (this.notInvoicedReceivablesAmount != newValue) { this.notInvoicedReceivablesAmount = newValue; this.MarkAsDirty("NotInvoicedReceivablesAmount"); } }
+
 
     private openReceivablesInLocalCurrency: number;
     public get OpenReceivablesInLocalCurrency() { return this.openReceivablesInLocalCurrency; }
@@ -315,7 +319,12 @@ export class ShipmentPM {
     public get GrossWeightInKG() { return this.grossWeightInKG; }
     public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
        
-	 
+
+    private grossWeightPerStorageDays: number;
+    public get GrossWeightPerStorageDays() { return this.grossWeightPerStorageDays; }
+    public set GrossWeightPerStorageDays(newValue: number) { if (this.grossWeightPerStorageDays != newValue) { this.grossWeightPerStorageDays = newValue; this.MarkAsDirty("GrossWeightPerStorageDays"); } }
+
+
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
     public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
@@ -600,7 +609,7 @@ export class ShipmentPM {
     public set Field25(newValue: CustomFieldClass) { this.field25 = newValue; this.MarkAsDirty("Field25"); }
 
     private field26: CustomFieldClass;
-    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field6; }
+    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field26; }
     public set Field26(newValue: CustomFieldClass) { this.field26 = newValue; this.MarkAsDirty("Field26"); }
 
     private field27: CustomFieldClass;
@@ -4126,6 +4135,15 @@ export class ShipmentPM {
         }
     }
 
+    private warehouseStorageFreeDays: number;
+    public get WarehouseStorageFreeDays() { return this.warehouseStorageFreeDays; }
+    public set WarehouseStorageFreeDays(newValue: number) {
+        if (this.warehouseStorageFreeDays != newValue) {
+            this.warehouseStorageFreeDays = newValue;
+            this.MarkAsDirty("WarehouseStorageFreeDays");
+        }
+    }
+
     private shipperNotExporterReference: string;
     public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
     public set ShipperNotExporterReference(newValue: string) {
@@ -4256,9 +4274,314 @@ export class ShipmentPM {
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
 
+    private shipmentConvertedNewNumber: boolean;
+    public get ShipmentConvertedNewNumber() { return this.shipmentConvertedNewNumber; }
+    public set ShipmentConvertedNewNumber(newValue: boolean) { if (this.shipmentConvertedNewNumber != newValue) { this.shipmentConvertedNewNumber = newValue; this.MarkAsDirty("ShipmentConvertedNewNumber"); } }
+
     private packagesDeleted: boolean;
     public get PackagesDeleted() { return this.packagesDeleted; }
     public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
+
+    private isDeletingAllPayables: boolean;
+    public get IsDeletingAllPayables() { return this.isDeletingAllPayables; }
+    public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
+
+
+    private iNTTRABookingResponse_Voyage: string;
+    public get INTTRABookingResponse_Voyage() { return this.iNTTRABookingResponse_Voyage; }
+    public set INTTRABookingResponse_Voyage(newValue: string) { if (this.iNTTRABookingResponse_Voyage != newValue) { this.iNTTRABookingResponse_Voyage = newValue; this.MarkAsDirty("INTTRABookingResponse_Voyage"); } }
+
+    private iNTTRABookingResponse_POLDate: Date;
+    public get INTTRABookingResponse_POLDate() { return this.iNTTRABookingResponse_POLDate; }
+    public set INTTRABookingResponse_POLDate(newValue: Date) { if (this.iNTTRABookingResponse_POLDate != newValue) { this.iNTTRABookingResponse_POLDate = newValue; this.MarkAsDirty("INTTRABookingResponse_POLDate"); } }
+
+
+    private iNTTRABookingResponse_POFPort: string;
+    public get INTTRABookingResponse_POFPort() { return this.iNTTRABookingResponse_POFPort; }
+    public set INTTRABookingResponse_POFPort(newValue: string) { if (this.iNTTRABookingResponse_POFPort != newValue) { this.iNTTRABookingResponse_POFPort = newValue; this.MarkAsDirty("INTTRABookingResponse_POFPort"); } }
+
+    private iNTTRABookingResponse_POFCCode: string;
+    public get INTTRABookingResponse_POFCCode() { return this.iNTTRABookingResponse_POFCCode; }
+    public set INTTRABookingResponse_POFCCode(newValue: string) { if (this.iNTTRABookingResponse_POFCCode != newValue) { this.iNTTRABookingResponse_POFCCode = newValue; this.MarkAsDirty("INTTRABookingResponse_POFCCode"); } }
+
+    private iNTTRABookingResponse_POFCName: string;
+    public get INTTRABookingResponse_POFCName() { return this.iNTTRABookingResponse_POFCName; }
+    public set INTTRABookingResponse_POFCName(newValue: string) { if (this.iNTTRABookingResponse_POFCName != newValue) { this.iNTTRABookingResponse_POFCName = newValue; this.MarkAsDirty("INTTRABookingResponse_POFCName"); } }
+
+    private iNTTRABookingResponse_PODDate: Date;
+    public get INTTRABookingResponse_PODDate() { return this.iNTTRABookingResponse_PODDate; }
+    public set INTTRABookingResponse_PODDate(newValue: Date) { if (this.iNTTRABookingResponse_PODDate != newValue) { this.iNTTRABookingResponse_PODDate = newValue; this.MarkAsDirty("INTTRABookingResponse_PODDate"); } }
+
+    private iNTTRABookingResponse_PODPort: string;
+    public get INTTRABookingResponse_PODPort() { return this.iNTTRABookingResponse_PODPort; }
+    public set INTTRABookingResponse_PODPort(newValue: string) { if (this.iNTTRABookingResponse_PODPort != newValue) { this.iNTTRABookingResponse_PODPort = newValue; this.MarkAsDirty("INTTRABookingResponse_PODPort"); } }
+
+    private iNTTRABookingResponse_PODCCode: string;
+    public get INTTRABookingResponse_PODCCode() { return this.iNTTRABookingResponse_PODCCode; }
+    public set INTTRABookingResponse_PODCCode(newValue: string) { if (this.iNTTRABookingResponse_PODCCode != newValue) { this.iNTTRABookingResponse_PODCCode = newValue; this.MarkAsDirty("INTTRABookingResponse_PODCCode"); } }
+
+    private iNTTRABookingResponse_PODCName: string;
+    public get INTTRABookingResponse_PODCName() { return this.iNTTRABookingResponse_PODCName; }
+    public set INTTRABookingResponse_PODCName(newValue: string) { if (this.iNTTRABookingResponse_PODCName != newValue) { this.iNTTRABookingResponse_PODCName = newValue; this.MarkAsDirty("INTTRABookingResponse_PODCName"); } }
+
+
+    private iNTTRABookingResponse_POFPortCode: string;
+    public get INTTRABookingResponse_POFPortCode() { return this.iNTTRABookingResponse_POFPortCode; }
+    public set INTTRABookingResponse_POFPortCode(newValue: string) { if (this.iNTTRABookingResponse_POFPortCode != newValue) { this.iNTTRABookingResponse_POFPortCode = newValue; this.MarkAsDirty("INTTRABookingResponse_POFPortCode"); } }
+
+    private iNTTRABookingResponse_PODPortCode: string;
+    public get INTTRABookingResponse_PODPortCode() { return this.iNTTRABookingResponse_PODPortCode; }
+    public set INTTRABookingResponse_PODPortCode(newValue: string) { if (this.iNTTRABookingResponse_PODPortCode != newValue) { this.iNTTRABookingResponse_PODPortCode = newValue; this.MarkAsDirty("INTTRABookingResponse_PODPortCode"); } }
+
+    private iNTTRABookingResponse_ShippingLine: string;
+    public get INTTRABookingResponse_ShippingLine() { return this.iNTTRABookingResponse_ShippingLine; }
+    public set INTTRABookingResponse_ShippingLine(newValue: string) { if (this.iNTTRABookingResponse_ShippingLine != newValue) { this.iNTTRABookingResponse_ShippingLine = newValue; this.MarkAsDirty("INTTRABookingResponse_ShippingLine"); } }
+
+    private fWBStatusCode_Original: string;
+    public get FWBStatusCode_Original() { return this.fWBStatusCode_Original; }
+    public set FWBStatusCode_Original(newValue: string) { if (this.fWBStatusCode_Original != newValue) { this.fWBStatusCode_Original = newValue; this.MarkAsDirty("FWBStatusCode_Original"); } }
+
+    private fHLStatusCode_Original: string;
+    public get FHLStatusCode_Original() { return this.fHLStatusCode_Original; }
+    public set FHLStatusCode_Original(newValue: string) { if (this.fHLStatusCode_Original != newValue) { this.fHLStatusCode_Original = newValue; this.MarkAsDirty("FHLStatusCode_Original"); } }
+
+    private fHLStatusDate_Original: Date;
+    public get FHLStatusDate_Original() { return this.fHLStatusDate_Original; }
+    public set FHLStatusDate_Original(newValue: Date) { if (this.fHLStatusDate_Original != newValue) { this.fHLStatusDate_Original = newValue; this.MarkAsDirty("FHLStatusDate_Original"); } }
+
+    private fWBStatusDate_Original: Date;
+    public get FWBStatusDate_Original() { return this.fWBStatusDate_Original; }
+    public set FWBStatusDate_Original(newValue: Date) { if (this.fWBStatusDate_Original != newValue) { this.fWBStatusDate_Original = newValue; this.MarkAsDirty("FWBStatusDate_Original"); } }
+
+    private carrierLastStatusCode_Original: string;
+    public get CarrierLastStatusCode_Original() { return this.carrierLastStatusCode_Original; }
+    public set CarrierLastStatusCode_Original(newValue: string) { if (this.carrierLastStatusCode_Original != newValue) { this.carrierLastStatusCode_Original = newValue; this.MarkAsDirty("CarrierLastStatusCode_Original"); } }
+
+    private carrierLastStatusDate_Original: Date;
+    public get CarrierLastStatusDate_Original() { return this.carrierLastStatusDate_Original; }
+    public set CarrierLastStatusDate_Original(newValue: Date) { if (this.carrierLastStatusDate_Original != newValue) { this.carrierLastStatusDate_Original = newValue; this.MarkAsDirty("CarrierLastStatusDate_Original"); } }
+
+    private mainCarriageToPortId_Original: string;
+    public get MainCarriageToPortId_Original() { return this.mainCarriageToPortId_Original; }
+    public set MainCarriageToPortId_Original(newValue: string) { if (this.mainCarriageToPortId_Original != newValue) { this.mainCarriageToPortId_Original = newValue; this.MarkAsDirty("MainCarriageToPortId_Original"); } }
+
+    private numberOfPackages_Original: number;
+    public get NumberOfPackages_Original() { return this.numberOfPackages_Original; }
+    public set NumberOfPackages_Original(newValue: number) { if (this.numberOfPackages_Original != newValue) { this.numberOfPackages_Original = newValue; this.MarkAsDirty("NumberOfPackages_Original"); } }
+
+    private chargeableWeight_Original: number;
+    public get ChargeableWeight_Original() { return this.chargeableWeight_Original; }
+    public set ChargeableWeight_Original(newValue: number) { if (this.chargeableWeight_Original != newValue) { this.chargeableWeight_Original = newValue; this.MarkAsDirty("ChargeableWeight_Original"); } }
+
+    private grossWeight_Original: number;
+    public get GrossWeight_Original() { return this.grossWeight_Original; }
+    public set GrossWeight_Original(newValue: number) { if (this.grossWeight_Original != newValue) { this.grossWeight_Original = newValue; this.MarkAsDirty("GrossWeight_Original"); } }
+
+    private grossWeightUnitCode_Original: string;
+    public get GrossWeightUnitCode_Original() { return this.grossWeightUnitCode_Original; }
+    public set GrossWeightUnitCode_Original(newValue: string) { if (this.grossWeightUnitCode_Original != newValue) { this.grossWeightUnitCode_Original = newValue; this.MarkAsDirty("GrossWeightUnitCode_Original"); } }
+
+    private mainCarriageATD_Original: Date;
+    public get MainCarriageATD_Original() { return this.mainCarriageATD_Original; }
+    public set MainCarriageATD_Original(newValue: Date) { if (this.mainCarriageATD_Original != newValue) { this.mainCarriageATD_Original = newValue; this.MarkAsDirty("MainCarriageATD_Original"); } }
+
+
+    private mainCarriageATA_Original: Date;
+    public get MainCarriageATA_Original() { return this.mainCarriageATA_Original; }
+    public set MainCarriageATA_Original(newValue: Date) { if (this.mainCarriageATA_Original != newValue) { this.mainCarriageATA_Original = newValue; this.MarkAsDirty("MainCarriageATA_Original"); } }
+
+
+    private mainCarriageETD_Original: Date;
+    public get MainCarriageETD_Original() { return this.mainCarriageETD_Original; }
+    public set MainCarriageETD_Original(newValue: Date) { if (this.mainCarriageETD_Original != newValue) { this.mainCarriageETD_Original = newValue; this.MarkAsDirty("MainCarriageETD_Original"); } }
+
+
+    private mainCarriageETA_Original: Date;
+    public get MainCarriageETA_Original() { return this.mainCarriageETA_Original; }
+    public set MainCarriageETA_Original(newValue: Date) { if (this.mainCarriageETA_Original != newValue) { this.mainCarriageETA_Original = newValue; this.MarkAsDirty("MainCarriageETA_Original"); } }
+
+    private mainCarriageSTD_Original: Date;
+    public get MainCarriageSTD_Original() { return this.mainCarriageSTD_Original; }
+    public set MainCarriageSTD_Original(newValue: Date) { if (this.mainCarriageSTD_Original != newValue) { this.mainCarriageSTD_Original = newValue; this.MarkAsDirty("MainCarriageSTD_Original"); } }
+
+    private mainCarriageSTA_Original: Date;
+    public get MainCarriageSTA_Original() { return this.mainCarriageSTA_Original; }
+    public set MainCarriageSTA_Original(newValue: Date) { if (this.mainCarriageSTA_Original != newValue) { this.mainCarriageSTA_Original = newValue; this.MarkAsDirty("MainCarriageSTA_Original"); } }
+
+    private transshipment1ATD_Original: Date;
+    public get Transshipment1ATD_Original() { return this.transshipment1ATD_Original; }
+    public set Transshipment1ATD_Original(newValue: Date) { if (this.transshipment1ATD_Original != newValue) { this.transshipment1ATD_Original = newValue; this.MarkAsDirty("Transshipment1ATD_Original"); } }
+
+
+    private transshipment1ATA_Original: Date;
+    public get Transshipment1ATA_Original() { return this.transshipment1ATA_Original; }
+    public set Transshipment1ATA_Original(newValue: Date) { if (this.transshipment1ATA_Original != newValue) { this.transshipment1ATA_Original = newValue; this.MarkAsDirty("Transshipment1ATA_Original"); } }
+
+
+    private transshipment1ETD_Original: Date;
+    public get Transshipment1ETD_Original() { return this.transshipment1ETD_Original; }
+    public set Transshipment1ETD_Original(newValue: Date) { if (this.transshipment1ETD_Original != newValue) { this.transshipment1ETD_Original = newValue; this.MarkAsDirty("Transshipment1ETD_Original"); } }
+
+
+    private transshipment1ETA_Original: Date;
+    public get Transshipment1ETA_Original() { return this.transshipment1ETA_Original; }
+    public set Transshipment1ETA_Original(newValue: Date) { if (this.transshipment1ETA_Original != newValue) { this.transshipment1ETA_Original = newValue; this.MarkAsDirty("Transshipment1ETA_Original"); } }
+
+    private transshipment1STD_Original: Date;
+    public get Transshipment1STD_Original() { return this.transshipment1STD_Original; }
+    public set Transshipment1STD_Original(newValue: Date) { if (this.transshipment1STD_Original != newValue) { this.transshipment1STD_Original = newValue; this.MarkAsDirty("Transshipment1STD_Original"); } }
+
+
+    private transshipment1STA_Original: Date;
+    public get Transshipment1STA_Original() { return this.transshipment1STA_Original; }
+    public set Transshipment1STA_Original(newValue: Date) { if (this.transshipment1STA_Original != newValue) { this.transshipment1STA_Original = newValue; this.MarkAsDirty("Transshipment1STA_Original"); } }
+
+    private transshipment2ATD_Original: Date;
+    public get Transshipment2ATD_Original() { return this.transshipment2ATD_Original; }
+    public set Transshipment2ATD_Original(newValue: Date) { if (this.transshipment2ATD_Original != newValue) { this.transshipment2ATD_Original = newValue; this.MarkAsDirty("Transshipment2ATD_Original"); } }
+
+
+    private transshipment2ATA_Original: Date;
+    public get Transshipment2ATA_Original() { return this.transshipment2ATA_Original; }
+    public set Transshipment2ATA_Original(newValue: Date) { if (this.transshipment2ATA_Original != newValue) { this.transshipment2ATA_Original = newValue; this.MarkAsDirty("Transshipment2ATA_Original"); } }
+
+
+    private transshipment2ETD_Original: Date;
+    public get Transshipment2ETD_Original() { return this.transshipment2ETD_Original; }
+    public set Transshipment2ETD_Original(newValue: Date) { if (this.transshipment2ETD_Original != newValue) { this.transshipment2ETD_Original = newValue; this.MarkAsDirty("Transshipment2ETD_Original"); } }
+
+
+    private transshipment2ETA_Original: Date;
+    public get Transshipment2ETA_Original() { return this.transshipment2ETA_Original; }
+    public set Transshipment2ETA_Original(newValue: Date) { if (this.transshipment2ETA_Original != newValue) { this.transshipment2ETA_Original = newValue; this.MarkAsDirty("Transshipment2ETA_Original"); } }
+
+    private transshipment2STD_Original: Date;
+    public get Transshipment2STD_Original() { return this.transshipment2STD_Original; }
+    public set Transshipment2STD_Original(newValue: Date) { if (this.transshipment2STD_Original != newValue) { this.transshipment2STD_Original = newValue; this.MarkAsDirty("Transshipment2STD_Original"); } }
+
+
+    private transshipment2STA_Original: Date;
+    public get Transshipment2STA_Original() { return this.transshipment2STA_Original; }
+    public set Transshipment2STA_Original(newValue: Date) { if (this.transshipment2STA_Original != newValue) { this.transshipment2STA_Original = newValue; this.MarkAsDirty("Transshipment2STA_Original"); } }
+
+    private transshipment3ATD_Original: Date;
+    public get Transshipment3ATD_Original() { return this.transshipment3ATD_Original; }
+    public set Transshipment3ATD_Original(newValue: Date) { if (this.transshipment3ATD_Original != newValue) { this.transshipment3ATD_Original = newValue; this.MarkAsDirty("Transshipment3ATD_Original"); } }
+
+
+    private transshipment3ATA_Original: Date;
+    public get Transshipment3ATA_Original() { return this.transshipment3ATA_Original; }
+    public set Transshipment3ATA_Original(newValue: Date) { if (this.transshipment3ATA_Original != newValue) { this.transshipment3ATA_Original = newValue; this.MarkAsDirty("Transshipment3ATA_Original"); } }
+
+
+    private transshipment3ETD_Original: Date;
+    public get Transshipment3ETD_Original() { return this.transshipment3ETD_Original; }
+    public set Transshipment3ETD_Original(newValue: Date) { if (this.transshipment3ETD_Original != newValue) { this.transshipment3ETD_Original = newValue; this.MarkAsDirty("Transshipment3ETD_Original"); } }
+
+
+    private transshipment3ETA_Original: Date;
+    public get Transshipment3ETA_Original() { return this.transshipment3ETA_Original; }
+    public set Transshipment3ETA_Original(newValue: Date) { if (this.transshipment3ETA_Original != newValue) { this.transshipment3ETA_Original = newValue; this.MarkAsDirty("Transshipment3ETA_Original"); } }
+
+    private transshipment3STD_Original: Date;
+    public get Transshipment3STD_Original() { return this.transshipment3STD_Original; }
+    public set Transshipment3STD_Original(newValue: Date) { if (this.transshipment3STD_Original != newValue) { this.transshipment3STD_Original = newValue; this.MarkAsDirty("Transshipment3STD_Original"); } }
+
+
+    private transshipment3STA_Original: Date;
+    public get Transshipment3STA_Original() { return this.transshipment3STA_Original; }
+    public set Transshipment3STA_Original(newValue: Date) { if (this.transshipment3STA_Original != newValue) { this.transshipment3STA_Original = newValue; this.MarkAsDirty("Transshipment3STA_Original"); } }
+
+    private preCarriageETD_Original: Date;
+    public get PreCarriageETD_Original() { return this.preCarriageETD_Original; }
+    public set PreCarriageETD_Original(newValue: Date) { if (this.preCarriageETD_Original != newValue) { this.preCarriageETD_Original = newValue; this.MarkAsDirty("PreCarriageETD_Original"); } }
+
+
+    private preCarriageATD_Original: Date;
+    public get PreCarriageATD_Original() { return this.preCarriageATD_Original; }
+    public set PreCarriageATD_Original(newValue: Date) { if (this.preCarriageATD_Original != newValue) { this.preCarriageATD_Original = newValue; this.MarkAsDirty("PreCarriageATD_Original"); } }
+
+
+    private preCarriageETA_Original: Date;
+    public get PreCarriageETA_Original() { return this.preCarriageETA_Original; }
+    public set PreCarriageETA_Original(newValue: Date) { if (this.preCarriageETA_Original != newValue) { this.preCarriageETA_Original = newValue; this.MarkAsDirty("PreCarriageETA_Original"); } }
+
+
+    private preCarriageATA_Original: Date;
+    public get PreCarriageATA_Original() { return this.preCarriageATA_Original; }
+    public set PreCarriageATA_Original(newValue: Date) { if (this.preCarriageATA_Original != newValue) { this.preCarriageATA_Original = newValue; this.MarkAsDirty("PreCarriageATA_Original"); } }
+
+    private onCarriageETD_Original: Date;
+    public get OnCarriageETD_Original() { return this.onCarriageETD_Original; }
+    public set OnCarriageETD_Original(newValue: Date) { if (this.onCarriageETD_Original != newValue) { this.onCarriageETD_Original = newValue; this.MarkAsDirty("OnCarriageETD_Original"); } }
+
+
+    private onCarriageATD_Original: Date;
+    public get OnCarriageATD_Original() { return this.onCarriageATD_Original; }
+    public set OnCarriageATD_Original(newValue: Date) { if (this.onCarriageATD_Original != newValue) { this.onCarriageATD_Original = newValue; this.MarkAsDirty("OnCarriageATD_Original"); } }
+
+    private onCarriageETA_Original: Date;
+    public get OnCarriageETA_Original() { return this.onCarriageETA_Original; }
+    public set OnCarriageETA_Original(newValue: Date) { if (this.onCarriageETA_Original != newValue) { this.onCarriageETA_Original = newValue; this.MarkAsDirty("OnCarriageETA_Original"); } }
+
+    private onCarriageATA_Original: Date;
+    public get OnCarriageATA_Original() { return this.onCarriageATA_Original; }
+    public set OnCarriageATA_Original(newValue: Date) { if (this.onCarriageATA_Original != newValue) { this.onCarriageATA_Original = newValue; this.MarkAsDirty("OnCarriageATA_Original"); } }
+
+    private iNTTRABookingStatusCode_Original: string;
+    public get INTTRABookingStatusCode_Original() { return this.iNTTRABookingStatusCode_Original; }
+    public set INTTRABookingStatusCode_Original(newValue: string) { this.iNTTRABookingStatusCode_Original = newValue; this.MarkAsDirty(); }
+
+    private bookingConfirmedBy_Original: string;
+    public get BookingConfirmedBy_Original() { return this.bookingConfirmedBy_Original; }
+    public set BookingConfirmedBy_Original(newValue: string) { if (this.bookingConfirmedBy_Original != newValue) { this.bookingConfirmedBy_Original = newValue; this.MarkAsDirty("BookingConfirmedBy_Original"); } }   
+
+    private mAN_FromPortId_Original: string;
+    public get MAN_FromPortId_Original() { return this.mAN_FromPortId_Original; }
+    public set MAN_FromPortId_Original(newValue: string) { if (this.mAN_FromPortId_Original != newValue) { this.mAN_FromPortId_Original = newValue; this.MarkAsDirty("MAN_FromPortId_Original"); } }
+
+    private fIN_PortId_Original: string;
+    public get FIN_PortId_Original() { return this.fIN_PortId_Original; }
+    public set FIN_PortId_Original(newValue: string) { if (this.fIN_PortId_Original != newValue) { this.fIN_PortId_Original = newValue; this.MarkAsDirty("FIN_PortId_Original"); } }
+
+    private bookingConfNumber_Original: string;
+    public get BookingConfNumber_Original() { return this.bookingConfNumber_Original; }
+    public set BookingConfNumber_Original(newValue: string) { if (this.bookingConfNumber_Original != newValue) { this.bookingConfNumber_Original = newValue; this.MarkAsDirty("BookingConfNumber_Original"); } }
+
+    private mAN_CarrierNumber_Original: string;
+    public get MAN_CarrierNumber_Original() { return this.mAN_CarrierNumber_Original; }
+    public set MAN_CarrierNumber_Original(newValue: string) { if (this.mAN_CarrierNumber_Original != newValue) { this.mAN_CarrierNumber_Original = newValue; this.MarkAsDirty("MAN_CarrierNumber_Original"); } }
+
+    private tR1_ToPortId_Original: string;
+    public get TR1_ToPortId_Original() { return this.tR1_ToPortId_Original; }
+    public set TR1_ToPortId_Original(newValue: string) { if (this.tR1_ToPortId_Original != newValue) { this.tR1_ToPortId_Original = newValue; this.MarkAsDirty("TR1_ToPortId_Original"); } }
+
+    private tR2_ToPortId_Original: string;
+    public get TR2_ToPortId_Original() { return this.tR2_ToPortId_Original; }
+    public set TR2_ToPortId_Original(newValue: string) { if (this.tR2_ToPortId_Original != newValue) { this.tR2_ToPortId_Original = newValue; this.MarkAsDirty("TR2_ToPortId_Original"); } }
+
+    private tR3_ToPortId_Original: string;
+    public get TR3_ToPortId_Original() { return this.tR3_ToPortId_Original; }
+    public set TR3_ToPortId_Original(newValue: string) {
+        if (this.tR3_ToPortId_Original != newValue) {
+            this.tR3_ToPortId_Original = newValue;
+            this.MarkAsDirty("TR3_ToPortId_Original");
+        }
+    }
+   
+ 
+    private storageDays: number;
+    public get StorageDays() { return this.storageDays; }
+    public set StorageDays(newValue: number) { if (this.storageDays != newValue) { this.storageDays = newValue; this.MarkAsDirty("StorageDays"); } }
+
+
+    private warehouseReleasesIds: string;
+    public get WarehouseReleasesIds() { return this.warehouseReleasesIds; }
+    public set WarehouseReleasesIds(newValue: string) { if (this.warehouseReleasesIds != newValue) { this.warehouseReleasesIds = newValue; this.MarkAsDirty("WarehouseReleasesIds"); } }
+
+    private sLAC: string;
+    public get SLAC() { return this.sLAC; }
+    public set SLAC(newValue: string) { if (this.sLAC != newValue) { this.sLAC = newValue; this.MarkAsDirty("SLAC"); } }
 
     public OldEntityPM: ShipmentPM;
 

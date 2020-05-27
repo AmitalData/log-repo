@@ -105,7 +105,7 @@ namespace WebFreight.Web
             }
             catch (Exception errorInfo)
             {
-                string errorMessage = errorInfo.Message;
+                string errorMessage = errorInfo.Message + (errorInfo.InnerException != null ? (errorInfo.InnerException.InnerException != null ? errorInfo.InnerException.InnerException.Message : errorInfo.InnerException.Message) : "Rabaia");
                 AzureLog.SaveLogsInStorage("Send Grid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
                 //throw;
             }

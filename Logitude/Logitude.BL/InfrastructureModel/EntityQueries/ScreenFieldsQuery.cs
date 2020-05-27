@@ -45,9 +45,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Row = a.Row,
                                                     ScreenId = a.ScreenId,
                                                     Tenant = a.Tenant,
-                                                    ScreenCode = a.Screen.Code,
+                                                    ScreenCode = a.ScreenCode,
                                                     ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
-                                                    
+                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 }).ToList();
 
 
@@ -55,7 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (ScreenFieldPM field in screenfields)
             {
                 ScreenFieldPM existedField = (from a in selectedScreenFields
-                                              where a.ScreenId == field.ScreenId && a.ObjectFieldId == field.ObjectFieldId
+                                              where a.ScreenId == field.ScreenId && a.ObjectFieldCode == field.ObjectFieldCode
                                               select a).FirstOrDefault();
 
                 if (existedField != null)
@@ -88,9 +88,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          Row = a.Row,
                                                          ScreenId = a.ScreenId,
                                                          Tenant = a.Tenant,
-                                                         ScreenCode = a.Screen.Code,
+                                                         ScreenCode = a.ScreenCode,
                                                          ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
-                                                          
+                                                         ObjectFieldCode = a.ObjectFieldCode,
                                                      };
             return screenfields;
         }

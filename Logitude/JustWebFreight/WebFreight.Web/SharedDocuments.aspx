@@ -534,6 +534,7 @@
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open("../WebPages/CorrespondenceDownloadpage.aspx?securitykey=" + $.CurrentEntityKey + ":" + $.CurrentEntityId + ":" + $.CurrentCardType + ":" + $.CurrentTenant + "&DA=1");
         }
 
         function GetURL() {

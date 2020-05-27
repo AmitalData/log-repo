@@ -59,7 +59,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;411aa29b-4cba-42a1-93ab-c882c354369e&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -194,7 +196,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -659,7 +661,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;c1886320-f758-4c8e-8bce-fb920b8e1bcc&quot;"
     FieldName="&quot;PackageTypeCode&quot;"
@@ -671,7 +674,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.PackingType&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1307,14 +1310,19 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ConsignmentPackage&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1324,10 +1332,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ConsignmentPackage&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1335,8 +1344,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

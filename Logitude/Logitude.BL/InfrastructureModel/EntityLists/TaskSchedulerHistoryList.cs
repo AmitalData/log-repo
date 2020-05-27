@@ -25,5 +25,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string LogFirstLine { get; set; }
         public double Duration { get; set; }
 
+        public string LogDocumentId { get; set; }
     }
 }

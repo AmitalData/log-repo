@@ -5,6 +5,7 @@ import {AppTool, DateTool} from '../Tools';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { BaseComponent } from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DWObjectFieldExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 export class DWQueryBuilderHelper   {
 
@@ -31,7 +32,7 @@ export class DWQueryBuilderHelper   {
     public FillAllFactFields(FactTableCode: string) {
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         if (window.FactFields.length == 0)
-            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(FactTableCode).subscribe(Result => {
+            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(FactTableCode).subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 Result.Result.forEach((field) => {
                     if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) { 
@@ -151,6 +152,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
             this.IsCustom = DWObjectField.IsCustom;
+            this.CustomPickListCode = DWObjectField.CustomPickListCode;
 
             if (DWObjectField.FilterItems.length == 0) {
                 this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
@@ -234,6 +236,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private isCustom: boolean;
     public get IsCustom() { return this.isCustom; }
     public set IsCustom(newValue: boolean) { this.isCustom = newValue; }
+
+    
+    private customPickListCode: string;
+    public get CustomPickListCode() { return this.customPickListCode; }
+    public set CustomPickListCode(newValue: string) { this.customPickListCode = newValue; }
 
 
     private name: string;
@@ -509,9 +516,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
     //    var _DWObjectTablePMService = new DWObjectTablePMService();
     //    var _DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
     //    var ObsList = [];
-    //    _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe(myResult => {
+    //    _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe((myResult:any) => {
     //        if (!myResult.HasError) {
-    //            _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
+    //            _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
     //                if (!Result.HasError) {
     //                    Result.Result.forEach((field) => {
     //                        if (field.DisplayInQueryBuilder == true) {

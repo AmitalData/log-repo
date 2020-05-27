@@ -8,7 +8,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuoteSettingsComponent.html',
 })
 
@@ -50,7 +50,7 @@ export class QuoteSettingsComponent extends BaseComponent {
                     else {
                         this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "F")[0];
                     }
-
+                    
                     this.IsResourcesReady = true;
                 }
             });
@@ -127,6 +127,13 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
+    get CopyExchangeRates() { return this.EntityPM.CopyExchangeRates; }
+    set CopyExchangeRates(value: boolean) {
+        if (this.EntityPM.CopyExchangeRates != value) {
+            this.EntityPM.CopyExchangeRates = value;
+        }
+    }
+
     get EditMainCarriage() { return this.EntityPM.EditMainCarriage; }
     set EditMainCarriage(value: boolean) {
         if (this.EntityPM.EditMainCarriage != value) {
@@ -138,6 +145,13 @@ export class QuoteSettingsComponent extends BaseComponent {
     set IsSaleAsCostCurrency(value: boolean) {
         if (this.EntityPM.IsSaleAsCostCurrency != value) {
             this.EntityPM.IsSaleAsCostCurrency = value;
+        }
+    }
+
+    get AutomaticallyCloseDays() { return this.EntityPM.AutomaticallyCloseDays; }
+    set AutomaticallyCloseDays(value: number) {
+        if (this.EntityPM.AutomaticallyCloseDays != value) {
+            this.EntityPM.AutomaticallyCloseDays = value;
         }
     }
 
@@ -169,6 +183,14 @@ export class QuoteSettingsComponent extends BaseComponent {
 
         if (isAnyOptionChecked == false) {
             errors.push("One Option at least  should be selected");
+        }
+
+        if (this.AutomaticallyCloseDays == 0) {
+            errors.push("Automatically Close Days field should not be Zero");
+        }
+
+        if (this.AutomaticallyCloseDays == null) {
+            errors.push("Automatically Close Days field is required");
         }
 
         this.ValidationErrorsList = errors;
@@ -235,6 +257,10 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
 
         else if (this.EditMainCarriage) {
+            myResult = true;
+        }
+
+        else if (this.AutomaticallyCloseDays != null) {
             myResult = true;
         }
 

@@ -258,6 +258,16 @@ namespace Logitude.Accounting.Data.Repositories
             return rv;
         }
 
+        public List<int> GetActiveTenantPerYear(int year)
+        {
+            var q=
+            context
+                .GLAccountTotalByMonths
+                .Where(r => r.Year == year)
+                .Select(r => r.Tenant).Distinct();
+            return q.ToList();
+             
+        }
 
 
 

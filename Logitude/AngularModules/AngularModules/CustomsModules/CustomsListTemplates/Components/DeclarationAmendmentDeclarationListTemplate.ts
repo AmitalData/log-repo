@@ -19,7 +19,6 @@ import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/Decl
  import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationAmendmentListTemplate.html',
 })
 

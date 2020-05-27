@@ -107,9 +107,29 @@ export class ARPaymentPM {
     public set AmountInProfitCurrency(newValue: number) { if (this.amountInProfitCurrency != newValue) { this.amountInProfitCurrency = newValue; this.MarkAsDirty("AmountInProfitCurrency"); } }
        
 	 
+    private accountingCancelationDate: Date;
+    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
+    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
+       
+	 
+    private cancelationNotes: string;
+    public get CancelationNotes() { return this.cancelationNotes; }
+    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
+       
+	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
+       
+	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
     private billToId: string;
@@ -197,6 +217,11 @@ export class ARPaymentPM {
     public set BillToName(newValue: string) { if (this.billToName != newValue) { this.billToName = newValue; this.MarkAsDirty("BillToName"); } }
        
 	 
+    private billToLocalName: string;
+    public get BillToLocalName() { return this.billToLocalName; }
+    public set BillToLocalName(newValue: string) { if (this.billToLocalName != newValue) { this.billToLocalName = newValue; this.MarkAsDirty("BillToLocalName"); } }
+       
+	 
     private paymentCurrencyCode: string;
     public get PaymentCurrencyCode() { return this.paymentCurrencyCode; }
     public set PaymentCurrencyCode(newValue: string) { if (this.paymentCurrencyCode != newValue) { this.paymentCurrencyCode = newValue; this.MarkAsDirty("PaymentCurrencyCode"); } }
@@ -230,6 +255,11 @@ export class ARPaymentPM {
     private openAmount: number;
     public get OpenAmount() { return this.openAmount; }
     public set OpenAmount(newValue: number) { if (this.openAmount != newValue) { this.openAmount = newValue; this.MarkAsDirty("OpenAmount"); } }
+       
+	 
+    private openAmountInLocalCurrency: number;
+    public get OpenAmountInLocalCurrency() { return this.openAmountInLocalCurrency; }
+    public set OpenAmountInLocalCurrency(newValue: number) { if (this.openAmountInLocalCurrency != newValue) { this.openAmountInLocalCurrency = newValue; this.MarkAsDirty("OpenAmountInLocalCurrency"); } }
        
 	 
     private chequeOrPaymentRef: string;
@@ -438,6 +468,11 @@ export class ARPaymentPM {
     public set BankAccountName(newValue: string) { if (this.bankAccountName != newValue) { this.bankAccountName = newValue; this.MarkAsDirty("BankAccountName"); } }
        
 	 
+    private bankAccountNumber: string;
+    public get BankAccountNumber() { return this.bankAccountNumber; }
+    public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
+       
+	 
     private metodoPagoCode: string;
     public get MetodoPagoCode() { return this.metodoPagoCode; }
     public set MetodoPagoCode(newValue: string) { if (this.metodoPagoCode != newValue) { this.metodoPagoCode = newValue; this.MarkAsDirty("MetodoPagoCode"); } }
@@ -461,11 +496,6 @@ export class ARPaymentPM {
     private selloPago: string;
     public get SelloPago() { return this.selloPago; }
     public set SelloPago(newValue: string) { if (this.selloPago != newValue) { this.selloPago = newValue; this.MarkAsDirty("SelloPago"); } }
-       
-	 
-    private branchName: string;
-    public get BranchName() { return this.branchName; }
-    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
     private approvedDate: Date;
@@ -506,6 +536,21 @@ export class ARPaymentPM {
     private isExternalEntity: boolean;
     public get IsExternalEntity() { return this.isExternalEntity; }
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
+       
+	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private journalId: string;
+    public get JournalId() { return this.journalId; }
+    public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
      
@@ -559,7 +604,72 @@ export class ARPaymentPM {
         }
     }
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
- 
+     private isPaymentNumberManuallySet: boolean;
+    public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
+    public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
+       
+	 
+    private field1: CustomFieldClass;
+    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "ARPayment");} return this.field1; }
+    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+       
+	 
+    private field2: CustomFieldClass;
+    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "ARPayment");} return this.field2; }
+    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+       
+	 
+    private field3: CustomFieldClass;
+    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "ARPayment");} return this.field3; }
+    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+       
+	 
+    private field4: CustomFieldClass;
+    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "ARPayment");} return this.field4; }
+    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+       
+	 
+    private field5: CustomFieldClass;
+    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "ARPayment");} return this.field5; }
+    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+       
+	 
+    private field6: CustomFieldClass;
+    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "ARPayment");} return this.field6; }
+    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+       
+	 
+    private field7: CustomFieldClass;
+    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "ARPayment");} return this.field7; }
+    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+       
+	 
+    private field8: CustomFieldClass;
+    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "ARPayment");} return this.field8; }
+    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+       
+	 
+    private field9: CustomFieldClass;
+    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "ARPayment");} return this.field9; }
+    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+       
+	 
+    private field10: CustomFieldClass;
+    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "ARPayment");} return this.field10; }
+    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
+    private gLAccountCurrencyCode: string;
+    public get GLAccountCurrencyCode() { return this.gLAccountCurrencyCode; }
+    public set GLAccountCurrencyCode(newValue: string) { if (this.gLAccountCurrencyCode != newValue) { this.gLAccountCurrencyCode = newValue; this.MarkAsDirty("GLAccountCurrencyCode"); } }
+       
+	 
+    private paymentCurrencySign: string;
+    public get PaymentCurrencySign() { return this.paymentCurrencySign; }
+    public set PaymentCurrencySign(newValue: string) { if (this.paymentCurrencySign != newValue) { this.paymentCurrencySign = newValue; this.MarkAsDirty("PaymentCurrencySign"); } }
+       
+	 
+
     public OldEntityPM: ARPaymentPM;
 		
     public IsDirty: boolean;

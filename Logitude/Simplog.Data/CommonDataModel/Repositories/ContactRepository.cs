@@ -124,8 +124,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Contact entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             
@@ -144,12 +143,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
-                    else
-                    {
-                      
-                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                    }
+                    
+              
                 }
                 else
                 {
@@ -168,10 +163,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 string entityName = "Contact" + id + tenant;
                 Contact entity;
+             
+
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -190,12 +186,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
-                    else
-                    {
-                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                    }
+                    
+                
                 }
                 else
                 {
@@ -257,8 +249,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Contact entity;
                 if (getFromCache)
                 {
-                    if (HttpContext.Current != null)
-                    {
+                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -293,19 +284,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
 
                         }
-                    }
-                    else
-                    {
-                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        entity = (from record in context.Contacts where record.Email == email && record.Tenant == tenant select record).FirstOrDefault();
-
-                        if (entity == null)
-                        {
-                            entity = (from a in context.Contacts
-                                      where a.Email == email && a.Tenant == 0
-                                      select a).FirstOrDefault();
-                        }
-                    }
+                    
+              
 
 
                    

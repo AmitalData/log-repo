@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Item Government Procedure Type&quot;"
-  Code="&quot;23e8&quot;"
-  Name="&quot;Customs.ItemGovernmentProcedureType Query Group&quot;"
+  Code="&quot;IGPT&quot;"
+  Name="&quot;Customs.ItemGovernmentProcedureType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;40021822-6378-4efd-bcfc-e24ad8050ed4&quot;"
     FieldName="&quot;Code&quot;"
@@ -308,21 +310,164 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1100101&quot;"
+      SearchFields="&quot;1100101,יבוא מוחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;יבוא מוחזר&quot;" />
+    <Record
+      Code="&quot;1100103&quot;"
+      SearchFields="&quot;1100103,(רכב (יצוא&quot;"
+      Inactive="false"
+      LocalName="&quot;(רכב (יצוא&quot;" />
+    <Record
+      Code="&quot;1100105&quot;"
+      SearchFields="&quot;1100105,מוחלט&quot;"
+      Inactive="false"
+      LocalName="&quot;מוחלט&quot;" />
+    <Record
+      Code="&quot;1100106&quot;"
+      SearchFields="&quot;1100106,חקלאות&quot;"
+      Inactive="false"
+      LocalName="&quot;חקלאות&quot;" />
+    <Record
+      Code="&quot;1100107&quot;"
+      SearchFields="&quot;1100107,יצוא בקונסיגנציה&quot;"
+      Inactive="false"
+      LocalName="&quot;יצוא בקונסיגנציה&quot;" />
+    <Record
+      Code="&quot;2100102&quot;"
+      SearchFields="&quot;2100102,יצוא זמני&quot;"
+      Inactive="false"
+      LocalName="&quot;יצוא זמני&quot;" />
+    <Record
+      Code="&quot;4100101&quot;"
+      SearchFields="&quot;4100101,פט&quot;מ&quot;"
+      Inactive="false"
+      LocalName="&quot;פט&quot;מ&quot;" />
+    <Record
+      Code="&quot;4100103&quot;"
+      SearchFields="&quot;4100103,רכב&quot;"
+      Inactive="false"
+      LocalName="&quot;רכב&quot;" />
+    <Record
+      Code="&quot;4100105&quot;"
+      SearchFields="&quot;4100105,זכאות&quot;"
+      Inactive="false"
+      LocalName="&quot;זכאות&quot;" />
+    <Record
+      Code="&quot;4120101&quot;"
+      SearchFields="&quot;4120101,יצוא מוחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;יצוא מוחזר&quot;" />
+    <Record
+      Code="&quot;5100101&quot;"
+      SearchFields="&quot;5100101,הישבון&quot;"
+      Inactive="false"
+      LocalName="&quot;הישבון&quot;" />
+    <Record
+      Code="&quot;5100102&quot;"
+      SearchFields="&quot;5100102,יבוא זמני&quot;"
+      Inactive="false"
+      LocalName="&quot;יבוא זמני&quot;" />
+    <Record
+      Code="&quot;8100102&quot;"
+      SearchFields="&quot;8100102,(יבוא זמני (שטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;(יבוא זמני (שטעון&quot;" />
+    <Record
+      Code="&quot;8100103&quot;"
+      SearchFields="&quot;8100103,(רכב (שיטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;(רכב (שיטעון&quot;" />
+    <Record
+      Code="&quot;8100105&quot;"
+      SearchFields="&quot;8100105,(מוחלט (שטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;(מוחלט (שטעון&quot;" />
+    <Record
+      Code="&quot;8100106&quot;"
+      SearchFields="&quot;8100106,(חקלאות (שטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;(חקלאות (שטעון&quot;" />
+    <Record
+      Code="&quot;8100111&quot;"
+      SearchFields="&quot;8100111,(חומרים מסוכנים (שטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;(חומרים מסוכנים (שטעון&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ItemGovernmentProcedureType&quot;"
+    ObjectTableName="&quot;Customs.ItemGovernmentProcedureType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ItemGovernmentProcedureType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;IGPT&quot;"
+    QueryGroupName="&quot;Customs.ItemGovernmentProcedureType&quot;"
+    LocalTextCode="&quot;תהליכים לסחורה&quot;"
+    TextCode="&quot;Item Government Procedure Types&quot;"
+    TextCodeCode="&quot;Customs.ItemGovernmentProcedureType.Q.ItemGovernmentProcedureTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ITEMGOVERNMENTPROCEDURETYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ItemGovernmentProcedureType.Features.ItemGovernmentProcedureTypes&quot;"
+    FeatureDefaultText="&quot;Item Government Procedure Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ItemGovernmentProcedureType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ItemGovernmentProcedureType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ItemGovernmentProcedureType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ItemGovernmentProcedureType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ItemGovernmentProcedureType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ItemGovernmentProcedureType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

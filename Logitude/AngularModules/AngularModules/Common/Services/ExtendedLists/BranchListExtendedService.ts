@@ -1,10 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-
-
-import {Observable} from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
 
@@ -13,10 +10,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 export class BranchListExtendedService {
 
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BranchListExtended';
     }
 
@@ -25,14 +22,14 @@ export class BranchListExtendedService {
     GetAllBranchesByTenant(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 

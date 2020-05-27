@@ -49,7 +49,7 @@ namespace Logitude.CRM.Data.EntityMapping
 
             this.Property(t => t.SeverityId).HasColumnName("SeverityId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Subject).HasColumnName("Subject").IsRequired().HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Subject).HasColumnName("Subject").IsRequired().HasMaxLength(256).IsUnicode(true);
 
             this.Property(t => t.TicketTypeId).HasColumnName("TicketTypeId").HasMaxLength(15).IsUnicode(false);
 
@@ -150,6 +150,21 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.SLAId).HasColumnName("SLAId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SupportMailboxId).HasColumnName("SupportMailboxId").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.LastCorrespondence).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.LastCorrespondence).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.LastCorrespondence).HasColumnName("LastCorrespondence").IsUnicode(true);
         }
     }
 }

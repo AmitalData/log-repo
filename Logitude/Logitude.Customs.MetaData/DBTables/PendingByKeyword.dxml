@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="PendingByKeywords"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CourierPendingReasonCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="KeywordsList"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CourierPendingReasonCode"
+    ReferencedTable="CourierPendingReasons"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

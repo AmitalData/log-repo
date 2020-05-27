@@ -49,7 +49,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        VatTypeId = a.VatTypeId,
                        VATPercent = a.VatPercent,
                        VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
-                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),                        
+                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"), 
+                       IsRegionalTax = a.IsRegionalTax,
                    };
         }
 
@@ -67,6 +68,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                            VATPercent = entity.VatPercent,
                                                            VatTypeId = entity.VatTypeId,
                                                            ARInvoiceId = entity.ARInvoiceId,
+                                                           IsRegionalTax = entity.IsRegionalTax,
                                                        };
             return result;
         }
@@ -93,6 +95,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         VATPercent = a.VatPercent,
                         VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
                         VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                        IsRegionalTax = a.IsRegionalTax,
                     }).ToList();
         }
 

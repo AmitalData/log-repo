@@ -33,4 +33,5 @@ export class UserArgs {
 export class UserLicenseArgs {
     public AllUserLicenses: any[];
     public AllPackages: any[];
+    public ActiveNotAdditionalUsersCount: number
 }

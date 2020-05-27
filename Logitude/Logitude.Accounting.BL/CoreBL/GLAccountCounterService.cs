@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             FillGLAccountChartOfAccountCode(gLAccountPM);
 
-            string prefix = gLAccountPM.ChartOfAccountsTypeCode + gLAccountPM.ChartOfAccountsCode;
+            string prefix = gLAccountPM.ChartOfAccountsCode; // gLAccountPM.ChartOfAccountsTypeCode + WI 58074
             string displayNumber = GetNewDisplayNumber(prefix);
             return displayNumber;
         }

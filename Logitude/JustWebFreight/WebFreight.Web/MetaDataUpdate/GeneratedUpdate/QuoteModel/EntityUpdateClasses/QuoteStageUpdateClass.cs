@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteStageUpdateClass
-   {  
+   {  		
+		public const string HashString = "4cbd8ca4928e8226f0e90c88038b7a1e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,13 +84,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             {
 			
 	             				    ObjectTableName =  "QuoteStage",
+			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteStages",
 			      				    ObjectTableSingular =  "Quote Stage",
 			      				    ObjectTablePlural =  "Quote Stages",
+			      				    DescriptionDefaultText =  "Define the stages for handling quotes.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
@@ -116,15 +120,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    Code =  "QSQG",
 			      				    Name =  "Quote Stage",
 			      				    GenerateDomainService =  false,
-			      				    HasMenuButtons =  false,
-			      				    CustomFieldsCount =  0,
-			      				    SearchFields =  "QuoteStage,QuoteStages,,Id,",
 			      				    ClientModuleName =  "Quote",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "QuoteStage,QuoteStages,,Id,",
+			      				    HashString =  QuoteStageUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -136,7 +147,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -156,15 +169,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Code",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeLabel",
+					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -173,19 +193,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "Code",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Code",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +211,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -217,15 +233,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Name",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameLabel",
+					  						ListFieldLable =  "NameListLable",
 					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -234,19 +257,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "Name",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Name",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,9 +273,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -278,15 +297,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "MaxDays",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MaxDays",
 					  						DefaultText =  "Max days",
-					  						ListFieldLable =  "MaxDaysLabel",
+					  						ListFieldLable =  "MaxDaysListLable",
 					  						ListLableDefaultText =  "Max days",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -295,19 +321,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "MaxDays",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "MaxDays",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -319,7 +339,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -339,7 +361,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -353,19 +382,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "SearchFields",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "SearchFields",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -375,9 +398,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -397,15 +422,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdateDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						ListFieldLable =  "UpdateDateLabel",
+					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -414,19 +446,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "UpdateDate",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "UpdateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -439,7 +465,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -459,8 +487,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdatedByUserId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -474,19 +509,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "UpdatedByUserId",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "UpdatedByUserId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -498,7 +527,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  60,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -518,8 +549,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdatedByUserName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -535,19 +573,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "UpdatedByUserName",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "UpdatedByUserName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -557,9 +589,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -579,15 +613,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Rank",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Rank",
 					  						DefaultText =  "Rank",
-					  						ListFieldLable =  "RankLabel",
+					  						ListFieldLable =  "RankListLable",
 					  						ListLableDefaultText =  "Rank",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -596,19 +637,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "Rank",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "Rank",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -620,7 +655,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -640,8 +677,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "QuoteStage",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "InActive",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
@@ -657,67 +701,80 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "InActive",
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, queryGroupRepository);
+	        QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup QuoteStageQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a32b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable QuoteStageObjectTable = objectTables.ContainsKey("QuoteStage") ? objectTables["QuoteStage"] : null;
+            if (QuoteStageObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable QuoteStageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> QuoteStageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();   
+                QuoteStageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode QuoteStageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = @"Quote Stages",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Q.AllQuery", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.AllQuoteStages", NameTextCodeDefaultText = "All Quote Stages", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode QuoteStageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = @"Quote Stages",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature QuoteStageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Q.AllQuery", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.AllQuoteStages", NameTextCodeDefaultText = "All Quote Stages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,QuoteStageObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, NameTextCodeCode = QuoteStageTextCode_0.Code, ObjectTableName = "QuoteStage", Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id,FeatureUniqeCode= QuoteStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllQuoteStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteStage.Code" , ColumnWidth = 60 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "QuoteStage.Name" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "MaxDays" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "QuoteStage.MaxDays" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Rank" && d.ObjectTableId == QuoteStageObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllQuoteStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "QuoteStage.Rank" , ColumnWidth = 70 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> QuoteStageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();
+		   //List<ObjectField> QuoteStageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();
 		       
 	      
 
 	         Screen QuoteStageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteStage.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteStageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = QuoteStageHeaderScreenScreen0.Id,ScreenCode = QuoteStageHeaderScreenScreen0.Code, ObjectFieldCode = "QuoteStage.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    QuoteStageObjectTable.HeaderScreenId = QuoteStageHeaderScreenScreen0.Id;
+		    QuoteStageObjectTable.HeaderScreenCode = QuoteStageHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -728,19 +785,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode QuoteStageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.General", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteStageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.General", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteStageObjectTable);
  
                  
 			   TextCode QuoteStageEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.Events", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteStageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.Events", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteStageObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSGN",HtmlComponentName = "QuoteStageGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/QuoteStage/QuoteStageGeneralTabComponent", FeatureId = QuoteStageGeneralFeature_TH0.Id, ControlPath = "Simplog.QuoteLib.Views.QuoteStage.StageGeneralTabControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSGN",HtmlComponentName = "QuoteStageGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/QuoteStage/QuoteStageGeneralTabComponent", FeatureId = QuoteStageGeneralFeature_TH0.Id,FeatureUniqeCode = QuoteStageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.QuoteStage.StageGeneralTabControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageGeneralTextCode_TH0.Id, TabNameTextCodeCode = QuoteStageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteStageEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteStageEventsFeature_TH1.Id,FeatureUniqeCode = QuoteStageEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteStageObjectTable.Id, TabNameTextCodeId = QuoteStageEventsTextCode_TH1.Id, TabNameTextCodeCode = QuoteStageEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -748,14 +805,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    {  
 		   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature QuoteStageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.PackageFeature", NameTextCodeDefaultText = "QuoteStage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature QuoteStageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.PackageFeature", NameTextCodeDefaultText = "QuoteStage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature QuoteStageFeature_QuoteStage_M_QuoteStages = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.M.QuoteStages", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.QuoteStages", NameTextCodeDefaultText = @"Quote Stages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteStageFeature_QuoteStage_M_QuoteStages = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.M.QuoteStages", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.QuoteStages", NameTextCodeDefaultText = @"Quote Stages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
 
    
 	    
@@ -767,10 +824,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPQS",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Quote Stage Updated",
                 EnglishName =  "Quote Stage Updated",
+                LocalName =  "Quote Stage Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -786,10 +843,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRQS",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

@@ -96,5 +96,13 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsSystemAdditionalPrintingFields { get; set; }
         [DataMember]
         public string PrintingFieldsScreenCode { get; set; }
+
+
+        [DataMember]
+        public bool AddedManually { get; set; }
+
+
+
+
     }
 }

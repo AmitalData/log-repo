@@ -469,49 +469,55 @@ namespace WebFreight.Web.Helpers
 
         private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs)
         {
-            var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
-            if (documenttype != null)
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-                if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id);
+                if (documenttype != null)
                 {
+                    messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
+                    if (!string.IsNullOrEmpty(messageArgs.HtmlTemplate))
+                    {
 
-                    messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
-                    return messageArgs.HtmlTemplate;
+                        messageArgs.HtmlTemplate = ResolveInvitationvariable(messageArgs.HtmlTemplate, contact, password);
+                        return messageArgs.HtmlTemplate;
+                    }
+
+
                 }
-               
 
+
+                string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
+                string emailMessage = "";
+                StringBuilder HtmlTemplate = new StringBuilder();
+                HtmlTemplate.Append("<p style='text-align:left'>");
+                HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to connect to their operation system to check on your shipments ");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("To view your shipments online, Please use the following:");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);//System.Configuration.ConfigurationManager.AppSettings.Get("LogitudeURL"));
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<b>Password: </b>" + password);
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("<br />");
+                HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated on-line on your shipments, statuses, documents and more");
+
+
+                HtmlTemplate.Append("<br /><br />");
+                HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
+                HtmlTemplate.Append("<br /><br />");
+
+                HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
+                // HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+                emailMessage = HtmlTemplate.ToString();
+
+                scope.Complete();
+
+                return emailMessage;
             }
-
-          
-            string logo = GetLogoInvitation(tenantCompany.Id, "Logitude");
-            string emailMessage = "";
-            StringBuilder HtmlTemplate = new StringBuilder();
-            HtmlTemplate.Append("<p style='text-align:left'>");
-            HtmlTemplate.Append("Hello " + contact.EnglishName + ",");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(logedContact.EnglishName + " from " + tenantCompany.Company + " is sending you this invitation to connect to their operation system to check on your shipments ");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("To view your shipments online, Please use the following:");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Address: " + LogitudeSettings.LogitudeURL);//System.Configuration.ConfigurationManager.AppSettings.Get("LogitudeURL"));
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Username: </b>" + contact.Email);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<b>Password: </b>" + password);
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated on-line on your shipments, statuses, documents and more");
-
-
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("For more information please visit us at <a href='http://www.logitudeworld.com'>www.logitudeworld.com<a>");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
-            // HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
-            emailMessage = HtmlTemplate.ToString();
-            return emailMessage;
         }
 
         private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs)

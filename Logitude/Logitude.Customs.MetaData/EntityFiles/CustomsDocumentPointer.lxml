@@ -31,7 +31,9 @@
   DefaultText="&quot;Customs Document Pointer&quot;"
   Code="&quot;ea3a&quot;"
   Name="&quot;Customs.CustomsDocumentPointer Query Group&quot;"
-  GenerateDomainService="false">
+  GenerateDomainService="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;bc71462a-691c-48ae-a5c5-55ddb50249ea&quot;"
     FieldName="&quot;Id&quot;"
@@ -75,7 +77,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -123,7 +125,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1058,21 +1060,47 @@
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="false"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Customs.CustomsDocumentPointer.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+  </AdditionalFeatures>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsDocumentPointer&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsDocumentPointer&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

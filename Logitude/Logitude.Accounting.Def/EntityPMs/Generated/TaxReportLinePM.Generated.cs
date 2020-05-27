@@ -528,6 +528,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime taxReportDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime TaxReportDate  
+	   {
+	    
+	     get
+		{
+		   return taxReportDate;
+		 }
+		 set
+		 {
+		   if(taxReportDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportDate",OldValue=taxReportDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   taxReportDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool isExternalLine ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExternalLine  
+	   {
+	    
+	     get
+		{
+		   return isExternalLine;
+		 }
+		 set
+		 {
+		   if(isExternalLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalLine",OldValue=isExternalLine,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExternalLine=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalInvoiceAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalInvoiceAmount  
+	   {
+	    
+	     get
+		{
+		   return totalInvoiceAmount;
+		 }
+		 set
+		 {
+		   if(totalInvoiceAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmount",OldValue=totalInvoiceAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalInvoiceAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

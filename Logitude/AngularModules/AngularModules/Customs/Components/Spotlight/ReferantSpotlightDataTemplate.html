@@ -1,6 +1,6 @@
 <div style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
     <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
-        <div class="MediaFillRelative" style=" overflow-x: auto;overflow-y: hidden;">
+        <div class="MediaFillRelative" style=" overflow-x: auto;overflow-y: hidden;z-index:0;">
             <table style="width:80%;">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td colspan="2">
@@ -22,7 +22,8 @@
                                                 [SelectedRow]="SelectedRow">
                                 <!-- ExceptionReasonsCode -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'">
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.ShowCode">
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ExceptionReasonsCode}}</span>
                                         </div>
@@ -38,9 +39,11 @@
                                             </LogLov>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [width]="'130'" [Editable]="true" [Alignment]="'center'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ExceptionRemarks}}</span>
                                         </div>
@@ -49,11 +52,13 @@
                                                         [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Status --> <!-- [Text]="item.Status" -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.Status ' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                     <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.SelectedItemStatus.Value}}</span>
                                         </div>
@@ -61,9 +66,11 @@
                                             <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
                                 <log-column [width]="'75'" [Editable]="true" [Alignment]="'center'" [visibility]="'collapsed'">
-                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                     <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                                         <div style="        width: 30px;
         float: right;
         height: 20px;
@@ -71,6 +78,7 @@
                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
                             </logitude-edit-grid>
 

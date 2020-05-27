@@ -36,12 +36,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     return textCodeCode;
                 }
             );
-            JournalValidator.OverrideITextCodeTranslator = textCodeTranslatorFake;
+            JournalValidatorNotStatic.OverrideITextCodeTranslator = textCodeTranslatorFake;
         }
         [TestCleanup]
         public void TestCleanup1()
         {
-            JournalValidator.OverrideITextCodeTranslator = null;
+            JournalValidatorNotStatic.OverrideITextCodeTranslator = null;
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //var actual = Validator.TryValidateObject(entityPM, new ValidationContext(entityPM), validationResults);
 
             System.ComponentModel.DataAnnotations.ValidationContext validationcontext = new System.ComponentModel.DataAnnotations.ValidationContext(entityPM);
-            JournalValidator.OverrideGetLoggedContactFunc =
+            JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                     new Func<int, BL.CommonDataModel.EntityPMs.ContactPM>(
                         (tenant) => new BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true }
                      );
@@ -73,7 +73,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
             finally
             {
-                JournalValidator.OverrideGetLoggedContactFunc = null;
+                JournalValidatorNotStatic.OverrideGetLoggedContactFunc = null;
             }
             
         }
@@ -1452,9 +1452,25 @@ namespace Logitude.UnitTest.Accounting.UniTests
         private static ValidationContext GetValidationContext(JournalPM entityPM, AccountingPeriodPM MyAccountingPeriodPM = null, bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false)
         {
 
+
+            var percentagesQuery = new List<VatTypePercentagePM>()
+                {
+                    new  VatTypePercentagePM(){ Tenant=entityPM.Tenant , FromDate=new DateTime(2008,1,1)  , Percentage=18}
+
+                };
+
+
+
+            var fakeAccountingSettingResolver = A.Fake<AccountingSettingResolver>(opt => opt.CallsBaseMethods());
+            A.CallTo(() => fakeAccountingSettingResolver.GetAccountingVatList(entityPM.Tenant)).
+                Returns(percentagesQuery);
+
+
             MyAccountingPeriodPM = MyAccountingPeriodPM ?? new AccountingPeriodPM() { Year = 2016, ClosedMonth = 1, OpenMonth = 9 ,PeriodTypeCode="1"  };
             //string journalNumber = "";
             IJournalValidatorContextDataProvider myStubIJournalValidatorContextDataProvider = A.Fake<IJournalValidatorContextDataProvider>( );
+            IExternalReconcileDataProvider myIExternalReconcileDataProvider = A.Fake<IExternalReconcileDataProvider>();
+
             
             {
                 A.CallTo(() =>myStubIJournalValidatorContextDataProvider.GetGLAccount(A<string>.Ignored,A<int>.Ignored))
@@ -1545,11 +1561,14 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             DateTime? dateTimeUtcNow = new DateTime(2017, 01, 12); 
             var myFullAccountingSettingPM = new FullAccountingSettingPM();
+            
             var myNewJournalValidatorContext = AccountingValidationContextServiceProvider
                 .NewJournalValidatorContext(
                 entityPM, 
                 AccountingPeriodList, 
                 myStubIJournalValidatorContextDataProvider,
+                myIExternalReconcileDataProvider,
+                fakeAccountingSettingResolver,
                 myFullAccountingSettingPM ,
                 SuppressCheckGLAccountIsMultiCurrencyWI40640,
                 dateTimeUtcNow);

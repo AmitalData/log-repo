@@ -41,8 +41,8 @@
   DefaultText="&quot;Declaration Cargo Split&quot;"
   NewButtonLocalDefaultText="&quot;בקשת פיצול מטען חדשה&quot;"
   NewButtonDefaultText="&quot;בקשת פיצול מטען חדשה&quot;"
-  Code="&quot;f116&quot;"
-  Name="&quot;Customs.DeclarationCargoSplit Query Group&quot;"
+  Code="&quot;DECS&quot;"
+  Name="&quot;Customs.DeclarationCargoSplit&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -61,7 +61,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;047c5fe0-324a-4d57-ad84-21a26a8a99d9&quot;"
     FieldName="&quot;Id&quot;"
@@ -117,7 +119,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -186,7 +188,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -1607,14 +1609,259 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+  </AdditionalFeatures>
+  <Query
+    Code="&quot;OpenCargoSplits&quot;"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;DECS&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    LocalTextCode="&quot;בקשות פיצול מטען פתוחות&quot;"
+    TextCode="&quot;Open Cargo Splits&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.OpenCargoSplits&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;OPENCARGOSPLITS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.OpenDeclarationCargoSplits&quot;"
+    FeatureDefaultText="&quot;Open Declaration Cargo Splits&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ActionTypeName&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestReasonName&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ResponseStatusName&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="9"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;OpenCargoSplits&quot;" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenCargoSplits&quot;"
+        IndexOrder="0"
+        IsPredefined="true"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        PredefinedValue="&quot;false&quot;" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedCargoSplits&quot;"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    IndexOrder="1"
+    QueryGroupCode="&quot;DECS&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    LocalTextCode="&quot;בקשות פיצול מטען סגורות&quot;"
+    TextCode="&quot;Closed Cargo Splits&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.ClosedCargoSplits&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CLOSEDCARGOSPLITS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.ClosedDeclarationCargoSplits&quot;"
+    FeatureDefaultText="&quot;Closed Declaration Cargo Splits&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ActionTypeName&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestReasonName&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ResponseStatusName&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="9"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;ClosedCargoSplits&quot;" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedCargoSplits&quot;"
+        IndexOrder="0"
+        IsPredefined="true"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        PredefinedValue="&quot;true&quot;" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;AllCargoSplits&quot;"
+    ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.DeclarationCargoSplit&quot;"
+    IndexOrder="2"
+    QueryGroupCode="&quot;DECS&quot;"
+    QueryGroupName="&quot;Customs.DeclarationCargoSplit&quot;"
+    LocalTextCode="&quot;הכל&quot;"
+    TextCode="&quot;All Cargo Splits&quot;"
+    TextCodeCode="&quot;Customs.DeclarationCargoSplit.Q.AllCargoSplits&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ALLCARGOSPLITS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsDeclarationCargoSplit.Features.AllDeclarationCargoSplits&quot;"
+    FeatureDefaultText="&quot;All Declaration Cargo Splits&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.DeclarationCargoSplit.DeclarationCargoSplitControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ManifestNumber&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;SecondCargoID&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ThirdCargoID&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ActionTypeName&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RequestReasonName&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="110"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ResponseStatusName&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+      <QueryColumn
+        IndexOrder="9"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        QueryCode="&quot;AllCargoSplits&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1624,10 +1871,25 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;CSR&quot;"
+      ObjectTableName="&quot;Customs.DeclarationCargoSplit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;בקשה לפיצול מטען&quot;"
+      EnglishName="&quot;Cargo Split Request&quot;"
+      EventTypeCategoryCode="&quot;LOG&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -1635,6 +1897,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

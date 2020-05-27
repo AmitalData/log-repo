@@ -37,7 +37,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;803a76df-935a-40f5-847d-20d7e0ca4a46&quot;"
     FieldName="&quot;Code&quot;"
@@ -307,21 +309,56 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;D&quot;"
+      EnglishName="&quot;DCA Out&quot;"
+      SearchFields="&quot;d,dca out,כספת&quot;"
+      Inactive="false"
+      LocalName="&quot;כספת&quot;" />
+    <Record
+      Code="&quot;WB&quot;"
+      EnglishName="&quot;Asynchronous Web Service&quot;"
+      SearchFields="&quot;wb,asynchronous web service,שליחה ברקע&quot;"
+      Inactive="false"
+      LocalName="&quot;שליחה ברקע&quot;" />
+    <Record
+      Code="&quot;WI&quot;"
+      EnglishName="&quot;Interactive Web Service&quot;"
+      SearchFields="&quot;wi,interactive web service,אינטרקטיבי&quot;"
+      Inactive="false"
+      LocalName="&quot;אינטרקטיבי&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.InterfaceSendOption&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.InterfaceSendOption&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

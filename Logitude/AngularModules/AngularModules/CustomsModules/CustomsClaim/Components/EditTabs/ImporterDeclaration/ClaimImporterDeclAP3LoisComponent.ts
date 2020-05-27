@@ -14,11 +14,13 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimImporterDeclAP3LoisComponent.html',
 })
 
 export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimImporterDeclAP3LoisComponent = this;
     public EntityPM: ClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
     public ObjectTableName: string = "Customs.ClaimImporterDeclarsP3Loi";
@@ -37,7 +39,7 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
         this.ClaimImporterDeclarsP3Loilist = new ObservableCollection([]);
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe((response:any) => { });
     }
 
     SetWindowArgs(args: any) {

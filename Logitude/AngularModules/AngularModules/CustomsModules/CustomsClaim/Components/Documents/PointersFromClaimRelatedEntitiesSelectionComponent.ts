@@ -9,7 +9,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PointersFromClaimRelatedEntitiesSelectionComponent.html',
 })
 

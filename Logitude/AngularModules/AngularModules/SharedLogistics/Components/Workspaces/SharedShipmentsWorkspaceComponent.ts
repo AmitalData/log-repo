@@ -7,11 +7,16 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AppTool, DateTool, DateFormats } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SharedShipmentsWorkspaceComponent.html',
 })
 
 export class SharedShipmentsWorkspaceComponent implements OnInit {
+  public FromDateType: any;
+  public ToDateType: any;
+  public EditShipment(item: any) { }
+
+
     public IsResourcesReady: boolean = false;
     private myService: SharedLogisticsService;
     constructor(private _entityResourceService: EntityResourceService) {
@@ -19,7 +24,7 @@ export class SharedShipmentsWorkspaceComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.SetSelectedItem();
 

@@ -216,7 +216,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                         var ResponseData = JsonConvert.SerializeObject(ImporterShipment.Id);
                         var Donemsg = "Shipment Added To Importer Tenant Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -341,6 +341,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     if (!string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
                     {
                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(Shipment.CustomerShipmentNumber, Shipment.ImporterTenant);
+                        if (ImporterShipment == null)
+                        {
+                            ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant); 
+                        }
                     }
                     else
                     {
@@ -374,7 +378,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -550,6 +554,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         private APIException MapEntityAMToEntityPM(ShipmentAM entityAM, ShipmentPM entityPM)
         {
             APIException Responce = new APIException();
+            //TenantQuery myTenantQuery = new TenantQuery();
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.ImporterTenant, false);
             ICommonDataContext commoncontext = CommonDataContext.GetContext(entityAM.ImporterTenant);
             HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
@@ -880,7 +885,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-           
+
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -898,9 +903,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
+            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd")
+            {
+                entityPM.IsShipmentComputedFieldChange = true;
+                entityPM.IsRequestedDocuments = false;
+                entityPM.RequestedDocumentsCount = 0;
+                entityPM.MissingDocumentsCount = 0;
+                entityPM.IsMissingDocument = false;
+
+
+            }
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-            
+
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
@@ -926,7 +941,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
             }
-      
+
             entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)
             {

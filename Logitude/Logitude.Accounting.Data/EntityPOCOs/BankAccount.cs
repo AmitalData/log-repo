@@ -88,6 +88,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CurrencyId { get; set; }
 	      
         public virtual Currency Currency { get; set; }
+        [Column("PrintingBranchNumber")]
+	    public string PrintingBranchNumber { get; set; }
+        [Column("PrintingAccountNumber")]
+	    public string PrintingAccountNumber { get; set; }
     }
 }
 	 

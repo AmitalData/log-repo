@@ -10,6 +10,7 @@ using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.Data.Utilities;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -326,7 +327,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public GenericCallBack GetReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId,  int tenant, bool getOpenReconciliations = true)
         {
 
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
 
             const int MaxTotal = 99001;
 
@@ -334,6 +335,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
             else
                 query2 = ReconciliationFilter(AccountId, query2);
+
+            GenericCallBack myGenericCallBack = GetGenericCallback(query2, MaxTotal);
+            return myGenericCallBack;
+        }
+
+        public GenericCallBack GetExternalReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId, int tenant)
+        {
+
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
+
+            const int MaxTotal = 99001;
+            
+            query2 = AddFiltersForExternalReconciliations(AccountId, query2, tenant);
 
             GenericCallBack myGenericCallBack = GetGenericCallback(query2, MaxTotal);
             return myGenericCallBack;
@@ -379,7 +393,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string AccountId,
             int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
             const int MaxTotal = 99001;
             query2 = ReconciliationFilter(AccountId, query2);
             var callback11 =
@@ -422,7 +436,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Where(rec => rec.IsReconciled == false)
                 .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
                 .Where(rec => rec.AccountId == AccountId)
-                .OrderBy(rec => rec.AccountingDate)
+                //.OrderBy(rec => rec.AccountingDate)
                 //.Take(MaxTotal);
                 ;
             return query2;
@@ -459,10 +473,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string AccountId,
             int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
             const int MaxTotal = 99001;
 
             query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
@@ -479,10 +503,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string AccountId,
             int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
             const int MaxTotal = 99001;
 
             query2 = ReconciliationFilter(AccountId, query2);
+
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
@@ -500,19 +534,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public List<LedgerTransactionList> GetReconciliationFilterListForTransferGLAccount(QueryOperations queryOperations, GenericCallBack callback, string AccountId, int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
 
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            query2 = AddFiltersForExternalReconciliations(AccountId, query2, tenant);
 
-            query2 = query2
-                .Where(rec =>
-                rec.AccountId == AccountId
-            && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
-            && rec.DueDate <= _today
-            && rec.IsExternalReconcile == false
-            && rec.OpenAmount == (rec.LocalAmountCredit + rec.LocalAmountDebit)
-            )
-                .OrderBy(rec => rec.AccountingDate);
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = AccountId,
+                QueryOperations = queryOperations,
+                Transactions = query2,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
@@ -530,7 +564,25 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return mylist;
         }
 
-        private IQueryable<LedgerTransactionList> BasicListFilter(QueryOperations queryOperations, int tenant)
+        private static IQueryable<LedgerTransactionList> AddFiltersForExternalReconciliations(string AccountId, IQueryable<LedgerTransactionList> query2, int tenant)
+        {
+
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
+
+            query2 = query2
+                .Where(rec =>
+                rec.AccountId == AccountId
+            && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
+            && rec.DueDate < _today
+            && rec.IsExternalReconcile == false
+            && Math.Abs(rec.OpenAmount) == Math.Abs(rec.LocalAmountCredit + rec.LocalAmountDebit)
+            )
+                .OrderBy(rec => rec.AccountingDate);
+            return query2;
+        }
+
+        private IQueryable<LedgerTransactionList> GetFilteredList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -552,11 +604,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);
-            ApplyOrderBy(queryOperations, query2, tenant);
+
+            query2 = ApplyOrderBy(queryOperations, query2, tenant);
+
+
             return query2;
         }
 
-        private void ApplyOrderBy(QueryOperations queryOperations, IQueryable<LedgerTransactionList> query2, int tenant)
+        private IQueryable<LedgerTransactionList> ApplyOrderBy(QueryOperations queryOperations, IQueryable<LedgerTransactionList> query2, int tenant)
         {
             GenericSort sortClass = new GenericSort();
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
@@ -627,6 +682,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 query2 = query2.OrderBy(d => d.JournalId);
             }
+            return query2;
         }
 
         public int GetRecoCount(string glAccountId, int tenant)
@@ -642,7 +698,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public IQueryable<LedgerTransactionList> GetIquerableOpenReconciliationFilterList(QueryOperations queryOperations, string AccountId, int tenant)
         {
-            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
 
             const int MaxTotal = 99001;
             query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
@@ -677,7 +733,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var list = query.ToList();
             return list.Count();
         }
-        
+        public int getRecoCount(string glAccountId, int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                    where
+                    a.AccountId == glAccountId
+                    && a.InReconcileProgress == false
+                    && a.IsReconciled == false
+                    && a.Tenant == tenant
+                    select a).Count();
+        }
+
 
         public List<LedgerTransactionList> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
         {
@@ -712,6 +778,92 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return list;
         }
 
+        public List<LedgerTransactionList> GetOpenLedgerTransactions(QueryOperations queryOperations, string accountId, string transferAccountId, int tenant)
+        {
+
+            IQueryable<LedgerTransactionList> resultedList = GetLedgerTransactions(queryOperations, tenant, accountId, transferAccountId);
+
+            LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+            {
+                Tenant = tenant,
+                AccountId = accountId,
+                QueryOperations = queryOperations,
+                Transactions = resultedList,
+            };
+            LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+            resultedList = transactionsSorter.SortQuery();
+
+
+            //resultedList = FilterMaxDate(callback, resultedList);
+
+            var skippedPages = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
+            resultedList = resultedList
+                .Skip(skippedPages)
+                .Take(queryOperations.PageSize);
+
+            var mylist = resultedList.ToList();
+
+
+            return mylist;
+        }
+
+        public int GetOpenLedgerTransactionsCount(QueryOperations queryOperations, string accountId, string transferAccountId, int tenant)
+        {
+
+            IQueryable<LedgerTransactionList> resultedList = GetLedgerTransactions(queryOperations, tenant, accountId, transferAccountId);
+
+
+            return resultedList.Count();
+        }
+
+        private IQueryable<LedgerTransactionList> GetLedgerTransactions(QueryOperations queryOperations, int tenant, string accountId, string transferAccountId)
+        {
+            IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
+
+            IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
+            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
+
+            IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d=>d.DocumentDate);
+            return resultedList;
+        }
+
+        private IQueryable<LedgerTransactionList> FilterMaxDate(GenericCallBack callback, IQueryable<LedgerTransactionList> resultedList)
+        {
+            DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+
+            resultedList = resultedList
+                .Where(rec => rec.CreateDate <= maxCreateDate)
+                .Take(callback.TotalRecord);
+            return resultedList;
+        }
+
+        private IQueryable<LedgerTransactionList> GetTransactionsForTransferAccount(int tenant, string transferAccountId, IQueryable<LedgerTransactionList> transactions)
+        {
+            DateTime today = GetCurrentDate(tenant);
+            return from a in transactions
+                   where a.Tenant == tenant
+                   && a.AccountId == transferAccountId
+                    && (a.SourceTypeCode == "5" || a.SourceTypeCode == "9")
+                  && a.DueDate < today
+                  && a.IsExternalReconcile == false
+                  && Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit)
+                   select a;
+        }
+
+        private static IQueryable<LedgerTransactionList> GetTransactionsForNormalAccount(int tenant, string accountId, IQueryable<LedgerTransactionList> transactions)
+        {
+            return from a in transactions
+                   where a.Tenant == tenant
+                   && a.AccountId == accountId
+                   select a;
+        }
+
+        private static DateTime GetCurrentDate(int tenant)
+        {
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
+            return _today;
+        }
     }
 
     public class LedgerTransactionDto
@@ -750,6 +902,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
         public string DateTypeCode { get; set; }
+        public bool CheckHaveAccountingQueued { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
@@ -757,18 +910,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         //[XmlIgnore]
         public List<LedgerTransactionList> MyLedgerTransactionList { get; set; }
+        public string GLAccountId { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-        
+        public long TookMS { get; set; }
     }
 
     public class LedgerTransactionBalanceFilterCallBack : LedgerTransactionBalanceFilterCallBackCanBeNull
@@ -869,7 +1013,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int PageSize { get; set; }
         public int PageStartAtRecordIndex { get; set; }
 
-        public bool IsReconciled { get; set; }
+        public bool? IsReconciled { get; set; }
 
         public bool IncludeChildAccounts { get; set; }
         public string Category1Id { get; set; }
@@ -897,10 +1041,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     public class LedgerTransactionCardIndexFilterCallBackCanBeNull
     {
         public bool? HaveAccountingQueued { get; set; }
+        public string Have1CurrencyIdInPeriod { get; set; }
     }
 
     public class LedgerTransactionCardIndexResponse : LedgerTransactionCardIndexFilterCallBack
     {
+        public List<string> YearTransferLedgerTransactionIds;
+
         //[XmlIgnore]
         public List<LedgerTransactionList> MyLedgerTransactionList { get; set; }
 
@@ -915,6 +1062,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public bool OmitAllCardIndex { get; set; }
         public int? TotalRowCount { get; set; }
         public List<string> AllIdAccounts { get; set; }
+        public List<CallBackBalance> StartBalanceForeignList { get; set; }
+        public List<CallBackBalance> EndBalanceForeignList { get; set; }
+        public decimal? StartBalanceLocal { get; set; }
+        public decimal? EndBalanceLocal { get; set; }
+        public bool? SuppressCumulativeDueMultiCurrencyInPeriod { get; set; }
+        public List<string> YearTransferLedgerTransactionIds { get; set; }
+        public decimal? OpenBalanceForYearInLocalCurrency { get; set; }
 
     }
 

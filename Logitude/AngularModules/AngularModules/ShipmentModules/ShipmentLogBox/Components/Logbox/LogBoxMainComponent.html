@@ -53,7 +53,7 @@
                 <tr>
                     <td>
                         <table>
-                            <tr *ngIf="!DontShowLogboxToolTip" style="height: 21px;">
+                            <tr style="height: 21px;">
                                 <td style="height: 21px;">
                                     <table>
                                         <tr>
@@ -61,10 +61,10 @@
                                                 <span class="Counter" *ngIf="DataSource.rowCount > 1000" style="font-size: 18px; font-weight: bold;" [style.color]="isPrivateLabel == true ?  'white' : '#1B90CB'">1000+ {{SelectedFilter}}</span>
                                                 <span class="Counter" *ngIf="DataSource.rowCount <= 1000" style="font-size: 18px; font-weight: bold;" [style.color]="isPrivateLabel == true ?  'white' : '#1B90CB'">{{DataSource.rowCount}} {{SelectedFilter}}</span>
                                             </td>
-                                            <td style="width: 30px; vertical-align: top;">
+                                            <td *ngIf="!DontShowLogboxToolTip" style="width: 30px; vertical-align: top;">
                                                 <img style="height:30px;width:30px;margin-right:8px;margin-top:-5px;" src="./Images/lightbulb.png" />
                                             </td>
-                                            <td  style="vertical-align: middle;width:620px;">
+                                            <td *ngIf="!DontShowLogboxToolTip" style="vertical-align: middle;width:620px;">
                                                 <div [style.height.px]="21" style="background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px);">
                                                     <table>
                                                         <!--<tr style="height:5px"><td colspan="2"></td>  </tr>
@@ -151,14 +151,14 @@
                                                 <div></div>
                                             </td>
                                             <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;"> 
-                                                <DirectionsFilter [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" [HideImportDomistic]="true" [HideAMANACFilters]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
                                                 <div></div>
                                             </td>
                                             <td style="width: 117px; vertical-align: middle; position:relative;">
-                                                <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                                                <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
@@ -166,7 +166,7 @@
                                             </td>
 
                                             <td style="width: 175px; vertical-align: middle; position:relative;">
-                                                <ShipmentArchiveFilter (SelectedTypeValueChanged)="SelectedArchiveFilter = $event"></ShipmentArchiveFilter>
+                                                <ShipmentArchiveFilter [SelectedValue]="SelectedArchiveFilter" (SelectedTypeValueChanged)="SelectedArchiveFilter = $event"></ShipmentArchiveFilter>
                                             </td>
 
                                             <td style="width: 3px;">
@@ -273,7 +273,7 @@
                                         <td>
                                             <div style="height: Calc(100% - 1px);background-color:white;border-radius: 0 0 0 7px;">
                                                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
-                                                               [columns]="columns" [autoLoad]="true" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
+                                                               [columns]="columns" [autoLoad]="false" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
                                                                [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
                                                 </logitude-grid>
                                             </div>

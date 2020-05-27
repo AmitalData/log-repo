@@ -11,7 +11,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPackageHarmonizeComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class AddEditPackageHarmonizeComponent {
     private isPackageDirty: boolean = false;
     private isShipmentDirty: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['PackagePM'];

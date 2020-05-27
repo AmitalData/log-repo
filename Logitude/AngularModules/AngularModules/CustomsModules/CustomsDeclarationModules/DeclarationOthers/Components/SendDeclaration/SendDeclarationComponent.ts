@@ -39,7 +39,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDeclarationComponent',
     templateUrl: "SendDeclarationComponent.html",
 })
@@ -139,7 +139,7 @@ export class SendDeclarationComponent implements OnDestroy {
                 });
             });
 
-            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
             ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
 
             return;
@@ -397,7 +397,7 @@ export class SendDeclarationService implements OnDestroy {
 
                     this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                     this._SupplierInvoiceExtendedPMService
-                        .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe(response => {
+                        .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe((response:any) => {
                             supplierInvoice = response.Result;
 
                             var service: AnalyzeUnifreightInsuranceService = new AnalyzeUnifreightInsuranceService();
@@ -500,7 +500,7 @@ export class SendDeclarationService implements OnDestroy {
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.TaxationWindowClosed($event));
 
-            logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
             this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             // this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.TaxationDateTimeCheck"));
         }
@@ -570,7 +570,7 @@ export class SendDeclarationService implements OnDestroy {
                 logWindow.WindowArgs = windowArgs;
                 logWindow.WindowClosed.subscribe(($event: any) => this.CheckCertificateStatusClosed($event));
 
-                logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                 this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
             }
             else {
@@ -630,7 +630,7 @@ export class SendDeclarationService implements OnDestroy {
                         logWindow.WindowArgs = windowArgs;
                         logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsUploadedCheckClosed($event));
 
-                        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                         this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                     }
                 }
@@ -677,7 +677,7 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.WindowClosed.subscribe(($event: any) => this.DocumetsTicketUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -717,7 +717,7 @@ export class SendDeclarationService implements OnDestroy {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.WindowClosed.subscribe(($event: any) => this.FreightByIncotermUploadedCheckClosed($event));
 
-                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                     this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 }
             }
@@ -999,7 +999,7 @@ export class SendDeclarationService implements OnDestroy {
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     StopMyBusyIndicator() {
         if (this.CourierWorksheetmode) {

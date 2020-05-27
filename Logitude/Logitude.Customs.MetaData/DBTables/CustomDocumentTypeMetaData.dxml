@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomDocumentTypeMetaData"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="MetaDataTypeCode"
+    Type="varchar"
+    Size="6">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DocumentTypeCode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Mandatory"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Format"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ValuesTable"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsLeading"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="MetaDataTypeCode"
+    ReferencedTable="CustomMetaDataTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DocumentTypeCode"
+    ReferencedTable="CustomDocumentTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

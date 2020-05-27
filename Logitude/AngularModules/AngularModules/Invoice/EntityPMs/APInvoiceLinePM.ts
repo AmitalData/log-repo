@@ -68,6 +68,11 @@ export class APInvoiceLinePM {
     public set VatPercentage(newValue: number) { if (this.vatPercentage != newValue) { this.vatPercentage = newValue; this.MarkAsDirty("VatPercentage"); } }
        
 	 
+    private vatRecognizedPercentage: number;
+    public get VatRecognizedPercentage() { return this.vatRecognizedPercentage; }
+    public set VatRecognizedPercentage(newValue: number) { if (this.vatRecognizedPercentage != newValue) { this.vatRecognizedPercentage = newValue; this.MarkAsDirty("VatRecognizedPercentage"); } }
+       
+	 
     private vatTypeName: string;
     public get VatTypeName() { return this.vatTypeName; }
     public set VatTypeName(newValue: string) { if (this.vatTypeName != newValue) { this.vatTypeName = newValue; this.MarkAsDirty("VatTypeName"); } }
@@ -236,6 +241,26 @@ export class APInvoiceLinePM {
     private prepaidCollectId: string;
     public get PrepaidCollectId() { return this.prepaidCollectId; }
     public set PrepaidCollectId(newValue: string) { if (this.prepaidCollectId != newValue) { this.prepaidCollectId = newValue; this.MarkAsDirty("PrepaidCollectId"); } }
+       
+	 
+    private containerTypeId: string;
+    public get ContainerTypeId() { return this.containerTypeId; }
+    public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
+       
+	 
+    private containerTypeCode: string;
+    public get ContainerTypeCode() { return this.containerTypeCode; }
+    public set ContainerTypeCode(newValue: string) { if (this.containerTypeCode != newValue) { this.containerTypeCode = newValue; this.MarkAsDirty("ContainerTypeCode"); } }
+       
+	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
+    private foriegnAmountWithRecognizedVat: number;
+    public get ForiegnAmountWithRecognizedVat() { return this.foriegnAmountWithRecognizedVat; }
+    public set ForiegnAmountWithRecognizedVat(newValue: number) { if (this.foriegnAmountWithRecognizedVat != newValue) { this.foriegnAmountWithRecognizedVat = newValue; this.MarkAsDirty("ForiegnAmountWithRecognizedVat"); } }
        
 	 
 

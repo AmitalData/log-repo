@@ -1,4 +1,7 @@
-﻿using Logitude.BL.GlobalModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -17,6 +20,11 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
     {
         public static void Validate(TenantManagementPM entityPM, TenantManagement entityPOCO, bool isNewEntity, TenantManagementRepository entityRepository)
         {
+            if (string.IsNullOrEmpty(entityPM.PackageCode))
+            {
+                throw new ApplicationException("Main Package field is required");
+            }
+
             ValidateCCSParameter(entityPM, entityRepository);
             ValidateNumberOfUsers(entityPM);
             ValidateConnectedAirline(entityPM, entityRepository);
@@ -132,19 +140,19 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         {
             if (entityPM.SupportActivated)
             {
-                if (string.IsNullOrEmpty(entityPM.SupportEmail))
+                if (string.IsNullOrEmpty(entityPM.SupportDomain))
                 {
-                    throw new Exception("Support Email is Required");
+                    throw new Exception("Support Domain is Required");
                 }
 
                 else
                 {
-                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportEmail, entityPM.Id))
+                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportDomain, entityPM.Id))
                     {
-                        throw new Exception("Support Email is used");
+                        throw new Exception("Support Domain is used");
                     }
                 }
             }
-        }
+        }        
     }
 }

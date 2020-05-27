@@ -1124,6 +1124,52 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string releasesNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReleasesNumber  
+	   {
+	    
+	     get
+		{
+		   return releasesNumber;
+		 }
+		 set
+		 {
+		   if(releasesNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleasesNumber",OldValue=releasesNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   releasesNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string warehouseEntryNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WarehouseEntryNumber  
+	   {
+	    
+	     get
+		{
+		   return warehouseEntryNumber;
+		 }
+		 set
+		 {
+		   if(warehouseEntryNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseEntryNumber",OldValue=warehouseEntryNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   warehouseEntryNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -29,6 +29,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableRule.SystemLevel = objectTableRuleDetails.SystemLevel;
                 objectTableRule.Tenant = objectTableRuleDetails.Tenant;
                 objectTableRule.TriggerFieldId = objectTableRuleDetails.TriggerFieldId;
+                objectTableRule.TriggerFieldCode = objectTableRuleDetails.TriggerFieldCode;
                 objectTableRule.TriggerTypeCode = objectTableRuleDetails.TriggerTypeCode;
                 objectTableRule.Internal = objectTableRuleDetails.Internal;
                 objectTableRule.AdvancedCondition = objectTableRuleDetails.AdvancedCondition;
@@ -41,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     TriggerTypeCode = objectTableRuleDetails.TriggerTypeCode,
                     TriggerFieldId = objectTableRuleDetails.TriggerFieldId,
+                    TriggerFieldCode = objectTableRuleDetails.TriggerFieldCode,
                     Tenant = objectTableRuleDetails.Tenant,
                     SystemLevel = objectTableRuleDetails.SystemLevel,
                     RuleTypeCode = objectTableRuleDetails.RuleTypeCode,
@@ -64,9 +66,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static ObjectTableRuleField AddObjectTableRuleField(ObjectTableRuleFieldDetails objectTableRuleFieldDetails, ObjectTableRuleFieldRepository objectTableRuleRepository, Dictionary<string, ObjectTableRuleField> tenantObjectTableRuleFields)
         {
-            if (tenantObjectTableRuleFields.Keys.Contains(objectTableRuleFieldDetails.ObjectTableRuleId + objectTableRuleFieldDetails.ObjectFieldId))
+            if (tenantObjectTableRuleFields.Keys.Contains(objectTableRuleFieldDetails.ObjectTableRuleId + objectTableRuleFieldDetails.ObjectFieldCode))
             {
-                ObjectTableRuleField objectTableRuleField = tenantObjectTableRuleFields[objectTableRuleFieldDetails.ObjectTableRuleId + objectTableRuleFieldDetails.ObjectFieldId];
+                ObjectTableRuleField objectTableRuleField = tenantObjectTableRuleFields[objectTableRuleFieldDetails.ObjectTableRuleId + objectTableRuleFieldDetails.ObjectFieldCode];
                 objectTableRuleField.Expression = objectTableRuleFieldDetails.Expression;
                 objectTableRuleField.SystemLevel = objectTableRuleFieldDetails.SystemLevel;
                 objectTableRuleField.RuleNotificationTypeCode = objectTableRuleFieldDetails.RuleNotificationTypeCode;
@@ -84,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ObjectTableRuleId = objectTableRuleFieldDetails.ObjectTableRuleId,
                     Tenant = objectTableRuleFieldDetails.Tenant,
                     RuleNotificationTypeCode = objectTableRuleFieldDetails.RuleNotificationTypeCode,
-                    
+                    ObjectFieldCode = objectTableRuleFieldDetails.ObjectFieldCode,
                 };
                 objectTableRuleRepository.Add(newObjectTableRuleField);
                 return newObjectTableRuleField;
@@ -96,9 +98,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static RuleConditionField AddRuleConditionField(RuleConditionFieldDetails ruleConditionFieldDetails, RuleConditionFieldRepository ruleConditionFieldRepository, Dictionary<string, RuleConditionField> tenantRuleConditionFields)
         {
-            if (tenantRuleConditionFields.Keys.Contains(ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldId))
+            if (tenantRuleConditionFields.Keys.Contains(ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldCode))
             {
-                RuleConditionField ruleConditionField = tenantRuleConditionFields[ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldId];
+                RuleConditionField ruleConditionField = tenantRuleConditionFields[ruleConditionFieldDetails.ObjectTableRuleId + ruleConditionFieldDetails.ObjectFieldCode];
                 ruleConditionField.Operator = ruleConditionFieldDetails.Operator;
                 ruleConditionField.Value = ruleConditionFieldDetails.Value;
 
@@ -112,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                     Id = IdCounter.GetNumber("RuleConditionField", ruleConditionFieldDetails.Tenant).ToString(),
                     ObjectFieldId = ruleConditionFieldDetails.ObjectFieldId,
+                    ObjectFieldCode = ruleConditionFieldDetails.ObjectFieldCode,
                     ObjectTableRuleId = ruleConditionFieldDetails.ObjectTableRuleId,
                     Tenant = ruleConditionFieldDetails.Tenant,
                     Value = ruleConditionFieldDetails.Value,

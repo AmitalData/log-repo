@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -279,7 +279,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
+                        <button id="{{'OKButtonID' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

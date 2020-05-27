@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ffdc3aeb-e1ac-47c4-a074-22fa3742a4ee&quot;"
     FieldName="&quot;ClaimId&quot;"
@@ -189,7 +191,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="true"
@@ -1174,7 +1176,7 @@
     ObjectTableName="&quot;Customs.ClaimsRelatedEntity&quot;"
     FieldsDataType="&quot;Decimal&quot;"
     MinLength="0"
-    MaxLength="9"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1396,7 +1398,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.SiteLookup&quot;"
     MinLength="0"
-    MaxLength="9"
+    MaxLength="17"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1617,7 +1619,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.ContinuousMessagesTypeCode&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="9"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2057,7 +2059,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.CustomsHouseType&quot;"
     MinLength="0"
-    MaxLength="4"
+    MaxLength="17"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3280,14 +3282,19 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ClaimsRelatedEntity&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -3297,10 +3304,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ClaimsRelatedEntity&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -3308,8 +3316,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

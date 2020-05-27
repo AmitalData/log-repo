@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class WarehouseUpdateClass
-   {  
+   {  		
+		public const string HashString = "804a1e9cc0cbf6189fb724f0d5eb5c3a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    OldDBTableName =  "Warehouses",
 			      				    ObjectTableSingular =  "Warehouse",
 			      				    ObjectTablePlural =  "Warehouses",
+			      				    DescriptionDefaultText =  "Add and manage information about the warehouses you work with and those of your partners.",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -97,6 +99,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "EnglishName",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
@@ -121,6 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    Code =  "WARH",
 			      				    Name =  "WarHouses",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
+			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -128,15 +134,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,",
-			      				    ClientModuleName =  "Common",
-			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent",
-			      				    DescriptionDefaultText =  "Add and manage information about the warehouses you work with and those of your partners.",
+			      				    HashString =  WarehouseUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -149,7 +154,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -173,6 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Code",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  1,
@@ -192,13 +200,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
-					  						Code =  "Code",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -211,7 +219,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  70,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -235,6 +245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "EnglishName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  true,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -254,13 +265,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
-					  						Code =  "EnglishName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -273,7 +284,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -297,6 +310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "LocalName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -316,13 +330,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
-					  						Code =  "LocalName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -335,7 +349,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -359,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ComputedLocalName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -376,13 +393,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
-					  						Code =  "ComputedLocalName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -393,9 +410,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -419,6 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AddedManually",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -438,13 +458,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
-					  						Code =  "AddedManually",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -457,7 +477,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -481,6 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "InActive",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -500,13 +523,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
-					  						Code =  "InActive",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -519,7 +542,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  2000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -544,6 +569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Notes",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -563,13 +589,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
-					  						Code =  "Notes",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -582,7 +608,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -606,6 +634,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "VatNumber",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -625,13 +654,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatNumber",
-					  						Code =  "VatNumber",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -644,7 +673,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -687,11 +718,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingCard",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -705,7 +738,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -729,6 +764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PaymentTermId",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -746,13 +782,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermId",
-					  						Code =  "PaymentTermId",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -765,7 +801,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -789,6 +827,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PaymentTermEnglishName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -799,7 +838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentTermEnglishName",
 					  						DefaultText =  "Payment Term Name",
-					  						ListFieldLable =  "PaymentTermListLable",
+					  						ListFieldLable =  "PaymentTermEnglishNameListLable",
 					  						ListLableDefaultText =  "Payment Term",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -808,14 +847,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PaymentTermEnglishName",
-					  						LookUpTableName =  "PaymentTerm",
-					  						Code =  "PaymentTermEnglishName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -829,7 +867,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -853,6 +893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "InvoiceCurrencyId",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -870,13 +911,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InvoiceCurrencyId",
-					  						Code =  "InvoiceCurrencyId",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -890,7 +931,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -914,6 +957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "VatTypeId",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -931,13 +975,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "VatTypeId",
-					  						Code =  "VatTypeId",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -950,7 +994,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -974,6 +1020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "BankName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -991,13 +1038,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankName",
-					  						Code =  "BankName",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1010,7 +1057,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1034,6 +1083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "BankAddress",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1051,13 +1101,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BankAddress",
-					  						Code =  "BankAddress",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1070,7 +1120,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1094,6 +1146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Swift",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1111,13 +1164,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Swift",
-					  						Code =  "Swift",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1130,7 +1183,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1154,6 +1209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AccountNumber",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1171,13 +1227,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountNumber",
-					  						Code =  "AccountNumber",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1190,7 +1246,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1214,6 +1272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "IBANNumber",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1231,13 +1290,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IBANNumber",
-					  						Code =  "IBANNumber",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1250,7 +1309,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1274,6 +1335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "EnableConsolidationInvoices",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1293,12 +1355,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "EnableConsolidationInvoices",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1311,7 +1373,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1334,6 +1398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection2 =  "WarehouseFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SearchFields",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1353,12 +1418,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "SearchFields",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1371,13 +1436,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1394,10 +1462,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "CityName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CityName",
@@ -1413,16 +1484,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "CityName",
-					  						Operator =  "StartsWith",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "CityName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1432,16 +1500,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Country",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1458,10 +1530,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "CountryId",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CountryId",
@@ -1477,17 +1552,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						LookUpTableName =  "Country",
-					  						Code =  "CountryId",
-					  						Operator =  "Equals",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "CountryId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1500,7 +1571,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  120,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1523,16 +1596,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "CountryName",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CountryName",
 					  						DefaultText =  "Country",
 					  						FullLocalDefaultText =  "CountryName",
-					  						ListFieldLable =  "CountryNameListLabel",
+					  						ListFieldLable =  "CountryNameListLable",
 					  						ListLableDefaultText =  "Country",
 					  						ListLocalDefaultText =  "CountryName",
 					  						IsMaxLength =  false,
@@ -1542,15 +1618,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "CountryName",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
 					  						HelpTextCode =  "CountryName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1564,13 +1638,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1584,12 +1661,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "MetodoPagoCode",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MetodoPagoCode",
@@ -1597,6 +1678,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListFieldLable =  "MetodoPagoCodeListLable",
 					  						ListLableDefaultText =  "Metodo Pago",
 					  						ListLocalDefaultText =  "Metodo Pago",
+					  						HelpTextCode =  "MetodoPagoCode",
+					  						HelpTextDefaultText =  "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1604,18 +1687,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "MetodoPagoCode",
-					  						Operator =  "StartsWith",
-					  						ValidForQuerySection1 =  "Warehouse",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
-					  						HelpTextCode =  "MetodoPagoCode",
-					  						HelpTextDefaultText =  "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1629,13 +1706,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1649,19 +1729,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UsoCFDICode",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UsoCFDICode",
 					  						DefaultText =  "UsoCFDI",
-					  						ListFieldLable =  "UsoCFDIListLable",
+					  						ListFieldLable =  "UsoCFDICodeListLable",
 					  						ListLableDefaultText =  "UsoCFDI",
 					  						ListLocalDefaultText =  "UsoCFDI",
+					  						HelpTextCode =  "UsoCFDICode",
+					  						HelpTextDefaultText =  "Use of Digital Fiscal Receipt through Internet",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1669,18 +1755,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						Code =  "UsoCFDICode",
-					  						Operator =  "StartsWith",
-					  						ValidForQuerySection1 =  "Warehouse",
-					  						DigitsAfterPoint =  0,
-					  						NumberOfDigits =  0,
-					  						CopyToDW =  false,
-					  						HelpTextCode =  "UsoCFDICode",
-					  						HelpTextDefaultText =  "Use of Digital Fiscal Receipt through Internet",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1693,7 +1773,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1713,8 +1795,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SATForeignRFC",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1732,27 +1816,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SATForeignRFC",
-					  						Code =  "SATForeignRFC",
-					  						ValidForQuerySection1 =  "Warehouse",
-					  						CopyToDW =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExternalId2",
+					  						OldFieldName =  "ExternalId2",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ExternalId2",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1762,51 +1847,58 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ExternalId2",
 					  						ListPropertyPath =  "ExternalId2",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ExternalId2",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ExternalId2",
+					  						DefaultText =  "External ID2",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "ExternalId2",
-					  						DefaultText =  "External ID2",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ExternalId2",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FirmCode",
+					  						OldFieldName =  "FirmCode",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "FirmCode",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1817,14 +1909,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "FirmCode",
 					  						ListPropertyPath =  "FirmCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -1832,38 +1922,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "FirmCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "FirmCode",
+					  						DefaultText =  "Terminal Code",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "FirmCode",
-					  						DefaultText =  "Terminal Code",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "FirmCode",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TypeCode",
+					  						OldFieldName =  "TypeCode",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WarehouseType",
-					  						Code =  "TypeCode",
-					  						MaxLength =  4,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1874,14 +1973,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TypeCode",
 					  						ListPropertyPath =  "TypeCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -1889,37 +1986,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "WareHouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "TypeCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "TypeCode",
+					  						DefaultText =  "Type",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "TypeCode",
-					  						DefaultText =  "Type",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "TypeCode",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MyWarehouse",
+					  						OldFieldName =  "MyWarehouse",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "MyWarehouse",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1930,14 +2036,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "MyWarehouse",
 					  						ListPropertyPath =  "MyWarehouse",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -1945,39 +2049,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "MyWarehouse",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "MyWarehouse",
 					  						DefaultText =  "My Warehouse",
 					  						ListFieldLable =  "MyWarehouseListLable",
 					  						ListLableDefaultText =  "My Warehouse",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "MyWarehouse",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IRSPlace",
+					  						OldFieldName =  "IRSPlace",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "IRSPlace",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1988,14 +2101,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "IRSPlace",
 					  						ListPropertyPath =  "IRSPlace",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2003,37 +2114,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "IRSPlace",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "IRSPlace",
+					  						DefaultText =  "IRS Place",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "IRSPlace",
-					  						DefaultText =  "IRS Place",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "IRSPlace",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IRSNumber",
+					  						OldFieldName =  "IRSNumber",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "IRSNumber",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2044,14 +2164,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "IRSNumber",
 					  						ListPropertyPath =  "IRSNumber",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2059,37 +2177,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "IRSNumber",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "IRSNumber",
+					  						DefaultText =  "IRS #",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "IRSNumber",
-					  						DefaultText =  "IRS #",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "IRSNumber",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ReceivablesAccountingCard",
+					  						OldFieldName =  "ReceivablesAccountingCard",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ReceivablesAccountingCard",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2100,14 +2227,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ReceivablesAccountingCard",
 					  						ListPropertyPath =  "ReceivablesAccountingCard",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2115,39 +2240,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ReceivablesAccountingCard",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesAccountingCard",
 					  						DefaultText =  "Receivables External ID",
 					  						ListFieldLable =  "ReceivablesAccountingCardListLable",
 					  						ListLableDefaultText =  "Receivables External ID",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ReceivablesAccountingCard",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PayablesAccountingCard",
+					  						OldFieldName =  "PayablesAccountingCard",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PayablesAccountingCard",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2158,14 +2292,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PayablesAccountingCard",
 					  						ListPropertyPath =  "PayablesAccountingCard",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2173,39 +2305,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PayablesAccountingCard",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesAccountingCard",
 					  						DefaultText =  "Payables External ID",
 					  						ListFieldLable =  "PayablesAccountingCardListLable",
 					  						ListLableDefaultText =  "Payables External ID",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PayablesAccountingCard",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExternalAccountingBusinessArea",
+					  						OldFieldName =  "ExternalAccountingBusinessArea",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ExternalAccountingBusinessArea",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2216,14 +2357,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ExternalAccountingBusinessArea",
 					  						ListPropertyPath =  "ExternalAccountingBusinessArea",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2231,38 +2370,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ExternalAccountingBusinessArea",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ExternalAccountingBusinessArea",
+					  						DefaultText =  "Business Area",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "ExternalAccountingBusinessArea",
-					  						DefaultText =  "Business Area",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ExternalAccountingBusinessArea",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentMethodCode",
+					  						OldFieldName =  "PaymentMethodCode",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "SATPaymentMethod",
-					  						Code =  "PaymentMethodCode",
-					  						MaxLength =  2,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2272,14 +2420,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PaymentMethodCode",
 					  						ListPropertyPath =  "PaymentMethodCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2287,38 +2433,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PaymentMethodCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentMethodCode",
 					  						DefaultText =  "Forma Pago",
 					  						HelpTextCode =  "PaymentMethodCode",
 					  						HelpTextDefaultText =  "Payment Method",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PrimaryContactName",
+					  						OldFieldName =  "PrimaryContactName",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrimaryContactName",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2329,14 +2484,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PrimaryContactName",
 					  						ListPropertyPath =  "PrimaryContactName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2344,39 +2497,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PrimaryContactName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrimaryContactName",
+					  						DefaultText =  "Primary Contact Name",
+					  						ListFieldLable =  "PrimaryContactNameListLable",
+					  						ListLableDefaultText =  "Primary Contact",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "PrimaryContactName",
-					  						DefaultText =  "Primary Contact Name",
-					  						ListFieldLable =  "PrimaryContactNameLabel",
-					  						ListLableDefaultText =  "Primary Contact",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PrimaryContactEmail",
+					  						OldFieldName =  "PrimaryContactEmail",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrimaryContactEmail",
-					  						MaxLength =  70,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  70,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2387,14 +2549,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PrimaryContactEmail",
 					  						ListPropertyPath =  "PrimaryContactEmail",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2402,39 +2562,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PrimaryContactEmail",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrimaryContactEmail",
+					  						DefaultText =  "Primary Contact E-mail",
+					  						ListFieldLable =  "PrimaryContactEmailListLable",
+					  						ListLableDefaultText =  "Primary Contact E-mail",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "PrimaryContactEmail",
-					  						DefaultText =  "Primary Contact E-mail",
-					  						ListFieldLable =  "PrimaryContactEmailLabel",
-					  						ListLableDefaultText =  "Primary Contact E-mail",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactEmail",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PrimaryContactPhone",
+					  						OldFieldName =  "PrimaryContactPhone",
 					  						ObjectTableName =  "Warehouse",
 					  						FieldsDataType =  "Text",
-					  						Code =  "PrimaryContactPhone",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -2445,14 +2614,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PrimaryContactPhone",
 					  						ListPropertyPath =  "PrimaryContactPhone",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2460,111 +2627,194 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "Warehouse",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "PrimaryContactPhone",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PrimaryContactPhone",
+					  						DefaultText =  "Primary Contact Phone",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "PrimaryContactPhone",
-					  						DefaultText =  "Primary Contact Phone",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PrimaryContactPhone",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StateName",
+					  						ObjectTableName =  "Warehouse",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StateName",
+					  						ListPropertyPath =  "StateName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Warehouse",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StateName",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateNameListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup WarehouseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "WARH", Name = "WarHouses" }, queryGroupRepository);
-						QueryGroup WarehouseQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4d67", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup WarehouseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "WARH", Name = "WarHouses" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup WarehouseQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4d67", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable WarehouseObjectTable = objectTables.ContainsKey("Warehouse") ? objectTables["Warehouse"] : null;
+            if (WarehouseObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable WarehouseObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> WarehouseObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Warehouse").ToList();   
+                WarehouseObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode WarehouseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = @"Warehouses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode WarehouseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = @"Warehouses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, NameTextCodeCode = WarehouseTextCode_0.Code, ObjectTableName = "Warehouse", Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id,FeatureUniqeCode= WarehouseFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn WarehousesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Warehouse.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Warehouse.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Warehouse.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Warehouse.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Warehouse.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn WarehousesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Warehouse.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> WarehouseObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Warehouse").ToList();
+		   //List<ObjectField> WarehouseObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Warehouse").ToList();
 		       
 	      
 
 	         Screen WarehouseHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Warehouse.HeaderScreen", Name = "Header Screen", ObjectTableId = WarehouseObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseWarehouseHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = WarehouseHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseHeaderScreenScreen0.Id,ScreenCode = WarehouseHeaderScreenScreen0.Code, ObjectFieldCode = "Warehouse.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = WarehouseHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseHeaderScreenScreen0.Id,ScreenCode = WarehouseHeaderScreenScreen0.Code, ObjectFieldCode = "Warehouse.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = WarehouseHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = WarehouseHeaderScreenScreen0.Id,ScreenCode = WarehouseHeaderScreenScreen0.Code, ObjectFieldCode = "Warehouse.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    WarehouseObjectTable.HeaderScreenId = WarehouseHeaderScreenScreen0.Id;
+		    WarehouseObjectTable.HeaderScreenCode = WarehouseHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
-	         Screen WarehouseBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Warehouse.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = WarehouseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen WarehouseBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Warehouse.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = WarehouseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = WarehouseBillingTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = WarehouseBillingTabScreenScreen1.Id,ScreenCode = WarehouseBillingTabScreenScreen1.Code, ObjectFieldCode = "Warehouse.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
-	         Screen WarehouseAccountingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Warehouse.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = WarehouseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen WarehouseAccountingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Warehouse.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = WarehouseObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseWarehouseAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = WarehouseAccountingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseAccountingTabScreenScreen2.Id,ScreenCode = WarehouseAccountingTabScreenScreen2.Code, ObjectFieldCode = "Warehouse.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseWarehouseAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = WarehouseObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = WarehouseAccountingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseWarehouseAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseAccountingTabScreenScreen2.Id,ScreenCode = WarehouseAccountingTabScreenScreen2.Code, ObjectFieldCode = "Warehouse.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2575,49 +2825,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode WarehouseGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode WarehouseAddressTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseAddressFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseAddressFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHGC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseGeneralTabComponent", FeatureId = WarehouseGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHGC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseGeneralTabComponent", FeatureId = WarehouseGeneralFeature_TH0.Id,FeatureUniqeCode = WarehouseGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseGeneralTextCode_TH0.Id, TabNameTextCodeCode = WarehouseGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseBillingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseBillingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseBillingFeature_TH1.Id,FeatureUniqeCode = WarehouseBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseBillingTextCode_TH1.Id, TabNameTextCodeCode = WarehouseBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.WarehouseAccountingTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseAccountingTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = GeneralAccountingFeature_TH2.Id,FeatureUniqeCode = GeneralAccountingFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.WarehouseAccountingTabControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseAccountingTextCode_TH2.Id, TabNameTextCodeCode = WarehouseAccountingTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseAddressFeature_TH3.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseAddressTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseAddressFeature_TH3.Id,FeatureUniqeCode = WarehouseAddressFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseAddressTextCode_TH3.Id, TabNameTextCodeCode = WarehouseAddressTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseContactsFeature_TH4.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseContactsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHCO",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseContactsFeature_TH4.Id,FeatureUniqeCode = WarehouseContactsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseContactsTextCode_TH4.Id, TabNameTextCodeCode = WarehouseContactsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseDocsInTabComponent", FeatureId = WarehouseDocsInFeature_TH5.Id, ControlPath = "", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseDocsInTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseDocsInTabComponent", FeatureId = WarehouseDocsInFeature_TH5.Id,FeatureUniqeCode = WarehouseDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseDocsInTextCode_TH5.Id, TabNameTextCodeCode = WarehouseDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "WHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEventsFeature_TH6.Id,FeatureUniqeCode = WarehouseEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseObjectTable.Id, TabNameTextCodeId = WarehouseEventsTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2625,10 +2875,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature WarehouseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.PackageFeature", NameTextCodeDefaultText = "Warehouse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WarehouseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.PackageFeature", NameTextCodeDefaultText = "Warehouse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);    
 	    
 		}
 
@@ -2638,10 +2888,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPWH",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Warehouse Updated",
                 EnglishName =  "Warehouse Updated",
+                LocalName =  "Warehouse Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -2657,10 +2907,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRWH",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

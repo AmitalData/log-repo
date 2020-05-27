@@ -21,7 +21,7 @@ import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/We
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RequiredFieldsComponent',
     templateUrl: 'RequiredFieldsComponent.html',
 })
@@ -144,7 +144,7 @@ export class RequiredFieldsComponent extends BaseComponent {
 
     TranslateFieldsNames() {
         this.FieldsList.forEach((field) => {
-            var objectField = window.ObjectFields.find(x => x.Id == field.ObjectfieldId);
+            var objectField = window.ObjectFields.find(x => x.FieldCode == field.ObjectfieldCode);
             field.ObjectFieldName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
         });
     }

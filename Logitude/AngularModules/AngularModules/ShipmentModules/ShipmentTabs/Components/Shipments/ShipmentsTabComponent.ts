@@ -16,7 +16,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentsTabComponent.html',
 })
   // islam: merge test
@@ -461,6 +461,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             cmp.EntityPM.BranchId = this.EntityPM.BranchId;
             cmp.EntityPM.DepartmentId = this.EntityPM.DepartmentId;
             cmp.EntityPM.MasterShipmentDataId = this.EntityPM.MasterShipmentDataId;
+            cmp.EntityPM.CutoffDate = this.EntityPM.CutoffDate;
             cmp.EntityPM.SCI = this.EntityPM.SCI;
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {

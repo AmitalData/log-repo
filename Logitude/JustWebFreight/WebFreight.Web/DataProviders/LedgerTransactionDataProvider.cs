@@ -38,6 +38,9 @@ namespace WebFreight.Web.DataProviders
 
     public class ReportLedgerTransaction
     {
+        public string AccountEnglishName { get; set; }
+        public string AccountLocalName { get; set; }
+        public string AccountNumber { get; set; }
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string JournalId { get; set; }
@@ -72,6 +75,9 @@ namespace WebFreight.Web.DataProviders
         public bool IsExternalReconcile { get; set; }
         public bool InReconcileProgress { get; set; }
         public string ReconcileRemarks { get; set; }
+        public decimal CumulativeLocalAmount { get; set; }
+        public decimal CumulativeForeignAmount { get; set; }
+
 
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
@@ -140,6 +146,26 @@ namespace WebFreight.Web.DataProviders
 
                 }
                 return result;
+            }
+        }
+        public decimal LocalAmount
+        {
+            get
+            {
+                if (LocalAmountDebit != 0)
+                    return LocalAmountDebit;
+                else
+                    return LocalAmountCredit*-1;
+            }
+        }
+        public decimal ForeignAmount
+        {
+            get
+            {
+                if (ForeignAmountDebit != 0)
+                    return ForeignAmountDebit;
+                else
+                    return ForeignAmountCredit * -1;
             }
         }
     }

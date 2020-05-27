@@ -171,25 +171,29 @@
                                             [ItemSource]="_ObservableList">
                           
                             <!-- MessageDate -->
-                            <log-column [header]="'Customs.CustomsClosedTable.F.Id' | TextCodeTranslationPipe"
+                            <log-column [header]="'Customs.CustomsClosedTable.O.Id' | TextCodeTranslationPipe"
                                         [width]="'100'" [Alignment]="'right'"
                                         [binding]="'Content'">
-                                <log-cell-template template="let item" #logcelltemplate>
+                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                     <div class="TextTrimming RightCenter">
                                         <span>{{item.idField}}</span>
                                     </div>
                                 </log-cell-template>
+</ng-template>
                             </log-column>
 
                             <!-- MessageID -->
                             <log-column [header]="'Customs.CustomsClosedTable.F.CustomsLocalName' | TextCodeTranslationPipe"
                                         [binding]="'nameField'"
                                         [width]="'190'" [Alignment]="'right'">
-                                <log-cell-template template="let item" #logcelltemplate>
+                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                     <div class="RightCenter">
                                         <span>{{item.nameField}}</span>
                                     </div>
                                 </log-cell-template>
+</ng-template>
                             </log-column>
 
                            

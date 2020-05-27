@@ -268,5 +268,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+
+        [DataMember]
+        public string GLAccountId { get; set; }
     }
 }

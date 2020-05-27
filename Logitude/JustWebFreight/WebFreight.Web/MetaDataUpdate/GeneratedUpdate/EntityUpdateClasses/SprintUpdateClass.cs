@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SprintUpdateClass
-   {  
+   {  		
+		public const string HashString = "631642b6bf878650341ab0816adfe258";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,11 +136,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  SprintUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -196,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -253,7 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -312,7 +314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -373,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -434,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -494,7 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -553,64 +555,82 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SprintQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8b58", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup SprintQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "de93", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup SprintQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8b58", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup SprintQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "de93", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable SprintObjectTable = objectTables.ContainsKey("Sprint") ? objectTables["Sprint"] : null;
+            if (SprintObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable SprintObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> SprintObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Sprint").ToList();   
+                SprintObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode SprintTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.Q.AllSprints", DefaultText = @"All Sprints",LocalDefaultText = "All Sprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SprintFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Q.AllSprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.AllSprints", NameTextCodeDefaultText = "All Sprints", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode SprintTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.Q.AllSprints", DefaultText = @"All Sprints",LocalDefaultText = "All Sprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature SprintFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Q.AllSprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.AllSprints", NameTextCodeDefaultText = "All Sprints", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,SprintObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllSprintsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SprintTextCode_0.Id, Code = "All Sprints",  QueryGroupCode = "8b58", IndexOrder = 0, Tenant = 0, ObjectTableId = SprintObjectTable.Id, QuerySection = "Sprint", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SprintFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllSprintsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SprintTextCode_0.Id, NameTextCodeCode = SprintTextCode_0.Code, ObjectTableName = "Sprint", Code = "All Sprints",  QueryGroupCode = "8b58", IndexOrder = 0, Tenant = 0, ObjectTableId = SprintObjectTable.Id, QuerySection = "Sprint", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SprintFeature_0.Id,FeatureUniqeCode= SprintFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllSprintsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSprintsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id,QueryCode = AllSprintsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Sprint.Name" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllSprintsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSprintsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id,QueryCode = AllSprintsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Sprint.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllSprintsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllSprintsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id,QueryCode = AllSprintsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Sprint.ToDate" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> SprintObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Sprint").ToList();
+		   //List<ObjectField> SprintObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Sprint").ToList();
 		       
 	      
 
 	         Screen SprintGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "IsCompleted").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SprintGeneralTabScreenScreen0.Id,ScreenCode = SprintGeneralTabScreenScreen0.Code, ObjectFieldCode = "Sprint.IsCompleted", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen SprintSprintHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.HeaderScreen", Name = "SprintHeaderScreen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintSprintHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SprintSprintHeaderScreenScreen1.Id,ScreenCode = SprintSprintHeaderScreenScreen1.Code, ObjectFieldCode = "Sprint.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    SprintObjectTable.HeaderScreenId = SprintSprintHeaderScreenScreen1.Id;
+		    SprintObjectTable.HeaderScreenCode = SprintSprintHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -621,19 +641,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode SprintGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SprintGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.General", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.GESP", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature SprintGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.General", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.GESP", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,SprintObjectTable);
  
                  
 			   TextCode SprintEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SprintEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.Events", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.EVSP", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature SprintEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.Events", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.EVSP", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,SprintObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GESP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GESP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintGeneralFeature_TH0.Id,FeatureUniqeCode = SprintGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintGeneralTextCode_TH0.Id, TabNameTextCodeCode = SprintGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVSP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVSP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = SprintEventsFeature_TH1.Id,FeatureUniqeCode = SprintEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = SprintEventsTextCode_TH1.Id, TabNameTextCodeCode = SprintEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -641,10 +661,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature SprintFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.PackageFeature", NameTextCodeDefaultText = "Sprint Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature SprintFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SprintObjectTable);
+		   Feature SprintFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SprintObjectTable);
+		   Feature SprintFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SprintObjectTable);
+		   Feature SprintFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.PackageFeature", NameTextCodeDefaultText = "Sprint Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SprintObjectTable);    
 	    
 		}
 

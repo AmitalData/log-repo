@@ -11,7 +11,6 @@ import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountr
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './UpdateCountryOfOriginComponent.html',
 })
 

@@ -17,7 +17,6 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationCargoSealTabComponent.html',
 })
 
@@ -38,11 +37,14 @@ export class DeclarationCargoSealTabComponent extends BaseComponent implements O
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response: any) => {
+
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.LoadCargoSealsList();
                 this.Listen();
                 this.IsLoaded = true;
+            });
             });
         });
     }

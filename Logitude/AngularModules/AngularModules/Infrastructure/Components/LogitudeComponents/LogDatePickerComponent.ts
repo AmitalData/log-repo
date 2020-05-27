@@ -3,7 +3,6 @@ declare var SelectingElement: any;
 import {
     Directive,
     ElementRef,
-    Renderer,
     Input,
     Output,
     Component,
@@ -36,7 +35,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-    moduleId: module.id,
+    
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [
@@ -297,6 +296,7 @@ export class LogDatePickerComponent
                         this.DataContext[this.ObjectFieldName] =
                             this.CurrentSession.CopiedCell;
                         this.CurrentSession.CopiedCell = null;
+                        this.SetParsedDateValueToDatePickerInput();
                     }
                 }
             );
@@ -321,9 +321,9 @@ export class LogDatePickerComponent
             )[0];
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
-            } else if (this.ObjectField.HelpTextCodeId != null) {
+            } else if (this.ObjectField.HelpTextCodeCode != null) {
                 this.ObjectFieldHelp = TextCodeTranslator.Translate(
-                    this.ObjectField.HelpTextTextCodeCode
+                    this.ObjectField.HelpTextCodeCode
                 );
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
@@ -370,7 +370,7 @@ export class LogDatePickerComponent
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
         //if (objectFieldAvailable) {
         if (objectFieldAvailable || this.ForceSubscribe) {
-            //this.ctrl.valueChanges.subscribe(res=> {
+            //this.ctrl.valueChanges.subscribe((res:any)=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 
@@ -474,6 +474,9 @@ export class LogDatePickerComponent
             );
         }
 
+        this.SetParsedDateValueToDatePickerInput();
+    }
+    SetParsedDateValueToDatePickerInput(){
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
             var customFieldClass: CustomFieldClass = this.DataContext[
@@ -495,7 +498,6 @@ export class LogDatePickerComponent
         this.GetParsedDate(valueDate); //(this.DataContext[this.ObjectFieldName]);
         this.initialized = true;
     }
-
     SetControlPropertiesAndValidations(
         uiProperty: UIProperty,
         ctrl: FormControl
@@ -608,6 +610,8 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
+        }else {
+            this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
         if (!this.MouseInArea) {
@@ -1110,7 +1114,7 @@ export class LogDatePickerComponent
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
-        
+
                 if (!this.IsFreeValue) {
                     this.SetValidity(true, null);
                     this.ValidateField();
@@ -1711,6 +1715,7 @@ export class LogDatePickerComponent
                 );
             }
             this.SetValidity(false, errorMessage);
+            this.DataContext[this.ObjectFieldName] = null;
         } else {
             this.SetValidity(true, null);
         }
@@ -2480,6 +2485,7 @@ export class LogDatePickerComponent
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
+                    
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };

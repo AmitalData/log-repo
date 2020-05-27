@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewRoleComponent.html',
 })
 

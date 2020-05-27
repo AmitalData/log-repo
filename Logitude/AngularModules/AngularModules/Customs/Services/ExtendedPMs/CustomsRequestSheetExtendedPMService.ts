@@ -1,7 +1,8 @@
 ﻿
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,10 +13,10 @@ import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
 @Injectable()
 
 export class CustomsRequestSheetExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
     }
 
@@ -24,7 +25,7 @@ export class CustomsRequestSheetExtendedPMService {
     //CancellRequestInProgress(Id: string, Tenant: number) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -38,21 +39,19 @@ export class CustomsRequestSheetExtendedPMService {
             //var mappedEntity: CustomsRequestsSheetPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return Observable.defer(() => {
+            return defer(() => {
                 return this._http
                     .post(
                     this._apiUrl + '/PostSetCustomsRequestSheetStatus/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response.json();
+                    var requestSheets = response;
                     serviceResponse.Result = requestSheets;
                     
                     return serviceResponse;
                     })
-                    .catch(ServiceHelper.HandleServiceError);
+                    ,catchError(ServiceHelper.HandleServiceError));
             }
 
             );
@@ -68,7 +67,7 @@ export class CustomsRequestSheetExtendedPMService {
         //CancellRequestInProgress(Id: string, Tenant: number) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -82,21 +81,19 @@ export class CustomsRequestSheetExtendedPMService {
             //var mappedEntity: CustomsRequestsSheetPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return Observable.defer(() => {
+            return defer(() => {
                 return this._http
                     .post(
                     this._apiUrl + '/PostCustomsRequestSheetReQueue/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        var requestSheets = response.json();
+                        var requestSheets = response;
                         serviceResponse.Result = requestSheets;
 
                         return serviceResponse;
                     })
-                    .catch(ServiceHelper.HandleServiceError);
+                    ,catchError(ServiceHelper.HandleServiceError));
             }
 
             );

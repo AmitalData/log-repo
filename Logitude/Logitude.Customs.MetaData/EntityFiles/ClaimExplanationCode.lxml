@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;92022770-6bfe-4071-bf69-0eedbf6ea76b&quot;"
     FieldName="&quot;Code&quot;"
@@ -301,34 +303,169 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,עקרון סיווג מספר&quot;"
+      Inactive="false"
+      LocalName="&quot;עקרון סיווג מספר&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,שינוי בערך יצוא מוחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;שינוי בערך יצוא מוחזר&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,סגירת שנה&quot;"
+      Inactive="false"
+      LocalName="&quot;סגירת שנה&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,תיקון זיכוי מתביעה&quot;"
+      Inactive="false"
+      LocalName="&quot;תיקון זיכוי מתביעה&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,תיקון מלאי בתביעה&quot;"
+      Inactive="false"
+      LocalName="&quot;תיקון מלאי בתביעה&quot;" />
+    <Record
+      Code="&quot;14&quot;"
+      SearchFields="&quot;14,מלאי פתיחה לשנה סגורה&quot;"
+      Inactive="false"
+      LocalName="&quot;מלאי פתיחה לשנה סגורה&quot;" />
+    <Record
+      Code="&quot;15&quot;"
+      SearchFields="&quot;15,תיקון ניצול אשראי  לשנה סגורה&quot;"
+      Inactive="false"
+      LocalName="&quot;תיקון ניצול אשראי  לשנה סגורה&quot;" />
+    <Record
+      Code="&quot;16&quot;"
+      SearchFields="&quot;16,איפוס  עקב אי הגשת תביעה&quot;"
+      Inactive="false"
+      LocalName="&quot;איפוס  עקב אי הגשת תביעה&quot;" />
+    <Record
+      Code="&quot;17&quot;"
+      SearchFields="&quot;17,חישוב חודשי&quot;"
+      Inactive="false"
+      LocalName="&quot;חישוב חודשי&quot;" />
+    <Record
+      Code="&quot;18&quot;"
+      SearchFields="&quot;18,תביעה חריגה&quot;"
+      Inactive="false"
+      LocalName="&quot;תביעה חריגה&quot;" />
+    <Record
+      Code="&quot;19&quot;"
+      SearchFields="&quot;19,תיקון תביעה חריגה&quot;"
+      Inactive="false"
+      LocalName="&quot;תיקון תביעה חריגה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,הנחיות סיווג&quot;"
+      Inactive="false"
+      LocalName="&quot;הנחיות סיווג&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,שינוי אחוז ניכוי מס-הסבה&quot;"
+      Inactive="false"
+      LocalName="&quot;שינוי אחוז ניכוי מס-הסבה&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,הסבות&quot;"
+      Inactive="false"
+      LocalName="&quot;הסבות&quot;" />
+    <Record
+      Code="&quot;22&quot;"
+      SearchFields="&quot;22,מס&quot;ב שחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;מס&quot;ב שחזר&quot;" />
+    <Record
+      Code="&quot;23&quot;"
+      SearchFields="&quot;23,שיק שחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;שיק שחזר&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,הכחשת עסקה&quot;"
+      Inactive="false"
+      LocalName="&quot;הכחשת עסקה&quot;" />
+    <Record
+      Code="&quot;25&quot;"
+      SearchFields="&quot;25,פירוט האסמכתא לתיקון&quot;"
+      Inactive="false"
+      LocalName="&quot;פירוט האסמכתא לתיקון&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,לא התקיים אחד התנאים הבאים&quot;"
+      Inactive="false"
+      LocalName="&quot;לא התקיים אחד התנאים הבאים&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,כללי&quot;"
+      Inactive="false"
+      LocalName="&quot;כללי&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,הפרשי קנסות&quot;"
+      Inactive="false"
+      LocalName="&quot;הפרשי קנסות&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,החזר יצוא מוחזר&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר יצוא מוחזר&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,שינוי אחוז מס&quot;"
+      Inactive="false"
+      LocalName="&quot;שינוי אחוז מס&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,שינוי במחזוריות&quot;"
+      Inactive="false"
+      LocalName="&quot;שינוי במחזוריות&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,שינוי בערך יצוא&quot;"
+      Inactive="false"
+      LocalName="&quot;שינוי בערך יצוא&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;ClaimExplanation&quot;"
-    TextCode="&quot;ClaimExplanationQuery&quot;"
-    QueryGroupCode="&quot;f29d&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.ClaimExplanationCode&quot;"
-    QuerySection="&quot;Customs.ClaimExplanationCode&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ClaimExplanationCode&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;f29d&quot;"
+    QueryGroupName="&quot;Customs.ClaimExplanationCode Query Group&quot;"
+    TextCode="&quot;ClaimExplanationQuery&quot;"
+    TextCodeCode="&quot;ClaimExplanationCode.Q.ClaimExplanation&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ClaimExplanationCode.Q.ClaimExplanation&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;ClaimExplanationCode.Features.ClaimExplanation&quot;"
+    FeatureDefaultText="&quot;ClaimExplanation&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ClaimExplanation&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;ClaimExplanation&quot;" />
       <QueryColumn
-        QueryCode="&quot;ClaimExplanation&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ClaimExplanation&quot;" />
       <QueryColumn
-        QueryCode="&quot;ClaimExplanation&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ClaimExplanation&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -336,17 +473,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ClaimExplanationCode&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ClaimExplanationCode&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

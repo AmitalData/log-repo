@@ -260,7 +260,7 @@
                 <!-- DayLight Start Date -->
                 <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
                     <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'DayLightStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'DayLightStartDate'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
                         <!--<label style="margin-left:10px;"> DayLight Start Date: </label>-->
                     </td>
 
@@ -282,8 +282,7 @@
                 <!-- DayLight End Date -->
                 <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
                     <td>
-                        <LogLabel [ObjectFieldName]="'DayLightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
+                        <LogLabel [ObjectFieldName]="'DayLightEndDate'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
                         <!--<label style="margin-left:10px;"> DayLight End Date: </label>-->
                     </td>
                     <td>
@@ -304,9 +303,8 @@
                 <!-- DayLight Offset  -->
                 <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
                     <td>
-                        <LogLabel [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                        <!--<label style="margin-left:10px;"> DayLight Offset: </label>-->
+                        <!--<label> DayLight Offset: </label>-->
+                        <LogLabel [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
                         <table>

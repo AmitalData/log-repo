@@ -31,6 +31,8 @@ using Logitude.Server.Tools;
 using System.Drawing;
 using System.Xml;
 using System.Text;
+using System.Web;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -68,6 +70,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PaymentDataProvider GetPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             PaymentDataProvider paymentDataProvider = new PaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);
@@ -176,7 +179,7 @@ namespace WebFreight.Web.ReportsWebServices
                     //payment number
                     paymentDataProvider.PaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
 
-                  
+                    Contact loggedContact = GetLoggedContact(currentPayment.Tenant);
 
                     if (billToCard != null)
                     {
@@ -189,7 +192,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (address != null)
                         {
-                            if (address.IsLocalLanguage)
+
+                        
+                            if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
                                 {
@@ -197,6 +202,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
+                       
                             paymentDataProvider.BillToAddress = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
                         }
 
@@ -206,14 +212,14 @@ namespace WebFreight.Web.ReportsWebServices
                         // accounting card
                         paymentDataProvider.AccountingCard = billToCard.ReceivablesAccountingCard;
                         paymentDataProvider.ReceivedFrom = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
-
+                        paymentDataProvider.ReceivedFromInLocal = billToCard.LocalName+ Environment.NewLine + DataProviders.General.GetAddress(address);
                         if (billToCard.PartnerTypeId == "CS")
                         {
                             CustomerQuery customerQuery = new CustomerQuery(tenant);
                             CustomerPM customer = customerQuery.GetSinglePM(billToCard.Id, tenant);
                             if (customer != null)
                             {
-                                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                              
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, paymentDataProvider);
                             }
                         }
@@ -292,9 +298,13 @@ namespace WebFreight.Web.ReportsWebServices
                                                 where a.Id == currentPayment.PaymentCurrencyId
                                                 select a).FirstOrDefault();
 
+                    string paymentCurrencyLocalName = "";
+
                     if (paymentCurrency != null)
                     {
                         paymentDataProvider.PaymentCurrencyCode = paymentCurrency.Code;
+
+                        paymentCurrencyLocalName = paymentCurrency.LocalName;
                     }
 
                     //internal notes
@@ -426,6 +436,9 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     paymentDataProvider.TotalAmount = totalAmount;
+
+                    this.PrintTotalAmountInEnglishAndSpanish(paymentDataProvider, paymentCurrencyLocalName);
+                    
                     paymentDataProvider.OutstandingBalance = currentPayment.AmountInPaymentCurrency - totalAmount;
                     paymentDataProvider.Logo = DataProviders.General.GetLogo(tenantSettings.Id);
                 }
@@ -447,9 +460,40 @@ namespace WebFreight.Web.ReportsWebServices
                 {
 					this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+
+                paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
+
             }
 
+             
+            customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
+
             return paymentDataProvider;
+        }
+        private Contact GetLoggedContact(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
+        }
+        private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
+        {
+            NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
+            var resultOfTotalAmount = decimal.Parse(paymentDataProvider.TotalAmount + "") - Math.Truncate(decimal.Parse(paymentDataProvider.TotalAmount + ""));
+            var resulyFirstdigits = (int)(Math.Round(resultOfTotalAmount, 2) * 100);
+            string resultstr = "";
+            if (resulyFirstdigits < 10 && resulyFirstdigits > 0)
+                resultstr = 0 + "" + resulyFirstdigits + "/100";
+            else
+                resultstr = resulyFirstdigits + "/100";
+
+            if ((int)(Math.Round(resultOfTotalAmount, 2) * 100) <= 0)
+            {
+                resultstr = "";
+            }
+            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
         }
 
         private string GetPaymentMethodLocalName(string code)
@@ -483,7 +527,8 @@ namespace WebFreight.Web.ReportsWebServices
 			if (billToCard != null)
 			{
 				paymentDataProvider.SAT.SATForeignRFC = (billToCard.SATForeignRFC ?? null);
-			}
+                paymentDataProvider.ForeignRFC = (billToCard.SATForeignRFC ?? null);
+            }
 
 			if (!string.IsNullOrEmpty(currentPayment.SATXML))
             {

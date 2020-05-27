@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customer Type General&quot;"
-  Code="&quot;a9da&quot;"
-  Name="&quot;Customs.CustomerTypeGeneral Query Group&quot;"
+  Code="&quot;CUTG&quot;"
+  Name="&quot;Customs.CustomerTypeGeneral&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;41338c69-a8e8-4bbd-8cf5-526fca344be2&quot;"
     FieldName="&quot;Code&quot;"
@@ -305,21 +307,114 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,תושב הארץ&quot;"
+      Inactive="false"
+      LocalName="&quot;תושב הארץ&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,תושב רש&quot;פ&quot;"
+      Inactive="false"
+      LocalName="&quot;תושב רש&quot;פ&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,תושב חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;תושב חוץ&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,תאגיד ישראלי/זר&quot;"
+      Inactive="false"
+      LocalName="&quot;תאגיד ישראלי/זר&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,תאגיד רש&quot;פ/יו&quot;ש&quot;"
+      Inactive="false"
+      LocalName="&quot;תאגיד רש&quot;פ/יו&quot;ש&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,תאגיד רש&quot;פ/עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;תאגיד רש&quot;פ/עזה&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,תאגיד חסר ישות משפטית&quot;"
+      Inactive="false"
+      LocalName="&quot;תאגיד חסר ישות משפטית&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomerTypeGeneral&quot;"
+    ObjectTableName="&quot;Customs.CustomerTypeGeneral&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomerTypeGeneral&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUTG&quot;"
+    QueryGroupName="&quot;Customs.CustomerTypeGeneral&quot;"
+    LocalTextCode="&quot;סוג לקוח&quot;"
+    TextCode="&quot;Customer Type Generals&quot;"
+    TextCodeCode="&quot;Customs.CustomerTypeGeneral.Q.CustomerTypeGeneralQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMERTYPEGENERAL&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomerTypeGeneral.Features.CustomerTypeGenerals&quot;"
+    FeatureDefaultText="&quot;Customer Type Generals&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomerTypeGeneral&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomerTypeGeneral&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomerTypeGeneral&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomerTypeGeneral&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomerTypeGeneral&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomerTypeGeneral&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

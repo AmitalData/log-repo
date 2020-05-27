@@ -33,18 +33,25 @@ namespace CommunicationWorkerRole.Tasks
 
                 SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(ftpTask.SchedulerDetailsXML);
                 schedulerDetails.Tenant = ftpTask.Tenant;
-                SFTPSchedulerTaskService fTPSchedulerTaskService = new SFTPSchedulerTaskService();
+                SFTPSchedulerTaskService fTPSchedulerTaskService = new SFTPSchedulerTaskService(this);
+               
+               
                 fTPSchedulerTaskService.ReadSFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
 
-                foreach(var warning in fTPSchedulerTaskService.WarningsList)
+                if(schedulerDetails.FTPDetails.Subject == "test exception")
                 {
-                    this.Logwarning(warning);
+                    throw new Exception("test exception log is thrown!!");
                 }
 
-                foreach (var message in fTPSchedulerTaskService.MessagesList)
-                {
-                    this.LogInfo(message);
-                }
+                //foreach(var warning in fTPSchedulerTaskService.WarningsList)
+                //{
+                //    this.Logwarning(warning);
+                //}
+
+                //foreach (var message in fTPSchedulerTaskService.MessagesList)
+                //{
+                //    this.LogInfo(message);
+                //}
             }
 
         }

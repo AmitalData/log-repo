@@ -53,5 +53,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool EnableNegativeOffsetARPayments { get; set; }
         public bool EnableNegativeOffsetAPPayments { get; set; }
         public bool EnableInvoiceStocksManagement { get; set; }
+        public string RefreshToken { get; set; }
+        public int QBOOAuth { get; set; }
+        public bool AllowManualARPaymentNumber { get; set; }
+        public bool AllowRegionalTaxManagement { get; set; }
+        public bool EnableAPPaymentExternalPayment { get; set; }
+        public bool TransferToFTPActivated { get; set; }
+        public string TransferFTPDetailId { get; set; }
+        public string TransferFTPDetailHost { get; set; }
     }
 }

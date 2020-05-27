@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ExternalSystemsTablesCodeUpdateClass
-   {  
+   {  		
+		public const string HashString = "960248eb66c604bb997b6929bba81d6f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,11 +131,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    SearchFields =  "ExternalSystemsTablesCode,ExternalSystemsTablesCodes,,Id,Name",
+			      				    HashString =  ExternalSystemsTablesCodeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -145,7 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  4,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -197,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -208,7 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
@@ -261,7 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -325,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "LogitudeTable",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -390,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "CreatedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -455,7 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "UpdatedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -464,7 +466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ExternalSystemsTablesCode",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -518,74 +520,92 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ExternalSystemsTablesCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ESTC", Name = "ExternalSystemsTablesCode" }, queryGroupRepository);
-						QueryGroup ExternalSystemsTablesCodeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b02c", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ExternalSystemsTablesCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ESTC", Name = "ExternalSystemsTablesCode" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ExternalSystemsTablesCodeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b02c", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ExternalSystemsTablesCodeObjectTable = objectTables.ContainsKey("ExternalSystemsTablesCode") ? objectTables["ExternalSystemsTablesCode"] : null;
+            if (ExternalSystemsTablesCodeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable ExternalSystemsTablesCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ExternalSystemsTablesCode" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> ExternalSystemsTablesCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ExternalSystemsTablesCode").ToList();   
+                ExternalSystemsTablesCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ExternalSystemsTablesCode" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode ExternalSystemsTablesCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode.Q.AllExternalSystemsTablesCodes", DefaultText = @"All External Systems Tables Codes",LocalDefaultText = null, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ExternalSystemsTablesCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLEXTERNALSYSTEMSTABLESCODES", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.AllExternalSystemsTablesCodes", NameTextCodeDefaultText = "All External Systems Tables Codes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode ExternalSystemsTablesCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode.Q.AllExternalSystemsTablesCodes", DefaultText = @"All External Systems Tables Codes",LocalDefaultText = null, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExternalSystemsTablesCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLEXTERNALSYSTEMSTABLESCODES", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.AllExternalSystemsTablesCodes", NameTextCodeDefaultText = "All External Systems Tables Codes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExternalSystemsTablesCodeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllExternalTablesCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalSystemsTablesCodeTextCode_0.Id, NameTextCodeCode = ExternalSystemsTablesCodeTextCode_0.Code, ObjectTableName = "ExternalSystemsTablesCode", Code = "All External Tables Codes",  QueryGroupCode = "ESTC", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, QuerySection = "ExternalSystemsTablesCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalSystemsTablesCodeFeature_0.Id,FeatureUniqeCode= ExternalSystemsTablesCodeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllExternalTablesCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 0, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllExternalTablesCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id,QueryCode = AllExternalTablesCodesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ExternalSystemsTablesCode.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllExternalTablesCodesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 1, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllExternalTablesCodesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id,QueryCode = AllExternalTablesCodesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ExternalSystemsTablesCode.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllExternalTablesCodesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 2, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "LogitudeTable" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllExternalTablesCodesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id,QueryCode = AllExternalTablesCodesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ExternalSystemsTablesCode.LogitudeTable" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllExternalTablesCodesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 3, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "CreatedDate" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllExternalTablesCodesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id,QueryCode = AllExternalTablesCodesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllExternalTablesCodesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id, IndexOrder = 4, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "UpdatedDate" && d.ObjectTableId == ExternalSystemsTablesCodeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllExternalTablesCodesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllExternalTablesCodesQuery.Id,QueryCode = AllExternalTablesCodesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ExternalSystemsTablesCode.UpdatedDate" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable ExternalSystemsTablesCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalSystemsTablesCode" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> ExternalSystemsTablesCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ExternalSystemsTablesCode").ToList();
+		   //List<ObjectField> ExternalSystemsTablesCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ExternalSystemsTablesCode").ToList();
 		       
 	      
 
 	         Screen ExternalSystemsTablesCodeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExternalSystemsTablesCode.HeaderScreen", Name = "Header Screen", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "CreatedDate").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id,ScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ExternalSystemsTablesCodeObjectTable.HeaderScreenId = ExternalSystemsTablesCodeHeaderScreenScreen0.Id;
+		    ExternalSystemsTablesCodeObjectTable.HeaderScreenCode = ExternalSystemsTablesCodeHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen ExternalSystemsTablesCodeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExternalSystemsTablesCode.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "LogitudeTable").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.LogitudeTable", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "CreatedDate").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.CreatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = ExternalSystemsTablesCodeObjectFields.Where(d => d.FieldName == "UpdatedDate").FirstOrDefault().Id, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExternalSystemsTablesCodeExternalSystemsTablesCodeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Id,ScreenCode = ExternalSystemsTablesCodeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ExternalSystemsTablesCode.UpdatedDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -601,7 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ExternalSystemsTablesCodeFeature_EXTERNALSYSTEMSTABLESCODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALSYSTEMSTABLESCODES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes", NameTextCodeDefaultText = @"External Tables Codes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ExternalSystemsTablesCodeFeature_EXTERNALSYSTEMSTABLESCODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALSYSTEMSTABLESCODES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes", NameTextCodeDefaultText = @"External Tables Codes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalSystemsTablesCodeObjectTable);
 
    
 	    

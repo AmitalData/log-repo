@@ -1,48 +1,41 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { defer, of } from 'rxjs';
 
 @Injectable()
-
 export class MessageSimulatingService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/MessageSimulating';
     }
 
     Simulate(args: SimulatorArgs) {
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var mappedEntity: SimulatorArgs = this.MapSimulatorArgs(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                { headers: authHeader }).map((res) => {
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJsonResult = response;
 
-                    var myJsonResult = res.json();
+                var mappedResult: SimulatorResult = new SimulatorResult();
 
-                    var mappedResult: SimulatorResult = new SimulatorResult();
-
-                    if (myJsonResult) {
-                        var jsonListKeys = Object.keys(myJsonResult);
-                        for (var key in jsonListKeys) {
-                            var property = jsonListKeys[key];
-                            mappedResult[property] = myJsonResult[property];
-                        }
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        mappedResult[property] = myJsonResult[property];
                     }
-                    
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = mappedResult;
-                    return serviceResponse;
+                }
 
-                }).catch(ServiceHelper.HandleServiceError);
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedResult;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -50,7 +43,6 @@ export class MessageSimulatingService {
         if (!entity) {
             entity = new SimulatorArgs();
         }
-
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
@@ -67,7 +59,6 @@ export class MessageSimulatingService {
 
         return entity;
     }
-
 }
 
 export class SimulatorArgs {
@@ -94,6 +85,7 @@ export class SimulatorArgs {
     public FFA: any;
     public FVA: SimulatorFVA;
     public IsLocalAnalyze: boolean;
+    public IsChampSimulator: boolean;
 }
 
 export class SimulatorFVA {
@@ -127,4 +119,3 @@ export class SimulatorResult {
     public IsValid: boolean;
     public Errors: string[];
 }
-

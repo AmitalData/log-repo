@@ -329,16 +329,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CourierPendingReasonName  { get; set; }
        [DataMember]
-       public string Direction  { get; set; }
-       [DataMember]
-       public string ExportFile  { get; set; }
-       [DataMember]
-       public string DeclarationTypeCode  { get; set; }
-       [DataMember]
-       public string AgentRoleCode  { get; set; }
-       [DataMember]
-       public string DestinationCountryCode  { get; set; }
-       [DataMember]
        public DateTime? LoadingDateTime  { get; set; }
        [DataMember]
        public string ShipCode  { get; set; }
@@ -348,6 +338,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string ShipName  { get; set; }
        [DataMember]
        public string DestinationCountryName  { get; set; }
+       [DataMember]
+       public string Direction  { get; set; }
+       [DataMember]
+       public string AgentRoleCode  { get; set; }
+       [DataMember]
+       public string ExportFile  { get; set; }
+       [DataMember]
+       public string DeclarationTypeCode  { get; set; }
+       [DataMember]
+       public string DestinationCountryCode  { get; set; }
    }
 
 }

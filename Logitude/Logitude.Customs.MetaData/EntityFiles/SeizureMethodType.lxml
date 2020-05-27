@@ -61,7 +61,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;88d2c934-d698-49b4-8850-1cb19e01215c&quot;"
     FieldName="&quot;Code&quot;"
@@ -408,40 +410,49 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;SeizureMethodType&quot;"
-    TextCode="&quot;SeizureMethodTypeQuery&quot;"
-    QueryGroupCode="&quot;3174&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.SeizureMethodType&quot;"
-    QuerySection="&quot;Customs.SeizureMethodType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SeizureMethodType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;3174&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    TextCode="&quot;SeizureMethodTypeQuery&quot;"
+    TextCodeCode="&quot;SeizureMethodType.Q.SeizureMethodType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SeizureMethodType.Q.SeizureMethodType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;SeizureMethodType.Features.SeizureMethodType&quot;"
+    FeatureDefaultText="&quot;SeizureMethodType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;SeizureMethodType&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureMethodType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureMethodType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureMethodType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureMethodType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureMethodType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureMethodType&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SeizureMethodType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -449,10 +460,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SeizureMethodType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -462,10 +474,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SeizureMethodType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -473,6 +486,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

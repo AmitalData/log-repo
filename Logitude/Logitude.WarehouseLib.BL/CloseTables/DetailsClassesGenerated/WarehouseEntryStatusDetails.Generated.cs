@@ -34,6 +34,13 @@ namespace Logitude.WarehouseLib.BL.CLoseTable
                 SearchFields = "ENTE,Entered,", 
                 Name = "Entered", 
 			});
+			 
+            all.Add(new WarehouseEntryStatusDetails()
+            {    
+                Code = "CAEA", 
+                Name = "Cancelled", 
+                SearchFields = "CAEA,Cancelled", 
+			});
 			
             return all;
        }

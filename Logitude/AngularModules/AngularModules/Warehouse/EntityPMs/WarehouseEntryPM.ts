@@ -369,6 +369,51 @@ export class WarehouseEntryPM {
     public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
        
 	 
+    private lastStatusUpdateDate: Date;
+    public get LastStatusUpdateDate() { return this.lastStatusUpdateDate; }
+    public set LastStatusUpdateDate(newValue: Date) { if (this.lastStatusUpdateDate != newValue) { this.lastStatusUpdateDate = newValue; this.MarkAsDirty("LastStatusUpdateDate"); } }
+       
+	 
+    private masterHouse: string;
+    public get MasterHouse() { return this.masterHouse; }
+    public set MasterHouse(newValue: string) { if (this.masterHouse != newValue) { this.masterHouse = newValue; this.MarkAsDirty("MasterHouse"); } }
+       
+	 
+    private entryReferencesAndDate: string;
+    public get EntryReferencesAndDate() { return this.entryReferencesAndDate; }
+    public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
+       
+	 
+    private connectedTo: string;
+    public get ConnectedTo() { return this.connectedTo; }
+    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
+    private toTypeCode: string;
+    public get ToTypeCode() { return this.toTypeCode; }
+    public set ToTypeCode(newValue: string) { if (this.toTypeCode != newValue) { this.toTypeCode = newValue; this.MarkAsDirty("ToTypeCode"); } }
+       
+	 
+    private fromTypeCode: string;
+    public get FromTypeCode() { return this.fromTypeCode; }
+    public set FromTypeCode(newValue: string) { if (this.fromTypeCode != newValue) { this.fromTypeCode = newValue; this.MarkAsDirty("FromTypeCode"); } }
+       
+	 
+    private fromCountryId: string;
+    public get FromCountryId() { return this.fromCountryId; }
+    public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
+       
+	 
+    private toCountryId: string;
+    public get ToCountryId() { return this.toCountryId; }
+    public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

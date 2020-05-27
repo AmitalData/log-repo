@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג החלטה באילוץ&quot;"
   DefaultText="&quot;Constraint Approval Decision &quot;"
-  Code="&quot;0e94&quot;"
-  Name="&quot;Customs.ConstraintApprovalDecision Query Group&quot;"
+  Code="&quot;CADG&quot;"
+  Name="&quot;Customs.ConstraintApprovalDecisions&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2a2dbda3-f0e9-43c3-95cd-8b0d80820aaf&quot;"
     FieldName="&quot;Code&quot;"
@@ -307,21 +309,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,נדחה,,&quot;"
+      Inactive="false"
+      LocalName="&quot;נדחה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,מאושר,,&quot;"
+      Inactive="false"
+      LocalName="&quot;מאושר&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,מאושר בתנאי,,&quot;"
+      Inactive="false"
+      LocalName="&quot;מאושר בתנאי&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ConstraintApprovalDecision&quot;"
+    ObjectTableName="&quot;Customs.ConstraintApprovalDecision&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ConstraintApprovalDecision&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CADG&quot;"
+    QueryGroupName="&quot;Customs.ConstraintApprovalDecisions&quot;"
+    LocalTextCode="&quot;סוג החלטה באילוץ&quot;"
+    TextCode="&quot;Constraint Approval Decisions&quot;"
+    TextCodeCode="&quot;Customs.ConstraintApproval.Q.ConstraintApprovalDecisionQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CONSTRAINTAPPROVALQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions&quot;"
+    FeatureDefaultText="&quot;Constraint Approval Decisions&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ConstraintApprovalDecision&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ConstraintApprovalDecision&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ConstraintApprovalDecision&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ConstraintApprovalDecision&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ConstraintApprovalDecision&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ConstraintApprovalDecision&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -30,6 +30,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.ContactName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ContactEmail);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ContactImageDetailId);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ContactDefaultColor);
 
             if (!string.IsNullOrEmpty(entityPOCO.CreatedByContactId))
             {
@@ -38,10 +40,14 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 if (contact != null)
                 {
                     entityPM.ContactName = contact.EnglishName;
-                    entityPM.ContactEmail = contact.Email;                
+                    entityPM.ContactEmail = contact.Email;
+                    entityPM.ContactImageDetailId = contact.ImageDetailId;
+
+                    ColorIndexRepository colorIndexRepository = new ColorIndexRepository(entityPOCO.Tenant);
+                    IQueryable<ColorIndex> ColorIndexList = colorIndexRepository.GetColorIndexs();
+                    entityPM.ContactDefaultColor = ColorIndexList.Where(d => d.IndexNumber == contact.IndexColor).Select(s => s.Color).FirstOrDefault();
                 }
             }
-
         }
    }
 }

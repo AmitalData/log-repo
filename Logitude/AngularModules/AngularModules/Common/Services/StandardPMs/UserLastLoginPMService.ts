@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -9,10 +10,10 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {UserLastLoginPM} from '../../EntityPMs/UserLastLoginPM';
 export class UserLastLoginPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/UserLastLogins';
     }
 
@@ -22,31 +23,31 @@ export class UserLastLoginPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return this._http.get(url, { headers: authHeader }).map(response => {
+        return this._http.get(url, ServiceHelper.GetHttpFullHeaders())
+            .pipe(
+                map((response: HttpResponse<any>) => {
 
-          
-
-            var pm = response.json();
+                    var pm = response.body;
 
 
-            var entity: UserLastLoginPM;
-            if (pm) {
-                entity = this.MapJsonToEntityPM(pm);
-            }
+                    var entity: UserLastLoginPM;
+                    if (pm) {
+                        entity = this.MapJsonToEntityPM(pm);
+                    }
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = entity;
-            return serviceResponse;
-           
-              
-        }).catch(ServiceHelper.HandleTimerServiceError);
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = entity;
+                    return serviceResponse;
+
+
+                }), catchError(ServiceHelper.HandleServiceError));
     }
 
     update(entityPM: UserLastLoginPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -65,31 +66,30 @@ export class UserLastLoginPMService {
                 var mappedEntity: UserLastLoginPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: UserLastLoginPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
-                        }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: UserLastLoginPM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
 
-                        return serviceResponse;
+                            return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleTimerServiceError);
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
-        }
-
-        );
+        });
 
     }
 

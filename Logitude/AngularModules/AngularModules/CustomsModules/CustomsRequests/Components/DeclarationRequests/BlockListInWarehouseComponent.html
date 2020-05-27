@@ -115,22 +115,26 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.DeclarationNumber' | TextCodeTranslationPipe"
                                                 [width]="'110'" [Alignment]="'right'"
                                                 [binding]="'DeclarationNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DeclarationNumber}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- WarehouseBlockNumber -->
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber' | TextCodeTranslationPipe"
                                                 [binding]="'WarehouseBlockNumber'"
                                                 [width]="'60'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.WarehouseBlockNumber}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -138,22 +142,26 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.ImporterTitle' | TextCodeTranslationPipe"
                                                 [binding]="'ImporterTitle'"
                                                 [width]="'100'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.ImporterTitle}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- OpeningDate -->
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.OpeningDate' | TextCodeTranslationPipe"
                                                 [binding]="'OpeningDate'"
                                                 [width]="'85'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.OpeningDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -161,11 +169,13 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.OriginalOpeningDate' | TextCodeTranslationPipe"
                                                 [binding]="'OriginalOpeningDate'"
                                                 [width]="'105'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.OriginalOpeningDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -173,11 +183,13 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.PhysicalPackagesQuantityBalance' | TextCodeTranslationPipe"
                                                 [binding]="'PhysicalPackagesQuantityBalance'"
                                                 [width]="'105'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.PhysicalPackagesQuantityBalance}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -186,22 +198,26 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.LogicalPackagesQuantityBalance' | TextCodeTranslationPipe"
                                                 [binding]="'LogicalPackagesQuantityBalance'"
                                                 [width]="'100'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.LogicalPackagesQuantityBalance}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- Value -->
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.Value' | TextCodeTranslationPipe"
                                                 [binding]="'Value'"
                                                 [width]="'95'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.Value}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -209,11 +225,13 @@
                                     <log-column [header]="'Customs.BlockListInWarehouse.O.SpecialActivityTypeName' | TextCodeTranslationPipe"
                                                 [binding]="'SpecialActivityTypeName'"
                                                 [width]="'80'" [Alignment]="'right'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="RightCenter">
                                                 <span>{{item.SpecialActivityTypeName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

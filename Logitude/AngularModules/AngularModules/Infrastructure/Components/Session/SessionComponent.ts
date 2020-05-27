@@ -10,12 +10,12 @@ import {LogitudeGridHelper} from '../../Utilities/LogitudeGridHelper';
 import {PubSubFiltersChangeEventService} from '../../Utilities/events/ApiFiltersChangeEvent'; 
 import {MainMenuComponent} from '../MainMenuComponent/MainMenuComponent'; 
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import {EntityResourceService} from '../../Services/EntityResourceService';
 
 @Component({
     selector: 'SessionComponent',
-    moduleId: module.id,
+    
     templateUrl: "./SessionComponent.html",
     providers: [PubSubFiltersChangeEventService],
 })
@@ -103,7 +103,7 @@ export class SessionComponent {
                 this.SessionInitialize.emit(true);
                 
                 if (!SessionLocator.IsNewSignupTenant) {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load("./Infrastructure/Components/MainMenu/MainMenuComponent", this.SessionLocation.viewContainerRef).then(cmpRef => {
                         this.MainMenuComponent = cmpRef.instance;
                         cmpRef.instance.RunComponent();
@@ -127,7 +127,7 @@ export class SessionComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -372,6 +372,11 @@ export class SessionComponent {
     public CloseCurrentWindow() {
         if (this.CurrentWindow != null) {
             this.CurrentWindow.Close(null);
+        }
+    }
+    public ResizeCurrentWindow(width: number) {
+        if (this.CurrentWindow != null) {
+            this.CurrentWindow.Resize(width);
         }
     }
     public CloseCurrentWindowEmit(emit: string) {

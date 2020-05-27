@@ -2,15 +2,15 @@ import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../Services/TariffDomainService';
+import { TariffDomainService } from '../../../Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffLineExpirationDatePM } from '../../../EntityPMs/TariffLineExpirationDatePM';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -27,7 +27,7 @@ import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 
@@ -45,20 +45,47 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
+    public IsAir: boolean = false;
+  private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+  public LinesCount: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.GetTariffType();
         this.Listen();
+    }
+
+    GetTariffType() {
+        if (this.EntityPM.TypeCode == "ASC") { 
+            this.IsAir = true;
+        }
+    }
+
+    GetDisplayMemberPath() {
+        return this.IsAir ? "Code" : "CombinedCode";
+    }
+
+    SetOriginDependencyFilterValue() {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
     }
 
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
+    public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
+        this.deletedLinesExpirationDates = [];
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -98,6 +125,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 });
             }
         });
+        this.SetOriginDependencyFilterValue();
     }
 
     private SaveCompletedEvent: any = null;
@@ -130,26 +158,36 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isTariffLinesDeleted) {
+                        this.isTariffLinesDeleted = false;
+                        this.CurrentSession.FireEvent("TariffLinesDeleted");                       
+                    }
   
                     this.SetSurchargesLabelsAndVisibility();
                 }
 
                 else {
+                    //if (this.isApproveButtonClicked) {
+                        //if (this.isTariffLinesDeleted) {
+                        //    this.ResetDeletedLinesExpirationDates();                        
+                        //}
+                    //}
+
                     this.StopAllFlags();
                 }
             });
         }
     }
 
-    StopAllFlags() {
-
+    private StopAllFlags() {
         if (this.EntityPM.IsApprovingDraftVersion) {
             this.EntityPM.IsApprovingDraftVersion = false;
         }
 
         this.isApproveButtonClicked = false;
+        this.isTariffLinesDeleted = false;
     }
-
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
@@ -220,6 +258,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceLabel: string;
     public Surcharge10PriceLabel: string;
 
+    public Surcharge1MinPriceLabel: string;
+    public Surcharge2MinPriceLabel: string;
+    public Surcharge3MinPriceLabel: string;
+    public Surcharge4MinPriceLabel: string;
+    public Surcharge5MinPriceLabel: string;
+    public Surcharge6MinPriceLabel: string;
+    public Surcharge7MinPriceLabel: string;
+    public Surcharge8MinPriceLabel: string;
+    public Surcharge9MinPriceLabel: string;
+    public Surcharge10MinPriceLabel: string;
+
     public Surcharge1PriceVisibility: boolean;
     public Surcharge2PriceVisibility: boolean;
     public Surcharge3PriceVisibility: boolean;
@@ -231,6 +280,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
 
+    public Surcharge1MinPriceVisibility: boolean;
+    public Surcharge2MinPriceVisibility: boolean;
+    public Surcharge3MinPriceVisibility: boolean;
+    public Surcharge4MinPriceVisibility: boolean;
+    public Surcharge5MinPriceVisibility: boolean;
+    public Surcharge6MinPriceVisibility: boolean;
+    public Surcharge7MinPriceVisibility: boolean;
+    public Surcharge8MinPriceVisibility: boolean;
+    public Surcharge9MinPriceVisibility: boolean;
+    public Surcharge10MinPriceVisibility: boolean;
+    
     private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.tariffCharges = [];
@@ -255,17 +315,25 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 item.Code = iChargeType.Id;
                 item.Name = iChargeType.Code;
                 item.DisplyText = iChargeType.Code;
-                item.Code_Int = index;
+                item.Code_Int = index;                
 
+                var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
                     item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.AdditionalField = iMeasurement.Code;
+
+                    if (iMeasurement.Code == "FIXD") {
+                        isMeasurmentFixed = true;
+                    }
                 }
 
                 this.tariffCharges.push(item);
 
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+                this['Surcharge' + index + 'MinPriceVisibility'] = !isMeasurmentFixed;
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;               
             }
         }
     }
@@ -328,7 +396,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-
+      this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();    
     }
 
@@ -342,6 +410,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: AirSurchargeTariffLineData) => {
+            item.IsNewEntity = false;
             var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
@@ -428,7 +497,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
 
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -475,6 +544,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
         itemPM.Index = 0;
+        itemPM.CurrencyId = this.EntityPM.CurrencyId;
 
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {
@@ -498,7 +568,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
-
+        
+    private isTariffLinesDeleted: boolean = false;
     DeleteTariffButtonClicked(item: AirSurchargeTariffLineData) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this Tariff Line?");
@@ -507,16 +578,23 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 450;
                 logWindow.Height = 200;
-                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode };
+                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode, };
                 logWindow.Title = "Expiration Date";
 
                 logWindow.ComponentLoaded.subscribe(s => {
                     logWindow.WindowClosed.subscribe(d => {
                         if (s && d == "ok") {
-                            //this.EntityPM.DeletedLinesExpirationDates.push(item.EntityPM.Id + "," + item.EntityPM.ExpirationDate.getUTCFullYear() + "," + item.EntityPM.ExpirationDate.getUTCMonth() + "," + item.EntityPM.ExpirationDate.getUTCDay());
+                            var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
+                            deletedItem.OriginPortId = item.EntityPM.OriginPortId;
+                            deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
+                            deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
+                            
+                            this.deletedLinesExpirationDates.push(deletedItem);
                             this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                             this.TariffsLinesSource.Remove(item);
                             this.FillTariffLines(this.CurrentVersion.TariffLines);
+
+                            this.isTariffLinesDeleted = true;
                         }
                     });
                 });
@@ -545,6 +623,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     ApproveVersionClicked() {
         if (!this.isApproveButtonClicked) {
             this.isApproveButtonClicked = true;
+
+            if (this.deletedLinesExpirationDates.length > 0) {
+                this.deletedLinesExpirationDates.forEach(item => {
+                    this.EntityPM.DeletedLinesExpirationDates.push(item);
+                });
+            }
+
             this.EntityPM.IsApprovingDraftVersion = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }        
@@ -566,9 +651,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.isCopyButtonClicked = true;
 
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+        this.EntityPM.IsFromCopy = true;
         this.EntityPM.LastStartDate = this.StartDate;
         this.EntityPM.LastExpirationDate = this.ExpirationDate;
-
+        
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.CurrentVersion.TariffId;
         copiedVersion.Version = this.EntityPM.LastVersion;
@@ -582,7 +668,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.loadedTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = item.StartDate;
-            tariffLine.ExpirationDate = item.ExpirationDate;
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
@@ -603,8 +688,20 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge10Price = item.Surcharge10Price;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.CurrencyId = item.CurrencyId;
+            tariffLine.CurrencyCode = item.CurrencyCode;
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
+            tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
+            tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
+            tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
+            tariffLine.Surcharge4MinPrice = item.Surcharge4MinPrice;
+            tariffLine.Surcharge5MinPrice = item.Surcharge5MinPrice;
+            tariffLine.Surcharge6MinPrice = item.Surcharge6MinPrice;
+            tariffLine.Surcharge7MinPrice = item.Surcharge7MinPrice;
+            tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
+            tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
+            tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -615,13 +712,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var args: UpdateTariffArgs = new UpdateTariffArgs();
         args.Version = this.CurrentVersion;
         args.TariffCharges = this.tariffCharges;
-        args.AirlineId = this.EntityPM.SellerId;
+        args.CarrierId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1100;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
-        logWindow.Title = "Tariff Surchage Update";
+        logWindow.Title = "Tariff Surcharge Update";
 
         logWindow.WindowClosed.subscribe((s: any) => {
             if (s == "ok") {

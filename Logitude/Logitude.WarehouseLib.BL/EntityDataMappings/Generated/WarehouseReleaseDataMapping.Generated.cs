@@ -55,7 +55,22 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         SearchFields, 
 	         DirectionId, 
 	         TotalQuantity, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio, 
+	         ToTypeCode, 
+	         ToPartnerCardId, 
+	         ToAddressId, 
+	         ToAddressZipCode, 
+	         ToAddressCity, 
+	         ToAddressCountryId, 
+	         IsUsed, 
+	         TruckerId, 
+	         TruckerReference,
 	      }
 
 
@@ -101,7 +116,23 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         DirectionId, 
 	         ReleaseDate, 
 	         TotalQuantity, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio, 
+	         ToTypeCode, 
+	         ToPartnerCardId, 
+	         ToAddressId, 
+	         ToAddressZipCode, 
+	         ToAddressCity, 
+	         ToAddressCountryId, 
+	         IsUsed, 
+	         Destination, 
+	         TruckerId, 
+	         TruckerReference,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -273,6 +304,81 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
             {
 				entityPOCO.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+				entityPOCO.FromPortId = entityPM.FromPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+				entityPOCO.ToPortId = entityPM.ToPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+				entityPOCO.CustomerAddressId = entityPM.CustomerAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+				entityPOCO.ToTypeCode = entityPM.ToTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPartnerCardId))
+            {
+				entityPOCO.ToPartnerCardId = entityPM.ToPartnerCardId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+				entityPOCO.ToAddressId = entityPM.ToAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+				entityPOCO.ToAddressZipCode = entityPM.ToAddressZipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+				entityPOCO.ToAddressCity = entityPM.ToAddressCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+				entityPOCO.ToAddressCountryId = entityPM.ToAddressCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+				entityPOCO.IsUsed = entityPM.IsUsed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+				entityPOCO.TruckerId = entityPM.TruckerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
+            {
+				entityPOCO.TruckerReference = entityPM.TruckerReference;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -451,6 +557,81 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromPortId))
+            {
+					entityPM.FromPortId = entityPOCO.FromPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPortId))
+            {
+					entityPM.ToPortId = entityPOCO.ToPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerAddressId))
+            {
+					entityPM.CustomerAddressId = entityPOCO.CustomerAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVolumetricWeight))
+            {
+					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTypeCode))
+            {
+					entityPM.ToTypeCode = entityPOCO.ToTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPartnerCardId))
+            {
+					entityPM.ToPartnerCardId = entityPOCO.ToPartnerCardId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressId))
+            {
+					entityPM.ToAddressId = entityPOCO.ToAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressZipCode))
+            {
+					entityPM.ToAddressZipCode = entityPOCO.ToAddressZipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCity))
+            {
+					entityPM.ToAddressCity = entityPOCO.ToAddressCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCountryId))
+            {
+					entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUsed))
+            {
+					entityPM.IsUsed = entityPOCO.IsUsed;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
+            {
+					entityPM.TruckerId = entityPOCO.TruckerId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerReference))
+            {
+					entityPM.TruckerReference = entityPOCO.TruckerReference;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -622,6 +803,81 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+                oldEntityPM.FromPortId = entityPM.FromPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+                oldEntityPM.ToPortId = entityPM.ToPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+                oldEntityPM.CustomerAddressId = entityPM.CustomerAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+                oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+                oldEntityPM.ToTypeCode = entityPM.ToTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPartnerCardId))
+            {
+                oldEntityPM.ToPartnerCardId = entityPM.ToPartnerCardId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+                oldEntityPM.ToAddressId = entityPM.ToAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+                oldEntityPM.ToAddressZipCode = entityPM.ToAddressZipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+                oldEntityPM.ToAddressCity = entityPM.ToAddressCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+                oldEntityPM.ToAddressCountryId = entityPM.ToAddressCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
+            {
+                oldEntityPM.IsUsed = entityPM.IsUsed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
+            {
+                oldEntityPM.TruckerId = entityPM.TruckerId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
+            {
+                oldEntityPM.TruckerReference = entityPM.TruckerReference;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WarehouseReleasePM entityPM)
@@ -638,6 +894,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ToAddressCity)) //T4 find type == nText 
+            {
+                entityPM.ToAddressCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ToAddressCity));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

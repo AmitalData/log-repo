@@ -49,5 +49,6 @@ namespace WebFreight.Web.DataProviders
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double? ValueOfGoods { get; set; }
+        public string FlightNumber { get; set; }
     }
 }

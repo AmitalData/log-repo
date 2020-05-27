@@ -14,6 +14,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectFieldValidation.ValidationOrder = objectFieldValidationPM.ValidationOrder;
             objectFieldValidation.Condition = objectFieldValidationPM.Condition;
             objectFieldValidation.Code = objectFieldValidationPM.Code;
+            objectFieldValidation.ObjectFieldCode = objectFieldValidationPM.ObjectFieldCode;
         }
     }
 }

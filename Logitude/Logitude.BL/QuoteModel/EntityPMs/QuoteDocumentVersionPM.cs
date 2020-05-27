@@ -20,7 +20,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public DateTime? UpdateDate { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
-
+        
         public string VersionType { get; set; }
         public string DocumentId { get; set; }
         public DateTime? SendDate { get; set; }
@@ -30,12 +30,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
   
         public string CreatedByUserName { get; set; }
         public string UpdateByUserName { get; set; }
-
         public string VersionTypeName { get; set; }
 
         public double? FileSize { get; set; }
         public string FileName { get; set; }
-
+        public string Extension { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

@@ -19,14 +19,14 @@ export class NewAPInvoice {
         //this.Helper.WaitBusyIndicatorToShow();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VendorId',VendorName);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem',0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VendorId', VendorName);
         this.Helper.WaitBusyIndicator();
         ////browser.sleep(5000);
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceNumber',InvoiceNumer);
         this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency','1000');
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'NIS');
        // console.log("this is the second one");
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem',0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_InvoiceCurrencyId', 'NIS');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate','10/06/2019');
         this.Helper.WaitByIdAndFill('date_APInvoice_DueDate','10/06/2019');
@@ -36,21 +36,35 @@ export class NewAPInvoice {
 
         this.Helper.WaitWindowClosed();
 
+       // this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitBusyIndicatorToShow();
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitBusyIndicatorToShow();
-        this.Helper.WaitBusyIndicator();
+        //this.Helper.WaitEditComponentBusyIndicator();
+        //this.Helper.WaitEditComponentBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('AddInvoiceLine');
         this.Helper.WaitByIdAndFill('APInvoiceLine_ChargesTypeId','Air Freight');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_ChargesTypeId', 'Air Freight');
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount','1000');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_VatPercentage', '0');
+        this.Helper.WaitBusyIndicator();
+
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '1000');
+        this.Helper.WaitBusyIndicator();
+        this.Helper.ItemsVisibility('Ok-AddAPInvoiceLine');
+        this.Helper.ItemsPresent('Ok-AddAPInvoiceLine');
         this.Helper.WaitByIdAndClick('Ok-AddAPInvoiceLine');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
         //browser.sleep(6000);
+        this.Helper.WaitByIdAndClick('APInvoice.B.Save');
+        this.WaitBusyIndicatorToShowandHide();
+        //this.WaitBusyIndicatorToShowandHide();
 
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
-        this.Helper.WaitBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
+        this.WaitBusyIndicatorToShowandHide();
+        // this.Helper.WaitBusyIndicator();
       // this.Helper.WaitBusyIndicator();
      //  browser.sleep(10000);
        
@@ -61,5 +75,8 @@ export class NewAPInvoice {
 
 
     }
-
+    WaitBusyIndicatorToShowandHide() {
+        this.Helper.WaitShowEditComponentBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
+    }
 }

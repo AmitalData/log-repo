@@ -133,6 +133,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (cl != null)
                                     {
+                                        
 
                                         if (cl.CommunicationStatusTypeCode == "D")
                                         {
@@ -147,11 +148,14 @@ namespace CommunicationWorkerRole
                                                 cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
                                                 cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
                                                 communicationLogRep.Update(cl);
-                                                communicationLogRep.SubmitChanges();
+                                                communicationLogRep.SubmitChanges(); 
                                             }
-                                            else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-
+                                            else
+                                            {
+                                                SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response); 
+                                            }
                                             queueservice.Complete();
+
                                             LogDoneItemInMemory();
 
                                         }
@@ -337,13 +341,13 @@ namespace CommunicationWorkerRole
         }
 
         ICommonDataContext context;
-        private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep)
+        private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep, QueueResponse response)
         {
 
 
             try
             {
-                if (cl.Retries < 30)
+                if (response.RetryNumber < 30 && cl.Retries < 30)
                 {
                     SendWaitingCommunicationLog(cl);
                 }
@@ -380,6 +384,8 @@ namespace CommunicationWorkerRole
                 SetNextTryDateTime(cl);
                 if (context != null)
                 {
+                    cl.ExceptionMessage = StringHelper.TruncateLongString(cl.ExceptionMessage, 4000);
+
                     communicationLogRep.Update(cl);
                     communicationLogRep.SubmitChanges();
                 }
@@ -1052,7 +1058,7 @@ namespace CommunicationWorkerRole
             return gateWay;
         }
 
-        private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
+        private void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
             string iSendingURL = null;
             string iSendingPassword = null;
@@ -1121,11 +1127,11 @@ namespace CommunicationWorkerRole
                 //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
                 //System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> iResponse = client.PostAsync(iSendingURL, content);
 
-                System.Net.Http.HttpResponseMessage iResponse = await client.PostAsync(iSendingURL, content);
-
+                var iResponse = client.PostAsync(iSendingURL, content);
+                iResponse.Wait();
                 if (iResponse != null)
                 {
-                    if (iResponse.StatusCode == HttpStatusCode.OK)
+                    if (iResponse.Result.StatusCode == HttpStatusCode.OK)
                     {
                         waitingCommLog.CommunicationStatusTypeCode = "D";
                         waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -1143,7 +1149,7 @@ namespace CommunicationWorkerRole
                         waitingCommLog.CommunicationStatusTypeCode = "F";
                         waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
                         waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                        waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
+                        waitingCommLog.ExceptionMessage = iResponse.Result.StatusCode.ToString();
 
                         CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
                         commLogrepository.Update(waitingCommLog);

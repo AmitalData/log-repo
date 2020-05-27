@@ -350,98 +350,114 @@
                                 <log-column [width]="'110'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.PaymentID' | TextCodeTranslationPipe"
                                             [binding]="'PaymentID'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentID}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentType -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.PaymentType' | TextCodeTranslationPipe"
                                             [binding]="'PaymentType'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentAmount -->
                                 <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.PaymentAmount' | TextCodeTranslationPipe"
                                             [binding]="'PaymentAmount'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.PaymentAmount | NumbersPipe:'n0'}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Importer -->
                                 <log-column [width]="'220'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.Importer' | TextCodeTranslationPipe"
                                             [binding]="'Importer'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.Importer }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Agent -->
                                 <!--<log-column [width]="'250'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.Agent' | TextCodeTranslationPipe"
                                             [binding]="'Agent'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.Agent }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>-->
 
                                 <!-- EntityExternalId -->
                                 <log-column [width]="'120'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.EntityExternalID' | TextCodeTranslationPipe"
                                             [binding]="'Agent'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.EntityExternalID}}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentMethodType -->
                                 <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.PaymentMethodType' | TextCodeTranslationPipe"
                                             [binding]="'PaymentMethodType'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.PaymentMethodType }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PaymentStatus -->
                                 <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.PaymentQuery.O.PaymentOrderStatus' | TextCodeTranslationPipe"
                                             [binding]="'PaymentStatus'" [Editable]="false">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.PaymentStatus }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

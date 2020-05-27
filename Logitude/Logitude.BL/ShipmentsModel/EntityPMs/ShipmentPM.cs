@@ -2172,6 +2172,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? GrossWeightPerTon { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public double? GrossWeightPerStorageDays { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2226,6 +2230,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingStatusCode { get; set; }
         public string INTTRABookingStatusName{ get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingError { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRALastBookingResponse { get; set; }
+
+        public string INTTRABookingResponse_Voyage { get; set; }
+        public DateTime INTTRABookingResponse_POLDate { get; set; }
+        public string INTTRABookingResponse_POFPort { get; set; }
+        public string INTTRABookingResponse_POFPortCode { get; set; }
+        public string INTTRABookingResponse_POFCCode { get; set; }
+        public string INTTRABookingResponse_POFCName { get; set; }
+        public DateTime INTTRABookingResponse_PODDate { get; set; }
+        public string INTTRABookingResponse_PODPort { get; set; }
+        public string INTTRABookingResponse_PODPortCode { get; set; }
+        public string INTTRABookingResponse_PODCCode { get; set; }
+        public string INTTRABookingResponse_PODCName { get; set; }
+        public string INTTRABookingResponse_ShippingLine { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
@@ -2330,7 +2352,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool HasContainerException { get; set; }
 
-
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
 
 
         //ShipmentComputedFields
@@ -2345,6 +2367,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public bool IsShipmentComputedFieldChange { get; set; }
+        public bool IsShipmentAdditionalCloudDataChange { get; set; }
+
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
@@ -2352,11 +2376,85 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ARInvoices { get; set; }
         public bool ConvertShipmentToLCL { get; set; }
         public bool ConvertShipmentToFCL { get; set; }
+        public string HousesNumbers { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
+        public bool ShipmentConvertedNewNumber { get; set; }
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }
         public string MasterCreatedFromHouseId { get; set; }
+        public bool IsDeletingAllPayables { get; set; }
+        public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
+
+        // Fields of Champ analyzer Concurrency
+        public string FWBStatusCode_Original { get; set; }
+        public DateTime? FWBStatusDate_Original { get; set; }
+        public string FHLStatusCode_Original { get; set; }
+        public DateTime? FHLStatusDate_Original { get; set; }
+        public string CarrierLastStatusCode_Original { get; set; }
+        public DateTime? CarrierLastStatusDate_Original { get; set; }
+        public string MainCarriageToPortId_Original { get; set; }
+        public int? NumberOfPackages_Original { get; set; }
+        public double? GrossWeight_Original { get; set; }
+        public double? ChargeableWeight_Original { get; set; }
+        public string GrossWeightUnitCode_Original { get; set; }
+        public DateTime? MainCarriageATD_Original { get; set; }
+        public DateTime? MainCarriageETD_Original { get; set; }
+        public DateTime? MainCarriageSTD_Original { get; set; }
+        public DateTime? Transshipment1ATD_Original { get; set; }
+        public DateTime? Transshipment1ETD_Original { get; set; }
+        public DateTime? Transshipment1STD_Original { get; set; }
+        public DateTime? Transshipment2ATD_Original { get; set; }
+        public DateTime? Transshipment2ETD_Original { get; set; }
+        public DateTime? Transshipment2STD_Original { get; set; }
+        public DateTime? Transshipment3ATD_Original { get; set; }
+        public DateTime? Transshipment3ETD_Original { get; set; }
+        public DateTime? Transshipment3STD_Original { get; set; }
+        public DateTime? PreCarriageATD_Original { get; set; }
+        public DateTime? PreCarriageETD_Original { get; set; }
+        public DateTime? OnCarriageATD_Original { get; set; }
+        public DateTime? OnCarriageETD_Original { get; set; }
+        public DateTime? MainCarriageATA_Original { get; set; }
+        public DateTime? MainCarriageETA_Original { get; set; }
+        public DateTime? MainCarriageSTA_Original { get; set; }
+        public DateTime? Transshipment1ATA_Original { get; set; }
+        public DateTime? Transshipment1ETA_Original { get; set; }
+        public DateTime? Transshipment1STA_Original { get; set; }
+        public DateTime? Transshipment2ATA_Original { get; set; }
+        public DateTime? Transshipment2ETA_Original { get; set; }
+        public DateTime? Transshipment2STA_Original { get; set; }
+        public DateTime? Transshipment3ATA_Original { get; set; }
+        public DateTime? Transshipment3ETA_Original { get; set; }
+        public DateTime? Transshipment3STA_Original { get; set; }
+        public DateTime? PreCarriageATA_Original { get; set; }
+        public DateTime? PreCarriageETA_Original { get; set; }
+        public DateTime? OnCarriageATA_Original { get; set; }
+        public DateTime? OnCarriageETA_Original { get; set; }
+        public string INTTRABookingStatusCode_Original { get; set; }
+        public string BookingConfirmedBy_Original { get; set; }
+        public string MAN_FromPortId_Original { get; set; }
+        public string FIN_PortId_Original { get; set; }
+        public string TR3_ToPortId_Original { get; set; }
+        public string TR2_ToPortId_Original { get; set; }
+        public string TR1_ToPortId_Original { get; set; }
+        public string BookingConfNumber_Original { get; set; }
+        public string MAN_CarrierNumber_Original { get; set; }
+
+        public bool IsUserIDNumberRequired { get; set; }
+        public DateTime? UserIdNumberUpdateDate { get; set; }
+        public string UserIdNumberXMLData { get; set; }
+        public string UserIdNumber { get; set; }
+        public string WarehouseReleasesIds { get; set; }
+        public int? WarehouseStorageFreeDays { get; set; }
+        public bool IsDeclarationApprovalRequest { get; set; }
+        public bool CreatedFromDigital { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SLAC { get; set; }
+
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
     }
 }

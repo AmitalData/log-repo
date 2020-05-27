@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -15,16 +16,17 @@ import {VendorSearchByCustomsAgentRequestParams} from '../../DataContract/Reques
 @Injectable()
 
 export class VendorMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Vendor';
 
     }
 
     PostAddNewVendorRequest(params: VendorInsertUpdateDeleteMessageRequestParams) {
-        return Observable.defer(() => {
+
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -38,13 +40,13 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostAddNewVendorRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -53,7 +55,7 @@ export class VendorMessagesService {
 
     PostAddNewVendorCommunicationRequest(params: VendorAddCommunicationDeviceRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -67,13 +69,13 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostAddNewVendorCommunicationRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -82,7 +84,7 @@ export class VendorMessagesService {
 
     PostSearchVendorRequest(params: VendorSearchByCustomsAgentRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -96,13 +98,13 @@ export class VendorMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSearchVendorRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -111,7 +113,7 @@ export class VendorMessagesService {
 
     GetVendorByNumber(vendorNumber: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -122,15 +124,13 @@ export class VendorMessagesService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetVendorByNumber/?vendorNumber=" + vendorNumber, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetVendorByNumber/?vendorNumber=" + vendorNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -141,19 +141,16 @@ export class VendorMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallSuppliersFromFileRequest', JSON.stringify(fileUploadParamerter), {
-                headers: authHeader,
-
-            }).map(response => {
-                var result = response.json();
+        return defer(() => {
+            return this._http.put(this._apiUrl + '/PutRecallSuppliersFromFileRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

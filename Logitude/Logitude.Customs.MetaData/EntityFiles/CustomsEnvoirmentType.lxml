@@ -37,7 +37,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;339352e0-9a9e-42cb-b064-d45601553db0&quot;"
     FieldName="&quot;Code&quot;"
@@ -299,21 +301,68 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;PrePilot&quot;"
+      SearchFields="&quot;1,prepilot,פיילוט רשות&quot;"
+      Inactive="false"
+      LocalName="&quot;פיילוט רשות&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      EnglishName="&quot;Pilot&quot;"
+      SearchFields="&quot;2,pilot,פיילוט חובה&quot;"
+      Inactive="false"
+      LocalName="&quot;פיילוט חובה&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;Production&quot;"
+      SearchFields="&quot;3,production,ייצור&quot;"
+      Inactive="false"
+      LocalName="&quot;ייצור&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Test&quot;"
+      SearchFields="&quot;4,test,בדיקות&quot;"
+      Inactive="false"
+      LocalName="&quot;בדיקות&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      EnglishName="&quot;PRE Production&quot;"
+      SearchFields="&quot;5,pre production,קדם יצור&quot;"
+      Inactive="false"
+      LocalName="&quot;קדם יצור&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsEnvoirmentType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsEnvoirmentType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

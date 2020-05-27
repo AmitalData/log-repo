@@ -10,7 +10,7 @@ import { SupplierInvoiceUCRPM } from "../../../../../Customs/EntityPMs/SupplierI
 import { Validator } from "../../../../../Infrastructure/Validators/Validator";
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExporterInvoiceComponent.html',
 })
 

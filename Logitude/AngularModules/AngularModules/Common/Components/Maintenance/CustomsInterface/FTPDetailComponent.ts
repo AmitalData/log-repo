@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FTPDetailComponent.html',
 })
 
@@ -149,14 +149,6 @@ export class FTPDetailComponent extends BaseComponent {
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        if (!this.isINTTRA) {
-            var isValid = this.ValidateHost();
-
-            if (!isValid) {
-                errors.push("Invalid Host");
-            }
-        }
-
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
@@ -164,7 +156,7 @@ export class FTPDetailComponent extends BaseComponent {
             var myService: FTPDetailPMService = new FTPDetailPMService();
 
             if (this.IsNew) {
-                myService.insert(this.EntityPM).subscribe(myResult => {
+                myService.insert(this.EntityPM).subscribe((myResult:any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();
@@ -179,7 +171,7 @@ export class FTPDetailComponent extends BaseComponent {
             }
 
             else {
-                myService.update(this.EntityPM).subscribe(myResult => {
+                myService.update(this.EntityPM).subscribe((myResult:any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();
@@ -193,19 +185,6 @@ export class FTPDetailComponent extends BaseComponent {
                 });
             }
         }
-    }
-
-    private ValidateHost() {
-        var isValid = false;
-
-        if (!AppTool.IsNullOrEmpty(this.Host)) {
-            var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-            if (this.Host.match(ipformat)) {
-                isValid = true;
-            }
-        }
-
-        return isValid
     }
 
     private myCloner: Cloner;

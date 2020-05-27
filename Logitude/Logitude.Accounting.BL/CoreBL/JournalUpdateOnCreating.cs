@@ -33,16 +33,16 @@ namespace Logitude.Accounting.BL.CoreBL
         public void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
         {
 
-            
-            
+
+
             entityPM.Id = //IdCounter.GetNumber(
-                
+
                 // new IdCounterWrapper().GetNumber(
                 //GetNumberJournal(), 
                 IdCounterWrapperGetNumber(entityPM.Tenant);
 
-            
-            entityPM.JournalNumber = 
+
+            entityPM.JournalNumber =
                 //(new CodeCounterWrapper()).GetNumber(GetCodeNumberJournal(), 
                 CodeCounterWrapperGetNumber(
                 entityPM.Tenant).ToString();
@@ -58,29 +58,53 @@ namespace Logitude.Accounting.BL.CoreBL
             AddAcitivityLog(entityPM, loggedContactId, ObjectTableId);
 
 
-            
+            var myAccountingEntityDetails = new AccountingEntityDetails();
+            var myAccEntityReconciliation10 = myAccountingEntityDetails
+                .GetAll()
+                .FirstOrDefault(r => r.EnglishName =="Adjustment");
+
+
             if (entityPM.TypeCode == "0" && entityPM.AccountingEntityReference == null) // Manual
             {
-                entityPM.AccountingEntityReference = entityPM.JournalNumber;
+                if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
+                {
+                    //entityPM.AccountingEntityReference = will be enter WhileStreaming ;
+ 
+                }
+                else
+                {
+                    entityPM.AccountingEntityReference = entityPM.JournalNumber;
+                }
             }
             var DateTimeNow = GetDateTimeNow();
-            
-            if(entityPM.CreateDate == null)
+
+            if (entityPM.CreateDate == null)
                 entityPM.CreateDate = DateTimeNow;
 
-            if(entityPM.UpdateDate == null)
+            if (entityPM.UpdateDate == null)
                 entityPM.UpdateDate = DateTimeNow;
 
-            if(entityPM.UpdatedByUserId == null)
+            ClearDMYByUserId(entityPM, loggedContactId);
+            if (entityPM.UpdatedByUserId == null)
                 entityPM.UpdatedByUserId = loggedContactId;
 
-            if(entityPM.CreatedByUserId == null)
+            if (entityPM.CreatedByUserId == null)
                 entityPM.CreatedByUserId = loggedContactId;
 
-
-
             entityPM.IsVoided = entityPM.IsVoided ?? false;
-            if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityId)) entityPM.AccountingEntityId = entityPM.Id;
+            if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityId))
+            {
+                if (myAccEntityReconciliation10.Code == entityPM.AccountingEntityCode)
+                {
+                    //do not set  entityPM.AccountingEntityId!!! will be enter WhileStreaming 
+ 
+                }
+                else
+                {
+                    entityPM.AccountingEntityId = entityPM.Id;
+                }
+                
+            }
             if (String.IsNullOrWhiteSpace(entityPM.TypeCode)) entityPM.TypeCode = "0"; //Manual
             if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityCode)) entityPM.AccountingEntityCode = "1"; //Journal
             if (String.IsNullOrWhiteSpace(entityPM.CreatedByUserId)) entityPM.CreatedByUserId = AuthenticationUtil.GetAuthenticatedUser();// "1-14733"; //Alex //COMPILE//
@@ -97,6 +121,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
                 foreach (var item in entityPM.JournalReconciles)
+                {
+
+                    item.JournalId = entityPM.Id;
+
+                }
+                foreach (var item in entityPM.JournalExternalReconciles)
                 {
 
                     item.JournalId = entityPM.Id;
@@ -122,6 +152,27 @@ namespace Logitude.Accounting.BL.CoreBL
             //    Case_2(entityPM);
             //}
 
+        }
+
+        public virtual void ClearDMYByUserId(JournalPM entityPM, string loggedContactId)
+        {
+            ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+
+
+            var contact = contactRep.GetSingleContact(entityPM.UpdatedByUserId, entityPM.Tenant);
+            if (contact == null)
+            {
+                entityPM.UpdatedByUserId = null;
+            }
+
+            contact = contactRep.GetSingleContact(entityPM.CreatedByUserId, entityPM.Tenant);
+            if (contact == null)
+            {
+                entityPM.CreatedByUserId = null;
+            }
+
+
+            
         }
 
         public virtual void AddAcitivityLog(JournalPM entityPM, string loggedContactId, string ObjectTableId)

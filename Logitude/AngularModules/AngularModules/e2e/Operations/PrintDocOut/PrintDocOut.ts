@@ -10,10 +10,22 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-       // this.helper.waitElementByIDPresence(expectedId);
-       this.helper.ItemsPresent(expectedId);
-        if(closePopup) {
-            this.helper.WaitByCssStringAndClick('.Button', 'Close');
-        }   
+        this.helper.WaitBusyIndicator();
+       this.helper.WaitEditComponentBusyIndicator();
+        
+        if (closePopup) {
+            this.helper.ItemsPresentWithOutClick(expectedId);
+           this.helper.WaitByCssStringAndClick('.Button', 'Close'); // Edit Component
+          //  this.helper.WaitByIdAndClick('closeButtonId')
+
+           this.helper.WaitBusyIndicator(); // Logiude Window
+           this.helper.WaitEditComponentBusyIndicator(); // Edit Component
+        } else {
+            
+             this.helper.WaitEditComponentBusyIndicator(); // Edit Component
+             this.helper.WaitBusyIndicator(); // window component
+             this.helper.WaitByIdAndClick('MessageWindow_Ok_0'); // Message window
+           // console.log('Try to click OK ');
+        }
     }
 }

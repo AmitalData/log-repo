@@ -39,11 +39,11 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreditAccountId).HasColumnName("CreditAccountId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.DocumentDate).HasColumnName("DocumentDate");
+            this.Property(t => t.DocumentDate).HasColumnName("DocumentDate").IsRequired();
 
             this.Property(t => t.AccountingDate).HasColumnName("AccountingDate").IsRequired();
 
-            this.Property(t => t.DueDate).HasColumnName("DueDate");
+            this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
 
             this.Property(t => t.LocalAmount).HasColumnName("LocalAmount").HasPrecision(16, 2);
 
@@ -59,13 +59,15 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Reference3).HasColumnName("Reference3").HasMaxLength(30).IsUnicode(true);
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.ExternalOpenAmount).HasColumnName("ExternalOpenAmount").HasPrecision(16, 2);
 
             this.Property(t => t.ExternalReconcileNumber).HasColumnName("ExternalReconcileNumber").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsExternalReconcile).HasColumnName("IsExternalReconcile");
+
+            this.Property(t => t.ActionId).HasColumnName("ActionId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

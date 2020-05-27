@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג פטור מהיטל&quot;"
   DefaultText="&quot;Trade Levy Exampt Type&quot;"
-  Code="&quot;9264&quot;"
-  Name="&quot;Customs.TradeLevyExamptType Query Group&quot;"
+  Code="&quot;TLQG&quot;"
+  Name="&quot;Customs.TradeLevyExamptType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;a2988850-edb4-4619-859e-15bcd9d7f026&quot;"
     FieldName="&quot;Code&quot;"
@@ -306,21 +308,85 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;1&quot;"
+      SearchFields="&quot;1,'כלל הצמצום חל על סחורה זו'&quot;"
+      Inactive="false"
+      LocalName="&quot;'כלל הצמצום חל על סחורה זו'&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;TradeLevyExamptType&quot;"
+    ObjectTableName="&quot;Customs.TradeLevyExamptType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.TradeLevyExamptType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;TLQG&quot;"
+    QueryGroupName="&quot;Customs.TradeLevyExamptType&quot;"
+    LocalTextCode="&quot;סוג פטור מהיטל&quot;"
+    TextCode="&quot;Trade Levy Exampt Type&quot;"
+    TextCodeCode="&quot;Customs.TradeLevyExamptType.Q.TradeLevyExamptTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;TRADELEVYEXAMPT&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.TradeLevyExamptType.Features.TradeLevyExamptType&quot;"
+    FeatureDefaultText="&quot;Trade Levy Exampt Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;TradeLevyExamptType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;TradeLevyExamptType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;TradeLevyExamptType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;TradeLevyExamptType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.TradeLevyExamptType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.TradeLevyExamptType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -1,7 +1,7 @@
 <style>
     .tab-footer {
         background: #f7f7f7;
-        height: 115px;
+        height: 87px;
         border-radius: 7px;
         border-bottom-left-radius: unset;
         margin-right: -1px;
@@ -331,8 +331,10 @@
     <tr>
         <td>
             <div class="TableHolder">
+                <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
+                                'GLAccounts.O.GLAccountIsControl' | TextCodeTranslationPipe }}</div>
                 <table>
-                    <tr class="TabTitleRow">
+                    <!-- <tr class="TabTitleRow">
                         <td style="width: 300px;">{{'Accounting.General.O.Transactions' | TextCodeTranslationPipe}}</td>
                         <td>
                             <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
@@ -340,18 +342,12 @@
                             <div *ngIf="!isControlAccount" style="width: 300px;"></div>
                         </td>
                         <td style="width: 220px;">
-                            <!--<div class="Warning" style="text-align: center;width: 220px; margin: 5px;">
-                                {{OpenReconciliationMessage}}
-                            </div>-->
                         </td>
                         <td style="width: 120px;">
-                            <!--<div style="width: 110px; float: right;">
-                                <button class="Button" [disabled]="isControlAccount || reconciliationCount == 0" (click)="ReconcileButtonClicked()">{{'Accounting.General.O.Reconcile' | TextCodeTranslationPipe}} {{ '(' + reconciliationCount + ')'}}</button>
-                            </div>-->
                         </td>
 
 
-                    </tr>
+                    </tr> -->
 
                     <!-- Filters and Balance -->
                     <tr style="height: 0px;">
@@ -385,7 +381,7 @@
 
                                                 <td style="width: 90px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [DataContext]="DataContext"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
                                                         [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
                                                 </td>
 
@@ -398,7 +394,7 @@
 
                                                 <td style="width: 90px;">
                                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [DataContext]="DataContext"
+                                                        [NoObjectField]="true"  [ForceSubscribe]="true"  [DataContext]="DataContext"
                                                         [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
                                                 </td>
                                                 <td style="width:300px" rowspan="2">
@@ -489,7 +485,7 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td colspan="3" style="" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <td colspan="7" style="" [style.text-align]="isRTL ? 'right' : 'left'">
 
                                                     <span float-start  style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}</span>
 
@@ -534,7 +530,17 @@
                                                 </td>
 
                                                 <td>
-                                                    <div></div>
+                                                    <div [style.float]="isRTL ? 'left' : 'right'" style="width: 220px;padding: 0 5px;">
+                                                        <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
+                                                            (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                                    </div>
+                                                    <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
+                                                        <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
+                                                    </div>
+
+                                                    <div  [style.float]="isRTL ? 'left' : 'right'">
+                                                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -565,17 +571,17 @@
                     </tr>
 
                     <!-- Transactions ToolBar -->
-                    <tr style="height: 40px;">
+                    <tr *ngIf="0" style="height: 40px;">
                         <td colspan="4" style="width: 620px; padding: 4px;">
                             <div [style.float]="isRTL ? 'left' : 'right'" style="width: 220px;padding: 0 5px;">
                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
                                     (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                             </div>
                             <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
-                                <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>
+                                <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
                             </div>
 
-                            <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
+                            <div  [style.float]="isRTL ? 'left' : 'right'">
                                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                             </div>
 
@@ -607,7 +613,7 @@
 
                     <!-- Transactions Grid -->
                     <tr>
-                        <td colspan="5" style="height: 100%; padding-bottom: 115px;">
+                        <td colspan="5" style="height: 100%; padding-bottom: 87px;">
                             <div class="GeneratedGridContainer">
                                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                                     [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"

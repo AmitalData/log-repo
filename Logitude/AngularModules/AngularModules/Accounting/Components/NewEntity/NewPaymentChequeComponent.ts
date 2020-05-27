@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'NewPaymentChequeComponent',
-    moduleId: module.id,
+    
  
     templateUrl: './NewPaymentChequeComponent.html',
 })
@@ -29,6 +29,8 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 export class NewPaymentChequeComponent extends BaseComponent
 {
+  public Currency: any;
+
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
     entityPM: PaymentChequePM = new PaymentChequePM();
@@ -296,7 +298,7 @@ export class NewPaymentChequeComponent extends BaseComponent
 
         this.entityPM.BankAccountGLAccountId = this.BankAccount.DeferredGLAccountId;
         this.entityPM.PaymentChequeStatusCode = "1";
-        this.PaymentChequePMService.insert(this.entityPM).subscribe(myResult => {
+        this.PaymentChequePMService.insert(this.entityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

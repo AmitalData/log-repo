@@ -23,6 +23,9 @@ namespace CommunicationWorkerRole
         //    return (true);
         //}
         public bool IsRunning = true;
+        public int MaxWorkingTimeInMinutes = 0;
+        private DateTime StartTime;
+        public Thread CurrentThread = null;
         public override void StartMe()
         {
             if (CacheManager.CacheWrapper != null) return;
@@ -49,7 +52,8 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-
+                    StartCurrentThreadInternalManager();
+                    StartTime = DateTime.Now;
                     Run();
                     AsyncRun();
                 }
@@ -93,8 +97,55 @@ namespace CommunicationWorkerRole
         {
 
         }
+        void KillThread(Thread currentThread)
+        {
+            try
+            {
+                this.IsRunning = false;
+                currentThread.Abort();
+            }
+            catch (Exception e)
+            {
+                 
+            } 
+        }
+        private System.Timers.Timer CurrentThreadTimer;
+        void StartCurrentThreadInternalManager()
+        {
+            if (CurrentThreadTimer == null)
+            {
+                this.CurrentThreadTimer = new System.Timers.Timer();
 
-        
+                TimeSpan t = new TimeSpan(0, 0, 30);
+                CurrentThreadTimer.Interval = (int)t.TotalMilliseconds;
+                CurrentThreadTimer.Stop();
+                CurrentThreadTimer.Elapsed += CurrentThreadTimer_Elapsed;
+                CurrentThreadTimer.Start();
+            }
+        }
+
+        private void CurrentThreadTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            //Thread CurrentThread = RunningThreads.Where(a => a.Name == this.ThreadName).FirstOrDefault();
+
+
+            if (CurrentThread != null && CurrentThread.IsAlive)
+            {
+                if (CheckIsMaxWorkingTimeInMinutesExceeded())
+                {
+                    KillThread(CurrentThread);
+                }
+            }
+        }
+        private bool CheckIsMaxWorkingTimeInMinutesExceeded()
+        {
+            int RunningPeriod = (DateTime.Now - StartTime).Minutes;
+            if (MaxWorkingTimeInMinutes > 0 && RunningPeriod > MaxWorkingTimeInMinutes)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
 

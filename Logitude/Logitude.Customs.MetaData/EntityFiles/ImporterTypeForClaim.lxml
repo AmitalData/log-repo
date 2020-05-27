@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;28e13b24-d3c2-4422-9039-3e8e31820a5d&quot;"
     FieldName="&quot;Code&quot;"
@@ -298,34 +300,89 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      LocalName="&quot;עולה חדש&quot;"
+      Inactive="false"
+      SearchFields="&quot;1,עולה חדש&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      LocalName="&quot;תושב חוזר&quot;"
+      Inactive="false"
+      SearchFields="&quot;2,תושב חוזר&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      LocalName="&quot;תייר&quot;"
+      Inactive="false"
+      SearchFields="&quot;3,תייר&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      LocalName="&quot;שגרירות&quot;"
+      Inactive="false"
+      SearchFields="&quot;4,שגרירות&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      LocalName="&quot;חייל&quot;"
+      Inactive="false"
+      SearchFields="&quot;5,חייל&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      LocalName="&quot;יבוא אישי&quot;"
+      Inactive="false"
+      SearchFields="&quot;6,יבוא אישי&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      LocalName="&quot;סוכן מכס&quot;"
+      Inactive="false"
+      SearchFields="&quot;7,סוכן מכס&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      LocalName="&quot;יבואן מסחרי&quot;"
+      Inactive="false"
+      SearchFields="&quot;8,יבואן מסחרי&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      LocalName="&quot;מלכ&quot;ר&quot;"
+      Inactive="false"
+      SearchFields="&quot;9,מלכ&quot;ר&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;ImporterTypeForClaim&quot;"
-    TextCode="&quot;ImporterTypeForClaimQuery&quot;"
-    QueryGroupCode="&quot;4b8d&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.ImporterTypeForClaim&quot;"
-    QuerySection="&quot;Customs.ImporterTypeForClaim&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ImporterTypeForClaim&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;4b8d&quot;"
+    QueryGroupName="&quot;Customs.ImporterTypeForClaim Query Group&quot;"
+    TextCode="&quot;ImporterTypeForClaimQuery&quot;"
+    TextCodeCode="&quot;ImporterTypeForClaim.Q.ImporterTypeForClaim&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ImporterTypeForClaim.Q.ImporterTypeForClaim&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;ImporterTypeForClaim.Features.ImporterTypeForClaim&quot;"
+    FeatureDefaultText="&quot;ImporterTypeForClaim&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ImporterTypeForClaim&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;ImporterTypeForClaim&quot;" />
       <QueryColumn
-        QueryCode="&quot;ImporterTypeForClaim&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ImporterTypeForClaim&quot;" />
       <QueryColumn
-        QueryCode="&quot;ImporterTypeForClaim&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ImporterTypeForClaim&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -333,17 +390,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ImporterTypeForClaim&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ImporterTypeForClaim&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

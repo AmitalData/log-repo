@@ -13,7 +13,6 @@ import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPe
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationListTemplate.html',
 })
 

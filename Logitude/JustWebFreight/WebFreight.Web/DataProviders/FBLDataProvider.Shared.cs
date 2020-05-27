@@ -136,6 +136,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAlways { get; set; }
         public string PreCarriageBy { get; set; }
         public string PreCarriageFromPort { get; set; }
+        public string PreCarriageVesselName { get; set; }
 
         public double? OpenReceivablesInLocalCurrency { get; set; }
         public double? OpenReceivablesInProfitCurrency { get; set; }
@@ -151,7 +152,7 @@ namespace WebFreight.Web.DataProviders
         public string TransshipmentsVesselNameAndNumber { get; set; }
                
         public DateTime? MainCarriageFirstLegETD { get; set; } //(this should print the ETD date of the first main carriage leg)
-        public double? Temperature { get; set; } //(shows the temperature set on the first container package added on the shipment)
+        public string Temperature { get; set; } //(shows the temperature set on the first container package added on the shipment)
         public string AgentPrimaryContactDetails { get; set; } // Should print in the following way: ContactName, mail: Contact Email, Tel: Contact Tel
         public string FinalDestination { get; set; }
         public string VoyageNumber { get; set; }
@@ -233,6 +234,13 @@ namespace WebFreight.Web.DataProviders
         public string TenantCAAT { get; set; }
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
+        public string ConfirmationNotes { get; set; }
+        public string CreatedBy { get; set; }
+        public string PickUpInstructions { get; set; }
+        public string DeliveryInstructions { get; set; }
+        public string Broker { get; set; }
+        public string BrokerName { get; set; }
+        public string CustomsAgent { get; set; }
     } 
     
     public class ReceivablesCharges

@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -955,6 +956,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 break;
                             }
+                        case "AC"://Accounting Partner
+                            {
+                                if (args.AccountingPartner != null)
+                                {
+                                    if (args.AccountingPartner.Id == null)
+                                    {
+                                        this.CreateAccountingPartner(args);
+                                    }
+
+                                    else
+                                    {
+                                        this.UpdateAccountingPartner(args);
+                                    }
+                                }
+
+                                break;
+                            }
                     }
 
                     scope.Complete();
@@ -1451,7 +1469,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
             VendorService myPartnerService = new VendorService(objectContext, args.Tenant);
 
-            if (args.Vendor.Addresses.Count == 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count == 0)
             {
                 if (args.Address != null)
                 {
@@ -1459,7 +1477,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
-            if (args.Vendor.Contacts.Count == 0)
+            if (args.Vendor.Contacts != null && args.Vendor.Contacts.Count == 0)
             {
                 if (args.Contact != null)
                 {
@@ -1469,12 +1487,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             myPartnerService.Create(args.Vendor);
 
-            if (args.Vendor.Addresses.Count > 0)
+            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count > 0)
             {
                 args.AddressId = args.Vendor.Addresses.FirstOrDefault().Id;
             }
 
-            if (args.Vendor.Contacts.Count > 0)
+            if (args.Vendor.Contacts != null &&  args.Vendor.Contacts.Count > 0)
             {
                 args.ContactId = args.Vendor.Contacts.FirstOrDefault().Id;
             }
@@ -2107,6 +2125,105 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private void CreateAccountingPartner(PartnerServicePM args)
+        {
+            SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", args.Tenant);
+
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+            AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count == 0)
+            {
+                if (args.Address != null)
+                {
+                    args.AccountingPartner.Addresses.Add(args.Address);
+                }
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count == 0)
+            {
+                if (args.Contact != null)
+                {
+                    args.AccountingPartner.Contacts.Add(args.Contact);
+                }
+            }
+
+            myPartnerService.Create(args.AccountingPartner);
+
+            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count > 0)
+            {
+                args.AddressId = args.AccountingPartner.Addresses.FirstOrDefault().Id;
+            }
+
+            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count > 0)
+            {
+                args.ContactId = args.AccountingPartner.Contacts.FirstOrDefault().Id;
+            }
+
+            args.PartnerId = args.AccountingPartner.Id;
+
+        }
+        private void UpdateAccountingPartner(PartnerServicePM args)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
+
+            if (args.IsPartnerDirty)
+            {
+                SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", args.Tenant);
+
+                if (args.AccountingPartner.IsFirstContactToAdd)
+                {
+                    args.AccountingPartner.PrimaryContactId = args.ContactId;
+                }
+
+                AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+                myPartnerService.Update(args.AccountingPartner);
+            }
+
+        }
+
         public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
         {
             try
@@ -2252,13 +2369,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetCustomersQuickSearch(string SearchText)
+        public HttpResponseMessage GetCustomersQuickSearch([FromUri] ApiQueryFilters filters)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+
+                string SearchText = filters.Filter10Value;
 
                 PartnersDomainService domainService = new PartnersDomainService();
                 List<CustomerList> myResult = domainService.GetCustomersQuickSearch(tenant, SearchText);
@@ -2533,6 +2652,160 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, cardContactProducts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllCarrierAreasByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(tenant);
+                List<CarrierAreaPM> carrierAreas = carrierAreaQuery.GetCarrierAreasPMsByCarrierId(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, carrierAreas);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveCarrierAreaFromCarrier(string areaId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                CarrierAreaRepository carrierAreaRepository = new CarrierAreaRepository(commonDataContext);
+                CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(commonDataContext);
+
+                CarrierArea carrierArea = carrierAreaRepository.GetSingleCarrierArea(areaId, tenant);
+
+                if(carrierArea != null)
+                {
+                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(areaId, tenant);
+                    if(areasPorts != null && areasPorts.Count > 0)
+                    {
+                        foreach (CarrierAreasPort item in areasPorts)
+                        {
+                            carrierAreasPortRepository.Remove(item);
+                        }
+                    }
+
+                    carrierAreaRepository.Remove(carrierArea);
+                    commonDataContext.SaveChanges();
+                }               
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetInUseWarehouse(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                PartnersDomainService partnersDomain = new PartnersDomainService();
+
+                bool myResult = false;
+                
+                CardRepository rep = new CardRepository(tenant);
+                List<Card> cards = rep.GetWarehouseCards(tenant).ToList();
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    if (cards.Where(p => p.Code == code).FirstOrDefault() != null)
+                    {
+                        myResult = true;
+                    }
+                    else
+                    {
+                        myResult = false;
+                    }
+                }
+                else
+                {
+                    myResult = false;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllTariffTranslationsByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                TariffCarrierTranslationQuery myQuery = new TariffCarrierTranslationQuery(tenant);
+                List<TariffCarrierTranslationPM> myResult = myQuery.GetTranslationsByCarrier(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveTranslationFromCarrier(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                TariffCarrierTranslationRepository myRepository = new TariffCarrierTranslationRepository(commonDataContext);
+                
+                TariffCarrierTranslation translation = myRepository.GetSingleTariffCarrierTranslation(id, tenant);
+
+                if (translation != null)
+                {
+                    myRepository.Remove(translation);
+                    commonDataContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
             catch (Exception ex)

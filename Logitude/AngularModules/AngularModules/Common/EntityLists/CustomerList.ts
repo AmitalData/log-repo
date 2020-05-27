@@ -106,6 +106,8 @@ export class CustomerList {
 		LastCallDate: Date;
 		LastMeetingDate: Date;
 		LastOpportunityDate: Date;
+		LastOpportunitySubject: string;
+		LastOpportunityStatus: string;
 		FirstInvoiceDate: Date;
 		FirstShipmentDate: Date;
 		LastShipmentDate: Date;
@@ -140,5 +142,8 @@ export class CustomerList {
 		Phone: string;
 		CompetitorFields: string;
 		LeadSourceName: string;
+		CreatedByPartner: string;
+		StateName: string;
+		StorageFreeDays: number;
 	
 }

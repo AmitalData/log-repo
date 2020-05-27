@@ -93,6 +93,13 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsAutonomy { get; set; }
         public string CalculatedLocalName { get; set; }
         public string CalculatedEnglishName { get; set; }
+        public string CreatedByPartner { get; set; }
+        public decimal OpenShipments { get; set; }
+        public string BusinessPhone { get; set; }
 
+
+        public int? StorageFreeDays { get; set; }
+        public string RankId { get; set; }
+        public string IndustryId { get; set; }
     }
 }

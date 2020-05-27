@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.PhysicalChecks&quot;"
-  OldDBTableName="&quot;Customs.PhysicalChecks&quot;"
+  DBTableOldNames="Customs.PhysicalChecks"
   ObjectTableSingular="&quot;Customs.PhysicalCheck&quot;"
   ObjectTablePlural="&quot;Customs.PhysicalChecks&quot;"
   HasCustomFilter="false"
@@ -37,8 +37,8 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;בדיקה פיזית&quot;"
   DefaultText="&quot;Physical Check&quot;"
-  Code="&quot;6fb1&quot;"
-  Name="&quot;Customs.PhysicalCheck Query Group&quot;"
+  Code="&quot;PHCK&quot;"
+  Name="&quot;Customs.PhysicalCheck&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -58,11 +58,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;315584b2-bbae-4683-a0c7-fd09d133d853&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -112,12 +114,13 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -125,6 +128,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -135,7 +139,7 @@
   <field
     Id="&quot;f9bdc3a9-4231-428b-b160-ffc30f45d098&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -185,12 +189,13 @@
     ListLocalDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -198,6 +203,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -208,7 +214,7 @@
   <field
     Id="&quot;0e964a20-c229-49fe-99b9-607c829bc296&quot;"
     FieldName="&quot;DeclarationId&quot;"
-    OldFieldName="&quot;DeclarationId&quot;"
+    OldNames="DeclarationId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -259,6 +265,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="Declaration"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Declaration"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -273,6 +280,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -283,7 +291,7 @@
   <field
     Id="&quot;2830cb69-9f18-4cc3-be62-1a82d17c4277&quot;"
     FieldName="&quot;StorageSiteCode&quot;"
-    OldFieldName="&quot;StorageSiteCode&quot;"
+    OldNames="StorageSiteCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -336,6 +344,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="SiteLookup"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="StorageSite"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -350,6 +359,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -360,7 +370,7 @@
   <field
     Id="&quot;2de58414-ba21-47e6-9790-47bba0de230d&quot;"
     FieldName="&quot;StorageSiteName&quot;"
-    OldFieldName="&quot;StorageSiteName&quot;"
+    OldNames="StorageSiteName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -411,6 +421,7 @@
     ListLocalDefaultText="&quot;אתר אחסון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -424,6 +435,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -434,7 +446,7 @@
   <field
     Id="&quot;66e5032c-79a0-4ae1-8aa4-02cc219d6e53&quot;"
     FieldName="&quot;CheckSiteCode&quot;"
-    OldFieldName="&quot;CheckSiteCode&quot;"
+    OldNames="CheckSiteCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -487,6 +499,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="SiteLookup"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CheckSite"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -501,6 +514,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -511,7 +525,7 @@
   <field
     Id="&quot;e9a7dd05-c96a-406a-8f04-2bf5a5502251&quot;"
     FieldName="&quot;CheckSiteName&quot;"
-    OldFieldName="&quot;CheckSiteName&quot;"
+    OldNames="CheckSiteName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -562,6 +576,7 @@
     ListLocalDefaultText="&quot;אתר בדיקה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -575,6 +590,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -585,7 +601,7 @@
   <field
     Id="&quot;4fa94286-76af-4d76-929e-5b6f0136752d&quot;"
     FieldName="&quot;QueueTypeCode&quot;"
-    OldFieldName="&quot;QueueTypeCode&quot;"
+    OldNames="QueueTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -638,6 +654,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CheckQueueType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CheckQueueType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -652,6 +669,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -662,7 +680,7 @@
   <field
     Id="&quot;ec5a943a-45e9-45d7-bcdc-2adfab16e833&quot;"
     FieldName="&quot;QueueTypeName&quot;"
-    OldFieldName="&quot;QueueTypeName&quot;"
+    OldNames="QueueTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -713,6 +731,7 @@
     ListLocalDefaultText="&quot;סוג תור&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -726,6 +745,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -736,7 +756,7 @@
   <field
     Id="&quot;3b48974b-c35e-464c-b787-4f8adb9d447d&quot;"
     FieldName="&quot;OperationCode&quot;"
-    OldFieldName="&quot;OperationCode&quot;"
+    OldNames="OperationCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -744,7 +764,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.PhysicalCheckOperation&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -789,6 +809,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="PhysicalCheckOperation"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Operation"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -803,6 +824,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -813,7 +835,7 @@
   <field
     Id="&quot;99cc94f1-f1d8-42a0-8330-e1569b9c5006&quot;"
     FieldName="&quot;CheckId&quot;"
-    OldFieldName="&quot;CheckId&quot;"
+    OldNames="CheckId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -864,6 +886,7 @@
     ListLocalDefaultText="&quot;מספר בדיקה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -877,6 +900,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -887,7 +911,7 @@
   <field
     Id="&quot;063415e7-e96f-4fd6-90fc-d112b232466d&quot;"
     FieldName="&quot;EntityTypeId&quot;"
-    OldFieldName="&quot;EntityTypeId&quot;"
+    OldNames="EntityTypeId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -936,6 +960,7 @@
     ListLableDefaultText="&quot;EntityType&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -949,6 +974,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -959,7 +985,7 @@
   <field
     Id="&quot;37ecb72a-f1e0-4a8d-8de6-ecd853553a0d&quot;"
     FieldName="&quot;ContainerNubmer&quot;"
-    OldFieldName="&quot;ContainerNubmer&quot;"
+    OldNames="ContainerNubmer"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1010,6 +1036,7 @@
     ListLocalDefaultText="&quot;מספר מכולה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1023,6 +1050,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1033,7 +1061,7 @@
   <field
     Id="&quot;ca162ce9-6351-468e-a1fd-64f54634bd63&quot;"
     FieldName="&quot;OpenDate&quot;"
-    OldFieldName="&quot;OpenDate&quot;"
+    OldNames="OpenDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1085,6 +1113,7 @@
     ListLocalDefaultText="&quot;תאריך הפניה לבדיקה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1098,6 +1127,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1108,7 +1138,7 @@
   <field
     Id="&quot;17627ae8-a5ec-45a2-bb74-7dde8e984deb&quot;"
     FieldName="&quot;LimitDate&quot;"
-    OldFieldName="&quot;LimitDate&quot;"
+    OldNames="LimitDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1160,6 +1190,7 @@
     ListLocalDefaultText="&quot;תאריך הבדיקה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1173,6 +1204,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1183,7 +1215,7 @@
   <field
     Id="&quot;7f5453ff-2b80-489d-b78c-cf539fd8cdf4&quot;"
     FieldName="&quot;CargoIdentifierKey1&quot;"
-    OldFieldName="&quot;CargoIdentifierKey1&quot;"
+    OldNames="CargoIdentifierKey1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1234,6 +1266,7 @@
     ListLocalDefaultText="&quot;מזהה מטען 1&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1247,6 +1280,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1257,7 +1291,7 @@
   <field
     Id="&quot;9364761a-cf41-41c6-acfa-871f9fc910d9&quot;"
     FieldName="&quot;CargoIdentifierKey2&quot;"
-    OldFieldName="&quot;CargoIdentifierKey2&quot;"
+    OldNames="CargoIdentifierKey2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1308,6 +1342,7 @@
     ListLocalDefaultText="&quot;מזהה מטען 2&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1321,6 +1356,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1331,7 +1367,7 @@
   <field
     Id="&quot;3a71bfe2-e8cf-4c65-bf74-6a155f6d0e87&quot;"
     FieldName="&quot;CargoIdentifierKey3&quot;"
-    OldFieldName="&quot;CargoIdentifierKey3&quot;"
+    OldNames="CargoIdentifierKey3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1382,6 +1418,7 @@
     ListLocalDefaultText="&quot;מזהה מטען 3&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1395,6 +1432,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1405,7 +1443,7 @@
   <field
     Id="&quot;653d0c56-7004-40b3-900f-4b267a4cffbf&quot;"
     FieldName="&quot;RowNumber&quot;"
-    OldFieldName="&quot;RowNumber&quot;"
+    OldNames="RowNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1456,6 +1494,7 @@
     ListLocalDefaultText="&quot;סידורי במטען&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1469,6 +1508,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1479,7 +1519,7 @@
   <field
     Id="&quot;94e8bae8-a986-41ca-aeab-f87b20a49a07&quot;"
     FieldName="&quot;CheckEssence&quot;"
-    OldFieldName="&quot;CheckEssence&quot;"
+    OldNames="CheckEssence"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1530,6 +1570,7 @@
     ListLocalDefaultText="&quot;מהות הבדיקה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1543,6 +1584,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1553,7 +1595,7 @@
   <field
     Id="&quot;3886b03e-18ff-4b55-a276-f619b0df319f&quot;"
     FieldName="&quot;IsClosed&quot;"
-    OldFieldName="&quot;IsClosed&quot;"
+    OldNames="IsClosed"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1606,6 +1648,7 @@
     ListLocalDefaultText="&quot;פתוח/סגור&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1619,6 +1662,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1629,7 +1673,7 @@
   <field
     Id="&quot;3bbb07da-1ad5-4b42-9278-930e9c30fd5a&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1683,6 +1727,7 @@
     HelpLocalDefaultText="&quot;חיפוש על ידי :&#xA;1: הצהרה לא &#xA;2: שם לקוח &#xA;3: המכל לא&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1696,6 +1741,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1706,7 +1752,7 @@
   <field
     Id="&quot;055e6b3b-84ae-438a-872e-b29a506541da&quot;"
     FieldName="&quot;StatusMessageCode&quot;"
-    OldFieldName="&quot;StatusMessageCode&quot;"
+    OldNames="StatusMessageCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1714,7 +1760,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.PhysicalCheckStatusMessage&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1759,6 +1805,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="PhysicalCheckStatusMessage"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="StatusMessage"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1773,6 +1820,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1783,7 +1831,7 @@
   <field
     Id="&quot;ed8cc365-953d-4263-b693-90911e38d611&quot;"
     FieldName="&quot;CargoTypeCode&quot;"
-    OldFieldName="&quot;CargoTypeCode&quot;"
+    OldNames="CargoTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1836,6 +1884,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CheckEntityType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CheckEntityType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1850,6 +1899,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1860,7 +1910,7 @@
   <field
     Id="&quot;ab181595-72a5-4abf-b41b-997175f97687&quot;"
     FieldName="&quot;InitiatorTypeCode&quot;"
-    OldFieldName="&quot;InitiatorTypeCode&quot;"
+    OldNames="InitiatorTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1913,6 +1963,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CheckRepresentativeType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CheckRepresentativeType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1927,6 +1978,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1937,7 +1989,7 @@
   <field
     Id="&quot;79733e5b-bd27-4301-a8ed-5e32bbf9235a&quot;"
     FieldName="&quot;ImporterNumber&quot;"
-    OldFieldName="&quot;ImporterNumber&quot;"
+    OldNames="ImporterNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1988,6 +2040,7 @@
     ListLocalDefaultText="&quot;מספר יבואן&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2001,6 +2054,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2011,7 +2065,7 @@
   <field
     Id="&quot;ffa6d7dc-d4de-4464-bb95-2579e9da1c6e&quot;"
     FieldName="&quot;CargoIdentifierTypeCode&quot;"
-    OldFieldName="&quot;CargoIdentifierTypeCode&quot;"
+    OldNames="CargoIdentifierTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2064,6 +2118,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CargoIdentifireType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CargoIdentifireType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2078,6 +2133,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2088,7 +2144,7 @@
   <field
     Id="&quot;f03936d6-8cdb-44c6-a35a-0507926d29d4&quot;"
     FieldName="&quot;OperationName&quot;"
-    OldFieldName="&quot;OperationName&quot;"
+    OldNames="OperationName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2139,6 +2195,7 @@
     ListLocalDefaultText="&quot;קוד פעולה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2152,6 +2209,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2162,7 +2220,7 @@
   <field
     Id="&quot;8fd05cb6-f761-4232-a470-fca21e3db181&quot;"
     FieldName="&quot;DeclarationNo&quot;"
-    OldFieldName="&quot;DeclarationNo&quot;"
+    OldNames="DeclarationNo"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2213,6 +2271,7 @@
     ListLocalDefaultText="&quot;מספר הצהרה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2226,6 +2285,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2236,7 +2296,7 @@
   <field
     Id="&quot;d29a1004-baca-4819-9024-cc391ef87277&quot;"
     FieldName="&quot;CargoIdentifierTypeName&quot;"
-    OldFieldName="&quot;CargoIdentifierTypeName&quot;"
+    OldNames="CargoIdentifierTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2287,6 +2347,7 @@
     ListLocalDefaultText="&quot;סוג מזהה מטען&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2300,6 +2361,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2310,7 +2372,7 @@
   <field
     Id="&quot;24125d73-b6ca-4ef0-a340-d2861008220a&quot;"
     FieldName="&quot;CheckSiteId&quot;"
-    OldFieldName="&quot;CheckSiteId&quot;"
+    OldNames="CheckSiteId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2359,6 +2421,7 @@
     ListLableDefaultText="&quot;CheckSite&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2372,6 +2435,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2382,7 +2446,7 @@
   <field
     Id="&quot;6b75a61d-997b-46e4-bdfe-bbf92c6ff510&quot;"
     FieldName="&quot;CustomerCode&quot;"
-    OldFieldName="&quot;CustomerCode&quot;"
+    OldNames="CustomerCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2433,6 +2497,7 @@
     ListLocalDefaultText="&quot;קוד לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2446,6 +2511,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2456,7 +2522,7 @@
   <field
     Id="&quot;706128a3-b463-4985-bc51-bd1dcf9bb6a6&quot;"
     FieldName="&quot;CustomerName&quot;"
-    OldFieldName="&quot;CustomerName&quot;"
+    OldNames="CustomerName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2506,6 +2572,7 @@
     ListLocalDefaultText="&quot;שם לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2519,6 +2586,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2529,7 +2597,7 @@
   <field
     Id="&quot;ec19bd33-4bb5-4b10-8756-3c1583d0d839&quot;"
     FieldName="&quot;CustomFileNo&quot;"
-    OldFieldName="&quot;CustomFileNo&quot;"
+    OldNames="CustomFileNo"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2579,6 +2647,7 @@
     ListLocalDefaultText="&quot;תיק עמילות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2592,6 +2661,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2602,7 +2672,7 @@
   <field
     Id="&quot;d50c353f-53fc-4b09-932b-740dfecec11f&quot;"
     FieldName="&quot;StatusMessageName&quot;"
-    OldFieldName="&quot;StatusMessageName&quot;"
+    OldNames="StatusMessageName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2651,6 +2721,7 @@
     ListLocalDefaultText="&quot;סוג הודעה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2664,6 +2735,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2674,7 +2746,7 @@
   <field
     Id="&quot;04d2a932-e7c8-44bb-b40b-a18777b647b1&quot;"
     FieldName="&quot;ConcurrencyGUID&quot;"
-    OldFieldName="&quot;ConcurrencyGUID&quot;"
+    OldNames="ConcurrencyGUID"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2718,6 +2790,7 @@
     DefaultText="&quot;ConcurrencyGUID&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2731,6 +2804,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2741,7 +2815,7 @@
   <field
     Id="&quot;602958be-9a16-475b-9c09-ba02b0a7608d&quot;"
     FieldName="&quot;NewConcurrencyGUID&quot;"
-    OldFieldName="&quot;NewConcurrencyGUID&quot;"
+    OldNames="NewConcurrencyGUID"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2785,6 +2859,7 @@
     DefaultText="&quot;NewConcurrencyGUID&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2798,6 +2873,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2808,7 +2884,7 @@
   <field
     Id="&quot;a23a6d6c-e078-4a9b-9d4a-fe24d497698d&quot;"
     FieldName="&quot;IsComprehensiveCheck&quot;"
-    OldFieldName="&quot;IsComprehensiveCheck&quot;"
+    OldNames="IsComprehensiveCheck"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2858,6 +2934,7 @@
     ListLocalDefaultText="&quot;בדיקה מקיפה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2871,6 +2948,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2881,7 +2959,7 @@
   <field
     Id="&quot;cbd4a7e6-2696-43a9-adb2-46b5a49750ff&quot;"
     FieldName="&quot;CheckTypeCode&quot;"
-    OldFieldName="&quot;CheckTypeCode&quot;"
+    OldNames="CheckTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2933,6 +3011,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CheckTypeLookup"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CheckTypeLookup"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2947,6 +3026,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2957,7 +3037,7 @@
   <field
     Id="&quot;8f20acad-fad0-40cf-8c23-69e1ce35bb9c&quot;"
     FieldName="&quot;CheckTypeName&quot;"
-    OldFieldName="&quot;CheckTypeName&quot;"
+    OldNames="CheckTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3006,6 +3086,7 @@
     ListLocalDefaultText="&quot;סוג בדיקה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3019,6 +3100,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3029,7 +3111,7 @@
   <field
     Id="&quot;87450d78-3092-462e-9493-bc3371107ffb&quot;"
     FieldName="&quot;CustomerId&quot;"
-    OldFieldName="&quot;CustomerId&quot;"
+    OldNames="CustomerId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3081,6 +3163,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="Card"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CustomerCard"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -3095,6 +3178,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3105,7 +3189,7 @@
   <field
     Id="&quot;ffa6a0c3-1d93-41f6-9144-db999bb18366&quot;"
     FieldName="&quot;NoEscortRequired&quot;"
-    OldFieldName="&quot;NoEscortRequired&quot;"
+    OldNames="NoEscortRequired"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3154,6 +3238,7 @@
     ListLocalDefaultText="&quot;ללא נוכחות בודק&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3167,6 +3252,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3177,7 +3263,7 @@
   <field
     Id="&quot;88862609-d5d5-4df0-bc0f-1d7a81e46632&quot;"
     FieldName="&quot;VehicleChassisNumber&quot;"
-    OldFieldName="&quot;VehicleChassisNumber&quot;"
+    OldNames="VehicleChassisNumber"
     IsNew="true"
     IsChecked="false"
     IsDeleted="false"
@@ -3227,6 +3313,7 @@
     ListLocalDefaultText="&quot;מס' שלדה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3240,6 +3327,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3250,7 +3338,7 @@
   <field
     Id="&quot;024a7c2e-bcbf-4bd3-a281-015f7b663161&quot;"
     FieldName="&quot;EndDate&quot;"
-    OldFieldName="&quot;EndDate&quot;"
+    OldNames="EndDate"
     IsNew="true"
     IsChecked="false"
     IsDeleted="false"
@@ -3297,6 +3385,7 @@
     FullLocalDefaultText="&quot;מועד סיום הבדיקה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3310,6 +3399,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3317,7 +3407,554 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;OpenChecks&quot;"
+    TextCode="&quot;Open Checks&quot;"
+    LocalTextCode="&quot;בדיקות פתוחות&quot;"
+    QueryGroupCode="&quot;PHCK&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    QuerySection="&quot;Customs.PhysicalCheck&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.PhysicalCheck&quot;"
+    TextCodeCode="&quot;Customs.PhysicalCheck.Q.OpenChecks&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;VehicleChassisNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;QueueTypeName&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;OperationName&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CheckTypeCode&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;CheckTypeName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenChecks&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedChecks&quot;"
+    TextCode="&quot;Closed Checks&quot;"
+    LocalTextCode="&quot;בדיקות סגורות&quot;"
+    QueryGroupCode="&quot;PHCK&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    QuerySection="&quot;Customs.PhysicalCheck&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.PhysicalCheck&quot;"
+    TextCodeCode="&quot;Customs.PhysicalCheck.Q.ClosedChecks&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;QueueTypeName&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;OperationName&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;CheckTypeCode&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CheckTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;VehicleChassisNumber&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedChecks&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;By Upcoming Checks&quot;"
+    TextCode="&quot;All Checks&quot;"
+    LocalTextCode="&quot;כל הבדיקות&quot;"
+    QueryGroupCode="&quot;PHCK&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    QuerySection="&quot;Customs.PhysicalCheck&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.PhysicalCheck&quot;"
+    TextCodeCode="&quot;Customs.PhysicalCheck.Q.AllChecks&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;QueueTypeName&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;OperationName&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;CheckTypeCode&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CheckTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;VehicleChassisNumber&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;Header Screen&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;Customs.PhysicalCheck.HeaderScreen&quot;"
+    NumberOfColumns="4"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;CargoIdentifierTypeName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ScreenName="Header Screen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;Customs.PhysicalCheck.GeneralTabScreen&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="5">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;StorageSiteCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;CheckSiteCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;OperationCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;StatusMessageCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="2"
+        ObjectFieldName="&quot;QueueTypeCode&quot;"
+        ScreenName="General Tab Screen" />
+    </ScreenFields>
+  </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    Code="&quot;PHGC&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.PhysicalCheckAvailableTimesControl&quot;"
+    TextCode="&quot;Customs.PhysicalCheck.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsPhysicalCheck/Components/EditTabs/General/PhysicalCheckGeneralTabComponent&quot;"
+    HtmlComponentName="&quot;PhysicalCheckGeneralTabComponent&quot;"
+    FeatureCode="&quot;GENERAL&quot;"
+    FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    Code="&quot;PHEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;Customs.PhysicalCheck.TH.Events&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    FeatureCode="&quot;EVENTS&quot;"
+    FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Communications&quot;"
+    TabLocalName="&quot;תקשורת&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    Code="&quot;PHCM&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationsControl&quot;"
+    TextCode="&quot;Customs.PhysicalCheck.TH.Communications&quot;"
+    IsPackagable="true"
+    IndexOrder="2"
+    FeatureCode="&quot;COMMUNICATIONS&quot;"
+    FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.Communication&quot;"
+    FeatureDefaultText="&quot;Communication&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Request Sheets&quot;"
+    TabLocalName="&quot;גיליון בקשה&quot;"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    Code="&quot;PHRS&quot;"
+    ControlPath="&quot; &quot;"
+    TextCode="&quot;Customs.PhysicalCheck.TH.RequestSheets&quot;"
+    IsPackagable="true"
+    IndexOrder="3"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
+    HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
+    FeatureCode="&quot;REQUESTSHEET&quot;"
+    FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.RequestSheets&quot;"
+    FeatureDefaultText="&quot;Request Sheets&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
+    <EventType
+      Code="&quot;PCI&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Limit date change&quot;"
+      LocalName="&quot;התקבלו הנחיות לבדיקה פיזית&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PCE&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Inspection End Notice&quot;"
+      LocalName="&quot;הודעה על סיום בדיקה פיזית&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PUI&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Physical Checks Updated&quot;"
+      LocalName="&quot;בדיקה פיזית עודכנה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PUC&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Physical Check Cancelled&quot;"
+      LocalName="&quot;בדיקה פיזית בוטלה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PCF&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Physical Checks Created&quot;"
+      LocalName="&quot;בדיקה פיזית נוצרה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;STC&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Physical Checks Updated&quot;"
+      LocalName="&quot;שונה מועד זימון למשקף&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;SRF&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Inspection End Notice&quot;"
+      LocalName="&quot;החזרת מטען מאתר משקף לאחסון&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;SPR&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;Inspection End Notice&quot;"
+      LocalName="&quot;מטען שוחרר מאתר משקף ללקוח&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
@@ -3325,6 +3962,7 @@
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
       ShortView="true"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -3338,6 +3976,21 @@
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;SFC&quot;"
+      ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+      EnglishName="&quot;file summoned for screening site&quot;"
+      LocalName="&quot;תיק זומן לבדיקה באתר משקף&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -3346,7 +3999,317 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;Customs.PhysicalCheckEdit&quot;"
+    MenuButtonGroupName="&quot;Customs.PhysicalCheckEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;Actions&quot;"
+      DefaultText="&quot;Actions&quot;"
+      MenuButtonType="&quot;dropdownbutton&quot;"
+      IndexOrder="2"
+      LocalDefaultText="&quot;פעולות&quot;"
+      FeatureCode="&quot;PHYSICALCHECKACTIONS&quot;"
+      IsPackagable="true"
+      TextCodeCode="&quot;Customs.PhysicalCheck.B.Actions&quot;"
+      FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.Actions&quot;"
+      FeatureDefaultText="&quot;Actions&quot;">
+      <MenuItem
+        EventCode="&quot;ClosePhysicalCheck&quot;"
+        DefaultText="&quot;Close Physical Check&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;סגירת בדיקה&quot;"
+        FeatureCode="&quot;CLOSEPHYSICALCHECK&quot;"
+        IsPackagable="true"
+        TextCodeCode="&quot;Customs.PhysicalCheck.B.ClosePhysicalCheck&quot;"
+        FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.ClosePhysicalCheck&quot;"
+        FeatureDefaultText="&quot;Close Check&quot;" />
+    </MenuButton>
+  </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CustomsQueries&quot;"
+      DefaultText="&quot;Customs Queries&quot;"
+      LocalDefaultText="&quot;שאילתות מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.PhysicalChecks&quot;"
+      DefaultText="&quot;Physical Checks&quot;"
+      LocalDefaultText="&quot;בדיקות פיסיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.Declarations&quot;"
+      DefaultText="&quot;Declarations&quot;"
+      LocalDefaultText="&quot;הצהרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.FromDate&quot;"
+      DefaultText="&quot;From Date&quot;"
+      LocalDefaultText="&quot; :מתאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.ToDate&quot;"
+      DefaultText="&quot;To Date&quot;"
+      LocalDefaultText="&quot; :עד תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.GetAutomaticDate&quot;"
+      DefaultText="&quot;Get Automatic Date&quot;"
+      LocalDefaultText="&quot;קבל תאריך אוטומטי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.GetAvailableTimeList&quot;"
+      DefaultText="&quot;Get Available Time List&quot;"
+      LocalDefaultText="&quot;קבל רשימת תאריכים זמינים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.XRayAvailableTimes&quot;"
+      DefaultText="&quot;Available Times&quot;"
+      LocalDefaultText="&quot;זמינות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.Response&quot;"
+      DefaultText="&quot;Response&quot;"
+      LocalDefaultText="&quot;תשובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.Request&quot;"
+      DefaultText="&quot;Request&quot;"
+      LocalDefaultText="&quot;בקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.Send&quot;"
+      DefaultText="&quot;Send&quot;"
+      LocalDefaultText="&quot;שלח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.Choose&quot;"
+      DefaultText="&quot;Choose&quot;"
+      LocalDefaultText="&quot;בחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.F.AvailableTimesMessage&quot;"
+      DefaultText="&quot;Getting Available Times List Completed Successfully&quot;"
+      LocalDefaultText="&quot;קבלת רשימת זמינות הושלמה בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.F.AutomaticDateMessage&quot;"
+      DefaultText="&quot;Getting Automatic Date Completed Successfully&quot;"
+      LocalDefaultText="&quot;קבלת תאריך אוטומטי הושלמה בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.F.ChooseDateMessage&quot;"
+      DefaultText="&quot;New Limit Date Is Chosen Successfully&quot;"
+      LocalDefaultText="&quot;תאריך הגבלה חדש נבחר בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CheckIdRequierd&quot;"
+      DefaultText="&quot;Please Select a check id to request check times&quot;"
+      LocalDefaultText="&quot;אנא בחר id סימון כדי לבקש פעמים סימון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CheckSiteRequierd&quot;"
+      DefaultText="&quot;Please Select a check site to request check times&quot;"
+      LocalDefaultText="&quot;אנא בחר אתר המחאה לבקש פעמים סימון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.QueueTypeRequierd&quot;"
+      DefaultText="&quot;Please Select a queue type to request check times&quot;"
+      LocalDefaultText="&quot;אנא בחר סוג התור לבקש פעמים סימון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.FromDateLess&quot;"
+      DefaultText="&quot;From date must be less than to date&quot;"
+      LocalDefaultText="&quot;ממועד חייב להיות פחות מ עד כה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.ByUpComingChecks&quot;"
+      DefaultText="&quot;By UpComing Checks&quot;"
+      LocalDefaultText="&quot;בדיקות פיזיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.WaitingResponse&quot;"
+      DefaultText="&quot;Waiting Response...&quot;"
+      LocalDefaultText="&quot;מחכה תגובה ...&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.SelectFromAvailableTimes&quot;"
+      DefaultText="&quot;Please Select a date from the available times&quot;"
+      LocalDefaultText="&quot;אנא בחר תאריך מתוך פעמים הזמינות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.AskForAnEarlierDate&quot;"
+      DefaultText="&quot;Ask for an earlier date&quot;"
+      LocalDefaultText="&quot;קבל תאריך מוקדם יותר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.AskForAnLaterDate&quot;"
+      DefaultText="&quot;Ask for an later date&quot;"
+      LocalDefaultText="&quot;קבל תאריך מאוחר יותר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.PhysicalCheck&quot;"
+      DefaultText="&quot;Physical Check&quot;"
+      LocalDefaultText="&quot;בדיקה פיזית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CargoIdentifier&quot;"
+      DefaultText="&quot;Cargo Identifier&quot;"
+      LocalDefaultText="&quot;נתוני מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.cargoIdentifierType&quot;"
+      DefaultText="&quot;Cargo Identifier Type&quot;"
+      LocalDefaultText="&quot;מזהה מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CargoIdentifierKey1&quot;"
+      DefaultText="&quot;Cargo Identifier Key1&quot;"
+      LocalDefaultText="&quot;מזהה מטען ראשון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CargoIdentifierKey2&quot;"
+      DefaultText="&quot;Cargo Identifier key2&quot;"
+      LocalDefaultText="&quot;מזהה מטען שני&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.ContainerNumber&quot;"
+      DefaultText="&quot;Container Number&quot;"
+      LocalDefaultText="&quot;מספר מכולה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.PhysicalData&quot;"
+      DefaultText="&quot;Physical Data&quot;"
+      LocalDefaultText="&quot;נתוני בדיקה פיזית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CheckId&quot;"
+      DefaultText="&quot;Check Id &quot;"
+      LocalDefaultText="&quot;מספר בדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.OperationCode&quot;"
+      DefaultText="&quot;Operation Code&quot;"
+      LocalDefaultText="&quot;קוד פעולה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.StatusMessage&quot;"
+      DefaultText="&quot;Status Message&quot;"
+      LocalDefaultText="&quot;סוג הודעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.ImporterNumber&quot;"
+      DefaultText="&quot;Importer Number&quot;"
+      LocalDefaultText="&quot;לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.StorageSiteNumber&quot;"
+      DefaultText="&quot;Storage Site Number&quot;"
+      LocalDefaultText="&quot;אתר אחסון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CheckSiteNumber&quot;"
+      DefaultText="&quot;Check Site Number&quot;"
+      LocalDefaultText="&quot;אתר בדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CargoTypeCode&quot;"
+      DefaultText="&quot;Cargo Type Code&quot;"
+      LocalDefaultText="&quot;סוג מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.QueueType&quot;"
+      DefaultText="&quot;Queue Type&quot;"
+      LocalDefaultText="&quot;סוג תור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.LimitDate&quot;"
+      DefaultText="&quot;Limit Date&quot;"
+      LocalDefaultText="&quot;תאריך הבדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.OpenData&quot;"
+      DefaultText="&quot;Open Data&quot;"
+      LocalDefaultText="&quot;תאריך זימון הבדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CheckType&quot;"
+      DefaultText="&quot;Check Type&quot;"
+      LocalDefaultText="&quot;סוג הבדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.ConnectedEntity&quot;"
+      DefaultText="&quot;Connected Entity&quot;"
+      LocalDefaultText="&quot;ישויות קשורות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.DeclarationId&quot;"
+      DefaultText="&quot;Declaration ID&quot;"
+      LocalDefaultText="&quot;מספר הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.CustomFileNo&quot;"
+      DefaultText="&quot;Custom File No.&quot;"
+      LocalDefaultText="&quot;תיק עמילות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.EndDate&quot;"
+      DefaultText="&quot;End Date&quot;"
+      LocalDefaultText="&quot;מועד סיום הבדיקה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.PhysicalCheck.O.GeneralDetails&quot;"
+      DefaultText="&quot;General Details&quot;"
+      LocalDefaultText="&quot;נתוני בדיקה פיזית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

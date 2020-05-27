@@ -48,6 +48,13 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "W,Waiting,", 
                 Name = "Waiting", 
 			});
+			 
+            all.Add(new CommunicationStatusTypeDetails()
+            {    
+                Code = "T", 
+                Name = "Time out", 
+                SearchFields = "T,Time out", 
+			});
 			
             return all;
        }

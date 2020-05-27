@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוגי אבזור בטיחות&quot;"
   DefaultText="&quot;Vehicle Safety Accessory Type&quot;"
-  Code="&quot;e298&quot;"
-  Name="&quot;Customs.VehicleSafetyAccessoryType Query Group&quot;"
+  Code="&quot;VAQG&quot;"
+  Name="&quot;Customs.VehicleSafetyAccessoryType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ae4d599b-b0c6-433c-bd64-1239a8901b55&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;VehicleSafetyAccessoryType&quot;"
+    ObjectTableName="&quot;Customs.VehicleSafetyAccessoryType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.VehicleSafetyAccessoryType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;VAQG&quot;"
+    QueryGroupName="&quot;Customs.VehicleSafetyAccessoryType&quot;"
+    LocalTextCode="&quot;&quot;"
+    TextCode="&quot;VehicleSafetyAccessoryType&quot;"
+    TextCodeCode="&quot;Customs.VehicleSafetyAccessoryType.Q.VehicleSafetyAccessoryTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;VEHICLESAFETYACCESSORYTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.VehicleSafetyAccessoryType.Features.VehicleSafetyAccessoryType&quot;"
+    FeatureDefaultText="&quot;VehicleSafetyAccessoryType&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.VehicleSafetyAccessoryType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.VehicleSafetyAccessoryType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

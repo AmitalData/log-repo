@@ -34,7 +34,9 @@
   Name="&quot;Customs.SupplierInvoiceItemsTax Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;09e59870-d77f-449f-8ec9-88916c67d1e0&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -305,7 +307,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -649,7 +651,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;86948c85-5101-4141-bd5b-5e76ce3a602d&quot;"
     FieldName="&quot;AlternateDefinedPerUnitMeasure&quot;"
@@ -704,7 +707,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;9824483c-7681-40bb-8840-e5762aa26138&quot;"
     FieldName="&quot;DefinedPerUnitQuantity&quot;"
@@ -736,7 +740,7 @@
     DependencyFilter2IsList="false"
     ValidForQuerySection1="&quot;Customs.SupplierInvoiceItemsTax&quot;"
     DisplayInEntityVariables="false"
-    DigitsAfterPoint="6"
+    DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;DefinedPerUnitQuantity&quot;"
@@ -759,7 +763,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;fc5e0580-4c76-405f-ad74-ab74ec700f52&quot;"
     FieldName="&quot;AlternateDefinedPerUnitQuant&quot;"
@@ -791,7 +796,7 @@
     DependencyFilter2IsList="false"
     ValidForQuerySection1="&quot;Customs.SupplierInvoiceItemsTax&quot;"
     DisplayInEntityVariables="false"
-    DigitsAfterPoint="6"
+    DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;AlternateDefinedPerUnitQuant&quot;"
@@ -814,7 +819,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;0cf8a3a4-a96c-4cab-8131-3ec56883394d&quot;"
     FieldName="&quot;MeasurementUnitCode&quot;"
@@ -1038,7 +1044,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;7556b515-46db-4ecc-94f2-9d074fc1c08a&quot;"
     FieldName="&quot;AlternateRate&quot;"
@@ -1093,7 +1100,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;e5d31860-e163-46c4-887f-44e2b0a44655&quot;"
     FieldName="&quot;TaxTypeName&quot;"
@@ -1396,21 +1404,37 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SupplierInvoiceItemsTax&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SupplierInvoiceItemsTax&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

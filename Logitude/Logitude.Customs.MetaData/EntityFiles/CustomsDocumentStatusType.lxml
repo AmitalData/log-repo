@@ -37,7 +37,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;a0fbe78d-e9bb-4860-a4fd-f77df6908e0a&quot;"
     FieldName="&quot;Code&quot;"
@@ -305,21 +307,86 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;Sent&quot;"
+      SearchFields="&quot;1,נשלח,Sent,&quot;"
+      Inactive="false"
+      LocalName="&quot;נשלח&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      EnglishName="&quot;Fail&quot;"
+      SearchFields="&quot;2,נכשל,Fail,&quot;"
+      Inactive="false"
+      LocalName="&quot;נכשל&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;Needed&quot;"
+      SearchFields="&quot;3,נדרש,Needed,&quot;"
+      Inactive="false"
+      LocalName="&quot;נדרש&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Verified&quot;"
+      SearchFields="&quot;4,אומת,Verified,&quot;"
+      Inactive="false"
+      LocalName="&quot;אומת&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      EnglishName="&quot;Verified With Customer Presents&quot;"
+      SearchFields="&quot;5,אומת בנוכחות הלקוח,Verified With Customer Presents,&quot;"
+      Inactive="false"
+      LocalName="&quot;אומת בנוכחות הלקוח&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      EnglishName="&quot;Verify Rejected&quot;"
+      SearchFields="&quot;6,נדחה אימות,Verify Rejected,&quot;"
+      Inactive="false"
+      LocalName="&quot;נדחה אימות&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      EnglishName="&quot;Sent Without Answer&quot;"
+      SearchFields="&quot;7,נשלח ללא תשובה,Sent Without Answer,&quot;"
+      Inactive="false"
+      LocalName="&quot;נשלח ללא תשובה&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      EnglishName="&quot;In Verification Process&quot;"
+      SearchFields="&quot;8&quot;"
+      Inactive="false"
+      LocalName="&quot;בתהליך אימות&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsDocumentStatusType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsDocumentStatusType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -22,6 +22,7 @@ namespace Logitude.Server.Tools.Helpers
     public class AuthenticationUtil
     {
         
+        [ThreadStatic] public static string AuthenticatedUserEmail = string.Empty;
 
         public static string GetIP4Address()
         {
@@ -59,11 +60,14 @@ namespace Logitude.Server.Tools.Helpers
         }
 
 
-
-
-        public static string GetAuthenticatedUser(int tenant)
+        public static string GetLoggedUserEmail(int tenant)
         {
             string email = "";
+            if (!string.IsNullOrEmpty(AuthenticatedUserEmail))
+            {
+                email = AuthenticatedUserEmail;
+                return email;
+            }
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 email = HttpContext.Current.User.Identity.Name;

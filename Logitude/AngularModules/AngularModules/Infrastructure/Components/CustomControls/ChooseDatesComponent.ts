@@ -1,10 +1,10 @@
 declare var window: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit} from '@angular/core';  
+import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit} from '@angular/core';  
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ChooseDatesComponent',
     templateUrl: './ChooseDatesComponent.html',

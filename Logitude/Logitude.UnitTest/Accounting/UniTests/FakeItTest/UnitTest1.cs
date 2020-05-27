@@ -33,13 +33,13 @@ public partial class JournalValidatorUnitTest
                 return textCodeCode;
             }
         );
-        JournalValidator.OverrideITextCodeTranslator = textCodeTranslatorFake;
+        JournalValidatorNotStatic.OverrideITextCodeTranslator = textCodeTranslatorFake;
 
     }
     [TestCleanup]
     public void TestCleanup1()
     {
-        JournalValidator.OverrideITextCodeTranslator = null;
+        JournalValidatorNotStatic.OverrideITextCodeTranslator = null;
     }
 
     [TestMethod]
@@ -53,7 +53,7 @@ public partial class JournalValidatorUnitTest
 
         System.ComponentModel.DataAnnotations.ValidationContext validationcontext = new System.ComponentModel.DataAnnotations.ValidationContext(entityPM);
 
-        JournalValidator.OverrideGetLoggedContactFunc =
+        JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                 new Func<int, ContactPM>(
                     (tenant) => new ContactPM() { DontShowLocal = true }
                  );
@@ -73,7 +73,7 @@ public partial class JournalValidatorUnitTest
         }
         finally
         {
-            JournalValidator.OverrideGetLoggedContactFunc =
+            JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
                 null;
         }
 

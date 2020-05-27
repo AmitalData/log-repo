@@ -37,10 +37,14 @@ namespace WebFreight.Web.WebServices
     public class OceanExportWebService : System.Web.Services.WebService
     {
         private int tenant;
+        FBLDataProvider myDataProvider;
         private WebServiceHelper myServicHelper;
+        private IShipmentsContext shipmentsContext;
+        private ICommonDataContext commonContext;
+        private AddressRepository addressRepository;
 
         [WebMethod]
-        public byte[] GetFBLData(string shipmentId, int tenant,string documentTypeCopyId)
+        public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
         {
             this.tenant = tenant;
             this.myServicHelper = new WebServiceHelper(tenant);
@@ -58,19 +62,19 @@ namespace WebFreight.Web.WebServices
             return bytearray;
         }
 
-        private FBLDataProvider GetFBLDataProvider(string shipmentId, int tenant,string documentTypeCopyId)
+        private FBLDataProvider GetFBLDataProvider(string shipmentId, int tenant, string documentTypeCopyId)
         {
-            FBLDataProvider myDataProvider = new FBLDataProvider();
+            myDataProvider = new FBLDataProvider();
 
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
 
             PortRepository portRepository = new PortRepository(commonContext);
-            AddressRepository addressRepository = new AddressRepository(commonContext);
+            addressRepository = new AddressRepository(commonContext);
             ContactRepository contactRepository = new ContactRepository(commonContext);
 
             ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
@@ -192,6 +196,17 @@ namespace WebFreight.Web.WebServices
                 if (shipment.MainCarriageCarrierId != null)
                 {
                     mainCarriageCarrier = (from a in commonContext.Cards where a.Id == shipment.MainCarriageCarrierId select a).FirstOrDefault();
+                }
+
+                if (!string.IsNullOrEmpty(shipment.CreatedByUserId))
+                {
+                    Contact createdByUser = contactRepository.GetSingleContact(shipment.CreatedByUserId, tenant);
+
+                    if (createdByUser != null)
+                    {
+                        myDataProvider.CreatedBy = createdByUser.EnglishName;
+                    }
+
                 }
                 #endregion
 
@@ -434,7 +449,7 @@ namespace WebFreight.Web.WebServices
                                 }
 
                                 myDataProvider.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
-                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + DataProviders.General.GetAddress(myPartnerAddress);                                
+                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + DataProviders.General.GetAddress(myPartnerAddress);
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
@@ -494,7 +509,7 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region Notify2
-                    string myNotify2Id = shipment.Notify2Id;
+                string myNotify2Id = shipment.Notify2Id;
                 string myNotify2AddressId = shipment.Notify2AddressId;
 
                 if (!string.IsNullOrEmpty(myNotify2Id))
@@ -1093,7 +1108,7 @@ namespace WebFreight.Web.WebServices
                 {
                     myDataProvider.MainCarriageCarrierName = mainCarriageCarrier.EnglishName;
 
-                    if(mainCarriageCarrier.PartnerTypeId == "SL")
+                    if (mainCarriageCarrier.PartnerTypeId == "SL")
                     {
                         ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
                         ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrier.Id, tenant);
@@ -1102,7 +1117,7 @@ namespace WebFreight.Web.WebServices
                     }
                 }
                 #endregion
-
+                 
                 #region Move Type
                 if (!string.IsNullOrEmpty(shipment.MoveTypeId))
                 {
@@ -1143,12 +1158,12 @@ namespace WebFreight.Web.WebServices
 
 
                 myDataProvider.ReceivablesCharges = shipmentReceivables;
-                if(shipmentReceivables != null)
+                if (shipmentReceivables != null)
                 {
                     myDataProvider.TotalPrepaid = shipmentReceivables.Sum(a => a.PrepaidChargeAmount);
                     myDataProvider.TotalCollect = shipmentReceivables.Sum(a => a.CollectChargeAmount);
                 }
-                
+
                 //ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
                 //List<ShipmentReceivable> receivables = receivableRepository.GetShipmentReceivablesByShipmentId(shipment.Id, tenant);
                 //receivables[0].
@@ -1434,6 +1449,7 @@ namespace WebFreight.Web.WebServices
                                 break;
                             }
                     }
+                    myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
                 }
                 #endregion
 
@@ -1444,7 +1460,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Master = shipment.Master != null ? shipment.Master : "";
                 myDataProvider.LongMaster = shipment.LongMaster != null ? shipment.LongMaster : "";
                 myDataProvider.GeneralDescriptionOfGoods = shipment.DescriptionOfGoods != null ? shipment.DescriptionOfGoods : "";
-                
+
                 //Ports
                 if (mainCarriageFromPort != null)
                 {
@@ -1558,6 +1574,17 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.OnCarriageToPort = onCarriageToPort.EnglishName;
                 }
 
+                if (shipment.PreCarriageVesselId != null)
+                {
+                    Vessel precarriagevessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.PreCarriageVesselId
+                                                 select a).FirstOrDefault();
+                    if (precarriagevessel != null)
+                    {
+                        myDataProvider.PreCarriageVesselName = precarriagevessel.EnglishName;
+                    }
+                }
+
                 if (shipment.MainCarriageVesselId != null)
                 {
                     Vessel maincarriagevessel = (from a in commonContext.Vessels
@@ -1576,7 +1603,7 @@ namespace WebFreight.Web.WebServices
                 {
                     myDataProvider.TransshipmentsVesselNameAndNumber = shipment.Transshipment1VesselName + " \\ " + shipment.Transshipment1CarrierNumber;
                     myDataProvider.VesselName = shipment.Transshipment1VesselName;
-                    myDataProvider.VoyageNumber= shipment.Transshipment1CarrierNumber;
+                    myDataProvider.VoyageNumber = shipment.Transshipment1CarrierNumber;
                 }
 
                 if (!string.IsNullOrEmpty(shipment.Transshipment2VesselId))
@@ -1613,7 +1640,7 @@ namespace WebFreight.Web.WebServices
                 }
 
                 myDataProvider.BookingNumber = shipment.BookingConfirmationNumber != null ? shipment.BookingConfirmationNumber : "";
-                                
+
                 //Custom fields
                 string haSattachment = "";
                 DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "716" && doc.Tenant == tenant).FirstOrDefault();
@@ -1660,12 +1687,12 @@ namespace WebFreight.Web.WebServices
                                                                       select a).FirstOrDefault();
 
                     FormCustomField fblNotesCustomField2 = (from a in customfieldsList
-                                                           where a.FieldCode == "FBLNotes2" && a.EntityId == shipment.Id
-                                                           select a).FirstOrDefault();
+                                                            where a.FieldCode == "FBLNotes2" && a.EntityId == shipment.Id
+                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField fblNotesDocumentCustom2 = (from a in documentCustomfieldsList
-                                                                      where a.FieldCode == "FBLNotes2"
-                                                                      select a).FirstOrDefault();
+                                                                       where a.FieldCode == "FBLNotes2"
+                                                                       select a).FirstOrDefault();
 
                     myDataProvider.FBLNotes = fblNotesCustomField != null ? fblNotesCustomField.Value : (fblNotesDocumentCustom != null ? fblNotesDocumentCustom.DefaultValue : "");
                     myDataProvider.FBLNotes2 = fblNotesCustomField2 != null ? fblNotesCustomField2.Value : (fblNotesDocumentCustom2 != null ? fblNotesDocumentCustom2.DefaultValue : "");
@@ -1744,7 +1771,7 @@ namespace WebFreight.Web.WebServices
                         if (package.IsMultiHarmonize)
                         {
                             List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
-                            foreach(ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                            foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
                             {
                                 if (string.IsNullOrEmpty(packageline.HSCode))
                                 {
@@ -1960,23 +1987,35 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TotalVolume = shipment.Volume != null && shipment.Volume != 0 ? (shipment.Volume + " " + volumeUnitCode) : "";
                 myDataProvider.TotalWeight = shipment.GrossWeight != null && shipment.GrossWeight != 0 ? String.Format("{0:#,0.00}", shipment.GrossWeight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "") : "";
 
+                //Confimation Note
+                myDataProvider.ConfirmationNotes = shipment.BookingConfirmationNotes != null ? shipment.BookingConfirmationNotes : "";
                 //PrepaidCollect
                 myDataProvider.PrepaidCollect = shipmentprepaidcollect != null ? shipmentprepaidcollect.Name : "";
 
                 if (shipment.HAWBDate != null)
                 {
-                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yy}", shipment.HAWBDate.Value);
+                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", shipment.HAWBDate.Value);
                 }
                 else
                 {
-                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
                 }
 
                 myDataProvider.TenantLogo = DataProviders.General.GetLogo(tenantSettings.Id);
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
+                ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
+                if (lastPickUp != null)
+                {
+                    myDataProvider.PickUpInstructions = lastPickUp.Notes != null ? lastPickUp.Notes : "";
+                }
             }
+
+            #region Custom Agent Import|Custom Agent Export
+            this.GetAllBrokerVariables(shipment.CustomAgentImportId, shipment.CustomAgentImportAddressId);
+            this.GetCustomAgentVariable(shipment.CustomAgentImportId, shipment.CustomAgentExportId);
+            #endregion
 
             //------------------------------------------------
             try
@@ -1997,7 +2036,7 @@ namespace WebFreight.Web.WebServices
 
             #region From/To CountryCode
 
-            CountryRepository countryRepository = new CountryRepository(tenant);           
+            CountryRepository countryRepository = new CountryRepository(tenant);
 
             if (shipment.DirectionId == "I" && shipment.TransportModeId == "D")
             {
@@ -2024,9 +2063,9 @@ namespace WebFreight.Web.WebServices
             }
 
             else
-            {   
-                Port fromPort = portRepository.GetSinglePort(tenant,shipment.MainCarriageFromPortId);
-                Port toPort = portRepository.GetSinglePort(tenant,shipment.MainCarriageToPortId);
+            {
+                Port fromPort = portRepository.GetSinglePort(tenant, shipment.MainCarriageFromPortId);
+                Port toPort = portRepository.GetSinglePort(tenant, shipment.MainCarriageToPortId);
 
                 if (fromPort != null)
                 {
@@ -2051,6 +2090,85 @@ namespace WebFreight.Web.WebServices
             return myDataProvider;
         }
 
+        private void GetCustomAgentVariable(string customAgentImportId, string customAgentExportId)
+        {
+            Card customAgentImporter = GetCustomAgent(customAgentImportId);
+            Card customAgentExporter = GetCustomAgent(customAgentExportId);
+            if (customAgentImporter != null)
+            {
+                myDataProvider.CustomsAgent = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+            }
+            if (customAgentExporter != null)
+            {
+                myDataProvider.CustomsAgent = customAgentExporter.EnglishName != null ? customAgentExporter.EnglishName : "";
+            }
+        }
+
+        private void GetAllBrokerVariables(string customAgentImportId, string customAgentImportAddressId)
+        {
+            Card customAgentImporter = GetCustomAgent(customAgentImportId);
+            Address customAgentImportAddress;
+            if (customAgentImporter != null)
+            {
+                customAgentImportAddress = GetCustomAgentImporterAddress(customAgentImportAddressId);
+                myDataProvider.BrokerName = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+                myDataProvider.Broker = BuildBrokerValue(customAgentImporter, customAgentImportAddress);
+            }
+        }
+
+        private string BuildBrokerValue(Card customAgentImporter, Address customAgentImportAddress)
+        {
+            string broker = "";
+            if (customAgentImporter != null)
+            {
+                broker = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+            }
+            if (customAgentImportAddress != null)
+            {
+                if (customAgentImportAddress.IsLocalLanguage)
+                {
+                    if (customAgentImporter != null && !string.IsNullOrEmpty(customAgentImporter.LocalName))
+                    {
+                        broker = customAgentImporter.LocalName;
+                    }
+                }
+                broker = broker + Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
+                if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
+                {
+                    broker = broker + Environment.NewLine
+                        + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "")
+                        + (customAgentImportAddress.FaxNumber != null ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                }
+            }
+            return broker;
+        }
+
+        private Address GetCustomAgentImporterAddress(string customAgentImportAddressId)
+        {
+            if (!string.IsNullOrEmpty(customAgentImportAddressId))
+            {
+                return addressRepository.GetSingleAddress(customAgentImportAddressId, tenant);
+            }
+            return null;
+        }
+
+        private Card GetCustomAgent(string customAgentId)
+        {
+            if (!string.IsNullOrEmpty(customAgentId))
+            {
+                return (from a in commonContext.Cards
+                        where a.Id == customAgentId
+                        select a).FirstOrDefault();
+            }
+            return null;
+        }
+
+        private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
+        {
+            return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
+                    where pickUp.ShipmentId == shipmentId && pickUp.PickUpDeliveryTypeCode == "PICK"
+                    select pickUp).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        }
         private void GetInsidePackagesData(IShipmentsContext context, ShipmentPackage package, ShipmentPM shipment, PackageLine line)
         {
             List<InsideShipmentPackage> insidePackages = context.InsideShipmentPackages.Include("PackageType").Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();
@@ -2073,13 +2191,13 @@ namespace WebFreight.Web.WebServices
                 qty.Append(insPackage.Quantity.ToString(), count, 1).Append('\n');
                 type.Append(insPackage.PackageType != null ? insPackage.PackageType.EnglishName : "").Append('\n');
                 desc.Append(insPackage.Description != null ? insPackage.Description : "").Append('\n');
-                weight.Append(String.Format("{0:#0.00}",insPackage.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "")).Append('\n');
-                volume.Append(String.Format("{0:#0.00}",insPackage.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "")).Append('\n');                
+                weight.Append(String.Format("{0:#0.00}", insPackage.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "")).Append('\n');
+                volume.Append(String.Format("{0:#0.00}", insPackage.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "")).Append('\n');
             }
 
             line.PackageQuantity = qty.ToString() + package.Quantity;
             line.PackageType = type.ToString() + (package.PackageType != null ? package.PackageType.EnglishName : "");
-            line.PackageDescriptionOfGoods = desc.ToString() + (package.Description != null? package.Description : "");
+            line.PackageDescriptionOfGoods = desc.ToString() + (package.Description != null ? package.Description : "");
             line.PackageGrossWeight = weight.ToString() + String.Format("{0:#0.00}", package.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "");
             line.PackageVolume = volume.ToString() + String.Format("{0:#0.00}", package.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "");
             line.ContainerNumber = package.ContainerNumber;
@@ -2181,6 +2299,169 @@ namespace WebFreight.Web.WebServices
             }
 
             return result;
+        }
+
+        public byte[] GetFBLDataForPickUp(string shipmentId, string pickUpId, int tenant)
+        {
+            this.tenant = tenant;
+            this.myServicHelper = new WebServiceHelper(tenant);
+
+            FBLDataProvider myDataProvider = GetFBLDataProviderForPickUp(shipmentId, pickUpId, tenant);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(FBLDataProvider));
+            MemoryStream memoryStream = new MemoryStream();
+            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            var reader = new StreamReader(memoryStream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
+        }
+        private FBLDataProvider GetFBLDataProviderForPickUp(string shipmentId, string pickUpId, int tenant)
+        {
+            FBLDataProvider myDataProvider = new FBLDataProvider();
+            myDataProvider.PackagesLines = new List<PackageLine>();
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+            ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(shipmentsContext);
+            TenantRepository tenantRepository = new TenantRepository(commonContext);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            ShipmentDataView myShipment = shipmentRepository.GetSingleShipmentDataView(shipmentId, tenant);
+            ShipmentPickUpDelivery myShipmentPickUp = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickUpId);
+
+            if (myShipment != null && myShipmentPickUp != null)
+            {
+                myDataProvider.ShipmentNumber = myShipment.ShipmentNumber;
+                myDataProvider.ConsigneeRef1 = myShipment.ConsigneeReference1;
+                myDataProvider.MainCarriageVesselNameAndNumber = myShipment.MainCarriageVesselName + " \\ " + myShipment.MainCarriageCarrierNumber;
+
+                if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                {
+                    Card shipper = CardRepository.GetSingleCard(myShipment.ShipperId, tenant, true);
+                    if (shipper != null)
+                    {
+                        myDataProvider.ShipperAddress = shipper.EnglishName + Environment.NewLine;
+
+                        if (!string.IsNullOrEmpty(myShipment.ShipperAddressId))
+                        {
+                            Address shipperAddress = addressRepository.GetSingleAddress(myShipment.ShipperAddressId, tenant);
+
+                            if (shipperAddress != null)
+                            {
+                                if (shipperAddress.IsLocalLanguage && !string.IsNullOrEmpty(shipper.LocalName))
+                                {
+                                    myDataProvider.ShipperAddress = shipper.LocalName + Environment.NewLine;
+                                }
+
+                                myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + DataProviders.General.GetAddress(shipperAddress);
+
+                                if (shipperAddress.PhoneNumber != null || shipperAddress.FaxNumber != null)
+                                {
+                                    myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + Environment.NewLine + (shipperAddress.PhoneNumber != null ? "Tel: " + shipperAddress.PhoneNumber + " " : "") + (shipperAddress.FaxNumber != null ? "Fax: " + shipperAddress.FaxNumber + " " : "");
+                                }
+
+                                if (shipperAddress.State != null)
+                                {
+                                    myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + ", " + shipperAddress.State.Code;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                {
+                    Card consignee = CardRepository.GetSingleCard(myShipment.ConsigneeId, tenant, true);
+                    if (consignee != null)
+                    {
+                        myDataProvider.ConsigneeAddress = consignee.EnglishName + Environment.NewLine;
+
+                        if (!string.IsNullOrEmpty(myShipment.ConsigneeAddressId))
+                        {
+                            Address consigneeAddress = addressRepository.GetSingleAddress(myShipment.ConsigneeAddressId, tenant);
+
+                            if (consigneeAddress != null)
+                            {
+                                if (consigneeAddress.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
+                                {
+                                    myDataProvider.ConsigneeAddress = consignee.LocalName + Environment.NewLine;
+                                }
+
+                                myDataProvider.ConsigneeAddress = myDataProvider.ConsigneeAddress + DataProviders.General.GetAddress(consigneeAddress);
+
+                                if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
+                                {
+                                    myDataProvider.ConsigneeAddress = myDataProvider.ConsigneeAddress + Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (consigneeAddress.FaxNumber != null ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                }
+
+                                if (consigneeAddress.State != null)
+                                {
+                                    myDataProvider.ConsigneeAddress = myDataProvider.ConsigneeAddress + ", " + consigneeAddress.State.Code;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                IQueryable<ShipmentPickUpDeliveryPackage> packages = shipmentPickUpDeliveryPackageRepository.GetPackagesByDeliveryId(pickUpId, tenant);
+                if (packages.Count() > 0)
+                {
+                    foreach (ShipmentPickUpDeliveryPackage package in packages)
+                    {
+                        PackageLine packageline = new PackageLine();
+                        PackageType packageType = (from pa in commonContext.PackageTypes
+                                                   where pa.Id == package.PackageTypeId
+                                                   select pa).FirstOrDefault();
+
+                        packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
+                        packageline.PackageGrossWeight = package.Weight != null ? String.Format("{0:N2}", package.Weight) + (myShipment.GrossWeightUnitCode != null ? myShipment.GrossWeightUnitCode : "") : "";
+                        packageline.PackageDescriptionOfGoods = package.Description != null ? (package.Description + Environment.NewLine) : "";
+
+                        if (packageType != null)
+                        {
+                            if (packageType.IsContainer)
+                            {
+                                packageline.PackageType = packageType.PrintAs;
+                            }
+
+                            else
+                            {
+                                packageline.PackageType = packageType.EnglishName;
+                            }                            
+                        }
+                        
+                        if (package.Length != null && package.Width != null && package.Height != null)
+                        {
+                            packageline.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
+                        }
+                        
+                        myDataProvider.PackagesLines.Add(packageline);
+                    }
+                }
+
+                Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
+                if (myTenant != null)
+                {
+                    myDataProvider.CompanyName = myTenant.Company;
+                    myDataProvider.Signature = myTenant.Signature;
+
+                    if (!string.IsNullOrEmpty(myTenant.AddressId))
+                    {
+                        Address tenantAddress = addressRepository.GetSingleAddress(myTenant.AddressId, tenant);
+                        if (tenantAddress != null)
+                        {
+                            myDataProvider.TenantCountryCode = tenantAddress.Country == null ? null : tenantAddress.Country.Code;
+                        }
+                    }
+                }
+            }
+
+            return myDataProvider;
         }
     }
 }

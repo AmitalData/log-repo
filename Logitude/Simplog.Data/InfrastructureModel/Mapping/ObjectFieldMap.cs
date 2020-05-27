@@ -9,6 +9,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public ObjectFieldMap()
         {
             this.HasKey(t => t.Id);
+           
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -54,6 +55,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DisplayInDocumentReferences);
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
+            this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.FieldCode).HasMaxLength(200).IsUnicode(false);
+            //this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.HelpTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ShortNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
@@ -122,30 +130,35 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CanAutomateSetValue).HasColumnName("CanAutomateSetValue");
             this.Property(t => t.AllowedInAirlineMessaging).HasColumnName("AllowedInAirlineMessaging");
             this.Property(t => t.HasTemplate).HasColumnName("HasTemplate");
-            this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
+            this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
             this.Property(t => t.GeneratedComponentPath).HasColumnName("GeneratedComponentPath");
             this.Property(t => t.DisplayInDocumentReferences).HasColumnName("DisplayInDocumentReferences");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.CopyToDW).HasColumnName("CopyToDW");
             this.Property(t => t.DisplayOnLookUpLocal).HasColumnName("DisplayOnLookUpLocal");
             this.Property(t => t.EnableFullscreenTextBox).HasColumnName("EnableFullscreenTextBox");
-
-
+            this.Property(t => t.DisplayInAutomationAsEnitity).HasColumnName("DisplayInAutomationAsEnitity");
+            this.Property(t => t.RecordType).HasColumnName("RecordType");
+            this.Property(t => t.FieldCode).HasColumnName("FieldCode");
+            this.Property(t => t.FullNameTextCodeCode).HasColumnName("FullNameTextCodeCode");
+            this.Property(t => t.HelpTextCodeCode).HasColumnName("HelpTextCodeCode");
+            this.Property(t => t.ListTextCodeCode).HasColumnName("ListTextCodeCode");
+            this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
 
             //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
-            }
+            //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            //if (dbms == "oracle")
+            //{
+                this.Property(t => t.SearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
+                this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
+            //}
 
-            //#else
-            else
-            {
-                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
-            }
+            ////#else
+            //else
+            //{
+            //    this.Property(t => t.SearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
+            //    this.Property(t => t.AllowedInCustFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
+            //}
 
             //#endif
 

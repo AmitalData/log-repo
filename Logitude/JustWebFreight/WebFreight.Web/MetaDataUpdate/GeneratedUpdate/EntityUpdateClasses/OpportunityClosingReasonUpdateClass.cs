@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityClosingReasonUpdateClass
-   {  
+   {  		
+		public const string HashString = "2f9febd5b5cd10bafe15934222bdfe0c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,13 +84,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "OpportunityClosingReason",
+			      				    IsNew =  false,
 			      				    DBTableName =  "OpportunityClosingReasons",
 			      				    ObjectTableSingular =  "Opportunity Closing Reason",
 			      				    ObjectTablePlural =  "Opportunity Closing Reasons",
+			      				    DescriptionDefaultText =  "Define the reasons for closing  opportunities.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
@@ -119,12 +123,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    Name =  "OpportunityClosingReason",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "CRM",
+			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  OpportunityClosingReasonUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -136,7 +148,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -155,7 +169,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
@@ -167,10 +187,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -182,7 +204,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  60,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  true,
@@ -202,8 +226,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "OpportunityClosingReason",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
@@ -217,10 +247,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -232,7 +264,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  60,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -252,8 +286,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "OpportunityClosingReason",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
@@ -267,10 +307,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -282,7 +324,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -301,7 +345,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosedLost",
@@ -313,10 +363,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +380,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -347,7 +401,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AddedManually",
@@ -359,10 +419,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -374,7 +436,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -393,7 +457,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
@@ -405,10 +475,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -420,7 +492,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -440,8 +514,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "OpportunityClosingReason",
+					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
@@ -455,64 +535,85 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup OpportunityClosingReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "OPCR", Name = "OpportunityClosingReason" }, queryGroupRepository);
+	        QueryGroup OpportunityClosingReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "OPCR", Name = "OpportunityClosingReason" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup OpportunityClosingReasonQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7085", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable OpportunityClosingReasonObjectTable = objectTables.ContainsKey("OpportunityClosingReason") ? objectTables["OpportunityClosingReason"] : null;
+            if (OpportunityClosingReasonObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable OpportunityClosingReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> OpportunityClosingReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpportunityClosingReason").ToList();   
+                OpportunityClosingReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode OpportunityClosingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.Q.AllClosingReasons", DefaultText = @"Closing Reasons",LocalDefaultText = null, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature OpportunityClosingReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCLOSINGREASONS", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.AllClosingReasons", NameTextCodeDefaultText = "All Closing Reasons", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode OpportunityClosingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.Q.AllClosingReasons", DefaultText = @"Closing Reasons",LocalDefaultText = null, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature OpportunityClosingReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCLOSINGREASONS", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.AllClosingReasons", NameTextCodeDefaultText = "All Closing Reasons", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,OpportunityClosingReasonObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllClosingReasonsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityClosingReasonTextCode_0.Id, Code = "All Closing Reasons",  QueryGroupCode = "OPCR", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityClosingReasonObjectTable.Id, QuerySection = "OpportunityClosingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityClosingReasonFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllClosingReasonsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityClosingReasonTextCode_0.Id, NameTextCodeCode = OpportunityClosingReasonTextCode_0.Code, ObjectTableName = "OpportunityClosingReason", Code = "All Closing Reasons",  QueryGroupCode = "OPCR", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityClosingReasonObjectTable.Id, QuerySection = "OpportunityClosingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityClosingReasonFeature_0.Id,FeatureUniqeCode= OpportunityClosingReasonFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllClosingReasonsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosingReasonsQuery.Id, IndexOrder = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OpportunityClosingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllClosingReasonsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosingReasonsQuery.Id,QueryCode = AllClosingReasonsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OpportunityClosingReason.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllClosingReasonsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosingReasonsQuery.Id, IndexOrder = 1, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == OpportunityClosingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllClosingReasonsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosingReasonsQuery.Id,QueryCode = AllClosingReasonsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OpportunityClosingReason.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable OpportunityClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> OpportunityClosingReasonObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpportunityClosingReason").ToList();
+		   //List<ObjectField> OpportunityClosingReasonObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpportunityClosingReason").ToList();
 		       
 	      
 
 	         Screen OpportunityClosingReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityClosingReason.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityClosingReasonObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpportunityClosingReasonOpportunityClosingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id,ScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpportunityClosingReasonObjectTable.HeaderScreenId = OpportunityClosingReasonHeaderScreenScreen0.Id;
+		    OpportunityClosingReasonObjectTable.HeaderScreenCode = OpportunityClosingReasonHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
-	         Screen OpportunityClosingReasonGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityClosingReason.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = OpportunityClosingReasonObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen OpportunityClosingReasonGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityClosingReason.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = OpportunityClosingReasonObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = OpportunityClosingReasonObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpportunityClosingReasonOpportunityClosingReasonGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = OpportunityClosingReasonGeneralTabScreenScreen1.Id,ScreenCode = OpportunityClosingReasonGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityClosingReason.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -523,19 +624,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable OpportunityClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode OpportunityClosingReasonGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OpportunityClosingReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityClosingReason.Tab.General", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature OpportunityClosingReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityClosingReason.Tab.General", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityClosingReasonObjectTable);
  
                  
 			   TextCode OpportunityClosingReasonEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityClosingReason.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OpportunityClosingReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityClosingReason.Tab.Events", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature OpportunityClosingReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityClosingReason.Tab.Events", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClosingReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityClosingReasonObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityClosingReasonGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpportunityClosingReasonObjectTable.Id, TabNameTextCodeId = OpportunityClosingReasonGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CRGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityClosingReasonGeneralFeature_TH0.Id,FeatureUniqeCode = OpportunityClosingReasonGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpportunityClosingReasonObjectTable.Id, TabNameTextCodeId = OpportunityClosingReasonGeneralTextCode_TH0.Id, TabNameTextCodeCode = OpportunityClosingReasonGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityClosingReasonEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityClosingReasonObjectTable.Id, TabNameTextCodeId = OpportunityClosingReasonEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityClosingReasonEventsFeature_TH1.Id,FeatureUniqeCode = OpportunityClosingReasonEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityClosingReasonObjectTable.Id, TabNameTextCodeId = OpportunityClosingReasonEventsTextCode_TH1.Id, TabNameTextCodeCode = OpportunityClosingReasonEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -543,10 +644,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OpportunityClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityClosingReason" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OpportunityClosingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpportunityClosingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpportunityClosingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpportunityClosingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.PackageFeature", NameTextCodeDefaultText = "OpportunityClosingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature OpportunityClosingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityClosingReasonObjectTable);
+		   Feature OpportunityClosingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityClosingReasonObjectTable);
+		   Feature OpportunityClosingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityClosingReasonObjectTable);
+		   Feature OpportunityClosingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = OpportunityClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityClosingReason.Features.PackageFeature", NameTextCodeDefaultText = "OpportunityClosingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityClosingReasonObjectTable);    
 	    
 		}
 
@@ -556,10 +657,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -575,10 +676,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPEV",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Updated",
                 EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -594,10 +695,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPCL",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Closing Reason Updated",
                 EnglishName =  "Closing Reason Updated",
+                LocalName =  "Closing Reason Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -613,10 +714,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRCL",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

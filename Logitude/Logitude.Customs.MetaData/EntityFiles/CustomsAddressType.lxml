@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג הכתובת&quot;"
   DefaultText="&quot;Address Type&quot;"
-  Code="&quot;7c18&quot;"
-  Name="&quot;Customs.CustomsAddressType Query Group&quot;"
+  Code="&quot;CUAT&quot;"
+  Name="&quot;Customs.CustomerActivityType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;686d127c-0b1b-486d-aa37-b8b561b2184d&quot;"
     FieldName="&quot;Code&quot;"
@@ -306,21 +308,144 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,עסק&quot;"
+      Inactive="false"
+      LocalName="&quot;עסק&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,איש קשר למטען&quot;"
+      Inactive="false"
+      LocalName="&quot;איש קשר למטען&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,שע&quot;ם/מרשם&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/מרשם&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,שע&quot;ם/מרשם - דואר&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/מרשם - דואר&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,משלוח&quot;"
+      Inactive="false"
+      LocalName="&quot;משלוח&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,פרטית&quot;"
+      Inactive="false"
+      LocalName="&quot;פרטית&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,התכתבות&quot;"
+      Inactive="false"
+      LocalName="&quot;התכתבות&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,סניף / מפעל / מחסן&quot;"
+      Inactive="false"
+      LocalName="&quot;סניף / מפעל / מחסן&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,איש קשר&quot;"
+      Inactive="false"
+      LocalName="&quot;איש קשר&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,שע&quot;ם/מע&quot;ם - עסק&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/מע&quot;ם - עסק&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,שע&quot;ם/מע&quot;ם - פרטית&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/מע&quot;ם - פרטית&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,שע&quot;ם/מע&quot;ם - התכתבות&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/מע&quot;ם - התכתבות&quot;" />
+    <Record
+      Code="&quot;99&quot;"
+      SearchFields="&quot;99,שע&quot;ם/MTEL&quot;"
+      Inactive="false"
+      LocalName="&quot;שע&quot;ם/MTEL&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomsAddressType&quot;"
+    ObjectTableName="&quot;Customs.CustomsAddressType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsAddressType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUAT&quot;"
+    QueryGroupName="&quot;Customs.CustomerActivityType&quot;"
+    LocalTextCode="&quot;סוג כתובת&quot;"
+    TextCode="&quot;Address Types&quot;"
+    TextCodeCode="&quot;Customs.CustomsAddressType.Q.CustomsAddressTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMSADDRESSTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsAddressType.Features.CustomsAddressTypes&quot;"
+    FeatureDefaultText="&quot;Customs Address Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomsAddressType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomsAddressType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomsAddressType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomsAddressType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsAddressType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsAddressType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

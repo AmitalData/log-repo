@@ -23,7 +23,7 @@ import {CountryListService} from '../../../../Common/Services/StandardLists/Coun
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeGeneral',
     templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],
@@ -51,18 +51,21 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
      OpacityAreaHTMLDocument: string = "1";
      CountryLists: CountryList[] = [];
      DocumentTypeTemplates: DocumentTypeTemplatePM[];
-
+     IsDisableObjectTable: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, public entityArgs: EntityArgs, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
         this.myForm = fb.group({});
-       this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+
+
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe((response:any) => {
 
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -96,6 +99,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
 
 
     Run() {
+
         this.EntityPM.UIProperties.SetEnabled("Code", "DocumentType", false);
 
         if (this.EntityPM.Code == "SLCIN" || this.EntityPM.Code == "SLCRP") {
@@ -113,6 +117,20 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         else {
             this.IsEnableEdit = true;
         }
+
+
+
+
+
+        if (!this.EntityPM.AddedManually) {
+
+            if (!SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.Tenant != 0) {
+                this.IsDisableObjectTable = true;
+            }
+        } 
+
+
+
 
 
         var tempList: ObjectTablePM[] = [];
@@ -149,7 +167,9 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "ShippingLine":
                 case "Trucker":
                 case "Vendor":
+                case "AccountingPartner":
                 case "Warehouse":
+                case "Occasion":
                     {
 
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
@@ -315,7 +335,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             var table = window.ObjectTables.filter(d => d.Id == this.EntityPM.ObjectTableId)[0];
             if (table) tableId = table.Id;
 
-            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response:any) => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTypeField = "DocuemntFileName";
                windowArgs.HideSystemDataTab = true;

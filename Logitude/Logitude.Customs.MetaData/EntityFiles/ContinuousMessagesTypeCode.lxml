@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;62598adb-2955-46e1-9d14-3453f70c6e4b&quot;"
     FieldName="&quot;Code&quot;"
@@ -298,34 +300,43 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;ContinuousMessagesType&quot;"
-    TextCode="&quot;ContinuousMessagesTypeQuery&quot;"
-    QueryGroupCode="&quot;6b46&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.ContinuousMessagesTypeCode&quot;"
-    QuerySection="&quot;Customs.ContinuousMessagesTypeCode&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ContinuousMessagesTypeCode&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;6b46&quot;"
+    QueryGroupName="&quot;Customs.ContinuousMessagesTypeCode Query Group&quot;"
+    TextCode="&quot;ContinuousMessagesTypeQuery&quot;"
+    TextCodeCode="&quot;ContinuousMessagesTypeCode.Q.ContinuousMessagesType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ContinuousMessagesTypeCode.Q.ContinuousMessagesType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;ContinuousMessagesTypeCode.Features.ContinuousMessagesType&quot;"
+    FeatureDefaultText="&quot;ContinuousMessagesType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ContinuousMessagesType&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;ContinuousMessagesType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ContinuousMessagesType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ContinuousMessagesType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ContinuousMessagesType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ContinuousMessagesType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -333,17 +344,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ContinuousMessagesTypeCode&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ContinuousMessagesTypeCode&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

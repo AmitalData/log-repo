@@ -20,17 +20,40 @@ namespace Logitude.Customs.BL
    {
        public List<VehicleSafeAccessoryInstlTypeDetails> GetAll()
        {
-		    var all = new List<VehicleSafeAccessoryInstlTypeDetails>(); 
+		    var all = new List<VehicleSafeAccessoryInstlTypeDetails>();  
+            all.Add(new VehicleSafeAccessoryInstlTypeDetails()
+            {    
+                Code = "1", 
+                EnglishName = "Already installed", 
+                SearchFields = "1,already installed,האביזר הותקן כבר ברכב ", 
+                Inactive = false, 
+                LocalName = "האביזר הותקן כבר ברכב ", 
+			});
+			 
+            all.Add(new VehicleSafeAccessoryInstlTypeDetails()
+            {    
+                Code = "2", 
+                EnglishName = "Not Installed yes", 
+                SearchFields = "2,not installed yes, האביזר עדיין לא הותקן ברכב", 
+                Inactive = false, 
+                LocalName = " האביזר עדיין לא הותקן ברכב", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(VehicleSafeAccessoryInstlType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(VehicleSafeAccessoryInstlType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

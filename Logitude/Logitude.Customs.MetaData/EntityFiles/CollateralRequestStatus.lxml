@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Collateral Request Status&quot;"
-  Code="&quot;5841&quot;"
-  Name="&quot;Customs.CollateralRequestStatus Query Group&quot;"
+  Code="&quot;CORS&quot;"
+  Name="&quot;Customs.CollateralRequestStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;f15eb76c-538f-4348-927c-a97f872c2537&quot;"
     FieldName="&quot;Code&quot;"
@@ -299,21 +301,114 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,ממתינה למענה&quot;"
+      Inactive="false"
+      LocalName="&quot;ממתינה למענה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,קיבלה מענה&quot;"
+      Inactive="false"
+      LocalName="&quot;קיבלה מענה&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,בוצע חיוב אשראי&quot;"
+      Inactive="false"
+      LocalName="&quot;בוצע חיוב אשראי&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,במעקב&quot;"
+      Inactive="false"
+      LocalName="&quot;במעקב&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,מבוטלת&quot;"
+      Inactive="false"
+      LocalName="&quot;מבוטלת&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,סגורה&quot;"
+      Inactive="false"
+      LocalName="&quot;סגורה&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,פג תוקף ההמתנה למענה&quot;"
+      Inactive="false"
+      LocalName="&quot;פג תוקף ההמתנה למענה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CollateralRequestStatus&quot;"
+    ObjectTableName="&quot;Customs.CollateralRequestStatus&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CollateralRequestStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CORS&quot;"
+    QueryGroupName="&quot;Customs.CollateralRequestStatus&quot;"
+    LocalTextCode="&quot;סטאטוס הדרישה לבטוחה&quot;"
+    TextCode="&quot;Collateral Request Status&quot;"
+    TextCodeCode="&quot;Customs.CollateralRequestStatus.Q.CollateralRequestStatusQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;COLLATERALREQUESTSTATUS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CollateralRequestStatus.Features.CollateralRequestStatus&quot;"
+    FeatureDefaultText="&quot;Collateral Request Status&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CollateralRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CollateralRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CollateralRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CollateralRequestStatus&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CollateralRequestStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CollateralRequestStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -975,6 +975,374 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string connectedTo ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedTo  
+	   {
+	    
+	     get
+		{
+		   return connectedTo;
+		 }
+		 set
+		 {
+		   if(connectedTo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedTo",OldValue=connectedTo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedTo=value;
+		   }
+			
+		 }
+	   }
+	  private string fromPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortId  
+	   {
+	    
+	     get
+		{
+		   return fromPortId;
+		 }
+		 set
+		 {
+		   if(fromPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortId",OldValue=fromPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortId  
+	   {
+	    
+	     get
+		{
+		   return toPortId;
+		 }
+		 set
+		 {
+		   if(toPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortId",OldValue=toPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerAddressId  
+	   {
+	    
+	     get
+		{
+		   return customerAddressId;
+		 }
+		 set
+		 {
+		   if(customerAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerAddressId",OldValue=customerAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private decimal totalVolumetricWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TotalVolumetricWeight  
+	   {
+	    
+	     get
+		{
+		   return totalVolumetricWeight;
+		 }
+		 set
+		 {
+		   if(totalVolumetricWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalVolumetricWeight",OldValue=totalVolumetricWeight,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   totalVolumetricWeight=value;
+		   }
+			
+		 }
+	   }
+	  private double? ratio ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Ratio  
+	   {
+	    
+	     get
+		{
+		   return ratio;
+		 }
+		 set
+		 {
+		   if(ratio != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Ratio",OldValue=ratio,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   ratio=value;
+		   }
+			
+		 }
+	   }
+	  private string toTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToTypeCode  
+	   {
+	    
+	     get
+		{
+		   return toTypeCode;
+		 }
+		 set
+		 {
+		   if(toTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToTypeCode",OldValue=toTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toPartnerCardId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPartnerCardId  
+	   {
+	    
+	     get
+		{
+		   return toPartnerCardId;
+		 }
+		 set
+		 {
+		   if(toPartnerCardId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPartnerCardId",OldValue=toPartnerCardId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPartnerCardId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressId  
+	   {
+	    
+	     get
+		{
+		   return toAddressId;
+		 }
+		 set
+		 {
+		   if(toAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressId",OldValue=toAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressZipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressZipCode  
+	   {
+	    
+	     get
+		{
+		   return toAddressZipCode;
+		 }
+		 set
+		 {
+		   if(toAddressZipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressZipCode",OldValue=toAddressZipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressZipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCity ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCity  
+	   {
+	    
+	     get
+		{
+		   return toAddressCity;
+		 }
+		 set
+		 {
+		   if(toAddressCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCity",OldValue=toAddressCity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCity=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCountryId  
+	   {
+	    
+	     get
+		{
+		   return toAddressCountryId;
+		 }
+		 set
+		 {
+		   if(toAddressCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCountryId",OldValue=toAddressCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private bool isUsed ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUsed  
+	   {
+	    
+	     get
+		{
+		   return isUsed;
+		 }
+		 set
+		 {
+		   if(isUsed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUsed",OldValue=isUsed,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUsed=value;
+		   }
+			
+		 }
+	   }
+	  private string destination ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Destination  
+	   {
+	    
+	     get
+		{
+		   return destination;
+		 }
+		 set
+		 {
+		   if(destination != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Destination",OldValue=destination,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destination=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerReference ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerReference  
+	   {
+	    
+	     get
+		{
+		   return truckerReference;
+		 }
+		 set
+		 {
+		   if(truckerReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerReference",OldValue=truckerReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

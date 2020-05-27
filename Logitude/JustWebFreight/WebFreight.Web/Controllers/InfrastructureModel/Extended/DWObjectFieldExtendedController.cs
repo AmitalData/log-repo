@@ -168,6 +168,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                                 field.DataTypeCode = "Dimension";
                                 field.DimensionTableCode = "DIM_CustomPickLists";
                                 field.HideTree = true;
+                                field.CustomPickListCode = objectFieldPM.CustomPickListCode;
                             }
 
 

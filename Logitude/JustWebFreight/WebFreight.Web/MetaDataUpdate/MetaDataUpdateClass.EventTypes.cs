@@ -3149,27 +3149,27 @@ namespace WebFreight.Web.MetaDataUpdate
 			}, EventTypeRepository, tenantEventTypes);
 			#endregion
 
-			#region BankAccountLite
-			AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "UPBA",
-                EnglishName = "Updated",
-                Tenant = 0,
-                LocalName = "Updated",
-                ObjectTableId = BankAccountLiteObject.Id,
-                ShortView = false,
-            }, EventTypeRepository, tenantEventTypes);
+			//#region BankAccountLite
+			//AddEventTypes.AddEventType(new EventTypeDetails()
+   //         {
+   //             Code = "UPBA",
+   //             EnglishName = "Updated",
+   //             Tenant = 0,
+   //             LocalName = "Updated",
+   //             ObjectTableId = BankAccountLiteObject.Id,
+   //             ShortView = false,
+   //         }, EventTypeRepository, tenantEventTypes);
 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "CRBA",
-                EnglishName = "Created",
-                Tenant = 0,
-                LocalName = "Created",
-                ObjectTableId = BankAccountLiteObject.Id,
-                ShortView = true,
-            }, EventTypeRepository, tenantEventTypes);
-            #endregion 
+   //         AddEventTypes.AddEventType(new EventTypeDetails()
+   //         {
+   //             Code = "CRBA",
+   //             EnglishName = "Created",
+   //             Tenant = 0,
+   //             LocalName = "Created",
+   //             ObjectTableId = BankAccountLiteObject.Id,
+   //             ShortView = true,
+   //         }, EventTypeRepository, tenantEventTypes);
+   //         #endregion 
 
             #region APPayment
             AddEventTypes.AddEventType(new EventTypeDetails() { Code = "APPA", EnglishName = "Approved", LocalName = "Approved", Tenant = 0, ObjectTableId = apPaymentObject.Id, ShortView = true, }, EventTypeRepository, tenantEventTypes);

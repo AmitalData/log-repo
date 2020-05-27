@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
-    public class RevenueExpenseType
+    public partial class RevenueExpenseType
     {
 
 	    

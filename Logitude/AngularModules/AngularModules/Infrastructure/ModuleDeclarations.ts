@@ -3,6 +3,7 @@ import { CacheLogComponent } from './Components/Maintenance/CacheLogComponent';
 import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
+import { ChildDirective } from './Directives/ChildDirective';
 
 //rtl directives
 import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
@@ -36,7 +37,8 @@ import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
 import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 
 // Controls Components
-import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
+import { GeneralSendComponent } from './Components/LogitudeComponents/GeneralSendComponent';
+import { ImageLibraryComponent } from './Components/LogitudeComponents/ImageLibraryComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
@@ -44,7 +46,7 @@ import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineT
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
 import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
-
+import {LogTextBoxComponentV3} from './Components/LogitudeComponents/LogTextBoxComponentV3';
 import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
 import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
 
@@ -167,6 +169,7 @@ import {DocsInTabComponent} from './Components/Documents/DocsInTabComponent';
 import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent';
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
+import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
 import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
 import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
 
@@ -175,7 +178,7 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
-
+    ChildDirective,
         FloatStartDirective,
         FloatEndDirective,
         TextAlignStart,
@@ -269,6 +272,9 @@ export const ControlsComponents =
         DocsOutTabComponent,
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
+        LogTextBoxComponentV3,
+        ImageLibraryComponent,
+        TaskSchedulerHistoryComponent,
         DropdownMenuComponent,
         MultiSelectLOVComponent
     ];
@@ -442,6 +448,7 @@ export class ModuleDeclarations {
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
+            case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
 
 
         }

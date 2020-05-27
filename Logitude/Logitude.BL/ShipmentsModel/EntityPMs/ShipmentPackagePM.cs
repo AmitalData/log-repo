@@ -35,6 +35,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public decimal PackageTypeVolume { get; set; }
         public bool IsPackageAddedManually { get; set; }
 
+        public string WarehouseReleaseNumber { get; set; }
+
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ContainerNumber { get; set; }
 
@@ -75,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ClassNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? Temperature { get; set; }
+        public string Temperature { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? Ventilation { get; set; }

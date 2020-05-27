@@ -30,13 +30,13 @@ namespace WebFreight.Web.Security
 		public static void AuthenticateAPICall(int tenant)
 		{
 			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
-			{
-				bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
-				if (!exist)
-				{
-					throw new AutenticationException("API is not activated. Please contact your system administrator");
-				}
-			}
+            {
+                bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+                if (!exist)
+                {
+                    throw new AutenticationException("API is not activated. Please contact your system administrator");
+                }
+            }
 		}
 
 		private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)
@@ -261,7 +261,7 @@ namespace WebFreight.Web.Security
                 }
             }
 
-            if (!exists)
+            if (false)//(!exists)
             {
                 string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + tenant;
 
@@ -672,24 +672,46 @@ namespace WebFreight.Web.Security
 			//string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + entityTenant;
 
 		}
-		//private static string GetComputingPartnerCode(AuthenticationToken authToken)
-		//{
-		//    string computingPartnerCode = "";
-		//    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
-		//    {
-		//            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
-		//            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
-		//            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
-		//            {
-		//                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
-		//                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
-		//            }
+        //private static string GetComputingPartnerCode(AuthenticationToken authToken)
+        //{
+        //    string computingPartnerCode = "";
+        //    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
+        //    {
+        //            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
+        //            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
+        //            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
+        //            {
+        //                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
+        //                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
+        //            }
 
-		//    }
-		//    return computingPartnerCode;
-		//}
+        //    }
+        //    return computingPartnerCode;
+        //}
 
-		private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
+        private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
+        {
+            string loggedUserId = GetLoggedUserId(email, tenant);
+
+            PackagesCodesManager iManager = new PackagesCodesManager(tenant, loggedUserId, isCustomerCare);
+            return iManager.BasePackagesCodes;
+        }
+        private static string GetLoggedUserId(string email, int tenant)
+        {
+            string loggedUserId = null;
+
+            UserRepository userRep = new UserRepository(tenant);
+            User user = userRep.GetSingleUserByEmail(email, tenant, true);
+            if (user != null)
+            {
+                loggedUserId = user.Id;
+            }
+
+            return loggedUserId;
+        }
+
+
+        private static List<string> GetAllPackagesCodes_Old(string email, int tenant, bool isCustomerCare)
         {
             List<string> myResult = new List<string>();
 
@@ -722,6 +744,11 @@ namespace WebFreight.Web.Security
                                                where d.Tenant == tenant
                                                group d by d.PackageCode into g
                                                select g.Key).ToList();
+
+                        //if (!this.IsUserAdditionalPackagesOnly && !allPackagesCodes_PK.Contains(myTenantManagement.PackageCode))
+                        //{
+                        //    allPackagesCodes_PK.Add(myTenantManagement.PackageCode);
+                        //}
                     }
 
                     else
@@ -955,7 +982,7 @@ namespace WebFreight.Web.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-        public static void RedirectToHttps()
+        public static void RedirectToHttps(bool IsEndResponse=true)
         {
             bool redirect = false;
 
@@ -989,12 +1016,29 @@ namespace WebFreight.Web.Security
             {
                 if (!context.Request.IsSecureConnection)
                 {
+
                     string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:");
-                    context.Response.Redirect(redirectUrl);
+                    if (IsEndResponse)
+                    {
+                        context.Response.Redirect(redirectUrl);
+                    }
+                    else
+                    {
+                        if (!context.Request.Url.ToString().Contains("https"))
+                        {
+                            context.Response.Redirect(redirectUrl, false);
+                        }
+
+                    }
                 }
             }
 
         }
+
+
+
+
+
 
         public static string getLoggedDomain()
         {
@@ -1060,6 +1104,7 @@ namespace WebFreight.Web.Security
                                 if (features)
                                 {
                                     inf.HasAccess = true;
+                                    break;
                                 }
                                 else
                                 {

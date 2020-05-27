@@ -12,12 +12,12 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'RatesMainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './RatesMainTabComponent.html',
 })
 
 export class RatesMainTabComponent extends BaseComponent {
-
+  public imgNgStyle: any = null;
     //Props 
     public TodayDate: Date = DateTool.GetCurrentDateAsUtc();
     public ItemsSource: RatesItem[] = [];
@@ -96,7 +96,7 @@ export class RatesMainTabComponent extends BaseComponent {
                 //loadingDate = Date.SpecifyKind(loadingDate, Date.UTC);
             }
 
-            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe(resp => {
+            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe((resp:any) => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
                     result.Result.forEach(item => {

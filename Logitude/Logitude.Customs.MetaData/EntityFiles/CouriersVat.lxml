@@ -60,7 +60,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;75e1efd1-1b3b-4c48-a7ec-cd5ab77f49f4&quot;"
     FieldName="&quot;Id&quot;"
@@ -116,7 +118,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -185,7 +187,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -548,94 +550,6 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
-  <Query
-    Code="&quot;AllCouriersVats&quot;"
-    TextCode="&quot;All Couriers Vat&quot;"
-    LocalTextCode="&quot;רשימת בלדרים&quot;"
-    QueryGroupCode="&quot;77f9&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    QuerySection="&quot;Customs.CouriersVat&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="true"
-    IsPackagable="true"
-    DefaultSortName="&quot;EnglishName&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;AllCouriersVats&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;VatNumber&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersVats&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="240" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersVats&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="220" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersVats&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;InActive&quot;"
-        ColumnWidth="100" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;Customs.CouriersVatHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1"
-    IsReadOnly="true"
-    IsHeaderScreen="true">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;VatNumber&quot;"
-        ScreenName="Customs.CouriersVatHeaderScreen" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="Customs.CouriersVatHeaderScreen" />
-    </ScreenFields>
-  </Screen>
-  <Screen
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CouriersVat&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="4"
-    IsReadOnly="false"
-    IsHeaderScreen="false">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;VatNumber&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;InActive&quot;"
-        ScreenName="GeneralTabScreen" />
-    </ScreenFields>
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -643,11 +557,14 @@
     Code="&quot;VCGT&quot;"
     ControlPath="&quot;&quot;"
     TextCode="&quot;Customs.CouriersVat.TH.General&quot;"
-    IsPackagable="true"
+    IsPackagable="True"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierVat/AddEditCouriersVatComponent&quot;"
     HtmlComponentName="&quot;AddEditCouriersVatComponent&quot;"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    FeatureCode="&quot;CouriersVat.Tab.General&quot;"
+    FeatureTextCodeCode="&quot;CouriersVat.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
   <Tab
     TabName="&quot;Event&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -655,17 +572,122 @@
     Code="&quot;VCVT&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CouriersVat.TH.Event&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="1"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CouriersVat.Tab.Event&quot;"
+    FeatureTextCodeCode="&quot;CouriersVat.Features.Event&quot;"
+    FeatureDefaultText="&quot;Event&quot;" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AllCouriersVats&quot;"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    DefaultSortName="&quot;EnglishName&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CouriersVat&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;77f9&quot;"
+    QueryGroupName="&quot;Customs.CouriersVat Query Group&quot;"
+    LocalTextCode="&quot;רשימת בלדרים&quot;"
+    TextCode="&quot;All Couriers Vat&quot;"
+    TextCodeCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CouriersVat.Q.AllCouriersVats&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CouriersVat.Features.AllCouriersVats&quot;"
+    FeatureDefaultText="&quot;AllCouriersVats&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="150"
+        ObjectFieldName="&quot;VatNumber&quot;"
+        QueryCode="&quot;AllCouriersVats&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="240"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AllCouriersVats&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="220"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AllCouriersVats&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;InActive&quot;"
+        QueryCode="&quot;AllCouriersVats&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;CouriersVat.Customs.CouriersVatHeaderScreen&quot;"
+    Name="&quot;Customs.CouriersVatHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    IsHeaderScreen="true"
+    IsReadOnly="true"
+    NumberOfRows="1"
+    NumberOfColumns="2">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ScreenName="CouriersVat.Customs.CouriersVatHeaderScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CouriersVat.Customs.CouriersVatHeaderScreen"
+        Row="0"
+        Column="1" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Code="&quot;CouriersVat.GeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CouriersVat&quot;"
+    IsHeaderScreen="false"
+    IsReadOnly="false"
+    NumberOfRows="4"
+    NumberOfColumns="1">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;VatNumber&quot;"
+        ScreenName="CouriersVat.GeneralTabScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CouriersVat.GeneralTabScreen"
+        Row="1"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="CouriersVat.GeneralTabScreen"
+        Row="2"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;InActive&quot;"
+        ScreenName="CouriersVat.GeneralTabScreen"
+        Row="3"
+        Column="0" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CouriersVat&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -675,10 +697,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CouriersVat&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -686,6 +709,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

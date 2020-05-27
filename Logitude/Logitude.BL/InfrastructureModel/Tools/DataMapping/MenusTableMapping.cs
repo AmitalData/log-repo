@@ -18,6 +18,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             menusTable.FeatureId = menusTablePM.FeatureId;
             menusTable.Code = menusTablePM.Code;
             menusTable.HtmlView = menusTablePM.HtmlView;
+            menusTable.FeatureUniqeCode = menusTablePM.FeatureUniqeCode;
+
         }
     }
 }

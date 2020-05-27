@@ -13,5 +13,6 @@ export class ChargesGroupList {
 		SearchFields: string;
 		Tenant: number;
 		LocalName: string;
+		ViewOrder: number;
 	
 }

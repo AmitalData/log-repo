@@ -73,21 +73,23 @@ export class QuoteTemplateTextDesignPM {
     private alignment: string;
     public get Alignment() { return this.alignment; }
     public set Alignment(newValue: string) { if (this.alignment != newValue) { this.alignment = newValue; this.MarkAsDirty("Alignment"); } }
-
-
-
+       
+	 
     private title: string;
     public get Title() { return this.title; }
-    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue;  } }
-
+    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
+       
+	 
     private textValue: string;
     public get TextValue() { return this.textValue; }
-    public set TextValue(newValue: string) { if (this.textValue != newValue) { this.textValue = newValue; } }
-
+    public set TextValue(newValue: string) { if (this.textValue != newValue) { this.textValue = newValue; this.MarkAsDirty("TextValue"); } }
+       
+	 
     private hideAlignment: boolean;
     public get HideAlignment() { return this.hideAlignment; }
-    public set HideAlignment(newValue: boolean) { if (this.hideAlignment != newValue) { this.hideAlignment = newValue; } }
-
+    public set HideAlignment(newValue: boolean) { if (this.hideAlignment != newValue) { this.hideAlignment = newValue; this.MarkAsDirty("HideAlignment"); } }
+       
+	 
 
     public OldEntityPM: QuoteTemplateTextDesignPM;
 		

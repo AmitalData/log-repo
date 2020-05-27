@@ -84,7 +84,11 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
+            modelBuilder.Configurations.Add(new LastRunDetailMap());
+	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
+	
+            modelBuilder.Configurations.Add(new PriceStepMap());
 	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
 	
@@ -309,6 +313,7 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -427,7 +432,19 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<LastRunDetail> LastRunDetails 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<LBPTeamMember> LBPTeamMembers 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PriceStep> PriceSteps 
 	 {
 	      get; set;
 	 

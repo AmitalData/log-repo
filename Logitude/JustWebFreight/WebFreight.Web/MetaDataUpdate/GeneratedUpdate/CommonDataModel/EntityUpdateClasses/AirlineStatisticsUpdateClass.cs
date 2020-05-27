@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AirlineStatisticsUpdateClass
-   {  
+   {  		
+		public const string HashString = "7a2a946721c2ad5a5f13e3e7b024ea13";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,11 +128,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    SearchFields =  "AirlineStatistics,AirlineStatistics,,Id,",
+			      				    HashString =  AirlineStatisticsUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -142,7 +144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -193,7 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SourceTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SourceTenantName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ShipmentLevelCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -384,7 +386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EntityReference",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -448,7 +450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AWBNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -512,7 +514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "HWBNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -576,7 +578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AirlineCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -587,7 +589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  70,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -640,7 +642,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -651,7 +653,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -704,7 +706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -715,7 +717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -768,7 +770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EntitiyCreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -779,7 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -832,7 +834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EntitiyUpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -896,7 +898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EntityCreatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -960,7 +962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "MessageType",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -971,7 +973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1024,7 +1026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1088,7 +1090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EntityStatus",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1099,7 +1101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1152,7 +1154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "NumberOfPackages",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1163,7 +1165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1196,8 +1198,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargeableWeight",
@@ -1216,7 +1218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ChargeableWeight",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1278,7 +1280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ChargeableWeightUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1289,7 +1291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1322,8 +1324,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GrossWeight",
@@ -1342,7 +1344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "GrossWeight",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1404,7 +1406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "GrossWeightUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1415,7 +1417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1448,8 +1450,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Volume",
@@ -1468,7 +1470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Volume",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1530,7 +1532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VolumeUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1594,7 +1596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "OriginCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1658,7 +1660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DestinationCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1720,7 +1722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DescriptionOfGoods",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1784,7 +1786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ShipperName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1848,7 +1850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ConsigneeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1912,7 +1914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight1",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1923,7 +1925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1976,7 +1978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight1Date",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2040,7 +2042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight2",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2051,7 +2053,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2104,7 +2106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight2Date",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2168,7 +2170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight3",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2179,7 +2181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2232,7 +2234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Flight3Date",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2296,7 +2298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "OnCarriageTo",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2307,7 +2309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2360,7 +2362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "OnCarriageDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2424,7 +2426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PreCarriageFrom",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2435,7 +2437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AirlineStatistics",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2488,7 +2490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PreCarriageDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2552,7 +2554,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Allotment",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2614,98 +2616,116 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AirlineStatisticsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ALST", Name = "Airline Statistics" }, queryGroupRepository);
-						QueryGroup AirlineStatisticsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "62e9", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AirlineStatisticsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ALST", Name = "Airline Statistics" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AirlineStatisticsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "62e9", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AirlineStatisticsObjectTable = objectTables.ContainsKey("AirlineStatistics") ? objectTables["AirlineStatistics"] : null;
+            if (AirlineStatisticsObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable AirlineStatisticsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> AirlineStatisticsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AirlineStatistics").ToList();   
+                AirlineStatisticsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode AirlineStatisticsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = @"All Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AirlineStatisticsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode AirlineStatisticsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = @"All Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AirlineStatisticsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AirlineStatisticsObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, NameTextCodeCode = AirlineStatisticsTextCode_0.Code, ObjectTableName = "AirlineStatistics", Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id,FeatureUniqeCode= AirlineStatisticsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAirlineStatisticsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 0, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "SourceTenant" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AirlineStatistics.SourceTenant" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "SourceTenantName" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AirlineStatistics.SourceTenantName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 2, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AirlineStatistics.EntityReference" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 3, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "AWBNumber" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AirlineStatistics.AWBNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 4, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "EntityCreatedByUserName" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 5, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "MessageType" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AirlineStatistics.MessageType" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 6, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "LastSentDate" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AirlineStatistics.LastSentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 7, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "OriginCode" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AirlineStatistics.OriginCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 8, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "DestinationCode" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AirlineStatistics.DestinationCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 9, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "ShipperName" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AirlineStatistics.ShipperName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 10, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "ConsigneeName" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAirlineStatisticsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AirlineStatistics.ConsigneeName" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AirlineStatisticsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AirlineStatisticsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AirlineStatistics").ToList();
+		   //List<ObjectField> AirlineStatisticsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AirlineStatistics").ToList();
 		       
 	      
 
 	         Screen AirlineStatisticsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineStatistics.HeaderScreen", Name = "Header Screen", ObjectTableId = AirlineStatisticsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "SourceTenantName").FirstOrDefault().Id, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.SourceTenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "EntityCreatedByUserName").FirstOrDefault().Id, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "EntityReference").FirstOrDefault().Id, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.EntityReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsHeaderScreenScreen0.Id,ScreenCode = AirlineStatisticsHeaderScreenScreen0.Code, ObjectFieldCode = "AirlineStatistics.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AirlineStatisticsObjectTable.HeaderScreenId = AirlineStatisticsHeaderScreenScreen0.Id;
+		    AirlineStatisticsObjectTable.HeaderScreenCode = AirlineStatisticsHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen AirlineStatisticsGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AirlineStatistics.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AirlineStatisticsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "MessageType").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.MessageType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "LastSentDate").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.LastSentDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "OriginCode").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.OriginCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "DestinationCode").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.DestinationCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "ShipperName").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ShipperName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "ConsigneeName").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ConsigneeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "GrossWeight").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.GrossWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "ChargeableWeight").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.ChargeableWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "NumberOfPackages").FirstOrDefault().Id, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AirlineStatisticsAirlineStatisticsGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AirlineStatisticsGeneralTabScreenScreen1.Id,ScreenCode = AirlineStatisticsGeneralTabScreenScreen1.Code, ObjectFieldCode = "AirlineStatistics.NumberOfPackages", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2716,13 +2736,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AirlineStatisticsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AirlineStatisticsGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineStatisticsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineStatisticsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineStatisticsObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ASGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineStatisticsGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineStatisticsObjectTable.Id, TabNameTextCodeId = AirlineStatisticsGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ASGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineStatisticsGeneralFeature_TH0.Id,FeatureUniqeCode = AirlineStatisticsGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineStatisticsObjectTable.Id, TabNameTextCodeId = AirlineStatisticsGeneralTextCode_TH0.Id, TabNameTextCodeCode = AirlineStatisticsGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

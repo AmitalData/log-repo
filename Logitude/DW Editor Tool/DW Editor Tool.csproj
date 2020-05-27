@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>DW_Editor_Tool</RootNamespace>
     <AssemblyName>DW Editor Tool</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -127,6 +128,7 @@
     <None Include="Files\DIM_Branches.dwml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\DIM_ChargesTypes.dwml" />
     <None Include="Files\DIM_Currencies.dwml" />
     <None Include="Files\DIM_CustomPickLists.dwml" />
     <None Include="Files\DIM_Dates.dwml" />
@@ -145,6 +147,7 @@
     <None Include="Files\DIM_TransportModes.dwml" />
     <None Include="Files\DIM_Types.dwml" />
     <None Include="Files\DIM_Users.dwml" />
+    <None Include="Files\Fact_Charges.dwml" />
     <None Include="Files\Fact_Shipments.dwml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -101,7 +101,7 @@ private void GenerateIDbSet(string xmlFilePath)
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
-	if(entity.tableName.ToString().Trim('"').Contains("."))
+	if(tableName.Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
 		dBTableName = dBTableName.ToString().Split('.')[1];
@@ -459,6 +459,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -555,7 +556,7 @@ private void GenerateDecimalFields(string xmlFilePath)
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
-	if(entity.tableName.ToString().Trim('"').Contains("."))
+	if(tableName.Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
 		dBTableName = dBTableName.ToString().Split('.')[1];
@@ -603,7 +604,7 @@ private void GenerateIDbSetForContext(string xmlFilePath)
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
-	if(entity.tableName.ToString().Trim('"').Contains("."))
+	if(tableName.Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
 		dBTableName = dBTableName.ToString().Split('.')[1];
@@ -634,7 +635,7 @@ private void GenerateEntityMapForContext(string xmlFilePath)
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
-	if(entity.tableName.ToString().Trim('"').Contains("."))
+	if(tableName.Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
 		dBTableName = dBTableName.ToString().Split('.')[1];

@@ -52,7 +52,15 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
 
                         CardContactRepository repositry = new CardContactRepository(tenant);
-                        queryableData = repositry.GetContactsByCardId(value);
+                        if (item.Operator == "InListExact")
+                        {
+                            List<string> cardIds = value.Split(',').ToList();
+                            queryableData = repositry.GetContactsByCardIds(cardIds);
+                        }
+                        else
+                        {
+                            queryableData = repositry.GetContactsByCardId(value);
+                        }
                     }
 
                     if (item.FieldName == "ContactEmailAndNames")
@@ -60,12 +68,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => 
+                            queryableData = queryableData.Where(d =>
                                 d.Email.ToUpper().Contains(value.ToUpper())
-                                || 
+                                ||
                                 d.EnglishName.ToUpper().Contains(value.ToUpper())
                                 ||
-                                d.LocalName.ToUpper().Contains(value.ToUpper()) 
+                                d.LocalName.ToUpper().Contains(value.ToUpper())
                                 );
                         }
                     }
@@ -73,7 +81,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                     if (item.FieldName == "UpcomingDates")
                     {
                         string tString = item.FieldValue as string;
-                        
+
                         DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                         int currentDayOfYear = todayDate.Value.DayOfYear;
                         int day1 = currentDayOfYear - 5;
@@ -95,7 +103,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                     if (item.FieldName == "HasNoReminders")
                     {
                         queryableData = queryableData.Where(c => !c.BirthdayReminder);
-                     
+
                     }
 
                     if (item.FieldName == "UpcomingBirthdaysFilter")
@@ -174,7 +182,22 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                 queryableData = queryableData.Where(c => !emails.Contains(c.Email));
                             }
                         }
-                    }                    
+                    }
+
+                    if (item.FieldName == "Occasion_ContactsQuery")
+                    {
+                        string value = item.FieldValue as string;
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            value = value.TrimEnd(',');
+                            var contactIds = value.Split(',');
+                            if (contactIds.Count() > 0)
+                            {
+                                queryableData = queryableData.Where(c => contactIds.Contains(c.Id));
+                            }
+                        }
+                    }
+
                 }
             }
 

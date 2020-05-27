@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מין&quot;"
   DefaultText="&quot;Gender&quot;"
-  Code="&quot;c15e&quot;"
-  Name="&quot;Customs.Gender Query Group&quot;"
+  Code="&quot;GNDR&quot;"
+  Name="&quot;Customs.Gender&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e456d1eb-4976-45de-900f-90fd6d7f11ab&quot;"
     FieldName="&quot;Code&quot;"
@@ -306,21 +308,104 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;0&quot;"
+      SearchFields="&quot;0,לא ידוע&quot;"
+      Inactive="false"
+      LocalName="&quot;לא ידוע&quot;" />
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,זכר&quot;"
+      Inactive="false"
+      LocalName="&quot;זכר&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,נקבה&quot;"
+      Inactive="false"
+      LocalName="&quot;נקבה&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,בבירור&quot;"
+      Inactive="false"
+      LocalName="&quot;בבירור&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,לא רשום&quot;"
+      Inactive="false"
+      LocalName="&quot;לא רשום&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;Gender&quot;"
+    ObjectTableName="&quot;Customs.Gender&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.Gender&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;GNDR&quot;"
+    QueryGroupName="&quot;Customs.Gender&quot;"
+    LocalTextCode="&quot;מין&quot;"
+    TextCode="&quot;Gender&quot;"
+    TextCodeCode="&quot;Customs.Gender.Q.GenderQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;GENDER&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.Gender.Features.Genders&quot;"
+    FeatureDefaultText="&quot;Gender&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;Gender&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;Gender&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;Gender&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;Gender&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.Gender&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.Gender&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

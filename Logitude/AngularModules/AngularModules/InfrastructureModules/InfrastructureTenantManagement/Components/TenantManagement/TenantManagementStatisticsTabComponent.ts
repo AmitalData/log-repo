@@ -10,7 +10,7 @@ import {TenantManagementPMService} from '../../../../Infrastructure/Services/Sta
 import {QueueMessagesWebService} from '../../../../Infrastructure/Services/WebServices/QueueMessagesWebService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'TenantManagementStatisticsTabComponent',
     templateUrl: './TenantManagementStatisticsTabComponent.html',
 })
@@ -280,7 +280,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     UpdateClicked() {
         var service = new QueueMessagesWebService();
 
-        service.UpdateTenantManagementStatistics(this.EntityPM.Id).subscribe((myResult) => {
+        service.UpdateTenantManagementStatistics(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
             //var myResponse: ServiceResponse = myResult;
 
             //if (!myResponse.HasError) {

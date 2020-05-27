@@ -11,6 +11,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
+        [Index(IsUnique = true)]
+        public string FieldCode { get; set; }
         public int Tenant { get; set; }
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
@@ -45,7 +47,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool UniqueField { get; set; }
         public string ShortNameTextCodeId { get; set; }
         public int  DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFiltersIndex { get; set; }
+        public int SearchWindowFiltersIndex { get; set; }
         public bool IsMulti { get; set; }
         public string MultiTableId { get; set; }
 
@@ -89,7 +91,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AutomationEmailRecipient { get; set; }
         public bool CanAutomateSetValue { get; set; }
 
-        public bool AllowedInCustomerFieldsSettings { get; set; }
+        public bool AllowedInCustFieldsSettings { get; set; }
 
         public bool AllowedInAirlineMessaging { get; set; }
 
@@ -100,6 +102,17 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool CopyToDW { get; set; }
 
         public bool DisplayOnLookUpLocal { get; set; }
+
+        public string FullNameTextCodeCode { get; set; }
+
+        public string HelpTextCodeCode { get; set; }
+
+        public string ListTextCodeCode { get; set; }
+
+        public string ShortNameTextCodeCode { get; set; }
+
+        public bool DisplayInAutomationAsEnitity { get; set; }
+        public string RecordType { get; set; }
 
         [ForeignKey("CustomerPermissionTypeCode")]
         public PermissionType CustomerPermissionType { get; set; }

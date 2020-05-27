@@ -1,4 +1,3 @@
-/// <reference path="../../controls/windows/messagewindow.ts" />
 import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -17,7 +16,7 @@ import {ContactPM} from '../../Common/EntityPMs/ContactPM';
 
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'InviteCustomersComponent',
     templateUrl: './InviteCustomersComponent.html',
     //inputs: ['PartnerTypeId', , 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],
@@ -49,7 +48,7 @@ export class InviteCustomersComponent implements OnInit {
     LoadData() {
 
         this.SharedLogisticCustomerLineList = [];
-        this._sharedLogisticContactService.getSharedLogisticContactsbyCardId(this.CurrentEntity.Id,SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticContactService.getSharedLogisticContactsbyCardId(this.CurrentEntity.Id, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 
@@ -72,7 +71,7 @@ export class InviteCustomersComponent implements OnInit {
     SaveChanges(item: SharedLogisticContactPM) {
         this.sharedLogisticContact = item;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe(res => {
+        this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -160,7 +159,7 @@ export class InviteCustomersComponent implements OnInit {
 
 
     ShowAddEditContactWindow(itemComponent: ContactItemClass, title: string) {
-        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

@@ -612,7 +612,15 @@ namespace WebFreight.Web
             return true;
         }
 
+        public HttpResponseMessage getLoggedDomain()
+        {
+            HttpContext context = HttpContext.Current;
+            string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
 
+            Url = Url.Split(':')[0];
+
+            return Request.CreateResponse(HttpStatusCode.OK, Url);
+        }
         public UserData PostUserValidation(LoginParameters loginParameters)
         {
 
@@ -622,6 +630,10 @@ namespace WebFreight.Web
 
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
+                //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                //{
+                    url = url.Split(':')[0];
+                //}
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
@@ -2000,7 +2012,15 @@ namespace WebFreight.Web
                 bool isIpAuthenticated = true;
                 if (customerCare)//(contact.Email == "customercare@logitudeworld.com")
                 {
-                    isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(contact.Email))
+                    {
+                        isIpAuthenticated = true;
+                    }
+                    else
+                    {
+                        isIpAuthenticated = IscustomerCareIpAuthenticated();
+                    }
+                   
                 }
 
                 if (isIpAuthenticated)
@@ -2194,6 +2214,12 @@ namespace WebFreight.Web
 
                         string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
 
+                        if(card != null)
+                        {
+                            CreateSharedLogisticsContactLastLogin(via, user, card);
+
+                        }
+
                         ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         //Abed    Log
                         ContactLoginLog contactLog = new ContactLoginLog()
@@ -2231,6 +2257,8 @@ namespace WebFreight.Web
                         lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         commonDataContext.ContactLoginLogs.Add(contactLog);
                         commonDataContext.SaveChanges();
+
+                         
                         // add a record to contact last login table
                     }
                     //contact.Email != "customercare@logitudeworld.com" && customercare to be replaced with tenant 0 users that are not distributors
@@ -2269,6 +2297,31 @@ namespace WebFreight.Web
                 user.NumberOfRetries = contactPassword.NumberOfRetries;
             }
             return user;
+        }
+
+        private void CreateSharedLogisticsContactLastLogin(string via, UserData user, Card card)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(card.Tenant);
+            string loggedVia = string.IsNullOrEmpty(via) ? "PC" : via;
+            SharedLogisticsContactLastLogin sharedContactLastLogin = (from a in commonDataContext.SharedLogisticsContactLastLogins
+                                                                      where a.ContactId == user.Id && a.CardId == card.Id && a.PartnerTypeId == card.PartnerTypeId && a.Via == loggedVia
+                                                                      select a).FirstOrDefault();
+            if (sharedContactLastLogin == null)
+            {
+                sharedContactLastLogin = new SharedLogisticsContactLastLogin()
+                {
+                    ContactId = user.Id,
+                    CardId = card.Id,
+                    PartnerTypeId = card.PartnerTypeId,
+                    Via = via,
+                    Tenant = card.Tenant,
+
+                };
+                commonDataContext.SharedLogisticsContactLastLogins.Add(sharedContactLastLogin);
+            }
+            sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
+            commonDataContext.SaveChanges();
+
         }
 
         private static bool IscustomerCareIpAuthenticated()
@@ -2315,7 +2368,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-
+        List<string> CustomerCareEmails = new List<string>() {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 
@@ -2392,7 +2445,15 @@ namespace WebFreight.Web
                     //        userData.IpRestricted = true;
                     //    }
                     //}
-                    userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    if (CustomerCareEmails.Contains(email))
+                    {
+                        userData.IpRestricted = false;
+                    }
+                    else
+                    {
+                        userData.IpRestricted = !IscustomerCareIpAuthenticated();
+                    }
+                    
                 }
             }
             else

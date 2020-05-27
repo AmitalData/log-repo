@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Server.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -59,5 +60,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             set { filingInboxAttachments = value; }
         }
 
+        public BlobFileInfo FileInfo { get; set; }
     }
 }

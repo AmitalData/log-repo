@@ -45,7 +45,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d03b5d4e-ca7d-4e16-9465-fb194edd3c85&quot;"
     FieldName="&quot;Code&quot;"
@@ -264,21 +266,53 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,accumulate above 998 items,צבור מעל 998 פריטים&quot;"
+      Name="&quot;Accumulate Above 998 items&quot;"
+      LocalName="&quot;צבור מעל 998 פריטים&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,always accumulate,צבור תמיד&quot;"
+      Name="&quot;Always Accumulate&quot;"
+      LocalName="&quot;צבור תמיד&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,never accumulate,ללא צבירה&quot;"
+      Name="&quot;Never Accumulate&quot;"
+      LocalName="&quot;ללא צבירה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AccumalationState&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AccumalationState&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

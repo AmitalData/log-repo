@@ -17,7 +17,7 @@ export class TariffList {
 	ExpirationDate: Date;
 	Name: string;
 	InActive: boolean;
-	Description: string;
+	Notes: string;
 	SellerId: string;
 	CurrencyId: string;
 	CreateDate: Date;
@@ -31,6 +31,14 @@ export class TariffList {
 	SellerName: string;
 	UpdatedByUserName: string;
 	TariffNumber: string;
+	IsFromUpdateScreen: boolean;
+	IsFromCopy: boolean;
+	LastActivityTypeName: string;
+	LastActivityByUserName: string;
+	LastActivityDate: Date;
+	TransportModeCode: string;
+	TransportModeName: string;
+	LastUsedDate: Date;
 	
 }
  

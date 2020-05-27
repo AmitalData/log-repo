@@ -1,15 +1,16 @@
-﻿import {LogBoxDocumentsComponent} from './Components/LogBox/LogBoxDocumentsComponent';
-import {LogBoxMainComponent} from './Components/LogBox/LogBoxMainComponent';
-import {EditLogBoxShipmentComponent} from './Components/LogBox/EditLogBoxShipmentComponent';
-import {DigitalSignDocTypeComponent} from './Components/LogBox/DigitalSignDocTypeComponent';
-import {AddEditImporterDocumentComponent} from './Components/LogBox/AddEditImporterDocumentComponent';
+import { LogBoxDocumentsComponent } from './Components/Logbox/LogBoxDocumentsComponent';
+import { LogBoxMainComponent } from './Components/Logbox/LogBoxMainComponent';
+import { EditLogBoxShipmentComponent } from './Components/Logbox/EditLogBoxShipmentComponent';
+import { DigitalSignDocTypeComponent } from './Components/Logbox/DigitalSignDocTypeComponent';
+import { AddEditImporterDocumentComponent } from './Components/Logbox/AddEditImporterDocumentComponent';
 import {LogboxUploaderComponent} from './Components/Logbox/LogboxUploaderComponent';
 import {AddEditImporterShipmentComponent} from './Components/Logbox/AddEditImporterShipmentComponent';
 import {ForwarderShipmentsComponent} from './Components/Logbox/ForwarderShipmentsComponent';
 import {MultiArchiveShipmentsComponent} from './Components/Logbox/MultiArchiveShipmentsComponent';
-import {DownloadAllFilesComponent} from './Components/LogBox/DownloadAllFilesComponent';
+import { DownloadAllFilesComponent } from './Components/Logbox/DownloadAllFilesComponent';
 import {AddEditPrivateLabelShipmentComponent} from './Components/Logbox/AddEditPrivateLabelShipmentComponent';
-import {PrivateLabelApprovePaymentComponent} from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { LogBoxApprovePaymentComponent } from './Components/Logbox/LogBoxApprovePaymentComponent';
 import {PrivateLabelApprovebyMobileComponent} from './Components/Logbox/PrivateLabelApprovebyMobileComponent';
 import {ECommercePaymentRequestMobileComponent} from './Components/Logbox/ECommercePaymentRequestMobileComponent';
 import {TaxScreenComponent} from './Components/Logbox/TaxScreenComponent';
@@ -17,6 +18,7 @@ import {GoodsValueComponent} from './Components/Logbox/GoodsValueComponent';
 import {DenyReasonComponent} from './Components/Logbox/DenyReasonComponent';
 import {LogBoxPackagesComponent} from './Components/Logbox/LogBoxPackagesComponent';
 import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestComponent';
+import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 
 
 
@@ -32,6 +34,7 @@ export const Components =
         DownloadAllFilesComponent,
         AddEditPrivateLabelShipmentComponent,
         PrivateLabelApprovePaymentComponent,
+        LogBoxApprovePaymentComponent,
         PrivateLabelApprovebyMobileComponent,
         TaxScreenComponent,
         GoodsValueComponent,
@@ -41,6 +44,7 @@ export const Components =
         LogBoxPackagesComponent,
         ECommercePaymentRequestMobileComponent,
         DepositionRequestComponent,
+        UserIdNumberMobileComponent,
     ];
 
 
@@ -60,6 +64,7 @@ export class ModuleDeclarations {
             case "DownloadAllFilesComponent": { myResult = DownloadAllFilesComponent; break; }
             case "AddEditPrivateLabelShipmentComponent": { myResult = AddEditPrivateLabelShipmentComponent; break; }
             case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }
+            case "LogBoxApprovePaymentComponent": { myResult = LogBoxApprovePaymentComponent; break; }
             case "PrivateLabelApprovebyMobileComponent": { myResult = PrivateLabelApprovebyMobileComponent; break; }
             case "TaxScreenComponent": { myResult = TaxScreenComponent; break; }
             case "GoodsValueComponent": { myResult = GoodsValueComponent; break; }
@@ -69,7 +74,7 @@ export class ModuleDeclarations {
             case "LogBoxPackagesComponent": { myResult = LogBoxPackagesComponent; break; }
             case "ECommercePaymentRequestMobileComponent": { myResult = ECommercePaymentRequestMobileComponent; break; }
             case "DepositionRequestComponent": { myResult = DepositionRequestComponent; break; }
-                
+            case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }                
         }
 
         return myResult;

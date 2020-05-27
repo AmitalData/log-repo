@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג תהליך אילוץ&quot;"
   DefaultText="&quot;Constraint Process Type&quot;"
-  Code="&quot;f6d4&quot;"
-  Name="&quot;Customs.ConstraintProcessType Query Group&quot;"
+  Code="&quot;CTPT&quot;"
+  Name="&quot;Customs.ConstraintProcessTypes&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;5311ad2d-95c6-4302-ae23-26ea12373d6b&quot;"
     FieldName="&quot;Code&quot;"
@@ -307,21 +309,89 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,הגשה&quot;"
+      Inactive="false"
+      LocalName="&quot;הגשה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,התרה&quot;"
+      Inactive="false"
+      LocalName="&quot;התרה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ConstraintProcessType&quot;"
+    ObjectTableName="&quot;Customs.ConstraintProcessType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ConstriantProcessType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CTPT&quot;"
+    QueryGroupName="&quot;Customs.ConstraintProcessTypes&quot;"
+    LocalTextCode="&quot;סוג תהליך אילוץ&quot;"
+    TextCode="&quot;Constraint Process Types&quot;"
+    TextCodeCode="&quot;Customs.ConstraintProcessType.Q.ConstraintProcessTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CONSTRAINTPROCESSTYPEQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ConstraintProcessType.Features.ConstraintProcesses&quot;"
+    FeatureDefaultText="&quot;Constraint Process Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ConstraintProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ConstraintProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ConstraintProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ConstraintProcessType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ConstraintProcessType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ConstraintProcessType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

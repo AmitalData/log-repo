@@ -1,0 +1,2100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.GlobalModel;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using WebFreight.Web.QuoteModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.CommonDataModel.DomainServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Configuration;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.BL;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.BL;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Social.Data.EntityPOCOs;
+using Logitude.Social.BL;
+using Logitude.Social.Data.Repsitories;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.ClosedTable;
+using Logitude.CRM.BL.CLoseTable;
+using Logitude.BookingLib.BL.CLoseTable;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.CLoseTable;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
+{
+   public class LogitudeLeadUpdateClass
+   {  		
+		public const string HashString = "a41f7170937657f1b1f6c13d95f84f72";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
+            AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+			
+	             				    ObjectTableName =  "LogitudeLead",
+			      				    IsNew =  false,
+			      				    DBTableName =  "LogitudeLeads",
+			      				    OldDBTableName =  "LogitudeLeads",
+			      				    ObjectTableSingular =  "Logitude Leads",
+			      				    ObjectTablePlural =  "Logitude Leads",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  true,
+			      				    LookUp1 =  "Name",
+			      				    KeyPropertyPath =  "Id",
+			      				    AutoCompleteSearchWindow =  true,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  true,
+			      				    HasCounter =  false,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  true,
+			      				    EnableEditFromLOV =  false,
+			      				    InActive =  false,
+			      				    IsSaveButtonVisible =  true,
+			      				    IsComposition =  false,
+			      				    EnableSecurity =  true,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Logitude Leads",
+			      				    Code =  "LLQG",
+			      				    Name =  "Logitude Leads",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Infrastructure",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "LogitudeLead,LogitudeLeads,,Id,",
+			      				    HashString =  LogitudeLeadUpdateClass.HashString,
+			                    
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+		}
+	
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "SearchFields",
+					  						FullLocalDefaultText =  "SearchFields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "SearchFields",
+					  						ListLocalDefaultText =  "SearchFields",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ContactName",
+					  						OldFieldName =  "ContactName",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ContactName",
+					  						ListPropertyPath =  "ContactName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ContactName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ContactName",
+					  						DefaultText =  "Contact Name",
+					  						ListFieldLable =  "ContactNameListLable",
+					  						ListLableDefaultText =  "Contact Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ContactName",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CompanyName",
+					  						OldFieldName =  "CompanyName",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CompanyName",
+					  						ListPropertyPath =  "CompanyName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "CompanyName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CompanyName",
+					  						DefaultText =  "Company Name",
+					  						ListFieldLable =  "CompanyNameListLable",
+					  						ListLableDefaultText =  "Company Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CompanyName",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PhoneNumber",
+					  						OldFieldName =  "PhoneNumber",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PhoneNumber",
+					  						ListPropertyPath =  "PhoneNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "PhoneNumber",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PhoneNumber",
+					  						DefaultText =  "Phone Number",
+					  						ListFieldLable =  "PhoneNumberListLable",
+					  						ListLableDefaultText =  "Phone Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "PhoneNumber",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Country",
+					  						OldFieldName =  "Country",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  120,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Country",
+					  						ListPropertyPath =  "Country",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Country",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Country",
+					  						DefaultText =  "Country",
+					  						ListFieldLable =  "CountryListLable",
+					  						ListLableDefaultText =  "Country",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Country",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Email",
+					  						OldFieldName =  "Email",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  70,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Email",
+					  						ListPropertyPath =  "Email",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Email",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Email",
+					  						DefaultText =  "Email",
+					  						ListFieldLable =  "EmailListLable",
+					  						ListLableDefaultText =  "Email",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Email",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Comments",
+					  						OldFieldName =  "Comments",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Comments",
+					  						ListPropertyPath =  "Comments",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Comments",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Comments",
+					  						DefaultText =  "Comments",
+					  						ListFieldLable =  "CommentsListLable",
+					  						ListLableDefaultText =  "Comments",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Comments",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RequestType",
+					  						OldFieldName =  "RequestType",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RequestType",
+					  						ListPropertyPath =  "RequestType",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "RequestType",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RequestType",
+					  						DefaultText =  "Request Type",
+					  						ListFieldLable =  "RequestTypeListLable",
+					  						ListLableDefaultText =  "Request Type",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "RequestType",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ZipCode",
+					  						OldFieldName =  "ZipCode",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ZipCode",
+					  						ListPropertyPath =  "ZipCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "ZipCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ZipCode",
+					  						DefaultText =  "Zip Code",
+					  						ListFieldLable =  "ZipCodeListLable",
+					  						ListLableDefaultText =  "Zip Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "ZipCode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "City",
+					  						OldFieldName =  "City",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "City",
+					  						ListPropertyPath =  "City",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "City",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "City",
+					  						DefaultText =  "City",
+					  						ListFieldLable =  "CityListLable",
+					  						ListLableDefaultText =  "City",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "City",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "State",
+					  						OldFieldName =  "State",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "State",
+					  						ListPropertyPath =  "State",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "State",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "State",
+					  						DefaultText =  "State",
+					  						ListFieldLable =  "StateListLable",
+					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "State",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OpportunityId",
+					  						OldFieldName =  "OpportunityId",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OpportunityId",
+					  						ListPropertyPath =  "OpportunityId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "OpportunityId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OpportunityId",
+					  						DefaultText =  "Opportunity Id",
+					  						ListFieldLable =  "OpportunityIdListLable",
+					  						ListLableDefaultText =  "Opportunity Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "OpportunityId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerId",
+					  						OldFieldName =  "CustomerId",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerId",
+					  						ListPropertyPath =  "CustomerId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "CustomerId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerId",
+					  						DefaultText =  "Customer Id",
+					  						ListFieldLable =  "CustomerIdListLable",
+					  						ListLableDefaultText =  "Customer Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CustomerId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PackageCode",
+					  						OldFieldName =  "PackageCode",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PackageCode",
+					  						ListPropertyPath =  "PackageCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "PackageCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PackageCode",
+					  						DefaultText =  "Package Code",
+					  						ListFieldLable =  "PackageCodeListLable",
+					  						ListLableDefaultText =  "Package Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "PackageCode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LeadSource",
+					  						OldFieldName =  "LeadSource",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LeadSource",
+					  						ListPropertyPath =  "LeadSource",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "LeadSource",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LeadSource",
+					  						DefaultText =  "Lead Source",
+					  						ListFieldLable =  "LeadSourceListLable",
+					  						ListLableDefaultText =  "Lead Source",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "LeadSource",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CASSCode",
+					  						OldFieldName =  "CASSCode",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CASSCode",
+					  						ListPropertyPath =  "CASSCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "CASSCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CASSCode",
+					  						DefaultText =  "CASS Code",
+					  						ListFieldLable =  "CASSCodeListLable",
+					  						ListLableDefaultText =  "CASS Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CASSCode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IATACode",
+					  						OldFieldName =  "IATACode",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  7,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IATACode",
+					  						ListPropertyPath =  "IATACode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "IATACode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IATACode",
+					  						DefaultText =  "IATA Code",
+					  						ListFieldLable =  "IATACodeListLable",
+					  						ListLableDefaultText =  "IATA Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "IATACode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NumberOfBranches",
+					  						OldFieldName =  "NumberOfBranches",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NumberOfBranches",
+					  						ListPropertyPath =  "NumberOfBranches",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "NumberOfBranches",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NumberOfBranches",
+					  						DefaultText =  "Number Of Branches",
+					  						ListFieldLable =  "NumberOfBranchesListLable",
+					  						ListLableDefaultText =  "Number Of Branches",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "NumberOfBranches",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastUpdateDate",
+					  						OldFieldName =  "LastUpdateDate",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastUpdateDate",
+					  						ListPropertyPath =  "LastUpdateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "LastUpdateDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastUpdateDate",
+					  						DefaultText =  "Last Update Date",
+					  						ListFieldLable =  "LastUpdateDateListLable",
+					  						ListLableDefaultText =  "Last Update Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "LastUpdateDate",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreateDate",
+					  						OldFieldName =  "CreateDate",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreateDate",
+					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "CreateDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "צור תאריך",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "צור תאריך",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "CreateDate",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsEmailVerified",
+					  						OldFieldName =  "IsEmailVerified",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsEmailVerified",
+					  						ListPropertyPath =  "IsEmailVerified",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "IsEmailVerified",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsEmailVerified",
+					  						DefaultText =  "Is Email Verified",
+					  						ListFieldLable =  "IsEmailVerifiedListLable",
+					  						ListLableDefaultText =  "Is Email Verified",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "IsEmailVerified",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsSentToCustomer",
+					  						OldFieldName =  "IsSentToCustomer",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsSentToCustomer",
+					  						ListPropertyPath =  "IsSentToCustomer",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "IsSentToCustomer",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsSentToCustomer",
+					  						DefaultText =  "Is Sent To Customer",
+					  						ListFieldLable =  "IsSentToCustomerListLable",
+					  						ListLableDefaultText =  "Is Sent To Customer",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "IsSentToCustomer",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusCode",
+					  						OldFieldName =  "StatusCode",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusCode",
+					  						ListPropertyPath =  "StatusCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "StatusCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusCode",
+					  						DefaultText =  "Status Code",
+					  						ListFieldLable =  "StatusCodeListLable",
+					  						ListLableDefaultText =  "Status Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "StatusCode",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Street",
+					  						OldFieldName =  "Street",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  65,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Street",
+					  						ListPropertyPath =  "Street",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Street",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Street",
+					  						DefaultText =  "Street",
+					  						ListFieldLable =  "StreetListLable",
+					  						ListLableDefaultText =  "Street",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Street",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsUserOpened",
+					  						OldFieldName =  "IsUserOpened",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsUserOpened",
+					  						ListPropertyPath =  "IsUserOpened",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "IsUserOpened",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsUserOpened",
+					  						DefaultText =  "Is User Opened",
+					  						ListFieldLable =  "IsUserOpenedListLable",
+					  						ListLableDefaultText =  "Is User Opened",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "IsUserOpened",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TenantNumber",
+					  						OldFieldName =  "TenantNumber",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TenantNumber",
+					  						ListPropertyPath =  "TenantNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "TenantNumber",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TenantNumber",
+					  						DefaultText =  "Tenant Number",
+					  						ListFieldLable =  "TenantNumberListLable",
+					  						ListLableDefaultText =  "Tenant Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "TenantNumber",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NumberOfUsers",
+					  						OldFieldName =  "NumberOfUsers",
+					  						ObjectTableName =  "LogitudeLead",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NumberOfUsers",
+					  						ListPropertyPath =  "NumberOfUsers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LogitudeLead",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "NumberOfUsers",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NumberOfUsers",
+					  						DefaultText =  "Number Of Users",
+					  						ListFieldLable =  "NumberOfUsersListLable",
+					  						ListLableDefaultText =  "Number Of Users",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "NumberOfUsers",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+	    }
+
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup LogitudeLeadQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LLQG", Name = "Logitude Leads" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LogitudeLeadQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0605", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable LogitudeLeadObjectTable = objectTables.ContainsKey("LogitudeLead") ? objectTables["LogitudeLead"] : null;
+            if (LogitudeLeadObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                LogitudeLeadObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode LogitudeLeadTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = @"All Logitude Leads ",LocalDefaultText = null, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LogitudeLeadFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.AllLogitudeLeads", NameTextCodeDefaultText = "All Logitude Lead", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogitudeLeadObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, ObjectTableName = "LogitudeLead", Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LogitudeLead.ContactName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LogitudeLead.PhoneNumber" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LogitudeLead.CompanyName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LogitudeLead.CreateDate" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LogitudeLead.NumberOfBranches" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LogitudeLead.Email" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LogitudeLead.NumberOfUsers" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LogitudeLead.Comments" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LogitudeLead.RequestType" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LogitudeLead.IsEmailVerified" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LogitudeLead.LastUpdateDate" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LogitudeLead.IsSentToCustomer" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LogitudeLead.StatusCode" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllLogitudeLeadsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LogitudeLead.Country" , ColumnWidth = 200 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
+	    }
+
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    {   
+
+		   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> LogitudeLeadObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();
+		       
+	      
+
+	         Screen LogitudeLeadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.HeaderScreen", Name = "Header Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    LogitudeLeadObjectTable.HeaderScreenId = LogitudeLeadHeaderScreenScreen0.Id;
+		    LogitudeLeadObjectTable.HeaderScreenCode = LogitudeLeadHeaderScreenScreen0.Code;
+
+	   		  
+	      
+
+	         Screen LogitudeLeadGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 10, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
+
+	    }
+
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode LogitudeLeadGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature LogitudeLeadGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeLeadObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LLGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeLeadGeneralFeature_TH0.Id,FeatureUniqeCode = LogitudeLeadGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.LogitudeLeads.LogitudeLeadGeneralControl", ObjectTableId = LogitudeLeadObjectTable.Id, TabNameTextCodeId = LogitudeLeadGeneralTextCode_TH0.Id, TabNameTextCodeCode = LogitudeLeadGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+	    } 
+	
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+		   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature LogitudeLeadFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.PackageFeature", NameTextCodeDefaultText = "LogitudeLead Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);    
+	    
+		}
+
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+	    {   
+			ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = LogitudeLeadObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = LogitudeLeadObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    {  
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
+
+   }
+    
+}
+	 

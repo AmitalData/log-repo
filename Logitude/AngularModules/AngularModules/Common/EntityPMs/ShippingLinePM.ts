@@ -267,6 +267,11 @@ export class ShippingLinePM {
     public set INTTRARegistrationNotes(newValue: string) { if (this.iNTTRARegistrationNotes != newValue) { this.iNTTRARegistrationNotes = newValue; this.MarkAsDirty("INTTRARegistrationNotes"); } }
        
 	 
+    private iNTTRAUpdatesShipment: boolean;
+    public get INTTRAUpdatesShipment() { return this.iNTTRAUpdatesShipment; }
+    public set INTTRAUpdatesShipment(newValue: boolean) { if (this.iNTTRAUpdatesShipment != newValue) { this.iNTTRAUpdatesShipment = newValue; this.MarkAsDirty("INTTRAUpdatesShipment"); } }
+       
+	 
     private primaryContactName: string;
     public get PrimaryContactName() { return this.primaryContactName; }
     public set PrimaryContactName(newValue: string) { if (this.primaryContactName != newValue) { this.primaryContactName = newValue; this.MarkAsDirty("PrimaryContactName"); } }
@@ -282,9 +287,9 @@ export class ShippingLinePM {
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
        
 	 
-    private card: string;
+    private card: any;
     public get Card() { return this.card; }
-    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -361,6 +366,11 @@ export class ShippingLinePM {
     private cAAT: string;
     public get CAAT() { return this.cAAT; }
     public set CAAT(newValue: string) { if (this.cAAT != newValue) { this.cAAT = newValue; this.MarkAsDirty("CAAT"); } }
+       
+	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
 

@@ -47,6 +47,13 @@ public void GeneratePMTS(string xmlFilePath,string outputFilePath)
 	 pmnamespacestring = GetPMTSNameSpace(outputFilePath);
     }
 var entity = FromPMTSFile(xmlFilePath);
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 WritePMTSMethod(entity);
 SaveFileOutput(outputFilePath);
 }
@@ -87,6 +94,13 @@ public dynamic GetPMTSNameSpace(string destinationFolder)
 	if(entity.NoTS.GetType() == typeof(string))
       	{
 	    	if(entity.NoTS == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
 	    	{
 	    		return;
 	    	}

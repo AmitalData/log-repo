@@ -3,7 +3,6 @@ declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
 //import {NgForm, NgStyle, NgFormControl, CORE_DIRECTIVES, FORM_DIRECTIVES,  FormBuilder, ControlGroup, Validators, Control} from '@angular/common';
 //import {Http, HTTP_PROVIDERS, Response} from '@angular/http';
-import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -32,15 +31,14 @@ import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOth
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
-import { filter } from 'rxjs/operators';
-;
+
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DWLogSearchWindow',
     templateUrl: './DWLogSearchWindowComponent.html',
-    providers: [Http, ServiceArgs, EntityListService, EntityPMService],
+    providers: [ServiceArgs, EntityListService, EntityPMService],
 })
 
 export class DWLogSearchWindowComponent extends BaseComponent implements OnInit, OnDestroy {
@@ -160,20 +158,19 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.PseventRowSelectEventSub.unsubscribe();
         //this.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
     } 
-
+    
     SetWindowArgs(args: CustomEntityArgs) {
         if (AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
             this.CurrentSession.Sessionkey = Guid.newGuid();
         }
-
+   
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
-
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
         this.ViewModel = args.DataContext; 
-
+     
         if (this.ViewModel) {
             this.MultiSelectedValueLists = this.ViewModel.MultiSelectedValueLists;
         }
@@ -228,16 +225,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.LOVAdditionalColumns) {
             AdditionalColumns = this.LOVAdditionalColumns.split(',');
         }
-       
-        this.columns.push({
-            FieldName: 'Field', 
-            DataTypeCode: 'text',
-            Display: this.ObjectFieldName.replace('[', '').replace(']',''),
-            Styles: { width: '120px' },  
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
-            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
-        });
+            this.columns.push({
+                FieldName: 'Field',
+                DataTypeCode: 'text',
+                Display: this.ObjectFieldName.replace('[', '').replace(']', ''),
+                Styles: { width: '120px' },
+                IsCustomTemplate: true,
+                HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
+                HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
+            });
         if (AdditionalColumns.length > 0) {
             var index = 1;
             AdditionalColumns.forEach((field) => {
@@ -325,12 +321,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.ObjectTableName = this.ObjectTableName; 
-        //if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0) {
-        //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
-        //}
-        //if (searchfields) {
-        //    filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
-        //}
+
+        if (this.ViewModel && this.ViewModel.CustomPickListCode && this.ViewModel.IsCustom  ) {
+            if (filters.AdditionalFilters.filter(a => a.FieldName == "CustomPickListCode").length > 0) {
+                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CustomPickListCode");
+            }
+       
+            filters.addAdditionalFilter("CustomPickListCode", this.ViewModel.CustomPickListCode, null, null, "Equals", false, true, false, "String");
+            
+        }
                 
         return this._entityListService.getDWDimByFilters(this.ObjectTableName, filters);
        

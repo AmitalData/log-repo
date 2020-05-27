@@ -227,25 +227,25 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string description ;
+	  private string notes ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Description  
+       public string Notes  
 	   {
 	    
 	     get
 		{
-		   return description;
+		   return notes;
 		 }
 		 set
 		 {
-		   if(description != value)
+		   if(notes != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Description",OldValue=description,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   description=value;
+		   notes=value;
 		   }
 			
 		 }
@@ -499,6 +499,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContractNumber",OldValue=contractNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   contractNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string sellerName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SellerName  
+	   {
+	    
+	     get
+		{
+		   return sellerName;
+		 }
+		 set
+		 {
+		   if(sellerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SellerName",OldValue=sellerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sellerName=value;
 		   }
 			
 		 }
@@ -1285,36 +1308,358 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 }
 	   }
 
-	   private List<string> deletedLinesExpirationDates;
+	   private List<TariffLineExpirationDatePM> deletedLinesExpirationDates;
 	 
 	   [DataMember]
-	   public virtual List<string> DeletedLinesExpirationDates  
+	   public virtual List<TariffLineExpirationDatePM> DeletedLinesExpirationDates  
 	   {
 	        get
              {
                  if (deletedLinesExpirationDates == null)
                  {
-                     deletedLinesExpirationDates = new List<string>();
+                     deletedLinesExpirationDates = new List<TariffLineExpirationDatePM>();
                  }
                  return deletedLinesExpirationDates;
               }
              set { deletedLinesExpirationDates = value; }
 	    }
 		   
-	   private List<string>  deletedDeletedLinesExpirationDates;
-	   public virtual List<string> DeletedDeletedLinesExpirationDates  
+	   private List<TariffLineExpirationDatePM>  deletedDeletedLinesExpirationDates;
+	   public virtual List<TariffLineExpirationDatePM> DeletedDeletedLinesExpirationDates  
 	   {
 	        get
              {
                  if ( deletedDeletedLinesExpirationDates == null)
                  {
-                      deletedDeletedLinesExpirationDates = new List<string>();
+                      deletedDeletedLinesExpirationDates = new List<TariffLineExpirationDatePM>();
                  }
                  return  deletedDeletedLinesExpirationDates;
               }
              set {  deletedDeletedLinesExpirationDates = value; }
 	    }
-	     }
+	  	  private bool isFromUpdateScreen ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromUpdateScreen  
+	   {
+	    
+	     get
+		{
+		   return isFromUpdateScreen;
+		 }
+		 set
+		 {
+		   if(isFromUpdateScreen != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromUpdateScreen",OldValue=isFromUpdateScreen,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromUpdateScreen=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFromCopy ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromCopy  
+	   {
+	    
+	     get
+		{
+		   return isFromCopy;
+		 }
+		 set
+		 {
+		   if(isFromCopy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromCopy",OldValue=isFromCopy,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromCopy=value;
+		   }
+			
+		 }
+	   }
+	  private bool isUpdatingMissingPorts ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUpdatingMissingPorts  
+	   {
+	    
+	     get
+		{
+		   return isUpdatingMissingPorts;
+		 }
+		 set
+		 {
+		   if(isUpdatingMissingPorts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdatingMissingPorts",OldValue=isUpdatingMissingPorts,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUpdatingMissingPorts=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType1Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType1Id  
+	   {
+	    
+	     get
+		{
+		   return containerType1Id;
+		 }
+		 set
+		 {
+		   if(containerType1Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType1Id",OldValue=containerType1Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType1Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType2Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType2Id  
+	   {
+	    
+	     get
+		{
+		   return containerType2Id;
+		 }
+		 set
+		 {
+		   if(containerType2Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType2Id",OldValue=containerType2Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType2Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType3Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType3Id  
+	   {
+	    
+	     get
+		{
+		   return containerType3Id;
+		 }
+		 set
+		 {
+		   if(containerType3Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType3Id",OldValue=containerType3Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType3Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType4Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType4Id  
+	   {
+	    
+	     get
+		{
+		   return containerType4Id;
+		 }
+		 set
+		 {
+		   if(containerType4Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType4Id",OldValue=containerType4Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType4Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType5Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType5Id  
+	   {
+	    
+	     get
+		{
+		   return containerType5Id;
+		 }
+		 set
+		 {
+		   if(containerType5Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType5Id",OldValue=containerType5Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType5Id=value;
+		   }
+			
+		 }
+	   }
+	  private string transportModeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeCode  
+	   {
+	    
+	     get
+		{
+		   return transportModeCode;
+		 }
+		 set
+		 {
+		   if(transportModeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeCode",OldValue=transportModeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transportModeName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportModeName  
+	   {
+	    
+	     get
+		{
+		   return transportModeName;
+		 }
+		 set
+		 {
+		   if(transportModeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeName",OldValue=transportModeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportModeName=value;
+		   }
+			
+		 }
+	   }
+	  private string tariffProductId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffProductId  
+	   {
+	    
+	     get
+		{
+		   return tariffProductId;
+		 }
+		 set
+		 {
+		   if(tariffProductId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffProductId",OldValue=tariffProductId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffProductId=value;
+		   }
+			
+		 }
+	   }
+	  private string sellerPartnerTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SellerPartnerTypeId  
+	   {
+	    
+	     get
+		{
+		   return sellerPartnerTypeId;
+		 }
+		 set
+		 {
+		   if(sellerPartnerTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SellerPartnerTypeId",OldValue=sellerPartnerTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sellerPartnerTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private bool isRefreshTranslations ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRefreshTranslations  
+	   {
+	    
+	     get
+		{
+		   return isRefreshTranslations;
+		 }
+		 set
+		 {
+		   if(isRefreshTranslations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRefreshTranslations",OldValue=isRefreshTranslations,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRefreshTranslations=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? lastUsedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastUsedDate  
+	   {
+	    
+	     get
+		{
+		   return lastUsedDate;
+		 }
+		 set
+		 {
+		   if(lastUsedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastUsedDate",OldValue=lastUsedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastUsedDate=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

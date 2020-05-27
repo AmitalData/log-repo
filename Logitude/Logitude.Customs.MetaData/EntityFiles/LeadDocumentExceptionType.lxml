@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Lead Document Exception Type&quot;"
-  Code="&quot;8640&quot;"
-  Name="&quot;Customs.LeadDocumentExceptionType Query Group&quot;"
+  Code="&quot;LDET&quot;"
+  Name="&quot;Customs.LeadDocumentExceptionTypes&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;fa382b1e-0316-41f5-b617-79b7219f252c&quot;"
     FieldName="&quot;Code&quot;"
@@ -299,21 +301,109 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;Error&quot;"
+      SearchFields="&quot;1,שגיאה&quot;"
+      Inactive="false"
+      LocalName="&quot;שגיאה&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      EnglishName="&quot;Serving constraint&quot;"
+      SearchFields="&quot;2,אילוץ הגשה&quot;"
+      Inactive="false"
+      LocalName="&quot;אילוץ הגשה&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;Forcing warned&quot;"
+      SearchFields="&quot;3,אילוץ התרה&quot;"
+      Inactive="false"
+      LocalName="&quot;אילוץ התרה&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Warning&quot;"
+      SearchFields="&quot;4,אזהרה&quot;"
+      Inactive="false"
+      LocalName="&quot;אזהרה&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      EnglishName="&quot;Severe warning&quot;"
+      SearchFields="&quot;5,אזהרה חמורה&quot;"
+      Inactive="false"
+      LocalName="&quot;אזהרה חמורה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;LeadDocumentExceptionType&quot;"
+    ObjectTableName="&quot;Customs.LeadDocumentExceptionType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.LeadDocumentExceptionType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;LDET&quot;"
+    QueryGroupName="&quot;Customs.LeadDocumentExceptionTypes&quot;"
+    LocalTextCode="&quot;סוג שגיאה במסמך מוביל&quot;"
+    TextCode="&quot;Lead Document Exception Types&quot;"
+    TextCodeCode="&quot;Customs.LeadDocumentExceptionType.Q.LeadDocumentExceptionTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;LEADDOCUMENTEXCEPTIONTYPEQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.City.Features.LeadDocumentExceptionTypes&quot;"
+    FeatureDefaultText="&quot;Lead Document Exception Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;LeadDocumentExceptionType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;LeadDocumentExceptionType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;LeadDocumentExceptionType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;LeadDocumentExceptionType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.LeadDocumentExceptionType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.LeadDocumentExceptionType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

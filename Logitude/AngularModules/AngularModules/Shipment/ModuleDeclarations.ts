@@ -1,7 +1,8 @@
 // General
 import {OperationsComponent} from './Components/Workspaces/OperationsComponent';
 import {ShipmentsComponent} from './Components/Workspaces/ShipmentsComponent';
-import {ContainersFUsComponent} from './Components/Workspaces/ContainersFUsComponent';
+import { ContainersFUsComponent } from './Components/Workspaces/ContainersFUsComponent';
+import { AMANACComponent } from './Components/Workspaces/AMANACComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ShipmentHelperComponent} from './Components/Helpers/ShipmentHelperComponent';
 import {ShipmentShortTitleComponent} from './Components/ShortTitles/ShipmentShortTitleComponent';
@@ -36,12 +37,14 @@ import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPa
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
 import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
 import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
+import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
 
 export const Components =
     [
         OperationsComponent,
         ShipmentsComponent,
         ContainersFUsComponent,
+        AMANACComponent,
         FieldTemplateComponent,
         ShipmentHelperComponent,
         ShipmentShortTitleComponent,
@@ -75,6 +78,7 @@ export const Components =
         RemoveTasksButtonListTemplate,
         AnalyzeChampXMLComponent,
         ShipmenDirectionConvertComponent,
+        CustomsTransferHeaderHelperComponent,
     ];
 
 export const ControlsComponents =
@@ -90,7 +94,8 @@ export class ModuleDeclarations {
         switch (name) {
             case "OperationsComponent": { myResult = OperationsComponent; break; }
             case "ShipmentsComponent": { myResult = ShipmentsComponent; break; }
-            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }          
+            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }
+            case "AMANACComponent": { myResult = AMANACComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ShipmentHelperComponent": { myResult = ShipmentHelperComponent; break; }
             case "ShipmentShortTitleComponent": { myResult = ShipmentShortTitleComponent; break; }
@@ -125,6 +130,7 @@ export class ModuleDeclarations {
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
             case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
             case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
+            case "CustomsTransferHeaderHelperComponent": { myResult = CustomsTransferHeaderHelperComponent; break; }
         }
 
         return myResult;

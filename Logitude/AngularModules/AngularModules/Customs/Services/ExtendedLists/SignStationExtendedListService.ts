@@ -1,7 +1,8 @@
 ﻿
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -14,11 +15,11 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class SignStationExtendedListService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<SignStationList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         //CustomsRequestsSheetViewsController
         //CustomsSettingExtended
         //CustomsRequestsSheetViews
@@ -30,9 +31,9 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, { headers: authHeader }).map(response => {
-                var list = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
 
                 var entity: SignStationList;
                 if (list) {
@@ -43,7 +44,7 @@ export class SignStationExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -52,10 +53,10 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<SignStationList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -69,7 +70,7 @@ export class SignStationExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -79,13 +80,12 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStationGroupByStatus?' + "&searchfields=" + searchfields ,
-                { headers: authHeader })
-                .map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                     var serviceResponse: ServiceResponse;
-                    serviceResponse = response.json();
+                    serviceResponse = response;
                     //var _mappedListsArray: Array<SignStationGroup> = [];
                     
 
@@ -94,7 +94,7 @@ export class SignStationExtendedListService {
                     //}
                     //serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -104,13 +104,12 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStations?' + "&skip=" + skip.toString() + "&take=" + take.toString() + "&sortingCol=" + sortingCol.toString() + "&sortingDir=" + sortingDir.toString() + "&searchfields=" + searchfields + "&FilterByStatus=" + FilterByStatus.toString(),
-                { headers: authHeader })
-                .map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                     var serviceResponse: ServiceResponse;
-                    serviceResponse = response.json();
+                    serviceResponse = response;
                     var _mappedListsArray: Array<SignStationList> = [];
                     //if (serviceResponse.Result) {
                     //    for (var key in serviceResponse.Result) {
@@ -127,7 +126,7 @@ export class SignStationExtendedListService {
                     }
                     serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

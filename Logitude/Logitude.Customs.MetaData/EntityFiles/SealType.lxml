@@ -419,41 +419,50 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
   <Query
     Code="&quot;SealType&quot;"
-    TextCode="&quot;SealTypeQuery&quot;"
-    LocalTextCode="&quot;סוג סגר&quot;"
-    QueryGroupCode="&quot;a866&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.SealType&quot;"
-    QuerySection="&quot;Customs.SealType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SealType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;a866&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    LocalTextCode="&quot;סוג סגר&quot;"
+    TextCode="&quot;SealTypeQuery&quot;"
+    TextCodeCode="&quot;SealType.Q.SealType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SealType.Q.SealType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;SealType.Features.SealType&quot;"
+    FeatureDefaultText="&quot;SealType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;SealType&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SealType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SealType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SealType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SealType&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SealType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -461,10 +470,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SealType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -474,10 +484,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SealType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -485,8 +496,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

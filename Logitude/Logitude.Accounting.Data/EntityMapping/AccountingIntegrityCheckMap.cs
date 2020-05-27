@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreateDateTimeUTC).HasColumnName("CreateDateTimeUTC").IsRequired();
 
-            this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.ParametersXML).HasColumnName("ParametersXML").HasMaxLength(1000).IsUnicode(true);
 
@@ -51,6 +51,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
+
+            this.Property(t => t.ShouldFix).HasColumnName("ShouldFix");
         }
     }
 }

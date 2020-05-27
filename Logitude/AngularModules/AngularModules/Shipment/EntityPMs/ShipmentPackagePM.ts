@@ -179,9 +179,9 @@ export class ShipmentPackagePM {
     public set ClassNumber(newValue: string) { if (this.classNumber != newValue) { this.classNumber = newValue; this.MarkAsDirty("ClassNumber"); } }
        
 	 
-    private temperature: number;
+    private temperature: string;
     public get Temperature() { return this.temperature; }
-    public set Temperature(newValue: number) { if (this.temperature != newValue) { this.temperature = newValue; this.MarkAsDirty("Temperature"); } }
+    public set Temperature(newValue: string) { if (this.temperature != newValue) { this.temperature = newValue; this.MarkAsDirty("Temperature"); } }
        
 	 
     private ventilation: number;
@@ -665,6 +665,17 @@ export class ShipmentPackagePM {
     private countryId: string;
     public get CountryId() { return this.countryId; }
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }        
+
+    private warehouseReleaseNumber: string;
+    public get WarehouseReleaseNumber() { return this.warehouseReleaseNumber; }
+    public set WarehouseReleaseNumber(newValue: string) { if (this.warehouseReleaseNumber != newValue) { this.warehouseReleaseNumber = newValue; this.MarkAsDirty("WarehouseReleaseNumber"); } }
+
+
+  private warehouseReleaseId: string;
+    public get WarehouseReleaseId() { return this.warehouseReleaseId; }
+    public set WarehouseReleaseId(newValue: string) { if (this.warehouseReleaseId != newValue) { this.warehouseReleaseId = newValue; this.MarkAsDirty("WarehouseReleaseId"); } }
+
+     
 
 
     public OldEntityPM: ShipmentPackagePM;

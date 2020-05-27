@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Payment Order Type&quot;"
-  Code="&quot;d29b&quot;"
-  Name="&quot;Customs.PaymentOrderType Query Group&quot;"
+  Code="&quot;PAOT&quot;"
+  Name="&quot;Customs.PaymentOrderType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;86ce37b7-9443-4415-96b8-17a87d467726&quot;"
     FieldName="&quot;Code&quot;"
@@ -310,21 +312,109 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,מיסים&quot;"
+      Inactive="false"
+      LocalName="&quot;מיסים&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;פיקדון&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,חילוט פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;חילוט פיקדון&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,אגרות ורישיונות&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרות ורישיונות&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,פיקדון ספציפי&quot;"
+      Inactive="false"
+      LocalName="&quot;פיקדון ספציפי&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,החזר הלוואת נכה&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר הלוואת נכה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PaymentOrderType&quot;"
+    ObjectTableName="&quot;Customs.PaymentOrderType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PaymentOrderType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PAOT&quot;"
+    QueryGroupName="&quot;Customs.PaymentOrderType&quot;"
+    LocalTextCode="&quot;סוג הוראת תשלום&quot;"
+    TextCode="&quot;Payment Order Types&quot;"
+    TextCodeCode="&quot;Customs.PaymentOrderType.Q.PaymentOrderTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PAYMENTORDERTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PaymentOrderType.Features.PaymentOrderTypes&quot;"
+    FeatureDefaultText="&quot;Payment Order Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PaymentOrderType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PaymentOrderType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PaymentOrderType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PaymentOrderType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PaymentOrderType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PaymentOrderType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

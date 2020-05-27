@@ -45,9 +45,10 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 declare var System: any;
 declare var window: any;
 declare var htmlComponentProparitiesTrue, GetPlainTextFromHtml, htmlComponentProparitiesFalse: any;
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDocument',
     templateUrl: './SendControl.html',
     providers: [CommunicationLogExtendedPMService, CommunicationAttachmentExtendedPMService, DocumentOutPMService, ServiceArgs, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService, DocumentTypePMExtendedService, DocumentTypeListService],
@@ -141,6 +142,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     From: string = "";
     ReplyTo: string = "";
     IsShowLinkDocsSharedWithAgents: boolean = false;
+    ShowImagesLibraryComponent: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
@@ -163,7 +165,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
-
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
+            this.ShowImagesLibraryComponent = true;
+        }
 
     }
 
@@ -234,7 +238,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
        
         if (!dataContext.DocumentTypePM && !AppTool.IsNullOrEmpty(dataContext.Id)) {
             this.CurrentSession.StartBusyIndicator("Loading...");
-            this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe(res => {
+            this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     dataContext.DocumentTypePM = pmResponse.Result;
@@ -350,7 +354,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.froalaEditorSetting.IsDisableEdit = true;
             this.froalaEditorSetting.Height = froalaheight;
 
-            this._htmlEditorService.getSentMessageHtmlBody(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CurrentEntityPm.DocumentId, SessionInfo.LoggedUserTenant).subscribe(res => {
+            this._htmlEditorService.getSentMessageHtmlBody(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CurrentEntityPm.DocumentId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -361,7 +365,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ReloadFroalaEditor();
                     }
 
-                    this._communicationAttachmentExtendedPMService.getCommunicationAttachmentsByCommunicationLogId(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+                    this._communicationAttachmentExtendedPMService.getCommunicationAttachmentsByCommunicationLogId(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -378,7 +382,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                     if (this.SelectedInternalDocument.IsViewGeneralAttachment) {
 
                                         logAttachments.forEach((attachment) => {
-                                            this._documentExtendedService.GetDocumentById(attachment.DocumentId, attachment.Tenant).subscribe(res => {
+                                            this._documentExtendedService.GetDocumentById(attachment.DocumentId, attachment.Tenant).subscribe((res:any) => {
                                                 var pmResponse: ServiceResponse = res;
                                                 count += 1;
                                                 if (!pmResponse.HasError) {
@@ -547,9 +551,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReplyTo = this.SelectedDocumentTypeTemplateViewModel.ReplyTo;
             this.Subject = this.SelectedDocumentTypeTemplateViewModel.TemplateSubject;
             this.Cc = this.SelectedDocumentTypeTemplateViewModel.TemplateCc;
+            this.Bcc = this.SelectedDocumentTypeTemplateViewModel.TemplateBcc;
 
             if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
-
+            if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
             this.ReloadFroalaEditor();
         }
         else {
@@ -561,12 +566,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 this.From = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.From) ? this.SelectedDocumentTypeTemplateViewModel.Entity.From : "";
                 this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo) ? this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo : "";
                 this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
+                this.Bcc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.BCC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.BCC : "";
+
 
             }
 
 
 
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc).subscribe(res => {
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -580,6 +587,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                             this.SelectedDocumentTypeTemplateViewModel.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                            this.SelectedDocumentTypeTemplateViewModel.TemplateBcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
+
+
 
                             if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                                 this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
@@ -594,7 +604,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                         this.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                         this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                        this.Bcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
+
                         if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
+                        if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
 
                         if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                             this.Subject = myResult.Subject;
@@ -630,7 +643,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.SelectId = selectId;
         this.ReportTemplates = new Array<DocumentTypeTemplateViewModel>();
         this.DocumenttypetemplateLists = new Array<DocumentTypeTemplateViewModel>();
-        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
              this.CurrentSession.StopBusyIndicator();
@@ -825,7 +838,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Cc = this.Cc;
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
-        filter.ExportQuotationsToIntegratedSystem = this.SelectedInternalDocument.ExportQuotationsToIntegratedSystem;
         filter.ObjectTableName = this.ObjecttableName;
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
@@ -889,20 +901,20 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         });
 
 
-        if (totalsize > 15) {
-            this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
+        if (totalsize > 20) {
+            this.ShowMessage("The maximum size of documents you can attach is 20 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
              this.CurrentSession.StopBusyIndicator();
             return;
         }
 
 
-        this._htmlEditorService.sendDocumentHtml(filter).subscribe(res => {
+        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res:any) => {
             var response: ServiceResponse = res;
 
             if (!response.HasError) {
                 this.IsSendDocumentSucceeded = true;
-                this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(res => {
+                this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -913,7 +925,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         });
                         this.SelectedInternalDocument.CommunicationLogObsList = this.CommunicationLogs.filter(d => d.CurrentEntityPm.DocumentOutId == this.SelectedInternalDocument.CurrentDocument.Id);
 
-                        this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe(res => {
+                        this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe((res:any) => {
 
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
@@ -971,7 +983,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     CloseButtonClicked() {
 
-        //this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
+        //this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe((res:any) => {
         //});
 
 
@@ -979,7 +991,26 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     }
 
 
+    ShowImageLibrary() {
+        var windowArgs: any = {};
+        //windowArgs.DocumentsFilingList = this.documentInPMs;
+        //windowArgs.OnCloseAttachmentDocsInEvent = this.OnCloseAttachmentDocsInEvent;
 
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 500;
+        logitudeWindow.Title = "Insert Image";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.ShowCloseButton = true;
+        logitudeWindow.Show("./Infrastructure/Components/LogitudeComponents/ImageLibraryComponent");
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event)
+                this.froalaEditorSetting.froalaEditorComponent.InSertHtml(' <img  src=' + $event + ' class="rounded mb-3">');
+            //viewModel.InSertHtml("[PageBreak]");
+            //this.froalaEditorSetting.froalaEditorComponent.InSertHtml('');
+        });
+    }
+    
 
     ShowAttachDocsOut() {
         this.IsEnableLinkDocOout = false;
@@ -988,7 +1019,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.CurrentDocument.Tenant;
 
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -1053,7 +1084,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             childEntityId = "";
         }
 
-        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -1171,7 +1202,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             if (mychildObjectTable.Name == "ARInvoice" || mychildObjectTable.Name == "APInvoice") childEntityId = "";
         }
 
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, "I", this.CurrentDocumentType.Tenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, "I", this.CurrentDocumentType.Tenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -1432,7 +1463,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         var att = new AttachmentDocment(item.DocumentTypeCopyNameWithDocumentTypeName, item.FileSize, item.Id, this.order++);
 
 
-        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe(res => {
+        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -1641,7 +1672,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     });
 
 
-                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe(res => {
+                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe((res:any) => {
                     });
 
                 }
@@ -1697,7 +1728,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 else {
 
-                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe(res => {
+                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -1749,7 +1780,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     UpdateDocumentTypeTemplate(item: any) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
+        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any) => {
 
         });
     }
@@ -1779,7 +1810,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 var childEntityId: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildEntityId) ? this.SelectedInternalDocument.ChildEntityId : "";
                 var childObjectTableName: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildObjectTableName) ? this.SelectedInternalDocument.ChildObjectTableName : "";
 
-                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId, childObjectTableName).subscribe(res => {
+                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId, childObjectTableName).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
@@ -1916,7 +1947,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     AddTemplateFromLibrary() {
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
 
             this.IsDisableAddTemplateFromLibrary = true;
 

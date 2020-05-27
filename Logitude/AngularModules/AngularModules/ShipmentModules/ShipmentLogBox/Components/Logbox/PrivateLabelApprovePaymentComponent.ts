@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,15 +34,19 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PrivateLabelApprovePaymentComponent.html'
 })
 
 export class PrivateLabelApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public SearchText: string = null;
+  public DeleteDocumentClicked(item: any) { }
 
     DataContext: PrivateLabelApprovePaymentComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
+    Language: string = 'HB';
+    public RTL: boolean = true;
     AdditionalData: any;
     externalDocs: any[];
     public DimApproveButton: boolean = false;
@@ -58,6 +62,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
+        this.Language = SessionLocator.TenantPM.Language;
+        this.RTL = (this.Language == 'HB');
     }
 
     private isAccepted: boolean = false;
@@ -77,100 +83,109 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             this.AdditionalData = args.AdditionalData;
-            if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                this.DimDenyButton = true;
-            }
-            if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
-                var today = new Date(this.AdditionalData.ApproveDateTime);
-                var d = today.getDate();
-                var m = today.getMonth() + 1; //January is 0!
-                var dd = "";
-                var mm = "";
-                var yyyy = today.getFullYear().toString();
-                if (d < 10) {
-                    dd = '0' + d;
+            
+                if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
+                    this.DimDenyButton = true;
                 }
-                else {
-                    dd = d.toString();
-                }
-                if (m < 10) {
-                    mm = '0' + m;
-                }
-                else {
-                    mm = m.toString();
-                }
-                var to = dd + '/' + mm + '/' + yyyy;
-                this.ValidationWarningsList = "גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
-
-                this.DimApproveButton = true;
-            }
-            var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
-                var Result = [];//DocumentTypeMetaDataExtendedService
-
-                Result = res.Result.filter(a => a.IsDeleted == false);
-
-
-                this.externalDocs = [];
-
-                var SupplierInvoice = Result.filter(a => a.DocumentTypeCode == "380" || a.DocumentTypeCode == "721");
-                var Others = Result.filter(a => a.DocumentTypeCode != "721" && a.DocumentTypeCode != "380");
-                var tempSupplierInvoice = [];
-                var tempOthers = [];
-                var DRELID = "";
-                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
-                    if (myResult.Result) {
-                        DRELID = myResult.Result.Id;
-                        if (!AppTool.IsNullOrEmpty(DRELID)) {
-                            SupplierInvoice.forEach((mydoc) => {
-                                var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                                if (DRELTypes != null && DRELTypes.length > 0) {
-                                    tempSupplierInvoice.push(mydoc);
-                                }
-                            });
-                            Others.forEach((docin) => {
-                                var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                                if (DRELTypes != null && DRELTypes.length > 0) {
-                                    tempOthers.push(docin);
-                                }
-                            });
-                        }
+                if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
+                    var today = new Date(this.AdditionalData.ApproveDateTime);
+                    var d = today.getDate();
+                    var m = today.getMonth() + 1; //January is 0!
+                    var dd = "";
+                    var mm = "";
+                    var yyyy = today.getFullYear().toString();
+                    if (d < 10) {
+                        dd = '0' + d;
                     }
-                });
-               
-                //else {
-                //    tempSupplierInvoice = SupplierInvoice;
-                //    tempOthers = Others;
-                //}
-                this.externalDocs.push({ key: "חשבונות ספק ורשימות אריזה", value: tempSupplierInvoice });
-                this.externalDocs.push({ key: "מסמכים נוספים", value: tempOthers });
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    else {
+                        dd = d.toString();
+                    }
+                    if (m < 10) {
+                        mm = '0' + m;
+                    }
+                    else {
+                        mm = m.toString();
+                    }
+                    var to = dd + '/' + mm + '/' + yyyy;
+                    //This Version (*VersionID*) was already Approved by *ApprovedByUserName* at *ApproveDateTime*
+                    //גרסת הצהרה זו כבר אושרה על ידי *ApprovedByUserName* בתאריך *ApproveDateTime*
+                    var tempMessage = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy");
+                    tempMessage = tempMessage.replace("*VersionID*", this.AdditionalData.VersionId);
+                    tempMessage = tempMessage.replace("*ApprovedByUserName*", this.AdditionalData.ApprovedByUserName);
+                    tempMessage = tempMessage.replace("*ApproveDateTime*", to);
+                    this.ValidationWarningsList = tempMessage;//TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
 
-            }, error => {
-                var dd: Response = error;
-            });
+                    this.DimApproveButton = true;
+                }
+                var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
+                    var Result = [];//DocumentTypeMetaDataExtendedService
+
+                    Result = res.Result.filter(a => a.IsDeleted == false);
+
+
+                    this.externalDocs = [];
+
+                    var SupplierInvoice = Result.filter(a => a.DocumentTypeCode == "380" || a.DocumentTypeCode == "721");
+                    var Others = Result.filter(a => a.DocumentTypeCode != "721" && a.DocumentTypeCode != "380");
+                    var tempSupplierInvoice = [];
+                    var tempOthers = [];
+                    var DRELID = "";
+                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult:any) => {
+                        if (myResult.Result) {
+                            DRELID = myResult.Result.Id;
+                            if (!AppTool.IsNullOrEmpty(DRELID)) {
+                                SupplierInvoice.forEach((mydoc) => {
+                                    var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                    if (DRELTypes != null && DRELTypes.length > 0) {
+                                        tempSupplierInvoice.push(mydoc);
+                                    }
+                                });
+                                Others.forEach((docin) => {
+                                    var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                    if (DRELTypes != null && DRELTypes.length > 0) {
+                                        tempOthers.push(docin);
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    //else {
+                    //    tempSupplierInvoice = SupplierInvoice;
+                    //    tempOthers = Others;
+                    //}
+                    this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.SupplierInvoiceAndPackingList"), value: tempSupplierInvoice });// "חשבונות ספק ורשימות אריזה"
+                    this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.AdditionalDocuments"), value: tempOthers });//"מסמכים נוספים"
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+                }, error => {
+                    var dd: Response = error;
+                });
+           
+          
         }
     }
     public ValidationWarningsList: string = null;
     ApproveButtonClicked() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
-                this.messageWindow.RTL = true;
+                this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
-                this.messageWindow.Title = "אזהרה!";
-                this.messageWindow.Message = "גרסה זו כבר אושרה על ידי משתמש אחר";
+                this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
+                this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.VersionAlreadyApproved");//"גרסה זו כבר אושרה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult:any) => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
                     this.DimApproveButton = true;
                     var today = new Date();
@@ -192,11 +207,11 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         mm = m.toString();
                     }
                     var to = dd + '/' + mm + '/' + yyyy;
-                    this.messageWindow.RTL = true;
+                    this.messageWindow.RTL = this.RTL;
                     this.messageWindow.Width = 300;
                     this.messageWindow.Height = 150;
-                    this.messageWindow.Title = "הצהרה אושרה";
-                    this.messageWindow.Message = "אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                    this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
+                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName;//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                     this.messageWindow.Show(this.messageWindow.Message);
                     //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -207,42 +222,42 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     DenyButtonClicked() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Sending ...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
-        newWindow.Height = 220;
+        newWindow.Height = 280;
         newWindow.RTL = true;
         
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
-                this.messageWindow.RTL = true;
+                this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
-                this.messageWindow.Title = "אזהרה!";
-                this.messageWindow.Message = "גרסה זו כבר נדחתה על ידי משתמש אחר";
+                this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
+                this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.Thisversionhasalreadybeenrejected");//"גרסה זו כבר נדחתה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
-                newWindow.Title = "הסבר לדחיית הצהרה";
+                newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ExplanationForRejectingAStatement");//"הסבר לדחיית הצהרה";//Shipment.O.ExplanationForRejectingAStatement
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
                 //newWindow.Add(control); 
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
                         this.DimDenyButton = true;
                         this.CurrentSession.CloseCurrentWindow();
-                        this.messageWindow.RTL = true;
+                        this.messageWindow.RTL = this.RTL;
                         this.messageWindow.Width = 300;
                         this.messageWindow.Height = 150;
-                        this.messageWindow.Title = "הצהרה נדחתה";
-                        this.messageWindow.Message = "דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                        this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.Astatementwasrejected");//"הצהרה נדחתה";
+                        this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.TheRejectionStatementWasSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName;//"דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                         this.messageWindow.Show(this.messageWindow.Message);
                     }
                 });
@@ -251,7 +266,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     DownloadDocumentFile(item) {
-        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
+        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;
@@ -348,15 +363,20 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         var newWindow = new LogitudeWindow();
         newWindow.Width = 722;
         newWindow.Height = 230;
-        newWindow.RTL = true;
-        newWindow.Title = "פרטי חשבון ספק";
+        if (this.Language == 'HB') {
+            newWindow.RTL = true;
+        }
+        else {
+            newWindow.RTL = false;
+        }
+        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ProviderAccountInformation");//"פרטי חשבון ספק";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;
 
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
 
     }
 
@@ -364,8 +384,13 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         var newWindow = new LogitudeWindow();
         newWindow.Width = 550;
         newWindow.Height = 230;
-        newWindow.RTL = true;
-        newWindow.Title = "פרטי מס";
+        //if (this.Language == 'HB') {
+        //    newWindow.RTL = true;
+        //}
+        //else {
+        newWindow.RTL = this.RTL;
+        //}
+        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;
 

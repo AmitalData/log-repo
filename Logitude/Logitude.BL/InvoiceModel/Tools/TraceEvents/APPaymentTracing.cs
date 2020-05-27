@@ -1,10 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System;
 
 namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 {
@@ -81,6 +83,32 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                         UserId = loggedContact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = myEntityName,
+                    });
+                }
+            }
+
+            TraceExternalPayment(entityPM, payment, loggedContact.Id);
+        }
+
+        private static void TraceExternalPayment(APPaymentPM entityPM, APPayment payment, string loggedContactId)
+        {
+            if (entityPM.ExternalPaymentAmount != null && entityPM.ExternalPaymentDate != null)
+            {
+                if (entityPM.ExternalPaymentAmount != payment.ExternalPaymentAmount || entityPM.ExternalPaymentDate != payment.ExternalPaymentDate)
+                {
+                    string notes = "";
+                    notes += "Amount: " + String.Format("{0:0,0.00}", entityPM.ExternalPaymentAmount.Value);
+                    notes += "\nDate: " + String.Format("{0:dd MMM yyyy}", entityPM.ExternalPaymentDate);
+                    notes += "\nNotes : " + entityPM.ExternalPaymentNotes;
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "PXTR",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "APPayment",
+                        Notes = notes,
                     });
                 }
             }

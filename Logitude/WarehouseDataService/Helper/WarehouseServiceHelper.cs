@@ -40,17 +40,18 @@ namespace WarehouseDataService.Helper
             return countStart;
         }
 
-        public bool GetWarehouseFieldFromSettings(string fieldName, string connectionString)
+
+
+
+        public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
         {
-            string connection = connectionString.Replace("Main", "Global");
-
             bool result = false;
-
-            SqlConnection con = new SqlConnection(connection);
+            
+            SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
 "select " + fieldName + " " +
-"FROM dbo.Settings" + " ;", con);
+"FROM dbo." + tableName + " ;", con);
 
             try
             {
@@ -58,8 +59,14 @@ namespace WarehouseDataService.Helper
 
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
-                    reader.Read();
-                    result = (bool)(reader[fieldName]);
+                    if (reader.Read())
+                    {
+                        if (reader[fieldName] != null)
+                        {
+                            result = (bool)(reader[fieldName]);
+                        }
+
+                    }
                 }
             }
             finally
@@ -71,16 +78,13 @@ namespace WarehouseDataService.Helper
 
         public DateTime? GetDWNextRunTime(string connectionString)
         {
-
-            string connection = connectionString.Replace("Main", "Global");
-
             DateTime? result = null;
 
-            SqlConnection con = new SqlConnection(connection);
+            SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
 "select DWNextRunTime " +
-"FROM dbo.Settings" + " ;", con);
+"FROM dbo.DWHBuildStatus" + " ;", con);
 
             try
             {
@@ -106,10 +110,9 @@ namespace WarehouseDataService.Helper
 
         public void UpdateDWNextRunTime(string connectionString, DateTime? datetime)
         {
-            string connection = connectionString.Replace("Main", "Global");
-            using (SqlConnection cn = new SqlConnection(connection))
+            using (SqlConnection cn = new SqlConnection(connectionString))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set DWNextRunTime= '" + datetime + "' ;", cn);
+                SqlCommand sqlCommand = new SqlCommand("update  DWHBuildStatus set DWNextRunTime= '" + datetime + "' ;", cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -119,12 +122,18 @@ namespace WarehouseDataService.Helper
         }
 
 
-        public void UpdateWarehouseFieldSettings(string fieldName, bool value, string connectionString)
+        public void UpdateDWHBuildStatus(string fieldName, bool value, string connectionString)
         {
-            string connection = connectionString.Replace("Main", "Global");
+            string sql = "update  dbo.DWHBuildStatus set " + fieldName + "= " + (value ? 1 : 0) + " ";
+            RunScript(sql, connectionString);
+        }
+
+
+        private void RunScript(string sql , string connection)
+        {
             using (SqlConnection cn = new SqlConnection(connection))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ;", cn);
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -136,6 +145,12 @@ namespace WarehouseDataService.Helper
         {
             string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
+        }
+
+        public void UpdateLastIncrementalDWUpdateDate(string sourceConnectionString)
+        {
+            string sql = "update  dbo.DWHBuildStatus set LastIncrementalDWUpdateDate = " + "'" + DateTime.Now + "'";
+            RunScript(sql, sourceConnectionString);
         }
 
         public string BuildConnectionString(string dbSourceConnection)
@@ -166,7 +181,10 @@ namespace WarehouseDataService.Helper
                     reader.Read();
 
                     var dbConnectionString = reader["DBConnection"];
-                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
+                    {
+                        result = dbConnectionString.ToString();
+                    }
                     else
                     {
                         dbConnectionString = reader["SecondaryAzureDBConnection"];
@@ -228,15 +246,24 @@ namespace WarehouseDataService.Helper
         }
 
 
+        public bool CheckIsUpgradingSystem(string sourceConnectionString)
+        {
+            string connection = sourceConnectionString.Replace("Main", "Global");
+            return GetFieldValueFromDBByTableNameAndFieldName("IsUpgrading", "GlobalDBs", connection);
+
+        }
+
+
+
 
         public void FillDaysList()
         {
             ApplicationInfo.Days = new List<DayOfWeekClass>();
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Sunday, 0));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Monday, 1));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 2));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 2));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Wednesday, 3));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 4));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 4));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Friday, 5));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday, 6));
         }

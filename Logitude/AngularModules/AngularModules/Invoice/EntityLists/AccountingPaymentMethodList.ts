@@ -18,5 +18,6 @@ export class AccountingPaymentMethodList {
 		Inactive: boolean;
 		IsAR: boolean;
 		IsAP: boolean;
+		LocalName: string;
 	
 }

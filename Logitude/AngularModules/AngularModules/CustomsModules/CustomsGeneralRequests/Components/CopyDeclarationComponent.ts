@@ -22,8 +22,7 @@ import { GenericRequestParams } from '../../../Customs/DataContract/RequestParam
 import { DeclarationWebService } from '../../../Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
-    selector: 'CopyDeclarationComponent',
-    moduleId: module.id,
+    selector: 'CopyDeclarationComponent',    
     templateUrl: './CopyDeclarationComponent.html',
     providers: [DeclarationExtendedListService, DeclarationWebService]
 })

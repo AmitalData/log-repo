@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Autonomy Type&quot;"
-  Code="&quot;4a9c&quot;"
-  Name="&quot;Customs.AutonomyType Query Group&quot;"
+  Code="&quot;AUTT&quot;"
+  Name="&quot;Customs.AutonomyType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;b16dd68d-b344-4ed6-9a4c-5a5babfa7ef2&quot;"
     FieldName="&quot;Code&quot;"
@@ -313,21 +315,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,אוטונומיה רש&quot;פ איוש&quot;"
+      Inactive="false"
+      LocalName="&quot;אוטונומיה רש&quot;פ איוש&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,אוטונומיה רש&quot;פ עזה&quot;"
+      Inactive="false"
+      LocalName="&quot;אוטונומיה רש&quot;פ עזה&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,ישראל (לא אוטונומיה)&quot;"
+      Inactive="false"
+      LocalName="&quot;ישראל (לא אוטונומיה)&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AutonomyType&quot;"
+    ObjectTableName="&quot;Customs.AutonomyType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AutonomyType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;AUTT&quot;"
+    QueryGroupName="&quot;Customs.AutonomyType&quot;"
+    LocalTextCode="&quot;סוג אוטונומיה&quot;"
+    TextCode="&quot;Autonomy Types&quot;"
+    TextCodeCode="&quot;Customs.AutonomyType.Q.AutonomyTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;AUTONOMYTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AutonomyType.Features.AutonomyTypes&quot;"
+    FeatureDefaultText="&quot;Autonomy Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AutonomyType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AutonomyType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AutonomyType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AutonomyType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AutonomyType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AutonomyType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

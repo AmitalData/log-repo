@@ -28,6 +28,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -60,6 +62,13 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (objectContext == null)
             {
                 objectContext = CommonDataContext.GetContext(tenant.Id);
+            }
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != tenant.Id))
+            {
+                throw new ApplicationException("You are not authorized to do this operation");
             }
 
             tenantRepository = new TenantRepository(objectContext);
@@ -181,21 +190,31 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             string entityPmName = "TenantPM" + currentTenant.Id;
             string datetimeoffset = "datetimeoffset" + currentTenant.Id;
 
-            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != currentTenant.Id))
             {
-                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
+                throw new ApplicationException("You are not authorized to do this operation");
             }
+
+            
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(entityName);
             }
 
+            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
+            }
+
+
             if (CacheManager.CacheWrapper.Get(entityPmName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-                     
+
             if (!string.IsNullOrEmpty(currentTenant.CurrencyId))
             {
                 CommonDataDomainService service = new CommonDataDomainService();
@@ -304,7 +323,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 tenantMngmentRep.SubmitChanges();
 
                 scop.Complete();
-            }
+            }           
         }
 
         public void DeleteTenantPM(TenantPM tenant)

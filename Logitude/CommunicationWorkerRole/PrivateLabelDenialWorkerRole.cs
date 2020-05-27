@@ -87,7 +87,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {
@@ -105,8 +105,9 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    var result = client.PostAsync(AuthURI, content);
+                    result.Wait();
+                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -232,8 +233,9 @@ namespace CommunicationWorkerRole
                                             
                                             var serializedObject = JsonConvert.SerializeObject(DataAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                            var result = await client.PostAsync(ImporterShipmentsURI, content);
-                                            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                            var result = client.PostAsync(ImporterShipmentsURI, content);
+                                            result.Wait();
+                                            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                             {
                                                 msg = "Denial sent To Forwarder " + DateTime.Now;
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
@@ -243,7 +245,7 @@ namespace CommunicationWorkerRole
                                             }
                                             else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                             {
-                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                 if (EXC != null)
                                                 {
                                                     var Failmsg = EXC.ErrorType + " Fail To Send Denial To Forwarder Tenant " + DateTime.Now;

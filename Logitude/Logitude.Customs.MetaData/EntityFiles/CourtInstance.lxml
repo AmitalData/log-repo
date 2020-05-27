@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;3bbde0a1-549b-478e-b371-596a31aaa938&quot;"
     FieldName="&quot;Code&quot;"
@@ -302,34 +304,43 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;CourtInstance&quot;"
-    TextCode="&quot;CourtInstanceQuery&quot;"
-    QueryGroupCode="&quot;269e&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.CourtInstance&quot;"
-    QuerySection="&quot;Customs.CourtInstance&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CourtInstance&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;269e&quot;"
+    QueryGroupName="&quot;Customs.CourtInstance Query Group&quot;"
+    TextCode="&quot;CourtInstanceQuery&quot;"
+    TextCodeCode="&quot;CourtInstance.Q.CourtInstance&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CourtInstance.Q.CourtInstance&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CourtInstance.Features.CourtInstance&quot;"
+    FeatureDefaultText="&quot;CourtInstance&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CourtInstance&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;CourtInstance&quot;" />
       <QueryColumn
-        QueryCode="&quot;CourtInstance&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CourtInstance&quot;" />
       <QueryColumn
-        QueryCode="&quot;CourtInstance&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CourtInstance&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -337,17 +348,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CourtInstance&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CourtInstance&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -115,6 +115,46 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return myResult;
         }
+        public APInvoiceLinePM GetSingle(string apinvoiceId, int lineNumber)
+        {
+            List<APInvoiceLine> invoices
+                = (from a in repository.context.APInvoiceLines
+                   where a.APInvoiceId == apinvoiceId
+                   && a.LineNumber == lineNumber
+                   select a).ToList();
+
+            if (invoices.Count > 1)
+                throw new ApplicationException("GetSinglePMByAPInvoiceIdAndLineNumber has wrong data!");
+            APInvoiceLine InvoiceLine = invoices.FirstOrDefault();
+            int tenant = 0;
+            if (InvoiceLine != null)
+            {
+                tenant = InvoiceLine.Tenant;
+            }
+            
+            List<APInvoiceLinePM> invoicePMs = MapToPM(invoices, apinvoiceId, tenant);
+            APInvoiceLinePM invoicePM = invoicePMs.FirstOrDefault();
+
+            return invoicePM;
+        }
+
+        public APInvoiceLinePM GetSinglePMByAPInvoiceIdAndLineNumber(string apinvoiceId,int lineNumber, int tenant)
+        {
+            List<APInvoiceLine> invoices
+                = ( from a in repository.context.APInvoiceLines
+                    where a.Tenant == tenant
+                    && a.APInvoiceId == apinvoiceId
+                    && a.LineNumber == lineNumber
+                    select a).ToList();
+
+            if (invoices.Count > 1)
+                throw new ApplicationException("GetSinglePMByAPInvoiceIdAndLineNumber has wrong data!");
+
+            List<APInvoiceLinePM> invoicePMs = MapToPM(invoices, apinvoiceId, tenant);
+            APInvoiceLinePM invoicePM = invoicePMs.FirstOrDefault();
+
+            return invoicePM;
+        }
 
         private List<APInvoiceLinePM> MapToPM(List<APInvoiceLine> myData, string invoiceId, int tenant)
         {
@@ -147,6 +187,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 VatTypeId = a.VatTypeId,
                                 VatPercentage = a.VatPercentage,
                                 PrepaidCollectId = a.PrepaidCollectId,
+                                ContainerTypeId = a.ContainerTypeId,
+                                Quantity = a.Quantity,
                             }).ToList();
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
@@ -191,6 +233,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         {
                             item.VatTypeName = vatType.EnglishName;
                             item.VatIsMultiPercentage = vatType.IsMultiPercentage;
+                            item.VatRecognizedPercentage = (vatType.RecognizedPercentage != null  && vatType.RecognizedPercentage != 0 )? vatType.RecognizedPercentage / 100: vatType.RecognizedPercentage ;
                         }
                     }
 

@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -96,7 +97,8 @@ using Simplog.Data.CommonDataModel;
 				   
 				   temp.VatNumber = MyEntityPM.VatNumber;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
+				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -137,19 +139,31 @@ using Simplog.Data.CommonDataModel;
 					
 					   					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Card with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
-					}					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
+					}
+					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
@@ -164,8 +178,10 @@ using Simplog.Data.CommonDataModel;
 					temp.VatNumber = MyEntity.VatNumber;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.PartnerCode;
-					}					   
+					}
+					temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;					   
 					   return temp;
 		    }
             catch (Exception ex)

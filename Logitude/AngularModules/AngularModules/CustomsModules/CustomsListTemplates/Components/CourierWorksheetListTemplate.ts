@@ -1,10 +1,11 @@
+import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 
 declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+//import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -35,8 +36,6 @@ import { DeclarationMamanSpecialActionListService } from '../../../Customs/Servi
 import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
 import { DeclarationCourierStatusWebService } from '../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
-import { retry } from 'rxjs/operator/retry';
-import { forEach } from "@angular/router/src/utils/collection";
 import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/DeclarationMamanSpecialActionList";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
@@ -50,11 +49,12 @@ import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatew
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 
 export class CourierWorksheetListTemplate {
+  public entityPM: any;
 
     _CourierWorksheet: DeclarationCourierStatusList;
     public fieldName: any;
@@ -97,7 +97,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-    
+    private currentSession=SessionLocator.SelectedSession;
 
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -107,7 +107,7 @@ export class CourierWorksheetListTemplate {
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
 
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
@@ -446,8 +446,8 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
                 if (res.HasError) {
@@ -844,7 +844,7 @@ export class CourierWorksheetListTemplate {
                         declarationMamanSpecialActionPM.DeclarationId = declarationId;
                         declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
 
-                        this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
+                        this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe((res: any) => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
@@ -856,7 +856,7 @@ export class CourierWorksheetListTemplate {
                     else {
                         declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = null;
                         declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = null;
-                        this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe(res => {
+                        this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe((res: any) => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
                                     SessionLocator.SelectedSession.StopBusyIndicator();

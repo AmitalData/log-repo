@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Collateral Answer Status&quot;"
-  Code="&quot;0d56&quot;"
-  Name="&quot;Customs.CollateralAnswerStatus Query Group&quot;"
+  Code="&quot;COAS&quot;"
+  Name="&quot;Customs.CollateralAnswerStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d426d8ad-3985-4fbc-ba81-1f9a7d08aed4&quot;"
     FieldName="&quot;Code&quot;"
@@ -299,21 +301,129 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,מאושר&quot;"
+      Inactive="false"
+      LocalName="&quot;מאושר&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,ממתין לפתיחת תיק&quot;"
+      Inactive="false"
+      LocalName="&quot;ממתין לפתיחת תיק&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,לא קיים&quot;"
+      Inactive="false"
+      LocalName="&quot;לא קיים&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,לא בתוקף&quot;"
+      Inactive="false"
+      LocalName="&quot;לא בתוקף&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,חסר&quot;"
+      Inactive="false"
+      LocalName="&quot;חסר&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,שיוך שגוי&quot;"
+      Inactive="false"
+      LocalName="&quot;שיוך שגוי&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,סוג בטוחה שגוי&quot;"
+      Inactive="false"
+      LocalName="&quot;סוג בטוחה שגוי&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,חורג ביתר&quot;"
+      Inactive="false"
+      LocalName="&quot;חורג ביתר&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,סטאטוס לא תקין&quot;"
+      Inactive="false"
+      LocalName="&quot;סטאטוס לא תקין&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,חסר תנאים&quot;"
+      Inactive="false"
+      LocalName="&quot;חסר תנאים&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CollateralAnswerStatus&quot;"
+    ObjectTableName="&quot;Customs.CollateralAnswerStatus&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CollateralAnswerStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;COAS&quot;"
+    QueryGroupName="&quot;Customs.CollateralAnswerStatus&quot;"
+    LocalTextCode="&quot;סטטוס מענה לדרישה לבטוחה&quot;"
+    TextCode="&quot;Collateral Answer Status&quot;"
+    TextCodeCode="&quot;Customs.CollateralAnswerStatus.Q.CollateralAnswerStatusQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;COLLATERALANSWERSTATUS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CollateralAnswerStatus.Features.CollateralAnswerStatus&quot;"
+    FeatureDefaultText="&quot;Collateral Answer Status&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CollateralAnswerStatus&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CollateralAnswerStatus&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CollateralAnswerStatus&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CollateralAnswerStatus&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CollateralAnswerStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CollateralAnswerStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

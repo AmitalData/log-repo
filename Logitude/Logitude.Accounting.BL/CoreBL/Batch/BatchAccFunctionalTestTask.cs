@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     case AccFunctionalState.ClearAccountingDB:
                     case AccFunctionalState.InsertApprovedJournalsDelay10Min:
 
-                        using (var scope = TransactionFactory.GetTransaction())
+                        //using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                         {
                             var clearAccountingDB = new ClearAccountingDB();
                             clearAccountingDB.ClearDB(parameterArgs.Tenant);
@@ -81,13 +81,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                             JournalToGLAccountMoreData.BuildJournals(parameterArgsFromCommunicationsData.Tenant, parameterArgsFromCommunicationsData.JournalInput);
                             parameterArgs.MyState = AccFunctionalState.CheckTrailReport.ToString();
                             this.CreateQBatchTaskExecution<BatchFunctionalTestTaskArg>(parameterArgs, parameterArgs.Tenant, $"CreateBatchFunctionalTestTask({parameterArgs.MyState.ToString()})", true);
-                            scope.Complete();
+                            //scope.Complete();
                         }
                         break;
 
                     case AccFunctionalState.CheckTrailReport:
 
-                        using (var scope = TransactionFactory.GetTransaction())
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                         {
                             List<string> res = parameterArgsFromCommunicationsData.ExpectedGLAccount
     .Select(gLAccountOutput =>

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BusinessProcessQueueUpdateClass
-   {  
+   {  		
+		public const string HashString = "26f5906495ce6fe0578ed4f196accd33";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,11 +133,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    HashString =  BusinessProcessQueueUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -192,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -246,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -302,7 +304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -356,7 +358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -412,7 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -468,7 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -524,7 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -580,7 +582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -634,7 +636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -687,7 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -743,7 +745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -797,7 +799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -853,72 +855,90 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BusinessProcessQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa2e", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup BusinessProcessQueueQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "43d1", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BusinessProcessQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa2e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BusinessProcessQueueQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "43d1", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable BusinessProcessQueueObjectTable = objectTables.ContainsKey("BusinessProcessQueue") ? objectTables["BusinessProcessQueue"] : null;
+            if (BusinessProcessQueueObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable BusinessProcessQueueObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> BusinessProcessQueueObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessProcessQueue").ToList();   
+                BusinessProcessQueueObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode BusinessProcessQueueTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessProcessQueue.Q.AllQueues", DefaultText = @"Queues",LocalDefaultText = "Queues", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BusinessProcessQueueFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Q.AllQueues", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.AllQueues", NameTextCodeDefaultText = "All Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode BusinessProcessQueueTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessProcessQueue.Q.AllQueues", DefaultText = @"Queues",LocalDefaultText = "Queues", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BusinessProcessQueueFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Q.AllQueues", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.AllQueues", NameTextCodeDefaultText = "All Queues", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BusinessProcessQueueObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessProcessQueueTextCode_0.Id, Code = "All Queues",  QueryGroupCode = "aa2e", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessProcessQueueObjectTable.Id, QuerySection = "BusinessProcessQueue", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessProcessQueueFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessProcessQueueTextCode_0.Id, NameTextCodeCode = BusinessProcessQueueTextCode_0.Code, ObjectTableName = "BusinessProcessQueue", Code = "All Queues",  QueryGroupCode = "aa2e", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessProcessQueueObjectTable.Id, QuerySection = "BusinessProcessQueue", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessProcessQueueFeature_0.Id,FeatureUniqeCode= BusinessProcessQueueFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id, IndexOrder = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessProcessQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id,QueryCode = AllQueuesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BusinessProcessQueue.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id, IndexOrder = 1, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BusinessProcessQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id,QueryCode = AllQueuesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BusinessProcessQueue.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id, IndexOrder = 2, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BusinessProcessQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id,QueryCode = AllQueuesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BusinessProcessQueue.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id, IndexOrder = 3, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "EntityName" && d.ObjectTableId == BusinessProcessQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id,QueryCode = AllQueuesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BusinessProcessQueue.EntityName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id, IndexOrder = 4, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "BusinessRoleName" && d.ObjectTableId == BusinessProcessQueueObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQueuesQuery.Id,QueryCode = AllQueuesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BusinessProcessQueue.BusinessRoleName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable BusinessProcessQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BusinessProcessQueueObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessProcessQueue").ToList();
+		   //List<ObjectField> BusinessProcessQueueObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessProcessQueue").ToList();
 		       
 	      
 
 	         Screen BusinessProcessQueueGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueue.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "BusinessRoleId").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.BusinessRoleId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "ObjectTableId").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.ObjectTableId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessProcessQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id,ScreenCode = BusinessProcessQueueGeneralTabScreenScreen0.Code, ObjectFieldCode = "BusinessProcessQueue.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BusinessProcessQueueHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueue.HeaderScreen.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessProcessQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessProcessQueueHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessProcessQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessProcessQueueHeaderScreenScreen1.Id,ScreenCode = BusinessProcessQueueHeaderScreenScreen1.Code, ObjectFieldCode = "BusinessProcessQueue.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessProcessQueueObjectTable.HeaderScreenId = BusinessProcessQueueHeaderScreenScreen1.Id;
+		    BusinessProcessQueueObjectTable.HeaderScreenCode = BusinessProcessQueueHeaderScreenScreen1.Code;
+
 	   		  
 
 	    }
@@ -929,19 +949,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable BusinessProcessQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BusinessProcessQueueGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessProcessQueue.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BusinessProcessQueueGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Tab.General", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.BQGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BusinessProcessQueueGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Tab.General", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.BQGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BusinessProcessQueueObjectTable);
  
                  
 			   TextCode BusinessProcessQueueEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessProcessQueue.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BusinessProcessQueueEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Tab.Events", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.BQEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BusinessProcessQueueEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessProcessQueue.Tab.Events", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueueFeatures.BQEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BusinessProcessQueueObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BQGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessProcessQueueGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = BusinessProcessQueueObjectTable.Id, TabNameTextCodeId = BusinessProcessQueueGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BQGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessProcessQueueGeneralFeature_TH0.Id,FeatureUniqeCode = BusinessProcessQueueGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = BusinessProcessQueueObjectTable.Id, TabNameTextCodeId = BusinessProcessQueueGeneralTextCode_TH0.Id, TabNameTextCodeCode = BusinessProcessQueueGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BQEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessProcessQueueEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessProcessQueueObjectTable.Id, TabNameTextCodeId = BusinessProcessQueueEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BQEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BusinessProcessQueueEventsFeature_TH1.Id,FeatureUniqeCode = BusinessProcessQueueEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BusinessProcessQueueObjectTable.Id, TabNameTextCodeId = BusinessProcessQueueEventsTextCode_TH1.Id, TabNameTextCodeCode = BusinessProcessQueueEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -949,10 +969,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BusinessProcessQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BusinessProcessQueueFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BusinessProcessQueueFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BusinessProcessQueueFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BusinessProcessQueueFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.PackageFeature", NameTextCodeDefaultText = "BusinessProcessQueue Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BusinessProcessQueueFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BusinessProcessQueueObjectTable);
+		   Feature BusinessProcessQueueFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BusinessProcessQueueObjectTable);
+		   Feature BusinessProcessQueueFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BusinessProcessQueueObjectTable);
+		   Feature BusinessProcessQueueFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessProcessQueue.Features.PackageFeature", NameTextCodeDefaultText = "BusinessProcessQueue Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BusinessProcessQueueObjectTable);    
 	    
 		}
 

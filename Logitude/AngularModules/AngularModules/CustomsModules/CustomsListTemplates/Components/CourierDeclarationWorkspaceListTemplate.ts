@@ -13,8 +13,7 @@ import { CourierMasterPMService } from '../../../Customs/Services/StandardPMs/Co
 import { CourierWorksheetSharedDataService } from "../../../Customs/Services/DataChange/CourierWorksheetSharedDataService";
 
 
-@Component({
-    moduleId: module.id,
+@Component({    
     templateUrl: './CourierDeclarationWorkspaceListTemplate.html',
 })
 

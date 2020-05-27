@@ -69,6 +69,8 @@
             this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.batchTaskExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -110,7 +112,7 @@
             this.button42 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
-            this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
+            this.UpdateAutomationMetadataButton = new System.Windows.Forms.Button();
             this.WarehouseButton = new System.Windows.Forms.Button();
             this.WarehouseLable = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -157,6 +159,14 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
+            this.button49 = new System.Windows.Forms.Button();
+            this.btnCallOldUpdate = new System.Windows.Forms.Button();
+            this.button50 = new System.Windows.Forms.Button();
+            this.UpdateRulesLabel = new System.Windows.Forms.Label();
+            this.button48 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button45 = new System.Windows.Forms.Button();
             this.lblUTariffModule = new System.Windows.Forms.Label();
             this.button41 = new System.Windows.Forms.Button();
             this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
@@ -167,6 +177,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -175,6 +186,17 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.UpdateLogosLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.FilePathTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
+            this.button46 = new System.Windows.Forms.Button();
+            this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
+            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
+            this.LoadClosedTablesLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -182,10 +204,12 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(16, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 24);
@@ -248,6 +272,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(543, 71);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(184, 42);
@@ -326,7 +351,8 @@
             this.customsBookToolStripMenuItem,
             this.metaDataUpdateToolStripMenuItem,
             this.expImpToolStripMenuItem,
-            this.tenantRTLToolStripMenuItem});
+            this.tenantRTLToolStripMenuItem,
+            this.batchTaskExecutionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(751, 24);
@@ -343,27 +369,27 @@
             this.internationalSiteToolStripMenuItem,
             this.createDecToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -374,7 +400,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -400,14 +426,14 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -446,7 +472,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -461,14 +487,14 @@
             // expPackagesToolStripMenuItem
             // 
             this.expPackagesToolStripMenuItem.Name = "expPackagesToolStripMenuItem";
-            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.expPackagesToolStripMenuItem.Text = "Exp.Packages";
             this.expPackagesToolStripMenuItem.Click += new System.EventHandler(this.expPackagesToolStripMenuItem_Click);
             // 
             // expRolesToolStripMenuItem
             // 
             this.expRolesToolStripMenuItem.Name = "expRolesToolStripMenuItem";
-            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.expRolesToolStripMenuItem.Text = "Exp.Roles";
             this.expRolesToolStripMenuItem.Click += new System.EventHandler(this.expRolesToolStripMenuItem_Click);
             // 
@@ -502,7 +528,7 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
@@ -524,6 +550,21 @@
             this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.lTRToolStripMenuItem.Text = "LTR";
             this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
+            // 
+            // batchTaskExecutionToolStripMenuItem
+            // 
+            this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.executeToolStripMenuItem});
+            this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
+            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
+            this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
+            // 
+            // executeToolStripMenuItem
+            // 
+            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.executeToolStripMenuItem.Text = "Execute";
+            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -678,7 +719,7 @@
             // 
             // btnAddBatchServicesDefinitions
             // 
-            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 195);
+            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 158);
             this.btnAddBatchServicesDefinitions.Name = "btnAddBatchServicesDefinitions";
             this.btnAddBatchServicesDefinitions.Size = new System.Drawing.Size(184, 35);
             this.btnAddBatchServicesDefinitions.TabIndex = 26;
@@ -718,7 +759,7 @@
             // 
             // DownLoadZipFile
             // 
-            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 151);
+            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 114);
             this.DownLoadZipFile.Name = "DownLoadZipFile";
             this.DownLoadZipFile.Size = new System.Drawing.Size(184, 38);
             this.DownLoadZipFile.TabIndex = 30;
@@ -729,7 +770,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(522, 57);
+            this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
@@ -819,7 +860,7 @@
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(437, 355);
+            this.button29.Location = new System.Drawing.Point(373, 398);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(184, 25);
             this.button29.TabIndex = 48;
@@ -831,7 +872,7 @@
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(437, 386);
+            this.button30.Location = new System.Drawing.Point(373, 429);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(184, 25);
             this.button30.TabIndex = 49;
@@ -843,7 +884,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(522, 257);
+            this.button31.Location = new System.Drawing.Point(522, 203);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(184, 28);
             this.button31.TabIndex = 55;
@@ -919,15 +960,17 @@
             this.button27.UseVisualStyleBackColor = true;
             this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
-            // ConvertXmalTemplateToHtmlButton
+            // UpdateAutomationMetadataButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 112);
-            this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
-            this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
-            this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
-            this.ConvertXmalTemplateToHtmlButton.Text = "Build document type templates html";
-            this.ConvertXmalTemplateToHtmlButton.UseVisualStyleBackColor = true;
-            this.ConvertXmalTemplateToHtmlButton.Click += new System.EventHandler(this.ConvertXmalTemplateToHtmlButton_Click);
+            this.UpdateAutomationMetadataButton.Location = new System.Drawing.Point(522, 71);
+            this.UpdateAutomationMetadataButton.Name = "UpdateAutomationMetadataButton";
+            this.UpdateAutomationMetadataButton.Size = new System.Drawing.Size(184, 33);
+            this.UpdateAutomationMetadataButton.TabIndex = 42;
+            this.UpdateAutomationMetadataButton.Text = "Update Automation Metadata";
+            this.UpdateAutomationMetadataButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.UpdateAutomationMetadataButton.UseVisualStyleBackColor = true;
+            this.UpdateAutomationMetadataButton.UseWaitCursor = true;
+            this.UpdateAutomationMetadataButton.Click += new System.EventHandler(this.UpdateAutomationMetadataButton_Click);
             // 
             // WarehouseButton
             // 
@@ -990,7 +1033,7 @@
             // UTZSLabel
             // 
             this.UTZSLabel.AutoSize = true;
-            this.UTZSLabel.Location = new System.Drawing.Point(434, 420);
+            this.UTZSLabel.Location = new System.Drawing.Point(370, 463);
             this.UTZSLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTZSLabel.Name = "UTZSLabel";
             this.UTZSLabel.Size = new System.Drawing.Size(100, 13);
@@ -1011,7 +1054,7 @@
             // UTenantsStatusLabel
             // 
             this.UTenantsStatusLabel.AutoSize = true;
-            this.UTenantsStatusLabel.Location = new System.Drawing.Point(434, 439);
+            this.UTenantsStatusLabel.Location = new System.Drawing.Point(370, 482);
             this.UTenantsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTenantsStatusLabel.Name = "UTenantsStatusLabel";
             this.UTenantsStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1022,7 +1065,7 @@
             // BuildZipFilesStatusLabel
             // 
             this.BuildZipFilesStatusLabel.AutoSize = true;
-            this.BuildZipFilesStatusLabel.Location = new System.Drawing.Point(434, 462);
+            this.BuildZipFilesStatusLabel.Location = new System.Drawing.Point(370, 505);
             this.BuildZipFilesStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesStatusLabel.Name = "BuildZipFilesStatusLabel";
             this.BuildZipFilesStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1033,7 +1076,7 @@
             // BuildZipFilesCustomsStatusLabel
             // 
             this.BuildZipFilesCustomsStatusLabel.AutoSize = true;
-            this.BuildZipFilesCustomsStatusLabel.Location = new System.Drawing.Point(434, 485);
+            this.BuildZipFilesCustomsStatusLabel.Location = new System.Drawing.Point(370, 528);
             this.BuildZipFilesCustomsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesCustomsStatusLabel.Name = "BuildZipFilesCustomsStatusLabel";
             this.BuildZipFilesCustomsStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1043,7 +1086,7 @@
             // 
             // ConvertSignatureButton
             // 
-            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 83);
+            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 46);
             this.ConvertSignatureButton.Name = "ConvertSignatureButton";
             this.ConvertSignatureButton.Size = new System.Drawing.Size(184, 23);
             this.ConvertSignatureButton.TabIndex = 48;
@@ -1062,7 +1105,7 @@
             // 
             // _UpdatePortsButton
             // 
-            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 289);
+            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 237);
             this._UpdatePortsButton.Name = "_UpdatePortsButton";
             this._UpdatePortsButton.Size = new System.Drawing.Size(184, 34);
             this._UpdatePortsButton.TabIndex = 50;
@@ -1110,7 +1153,7 @@
             // CopyReportButtonLable
             // 
             this.CopyReportButtonLable.AutoSize = true;
-            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 506);
+            this.CopyReportButtonLable.Location = new System.Drawing.Point(519, 497);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
             this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
@@ -1376,6 +1419,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -1387,6 +1431,15 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.LoadClosedTablesLabel);
+            this.tabPage1.Controls.Add(this.button50);
+            this.tabPage1.Controls.Add(this.cbxOldUpdateCode);
+            this.tabPage1.Controls.Add(this.button49);
+            this.tabPage1.Controls.Add(this.btnCallOldUpdate);
+            this.tabPage1.Controls.Add(this.UpdateRulesLabel);
+            this.tabPage1.Controls.Add(this.button48);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.button45);
             this.tabPage1.Controls.Add(this.lblUTariffModule);
             this.tabPage1.Controls.Add(this.button41);
             this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
@@ -1444,6 +1497,97 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // cbxOldUpdateCode
+            // 
+            this.cbxOldUpdateCode.AutoSize = true;
+            this.cbxOldUpdateCode.Location = new System.Drawing.Point(431, 350);
+            this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
+            this.cbxOldUpdateCode.TabIndex = 99;
+            this.cbxOldUpdateCode.Text = "Run Old Update";
+            this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
+            // 
+            // button49
+            // 
+            this.button49.Location = new System.Drawing.Point(543, 313);
+            this.button49.Name = "button49";
+            this.button49.Size = new System.Drawing.Size(184, 23);
+            this.button49.TabIndex = 98;
+            this.button49.Text = "Update Reports";
+            this.button49.UseVisualStyleBackColor = true;
+            this.button49.Click += new System.EventHandler(this.button49_Click);
+            // 
+            // btnCallOldUpdate
+            // 
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(543, 342);
+            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(184, 23);
+            this.btnCallOldUpdate.TabIndex = 98;
+            this.btnCallOldUpdate.Text = "Update Old Code";
+            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
+            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
+            // 
+            // button50
+            // 
+            this.button50.Location = new System.Drawing.Point(543, 313);
+            this.button50.Name = "button49";
+            this.button50.Size = new System.Drawing.Size(184, 36);
+            this.button50.TabIndex = 85;
+            this.button50.Text = "Load Closed Tables";
+            this.button50.UseVisualStyleBackColor = true;
+            this.button50.Click += new System.EventHandler(this.button50_Click);
+            // 
+            // btnCallOldUpdate
+            // 
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
+            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
+            this.btnCallOldUpdate.TabIndex = 98;
+            this.btnCallOldUpdate.Text = "Update Old Code";
+            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
+            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
+            // 
+            // UpdateRulesLabel
+            // 
+            this.UpdateRulesLabel.AutoSize = true;
+            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
+            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
+            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateRulesLabel.TabIndex = 97;
+            this.UpdateRulesLabel.Text = "...";
+            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // button48
+            // 
+            this.button48.Location = new System.Drawing.Point(543, 269);
+            this.button48.Name = "button48";
+            this.button48.Size = new System.Drawing.Size(184, 35);
+            this.button48.TabIndex = 96;
+            this.button48.Text = "Update Rules";
+            this.button48.UseVisualStyleBackColor = true;
+            this.button48.Click += new System.EventHandler(this.button48_Click);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(437, 28);
+            this.label3.MinimumSize = new System.Drawing.Size(100, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "...";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // button45
+            // 
+            this.button45.Location = new System.Drawing.Point(543, 23);
+            this.button45.Name = "button45";
+            this.button45.Size = new System.Drawing.Size(184, 23);
+            this.button45.TabIndex = 95;
+            this.button45.Text = "Fix Tenant Package Name";
+            this.button45.UseVisualStyleBackColor = true;
+            this.button45.Click += new System.EventHandler(this.button45_Click);
+            // 
             // lblUTariffModule
             // 
             this.lblUTariffModule.AutoSize = true;
@@ -1467,13 +1611,14 @@
             // 
             // btnUpdateTenantZeroNew
             // 
-            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
+            this.btnUpdateTenantZeroNew.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 310);
             this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
-            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 24);
+            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 29);
             this.btnUpdateTenantZeroNew.TabIndex = 91;
-            this.btnUpdateTenantZeroNew.Text = "Update Tenant 0 (Generated)";
+            this.btnUpdateTenantZeroNew.Text = "Update All Modules Metadata";
             this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = true;
+            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = false;
             this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
             // 
             // lblTenantNew
@@ -1539,6 +1684,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.uploadMexicoCitiesBtn);
+            this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
@@ -1590,13 +1737,23 @@
             this.tabPage2.Controls.Add(this.checkBox1);
             this.tabPage2.Controls.Add(this.ConvertXmalTemplateLable);
             this.tabPage2.Controls.Add(this.button27);
-            this.tabPage2.Controls.Add(this.ConvertXmalTemplateToHtmlButton);
+            this.tabPage2.Controls.Add(this.UpdateAutomationMetadataButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // button47
+            // 
+            this.button47.Location = new System.Drawing.Point(522, 278);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 34);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "Fill Tickert MailBox";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // button44
             // 
@@ -1614,7 +1771,7 @@
             this.button43.Name = "button43";
             this.button43.Size = new System.Drawing.Size(184, 26);
             this.button43.TabIndex = 95;
-            this.button43.Text = "button43";
+            this.button43.Text = "PreProd PWD Changing";
             this.button43.UseVisualStyleBackColor = true;
             this.button43.Click += new System.EventHandler(this.button43_Click);
             // 
@@ -1676,6 +1833,110 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.AirlineLogosCheckBox);
+            this.tabPage3.Controls.Add(this.UpdateLogosLabel);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.FilePathTextBox);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Controls.Add(this.AirlineLogoTenantTextBox);
+            this.tabPage3.Controls.Add(this.button46);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(743, 558);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Airline Logos";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // AirlineLogosCheckBox
+            // 
+            this.AirlineLogosCheckBox.AutoSize = true;
+            this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
+            this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.AirlineLogosCheckBox.TabIndex = 106;
+            this.AirlineLogosCheckBox.Text = "Apply for all tenants";
+            this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // UpdateLogosLabel
+            // 
+            this.UpdateLogosLabel.AutoSize = true;
+            this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
+            this.UpdateLogosLabel.Name = "UpdateLogosLabel";
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.TabIndex = 105;
+            this.UpdateLogosLabel.Text = "....";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(389, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(223, 13);
+            this.label6.TabIndex = 104;
+            this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.Location = new System.Drawing.Point(73, 27);
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.Size = new System.Drawing.Size(298, 20);
+            this.FilePathTextBox.TabIndex = 103;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 102;
+            this.label5.Text = "File path";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 101;
+            this.label4.Text = "Tenant";
+            // 
+            // AirlineLogoTenantTextBox
+            // 
+            this.AirlineLogoTenantTextBox.Location = new System.Drawing.Point(73, 57);
+            this.AirlineLogoTenantTextBox.Name = "AirlineLogoTenantTextBox";
+            this.AirlineLogoTenantTextBox.Size = new System.Drawing.Size(66, 20);
+            this.AirlineLogoTenantTextBox.TabIndex = 100;
+            // 
+            // button46
+            // 
+            this.button46.Location = new System.Drawing.Point(23, 117);
+            this.button46.Name = "button46";
+            this.button46.Size = new System.Drawing.Size(100, 23);
+            this.button46.TabIndex = 99;
+            this.button46.Text = "Update Logos";
+            this.button46.UseVisualStyleBackColor = true;
+            this.button46.Click += new System.EventHandler(this.button46_Click_1);
+            // 
+            // AirlineLogosCheckBox
+            // LoadClosedTablesLabel
+            // 
+            this.uploadMexicoCitiesBtn.Location = new System.Drawing.Point(10, 400);
+            this.uploadMexicoCitiesBtn.Name = "uploadMexicoCitiesBtn";
+            this.uploadMexicoCitiesBtn.Size = new System.Drawing.Size(182, 23);
+            this.uploadMexicoCitiesBtn.TabIndex = 98;
+            this.uploadMexicoCitiesBtn.Text = "Upload Mexico Cities";
+            this.uploadMexicoCitiesBtn.UseVisualStyleBackColor = true;
+            this.uploadMexicoCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
+            this.LoadClosedTablesLabel.AutoSize = true;
+            this.LoadClosedTablesLabel.Location = new System.Drawing.Point(518, 325);
+            this.LoadClosedTablesLabel.Name = "LoadClosedTablesLabel";
+            this.LoadClosedTablesLabel.Size = new System.Drawing.Size(16, 13);
+            this.LoadClosedTablesLabel.TabIndex = 99;
+            this.LoadClosedTablesLabel.Text = "...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1703,6 +1964,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1771,7 +2034,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label BuildZipFileslbl;
         private System.Windows.Forms.Button button27;
-        private System.Windows.Forms.Button ConvertXmalTemplateToHtmlButton;
+        private System.Windows.Forms.Button UpdateAutomationMetadataButton;
         private System.Windows.Forms.Button WarehouseButton;
         private System.Windows.Forms.Label WarehouseLable;
 
@@ -1867,6 +2130,31 @@
         private System.Windows.Forms.Button button42;
         private System.Windows.Forms.Button button43;
         private System.Windows.Forms.Button button44;
+        private System.Windows.Forms.Button button45;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox AirlineLogoTenantTextBox;
+        private System.Windows.Forms.Button button46;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox FilePathTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label UpdateLogosLabel;
+        private System.Windows.Forms.ToolStripMenuItem batchTaskExecutionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
+        //private System.Windows.Forms.Button button47;
+        private System.Windows.Forms.Button button48;
+        private System.Windows.Forms.Label UpdateRulesLabel;
+        private System.Windows.Forms.Button button47;
+        private System.Windows.Forms.Button btnCallOldUpdate;
+        private System.Windows.Forms.CheckBox cbxOldUpdateCode;
+        private System.Windows.Forms.Button button49;
+        private System.Windows.Forms.Button button50;
+
+        private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
+        private System.Windows.Forms.Button uploadMexicoCitiesBtn;
+        private System.Windows.Forms.Label LoadClosedTablesLabel;
+
     }
 }
 

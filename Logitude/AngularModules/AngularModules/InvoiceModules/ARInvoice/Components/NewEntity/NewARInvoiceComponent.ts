@@ -28,13 +28,12 @@ import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARInvoiceComponent.html',
 })
 
@@ -50,6 +49,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
 
         this.InitializeServices();
@@ -63,6 +63,8 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+
+        this.SetRegionalTaxVisibility();
     }
 
     public DisplaySATSettings: boolean = false;
@@ -267,7 +269,6 @@ export class NewARInvoiceComponent extends BaseComponent {
       }
     }
 
-
     // BillTo
     public BillToDependencyValue1: string = null;
     public BillToDependencyValue1IsList: boolean = true;
@@ -389,6 +390,8 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
 
+    private billToIsCustomer: boolean = false;
+    private billToCorePartnerTypeId: string = null;
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
@@ -402,6 +405,8 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.BillToAddressId = null;
                 this.SATPaymentMethodCode = null;
                 this.UsoCFDICode = null;
+                this.billToIsCustomer = false;
+                this.billToCorePartnerTypeId = null;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;        
                 this.IsConstituentInvoice = false;      
@@ -426,6 +431,8 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.VatTypeId = list.VatTypeId;
                             this.VatNumber = list.VatNumber;
                             this.BillToName = list.EnglishName;
+                            this.billToIsCustomer = list.IsCustomer;
+                            this.billToCorePartnerTypeId = list.PartnerTypeId;
 
                             if (this.EntityPM.ARInvoiceTypeCode != "CI" && this.EntityPM.ARInvoiceTypeCode != "CC") {
                                 this.IsConstituentInvoice = list.EnableConsolidationInvoices;
@@ -671,6 +678,13 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Load Date 
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
@@ -845,21 +859,29 @@ export class NewARInvoiceComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
-      }
-
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
-        //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-        //  errors.push(msg.replace("%FieldName", "Forma Pago"));
-        //}
-
-        if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
         }
 
-        if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
-          errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
+            //  errors.push(msg.replace("%FieldName", "Forma Pago"));
+            //}
+
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
+            }
+
+            if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
+                errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+            }
         }
-      }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BranchId")));
+        }
+
+        if (errors.length == 0) {
+            this.ValidateCreditLimitPartnersRestrictions(errors);
+        }
 
         this.ValidationErrorsList = errors;
 
@@ -877,6 +899,103 @@ export class NewARInvoiceComponent extends BaseComponent {
 
             else {
                 this.OnEntityValid();
+            }
+        }
+    }
+
+    ValidateCreditLimitPartnersRestrictions(errors: string[]) {
+        var errorText_Blocking: string = "Credit limit setting is blocking invoice for ";
+
+        if (ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled) {
+            switch (this.billToCorePartnerTypeId) {
+                case "CS":
+                    {
+                        if (this.billToIsCustomer) {
+                            if (ObjectsLocator.CreditLimitSettingPM.CustomersInvoicesBlock) {
+                                errors.push(errorText_Blocking + "Customers");
+                            }
+                        }
+
+                        else {
+                            if (ObjectsLocator.CreditLimitSettingPM.ShipperConsigneeInvoiceBlock) {
+                                errors.push(errorText_Blocking + "Shippers and Consignees");
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "AG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.AgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Agents");
+                        }
+
+                        break;
+                    }
+
+                case "CG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.CustomsAgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Customs Agents");
+                        }
+
+                        break;
+                    }
+
+                case "SG":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.ShippingAgentsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Shipping Agents");
+                        }
+
+                        break;
+                    }
+
+                case "AL":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.AirlinesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Airlines");
+                        }
+
+                        break;
+                    }
+
+                case "SL":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.ShippingLinesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Shipping Lines");
+                        }
+
+                        break;
+                    }
+
+                case "TR":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.TruckersInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Truckers");
+                        }
+
+                        break;
+                    }
+
+                case "VD":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.VendorsInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Vendors");
+                        }
+
+                        break;
+                    }
+
+                case "WH":
+                    {
+                        if (ObjectsLocator.CreditLimitSettingPM.WarehousesInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Warehouses");
+                        }
+
+                        break;
+                    }
             }
         }
     }
@@ -1176,7 +1295,13 @@ export class NewARInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
                             invoiceLine.LocalDescription = list.LocalName;
-                            invoiceLine.IsCustomsCharge = list.IsCustoms;                            
+                            invoiceLine.IsCustomsCharge = list.IsCustoms;
+
+                            if (this.RegionalTaxId) {
+                                if (invoiceLine.VatIsMultiPercentage == false) {
+                                    invoiceLine.IsRegionalTax = list.ApplyRegionalTax;
+                                }
+                            }
                         }
                     }
                 });
@@ -1251,7 +1376,26 @@ export class NewARInvoiceComponent extends BaseComponent {
                         myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
-                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;                        
+                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+
+                        if (item.IsRegionalTax) {
+
+                            myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount + item.LocalCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (this.RegionalTaxPercentage / 100);
+                            myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (this.RegionalTaxPercentage / 100);
+
+                            var regionalTaxItem = new InvoiceTotalsClass();
+                            regionalTaxItem.Id = this.RegionalTaxId;
+                            regionalTaxItem.VatTypeId = this.RegionalTaxId;
+                            regionalTaxItem.VatTypePercentage = this.RegionalTaxPercentage;
+                            regionalTaxItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            regionalTaxItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                            regionalTaxItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            regionalTaxItem.ExternalVatCard = SessionLocator.AccountingSettingPM.ReceivableVATCard;
+                            regionalTaxItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                            group_Source.push(regionalTaxItem);
+                        }
+
                         group_Source.push(myQroupItem);
                     }
 
@@ -1361,6 +1505,53 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (this.HasCreditLimitFeature) {
             this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
             this.IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationBlock == true || ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning == true) ? true : false;
+        }
+    }
+
+
+    // RegionalTaxId
+    public IsRegionalTaxVisible: boolean = false;
+    private SetRegionalTaxVisibility() {
+        var isVisible: boolean = false;
+
+        if (FeatureLocator.HasFeaturePermession("General", "REGIONALTAX")) {
+            if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
+                isVisible = true;
+            }
+        }
+
+        this.IsRegionalTaxVisible = isVisible;
+    }
+
+    get RegionalTaxId() { return this.EntityPM.RegionalTaxId; }
+    set RegionalTaxId(newValue: string) {
+        if (this.EntityPM.RegionalTaxId != newValue) {
+            this.EntityPM.RegionalTaxId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.RegionalTaxPercentage = null;
+            }
+
+            else {
+                this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
+            }
+        }
+    }
+
+    get RegionalTaxPercentage() {
+
+        var output: number = 0;
+
+        if (this.EntityPM.RegionalTaxPercentage) {
+            output = this.EntityPM.RegionalTaxPercentage;
+        }
+
+        return output;
+    }
+    set RegionalTaxPercentage(newValue: number) {
+        if (this.EntityPM.RegionalTaxPercentage != newValue) {
+            this.EntityPM.RegionalTaxPercentage = AppTool.Round(newValue, 2);
+            this.ComputeTotals();
         }
     }
 }

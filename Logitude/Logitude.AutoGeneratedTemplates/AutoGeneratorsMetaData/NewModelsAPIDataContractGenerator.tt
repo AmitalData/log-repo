@@ -580,7 +580,7 @@ using System.Xml.Serialization;
 namespace <#= NSString #>.<#=DCVersion#>
 {
    
-    public class <#=DCName #>
+    public partial class <#=DCName #>
     {
 
 	<#+  foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes

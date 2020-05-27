@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
     selector: "MainMenuFollowups",
-    moduleId: module.id,
+    
     templateUrl: './MainMenuFollowups.html',
     inputs: ['ObjectTableId', 'IsMainSidebarCollapsed'],
 })
@@ -67,7 +67,7 @@ export class MainMenuFollowups implements OnDestroy {
                         var list: MainMenuFollowupItem[] = [];
 
                         if (this.ObjectTableName == "Quote") {
-                            this.BackButtonLabel = TextCodeTranslator.Translate(" General.MH.Quotes");
+                            this.BackButtonLabel = TextCodeTranslator.Translate("General.MH.Quotes");
                             
                             var myQuotes: QuoteList[] = myResponse.Result;
                             myQuotes.forEach(item => {
@@ -83,7 +83,7 @@ export class MainMenuFollowups implements OnDestroy {
                         }
 
                         else {
-                            this.BackButtonLabel = TextCodeTranslator.Translate(" General.MH.Operations");
+                            this.BackButtonLabel = TextCodeTranslator.Translate("General.MH.Operations");
 
                             var myShipments: ShipmentList[] = myResponse.Result;
                             myShipments.forEach(item => {

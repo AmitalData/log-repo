@@ -1,4 +1,3 @@
-declare var System: any;
 declare var window: any;
 import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -8,11 +7,11 @@ import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {FormControl}   from '@angular/forms'; 
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentObjectFields',
     templateUrl: './DocumentObjectFieldsComponent.html',
 })
@@ -53,10 +52,10 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
     ) {
 
-        this.SearchTextValue = new FormControl();
-        this.SearchTextValue.valueChanges
-            .debounceTime(500)
-            .distinctUntilChanged()
+      this.SearchTextValue = new FormControl();
+      this.SearchTextValue.valueChanges.pipe(
+            debounceTime(500),
+            distinctUntilChanged())
             .subscribe((search: string): any => {
                 this.Search(search);
             });
@@ -74,7 +73,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.HideSystemDataTab = args.HideSystemDataTab;
 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
-         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC") this.ObjectTypeField = "Emails"; 
+         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC") this.ObjectTypeField = "Emails"; 
         } 
           
 

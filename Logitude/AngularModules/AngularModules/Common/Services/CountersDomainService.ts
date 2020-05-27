@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {CounterPM} from '../EntityPMs/CounterPM';
@@ -11,9 +12,9 @@ import {TenantSettingPM} from '../../Infrastructure/EntityPMs/TenantSettingPM';
 
 export class CountersDomainService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CountersDomain';
     }
 
@@ -21,9 +22,9 @@ export class CountersDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantCounters', { headers: authHeader }).map(response => {
-                var listJason = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantCounters',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<CounterPM> = [];
 
@@ -38,16 +39,16 @@ export class CountersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetCounterDefinitions(CounterId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCounterDefinitions?CounterId=' + CounterId, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCounterDefinitions?CounterId=' + CounterId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<CounterDefinitionPM> = [];
 
@@ -62,7 +63,7 @@ export class CountersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetCounterAPIHelper(CounterId:string) {
@@ -71,9 +72,9 @@ export class CountersDomainService {
 
         var url = this._apiUrl + '/GetCounterAPIHelper?CounterId=' + CounterId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
 
                 var mappedResult: CounterAPIHelper = this.MapJsonToCounterAPIHelper(myJsonResult, true);
 
@@ -81,11 +82,29 @@ export class CountersDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    GetCounterProperties(counterCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCounterProperties?counterCode=' + counterCode;
+
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
+
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     Post(args: CounterAPIHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -93,8 +112,8 @@ export class CountersDomainService {
 
             var mappedEntity: CounterAPIHelper = this.MapJsonToCounterAPIHelper(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: CounterAPIHelper = this.MapJsonToCounterAPIHelper(myJsonResult, true);
 
@@ -102,7 +121,7 @@ export class CountersDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

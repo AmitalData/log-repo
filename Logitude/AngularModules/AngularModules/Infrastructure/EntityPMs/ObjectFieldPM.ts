@@ -305,13 +305,13 @@ export class ObjectFieldPM {
     private objectTable_MultiTableName: string;
     public get ObjectTable_MultiTableName() { return this.objectTable_MultiTableName; }
     public set ObjectTable_MultiTableName(newValue: string) { if (this.objectTable_MultiTableName != newValue) { this.objectTable_MultiTableName = newValue; this.MarkAsDirty("ObjectTable_MultiTableName"); } }
-
-
-    private helpTextTextCodeCode: string;
-    public get HelpTextTextCodeCode() { return this.helpTextTextCodeCode; }
-    public set HelpTextTextCodeCode(newValue: string) { if (this.helpTextTextCodeCode != newValue) { this.helpTextTextCodeCode = newValue; this.MarkAsDirty("HelpTextTextCodeCode"); } }
-
-
+       
+	 
+    private helpTextCodeCode: string;
+    public get HelpTextCodeCode() { return this.helpTextCodeCode; }
+    public set HelpTextCodeCode(newValue: string) { if (this.helpTextCodeCode != newValue) { this.helpTextCodeCode = newValue; this.MarkAsDirty("HelpTextCodeCode"); } }
+       
+	 
     private fullNameTextCodeCode: string;
     public get FullNameTextCodeCode() { return this.fullNameTextCodeCode; }
     public set FullNameTextCodeCode(newValue: string) { if (this.fullNameTextCodeCode != newValue) { this.fullNameTextCodeCode = newValue; this.MarkAsDirty("FullNameTextCodeCode"); } }
@@ -475,9 +475,24 @@ export class ObjectFieldPM {
     private displayOnLookUpLocal: boolean;
     public get DisplayOnLookUpLocal() { return this.displayOnLookUpLocal; }
     public set DisplayOnLookUpLocal(newValue: boolean) { if (this.displayOnLookUpLocal != newValue) { this.displayOnLookUpLocal = newValue; this.MarkAsDirty("DisplayOnLookUpLocal"); } }
-
-
-
+       
+	 
+    private displayInAutomationAsEnitity: boolean;
+    public get DisplayInAutomationAsEnitity() { return this.displayInAutomationAsEnitity; }
+    public set DisplayInAutomationAsEnitity(newValue: boolean) { if (this.displayInAutomationAsEnitity != newValue) { this.displayInAutomationAsEnitity = newValue; this.MarkAsDirty("DisplayInAutomationAsEnitity"); } }
+       
+	 
+    private recordType: string;
+    public get RecordType() { return this.recordType; }
+    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
+       
+	 
+    private fieldCode: string;
+    public get FieldCode() { return this.fieldCode; }
+    public set FieldCode(newValue: string) { if (this.fieldCode != newValue) { this.fieldCode = newValue; this.MarkAsDirty("FieldCode"); } }
+       
+	 
+     
 	private objectFieldValidations: ObjectFieldValidationPM[];
     get  ObjectFieldValidations() {
         if (this.objectFieldValidations == null) {

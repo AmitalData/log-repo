@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -132,11 +133,26 @@ using Simplog.Data.InvoiceModel;
 							 
 				if(MyEntityPM.ARPaymentChequeReplicas != null && MyEntityPM.ARPaymentChequeReplicas.Count > 0)
 				{
-					 ARPaymentChequeReplicaQueryService ARPaymentChequeReplicaService6 = new ARPaymentChequeReplicaQueryService(Tenant);
-					 temp.ARPaymentChequeReplicas = ARPaymentChequeReplicaService6.ARPaymentChequeReplicaDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
+					 ARPaymentChequeQueryService ARPaymentChequeService6 = new ARPaymentChequeQueryService(Tenant);
+					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
 				}
 
-							 					
+							 
+
+
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;			  
+
+				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;					
+
+				   if(MyEntityPM.StatusCode != null)
+				   {
+					   ARPaymentStatusQueryService ARPaymentStatusService6 = new ARPaymentStatusQueryService(Tenant);
+					   					   temp.Status = ARPaymentStatusService6.GetARPaymentStatusByCode(MyEntityPM.StatusCode,Tenant); 
+			       
+					   				   }
+				   					
+
 				   return temp;
 			}
             catch (Exception ex)
@@ -157,15 +173,26 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ARPayment with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("ARPayment with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.Tenant = MyEntity.Tenant;
-					temp.PaymentNo = MyEntity.PaymentNo;					AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(Tenant);
+					temp.PaymentNo = MyEntity.PaymentNo;
+					AccountingPaymentMethodQueryService AccountingPaymentMethodAccountingPaymentMethodService = new AccountingPaymentMethodQueryService(Tenant);
 					if(MyEntity.AccountingPaymentMethod != null)
 					{
 						var myAccountingPaymentMethodPM = AccountingPaymentMethodAccountingPaymentMethodService.AccountingPaymentMethodCustomDataMappingAndValidatin(MyEntity.AccountingPaymentMethod,Tenant);
@@ -181,7 +208,8 @@ using Simplog.Data.InvoiceModel;
 					temp.AmountInPaymentCurrency = MyEntity.AmountInPaymentCurrency;
 					temp.PaidBy = MyEntity.PaidBy;
 					temp.PaymentCurrencyExchangeRate = MyEntity.PaymentCurrencyExchangeRate;
-					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
@@ -193,7 +221,8 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.LocalCurrencyCode = MyEntity.LocalCurrencyCode;					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+					temp.LocalCurrencyCode = MyEntity.LocalCurrencyCode;
+					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
@@ -204,7 +233,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										CurrencyQueryService PaymentCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService PaymentCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.PaymentCurrency != null)
 					{
 						var myPaymentCurrencyPM = PaymentCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.PaymentCurrency,Tenant,ComputingPartnerName);
@@ -215,7 +245,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										CardQueryService BillToCardService = new CardQueryService(Tenant);
+					
+					CardQueryService BillToCardService = new CardQueryService(Tenant);
 					if(MyEntity.BillTo != null)
 					{
 						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName);
@@ -232,7 +263,8 @@ using Simplog.Data.InvoiceModel;
 					temp.BankBranch = MyEntity.BankBranch;
 					temp.Account = MyEntity.Account;
 					temp.ValueDate = MyEntity.ValueDate;
-					temp.RegisterDate = MyEntity.RegisterDate;					CreditCardTypeQueryService CreditCardTypeCreditCardTypeService = new CreditCardTypeQueryService(Tenant);
+					temp.RegisterDate = MyEntity.RegisterDate;
+					CreditCardTypeQueryService CreditCardTypeCreditCardTypeService = new CreditCardTypeQueryService(Tenant);
 					if(MyEntity.CreditCardType != null)
 					{
 						var myCreditCardTypePM = CreditCardTypeCreditCardTypeService.CreditCardTypeDataMappingAndValidatin(MyEntity.CreditCardType,Tenant,ComputingPartnerName);
@@ -249,19 +281,37 @@ using Simplog.Data.InvoiceModel;
 
 					if(MyEntity.PaymentInvoices != null && MyEntity.PaymentInvoices.Count > 0)
 					{
-						ARPaymentInvoiceQueryService ARPaymentInvoiceService6 = new ARPaymentInvoiceQueryService(Tenant);
-						temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+						ARPaymentInvoiceQueryService ARPaymentInvoiceService7 = new ARPaymentInvoiceQueryService(Tenant);
+						temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
 					}
 
 								  
 
-					if(MyEntity.ARPaymentChequeReplicas != null && MyEntity.ARPaymentChequeReplicas.Count > 0)
+					if(MyEntity.ARPaymentCheques != null && MyEntity.ARPaymentCheques.Count > 0)
 					{
-						ARPaymentChequeReplicaQueryService ARPaymentChequeReplicaService6 = new ARPaymentChequeReplicaQueryService(Tenant);
-						temp.ARPaymentChequeReplicas = ARPaymentChequeReplicaService6.ARPaymentChequeReplicaDataMappingAndValidatin(MyEntity.ARPaymentChequeReplicas,Tenant,ComputingPartnerName);
+						ARPaymentChequeQueryService ARPaymentChequeService7 = new ARPaymentChequeQueryService(Tenant);
+						temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.BankAccountNumber = MyEntity.BankAccountNumber;
+
+					temp.CancelationNotes = MyEntity.CancelationNotes;
+					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;					   
+
+					ARPaymentStatusQueryService StatusARPaymentStatusService = new ARPaymentStatusQueryService(Tenant);
+					if(MyEntity.Status != null)
+					{
+						var myStatusPM = StatusARPaymentStatusService.ARPaymentStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+												if(myStatusPM != null)
+						{
+							temp.StatusCode = myStatusPM.Code;
+						}
+						 
+					}
+			
+										   
+
 					   return temp;
 		    }
             catch (Exception ex)
@@ -272,4 +322,4 @@ using Simplog.Data.InvoiceModel;
         }
 		 
    }
-}
+}

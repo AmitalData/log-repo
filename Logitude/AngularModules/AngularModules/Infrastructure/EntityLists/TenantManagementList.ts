@@ -130,5 +130,11 @@ export class TenantManagementList {
 		PackageCodeSearchField: string;
 		IsINTTRAOnlyDemo: boolean;
 		IsTestTenant: boolean;
+		MainAdditionalPackageApplied: boolean;
+		TotalPrice: number;
+		TotalNumberOfUsers: number;
+		TotalFreeUsers: number;
+		AveragePrice: number;
+		TotalPaymentamount: number;
 	
 }

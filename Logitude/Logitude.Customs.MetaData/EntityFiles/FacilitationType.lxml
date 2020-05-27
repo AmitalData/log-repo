@@ -37,7 +37,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;fc38d305-2b8e-4991-97e7-e3d14a85535c&quot;"
     FieldName="&quot;Code&quot;"
@@ -292,34 +294,50 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,AEO,A- EO,False,&quot;"
+      EnglishName="&quot;A- EO&quot;"
+      Inactive="false"
+      LocalName="&quot;AEO&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,יבואן מאושר,Approved Importer,False,&quot;"
+      EnglishName="&quot;Approved Importer&quot;"
+      Inactive="false"
+      LocalName="&quot;יבואן מאושר&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.FacilitationType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.FacilitationType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      LocalName="&quot;AEO&quot;"
-      EnglishName="&quot;A- EO&quot;"
-      Inactive="false"
-      SearchFields="&quot;A- EO,1,AEO&quot;" />
-    <Record
-      Inactive="false"
-      Code="&quot;2&quot;"
-      LocalName="&quot;יבואן מאושר&quot;"
-      EnglishName="&quot;Approved Importer&quot;"
-      SearchFields="&quot;Approved Importer,יבואן מאושר,2&quot;" />
-  </Records>
 </entity>

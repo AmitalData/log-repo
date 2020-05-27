@@ -71,7 +71,13 @@ public void GenerateEntityController(string xmlFilePath,string outputFilePath,st
 	    	}
 	    } 
 
-		
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
        // if( entity.GenerateDomainService.GetType() == typeof(string))
       	//{
 	   // 	if(entity.GenerateDomainService == "false" || entity.GenerateDomainService == null)
@@ -97,6 +103,13 @@ public void GenerateEntityViewController(string xmlFilePath,string outputFilePat
 		 if( entity.NoViewController.GetType() == typeof(string))
       	{
 	    	if(entity.NoViewController == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
 	    	{
 	    		return;
 	    	}

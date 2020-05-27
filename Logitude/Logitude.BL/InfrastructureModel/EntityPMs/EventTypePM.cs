@@ -105,5 +105,12 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         [DataMember]
         public bool AllowedInAutomation { get; set; }
+
+
+        [DataMember]
+        public string CustomField { get; set; }
+
+        
+
     }
 }

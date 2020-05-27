@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Dangerous Goods Packing Req&quot;"
-  Code="&quot;669a&quot;"
-  Name="&quot;Customs.DangerousGoodsPackingReq Query Group&quot;"
+  Code="&quot;DGPR&quot;"
+  Name="&quot;Customs.DangerousGoodsPackingReq&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;7b25b5a4-cff2-4a47-a9cd-3c73dd38e49d&quot;"
     FieldName="&quot;Code&quot;"
@@ -309,21 +311,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;47&quot;"
+      SearchFields="&quot;47,רמה I&quot;"
+      Inactive="false"
+      LocalName="&quot;רמה I&quot;" />
+    <Record
+      Code="&quot;48&quot;"
+      SearchFields="&quot;48,רמה II&quot;"
+      Inactive="false"
+      LocalName="&quot;רמה II&quot;" />
+    <Record
+      Code="&quot;49&quot;"
+      SearchFields="&quot;49,רמה III&quot;"
+      Inactive="false"
+      LocalName="&quot;רמה III&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;DangerousGoodsPackingReq&quot;"
+    ObjectTableName="&quot;Customs.DangerousGoodsPackingReq&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.DangerousGoodsPackingReq&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;DGPR&quot;"
+    QueryGroupName="&quot;Customs.DangerousGoodsPackingReq&quot;"
+    LocalTextCode="&quot;רמת סיכון חומר מסוכן במטען&quot;"
+    TextCode="&quot;Dangerous Goods Packing Reqs&quot;"
+    TextCodeCode="&quot;Customs.DangerousGoodsPackingReq.Q.DangerousGoodsPackingReqQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;DANGEROUSGOODSPACKINGREQ&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs&quot;"
+    FeatureDefaultText="&quot;Dangerous Goods Packing Reqs&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;DangerousGoodsPackingReq&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;DangerousGoodsPackingReq&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;DangerousGoodsPackingReq&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;DangerousGoodsPackingReq&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.DangerousGoodsPackingReq&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.DangerousGoodsPackingReq&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -54,9 +54,12 @@ namespace WebFreight.Web.DataProviders
         public string DestinationName { get; set; }
 
         public string AgentName { get; set; }
+        public string AgentAddress { get; set; }
+        public string AgentRef1 { get; set; }
+        public string AgentRef2 { get; set; }
+
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
-        public string AgentAddress { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeAddress { get; set; }
         public string VatType { get; set; }

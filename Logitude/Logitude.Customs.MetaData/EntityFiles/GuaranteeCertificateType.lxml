@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Guarantee Certificate Type&quot;"
-  Code="&quot;64eb&quot;"
-  Name="&quot;Customs.GuaranteeCertificateType Query Group&quot;"
+  Code="&quot;GCQG&quot;"
+  Name="&quot;Customs.GuaranteeCertificateType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;c7a57c1d-1142-4334-a3d0-fc8bb3852b1c&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;GuaranteeCertificateType&quot;"
+    ObjectTableName="&quot;Customs.GuaranteeCertificateType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.GuaranteeCertificateType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;GCQG&quot;"
+    QueryGroupName="&quot;Customs.GuaranteeCertificateType&quot;"
+    LocalTextCode="&quot;סוג ערבות&quot;"
+    TextCode="&quot;Guarantee Certificate Type&quot;"
+    TextCodeCode="&quot;Customs.GuaranteeCertificateType.Q.GuaranteeCertificateTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;GUARANTEECERTIFICATE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType&quot;"
+    FeatureDefaultText="&quot;Guarantee Certificate Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;GuaranteeCertificateType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;GuaranteeCertificateType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;GuaranteeCertificateType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;GuaranteeCertificateType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.GuaranteeCertificateType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.GuaranteeCertificateType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

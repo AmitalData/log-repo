@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -7,6 +8,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,6 +45,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountWithholdingTaxPM entityPM)
         {
+            entityPM.FromDate = new DateTime(entityPM.FromDate.Year, entityPM.FromDate.Month, entityPM.FromDate.Day, 00, 00, 00);
+            entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month, entityPM.ToDate.Day, 00, 00, 00);
             //    var currentContextTag = entityPM.CurrentContextTag ?? "";
             //    if (currentContextTag.ToString() == RaiseEventWBLKConst)
             //        {
@@ -80,5 +84,73 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //    }
             base.OnUpdating(entityPM);
         }
+
+        protected override void Trace(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO, string changesXml)
+        {
+           
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update) {
+               
+
+                PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
+                PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
+                foreach (PropertyInfo property in pmProperties)
+                {
+                    string notes = GetTraceEventNotes(pmProperties, pocoProperties, property);
+                    if (notes != null)
+                    {
+                        CreateTraceEvent(notes);
+                    }
+
+
+
+                }
+
+            }
+
+        }
+        public string GetTraceEventNotes(PropertyInfo[] pmProperties, PropertyInfo[] pocoProperties, PropertyInfo property)
+        {
+            string notes = null;
+            PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+            PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+            if (pmProperty != null && pocoProperty != null)
+            {
+                var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+                if (!pocoPropertyValue.Equals(pmPropertyValue))
+                {
+                   notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + pocoPropertyValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + pmPropertyValue;
+
+                  
+                }
+
+            }
+            return notes;
+        }
+
+        private void CreateTraceEvent(string notes)
+        {
+            Contact contact = GetLoggedContact();
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = EntityParentPM.Id,
+                Tenant = EntityParentPM.Tenant,
+                UserId = contact.Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+               EventTypeCode = "WTDU",
+               Notes = notes,
+            });
+
+        }
+
+        public Contact GetLoggedContact()
+        {
+
+            ContactRepository contactRep = new ContactRepository(EntityPM.Tenant);
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(EntityPM.Tenant);
+         return contactRep.GetSingleContactByEmail(resolveLoggingUserId,EntityPM.Tenant);
+        }
+
     }
 }

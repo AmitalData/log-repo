@@ -124,6 +124,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     SecurityUtility.CheckContactFeature("Journal", "UPDATE", authToken.Tenant);
 
                     IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(authToken.Tenant);
 
                     //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     //service.Update(entityPM, true);
@@ -133,7 +134,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                             {
                                 ICheckAndQYearTransferService yearTransferService = new YearTransferService();
                                 //yearTransferService.CheckThrowExceptionIfNeeded(accountingContext, year, authToken.Tenant);
-                                var BatchTaskYearTransferId = yearTransferService.Check_CreateQBatchTaskYearTransfer(year, authToken.Tenant);
+                                string BatchTaskYearTransferId = yearTransferService.Check_CreateQBatchTaskYearTransfer(year, authToken.Tenant, userId);
                                 scope.Complete();
                                 return Request.CreateResponse(HttpStatusCode.OK, new { BatchTaskYearTransferId  = BatchTaskYearTransferId });
                             }
@@ -159,7 +160,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                                 {
                                     throw new Exception("Its seemed onther thread Cancel Journal " + lastYearTransferJournalPMId);
                                 }
-                                JournalPM stornoJournalPM = yearTransferService.DoCancelYear(accountingContext, LastYearTransferJournalPM, authToken.Tenant);
+                                JournalPM stornoJournalPM = yearTransferService.DoCancelYear(accountingContext, LastYearTransferJournalPM, authToken.Tenant/*, userId*/);
                                 scope.Complete();
                                 return Request.CreateResponse(HttpStatusCode.OK, stornoJournalPM);
 

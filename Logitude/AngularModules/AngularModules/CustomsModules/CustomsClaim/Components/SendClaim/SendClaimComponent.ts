@@ -26,7 +26,7 @@ import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPM
 import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendClaimComponent',
     templateUrl: "SendClaimComponent.html",
 })
@@ -276,7 +276,7 @@ export class SendClaimComponent {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
 
     OnAddEditWindowClosed(event) {

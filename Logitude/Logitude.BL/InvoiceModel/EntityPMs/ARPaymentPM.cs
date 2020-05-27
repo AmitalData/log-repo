@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +26,13 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountInLocalCurrency { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountInProfitCurrency { get; set; }
+        public DateTime? AccountingCancelationDate { get; set; }
+        public string CancelationNotes { get; set; }
+        public string VoidedByJournalNumber { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToId { get; set; }
@@ -52,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? RegisterDate { get; set; }
         public string SearchFields { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string CreatedByUserName { get; set; }
         public string StatusName { get; set; }
@@ -60,6 +68,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string DebitAccountName { get; set; }
                 
         public double? OpenAmount { get; set; }
+        public double? OpenAmountInLocalCurrency { get; set; }
+
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }
@@ -125,12 +135,12 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string BankAccountLiteId { get; set; }
         public string BankAccountName { get; set; }
+        public string BankAccountNumber { get; set; }
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
-        public string BranchName { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
@@ -143,6 +153,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public DateTime? FechaPago { get; set; }
         public bool IsExternalEntity { get; set; }
+        public string JournalNumber { get; set; }
+        public string JournalId { get; set; }
+        public string CreatedByPartner { get; set; }
+
+
         private List<LedgerTransactionPM> invoicesLedgerTransactions;
         public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions
         {
@@ -187,5 +202,52 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
+
+        public bool IsPaymentNumberManuallySet { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field1 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field2 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field3 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field4 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field5 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field6 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field7 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field8 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field9 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field10 { get; set; }
+
+
+        public string GLAccountCurrencyCode { get; set; }
+        public string PaymentCurrencySign { get; set; }
+
     }
 }

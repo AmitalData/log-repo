@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class UserUpdateClass
-   {  
+   {  		
+		public const string HashString = "fade5526b12110894481dd392ceb0c2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "User",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Users",
-			      				    OldDBTableName =  "Users",
 			      				    ObjectTableSingular =  "User",
 			      				    ObjectTablePlural =  "Users",
 			      				    DescriptionDefaultText =  "Manage your Logitude users, associate users to roles and define restrictions.",
@@ -97,8 +97,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "EnglishName",
-			      				    CodeField =  "Code",
-			      				    NameField =  "EnglishName",
 			      				    DependencyFilter1 =  "BusinessUnitId",
 			      				    DependencyFilter2 =  "EmployeeGroupCustomFilter",
 			      				    DependencyFilter3 =  "IsSalesman",
@@ -137,22 +135,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "User,Users,Simplog.Infrastructure.NewUserCommand,Id,",
+			      				    HashString =  UserUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsFreelancer",
-					  						OldFieldName =  "IsFreelancer",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -202,19 +200,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsFreelancer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Email",
-					  						OldFieldName =  "Email",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -266,19 +264,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Email",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -327,19 +325,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Password",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -391,26 +389,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DepartmentId",
-					  						OldFieldName =  "DepartmentId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -456,26 +454,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DepartmentId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BranchId",
-					  						OldFieldName =  "BranchId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Branch",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -521,19 +519,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BranchId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -585,19 +583,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -649,19 +647,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -711,19 +709,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DepartmentName",
-					  						OldFieldName =  "DepartmentName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -775,19 +773,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DepartmentName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BranchName",
-					  						OldFieldName =  "BranchName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -839,23 +837,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BranchName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsSalesman",
-					  						OldFieldName =  "IsSalesman",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -903,19 +901,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsSalesman",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BusinessUnitId",
-					  						OldFieldName =  "BusinessUnitId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BusinessUnit",
@@ -966,19 +964,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessUnitId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BusinessUnitName",
-					  						OldFieldName =  "BusinessUnitName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1030,19 +1028,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessUnitName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1095,19 +1093,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Create Date",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExpirationDate",
-					  						OldFieldName =  "ExpirationDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1160,19 +1158,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExpirationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastLoginDate",
-					  						OldFieldName =  "LastLoginDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1225,23 +1223,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LastLoginDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LicencedUser",
-					  						OldFieldName =  "LicencedUser",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1291,18 +1289,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProductTypeCode",
-					  						OldFieldName =  "ProductTypeCode",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ProductType",
@@ -1353,19 +1351,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProductTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProductTypeName",
-					  						OldFieldName =  "ProductTypeName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1417,19 +1415,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProductTypeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DistributorCode",
-					  						OldFieldName =  "DistributorCode",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Distributor",
@@ -1480,23 +1478,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DistributorCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsDistributor",
-					  						OldFieldName =  "IsDistributor",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1544,19 +1542,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsDistributor",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActiveUsers",
-					  						OldFieldName =  "ActiveUsers",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1606,19 +1604,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActiveUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InactiveUsers",
-					  						OldFieldName =  "InactiveUsers",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1668,19 +1666,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InactiveUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActiveNotLicensed",
-					  						OldFieldName =  "ActiveNotLicensed",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1730,23 +1728,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActiveNotLicensed",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsShowContactDetailsInTheMobileApp",
-					  						OldFieldName =  "IsShowContactDetailsInTheMobileApp",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1792,19 +1790,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsShowContactDetailsInTheMobileApp",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PersonalId",
-					  						OldFieldName =  "PersonalId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1856,19 +1854,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PersonalId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EmployeeGroupCustomFilter",
-					  						OldFieldName =  "EmployeeGroupCustomFilter",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1917,21 +1915,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EmployeeGroupCustomFilter",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "User",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -1982,21 +1980,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "User",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -2045,18 +2043,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BusinessPhone",
-					  						OldFieldName =  "BusinessPhone",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2110,19 +2108,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessPhone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Mobile",
-					  						OldFieldName =  "Mobile",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2176,23 +2174,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Mobile",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsTwoFactorAuthenticationEnabled",
-					  						OldFieldName =  "IsTwoFactorAuthenticationEnabled",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2238,23 +2236,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsTwoFactorAuthenticationEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SetAngularAsDefault",
-					  						OldFieldName =  "SetAngularAsDefault",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2300,19 +2298,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SetAngularAsDefault",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Technology",
-					  						OldFieldName =  "Technology",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2364,19 +2362,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Technology",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DocumentFilingInbox",
-					  						OldFieldName =  "DocumentFilingInbox",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2426,19 +2424,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DocumentFilingInbox",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShowLocalNameInLOV",
-					  						OldFieldName =  "ShowLocalNameInLOV",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2485,18 +2483,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UserRoles",
-					  						OldFieldName =  "UserRoles",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2544,11 +2542,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2567,13 +2566,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AdditionalPackagesOnly",
 					  						ListPropertyPath =  "AdditionalPackagesOnly",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "User",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AdditionalPackagesOnly",
+					  						DefaultText =  " Additional Packages Only",
+					  						ListFieldLable =  "AdditionalPackagesOnlyListLable",
+					  						ListLableDefaultText =  " Additional Packages Only",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LayoutDirection",
+					  						ObjectTableName =  "User",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  3,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LayoutDirection",
+					  						ListPropertyPath =  "LayoutDirection",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2589,8 +2648,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AdditionalPackagesOnly",
-					  						DefaultText =  " Additional Packages Only",
+					  						FullFieldLable =  "LayoutDirection",
+					  						DefaultText =  "Layout Direction",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2598,129 +2657,264 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DontShowLocalLabels",
+					  						ObjectTableName =  "User",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DontShowLocalLabels",
+					  						ListPropertyPath =  "DontShowLocalLabels",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DontShowLocalLabels",
+					  						DefaultText =  "Dont Show Local Labels",
+					  						FullLocalDefaultText =  "Dont Show Local Labels",
+					  						ListFieldLable =  "DontShowLocalLabelsListLable",
+					  						ListLableDefaultText =  "Dont Show Local Labels",
+					  						ListLocalDefaultText =  "Dont Show Local Labels",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AutomaticLastUpdateDate",
+					  						ObjectTableName =  "User",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AutomaticLastUpdateDate",
+					  						ListPropertyPath =  "AutomaticLastUpdateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AutomaticLastUpdateDate",
+					  						DefaultText =  "AutomaticLastUpdateDate",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup UserQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "USER", Name = "Users" }, queryGroupRepository);
-						QueryGroup UserQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5515", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup UserQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "USER", Name = "Users" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup UserQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5515", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable UserObjectTable = objectTables.ContainsKey("User") ? objectTables["User"] : null;
+            if (UserObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable UserObjectTable = objectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> UserObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "User").ToList();   
+                UserObjectTable = objectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode UserTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveUsers", DefaultText = @"Active Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UserFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.ActiveUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ActiveUsers", NameTextCodeDefaultText = "Active Users", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode UserTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveUsers", DefaultText = @"Active Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature UserFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.ActiveUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ActiveUsers", NameTextCodeDefaultText = "Active Users", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode UserTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveNotLicensed", DefaultText = @"Active Not Licensed",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UserFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.ActiveNotLicensed", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ActiveNotLicensed", NameTextCodeDefaultText = "Active Not Licensed", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UserTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.ActiveNotLicensed", DefaultText = @"Active Not Licensed",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature UserFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.ActiveNotLicensed", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ActiveNotLicensed", NameTextCodeDefaultText = "Active Not Licensed", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode UserTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.InactiveUsers", DefaultText = @"Inactive Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UserFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.InactiveUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.InactiveUsers", NameTextCodeDefaultText = "Inactive Users", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UserTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.InactiveUsers", DefaultText = @"Inactive Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature UserFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.InactiveUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.InactiveUsers", NameTextCodeDefaultText = "Inactive Users", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode UserTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.AllUsers", DefaultText = @"All Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UserFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.AllUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.AllUsers", NameTextCodeDefaultText = "All Users", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UserTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.Q.AllUsers", DefaultText = @"All Users",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature UserFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Query.AllUsers", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.AllUsers", NameTextCodeDefaultText = "All Users", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UserObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ActiveUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_0.Id, Code = "ActiveUsers",  QueryGroupCode = "USER", IndexOrder = 0, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ActiveUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_0.Id, NameTextCodeCode = UserTextCode_0.Code, ObjectTableName = "User", Code = "ActiveUsers",  QueryGroupCode = "USER", IndexOrder = 0, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_0.Id,FeatureUniqeCode= UserFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ActiveUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "User.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 1, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "User.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 2, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "User.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 3, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "User.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 4, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "User.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id, IndexOrder = 5, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "ActiveUsers" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveUsersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveUsers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ActiveNotLicensedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_1.Id, Code = "ActiveNotLicensed",  QueryGroupCode = "USER", IndexOrder = 1, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ActiveNotLicensedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_1.Id, NameTextCodeCode = UserTextCode_1.Code, ObjectTableName = "User", Code = "ActiveNotLicensed",  QueryGroupCode = "USER", IndexOrder = 1, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_1.Id,FeatureUniqeCode= UserFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ActiveNotLicensedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "User.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveNotLicensedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 1, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "User.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveNotLicensedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 2, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "User.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveNotLicensedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 3, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "User.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveNotLicensedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 4, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "User.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActiveNotLicensedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id, IndexOrder = 5, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ActiveNotLicensedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveNotLicensedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "ActiveNotLicensed" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveNotLicensedQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ActiveNotLicensedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveNotLicensed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query InactiveUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_2.Id, Code = "InactiveUsers",  QueryGroupCode = "USER", IndexOrder = 2, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_2.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_2.Id, NameTextCodeCode = UserTextCode_2.Code, ObjectTableName = "User", Code = "InactiveUsers",  QueryGroupCode = "USER", IndexOrder = 2, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_2.Id,FeatureUniqeCode= UserFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InactiveUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "User.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InactiveUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 1, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "User.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InactiveUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 2, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "User.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InactiveUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 3, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "User.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InactiveUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 4, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "User.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InactiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id, IndexOrder = 5, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "InactiveUsers" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveUsersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.InactiveUsers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_3.Id, Code = "AllUsers",  QueryGroupCode = "USER", IndexOrder = 3, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_3.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllUsersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UserTextCode_3.Id, NameTextCodeCode = UserTextCode_3.Code, ObjectTableName = "User", Code = "AllUsers",  QueryGroupCode = "USER", IndexOrder = 3, Tenant = 0, ObjectTableId = UserObjectTable.Id, QuerySection = "User", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = UserFeature_3.Id,FeatureUniqeCode= UserFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id, IndexOrder = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllUsersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id,QueryCode = AllUsersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "User.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id, IndexOrder = 1, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllUsersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id,QueryCode = AllUsersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "User.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id, IndexOrder = 2, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllUsersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id,QueryCode = AllUsersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "User.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id, IndexOrder = 3, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllUsersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id,QueryCode = AllUsersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "User.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id, IndexOrder = 4, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == UserObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllUsersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllUsersQuery.Id,QueryCode = AllUsersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "User.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> UserObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "User").ToList();
+		   //List<ObjectField> UserObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "User").ToList();
 		       
 	      
 
 	         Screen UserHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "User.HeaderScreen", Name = "Header Screen", ObjectTableId = UserObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField UserUserHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = UserObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().Id, ScreenId = UserHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField UserUserHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = UserHeaderScreenScreen0.Id,ScreenCode = UserHeaderScreenScreen0.Code, ObjectFieldCode = "User.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    UserObjectTable.HeaderScreenId = UserHeaderScreenScreen0.Id;
+		    UserObjectTable.HeaderScreenCode = UserHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -2731,49 +2925,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode UserGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserRolesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Roles", DefaultText = "Roles",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserRolesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROLES", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Roles", NameTextCodeDefaultText = "Roles", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserRolesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROLES", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Roles", NameTextCodeDefaultText = "Roles", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserPermissionsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Permissions", DefaultText = "Permissions",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserPermissionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserPermissionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserDistributorTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Distributor", DefaultText = "Distributor",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserDistributorFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DISTRIBUTOR", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Distributor", NameTextCodeDefaultText = "Distributor", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserDistributorFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DISTRIBUTOR", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Distributor", NameTextCodeDefaultText = "Distributor", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserDevicesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Devices", DefaultText = "Devices",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserDevicesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEVICES", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Devices", NameTextCodeDefaultText = "Devices", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserDevicesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEVICES", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Devices", NameTextCodeDefaultText = "Devices", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserFilingInboxTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.DocumentFilingInbox", DefaultText = "Filing Inbox",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserFilingInboxFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentFilingInbox", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.DocumentFilingInbox", NameTextCodeDefaultText = "Document Filing Inbox", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserFilingInboxFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentFilingInbox", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.DocumentFilingInbox", NameTextCodeDefaultText = "Document Filing Inbox", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
  
                  
 			   TextCode UserEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UserEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UserEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USGC",HtmlComponentName = "UserGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserGeneralTabComponent", FeatureId = UserGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.User.UserGeneralTabControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USGC",HtmlComponentName = "UserGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserGeneralTabComponent", FeatureId = UserGeneralFeature_TH0.Id,FeatureUniqeCode = UserGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.User.UserGeneralTabControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserGeneralTextCode_TH0.Id, TabNameTextCodeCode = UserGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USRO",HtmlComponentName = "UserRolesTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserRolesTabComponent", FeatureId = UserRolesFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.Roles.UserRolesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserRolesTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USRO",HtmlComponentName = "UserRolesTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserRolesTabComponent", FeatureId = UserRolesFeature_TH1.Id,FeatureUniqeCode = UserRolesFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.Roles.UserRolesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserRolesTextCode_TH1.Id, TabNameTextCodeCode = UserRolesTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USPR",HtmlComponentName = "UserPermissionsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserPermissionsTabComponent", FeatureId = UserPermissionsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.Permissions.PermissionsControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserPermissionsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USPR",HtmlComponentName = "UserPermissionsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserPermissionsTabComponent", FeatureId = UserPermissionsFeature_TH2.Id,FeatureUniqeCode = UserPermissionsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.Permissions.PermissionsControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserPermissionsTextCode_TH2.Id, TabNameTextCodeCode = UserPermissionsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDS",HtmlComponentName = "UserDistributorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserDistributorComponent", FeatureId = UserDistributorFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.UserDistributorControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserDistributorTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDS",HtmlComponentName = "UserDistributorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/UserDistributorComponent", FeatureId = UserDistributorFeature_TH3.Id,FeatureUniqeCode = UserDistributorFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.MaintenanceControls.UserDistributorControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserDistributorTextCode_TH3.Id, TabNameTextCodeCode = UserDistributorTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDV",HtmlComponentName = "DevicesTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/DevicesTabComponent", FeatureId = UserDevicesFeature_TH4.Id, ControlPath = "Simplog.Infrastructure.Views.Events.DevicesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserDevicesTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDV",HtmlComponentName = "DevicesTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/DevicesTabComponent", FeatureId = UserDevicesFeature_TH4.Id,FeatureUniqeCode = UserDevicesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.DevicesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserDevicesTextCode_TH4.Id, TabNameTextCodeCode = UserDevicesTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDF",HtmlComponentName = "DocumentFilingInboxTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/DocumentFilingInboxTabComponent", FeatureId = UserFilingInboxFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Events.DevicesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserFilingInboxTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USDF",HtmlComponentName = "DocumentFilingInboxTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureUser/Components/EditTabs/DocumentFilingInboxTabComponent", FeatureId = UserFilingInboxFeature_TH5.Id,FeatureUniqeCode = UserFilingInboxFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.DevicesControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserFilingInboxTextCode_TH5.Id, TabNameTextCodeCode = UserFilingInboxTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = UserEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "USEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = UserEventsFeature_TH6.Id,FeatureUniqeCode = UserEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = UserObjectTable.Id, TabNameTextCodeId = UserEventsTextCode_TH6.Id, TabNameTextCodeCode = UserEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2781,30 +2975,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature UserFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UserFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UserFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UserFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.PackageFeature", NameTextCodeDefaultText = "User Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature UserFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
+		   Feature UserFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
+		   Feature UserFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
+		   Feature UserFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.PackageFeature", NameTextCodeDefaultText = "User Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature UserFeature_PRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Products", NameTextCodeDefaultText = @"Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_PRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Products", NameTextCodeDefaultText = @"Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_NEWUSER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWUSER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.NewUser", NameTextCodeDefaultText = @"New User" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_NEWUSER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWUSER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.NewUser", NameTextCodeDefaultText = @"New User" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_User_Feature_CustomRoles = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.CustomRoles", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.CustomRoles", NameTextCodeDefaultText = @"Create & Edit custom roles" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_User_Feature_CustomRoles = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.CustomRoles", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.CustomRoles", NameTextCodeDefaultText = @"Create & Edit custom roles" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_PERSONALID = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERSONALID", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.PersonalId", NameTextCodeDefaultText = @"User Personal Id" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_PERSONALID = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERSONALID", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.PersonalId", NameTextCodeDefaultText = @"User Personal Id" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_User_Feature_LicensesManagment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.LicensesManagment", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.LicensesManagment", NameTextCodeDefaultText = @"Licenses Managment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_User_Feature_LicensesManagment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.LicensesManagment", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.LicensesManagment", NameTextCodeDefaultText = @"Licenses Managment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_TECHNOLOGY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TECHNOLOGY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Technology", NameTextCodeDefaultText = @"Technology" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_TECHNOLOGY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TECHNOLOGY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Technology", NameTextCodeDefaultText = @"Technology" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_SETANGULARASDEFAULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETANGULARASDEFAULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.SetAngularAsDefault", NameTextCodeDefaultText = @"Set Angular As Default" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_SETANGULARASDEFAULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETANGULARASDEFAULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.SetAngularAsDefault", NameTextCodeDefaultText = @"Set Angular As Default" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_User_Feature_ViewsSharing  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.ViewsSharing ", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ENABLESHAEDVIEWS", NameTextCodeDefaultText = @"Views Sharing " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_User_Feature_ViewsSharing = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.ViewsSharing", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ENABLESHAEDVIEWS", NameTextCodeDefaultText = @"Views Sharing " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
-		   Feature UserFeature_User_Feature_EditSharedViews = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.EditSharedViews", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.User.Feature.EditSharedViews", NameTextCodeDefaultText = @"Edit Shared Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_User_Feature_EditSharedViews = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.EditSharedViews", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.User.Feature.EditSharedViews", NameTextCodeDefaultText = @"Edit Shared Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
+
+		   Feature UserFeature_LYDR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LYDR", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.LYDR", NameTextCodeDefaultText = @"Layout Direction" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
+
+		   Feature UserFeature_DontShowLocalLabels = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DontShowLocalLabels", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.DontShowLocalLabels", NameTextCodeDefaultText = @"Dont Show Local Labels" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UserObjectTable);
 
    
 	    
@@ -2893,10 +3091,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault(); 			   Feature UserFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESETPASSWORD", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ResetPassword", NameTextCodeDefaultText = "Reset User Password", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature UserFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANONYMIZE", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Anonymize", NameTextCodeDefaultText = "Anonymize", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault(); 			   Feature UserFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESETPASSWORD", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ResetPassword", NameTextCodeDefaultText = "Reset User Password", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
+             			   Feature UserFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANONYMIZE", ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Anonymize", NameTextCodeDefaultText = "Anonymize", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UserObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2923,6 +3121,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton UserMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2940,6 +3141,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  UserFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  UserFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton UserMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2957,6 +3161,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  UserFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  UserFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

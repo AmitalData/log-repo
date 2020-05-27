@@ -1,6 +1,5 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
@@ -16,8 +15,10 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {ObjectFieldPMExtendedService} from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'AutomationsSettingsComponent',
     templateUrl: './AutomationsSettingsComponent.html',
@@ -28,6 +29,10 @@ export class AutomationsSettingsComponent implements OnInit {
 
     IsShowTabUpdate: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
+    
+
+
     SelectedTabCode: string = "";
     ObjectTableId: string;
     ObjectTableName: string;
@@ -52,7 +57,7 @@ export class AutomationsSettingsComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
-
+        this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
     }
 
     ngOnInit(
@@ -61,37 +66,75 @@ export class AutomationsSettingsComponent implements OnInit {
     ) {
 
     }
+    EntityDisplayName: string;
+    SetDataContext(dataContext: any) {
+        if (dataContext) {
+            var tableName: string = dataContext.ObjectTableName;
+            this.EntityDisplayName = dataContext.DisplayName;
+            this.AutomationList = [];
 
-    SetDataContext(tableName: string) {
+
+            if (tableName) {
+                var table = window.ObjectTables.filter(d => d.Name == tableName)[0];
+
+                if (table) {
+                    this.ObjectTableName = table.Name;
+                    this.ObjectTableId = table.Id;
+                    this.LoadAutomationsList();
+                }
+
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
 
 
-        this.AutomationList = [];
+                    if (tableName == "Master") {
+                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response:any) => {
+                            this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
 
-
-        if (tableName) {
-            var table = window.ObjectTables.filter(d => d.Name == tableName)[0];
-
-            if (table) {
-                this.ObjectTableName = table.Name;
-                this.ObjectTableId = table.Id;
-                this.LoadAutomationsList();
+                        });
+                    } else this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
+                });
             }
-
-            this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
-
-
-                if (tableName == "Master") {
-                    this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
-                        this.Start();
-
-                    });
-                } else this.Start();
-            });
         }
     }
 
+    public EntityObjectAutomationFieldLists: any[];
+    LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName: string) {
+        var entityObjectTableIds: string = "";
+
+        var tableId: string = this.ObjectTableId; 
+        if (this.ObjectTableName == "Master") {
+            var table = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
+            if (table) {
+                tableId = table.Id;;
+            }
+        }
+
+
+
+        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == tableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == tableName)[0]))).forEach((objectField) => {
+            if (objectField.LookUpTableId) {
+                if (entityObjectTableIds) entityObjectTableIds += ",";
+                entityObjectTableIds += objectField.LookUpTableId;
+            }
+        });
+
+        if (entityObjectTableIds) {
+            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe((res: ServiceResponse) => {
+                var pmResponse: ServiceResponse = res;
+                if (pmResponse.Result) {
+                    this.EntityObjectAutomationFieldLists = pmResponse.Result;//pmResponse.Result.filter(d => entityObjectTableIds.split(',').indexOf(d.ObjectTableId) != -1);
+                    this.Start();
+                }
+            });
+        } else this.Start();
+
+    }
+
+
+
 
     Start() {
+
         this.ShowIncludeInactiveOnCreateCheckBoxKey = Guid.newGuid();
         this.ShowIncludeInactiveOnUpDateCheckBoxKey = Guid.newGuid();
 
@@ -118,7 +161,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
-        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -207,21 +250,21 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.FromEmail = "";
         newEntity.AutomationXML = "";
         newEntity.ObjectTableId = this.ObjectTableId;
-        newEntity.Order = this.AutomationList.filter(d=> d.EntityPM.Type == type) ? this.AutomationList.filter(d=> d.EntityPM.Type == type).length : 0;
+        newEntity.Order = this.AutomationList.filter(d => d.EntityPM.Type == type) ? this.AutomationList.filter(d => d.EntityPM.Type == type).length : 0;
         newEntity.Name = "";
 
         var windowArgs: any = {};
 
         this.SetObjectTableInWindoWArgs(windowArgs);
-        
+
         windowArgs.DataViewModel = this;
         windowArgs.AutomationPM = newEntity;
         windowArgs.Mode = "Add";
         windowArgs.IsNewEntity = true;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 800;
+        logWindow.Width = 820;
         logWindow.Height = 815;
-        logWindow.Title = "Add Automation";
+        logWindow.Title = "Add " + this.EntityDisplayName+" Automation";
         logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AddEditAutomationsComponent");
@@ -241,9 +284,9 @@ export class AutomationsSettingsComponent implements OnInit {
         windowArgs.IsNewEntity = false;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 800;
+        logWindow.Width = 820;
         logWindow.Height = 815;
-        logWindow.Title = "Edit Automation";
+        logWindow.Title = "Edit " + this.EntityDisplayName + " Automation";
         logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AddEditAutomationsComponent");
@@ -333,7 +376,7 @@ export class AutomationsSettingsComponent implements OnInit {
             //});
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
+            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe((res:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindow();
             });

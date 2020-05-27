@@ -30,13 +30,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Package Measure Qualifier&quot;"
-  Code="&quot;c920&quot;"
-  Name="&quot;Customs.PackageMeasureQualifier Query Group&quot;"
+  Code="&quot;PMQU&quot;"
+  Name="&quot;Customs.PackageMeasureQualifier&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;3e800212-82a7-4bcf-8c63-8ef15989f56a&quot;"
     FieldName="&quot;Code&quot;"
@@ -312,21 +314,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,כמות אריזות במחסן&quot;"
+      Inactive="false"
+      LocalName="&quot;כמות אריזות במחסן&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,כמות אריזות באתר אחסון&quot;"
+      Inactive="false"
+      LocalName="&quot;כמות אריזות באתר אחסון&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,כמות אריזות במעבר פנימי&quot;"
+      Inactive="false"
+      LocalName="&quot;כמות אריזות במעבר פנימי&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PackageMeasureQualifier&quot;"
+    ObjectTableName="&quot;Customs.PackageMeasureQualifier&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PackageMeasureQualifier&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PMQU&quot;"
+    QueryGroupName="&quot;Customs.PackageMeasureQualifier&quot;"
+    LocalTextCode="&quot;כמות אריזות&quot;"
+    TextCode="&quot;Package Measure Qualifiers&quot;"
+    TextCodeCode="&quot;Customs.PackageMeasureQualifier.Q.PackageMeasureQualifierQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PACKAGEMEASUREQUALIFIER&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PackageMeasureQualifier.Features.PackageMeasureQualifiers&quot;"
+    FeatureDefaultText="&quot;Package Measure Qualifiers&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PackageMeasureQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PackageMeasureQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PackageMeasureQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PackageMeasureQualifier&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PackageMeasureQualifier&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PackageMeasureQualifier&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -6,7 +6,7 @@ import {DocumentTypeCopyPM} from '../../../../../Common/EntityPMs/DocumentTypeCo
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsTab',
     templateUrl: './PrintingOptionsComponent.html',
 })

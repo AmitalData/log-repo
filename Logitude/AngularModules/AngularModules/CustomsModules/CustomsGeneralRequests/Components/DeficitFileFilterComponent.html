@@ -174,11 +174,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
                                                 [width]="'125'" [Alignment]="'right'"
                                                 [binding]="'DisplayFileNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DisplayFileNumber}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -186,11 +188,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'EntityTypeName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.EntityTypeName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -199,11 +203,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DeficitEntityID' | TextCodeTranslationPipe"
                                                 [width]="'130'" [Alignment]="'right'"
                                                 [binding]="'DeficitEntityID'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DeficitEntityID}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -212,11 +218,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.ProductionDate' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'ProductionDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.ProductionDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -224,11 +232,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.UnpaidBalance' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'UnpaidBalance'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.UnpaidBalance}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -236,22 +246,26 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.EstimatedBalance' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'EstimatedBalance'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.EstimatedBalance}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- StatusName -->
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.StatusName' | TextCodeTranslationPipe"
                                                 [width]="'130'" [Alignment]="'right'"
                                                 [binding]="'StatusName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.StatusName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -288,11 +302,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
                                                 [width]="'125'" [Alignment]="'right'"
                                                 [binding]="'DisplayFileNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DisplayFileNumber}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -300,11 +316,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'EntityTypeName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.EntityTypeName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -313,11 +331,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DeficitEntityID' | TextCodeTranslationPipe"
                                                 [width]="'130'" [Alignment]="'right'"
                                                 [binding]="'DeficitEntityID'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DeficitEntityID}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -326,11 +346,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.TotalComponentAmount' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'TotalComponentAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.TotalComponentAmount}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -338,11 +360,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.TotalRefundAmount' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'TotalRefundAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.TotalRefundAmount}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -350,22 +374,26 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.CloseDate' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'CloseDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.CloseDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- SecondaryStatus -->
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.SecondaryStatus' | TextCodeTranslationPipe"
                                                 [width]="'130'" [Alignment]="'right'"
                                                 [binding]="'SecondaryStatus'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.SecondaryStatus}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -402,14 +430,16 @@
                                                     [ItemSource]="PaymentOrderList">
 
                                     <!-- PaymentID -->
-                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentID' | TextCodeTranslationPipe"
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentId' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'PaymentID'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.PaymentID}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -417,11 +447,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentProcess' | TextCodeTranslationPipe"
                                                 [width]="'100'" [Alignment]="'right'"
                                                 [binding]="'PaymentProcessName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.PaymentProcessName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -431,15 +463,19 @@
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'AmountSum'">
                                         <log-footer>
-                                            <log-footer-template template="let item">
+                                            <ng-template let-item>  
+                                            <log-footer-template >
                                                 <div class="TextTrimming LeftCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountSumTotal | NumbersPipe:'N2'}}</div>
                                             </log-footer-template>
+                                        </ng-template>  
                                         </log-footer>
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming LeftCenter">
                                                 <span>{{item.AmountSum}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -450,11 +486,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.ExternalName' | TextCodeTranslationPipe"
                                                 [width]="'110'" [Alignment]="'right'"
                                                 [binding]="'ExternalName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.ExternalName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -462,11 +500,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.CreateDate' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'CreateDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.CreateDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -474,33 +514,39 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.ValidityDateTo' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'ValidityDateTo'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.ValidityDateTo}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- PaymentOrderPayDate -->
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentOrderPayDate' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'PaymentOrderPayDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.PaymentOrderPayDate}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- PaymentOrderStatusName -->
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.StatusName' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'PaymentOrderStatusName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.PaymentOrderStatusName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -539,11 +585,13 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DocumentTypeName' | TextCodeTranslationPipe"
                                                 [width]="'120'" [Alignment]="'right'"
                                                 [binding]="'DocumentTypeName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DocumentTypeName}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 
@@ -553,22 +601,26 @@
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
                                                 [width]="'150'" [Alignment]="'right'"
                                                 [binding]="'DisplayFileNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DisplayFileNumber}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- DocumentID -->
                                     <log-column [header]="'Customs.DeficitFileFilterQuery.F.DocumentID' | TextCodeTranslationPipe"
                                                 [width]="'120'" [Alignment]="'right'"
                                                 [binding]="'DocumentID'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming RightCenter">
                                                 <span>{{item.DocumentID}}</span>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
 

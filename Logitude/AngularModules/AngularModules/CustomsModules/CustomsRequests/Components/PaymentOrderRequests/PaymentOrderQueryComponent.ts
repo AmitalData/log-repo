@@ -25,7 +25,7 @@ import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList
 
 @Component({
     selector: 'PaymentOrderQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrderQueryComponent.html',
 })
 

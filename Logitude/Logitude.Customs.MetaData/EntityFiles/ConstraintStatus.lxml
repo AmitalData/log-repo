@@ -30,13 +30,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוס אילוץ&quot;"
   DefaultText="&quot;Constraint Status&quot;"
-  Code="&quot;4b33&quot;"
-  Name="&quot;Customs.ConstraintStatus Query Group&quot;"
+  Code="&quot;CONS&quot;"
+  Name="&quot;Customs.ConstraintStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;f392555b-28c4-40b8-8d44-0b8d1eae64a0&quot;"
     FieldName="&quot;Code&quot;"
@@ -304,21 +306,114 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,פוטנציאל&quot;"
+      Inactive="false"
+      LocalName="&quot;פוטנציאל&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,ממתין לאישור אילוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;ממתין לאישור אילוץ&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,ממתין לקיום תנאי לאישור&quot;"
+      Inactive="false"
+      LocalName="&quot;ממתין לקיום תנאי לאישור&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,דחייה ע&quot;י גורם מוסמך&quot;"
+      Inactive="false"
+      LocalName="&quot;דחייה ע&quot;י גורם מוסמך&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,אושר ע&quot;י גורם מוסמך&quot;"
+      Inactive="false"
+      LocalName="&quot;אושר ע&quot;י גורם מוסמך&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,נסגר ע&quot;י טיפול בבעיה&quot;"
+      Inactive="false"
+      LocalName="&quot;נסגר ע&quot;י טיפול בבעיה&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,נסגר בעקבות ביטול הצהרה&quot;"
+      Inactive="false"
+      LocalName="&quot;נסגר בעקבות ביטול הצהרה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ConstraintStatus&quot;"
+    ObjectTableName="&quot;Customs.ConstraintStatus&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ConstraintStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CONS&quot;"
+    QueryGroupName="&quot;Customs.ConstraintStatus&quot;"
+    LocalTextCode="&quot;ס. אילוץ&quot;"
+    TextCode="&quot;Constraint Status&quot;"
+    TextCodeCode="&quot;Customs.ConstraintStatus.Q.ConstraintStatusQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CONSTRAINTSTATUS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ConstraintStatus.Features.ConstraintStatus&quot;"
+    FeatureDefaultText="&quot;Constraint Status&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ConstraintStatus&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ConstraintStatus&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ConstraintStatus&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ConstraintStatus&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ConstraintStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ConstraintStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

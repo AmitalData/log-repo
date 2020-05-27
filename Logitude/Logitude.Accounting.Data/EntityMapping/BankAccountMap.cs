@@ -70,6 +70,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.TransferGLAcccountId).HasColumnName("TransferGLAcccountId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PrintingBranchNumber).HasColumnName("PrintingBranchNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PrintingAccountNumber).HasColumnName("PrintingAccountNumber").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

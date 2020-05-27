@@ -33,8 +33,8 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Product Identification Type&quot;"
-  Code="&quot;ddaa&quot;"
-  Name="&quot;Customs.ProductIdentificationType Query Group&quot;"
+  Code="&quot;PRIT&quot;"
+  Name="&quot;Customs.ProductIdentificationType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -44,7 +44,9 @@
   NoPMController="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false">
+  HasMenuButtons="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d5e743be-3056-4944-9191-4bcaae365e2c&quot;"
     FieldName="&quot;Code&quot;"
@@ -320,21 +322,89 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records>
+    <Record
+      Code="&quot;MN&quot;"
+      SearchFields="&quot;MN,דגם יצרן&quot;"
+      Inactive="false"
+      LocalName="&quot;דגם יצרן&quot;" />
+    <Record
+      Code="&quot;SS&quot;"
+      SearchFields="&quot;SS,מספר קטלוגי&quot;"
+      Inactive="false"
+      LocalName="&quot;מספר קטלוגי&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ProductIdentificationType&quot;"
+    ObjectTableName="&quot;Customs.ProductIdentificationType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ProductIdentificationType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PRIT&quot;"
+    QueryGroupName="&quot;Customs.ProductIdentificationType&quot;"
+    LocalTextCode="&quot;סוג מספר זיהוי&quot;"
+    TextCode="&quot;Product Identification Types&quot;"
+    TextCodeCode="&quot;Customs.ProductIdentificationType.Q.ProductIdentificationTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PRODUCTIDENTIFICATIONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ProductIdentificationType.Features.ProductIdentificationTypes&quot;"
+    FeatureDefaultText="&quot;Product Identification Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ProductIdentificationType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ProductIdentificationType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ProductIdentificationType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ProductIdentificationType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ProductIdentificationType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ProductIdentificationType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

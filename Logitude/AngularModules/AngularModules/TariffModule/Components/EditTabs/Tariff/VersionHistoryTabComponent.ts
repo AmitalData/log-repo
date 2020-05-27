@@ -20,13 +20,21 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
+import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VersionHistoryTabComponent.html',
 })
 
 export class VersionHistoryTabComponent implements OnDestroy {
+  public IsDraftVersion: any;
+  public EditTariffButtonClicked(item: any) { }
+  public DeleteTariffButtonClicked(item: any) { }
+
+
     public EntityPM: TariffPM;
     public VersionPM: TariffVersionPM;
     public VersionLinesSource: ObservableCollection;
@@ -34,18 +42,20 @@ export class VersionHistoryTabComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsActionsEnabled: boolean = false;
     public IsDownloadExcelTemplateVisible: boolean = false;
-
+    public IsAllInChargesVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
 
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             this.SetStepsLabelsAndVisibility();
             this.IsDownloadExcelTemplateVisible = true;
+            this.IsAllInChargesVisible = true;
+            this.GetAllPackageTypes();
         }
 
-        else if (this.EntityPM.TypeCode == "ASC") {
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.IsDownloadExcelTemplateVisible = false;
             this.GetAllChargesTypes();
         }
@@ -75,7 +85,20 @@ export class VersionHistoryTabComponent implements OnDestroy {
         });        
     }
 
+    public AllPackageTypes: PackageTypeList[];
+    private GetAllPackageTypes() {
+        var iPackageTypeListService = new PackageTypeListService();
+
+        iPackageTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllPackageTypes = myResponse.Result;
+                this.SetContainersLabelsAndVisibility();
+            }
+        });
+    }
+
     private SaveCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -88,11 +111,21 @@ export class VersionHistoryTabComponent implements OnDestroy {
                     }
                 }
             });
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "TariffLinesDeleted") {
+
+                    if (this.EntityPM != null && this.VersionPM != null) {
+                        this.LoadTariffLines();
+                    }
+                }
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public Step1PriceLabel: string;
@@ -225,6 +258,28 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public Surcharge9PriceLabel: string;
     public Surcharge10PriceLabel: string;
 
+    public Surcharge1PriceLabel_FCL: string;
+    public Surcharge2PriceLabel_FCL: string;
+    public Surcharge3PriceLabel_FCL: string;
+    public Surcharge4PriceLabel_FCL: string;
+    public Surcharge5PriceLabel_FCL: string;
+    public Surcharge6PriceLabel_FCL: string;
+    public Surcharge7PriceLabel_FCL: string;
+    public Surcharge8PriceLabel_FCL: string;
+    public Surcharge9PriceLabel_FCL: string;
+    public Surcharge10PriceLabel_FCL: string;
+
+    public Surcharge1MinPriceLabel: string;
+    public Surcharge2MinPriceLabel: string;
+    public Surcharge3MinPriceLabel: string;
+    public Surcharge4MinPriceLabel: string;
+    public Surcharge5MinPriceLabel: string;
+    public Surcharge6MinPriceLabel: string;
+    public Surcharge7MinPriceLabel: string;
+    public Surcharge8MinPriceLabel: string;
+    public Surcharge9MinPriceLabel: string;
+    public Surcharge10MinPriceLabel: string;
+
     public Surcharge1PriceVisibility: boolean;
     public Surcharge2PriceVisibility: boolean;
     public Surcharge3PriceVisibility: boolean;
@@ -235,6 +290,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public Surcharge8PriceVisibility: boolean;
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
+
+    public Surcharge1MinPriceVisibility: boolean;
+    public Surcharge2MinPriceVisibility: boolean;
+    public Surcharge3MinPriceVisibility: boolean;
+    public Surcharge4MinPriceVisibility: boolean;
+    public Surcharge5MinPriceVisibility: boolean;
+    public Surcharge6MinPriceVisibility: boolean;
+    public Surcharge7MinPriceVisibility: boolean;
+    public Surcharge8MinPriceVisibility: boolean;
+    public Surcharge9MinPriceVisibility: boolean;
+    public Surcharge10MinPriceVisibility: boolean;
 
     SetSurchargesLabelsAndVisibility() {        
         this.AddChargeColumn(this.EntityPM.Surcharge1Id, this.EntityPM.Surcharge1UOM, 1);
@@ -252,15 +318,54 @@ export class VersionHistoryTabComponent implements OnDestroy {
         if (!AppTool.IsNullOrEmpty(iChargeTypeId)) {
             var iChargeType: ChargesTypeList = this.AllChargesTypes.filter(a => a.Id == iChargeTypeId)[0];
             if (iChargeType) {
-                var displyText: string = iChargeType.Code;               
+                var displyText: string = iChargeType.Code;
+                var chargeCode: string = iChargeType.Code;
+                var isFixed = false;
 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
                     displyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+
+                    if (iMeasurement.Code == "FIXD") {
+                        isFixed = true;
+                    }
                 }
 
                 this['Surcharge' + index + 'PriceLabel'] = displyText;
+                this['Surcharge' + index + 'PriceLabel_FCL'] = chargeCode;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+                this['Surcharge' + index + 'MinPriceVisibility'] = !isFixed;
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
+            }
+        }
+    }
+
+    public Container1PriceLabel: string;
+    public Container2PriceLabel: string;
+    public Container3PriceLabel: string;
+    public Container4PriceLabel: string;
+    public Container5PriceLabel: string;
+
+    public Container1PriceVisibility: boolean;
+    public Container2PriceVisibility: boolean;
+    public Container3PriceVisibility: boolean;
+    public Container4PriceVisibility: boolean;
+    public Container5PriceVisibility: boolean;
+
+    SetContainersLabelsAndVisibility() {
+        this.AddColumn(this.EntityPM.ContainerType1Id, 1);
+        this.AddColumn(this.EntityPM.ContainerType2Id, 2);
+        this.AddColumn(this.EntityPM.ContainerType3Id, 3);
+        this.AddColumn(this.EntityPM.ContainerType4Id, 4);
+        this.AddColumn(this.EntityPM.ContainerType5Id, 5);
+    }
+
+    AddColumn(iContainerTypeId: string, index: number) {
+        if (!AppTool.IsNullOrEmpty(iContainerTypeId)) {
+            var iPackageType: PackageTypeList = this.AllPackageTypes.filter(a => a.Id == iContainerTypeId)[0];
+            if (iPackageType) {
+                this['Container' + index + 'PriceLabel'] = iPackageType.Code;
+                this['Container' + index + 'PriceVisibility'] = true;
             }
         }
     }
@@ -287,16 +392,30 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
 
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 newVersion.Name = "Version " + item.Version;
             }
 
             else {
                 var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
+                var to: string = datePipe.transform(item.ExpirationDate == null ? item.InitialEnddate : item.ExpirationDate, 'dd/MM/yyyy');
 
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+                }
+
+                else {
+                    newVersion.Name = "Version " + item.Version + " (" + from + to + ")";
+                }                
+            }
 
             this.VersionsList.push(newVersion);
         });
@@ -335,10 +454,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private FillLines() {
         this.VersionLinesSource.Clear();
-        var itemsCollection: TariffLinePM[] = [];
+        var itemsCollection: VersionHistoryTariffLine[] = [];
 
         this.tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            itemsCollection.push(item);
+            itemsCollection.push(new VersionHistoryTariffLine(item, this.EntityPM));
         });
 
         this.VersionLinesSource.InsertCollection(itemsCollection);
@@ -372,12 +491,15 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             var windowTitle = "New Copy Version";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
             logWindow.Height = 200;
-            logWindow.WindowArgs = this.VersionPM;
+            var windowArgs: any = {};
+            windowArgs.CurrentVersion = this.VersionPM;
+            windowArgs.TariffType = this.EntityPM.TypeCode;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Title = windowTitle;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {
@@ -404,7 +526,11 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate;
+
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+            copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
+        }
+
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.VersionPM.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
@@ -413,19 +539,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.EntityPM.AddTariffVersion(copiedVersion);
 
         this.tariffLines.forEach(item => {
-            var tariffLine = new TariffLinePM(copiedVersion);
-            tariffLine.StartDate = this.VersionPM.StartDate;
-            tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
+            var tariffLine = new TariffLinePM(copiedVersion);            
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
             tariffLine.OriginPortCode = item.OriginPortCode;
+            tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
             tariffLine.OriginPortName = item.OriginPortName;
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
+            tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
+            tariffLine.TransitTime = item.TransitTime;
+            tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
+            tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
-            if (this.EntityPM.TypeCode == "AFC") {
+            if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
                 tariffLine.MinPrice = item.MinPrice;
                 tariffLine.Step1Price = item.Step1Price;
                 tariffLine.Step2Price = item.Step2Price;
@@ -435,9 +566,11 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Step6Price = item.Step6Price;
                 tariffLine.Step7Price = item.Step7Price;
                 tariffLine.Step8Price = item.Step8Price;
+                tariffLine.StartDate = this.VersionPM.StartDate;
+                tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;
@@ -448,6 +581,46 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge8Price = item.Surcharge8Price;
                 tariffLine.Surcharge9Price = item.Surcharge9Price;
                 tariffLine.Surcharge10Price = item.Surcharge10Price;
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.CurrencyId = item.CurrencyId;
+                tariffLine.CurrencyCode = item.CurrencyCode;
+                tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
+                tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
+                tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
+                tariffLine.Surcharge4MinPrice = item.Surcharge4MinPrice;
+                tariffLine.Surcharge5MinPrice = item.Surcharge5MinPrice;
+                tariffLine.Surcharge6MinPrice = item.Surcharge6MinPrice;
+                tariffLine.Surcharge7MinPrice = item.Surcharge7MinPrice;
+                tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
+                tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
+                tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+            }
+
+            else if (this.EntityPM.TypeCode == "OFC") {
+                tariffLine.StartDate = this.VersionPM.StartDate;
+                tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
+                tariffLine.Surcharge1Price = item.Surcharge1Price;
+                tariffLine.Surcharge2Price = item.Surcharge2Price;
+                tariffLine.Surcharge3Price = item.Surcharge3Price;
+                tariffLine.Surcharge4Price = item.Surcharge4Price;
+                tariffLine.Surcharge5Price = item.Surcharge5Price;
+            }
+
+            else if (this.EntityPM.TypeCode == "OFS") {
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.CurrencyId = item.CurrencyId;
+                tariffLine.CurrencyCode = item.CurrencyCode;
+
+                item.ContainersPrices.forEach(containerItem => {
+                    var containerPrice = new TariffLinesContainersPricePM(tariffLine);
+                    containerPrice.SurchargeId = containerItem.SurchargeId;
+                    containerPrice.Price1 = containerItem.Price1;
+                    containerPrice.Price2 = containerItem.Price2;
+                    containerPrice.Price3 = containerItem.Price3;
+                    containerPrice.Price4 = containerItem.Price4;
+                    containerPrice.Price5 = containerItem.Price5;
+                    tariffLine.AddTariffLinesContainersPrice(containerPrice);
+                });
             }
 
             copiedVersion.AddTariffLine(tariffLine);
@@ -476,5 +649,208 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 
             }
         });
+    }
+}
+
+export class VersionHistoryTariffLine {
+    public OriginPortCode: string;
+    public DestinationPortCode: string;
+    public OriginPortCombinedCode: string;
+    public DestinationPortCombinedCode: string;
+    public Notes: string;
+    public ExpirationDate: Date;
+    public IsFromAllOtherPorts: boolean;
+    public IsToAllOtherPorts: boolean;
+    public CurrencyCode: string;
+    public StartDate: Date;
+    public TransitTime: string;
+
+    //AFC || OLC
+    public MinPrice: number;
+    public Step1Price: number;
+    public Step2Price: number;
+    public Step3Price: number;
+    public Step4Price: number;
+    public Step5Price: number;
+    public Step6Price: number;
+    public Step7Price: number;
+    public Step8Price: number;
+
+    //ASC || OSC || OFC
+    public Surcharge1MinPrice: number;
+    public Surcharge2MinPrice: number;
+    public Surcharge3MinPrice: number;
+    public Surcharge4MinPrice: number;
+    public Surcharge5MinPrice: number;
+    public Surcharge6MinPrice: number;
+    public Surcharge7MinPrice: number;
+    public Surcharge8MinPrice: number;
+    public Surcharge9MinPrice: number;
+    public Surcharge10MinPrice: number;
+    public Surcharge1Price: number;
+    public Surcharge2Price: number;
+    public Surcharge3Price: number;
+    public Surcharge4Price: number;
+    public Surcharge5Price: number;
+    public Surcharge6Price: number;
+    public Surcharge7Price: number;
+    public Surcharge8Price: number;
+    public Surcharge9Price: number;
+    public Surcharge10Price: number;
+
+    //OFS
+    public Surcharge1PriceValue: string;
+    public Surcharge2PriceValue: string;
+    public Surcharge3PriceValue: string;
+    public Surcharge4PriceValue: string;
+    public Surcharge5PriceValue: string;
+    public Surcharge6PriceValue: string;
+    public Surcharge7PriceValue: string;
+    public Surcharge8PriceValue: string;
+    public Surcharge9PriceValue: string;
+    public Surcharge10PriceValue: string;
+
+    private myTariffLine: TariffLinePM;
+    private myTariff: TariffPM;
+    constructor(tariffLine: TariffLinePM, tariff: TariffPM) {
+        this.myTariff = tariff;
+        this.myTariffLine = tariffLine;
+        this.AssignCommonData();
+
+        if (tariff.TypeCode == "AFC" || tariff.TypeCode == "OLC") {
+            this.AssignData_FreightCost();
+        }
+
+        else if (tariff.TypeCode == "OFC" || tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC") {
+            this.AssignData_AIRLCLSurchargeCost();
+        }
+
+        else if (tariff.TypeCode == "OFS") {
+            this.AssignData_OceanFCLSurchargeCost();
+        }
+    }
+
+    private AssignCommonData() {
+        this.OriginPortCode = this.myTariffLine.OriginPortCode;
+        this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
+        this.OriginPortCombinedCode = this.myTariffLine.OriginPortCombinedCode;
+        this.DestinationPortCombinedCode = this.myTariffLine.DestinationPortCombinedCode;
+        this.Notes = this.myTariffLine.Notes;
+        this.ExpirationDate = this.myTariffLine.ExpirationDate;
+        this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;
+        this.IsToAllOtherPorts = this.myTariffLine.IsToAllOtherPorts;
+        this.CurrencyCode = this.myTariffLine.CurrencyCode;
+        this.StartDate = this.myTariffLine.StartDate;
+        this.TransitTime = this.myTariffLine.TransitTime;
+    }
+
+    private AssignData_FreightCost() {
+        this.MinPrice = this.myTariffLine.MinPrice;
+        this.Step1Price = this.myTariffLine.Step1Price;
+        this.Step2Price = this.myTariffLine.Step2Price;
+        this.Step3Price = this.myTariffLine.Step3Price;
+        this.Step4Price = this.myTariffLine.Step4Price;
+        this.Step5Price = this.myTariffLine.Step5Price;
+        this.Step6Price = this.myTariffLine.Step6Price;
+        this.Step7Price = this.myTariffLine.Step7Price;
+        this.Step8Price = this.myTariffLine.Step8Price;
+    }
+
+    private AssignData_AIRLCLSurchargeCost() {
+        this.Surcharge1MinPrice = this.myTariffLine.Surcharge1MinPrice;
+        this.Surcharge2MinPrice = this.myTariffLine.Surcharge2MinPrice;
+        this.Surcharge3MinPrice = this.myTariffLine.Surcharge3MinPrice;
+        this.Surcharge4MinPrice = this.myTariffLine.Surcharge4MinPrice;
+        this.Surcharge5MinPrice = this.myTariffLine.Surcharge5MinPrice;
+        this.Surcharge6MinPrice = this.myTariffLine.Surcharge6MinPrice;
+        this.Surcharge7MinPrice = this.myTariffLine.Surcharge7MinPrice;
+        this.Surcharge8MinPrice = this.myTariffLine.Surcharge8MinPrice;
+        this.Surcharge9MinPrice = this.myTariffLine.Surcharge9MinPrice;
+        this.Surcharge10MinPrice = this.myTariffLine.Surcharge10MinPrice;
+
+        this.Surcharge1Price = this.myTariffLine.Surcharge1Price;
+        this.Surcharge2Price = this.myTariffLine.Surcharge2Price;
+        this.Surcharge3Price = this.myTariffLine.Surcharge3Price;
+        this.Surcharge4Price = this.myTariffLine.Surcharge4Price;
+        this.Surcharge5Price = this.myTariffLine.Surcharge5Price;
+        this.Surcharge6Price = this.myTariffLine.Surcharge6Price;
+        this.Surcharge7Price = this.myTariffLine.Surcharge7Price;
+        this.Surcharge8Price = this.myTariffLine.Surcharge8Price;
+        this.Surcharge9Price = this.myTariffLine.Surcharge9Price;
+        this.Surcharge10Price = this.myTariffLine.Surcharge10Price;
+    }
+
+    private AssignData_OceanFCLSurchargeCost() {
+        this.Surcharge1PriceValue = this.ComputePriceValue(this.myTariff.Surcharge1Id);
+        this.Surcharge2PriceValue = this.ComputePriceValue(this.myTariff.Surcharge2Id);
+        this.Surcharge3PriceValue = this.ComputePriceValue(this.myTariff.Surcharge3Id);
+        this.Surcharge4PriceValue = this.ComputePriceValue(this.myTariff.Surcharge4Id);
+        this.Surcharge5PriceValue = this.ComputePriceValue(this.myTariff.Surcharge5Id);
+        this.Surcharge6PriceValue = this.ComputePriceValue(this.myTariff.Surcharge6Id);
+        this.Surcharge7PriceValue = this.ComputePriceValue(this.myTariff.Surcharge7Id);
+        this.Surcharge8PriceValue = this.ComputePriceValue(this.myTariff.Surcharge8Id);
+        this.Surcharge9PriceValue = this.ComputePriceValue(this.myTariff.Surcharge9Id);
+        this.Surcharge10PriceValue = this.ComputePriceValue(this.myTariff.Surcharge10Id);
+    }
+    private ComputePriceValue(ichargeTypeId): string {
+        var myValue: string = "";
+
+        if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
+            if (this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
+                this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
+                        if (AppTool.IsNullOrZero(item.Price1)) {
+                            myValue = "-";
+                        }
+
+                        else {
+                            myValue = item.Price1.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
+                        if (AppTool.IsNullOrZero(item.Price2)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price2.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
+                        if (AppTool.IsNullOrZero(item.Price3)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price3.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
+                        if (AppTool.IsNullOrZero(item.Price4)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price4.toString();
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
+                        if (AppTool.IsNullOrZero(item.Price5)) {
+                            myValue = myValue + " / -";
+                        }
+
+                        else {
+                            myValue = myValue + " / " + item.Price5.toString();
+                        }
+                    }
+                });
+            }
+        }
+
+        return myValue;
     }
 }

@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct AssigneeNotificationTypeValues
     {   
+       public const string לפעולה = "A";  
+       public const string לידיעה = "I";  
     }
 }
 

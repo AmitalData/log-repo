@@ -39,8 +39,8 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מדינה&quot;"
   DefaultText="&quot;Country&quot;"
-  Code="&quot;a5a6&quot;"
-  Name="&quot;Customs.CustomsCountry Query Group&quot;"
+  Code="&quot;CUCO&quot;"
+  Name="&quot;Customs.CustomsCountry&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -60,7 +60,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;093dd808-8357-492e-8c6e-ced8afde8307&quot;"
     FieldName="&quot;Code&quot;"
@@ -629,103 +631,6 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
-  <Query
-    Code="&quot;CustomsCountry&quot;"
-    TextCode="&quot;CustomsCountryQuery&quot;"
-    QueryGroupCode="&quot;a5a6&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-    QuerySection="&quot;Customs.CustomsCountry&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;CustomsCountry&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;CustomsCountry&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsCountry&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsCountry&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;TarriffName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomsCountry&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="5"
-    IsReadOnly="true"
-    IsHeaderScreen="false">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;TarriffCode&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="4"
-        ObjectFieldName="&quot;Inactive&quot;"
-        ScreenName="GeneralTabScreen" />
-    </ScreenFields>
-  </Screen>
-  <Screen
-    Name="&quot;Customs.CustomsCountryHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1"
-    IsReadOnly="true"
-    IsHeaderScreen="true">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="Customs.CustomsCountryHeaderScreen" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="Customs.CustomsCountryHeaderScreen" />
-    </ScreenFields>
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -733,9 +638,14 @@
     Code="&quot;CCGN&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.CustomsCountry.TH.General&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="0"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CustomsCountry.Tab.General&quot;"
+    FeatureTextCodeCode="&quot;CustomsCountry.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -743,17 +653,145 @@
     Code="&quot;EVCC&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CustomsCountry.TH.Events&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="1"
-    IsSpellChecked="false" />
+    IsSpellChecked="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CustomsCountry.Tab.Events&quot;"
+    FeatureTextCodeCode="&quot;CustomsCountry.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;CustomsCountry.Q.CustomsCountry&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;CustomsCountry.Features.CustomsCountry&quot;"
+      FeatureDefaultText="&quot;CustomsCountry&quot;" />
+  </AdditionalFeatures>
+  <Query
+    Code="&quot;CustomsCountry&quot;"
+    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsCountry&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUCO&quot;"
+    QueryGroupName="&quot;Customs.CustomsCountry&quot;"
+    LocalTextCode="&quot;מדינה&quot;"
+    TextCode="&quot;Customs Countries&quot;"
+    TextCodeCode="&quot;Customs.CustomsCountry.Q.CustomsCountryQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMSCOUNTRY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsCountry.Features.CustomsCountries&quot;"
+    FeatureDefaultText="&quot;Customs Countries&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;TarriffName&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;MalamId&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomsCountry&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;CustomsCountry.GeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
+    IsHeaderScreen="false"
+    IsReadOnly="true"
+    NumberOfRows="5"
+    NumberOfColumns="1">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="CustomsCountry.GeneralTabScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CustomsCountry.GeneralTabScreen"
+        Row="1"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="CustomsCountry.GeneralTabScreen"
+        Row="2"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;TarriffCode&quot;"
+        ScreenName="CustomsCountry.GeneralTabScreen"
+        Row="3"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;Inactive&quot;"
+        ScreenName="CustomsCountry.GeneralTabScreen"
+        Row="4"
+        Column="0" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Code="&quot;CustomsCountry.Customs.CustomsCountryHeaderScreen&quot;"
+    Name="&quot;Customs.CustomsCountryHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CustomsCountry&quot;"
+    IsHeaderScreen="true"
+    IsReadOnly="true"
+    NumberOfRows="1"
+    NumberOfColumns="2">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="CustomsCountry.Customs.CustomsCountryHeaderScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CustomsCountry.Customs.CustomsCountryHeaderScreen"
+        Row="0"
+        Column="1" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -763,10 +801,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsCountry&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -774,6 +813,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

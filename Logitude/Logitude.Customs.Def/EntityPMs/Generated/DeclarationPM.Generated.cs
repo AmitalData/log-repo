@@ -4629,121 +4629,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string direction ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Direction  
-	   {
-	    
-	     get
-		{
-		   return direction;
-		 }
-		 set
-		 {
-		   if(direction != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Direction",OldValue=direction,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   direction=value;
-		   }
-			
-		 }
-	   }
-	  private string exportFile ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportFile  
-	   {
-	    
-	     get
-		{
-		   return exportFile;
-		 }
-		 set
-		 {
-		   if(exportFile != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFile",OldValue=exportFile,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportFile=value;
-		   }
-			
-		 }
-	   }
-	  private string declarationTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeclarationTypeCode  
-	   {
-	    
-	     get
-		{
-		   return declarationTypeCode;
-		 }
-		 set
-		 {
-		   if(declarationTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationTypeCode",OldValue=declarationTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   declarationTypeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string agentRoleCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AgentRoleCode  
-	   {
-	    
-	     get
-		{
-		   return agentRoleCode;
-		 }
-		 set
-		 {
-		   if(agentRoleCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AgentRoleCode",OldValue=agentRoleCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   agentRoleCode=value;
-		   }
-			
-		 }
-	   }
-	  private string destinationCountryCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DestinationCountryCode  
-	   {
-	    
-	     get
-		{
-		   return destinationCountryCode;
-		 }
-		 set
-		 {
-		   if(destinationCountryCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryCode",OldValue=destinationCountryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   destinationCountryCode=value;
-		   }
-			
-		 }
-	   }
 	  private DateTime? loadingDateTime ;
 	  	  
        
@@ -4894,7 +4779,122 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationExportRecipients = value; }
 	    }
-	     }
+	  	  private string direction ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Direction  
+	   {
+	    
+	     get
+		{
+		   return direction;
+		 }
+		 set
+		 {
+		   if(direction != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Direction",OldValue=direction,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   direction=value;
+		   }
+			
+		 }
+	   }
+	  private string agentRoleCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AgentRoleCode  
+	   {
+	    
+	     get
+		{
+		   return agentRoleCode;
+		 }
+		 set
+		 {
+		   if(agentRoleCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AgentRoleCode",OldValue=agentRoleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   agentRoleCode=value;
+		   }
+			
+		 }
+	   }
+	  private string exportFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFile  
+	   {
+	    
+	     get
+		{
+		   return exportFile;
+		 }
+		 set
+		 {
+		   if(exportFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFile",OldValue=exportFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFile=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return declarationTypeCode;
+		 }
+		 set
+		 {
+		   if(declarationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationTypeCode",OldValue=declarationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationCountryCode  
+	   {
+	    
+	     get
+		{
+		   return destinationCountryCode;
+		 }
+		 set
+		 {
+		   if(destinationCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryCode",OldValue=destinationCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationCountryCode=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

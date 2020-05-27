@@ -27,16 +27,14 @@ import {BankAccountPM} from '../../../../Accounting/EntityPMs/BankAccountPM';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {CashBookPM} from '../../../../Accounting/EntityPMs/CashBookPM';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {GetAccountingSystemWindowArgs} from '../../../../Common/Args';
-import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {AccountingPaymentMethodList} from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
 import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
-import { Invoice } from '../../../../Customs/DataContract/ResponseData/ExportDeclarationDataResponseData';
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentDetailsTabComponent.html',
 })
 
@@ -56,6 +54,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
     private CurrentSession = SessionLocator.SelectedSession;
+    public EntityWarningsList: string[] = [];
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
 
@@ -64,6 +63,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.EntityPM = entityArgs.EntityPM;
+        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            
+        }
+
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
@@ -90,6 +94,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ComputeRelativeRateDate();
         this.Listen();
         this.CheckARPaymentCashBook();
+        this.BuildEntityNumberFilters();
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -167,7 +173,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.SetUIProperties_CreditCard();
         this.SetUIProperties_BankTransfer();
         this.GetRateIsEnabled();
-
+        this.SetUIProperties_ManuallySet();
+        this.SetUIProperties_ValueDate();
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
@@ -629,7 +636,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
                 else {
                     var myService: AddressListService = new AddressListService();
-                    myService.getSingle(this.EntityPM.BillToId).subscribe(myResult => {
+                    myService.getSingle(this.EntityPM.BillToId).subscribe((myResult:any) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             var billingAddress: AddressList = myResponse.Result;
@@ -712,7 +719,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
-
+                this.ComputeOpenAmountInLocal();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
                 });
@@ -1113,18 +1120,15 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.ValueDate != value) {
                 this.EntityPM.ValueDate = value;
-                //if (value != null) {
-                //    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, false);
-                //    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, null);
-                //}
-                //else {
-                //    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, true);
-                //    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, null);
-                //}
+              this.SetUIProperties_ValueDate();
             }
         }
     }
 
+  SetUIProperties_ValueDate() {
+    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false: true);
+
+  }
     get ChequeOrPaymentRef() {
         if (this.EntityPM == null) {
             return null;
@@ -1247,6 +1251,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.ComputeOpenAmount();
+            this.ComputeOpenAmountInLocal();
             this.UpdateSummary();
 
             this.ItemsSource.Collection.forEach(item => {
@@ -1266,7 +1271,20 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set OpenAmount(value: number) {
         if (this.EntityPM.OpenAmount != value) {
             this.EntityPM.OpenAmount = AppTool.Round(value, 2);
+            this.ComputeOpenAmountInLocal();
+
         }
+    }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    ComputeOpenAmountInLocal() {
+        this.OpenAmountInLocalCurrency = this.OpenAmount * this.PaymentCurrencyExchangeRate;
     }
 
     get PrintNotes() { return this.EntityPM.PrintNotes; }
@@ -1278,6 +1296,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     ComputeOpenAmount() {
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
+        this.ComputeOpenAmountInLocal();
+
     }
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
@@ -1386,6 +1406,120 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.RequestedCommandCode = null;
+    }
+
+    public IsEntityNumberComboBoxVisible: boolean = false;
+    public IsEntityNumberComboBoxEnabled: boolean = false;
+    public NumberFilterList: CodeNameClass[] = [];
+    SetUIProperties_ManuallySet() {
+
+        var isEntityNumberComboBoxVisible = false;
+        var isEntityNumberComboBoxEnabled = false;
+
+        if (this.IsPaymentNumberManuallySet || SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
+            isEntityNumberComboBoxVisible = true;
+        }
+
+        if (this.IsScreenEnabled) {
+            if (isEntityNumberComboBoxVisible) {
+
+                if (this.IsPaymentNumberManuallySet) {
+                    isEntityNumberComboBoxEnabled = true;
+                }
+
+                else if (AppTool.IsNullOrEmpty(this.EntityPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PaymentNo)) {
+                    isEntityNumberComboBoxEnabled = true;
+                }                
+            }
+        }
+
+        this.IsEntityNumberComboBoxVisible = isEntityNumberComboBoxVisible;
+        this.IsEntityNumberComboBoxEnabled = isEntityNumberComboBoxEnabled;
+        this.SetUIProperties_PaymentNumber();
+    }
+
+    SetUIProperties_PaymentNumber() {
+        var isFieldEnabled = false;
+
+        if (this.IsScreenEnabled) {
+            if (this.IsPaymentNumberManuallySet) {
+                isFieldEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("PaymentNo", this.ObjectTableName, isFieldEnabled);
+    }
+
+    BuildEntityNumberFilters() {
+        this.NumberFilterList = [];
+        this.NumberFilterList.push(new CodeNameClass("CNR", "Counter"));
+        
+        if (this.IsEntityNumberComboBoxVisible) {
+            this.NumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
+        }
+
+        if (this.EntityPM.IsPaymentNumberManuallySet == true) {
+            this.selectedNumberFilter = this.NumberFilterList.filter(a => a.Code == "MAS")[0];
+        }
+
+        else {
+            this.selectedNumberFilter = this.NumberFilterList.filter(a => a.Code == "CNR")[0];
+        }
+    }
+
+    private selectedNumberFilter: CodeNameClass;
+    get SelectedNumberFilter() { return this.selectedNumberFilter; }
+    set SelectedNumberFilter(value: CodeNameClass) {
+        if (this.selectedNumberFilter != value) {
+            this.selectedNumberFilter = value;
+
+            this.EntityPM.PaymentNo = null;
+            this.EntityPM.IsPaymentNumberManuallySet = false;
+
+            if (value.Code == "MAS") {
+                this.IsPaymentNumberManuallySet = true;
+            }
+
+            this.SetUIProperties_PaymentNumber();
+        }
+    }
+
+    get IsPaymentNumberManuallySet() { return this.EntityPM.IsPaymentNumberManuallySet; }
+    set IsPaymentNumberManuallySet(value: boolean) {
+        if (this.EntityPM.IsPaymentNumberManuallySet != value) {
+
+            if (!value) {
+                this.PaymentNo = null;
+            }
+
+            else if (this.EntityPM.InvoiceNumber == this.EntityPM.Id) {
+                this.PaymentNo = null;
+            }
+
+            this.EntityPM.IsPaymentNumberManuallySet = value;
+            this.UIProperties.SetEnabled("PaymentNo", this.ObjectTableName, value);
+        }
+    }
+
+    get PaymentNo() {
+        if (this.IsPaymentNumberManuallySet) {
+            return this.EntityPM.PaymentNo;
+        }
+
+        else if (this.EntityPM.Id == this.EntityPM.PaymentNo) {
+            return null;
+        }
+
+        else {
+            return this.EntityPM.PaymentNo;
+        }
+    }
+    set PaymentNo(value: string) {
+        if (this.EntityPM.PaymentNo != value) {
+            if (this.IsPaymentNumberManuallySet) {
+                this.EntityPM.PaymentNo = value;
+            }
+        }
     }
 }
 export class ARPaymentInvoiceArgs extends BaseComponent {
@@ -1677,7 +1811,7 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
             this.isConnected = value;
 
             if (value == true) {
-                this.GetSmallestAmount();
+                this.GetConnectedAmount();
                 this.Connect();
             }
 
@@ -1693,7 +1827,7 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
 
     public ConnectedAmount_INV: number = 0;
     public ConnectedAmount_PAY: number = 0;
-    private GetSmallestAmount() {
+    private GetConnectedAmount() {
 
         var invoiceAmount = this.AmountDue;
         var paymentAmount = this.PaymentPM.OpenAmount;
@@ -1715,26 +1849,57 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
                 paymentAmountInInvoice = paymentAmount / this.Invoice.InvoiceCurrencyExchangeRate;
             }
 
-            if (invoiceAmountInPayment <= paymentAmount) {
-                ConnectedAmountOfInvoice = invoiceAmount;
-                ConnectedAmountOfPayment = invoiceAmountInPayment;
+            if (invoiceAmountInPayment < 0 && paymentAmount < 0) {
+                if (invoiceAmountInPayment >= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmountInPayment;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmountInInvoice;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
 
             else {
-                ConnectedAmountOfInvoice = paymentAmountInInvoice;
-                ConnectedAmountOfPayment = paymentAmount;
+                if (invoiceAmountInPayment <= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmountInPayment;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmountInInvoice;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
         }
 
         else {
-            if (invoiceAmount <= paymentAmount) {
-                ConnectedAmountOfInvoice = invoiceAmount;
-                ConnectedAmountOfPayment = invoiceAmount;
+
+            // Get Biggest Amount
+            if (invoiceAmount < 0 && paymentAmount < 0) {
+                if (invoiceAmount >= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmount;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmount;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
 
+            // Get Smallest Amount
             else {
-                ConnectedAmountOfInvoice = paymentAmount;
-                ConnectedAmountOfPayment = paymentAmount;
+                if (invoiceAmount <= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmount;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmount;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
         }
 

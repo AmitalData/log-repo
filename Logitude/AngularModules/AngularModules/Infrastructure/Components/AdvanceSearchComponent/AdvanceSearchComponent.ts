@@ -4,7 +4,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {AdvancedQueryFilterPM} from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
-import {Http} from '@angular/http';
+
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
@@ -17,13 +17,14 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
-    inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
-    providers: [Http],
+    inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],
+    providers: [HttpClient],
 })
 
 export class AdvanceSearchComponent implements OnInit {
@@ -31,6 +32,7 @@ export class AdvanceSearchComponent implements OnInit {
     public ObjectTableId: string;
     public ObjectTableName: string;
     public QueryId: string;
+    public QueryCode: string;
     public ObjectFields: any;
     allFilterFieldsClass: FilterFieldsClass;
     filterFields: FilterFieldsClass;
@@ -57,7 +59,7 @@ export class AdvanceSearchComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this.myForm = fb.group({
             //'ShipperName': ['', Validators.required]
 
@@ -134,9 +136,9 @@ export class AdvanceSearchComponent implements OnInit {
         //min-height: 163px
         this.Height = {};
         this.QueryChangeEvent.subscribe((res) => {
-            if (this.QueryId != res.QueryId) {
+            if (this.QueryCode != res.QueryCode) {
                 this.SearchText = null;
-                this.OnQueryFilterChanged(res.QueryId);
+                this.OnQueryFilterChanged(res.QueryCode);
             }
         });
 
@@ -186,7 +188,7 @@ export class AdvanceSearchComponent implements OnInit {
         //evt.Subscribe(OnFilterParametersChanged);
 
         //if (newGrid == null) {
-        this.QueryFilterChangedAction(this.QueryId);
+        this.QueryFilterChangedAction(this.QueryCode);
         //}
         //if (!loaded) {
         //    loaded = true;
@@ -203,7 +205,7 @@ export class AdvanceSearchComponent implements OnInit {
     timeFrameFields: FilterField[];
     noFiltersField: FilterField;
     objectField: ObjectFieldPM;
-    QueryFilterChangedAction(QueryID: string) {
+    QueryFilterChangedAction(QueryCode: string) {
 
         this.allFilterFields = [];
         this.constantFilterFieldsList = [];
@@ -217,7 +219,7 @@ export class AdvanceSearchComponent implements OnInit {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.AdvancedQueryFilterPMs = [];
             }
@@ -228,7 +230,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             this.timeFilterFieldsClass = new FilterFieldsClass(this.isNewViewMode, this, this.pubSubService);
             this.FieldsValues = new FieldsValues();
-            this.currentQuery = window.Queries.filter(q => q.Id == QueryID)[0];
+            this.currentQuery = window.Queries.filter(q => q.UniqueCode == /*this.ObjectTableName+"."+*/QueryCode)[0];
 
             if (!this.currentQuery) {
                 var iMessageWindow = new MessageWindow();
@@ -288,7 +290,7 @@ export class AdvanceSearchComponent implements OnInit {
                 this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, this.isWindowViewMode, myResult);
                 this.timeFrameFields.push(this.noFiltersField);
 
-                this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryID);
+                this.advancedQueryFiltersList = myResult.filter(q => q.QueryCode == QueryCode);
                 this.fillqueryfilters();
             }
         });
@@ -301,7 +303,7 @@ export class AdvanceSearchComponent implements OnInit {
         //}
         //else {
         this.advancedQueryFiltersList.forEach((item, key) => {
-            this.objectField = window.ObjectFields.filter(o => o.Id === item.ObjectFieldId)[0];
+            this.objectField = window.ObjectFields.filter(o => o.FieldCode === item.ObjectFieldCode)[0];
             var xx = this.MapJsonToEntityPM(this.objectField);
             this.AddFilterField(xx);
         });
@@ -338,14 +340,14 @@ export class AdvanceSearchComponent implements OnInit {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
         }
-        var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldId == field.Id);
+        var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
-            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id)[0].PredefinedValue;
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
             this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
             if (field.DataTypeCode != "Constant") {
-                this.SelectedObjectFields.push(new FilterField(field, this.QueryId, false, filters, this, this.pubSubService));
+                this.SelectedObjectFields.push(new FilterField(field, this.QueryCode, false, filters, this, this.pubSubService));
             }
         }
         if (this.SelectedObjectFields.length % 2 == 0) {
@@ -380,9 +382,9 @@ export class AdvanceSearchComponent implements OnInit {
     }
 
 
-    OnQueryFilterChanged(QueryID: string) {
-        this.QueryId = QueryID;
-        this.QueryFilterChangedAction(this.QueryId);
+    OnQueryFilterChanged(QueryCode: string) {
+        this.QueryCode = QueryCode;
+        this.QueryFilterChangedAction(this.QueryCode);
         if (this.IsOpened) {
             this.SaveChangesAndRecreate();
         }
@@ -448,8 +450,8 @@ export class AdvanceSearchComponent implements OnInit {
 
         if (this.isWindowViewMode) { // || isLocalSave
             //this.SelectedObjectFields.forEach((field, key) => {
-            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
-                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0]
+            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0] != null) {
+                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0]
                 //if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId) != null) {
 
                 //    if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
@@ -510,7 +512,7 @@ export class AdvanceSearchComponent implements OnInit {
             //});
         }
         //this.SelectedObjectFields.forEach((field, key) => {
-        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] == null) {
+        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryCode == this.QueryCode)[0] == null) {
             var value = this.FieldsValues.GetFieldValue(field.ObjectField.Id);
             var predefinedValue = null;
             var isPredifined = false;
@@ -527,13 +529,13 @@ export class AdvanceSearchComponent implements OnInit {
             var advanceFilter = new AdvancedQueryFilterPM();
 
             advanceFilter.Tenant = SessionInfo.LoggedUserTenant,
-                advanceFilter.ObjectFieldId = field.ObjectField.Id;
+            advanceFilter.ObjectFieldId = field.ObjectField.Id;
             advanceFilter.QueryId = this.QueryId;
             advanceFilter.DataTypeCode = field.ObjectField.DataTypeCode;
             advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
             advanceFilter.IsCustomFilter = field.ObjectField.IsCustomFilter;
             advanceFilter.ObjectFieldName = field.ObjectField.FieldName;
-            advanceFilter.QueryCode = this.currentQuery.Code;
+            advanceFilter.QueryCode = this.QueryCode;
             advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
             advanceFilter.QueryUserId = this.currentQuery.UserId;
             advanceFilter.ObjectFieldOperator = field.ObjectField.Operator;
@@ -541,10 +543,10 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.PredefinedValue = predefinedValue;
             advanceFilter.IsPredefined = isPredifined;
             advanceFilter.UserId = SessionInfo.LoggedUserId;
-
+            advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
 
             if (field.ObjectField.DataTypeCode == "DateTime" || field.ObjectField.DataTypeCode == "Date") {
-                if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId) != null) {
+                if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldCode) != null) {
                     //var date = this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId).ToString();
 
                     //string[] datesArr = date.Split(',');
@@ -578,7 +580,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
             myService.setServiceArgs(this.serviceArgs);
-            myService.insert(advanceFilter).subscribe(myResult => {
+            myService.insert(advanceFilter).subscribe((myResult:any) => {
                 this.AdvancedQueryFilterPMs.push(myResult.Result);
             });
 
@@ -622,11 +624,11 @@ export class AdvanceSearchComponent implements OnInit {
     public DeteteFilter(field: FilterField) {
         //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
         //var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
-        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.Id, field.QueryId, SessionInfo.LoggedUserId).subscribe(filter => {
+        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe((filter: any) => {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);
-                myService.delete(filter).subscribe(myResult => {
+                myService.delete(filter).subscribe((myResult:any) => {
                     if (this.SelectedObjectFields != null) {
                         this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
                     }
@@ -670,6 +672,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     public EditViewClicked() {
         var windowArgs: any = {};
+        windowArgs.queryCode = this.currentQuery.UniqueCode;
         windowArgs.queryId = this.currentQuery.Id;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = false;

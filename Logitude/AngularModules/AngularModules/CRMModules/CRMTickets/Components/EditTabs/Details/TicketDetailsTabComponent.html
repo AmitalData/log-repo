@@ -460,7 +460,7 @@
                             </td>
                             <td>
                                 <div>
-                                    <EmailSearchTextBox [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event"></EmailSearchTextBox>
+                                    <EmailSearchTextBox  [DontInCludeInactive]="true"  [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event"></EmailSearchTextBox>
                                 </div>
                             </td>
 
@@ -476,7 +476,7 @@
                             </td>
                             <td>
                                 <div>
-                                    <EmailSearchTextBox [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
+                                    <EmailSearchTextBox  [DontInCludeInactive]="true"  [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
                                 </div>
                             </td>
 

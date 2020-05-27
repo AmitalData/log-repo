@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -10,45 +9,41 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 
 @Injectable()
 
 
 export class TaxDeductionReportExtendedPMService {
 
-    private _http: Http;
+   
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxDeductionReportFile';
+     
+        this.httpClient = ServiceHelper.HttpClient;
+         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxDeductionReportFile';
     }
 
  
 
     DownloadTaxDeduction856FileInBatch(taxDeductionReportPM: TaxDeductionReportPM) {
-
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
+        return this.httpClient.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch" ,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
             var mappedEntity: TaxDeductionReportPM;
             mappedEntity = this.MapJsonToEntityPM(taxDeductionReportPM, false);
+                var result = res;
+                serviceResponse.Result = result;
 
-            return this._http.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
-                .map((res) => {
-
-                    var result = res.json();
-                    serviceResponse.Result = result;
-
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-        });
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        
 
     }
 

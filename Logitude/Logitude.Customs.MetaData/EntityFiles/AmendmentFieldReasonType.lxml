@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סיבת מופע לתיקון&quot;"
   DefaultText="&quot;Amendment Field Reason Type&quot;"
-  Code="&quot;2559&quot;"
-  Name="&quot;Customs.AmendmentFieldReasonType Query Group&quot;"
+  Code="&quot;AFQG&quot;"
+  Name="&quot;Customs.AmendmentFieldReasonType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;f9d3d333-74a4-4184-a40f-434f21df81de&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AmendmentFieldReasonType&quot;"
+    ObjectTableName="&quot;Customs.AmendmentFieldReasonType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AmendmentFieldReasonType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;AFQG&quot;"
+    QueryGroupName="&quot;Customs.AmendmentFieldReasonType&quot;"
+    LocalTextCode="&quot;סיבת מופע לתיקון&quot;"
+    TextCode="&quot;Amendment Field Reason Type&quot;"
+    TextCodeCode="&quot;Customs.AmendmentFieldReasonType.Q.AmendmentFieldReasonTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;AMEDMENTFIELDREASONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AmendmentFieldReasonType.Features.AmendmentFieldReasonType&quot;"
+    FeatureDefaultText="&quot;AmendmentFieldReasonType&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AmendmentFieldReasonType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AmendmentFieldReasonType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AmendmentFieldReasonType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AmendmentFieldReasonType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AmendmentFieldReasonType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AmendmentFieldReasonType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

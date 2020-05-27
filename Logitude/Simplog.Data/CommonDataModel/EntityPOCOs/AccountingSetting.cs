@@ -39,7 +39,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool NotifyPastDateOnInvoiceEdit { get; set; }
         public bool IsAPPaymentsTransferEnabled { get; set; }
 
-        
+        public string RefreshToken { get; set; }
+        public int QBOOAuth { get; set; }
+
+
         public string ReceivableVATCard { get; set; }
         public string PayableVATCard { get; set; }
 
@@ -61,5 +64,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableNegativeOffsetARPayments { get; set; }
         public bool EnableNegativeOffsetAPPayments { get; set; }
         public bool EnableInvoiceStocksManagement { get; set; }
+        public bool AllowManualARPaymentNumber { get; set; }
+        public bool AllowRegionalTaxManagement { get; set; }
+        public bool EnableAPPaymentExternalPayment { get; set; }
+        public bool TransferToFTPActivated { get; set; }
+        public string TransferFTPDetailId { get; set; }
+
+        public virtual FTPDetail TransferFTPDetail { get; set; }
     }
 }

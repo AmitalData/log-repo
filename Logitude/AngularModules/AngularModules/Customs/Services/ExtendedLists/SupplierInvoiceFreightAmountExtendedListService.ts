@@ -1,7 +1,8 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -14,22 +15,20 @@ import {SupplierInvoiceFreightAmountList} from '../../EntityLists/Extended/Suppl
 @Injectable()
 
 export class SupplierInvoiceFreightAmountExtendedListService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<SupplierInvoiceFreightAmountList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvoiceFreightAmountsViews';
     }
 
     getSingle(declarationid: string, invoicecounterkey: number, CurrencyTypeCode: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'CurrencyTypeCode=' + CurrencyTypeCode, { headers: authHeader }).map(response => {
-                var list = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'CurrencyTypeCode=' + CurrencyTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
 
                 var entity: SupplierInvoiceFreightAmountList;
                 if (list) {
@@ -40,7 +39,7 @@ export class SupplierInvoiceFreightAmountExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -49,10 +48,10 @@ export class SupplierInvoiceFreightAmountExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<SupplierInvoiceFreightAmountList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -66,7 +65,7 @@ export class SupplierInvoiceFreightAmountExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -103,13 +102,11 @@ export class SupplierInvoiceFreightAmountExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<SupplierInvoiceFreightAmountList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -123,7 +120,7 @@ export class SupplierInvoiceFreightAmountExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

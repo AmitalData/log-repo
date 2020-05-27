@@ -50,7 +50,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;1eed9631-7ac6-4f47-b5ee-7ec838dcbccc&quot;"
     FieldName="&quot;Code&quot;"
@@ -325,39 +327,49 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;TPGFileType&quot;"
-    TextCode="&quot;TPGFileTypeQuery&quot;"
-    QueryGroupCode="&quot;f69d&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.TPGFileType&quot;"
-    QuerySection="&quot;Customs.TPGFileType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.TPGFileType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;f69d&quot;"
+    QueryGroupName="&quot;Customs.TPGFileType Query Group&quot;"
+    TextCode="&quot;TPGFileTypeQuery&quot;"
+    TextCodeCode="&quot;TPGFileType.Q.TPGFileType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;TPGFileType.Q.TPGFileType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;TPGFileType.Features.TPGFileType&quot;"
+    FeatureDefaultText="&quot;TPGFileType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;TPGFileType&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;TPGFileType&quot;" />
       <QueryColumn
-        QueryCode="&quot;TPGFileType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;TPGFileType&quot;" />
       <QueryColumn
-        QueryCode="&quot;TPGFileType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;TPGFileType&quot;" />
       <QueryColumn
-        QueryCode="&quot;TPGFileType&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;TPGFileType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -365,18 +377,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.TPGFileType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.TPGFileType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

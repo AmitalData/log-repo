@@ -1,35 +1,30 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../Utilities/ServiceHelper';
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
-import {TraceEventPM} from '../EntityPMs/TraceEventPM';
-import {ExportToExcelArgs} from '../DataContracts/ExportToExcelArgs';
-import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { HttpClient, HttpResponse, HttpEvent } from '@angular/common/http';
 import { BIReportXMLData } from '../Services/InfrastructureDomainService';
-
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../DataContracts/ApiQueryFilters';
+import { ServiceHelper } from '../Utilities/ServiceHelper';
+import { TraceEventPM } from '../EntityPMs/TraceEventPM';
+import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { defer, of } from 'rxjs';
 
 @Injectable()
-
 export class WebFreightDomainService {
     private _apiUrl: string;
-    private _http: Http
+    private _http: HttpClient
     constructor() {
-        this._http = ServiceHelper.Http; 
+        this._http = ServiceHelper.HttpClient; 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WebFreightDomain';
     }
 
     GetTraceEventsForEntity(objectTableId: string, entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain/GetTraceEventsForEntity?objectTableId=' + objectTableId + '&entityId=' + entityId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<TraceEventPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -40,14 +35,11 @@ export class WebFreightDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listMapped;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    InsertTraceEvent(entityId: string, objectTableId: string, eventTypeId: string, eventDate: Date, notes: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
 
+    InsertTraceEvent(entityId: string, objectTableId: string, eventTypeId: string, eventDate: Date, notes: string) {
         var args = new TraceEventsServiceArgs();
         args.EntityId = entityId;
         args.ObjectTableId = objectTableId;
@@ -56,25 +48,21 @@ export class WebFreightDomainService {
         args.Notes = notes;
 
         var mappedArgs: TraceEventsServiceArgs = this.MapJsonTraceEventArgs(args);
-
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
-        return Observable.defer(() => {
-            return this._http.post(url, JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
-                var myJason = response.json();
+        return defer(() => {
+            return this._http.post(url, JSON.stringify(mappedArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJason = response;
                 var myResult: NewTraceEventResult = this.MapNewTraceEventResult(myJason);
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    DeleteTraceEvent(entityId: string, objectTableId: string, traceEventId: string, isExternal: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
 
+    DeleteTraceEvent(entityId: string, objectTableId: string, traceEventId: string, isExternal: boolean) {
         var args = new TraceEventsServiceArgs();
         args.EntityId = entityId;
         args.ObjectTableId = objectTableId;
@@ -82,17 +70,16 @@ export class WebFreightDomainService {
         args.IsExternal = isExternal;
 
         var mappedArgs: TraceEventsServiceArgs = this.MapJsonTraceEventArgs(args);
-
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
-        return Observable.defer(() => {
-            return this._http.put(url + "/PutDeleteTraceEvent", JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.put(url + "/PutDeleteTraceEvent", JSON.stringify(mappedArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myResult = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -117,6 +104,7 @@ export class WebFreightDomainService {
 
         return args;
     }
+
     private MapTraceEventPM(jsonList: any) {
         var entityPM: TraceEventPM;
         entityPM = new TraceEventPM();
@@ -129,6 +117,7 @@ export class WebFreightDomainService {
 
         return entityPM;
     }
+
     private MapNewTraceEventResult(jsonList: any) {
         var entityPM: NewTraceEventResult;
         entityPM = new NewTraceEventResult();
@@ -141,7 +130,8 @@ export class WebFreightDomainService {
 
         return entityPM;
     }
-    getExcelData(filters: ApiQueryFilters, queryId: string, tenant: number, userid: string, ObjectTableName: string) {
+
+    getExcelData(filters: ApiQueryFilters, queryCode: string, tenant: number, userid: string, ObjectTableName: string) {
         if (filters == null) {
             filters.GetCount = true;
             filters.PageIndex = 0;
@@ -149,7 +139,7 @@ export class WebFreightDomainService {
             filters.SortBy = "";
             filters.SortDirection = ""; 
         }
-        filters.queryId = queryId;
+        filters.queryCode = queryCode;
         filters.Tenant = tenant;
         filters.userid = userid;
         filters.ObjectTableName = ObjectTableName;
@@ -181,41 +171,33 @@ export class WebFreightDomainService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
-       
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var callUrl = this._apiUrl.concat(urlparameters);//
 
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                if (response.ok == true) {
-                    var viewResponse = response.json();
-                    if (viewResponse != "Faild") {
-                        return viewResponse;
+        var url = this._apiUrl.concat(urlparameters);
+        
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
+                    if (response.ok == true) {
+                        var viewResponse: any = response;
+                        if (viewResponse != "Faild") {
+                            return viewResponse;
+                        }
+                        else {
+                            return "Faild";
+                        }
                     }
                     else {
                         return "Faild";
                     }
-                    
                 }
-                else {
-                    return "Faild";
-                }
-            });
-        }
-        );
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     GetExportBIReportToExcel(QueryData: BIReportXMLData) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
+        return defer(() => {
+            var errorsArray = [];
+            var url = this._apiUrl + "/PutExportBIReportToExcelByWR";
             var response: ServiceResponse;
             response = new ServiceResponse();
 
@@ -226,44 +208,36 @@ export class WebFreightDomainService {
                 QueryData.BIReportPM = mappedEntity;
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
-                /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutExportBIReportToExcelByWR", JSON.stringify(temp2),
-                    { headers: authHeader }).map((res) => {
-                        var entity = res.json();
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
-                        var servertime = res.headers.get('ServerExecutionTime');
-                        return serviceResponse;
-                    });
+                return this._http.put(url, JSON.stringify(QueryData), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
                 return null;
             }
-        }
-        );
+        });
     }
+
     GetBIReportLogStatus(reportId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var report = response.json();
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var report = response;
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = report;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
-
         if (!entityPM) {
-
             entityPM = new BIReportPM();
         }
-
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
@@ -274,9 +248,9 @@ export class WebFreightDomainService {
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
+
         return entityPM;
     }
-
 
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
@@ -313,7 +287,7 @@ export class WebFreightDomainService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
 
             })));
     }
@@ -322,42 +296,27 @@ export class WebFreightDomainService {
         var urlparameters = '/GetHypridPartnerLogo?LogoId=' + logoId;
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var callUrl = this._apiUrl.concat(urlparameters);//
+        var url = this._apiUrl.concat(urlparameters);//
 
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 
-                    return response.json();
-                    
-            });
-        }
-
-        );
-
+                    return response;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     DownLoadAllFilesForShipments(ShipmentId: string, ObjectTableId: string, tenant: number) {
-        
         var urlparameters = '/DownLoadAllFilesForShipments?ShipmentId=' + ShipmentId + "&&ObjectTableId=" + ObjectTableId + "&&Tenant=" + tenant;
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var callUrl = this._apiUrl.concat(urlparameters);//
+        var url = this._apiUrl.concat(urlparameters);
+        
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
+                return response;
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                return response.json();
-
-            });
-        }
-
-        );
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 }
 

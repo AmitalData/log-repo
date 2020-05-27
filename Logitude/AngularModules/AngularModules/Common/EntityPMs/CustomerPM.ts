@@ -664,9 +664,9 @@ export class CustomerPM {
     public set IsCustomerAllowed(newValue: boolean) { if (this.isCustomerAllowed != newValue) { this.isCustomerAllowed = newValue; this.MarkAsDirty("IsCustomerAllowed"); } }
        
 	 
-    private card: string;
+    private card: any;
     public get Card() { return this.card; }
-    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -792,6 +792,16 @@ export class CustomerPM {
     private lastOpportunityDate: Date;
     public get LastOpportunityDate() { return this.lastOpportunityDate; }
     public set LastOpportunityDate(newValue: Date) { if (this.lastOpportunityDate != newValue) { this.lastOpportunityDate = newValue; this.MarkAsDirty("LastOpportunityDate"); } }
+       
+	 
+    private lastOpportunitySubject: string;
+    public get LastOpportunitySubject() { return this.lastOpportunitySubject; }
+    public set LastOpportunitySubject(newValue: string) { if (this.lastOpportunitySubject != newValue) { this.lastOpportunitySubject = newValue; this.MarkAsDirty("LastOpportunitySubject"); } }
+       
+	 
+    private lastOpportunityStatus: string;
+    public get LastOpportunityStatus() { return this.lastOpportunityStatus; }
+    public set LastOpportunityStatus(newValue: string) { if (this.lastOpportunityStatus != newValue) { this.lastOpportunityStatus = newValue; this.MarkAsDirty("LastOpportunityStatus"); } }
        
 	 
     private firstInvoiceDate: Date;
@@ -1328,6 +1338,16 @@ export class CustomerPM {
     private gLAccountId: string;
     public get GLAccountId() { return this.gLAccountId; }
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
+    private storageFreeDays: number;
+    public get StorageFreeDays() { return this.storageFreeDays; }
+    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
 

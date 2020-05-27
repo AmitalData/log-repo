@@ -24,15 +24,14 @@ import { AmendmentTypeList } from '../../../../Customs/EntityLists/AmendmentType
 import { AmendmentTypeListService } from '../../../../Customs/Services/StandardLists/AmendmentTypeListService';
 
 @Component({
-    moduleId: module.id,
     selector: 'CargoSealsQueryComponent',
     templateUrl: './CargoSealsQueryComponent.html',
     providers: [AmendmentTypeListService]
 })
 
-export class CargoSealsQueryComponent
-    extends BaseRequestsSheetMassaging
-    implements AfterViewInit, IRequestsSheetMassagingComponent, OnInit {
+export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging implements AfterViewInit, IRequestsSheetMassagingComponent, OnInit {
+  public FooterMethods: any;
+
     public DataContext: CargoSealsQueryComponent = this;
     public ObjectTableName: string = "Customs.CargoSealIdentifier";
     public CurrentEntity: CargoSealIdentifierPM;

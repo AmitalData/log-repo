@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuoteEventNotesComponent.html',
 })
 

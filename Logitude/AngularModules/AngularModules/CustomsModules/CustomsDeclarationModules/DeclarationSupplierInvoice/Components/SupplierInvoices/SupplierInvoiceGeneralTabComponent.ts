@@ -50,19 +50,20 @@ import { CustomsSettingExtendedListService } from '../../../../../Customs/Servic
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
-
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { DecimalPipe } from '@angular/common';
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceGeneralTabComponent.html',
 })
 
 
-export class SupplierInvoiceGeneralTabComponent extends BaseComponent
-    implements OnDestroy {
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnDestroy {
+  public CurrencyTypeCode: any;
+  public OriginCountryCode: any;
+
     public InvoiceTypeFocus: boolean;
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvoice";
@@ -357,7 +358,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                 if (this.Parent.EntityPM.IsDirty) {
                     this.Parent.SaveChangesSync();
                 }
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, 0, 500, this.AccumulatedFilter).subscribe(response => {
+                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, 0, 500, this.AccumulatedFilter).subscribe((response:any) => {
                     var entityPM: SupplierInvoicePM = this.EntityPM;
                     this.EntityPM = response.Result;
                     this.BuildItemsList();
@@ -437,15 +438,15 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             this.ParentsCount = "(" + this.EntityPM.FullParentsCount + ")";
             this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
         }
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(responseRate => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe((responseRate:any) => {
 
             if (responseRate) {
                 if (!responseRate.HasError) {
                     this.ExchangeRates = responseRate.Result;
                 }
             }
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsPartnersItem").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsPartnersItem").subscribe((response:any) => {
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
@@ -594,7 +595,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
     //GetExchagneRates() {
 
-    //    this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(response => {
+    //    this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe((response:any) => {
 
     //        if (response) {
     //            if (!response.HasError) {
@@ -646,7 +647,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     importer: ImporterDespositionClass;
     tootltip: string;
     SetDepositionStatus() {
-        this.supplierInvoiceExtendedPMService.GetImporterDespositionStatus(this.VendorId, this.declarationPM.ImporterId).subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetImporterDespositionStatus(this.VendorId, this.declarationPM.ImporterId).subscribe((response:any) => {
             if (response) {
                 if (response.Result) {
 
@@ -692,7 +693,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoice', true);
             });
         });
@@ -988,7 +989,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetInsurancePercentDefault(this.declarationPM.CustomerCode, this.declarationPM.Tenant)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this._OpInsurancePercent_Completed(res.Result);// += _OpInsurancePercent_Completed;
             });
     }
@@ -1017,7 +1018,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     //    this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
     //    var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     //    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
-    //        .subscribe(response => {
+    //        .subscribe((response:any) => {
     //            this.CurrentSession.StopBusyIndicator();
     //            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
     //                this.IsCountryPURForItems = true;
@@ -1285,7 +1286,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     processType.Tenant = this.EntityPM.Tenant;
                     processType.ProcessTypeCode = args.ProcessTypeCode;
 
-                    this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
+                    this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe((response:any) => {
+
                         var result: ItemGovernmentProcedureTypeList = response.Result;
                         processType.ProcessTypeName = result.LocalName;
                     });
@@ -1330,7 +1332,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                             processType.InvoiceItemLineNumber = item.LineNumber;
                             processType.Tenant = this.EntityPM.Tenant;
                             processType.ProcessTypeCode = args.ProcessTypeCode;
-                            this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
+                            this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe((response:any) => {
 
                                 var result: ItemGovernmentProcedureTypeList = response.Result;
                                 processType.ProcessTypeName = result.LocalName;
@@ -1376,7 +1378,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     }
 
     GetFreightTotals() {
-        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe(response => {
+        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
 
 
 
@@ -1643,7 +1645,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     //                        else {
     //                            this.allowToDelete = false;
     //                            this.IncotermCode = this.oldIncoterm;
-    //                            //this.termsOfSaleTypeListService.getSingle(IncotermCode).subscribe(response => {
+    //                            //this.termsOfSaleTypeListService.getSingle(IncotermCode).subscribe((response:any) => {
     //                            //    var incoterm: TermsOfSaleTypeList = response.Result;
     //                            //    this.EntityPM.IncotermName = incoterm.LocalName;
     //                            //});
@@ -2153,7 +2155,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             }
 
 
-            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe(response => {
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe((response:any) => {
 
                 var result = response.Result;
                 if (result) {

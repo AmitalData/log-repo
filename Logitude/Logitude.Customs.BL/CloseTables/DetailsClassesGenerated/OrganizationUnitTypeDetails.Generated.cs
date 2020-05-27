@@ -20,17 +20,493 @@ namespace Logitude.Customs.BL
    {
        public List<OrganizationUnitTypeDetails> GetAll()
        {
-		    var all = new List<OrganizationUnitTypeDetails>(); 
+		    var all = new List<OrganizationUnitTypeDetails>();  
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,מטה", 
+                Inactive = false, 
+                LocalName = "מטה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "101", 
+                SearchFields = "101,משרד הביטחון", 
+                Inactive = false, 
+                LocalName = "משרד הביטחון", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "102", 
+                SearchFields = "102,סוכני מכס", 
+                Inactive = false, 
+                LocalName = "סוכני מכס", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "103", 
+                SearchFields = "103,גורם כלכלי מאושר", 
+                Inactive = false, 
+                LocalName = "גורם כלכלי מאושר", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "104", 
+                SearchFields = "104,אוטונומיה", 
+                Inactive = false, 
+                LocalName = "אוטונומיה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "105", 
+                SearchFields = "105,הערכה", 
+                Inactive = false, 
+                LocalName = "הערכה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "106", 
+                SearchFields = "106,כללי מקור", 
+                Inactive = false, 
+                LocalName = "כללי מקור", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "107", 
+                SearchFields = "107,קרנה", 
+                Inactive = false, 
+                LocalName = "קרנה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "108", 
+                SearchFields = "108,חוקיות יבוא", 
+                Inactive = false, 
+                LocalName = "חוקיות יבוא", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "109", 
+                SearchFields = "109,קשרים בינלאומים", 
+                Inactive = false, 
+                LocalName = "קשרים בינלאומים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,תש''ר", 
+                Inactive = false, 
+                LocalName = "תש''ר", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "110", 
+                SearchFields = "110,צווים", 
+                Inactive = false, 
+                LocalName = "צווים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "111", 
+                SearchFields = "111,תעריף מכס", 
+                Inactive = false, 
+                LocalName = "תעריף מכס", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "113", 
+                SearchFields = "113,סמים", 
+                Inactive = false, 
+                LocalName = "סמים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "114", 
+                SearchFields = "114,בקרת ייצוא", 
+                Inactive = false, 
+                LocalName = "בקרת ייצוא", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "115", 
+                SearchFields = "115,קבוצת דיוור להערכת סיכונים", 
+                Inactive = false, 
+                LocalName = "קבוצת דיוור להערכת סיכונים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "116", 
+                SearchFields = "116,ביטחון", 
+                Inactive = false, 
+                LocalName = "ביטחון", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "117", 
+                SearchFields = "117,יהלומים", 
+                Inactive = false, 
+                LocalName = "יהלומים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "118", 
+                SearchFields = "118,כוללת", 
+                Inactive = false, 
+                LocalName = "כוללת", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "119", 
+                SearchFields = "119,מקצועית (תש''ר)", 
+                Inactive = false, 
+                LocalName = "מקצועית (תש''ר)", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,דואר חבילות", 
+                Inactive = false, 
+                LocalName = "דואר חבילות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "120", 
+                SearchFields = "120,משמרת באולם נוסעים", 
+                Inactive = false, 
+                LocalName = "משמרת באולם נוסעים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "121", 
+                SearchFields = "121,תחנת מכס מעבר יבשתי פנימי קו תפר", 
+                Inactive = false, 
+                LocalName = "תחנת מכס מעבר יבשתי פנימי קו תפר", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,תפ''ג חשבונות וערבויות", 
+                Inactive = false, 
+                LocalName = "תפ''ג חשבונות וערבויות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,סיווג", 
+                Inactive = false, 
+                LocalName = "סיווג", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,פט''ם", 
+                Inactive = false, 
+                LocalName = "פט''ם", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,הישבון", 
+                Inactive = false, 
+                LocalName = "הישבון", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,בקח''ש", 
+                Inactive = false, 
+                LocalName = "בקח''ש", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,יצוא", 
+                Inactive = false, 
+                LocalName = "יצוא", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,בלדרות", 
+                Inactive = false, 
+                LocalName = "בלדרות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,מיחשוב", 
+                Inactive = false, 
+                LocalName = "מיחשוב", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,מחסנים רשויים", 
+                Inactive = false, 
+                LocalName = "מחסנים רשויים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,דיפלומטים", 
+                Inactive = false, 
+                LocalName = "דיפלומטים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,מעקב מטענים", 
+                Inactive = false, 
+                LocalName = "מעקב מטענים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,סבני''ם", 
+                Inactive = false, 
+                LocalName = "סבני''ם", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "25", 
+                SearchFields = "25,רכב זכויות", 
+                Inactive = false, 
+                LocalName = "רכב זכויות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "26", 
+                SearchFields = "26,יבוא אישי", 
+                Inactive = false, 
+                LocalName = "יבוא אישי", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,אמרכלות", 
+                Inactive = false, 
+                LocalName = "אמרכלות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,אולם נוסעים", 
+                Inactive = false, 
+                LocalName = "אולם נוסעים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,בודקים", 
+                Inactive = false, 
+                LocalName = "בודקים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,בידוק רכב", 
+                Inactive = false, 
+                LocalName = "בידוק רכב", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "34", 
+                SearchFields = "34,בקרת יבוא", 
+                Inactive = false, 
+                LocalName = "בקרת יבוא", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "35", 
+                SearchFields = "35,תפיסות", 
+                Inactive = false, 
+                LocalName = "תפיסות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "36", 
+                SearchFields = "36,יס''מ", 
+                Inactive = false, 
+                LocalName = "יס''מ", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "37", 
+                SearchFields = "37,היטלים", 
+                Inactive = false, 
+                LocalName = "היטלים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "38", 
+                SearchFields = "38,יחידה ממונה", 
+                Inactive = false, 
+                LocalName = "יחידה ממונה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "39", 
+                SearchFields = "39,מודיעין", 
+                Inactive = false, 
+                LocalName = "מודיעין", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,משפטית", 
+                Inactive = false, 
+                LocalName = "משפטית", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "40", 
+                SearchFields = "40,מפענחים", 
+                Inactive = false, 
+                LocalName = "מפענחים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "41", 
+                SearchFields = "41,ועדה", 
+                Inactive = false, 
+                LocalName = "ועדה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "42", 
+                SearchFields = "42,הערכת סיכונים", 
+                Inactive = false, 
+                LocalName = "הערכת סיכונים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,בטיחות והגהות", 
+                Inactive = false, 
+                LocalName = "בטיחות והגהות", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "50", 
+                SearchFields = "50,חקירות תל-אביב", 
+                Inactive = false, 
+                LocalName = "חקירות תל-אביב", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "51", 
+                SearchFields = "51,חקירות חיפה", 
+                Inactive = false, 
+                LocalName = "חקירות חיפה", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "52", 
+                SearchFields = "52,חקירות ירושלים", 
+                Inactive = false, 
+                LocalName = "חקירות ירושלים", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "53", 
+                SearchFields = "53,חקירות באר שבע", 
+                Inactive = false, 
+                LocalName = "חקירות באר שבע", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,בתי מכס", 
+                Inactive = false, 
+                LocalName = "בתי מכס", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,תחנת מכס בינלאומית", 
+                Inactive = false, 
+                LocalName = "תחנת מכס בינלאומית", 
+			});
+			 
+            all.Add(new OrganizationUnitTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,תחנת מכס מקומית", 
+                Inactive = false, 
+                LocalName = "תחנת מכס מקומית", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(OrganizationUnitType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(OrganizationUnitType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -520,7 +520,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             {
                                 errorview.EntityName = "Declaration";
                             }
-                            errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                            if (errorview.EntityName== "SupplierInvioceItemsCertificate")
+                            {
+                                errorview.EntityName = "SupplierInvioceItemCertificat";
+                            }
+                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
                             errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                             declarationErrors.Add(errorview);
                         }
@@ -800,7 +804,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                        if (errorview.EntityName == "SupplierInvioceItemsCertificate")
+                        {
+                            errorview.EntityName = "SupplierInvioceItemCertificat";
+                            if (errorview.Field== "ClassificationCode")
+                            {
+                                errorview.EntityName = "SupplierInvoiceItem";
+
+                            }
+                         }
+
+                        errorview.FieldNameTextCode = errorview.Field!=null? "Customs." + errorview.EntityName + ".F." + errorview.Field: "Customs." + errorview.EntityName;
                         errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }

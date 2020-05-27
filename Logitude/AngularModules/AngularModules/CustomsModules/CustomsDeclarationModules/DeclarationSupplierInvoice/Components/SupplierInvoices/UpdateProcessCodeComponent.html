@@ -1,4 +1,4 @@
-﻿
+
 <style>
       .DisbleBox {
         display: inline-block;
@@ -136,7 +136,8 @@
 
 
                     <log-column [header]="'מספר'" [width]="'70'" [Alignment]="'right'" [Editable]="true">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                 <span>{{item.Number}}</span>
                             </div>
@@ -147,19 +148,22 @@
 
                             </div>
                         </log-cell-template>
+</ng-template>
 
 
                     </log-column>
 
                     <log-column [width]="'50'" [Editable]="true" [Alignment]="'right'">
-                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                             <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(it)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
                             </div>
 
 
 
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
 

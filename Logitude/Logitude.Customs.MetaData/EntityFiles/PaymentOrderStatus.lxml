@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Payment Order Status&quot;"
-  Code="&quot;8348&quot;"
-  Name="&quot;Customs.PaymentOrderStatus Query Group&quot;"
+  Code="&quot;PAOS&quot;"
+  Name="&quot;Customs.PaymentOrderStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;da38e9ad-0eb1-49c2-8e40-1004dd0dec8d&quot;"
     FieldName="&quot;Code&quot;"
@@ -310,21 +312,104 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,הוכן&quot;"
+      Inactive="false"
+      LocalName="&quot;הוכן&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,נבדק חלקית&quot;"
+      Inactive="false"
+      LocalName="&quot;נבדק חלקית&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,אושר&quot;"
+      Inactive="false"
+      LocalName="&quot;אושר&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,אושר חלקית&quot;"
+      Inactive="false"
+      LocalName="&quot;אושר חלקית&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,בוטל&quot;"
+      Inactive="false"
+      LocalName="&quot;בוטל&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PaymentOrderStatus&quot;"
+    ObjectTableName="&quot;Customs.PaymentOrderStatus&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PaymentOrderStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PAOS&quot;"
+    QueryGroupName="&quot;Customs.PaymentOrderStatus&quot;"
+    LocalTextCode="&quot;סטטוס הוראת תשלום&quot;"
+    TextCode="&quot;Payment Order Status&quot;"
+    TextCodeCode="&quot;Customs.PaymentOrderStatus.Q.PaymentOrderStatusQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PAYMENTORDERSTATUS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PaymentOrderStatus.Features.PaymentOrderStatus&quot;"
+    FeatureDefaultText="&quot;Payment Order Status&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PaymentOrderStatus&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PaymentOrderStatus&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PaymentOrderStatus&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PaymentOrderStatus&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PaymentOrderStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PaymentOrderStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -57,7 +57,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AirImportJobControlAccountId).HasColumnName("AirImportJobControlAccountId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ExternalReconciliationDefault).HasColumnName("ExternalReconciliationDefault").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ExternalReconciliationDefault).HasColumnName("ExternalReconciliationDefault").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.TaxWithholdingGLAccountId).HasColumnName("TaxWithholdingGLAccountId").HasMaxLength(15).IsUnicode(false);
 
@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.GLAccounterCounterLength).HasColumnName("GLAccounterCounterLength");
 
             this.Property(t => t.PaymentChequesLogoId).HasColumnName("PaymentChequesLogoId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.NumberOfAgingMonths).HasColumnName("NumberOfAgingMonths");
         }
     }
 }

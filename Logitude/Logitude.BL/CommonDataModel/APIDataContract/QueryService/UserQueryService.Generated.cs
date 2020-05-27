@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -129,17 +130,28 @@ using Simplog.Data.CommonDataModel;
 					
 					   					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("User with ExternalCode " + MyEntity.ExternalCode + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("User with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.ExternalCode;
 					}
 					temp.Email = MyEntity.PartnerCode;					   

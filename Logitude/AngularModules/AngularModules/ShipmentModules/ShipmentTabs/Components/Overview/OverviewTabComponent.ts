@@ -10,7 +10,7 @@ import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowU
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OverviewTabComponent.html',
 })
 

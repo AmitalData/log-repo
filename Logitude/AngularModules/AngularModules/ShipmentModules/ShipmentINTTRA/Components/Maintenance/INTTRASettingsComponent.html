@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -258,13 +258,11 @@
                                                         <td style="width: 60px; min-width: 60px; max-width: 60px;">Code</td>
                                                         <td style="width: 200px; min-width: 200px; max-width: 200px;">Name</td>
 
-                                                        <td *ngFor="let branch of Branches" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                        <td *ngFor="let branch of Branches" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                             {{branch.EnglishName}}
                                                         </td>
 
-                                                        <td class="LastChild">
-                                                            <div></div>
-                                                        </td>
+                                                        <td>Updates Shipments Dates</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -293,7 +291,7 @@
                                                             </table>
                                                         </td>
 
-                                                        <td *ngFor="let itemCarrier of item.Carriers" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                        <td *ngFor="let itemCarrier of item.Carriers" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                             <div class="MediaFill">
                                                                 <div class="MediaFillRelative">
                                                                     <div class="CenterCenter" style="width: 16px; height: 16px;">
@@ -304,7 +302,13 @@
                                                         </td>
 
                                                         <td>
-                                                            <div></div>
+                                                            <div class="MediaFill">
+                                                                <div class="MediaFillRelative">
+                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                        <CheckBox [IsChecked]="item.UpdatesShipmentsDates" (Checked)="item.UpdatesShipmentsDates = $event"></CheckBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
 

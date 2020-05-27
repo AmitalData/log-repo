@@ -23,6 +23,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ActivateCustomsManagementInShipments = entityPM.ActivateCustomsManagementInShipments;
             poco.ArtemusInSettingsId = entityPM.ArtemusInSettingsId;
             poco.ArtemusOutSettingsId = entityPM.ArtemusOutSettingsId;
+            poco.AMCAirStartDate = entityPM.AMCAirStartDate;
+            poco.AMCOceanStartDate = entityPM.AMCOceanStartDate;
         }
     }
 }

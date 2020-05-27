@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ApiQueryFilters, FilterItem} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -21,10 +22,10 @@ import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomField
 @Injectable()
 
 export class CommonDomainService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain';
     }
 
@@ -34,10 +35,10 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetUpdateAutoDisplay?myChargeTypeId=' + chargeTypeId + '&myPropertyTypeCode=' + propertyTypeCode + '&isAutoDisplay=' + isAutoDisplay;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                return response.json();
-            }).catch(ServiceHelper.HandleServiceError);
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return response;
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     InsertNewCurrency() {
@@ -48,16 +49,14 @@ export class CommonDomainService {
     GetBlueSnapToken(VaultedShopperId:string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -65,32 +64,28 @@ export class CommonDomainService {
     GetBlueSnapSecretToken(VaultedShopperId: string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId: string, CustomerTenantAccessId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId?CustomerId=' + CustomerId + '&CustomerTenantAccessId=' + CustomerTenantAccessId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId?CustomerId=' + CustomerId + '&CustomerTenantAccessId=' + CustomerTenantAccessId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -100,10 +95,10 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetTranslationHeadersByTenant?Id=' + Id;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<TranslationHeader> = [];
 
                 for (var key in allLists) {
@@ -115,7 +110,7 @@ export class CommonDomainService {
                 }
 
                 return _mappedListsArray;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     CopyCurrencyToTenant(CurrencyId: string, CurrencyRate: number, RateDate: string) {
@@ -124,10 +119,10 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetCopyCurrencyToTenant?CurrencyId=' + CurrencyId + '&CurrencyRate=' + CurrencyRate + '&RateDate=' + RateDate;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {                
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {                
 
-                var list = response.json();
+                var list = response;
                 var service = new CurrencyListService();
 
                 var entity: CurrencyList;
@@ -140,7 +135,7 @@ export class CommonDomainService {
                 serviceResponse.Result = entity; 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -150,10 +145,10 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetPortCopyToCurrentTenant?entityId=' + entityId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                return response.json();
-            }).catch(ServiceHelper.HandleServiceError);
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return response;
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetCopyCommodityToTenant(entityId: string) {
@@ -162,10 +157,10 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetCopyCommodityToTenant?entityId=' + entityId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                return response.json();
-            }).catch(ServiceHelper.HandleServiceError);
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return response;
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetQuickSearch(ObjectTableName: string, SearchFields: string) {
@@ -176,15 +171,15 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetQuickSearch?ObjectTableName=' + ObjectTableName + '&SearchFields=' + SearchFields;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.CallTime = callTime;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -194,11 +189,11 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetVatTypePercentagePMByDate?dateString=' + ServiceHelper.GetDateString(date);
 
-        return Observable.defer(() => {
+        return defer(() => {
 
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<VatTypePercentagePM> = [];
 
                 for (var key in allLists) {
@@ -213,7 +208,7 @@ export class CommonDomainService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetAllVatTypesGroups() {
@@ -222,11 +217,11 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetAllVatTypesGroups';
 
-        return Observable.defer(() => {
+        return defer(() => {
 
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<VATTypesGroupPM> = [];
 
                 for (var key in allLists) {
@@ -240,7 +235,7 @@ export class CommonDomainService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleVatTypeByCode(Code: string) {
@@ -249,19 +244,24 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetSingleVatTypeByCode?Code=' + Code;
 
-        return Observable.defer(() => {
+        return defer(() => {
 
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+   
+                var entity: VatTypePM;
+                var myResponse = response;
 
-                var myResponse= response.json();
-                var myService = new VatTypePMService();
-                var myResult: VatTypePM = myService.MapJsonToEntityPM(myResponse);
+                if (myResponse) {
+                    var myService = new VatTypePMService();
+                    entity = myService.MapJsonToEntityPM(myResponse);
+                    
+                }
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
+                serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -307,10 +307,10 @@ export class CommonDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetContactsCounts';
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
                 var myResult = new ContactSummary();
 
                 if (myJsonResult) {
@@ -326,7 +326,7 @@ export class CommonDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -336,90 +336,80 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetGettingStartedData';
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     UpdateUserData(displayGettingStarted: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserGettingStartedData?displayGettingStarted=' + displayGettingStarted, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserGettingStartedData?displayGettingStarted=' + displayGettingStarted,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDropBoxAuthURI(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDropBoxAuthURI?tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDropBoxAuthURI?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDropBoxComLog(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDropBoxComLog?tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDropBoxComLog?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDropBoxComLogTestFile(tenant: number, FileName: string, FolderName: string, FullText: string,ObjectTableId :string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDropBoxComLogTestFile?tenant=' + tenant + '&FileName=' + FileName + '&FolderName=' + FolderName + '&FullText=' + FullText + '&ObjectTableId=' + ObjectTableId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDropBoxComLogTestFile?tenant=' + tenant + '&FileName=' + FileName + '&FolderName=' + FolderName + '&FullText=' + FullText + '&ObjectTableId=' + ObjectTableId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDropBoxAccessTocken(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDropBoxAccessTocken?tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDropBoxAccessTocken?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 serviceResponse = new ServiceResponse();
-                var myResult = response.json();
+                var myResult = response;
                 if (myResult) {
                     var serviceResponse: ServiceResponse;
                     serviceResponse.Result = myResult;
@@ -429,21 +419,17 @@ export class CommonDomainService {
                     serviceResponse.Result = null;
                 }
                 return serviceResponse;
-            }).catch(
-                ServiceHelper.HandleServiceError
-                );
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetRedOfDropBoxAccessTocken(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetRedOfDropBoxAccessTocken?tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetRedOfDropBoxAccessTocken?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
-                var myResult = response.json();
+                var myResult = response;
                 if (myResult) {
                     serviceResponse.Result = myResult;
                 }
@@ -452,19 +438,17 @@ export class CommonDomainService {
                     serviceResponse.Result = null;
                 }
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDropBoxConnectionTest(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDropBoxConnectionTest?tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDropBoxConnectionTest?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
-                var myResult = response.json();
+                var myResult = response;
                 if (myResult == "invalid_access_token") {
                     serviceResponse.HasError = true;
                     serviceResponse.Result = myResult;
@@ -473,55 +457,49 @@ export class CommonDomainService {
                     serviceResponse.Result = myResult;
                 }
                 return serviceResponse;
-            });
+            }));
         });
     }
 
     GetUpdateCustomerActualData(entityId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetUpdateCustomerActualData?entityId=' + entityId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUpdateCustomerActualData?entityId=' + entityId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetContactsByEmails(emails: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetContactsByEmails?emails=' + emails, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetContactsByEmails?emails=' + emails,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetUsersByEmails(emails: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetUsersByEmails?emails=' + emails, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUsersByEmails?emails=' + emails,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -529,32 +507,28 @@ export class CommonDomainService {
     GetSingleCustomerTenantAccess(CustomerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleCustomerTenantAccess?CustomerId=' + CustomerId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleCustomerTenantAccess?CustomerId=' + CustomerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetUserListsByidsString(ids: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserListsByidsString?ids=' + ids, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserListsByidsString?ids=' + ids,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -562,40 +536,38 @@ export class CommonDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetComputingPartnerTranslationsByPartnerAndTableId?ComputingPartnerId=' + ComputingPartnerId + '&ObjectTableId=' + ObjectTableId + '&tenant=' + tenant;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetCustomerTenantAccessCard(CustomerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomerTenantAccessCard?CustomerId=' + CustomerId;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetHybridTenantThresholdByIdTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetHybridTenantThresholdByIdTenant', {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetHybridTenantThresholdByIdTenant',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 serviceResponse = new ServiceResponse();
-                var myResult = response.json();
+                var myResult = response;
                 if (myResult) {
                     var serviceResponse: ServiceResponse;
                     serviceResponse.Result = myResult;
@@ -605,30 +577,26 @@ export class CommonDomainService {
                     serviceResponse.Result = null;
                 }
                 return serviceResponse;
-            }).catch(
-                ServiceHelper.HandleServiceError
-                );
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetCustomsInterfaceListByTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsInterfaceListByTenant?', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCustomsInterfaceListByTenant?',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     UpdateUserLicense(entity: UserLicenseUpdateHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -636,8 +604,8 @@ export class CommonDomainService {
 
             var mappedEntity: UserLicenseUpdateHelper = this.MapJsonToUserLicenseUpdateHelper(entity, false);
 
-            return this._http.put(this._apiUrl + "/PutUserLicenses", JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl + "/PutUserLicenses", JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: UserLicenseUpdateHelper = this.MapJsonToUserLicenseUpdateHelper(myJsonResult, true, entity);
 
@@ -645,23 +613,22 @@ export class CommonDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-
-
+    
     getNoneZeroTenantTranslation(computingPartnerId:string,ObjectTableId:string,Code:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetNoneZeroTenantTranslation?ComputingPartnerId=' + computingPartnerId + '&ObjectTableId=' + ObjectTableId + '&Code=' + Code;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
@@ -701,13 +668,10 @@ export class CommonDomainService {
         authHeader.append('Token', SessionInfo.Token);
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ComputingPartnerViewsExtended';
         var callUrl = _apiUrl.concat(urlparameters);//
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                var serviceResponse: ServiceResponse = response.body;
                 //var _mappedListsArray: Array<ComputingPartnerList> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -724,7 +688,7 @@ export class CommonDomainService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ComputingPartner", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     getByFiltersSingle(filters: CustomApiQueryFilters) {
@@ -761,13 +725,10 @@ export class CommonDomainService {
         authHeader.append('Token', SessionInfo.Token);
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ComputingPartnerViewsExtended';
         var callUrl = _apiUrl.concat(urlparameters);//
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                var serviceResponse: ServiceResponse = response.body;
                 //var _mappedListsArray: Array<ComputingPartnerList> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -784,39 +745,35 @@ export class CommonDomainService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ComputingPartner", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDeafaultMyWarehouse() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDeafaultMyWarehouse', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeafaultMyWarehouse',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetSignRequestReceived() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSignRequestReceived?', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSignRequestReceived?',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -940,56 +897,50 @@ export class CommonDomainService {
     GetOnCreatingMexicanTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetOnCreatingMexicanTenant', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetOnCreatingMexicanTenant',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetOnCreatingUSTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetOnCreatingUSTenant', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetOnCreatingUSTenant',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     OnCreatingMoroccoTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetOnCreatingMoroccoTenant', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetOnCreatingMoroccoTenant',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     OnCreatingIsraelTenant() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetOnCreatingIsraelTenant', { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetOnCreatingIsraelTenant',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var entity: AccountingSettingPM;
                 if (myResult) {
@@ -999,7 +950,7 @@ export class CommonDomainService {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1007,16 +958,16 @@ export class CommonDomainService {
     GetFilingInboxes(filters: ApiQueryFilters, userId: string, isShowDeleted: boolean) {
         //var authHeader = new Headers();
         //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        //return Observable.defer(() => {
+        //return defer(() => {
         //    return this._http.get(this._apiUrl + '/GetFilingInboxes?userId=' + userId + '&isShowDeleted=' + isShowDeleted, {
         //        headers: authHeader
         //    }).map(response => {
-        //        var myResult = response.json();
+        //        var myResult = response;
         //        var serviceResponse: ServiceResponse;
         //        serviceResponse = new ServiceResponse();
         //        serviceResponse.Result = myResult;
         //        return serviceResponse;
-        //    }).catch(ServiceHelper.HandleServiceError);
+        //    }),catchError(ServiceHelper.HandleServiceError));
         //});
 
         var urlparameters = this._apiUrl + '/GetFilingInboxes?';
@@ -1046,10 +997,10 @@ export class CommonDomainService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(urlparameters, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(urlparameters, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse = response.json();
+                serviceResponse = response.body;
                 //var _mappedListsArray: Array<FilingInboxPM> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -1059,7 +1010,7 @@ export class CommonDomainService {
                 //    }
                 //}
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapJsonToFilingInboxPM(jsonList: any) {
@@ -1078,29 +1029,27 @@ export class CommonDomainService {
     GetFilingAttachPdfReport(documentId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetFilingAttachPdfReport?documentId=' + documentId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetFilingAttachPdfReport?documentId=' + documentId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     PutFilingInboxLogs(summary: FilingInboxSummary) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
-            return this._http.put(this._apiUrl + '/PutFilingInboxLogs', JSON.stringify(summary), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl + '/PutFilingInboxLogs', JSON.stringify(summary),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1110,15 +1059,13 @@ export class CommonDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetProductTypesByTenant?tenant=' + currentTenant, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetProductTypesByTenant?tenant=' + currentTenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myList: any = response.json();
+                var myList: any = response;
 
                 return myList;
-            });
+            }));
         });
 
     }
@@ -1129,16 +1076,16 @@ export class CommonDomainService {
 
         var url = this._apiUrl + '/GetTenantLogoUri?tenant=' + Id;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                  
-                var myResult = response.json();
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
                  
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1148,11 +1095,9 @@ export class CommonDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
 
 
                 //var entity: TenantPM;
@@ -1165,7 +1110,7 @@ export class CommonDomainService {
                 serviceResponse.Result = pm;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -1214,19 +1159,66 @@ export class CommonDomainService {
         return entityPM;
     }
 
-    GetAirlineAreas(airlineId: string) {
+    GetCarrierAreas(carrierId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAirlineAreas?airlineId=' + airlineId, {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCarrierAreas?carrierId=' + carrierId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetCardOccasions(cardId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCardOccasions?cardId=' + cardId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetContactOccasions(contactId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetContactOccasions?contactId=' + contactId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetMeasurementIdByCode(code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetMeasurementIdByCode?code=' + code
+
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 }
@@ -1330,6 +1322,9 @@ export class CustomApiQueryFilters {
     }
 
     public queryId: string;
+    public queryCode: string;
+    public uniqueCode: string;
+
     //public tenant: number;
     public userid: string;
     public ObjectTableName: string;

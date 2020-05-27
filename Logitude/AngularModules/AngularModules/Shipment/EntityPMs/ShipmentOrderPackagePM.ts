@@ -13,6 +13,8 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+
 
 export class ShipmentOrderPackagePM {
 
@@ -94,6 +96,11 @@ export class ShipmentOrderPackagePM {
     private packageTypeName: string;
     public get PackageTypeName() { return this.packageTypeName; }
     public set PackageTypeName(newValue: string) { if (this.packageTypeName != newValue) { this.packageTypeName = newValue; this.MarkAsDirty("PackageTypeName"); } }
+       
+	 
+    private dimensions: string;
+    public get Dimensions() { return this.dimensions; }
+    public set Dimensions(newValue: string) { if (this.dimensions != newValue) { this.dimensions = newValue; this.MarkAsDirty("Dimensions"); } }
        
 	 
     private changeSetOp: string;

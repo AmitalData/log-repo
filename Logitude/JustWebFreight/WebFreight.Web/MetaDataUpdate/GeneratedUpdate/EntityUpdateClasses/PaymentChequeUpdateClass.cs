@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentChequeUpdateClass
-   {  
+   {  		
+		public const string HashString = "950b5e055963c766089237f00e50629c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,11 +133,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  PaymentChequeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,7 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -316,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -374,7 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -434,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -496,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -558,7 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -616,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -627,7 +629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "PaymentCheque",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -635,7 +637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  30,
+					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
@@ -678,7 +680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -740,7 +742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -798,7 +800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -862,7 +864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -920,7 +922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -984,7 +986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1048,7 +1050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1057,7 +1059,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ValueDate",
 					  						OldFieldName =  "ValueDate",
 					  						ObjectTableName =  "PaymentCheque",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
@@ -1110,7 +1112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1119,7 +1121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "PrintDate",
 					  						OldFieldName =  "PrintDate",
 					  						ObjectTableName =  "PaymentCheque",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -1172,7 +1174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1234,7 +1236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1292,7 +1294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1354,7 +1356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1412,7 +1414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1474,7 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1536,7 +1538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1598,7 +1600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1655,7 +1657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1712,7 +1714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1774,7 +1776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1836,7 +1838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1898,7 +1900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1955,7 +1957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2017,7 +2019,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2074,7 +2076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2130,7 +2132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2187,7 +2189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2244,7 +2246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2301,7 +2303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2358,7 +2360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2414,7 +2416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2476,7 +2478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2533,7 +2535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2590,7 +2592,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2647,7 +2649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2703,7 +2705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2759,7 +2761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2815,7 +2817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2871,7 +2873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2927,68 +2929,86 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PaymentChequeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d25b", Name = "PaymentCheque Query Group" }, queryGroupRepository);
-						QueryGroup PaymentChequeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5eeb", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup PaymentChequeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d25b", Name = "PaymentCheque Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PaymentChequeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5eeb", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable PaymentChequeObjectTable = objectTables.ContainsKey("PaymentCheque") ? objectTables["PaymentCheque"] : null;
+            if (PaymentChequeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable PaymentChequeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> PaymentChequeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentCheque").ToList();   
+                PaymentChequeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode PaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", DefaultText = @"Payment Cheques",LocalDefaultText = "המחאות לתשלום", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.AllPaymentCheques", NameTextCodeDefaultText = "AllPaymentCheques", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode PaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", DefaultText = @"Payment Cheques",LocalDefaultText = "המחאות לתשלום", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.AllPaymentCheques", NameTextCodeDefaultText = "AllPaymentCheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentChequeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllPaymentChequesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentChequeTextCode_0.Id, NameTextCodeCode = PaymentChequeTextCode_0.Code, ObjectTableName = "PaymentCheque", Code = "AllPaymentCheques",  QueryGroupCode = "d25b", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentChequeObjectTable.Id, QuerySection = "PaymentCheque", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentChequeFeature_0.Id,FeatureUniqeCode= PaymentChequeFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllPaymentChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentCheque.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 1, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentCheque.ChequeNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 2, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountNumber" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentCheque.GLAccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 3, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "PayToName" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentCheque.PayToName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 4, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "BankAccountName" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentCheque.BankAccountName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 5, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "LocalAmount" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentCheque.LocalAmount" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 6, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "InternalNumber" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllPaymentChequesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentCheque.InternalNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllPaymentChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id, IndexOrder = 7, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusName" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllPaymentChequesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentChequesQuery.Id,QueryCode = AllPaymentChequesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> PaymentChequeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentCheque").ToList();
+		   //List<ObjectField> PaymentChequeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentCheque").ToList();
 		       
 	      
 
 	         Screen PaymentChequePaymentChequeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentCheque.PaymentChequeHeaderScreen", Name = "PaymentChequeHeaderScreen", ObjectTableId = PaymentChequeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "ChequeNumber").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.ChequeNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "GLAccountName").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.GLAccountName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "PaymentChequeStatusCode").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.PaymentChequeStatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = PaymentChequeObjectFields.Where(d => d.FieldName == "JournalId").FirstOrDefault().Id, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PaymentChequePaymentChequePaymentChequeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id,ScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentCheque.JournalId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PaymentChequeObjectTable.HeaderScreenId = PaymentChequePaymentChequeHeaderScreenScreen0.Id;
+		    PaymentChequeObjectTable.HeaderScreenCode = PaymentChequePaymentChequeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -2999,19 +3019,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PaymentChequeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PaymentChequeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.General", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentChequeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.General", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
  
                  
 			   TextCode PaymentChequeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PaymentChequeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.Events", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentChequeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.Events", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id,FeatureUniqeCode = PaymentChequeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, TabNameTextCodeCode = PaymentChequeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id,FeatureUniqeCode = PaymentChequeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, TabNameTextCodeCode = PaymentChequeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -3019,10 +3039,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PaymentChequeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentChequeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentChequeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentChequeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PackageFeature", NameTextCodeDefaultText = "PaymentCheque Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature PaymentChequeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentChequeObjectTable);
+		   Feature PaymentChequeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentChequeObjectTable);
+		   Feature PaymentChequeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentChequeObjectTable);
+		   Feature PaymentChequeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PackageFeature", NameTextCodeDefaultText = "PaymentCheque Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentChequeObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature PaymentChequeFeature_MOREE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCMore", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentChequeObjectTable);
+
+   
 	    
 		}
 
@@ -3109,18 +3135,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature PaymentChequeFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SAVEASDRAFTT", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCSaveAsDraft", NameTextCodeDefaultText = "Save as draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentChequeFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SAVEASDRAFTT", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCSaveAsDraft", NameTextCodeDefaultText = "Save as draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
 
       
     
-			   Feature PaymentChequeFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCApprove", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentChequeFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCApprove", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
 
-			   Feature PaymentChequeFeature_MB20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCPrint", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature PaymentChequeFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCCancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentChequeFeature_MB20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCPrint", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
+             			   Feature PaymentChequeFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCCancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3147,6 +3173,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB0.Id,
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
+						FeatureUniqeCode = PaymentChequeFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3164,13 +3193,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
+						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton PaymentChequeMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 2, 
 						IsActive = false,
 						LabelTextCodeCode = "PaymentCheque.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -3181,6 +3213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton PaymentChequeMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3198,6 +3233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = "הדפסת המחאה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton PaymentChequeMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3215,6 +3253,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המחאה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

@@ -42,9 +42,8 @@ namespace WebFreight.Web.DataContracts
         public string LOVAdditionalColumns { get; set; }
         public bool HideTree { get; set; }
         public bool IsCustom { get; set; }
-
-
-
+        public string CustomPickListCode { get; set; }
+        
         public List<MultiSelectedValue> MultiSelectedValueLists { get; set; }
       
     }

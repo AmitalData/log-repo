@@ -60,7 +60,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;09905c39-8d1b-448c-a3e8-480098dc426a&quot;"
     FieldName="&quot;Code&quot;"
@@ -410,40 +412,49 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;CargoSplitRequestStatus&quot;"
-    TextCode="&quot;CargoSplitRequestStatusQuery&quot;"
-    QueryGroupCode="&quot;7f60&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.CargoSplitRequestStatus&quot;"
-    QuerySection="&quot;Customs.CargoSplitRequestStatus&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CargoSplitRequestStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;7f60&quot;"
+    QueryGroupName="&quot;Customs.CargoSplitRequestStatus Query Group&quot;"
+    TextCode="&quot;CargoSplitRequestStatusQuery&quot;"
+    TextCodeCode="&quot;CargoSplitRequestStatus.Q.CargoSplitRequestStatus&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CargoSplitRequestStatus.Q.CargoSplitRequestStatus&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CargoSplitRequestStatus.Features.CargoSplitRequestStatus&quot;"
+    FeatureDefaultText="&quot;CargoSplitRequestStatus&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CargoSplitRequestStatus&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CargoSplitRequestStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoSplitRequestStatus&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CargoSplitRequestStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoSplitRequestStatus&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CargoSplitRequestStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoSplitRequestStatus&quot;"
         IndexOrder="3"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CargoSplitRequestStatus&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -451,10 +462,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CargoSplitRequestStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -464,10 +476,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CargoSplitRequestStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -475,6 +488,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

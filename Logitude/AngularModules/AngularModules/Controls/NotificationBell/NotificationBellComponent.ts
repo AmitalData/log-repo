@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 @Component({
     selector: 'NotificationBellComponent',
-    moduleId: module.id,
+    
     templateUrl: './NotificationBellComponent.html',
 })
 
@@ -38,12 +38,12 @@ export class NotificationBellComponent {
     DataContext = this;
     PreventSelect: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
-        entityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe(response => {
-            entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
-                entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
-                    entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                        entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
-                            entityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
+        entityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response:any) => {
+            entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+                entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+                    entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                        entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
+                            entityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
 
                                 this.IsVisibile = true;
                                 this.GetOpenNotificationsCount();
@@ -58,7 +58,7 @@ export class NotificationBellComponent {
     GetNotifications() {
         this.ItemsSource = [];
         this.Notifications = [];
-        this.notificationExtendedListService.GetGetTopTenNotifications(SessionInfo.LoggedUserId).subscribe(response => {
+        this.notificationExtendedListService.GetGetTopTenNotifications(SessionInfo.LoggedUserId).subscribe((response:any) => {
 
 
             if (response) {
@@ -66,7 +66,7 @@ export class NotificationBellComponent {
                     this.Notifications = response.Result;
                     this.BuildList();
 
-                    this.notificationExtendedListService.PutNotificationBadjCount(new NotificationPM()).subscribe(response => {
+                    this.notificationExtendedListService.PutNotificationBadjCount(new NotificationPM()).subscribe((response:any) => {
 
 
                     });
@@ -92,7 +92,7 @@ export class NotificationBellComponent {
     count: number;
 
     GetOpenNotificationsCount() {
-        this.notificationExtendedListService.GetOpenNotificationsCount(SessionInfo.LoggedUserId).subscribe(response => {
+        this.notificationExtendedListService.GetOpenNotificationsCount(SessionInfo.LoggedUserId).subscribe((response:any) => {
 
 
             if (response) {
@@ -323,10 +323,10 @@ export class NotificationBellComponent {
                                 case "8211U":
 
                                     {
-                                        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
-                                                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
+                                        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                                                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
+                                                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
 
 
                                                         this.customsCollateralPMService.get(selected.EntityId).subscribe((response: any) => {
@@ -476,7 +476,7 @@ export class NotificationBellComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
 
@@ -578,7 +578,7 @@ export class NotificationBellLine {
         this.Parent.ParentComponent.IsControlVisibile = true;
         this.entity.IsClosedByAssignee = true;
         this.Parent.BuildList();
-        this.notificationExtendedListService.PutNotificationsStatus(this.entity).subscribe(response => {
+        this.notificationExtendedListService.PutNotificationsStatus(this.entity).subscribe((response:any) => {
             if (response) {
                 if (!response.HasError) {
                     this.Parent.PreventSelect = false;

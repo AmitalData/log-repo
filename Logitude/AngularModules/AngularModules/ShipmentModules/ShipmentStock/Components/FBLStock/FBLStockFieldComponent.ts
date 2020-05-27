@@ -1,21 +1,14 @@
 
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool} from '../../../../infrastructure/Tools';
-import {TextCodeTranslator} from '../../../../infrastructure/Utilities/TextCodeTranslator';
-import {ObjectFieldPM} from '../../../../infrastructure/EntityPMs/ObjectFieldPM';
-import {ObjectTablePM} from '../../../../infrastructure/EntityPMs/ObjectTablePM';
-import {ApiQueryFilters, FilterItem} from '../../../../infrastructure/DataContracts/ApiQueryFilters';
-import {EntityResourceService} from '../../../../infrastructure/Services/EntityResourceService';
-import {EntityListService} from '../../../../infrastructure/Services/EntityListService';
-import {ServiceResponse} from '../../../../infrastructure/DataContracts/ServiceResponse';
-import {Observable} from 'rxjs/Observable';
+import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GetStackWindowArgs} from '../../../../Common/Args';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'FBLStockFieldComponent',
     templateUrl: './FBLStockFieldComponent.html',
 })

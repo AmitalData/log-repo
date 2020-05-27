@@ -22,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UsingAzure).IsRequired();
             this.Property(t => t.IsLogEnabled).IsRequired();
             this.Property(t => t.ChampEnv).IsRequired().HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.TotangoServiceId).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.StorageAccountName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageType).IsRequired().HasMaxLength(60).IsUnicode(false);
@@ -66,10 +66,14 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OceanInsightsToken).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.ReleaseNotesURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CPUIntensiveWebServicesURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIPassword).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIPassword).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.QBOClientID).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.TMPersonalAccessToken).HasMaxLength(100).IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -116,12 +120,14 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion");
             this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain");
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR");
-            this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");
             this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL");
             this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL");
             this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
             this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
             this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
+            this.Property(t => t.QBOOAuthDefault).HasColumnName("QBOOAuthDefault");
+            this.Property(t => t.QBOClientID).HasColumnName("QBOClientID");
+            this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret");
 
 
 
@@ -148,10 +154,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.INTTRAProdFTPHost).HasColumnName("INTTRAProdFTPHost");
             this.Property(t => t.INTTRATestFTPHost).HasColumnName("INTTRATestFTPHost");
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken");
-            this.Property(t => t.IsFullBuildDWRunning).HasColumnName("IsFullBuildDWRunning");
-            this.Property(t => t.IsIncrementalDWRunning).HasColumnName("IsIncrementalDWRunning");
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
+            this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken");
         }
     }
 }

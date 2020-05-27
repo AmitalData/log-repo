@@ -44,7 +44,7 @@
             <table>
                 <tr>
                     <!--Left Side-->
-                    <td style="width:400px;">
+                    <td style="width:500px;">
                         <table>
                             <tr style="height:200px;">
                                 <td>
@@ -82,10 +82,10 @@
                                                                                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                                                                                         <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
                                                                                             <table style="width:100%">
-                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromAirlineAreas; let i = index">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromCarrierAreas; let i = index">
                                                                                                     <td style="width:22px">
                                                                                                         <div style="width:22px">
-                                                                                                           <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>                                                                                                            
+                                                                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td style="width:5px"></td>
@@ -203,7 +203,7 @@
                                                                                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                                                                                         <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
                                                                                             <table style="width:100%">
-                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToAirlineAreas; let i = index">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToCarrierAreas; let i = index">
                                                                                                     <td style="width:22px">
                                                                                                         <div style="width:22px">
                                                                                                             <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'To')"></CheckBox>
@@ -311,21 +311,61 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr>
+                                                        <tr style="height:28px;" *ngIf="TypeCode != 'OFS'">
                                                             <td>
-                                                                <ScrollViewer>
-                                                                    <table style="margin:5px;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:120px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:90px; text-align:center" class="Label">
+                                                                            Price
+                                                                        </td>
+
+                                                                        <td style="width:1px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:90px; text-align:center" class="Label">
+                                                                            Min Price
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr *ngIf="TypeCode != 'OFS'">
+                                                            <td>
+                                                                <table class="FixedTable">
+                                                                    <ScrollViewer>
                                                                         <tr class="FormFieldRow" *ngFor="let item of TariffChargesObsList">
-                                                                            <td style="width:30px;">
+                                                                            <td style="width:5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width:20px;">
                                                                                 <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
                                                                             </td>
 
-                                                                            <td style="width:100px;">
+                                                                            <td style="width:95px;">
                                                                                 <LogLabel [ObjectFieldName]="'NewPrice'" [DataContext]="item.DataContext" [Text]="item.DisplayText"></LogLabel>
                                                                             </td>
 
-                                                                            <td style="width:180px;">
+                                                                            <td style="width:90px;">
                                                                                 <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
+                                                                            </td>
+
+                                                                            <td style="width:1px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width:90px;">
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="item.MinPricePlaceHolder" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewMinPrice'" [Text]="item.NewMinPrice" [DataContext]="item.DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td>
@@ -338,8 +378,83 @@
                                                                                 <div></div>
                                                                             </td>
                                                                         </tr>
-                                                                    </table>
-                                                                </ScrollViewer>
+                                                                    </ScrollViewer>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr *ngIf="TypeCode == 'OFS'">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="MediaFill">
+                                                                                <div class="SimpleGridView">
+                                                                                    <div class="SimpleGridViewHeader">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 25px; min-width: 25px; max-width: 25px; text-align:center;"></td>
+                                                                                                <td style="width: 85px; min-width: 85px; max-width: 85px; text-align:center;">Surcharge</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container1Visibility">{{FatherComponent.Container1Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container2Visibility">{{FatherComponent.Container2Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container3Visibility">{{FatherComponent.Container3Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container4Visibility">{{FatherComponent.Container4Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container5Visibility">{{FatherComponent.Container5Label}}</td>
+                                                                                                <td class="LastChild">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+
+                                                                                    <div class="SimpleGridViewBody">
+                                                                                        <table>
+                                                                                            <tr class="SimpleGridViewRow" *ngFor="let item of ContainerPricesItemsSource">
+                                                                                                <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                                                    <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
+                                                                                                </td>
+
+                                                                                                <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px; color:#6E7172">
+                                                                                                    {{item.ChargeLabel}}
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container1Visibility">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price1'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container2Visibility">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price2'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container3Visibility">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price3'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container4Visibility">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price4'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container5Visibility">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price5'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td colspan="8">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -397,26 +512,87 @@
                                             <tr>
                                                 <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
                                                     <div class="MediaFill">
-                                                        <div class="SimpleGridView">
-                                                            <div class="SimpleGridViewHeader">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
-                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">From</td>
-                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">To</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Start Date</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Surcharges</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Logs">
+                                                            <log-column [width]="'20'" [header]="'#'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            {{item.Index}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
 
-                                                            <div class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs"></tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                                            <log-column [width]="'90'" [header]="'From'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.From}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'90'" [header]="'To'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.To}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'100'" [header]="'Start Date'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.StartDate| DateTimeToDatePipe}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'150'" [header]="'Surcharges'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.Surcharges}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'100'" [header]="'Lines Updated'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            {{item.LinesUpdated}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'60'" [header]="'Manual'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            <img *ngIf="item.UpdateMethodCode == 'MA'" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'100'" [header]="'Create Date'">
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.CreateDate| DateTimePipe: 'DT'}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
+                                                            </log-column>
+                                                        </logitude-edit-grid>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -120,10 +120,17 @@ namespace WebFreight.Web.DataProviders
         public string AgentPhoneNumber { get; set; }
         public string AgentContactName { get; set; }
         public int NumberOfHBLs { get; set; }
-
+        public string TenantVATNumber { get; set; }
+        public string AgentVATNumber { get; set; }
+        public string FreightPC { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public string ChargeableWeight { get; set; }
+        public string AgentContactEmail { get; set; }
+        public string TrailerNumber { get; set; }
+        public string ProjectNumber { get; set; }
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
         #endregion
-
-
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
@@ -132,6 +139,7 @@ namespace WebFreight.Web.DataProviders
 
     public class ManifestDetailsClass
     {
+        public string AMSBL { get; set; }
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
         public string ShipperName { get; set; }        
@@ -224,12 +232,17 @@ namespace WebFreight.Web.DataProviders
         public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
         public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
         public string ITNumber { get; set; } //(from the house\customs tab ) 
-
+        public string QuoteNumberConnectedToHouse { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrency { get; set; }
+        public string ShipperRefernce1 { get; set; }
+        public string PlaceOfReceipt { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
     }
 
     public class NewManifestDetailsClass
     {
+        public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
         public string ShipperName { get; set; }
@@ -250,6 +263,7 @@ namespace WebFreight.Web.DataProviders
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
+        public string PlaceOfReceipt { get; set; }
 
         public int? Quantity { get; set; }
         public double? Volume { get; set; }
@@ -327,7 +341,10 @@ namespace WebFreight.Web.DataProviders
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
-
+        public string QuoteNumberConnectedToHouse { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrency { get; set; }
+        public string ShipperRefernce1 { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
 
         //public string MarksAndNumbers { get; set; }  //new
@@ -351,6 +368,8 @@ namespace WebFreight.Web.DataProviders
         public string Reference4 { get; set; }
         public string CommodityNumber { get; set; }
         public string Notes { get; set; }
+        public string Harmonize { get; set; }
+        public double? Tare { get; set; }
     }
 
     public class GroupedContainersClass

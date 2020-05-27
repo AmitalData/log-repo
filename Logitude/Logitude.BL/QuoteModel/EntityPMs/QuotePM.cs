@@ -317,6 +317,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
 
+        public string ExternalEntityNumber { get; set; }
         public string TransitTime { get; set; }
         public string DepartureFrequency { get; set; }
         public DateTime? ETD { get; set; }
@@ -393,8 +394,35 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
 
+        public string QuoteHTMLDocumentId { get; set; }
+        public string QuoteVersion { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field11 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field12 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field13 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field14 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field15 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field16 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field17 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field18 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field19 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field20 { get; set; }
+
+        public string CountryForStatisticsId { get; set; }
 
         private List<QuoteChargePM> quoteCharges;
         [Include]
@@ -491,6 +519,29 @@ namespace Logitude.BL.QuoteModel.EntityPMs
             }
         }
 
+        private List<QuoteSaleChargePM> quotationSaleCharges;
+        public List<QuoteSaleChargePM> QuotationSaleCharges
+        {
+            get
+            {
+                if (quotationSaleCharges == null)
+                {
+                    quotationSaleCharges = new List<QuoteSaleChargePM>();
+                }
+
+                return quotationSaleCharges;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    quotationSaleCharges = value;
+                }
+            }
+        }
+
+
         private List<QuoteSaleChargePM> quoteSaleCharges;
         public List<QuoteSaleChargePM> QuoteSaleCharges
         {
@@ -514,6 +565,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         }
 
         public bool MarkFollowUpsAsDone { get; set; }
+        public bool IsCopyExchangeRates { get; set; }
 
         private List<QuotePackagePM> quotePackagePM;
         [Include]
@@ -609,5 +661,15 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 }
             }
         }
+
+
+        public DateTime? RequestDate { get; set; }
+
+        public bool IsCreatedFromTicket { get; set; }
+        public DateTime? TicketCreateDate { get; set; }
+        public double? EstimatedProfitInLocal { get; set; }
+        public double? EstimatedProfitInProfit { get; set; }
+        public string ProfitCurrencyId { get; set; }
+        public double? ProfitExchangeRate { get; set; }
     }
 }

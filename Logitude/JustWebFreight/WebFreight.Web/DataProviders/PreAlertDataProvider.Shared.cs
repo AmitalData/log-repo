@@ -52,6 +52,7 @@ namespace WebFreight.Web.DataProviders
         public string GeneralDescriptionOfGoods { get; set; }
         public string Transshipment1Vessel { get; set; }
         public string Transshipment1CarrierNumber { get; set; }
+        public string Transshipment1CarrierName { get; set; }
         public string Transshipment1ToPortName { get; set; }
         public string Transshipment1ToPortCode { get; set; }
         public string Transshipment1ETA { get; set; }
@@ -72,7 +73,9 @@ namespace WebFreight.Web.DataProviders
         public string CuttOffTime { get; set; }
 
         public List<Packages> PackagesList { get; set; }
-        
+        public List<PayableLine> PayablesList { get; set; }
+        public List<PickUpDeliveryLine> PickUpsList { get; set; }
+        public List<PickUpDeliveryLine> DeliveriesList { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string IncotermCode { get; set; }
@@ -175,6 +178,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNotes { get; set; }
         public string InvoicesNumbers { get; set; } //It should show the number of the invoices connected to receivables separated by commas like 10001, 1002. If there is only one invoice, it should display as 1000
         public string CustomerPrimaryContactName { get; set; }
+        public string CustomerName { get; set; }
         public string AgentName { get; set; }
         public string AgentPrimaryContactName { get; set; }        
         public int? TotalQuantity { get; set; } //  It must display the total number of packages in a certain shipment.
@@ -183,12 +187,20 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transshipment2ETD_DateTime { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
 
+        public DateTime? MainCarriageETA_DateTime { get; set; }
+        public DateTime? Transshipment1ETA_DateTime { get; set; }
+        public DateTime? Transshipment2ETA_DateTime { get; set; }
+        public DateTime? Transshipment3ETD_DateTime { get; set; }
+        public DateTime? Transshipment3ETA_DateTime { get; set; }
+
+
         public string ReleasingAgentName { get; set; }
         public string ReleasingAgentAddress { get; set; }
 
         public string BranchAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
         public string PickUpAddress { get; set; }
+        public string PlaceOfReceiptCountryName { get; set; }
 
         public DateTime? OBLDate { get; set; }
         public DateTime? CutOffDate_DateTime { get; set; }
@@ -209,6 +221,8 @@ namespace WebFreight.Web.DataProviders
 
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
 
+        public string OriginCountryName { get; set; }
+
         // Warehouse Fields 
         public string WarehouseLegTerminalName { get; set; }
         public string WarehouseLegAddress { get; set; }
@@ -224,6 +238,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? WarehouseLegReleaseDate { get; set; }
         public string ProjectNumber { get; set; }
         public string BookingConfirmationNumber { get; set; }
+        public string Salesman { get; set; }
+        public string SpecialServicesType { get; set; }
     }
 
     public class Packages
@@ -241,6 +257,8 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string CommodityNumber { get; set; }
+        public int? NumberOfInsidePackages { get; set; }
+        public string ContainerNumber { get; set; }
     }
 
     public class PreAlertManifestDetails
@@ -275,7 +293,7 @@ namespace WebFreight.Web.DataProviders
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
-
+        public string Salesman { get; set; }
 
     }
 }

@@ -50,7 +50,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
         [HttpGet]
-        public HttpResponseMessage GetExternalAutomaticReconcilationsByFilter(bool amountReconcile, bool referenceReconcile, bool refDateReconcile, string bankAccountId, string glAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetExternalAutomaticReconcilationsByFilter(
+            bool amountReconcile,
+            bool referenceReconcile,
+            bool refDateReconcile,
+            string objectTableId,
+            string entityId,
+            string glAccountId,
+            [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -225,7 +232,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 var automaticExternalReconcileService = new AutomaticExternalReconcileService();
                 AutoSelectedExternalReconciliationLines resultedArray = automaticExternalReconcileService
                     .AutomaticExternalReconcile(amountReconcile, referenceReconcile, refDateReconcile,
-                    bankAccountId, glAccountId, queryOperationsTrans, queryOperationsBankLine, tenant);
+                    objectTableId, entityId, glAccountId, queryOperationsTrans, queryOperationsBankLine, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = resultedArray;

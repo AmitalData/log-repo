@@ -34,7 +34,9 @@
   Name="&quot;Customs.Deposit Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;7eb6f375-fecf-419c-baad-abd0b150a8ee&quot;"
     FieldName="&quot;Id&quot;"
@@ -75,7 +77,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -123,7 +125,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1968,21 +1970,93 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
+    <EventType
+      Code="&quot;DPR&quot;"
+      ObjectTableName="&quot;Customs.Deposit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;בקשת מכס לפיקדון&quot;"
+      EnglishName="&quot;Deposit Customs Request&quot;"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;DRE&quot;"
+      ObjectTableName="&quot;Customs.Deposit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;החזר פיקדון&quot;"
+      EnglishName="&quot;Deposit Refund&quot;"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;DFO&quot;"
+      ObjectTableName="&quot;Customs.Deposit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;חילוט פיקדון&quot;"
+      EnglishName="&quot;Deposit Forfiet&quot;"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;DPN&quot;"
+      ObjectTableName="&quot;Customs.Deposit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;הודעה על פתיחת תיק פיקדון&quot;"
+      EnglishName="&quot;Custom Despoit Notice&quot;"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.Deposit&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.Deposit&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

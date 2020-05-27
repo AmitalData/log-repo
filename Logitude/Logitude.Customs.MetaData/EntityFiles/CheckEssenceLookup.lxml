@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מהות בדיקה&quot;"
   DefaultText="&quot;CheckEssenceLookup&quot;"
-  Code="&quot;9c1e&quot;"
-  Name="&quot;Customs.CheckEssenceLookup Query Group&quot;"
+  Code="&quot;CEQG&quot;"
+  Name="&quot;Customs.CheckEssenceLookup&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e2746854-4fa8-41f8-a8ab-e1a4a1f50616&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CheckEssenceLookup&quot;"
+    ObjectTableName="&quot;Customs.CheckEssenceLookup&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CheckEssenceLookup&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CEQG&quot;"
+    QueryGroupName="&quot;Customs.CheckEssenceLookup&quot;"
+    LocalTextCode="&quot;מהות בדיקה&quot;"
+    TextCode="&quot;Check Essence Lookup&quot;"
+    TextCodeCode="&quot;Customs.CheckEssenceLookup.Q.CheckEssenceLookupQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CHECKESSENCELOOKUP&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CheckEssenceLookup.Features.CheckEssenceLookup&quot;"
+    FeatureDefaultText="&quot;Check Essence Lookup&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CheckEssenceLookup&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CheckEssenceLookup&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CheckEssenceLookup&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CheckEssenceLookup&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CheckEssenceLookup&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CheckEssenceLookup&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

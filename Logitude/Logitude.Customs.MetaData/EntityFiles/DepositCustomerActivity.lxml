@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;פקדון פעילות הלקוח&quot;"
   DefaultText="&quot;Deposit Customer Activity&quot;"
-  Code="&quot;140a&quot;"
-  Name="&quot;Customs.DepositCustomerActivity Query Group&quot;"
+  Code="&quot;DCQG&quot;"
+  Name="&quot;Customs.DepositCustomerActivity&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d1395d2a-2c73-41e2-8656-3105f8cd0f8e&quot;"
     FieldName="&quot;Code&quot;"
@@ -300,21 +302,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;DepositCustomerActivity&quot;"
+    ObjectTableName="&quot;Customs.DepositCustomerActivity&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.DepositCustomerActivity&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;DCQG&quot;"
+    QueryGroupName="&quot;Customs.DepositCustomerActivity&quot;"
+    LocalTextCode="&quot;פקדון פעילות הלקוח&quot;"
+    TextCode="&quot;Deposit Customer Activity&quot;"
+    TextCodeCode="&quot;Customs.DepositCustomerActivity.Q.DepositCustomerActivityQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;DEPOSITCUSTOMER&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.DepositCustomerActivity.Features.DepositCustomerActivity&quot;"
+    FeatureDefaultText="&quot;Deposit Customer Activity&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;DepositCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;DepositCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;DepositCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;DepositCustomerActivity&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.DepositCustomerActivity&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.DepositCustomerActivity&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AuditAutomationTabComponent',
     templateUrl: './AuditAutomationTabComponent.html',
     inputs: ['ObjectTableName','EntityId'],
@@ -63,7 +63,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             var table = window.ObjectTables.filter(d => d.Name == this.ObjectTableName)[0];
             if (table) {
                 this.ObjectTableId = table.Id;
@@ -83,7 +83,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         this.AutomationList = [];
         this.ChangeFieldsList = [];
 
-        this._entityChangeExtendedPMService.getEntityChangePMsByEntityIdAndObjectTable(this.EntityId, this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._entityChangeExtendedPMService.getEntityChangePMsByEntityIdAndObjectTable(this.EntityId, this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             this.IsConditionAll = true;
@@ -115,7 +115,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         this.AutomationList = [];
         this.ChangeFieldsList = [];
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this._entityChangeExtendedPMService.getEntityChangeAutomationsSummaryByEntityChangeId(this.EntityChangeListSelected.Id, this.ObjectTableName, SessionLocator.Tenant).subscribe(res => {
+        this._entityChangeExtendedPMService.getEntityChangeAutomationsSummaryByEntityChangeId(this.EntityChangeListSelected.Id, this.ObjectTableName, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {

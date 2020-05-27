@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAddressComponent.html',
 })
 

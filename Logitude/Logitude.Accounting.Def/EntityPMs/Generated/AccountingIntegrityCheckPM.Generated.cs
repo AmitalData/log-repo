@@ -296,6 +296,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool shouldFix ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ShouldFix  
+	   {
+	    
+	     get
+		{
+		   return shouldFix;
+		 }
+		 set
+		 {
+		   if(shouldFix != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShouldFix",OldValue=shouldFix,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   shouldFix=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

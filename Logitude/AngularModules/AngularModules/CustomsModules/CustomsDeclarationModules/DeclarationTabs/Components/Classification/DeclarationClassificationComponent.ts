@@ -2,44 +2,32 @@ declare var window;
 import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
-import { ItemCodeComponent } from '../../../../../Customsmodules/Customsdeclarationmodules/Declarationsupplierinvoice/Components/Supplierinvoices/SupplierInvoiceGeneralTabComponent';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
 import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
-import { GITITEMDto } from '../../../../../Customs/EntityPMs/Extended/GITITEMDto';
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationClassificationComponent.html',
 })
 //
@@ -71,15 +59,15 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
-                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
+                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
 
                                             this.EntityPM = this.entityArgs.EntityPM;
                                             this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -581,7 +569,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     DocumentFilingId: string;
     GetDocumentFilingId(InvoiceCounterKey) {
         console.log(" --->> Getting related document filing ...");
-        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe((response:any) => {
             console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
             var result = response.Result;
             if (result) {
@@ -853,7 +841,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });
@@ -930,7 +918,7 @@ export class AddEditSupplierInvoiceDUMMY {
   //                myGITITEMPM.NAMEENG = item.ItemDescription;
   //                myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
 
-  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
+  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
   //                    var mm: ServiceResponse = myResult;
   //                    if (!mm.HasError) {
   //                        //this.entity = mm.Result;

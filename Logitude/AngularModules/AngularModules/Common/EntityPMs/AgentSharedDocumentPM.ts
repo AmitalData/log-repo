@@ -14,7 +14,6 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-import {DocumentSL} from '../../Common/DataContracts/DocumentSL';
 
 export class AgentSharedDocumentPM {
 
@@ -71,16 +70,16 @@ export class AgentSharedDocumentPM {
     public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
-    private documentSL: DocumentSL;
-    public get DocumentSL() { return this.documentSL; }
-    public set DocumentSL(newValue: DocumentSL) { if (this.documentSL != newValue) { this.documentSL = newValue; this.MarkAsDirty("DocumentSL"); } }
-
     private agentSharedManifestRef: string;
     public get AgentSharedManifestRef() { return this.agentSharedManifestRef; }
     public set AgentSharedManifestRef(newValue: string) { if (this.agentSharedManifestRef != newValue) { this.agentSharedManifestRef = newValue; this.MarkAsDirty("AgentSharedManifestRef"); } }
-    
-
-
+       
+	 
+    private documentSL: any;
+    public get DocumentSL() { return this.documentSL; }
+    public set DocumentSL(newValue: any) { if (this.documentSL != newValue) { this.documentSL = newValue; this.MarkAsDirty("DocumentSL"); } }
+       
+	 
 
     public OldEntityPM: AgentSharedDocumentPM;
 		

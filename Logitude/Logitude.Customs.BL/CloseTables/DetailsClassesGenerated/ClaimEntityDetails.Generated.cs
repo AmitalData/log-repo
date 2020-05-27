@@ -20,17 +20,61 @@ namespace Logitude.Customs.BL
    {
        public List<ClaimEntityDetails> GetAll()
        {
-		    var all = new List<ClaimEntityDetails>(); 
+		    var all = new List<ClaimEntityDetails>();  
+            all.Add(new ClaimEntityDetails()
+            {    
+                Code = "1039", 
+                SearchFields = "1039,הוראת תשלום", 
+                Inactive = false, 
+                LocalName = "הוראת תשלום", 
+			});
+			 
+            all.Add(new ClaimEntityDetails()
+            {    
+                Code = "1055", 
+                SearchFields = "1055,הצהרת יבוא", 
+                Inactive = false, 
+                LocalName = "הצהרת יבוא", 
+			});
+			 
+            all.Add(new ClaimEntityDetails()
+            {    
+                Code = "11122", 
+                SearchFields = "11122,תיק גרעון מוביל", 
+                Inactive = false, 
+                LocalName = "תיק גרעון מוביל", 
+			});
+			 
+            all.Add(new ClaimEntityDetails()
+            {    
+                Code = "11147", 
+                SearchFields = "11147,תנועת חישוב הישבון", 
+                Inactive = false, 
+                LocalName = "תנועת חישוב הישבון", 
+			});
+			 
+            all.Add(new ClaimEntityDetails()
+            {    
+                Code = "12338", 
+                SearchFields = "12338,הוראת תשלום פיקטיבית", 
+                Inactive = false, 
+                LocalName = "הוראת תשלום פיקטיבית", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ClaimEntity newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ClaimEntity rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

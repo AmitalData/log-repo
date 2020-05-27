@@ -1,3 +1,5 @@
+import { FullAccountingSettingPM } from './../../EntityPMs/FullAccountingSettingPM';
+import { FullAccountingSettingPMService } from './../../Services/StandardPMs/FullAccountingSettingPMService';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -234,6 +236,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
 
 
 
@@ -279,7 +282,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
             }
-            this.AutomaticReconcileId = this.GLAccountPM.AutomaticReconcileId;
+            if(this.GLAccountPM.AutomaticReconcileId)
+                this.AutomaticReconcileId = this.GLAccountPM.AutomaticReconcileId;
+            else{
+                this.SetDefaultReconcileMethodFromAccountingSettings();
+            }
             this.SetUIProperty();
             this.openAmountCurrency = args.openAmountCurrency;
             this.originalAmountCurrency = args.originalAmountCurrency;
@@ -299,6 +306,26 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.BuildColumns();
         //this.ColumnsReady.emit("");
+    }
+
+    SetDefaultReconcileMethodFromAccountingSettings(){
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) =>
+        {
+            var myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
+
+            if (myResponse != null) {
+
+                var res = myResponse.Result;
+                var fullAccountingSetting: FullAccountingSettingPM = res;
+
+                if(fullAccountingSetting){
+                    this.AutomaticReconcileId = fullAccountingSetting.AutomaticReconcileMethodId;
+                }
+
+            }
+
+        });
     }
 
     //#region Properties
@@ -439,14 +466,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInSelectedLines"));
         }
 
-        //multiple payment check
-        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
-        if (paymentsCount > 1)
-        {
-            errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
-            this.ValidationErrorsList = errors;
-            return;
-        }
+        // //multiple payment check
+        // var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "5" ).length;
+        // if (paymentsCount > 1)
+        // {
+        //     errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
+        //     this.ValidationErrorsList = errors;
+        //     return;
+        // }
 
 
         this.ValidationErrorsList = errors;
@@ -538,7 +565,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             m3 = this.AutomaticReconcileMethodList.AutomaticReconcile3;
         }
 
-        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe(myResult => {
+        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;
@@ -577,17 +604,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.SelectedLines.Length > 0) {
 
             // 1- prepare transactions
-            var transactionsList = [];
+            var transactionsIds = [];
             this.SelectedLines.Collection.forEach((lineModel: LineModel) => {
                 var transaction = lineModel.LedgerTransactionPM;
                 //transaction.Mark = !transaction.Mark; // the service will take this misson
 
-                transactionsList.push(transaction);
+                transactionsIds.push(transaction.Id);
             });
 
             // 2- call the service
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
+            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsIds).subscribe((serviceResponse: ServiceResponse) => {
                 console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
                 this.CurrentSession.StopBusyIndicator();
 
@@ -688,7 +715,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '105px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'AccountingDate'
         });
         this.columns.push({
             FieldName: 'DocumentDate',
@@ -697,7 +726,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DocumentDate'
         });
         this.columns.push({
             FieldName: 'DueDate',
@@ -706,7 +737,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DueDate'
         });
         this.columns.push({
             FieldName: 'Source',
@@ -715,14 +748,18 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Source'
         });
         //this.columns.push({
         //    FieldName: 'SourceType',
         //    DataTypeCode: 'String',
         //    Display: 'Source Type',
         //    Styles: { width: '113px' },
-        //    IsCustomTemplate: true
+        //    IsCustomTemplate: true,
+            // ServerSideSortable: true,
+            // SortByName: 'AccountingDate'
         //});
         this.columns.push({ // Check ReconcileMethodCode.GLAccounts:
             FieldName: 'OriginalAmount',
@@ -733,13 +770,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'OriginalAmount',
         });
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
         //    DataTypeCode: 'String',
         //    Display: 'Open Amount Currency',
         //    Styles: { width: '120px' },
-        //    IsCustomTemplate: true
+        //    IsCustomTemplate: true,
+            // ServerSideSortable: true,
+            // SortByName: 'AccountingDate'
         //});
         this.columns.push({
             FieldName: 'OpenAmount',
@@ -749,28 +790,36 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '114px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'OpenAmount'
         });
         this.columns.push({
             FieldName: 'Reference1',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
             Styles: { width: '90px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference1'
         });
         this.columns.push({
             FieldName: 'Reference2',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
             Styles: { width: '90px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference2'
         });
         this.columns.push({
             FieldName: 'Reference3',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
             Styles: { width: '90px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'Reference3'
         });
         this.columns.push({
             FieldName: 'JournalNumber',
@@ -779,17 +828,21 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             Styles: { width: '80px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'JournalNumber'
         });
 
         this.columns.push({
             FieldName: 'Notes',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Notes"), // 'Notes',
-            Styles: { width: '77px' },
+            Styles: { width: '350px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            // ServerSideSortable: true,
+            // SortByName: 'Notes'
         });
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
@@ -819,7 +872,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     GetIndicatorText(transaction)
     {
         var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+        if ((transaction['LocalAmountDebit'] > 0 && transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction)) || (transaction['LocalAmountCredit'] > 0 && transaction['OpenAmount'] != -1 * this.CalculateOriginalAmount(transaction)))
             return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
         else
             return showLocal ? 'סכום פתוח ' : 'Open transaction';
@@ -848,6 +901,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         //} else {
         //    return;
         //}
+
+
         if (this.currencyFilter) {
             filters.AdditionalFilters.push(this.currencyFilter);
         }
@@ -863,9 +918,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.GetAll = true;
         filters.GetCount = true;
 
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+
         //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
 
         return this._entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.GLAccountPM.Id, filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
+    }
+
+    OnSortInvoked(event){
+        this.SelectedLines = new ObservableCollection([]);
     }
 
     PushLine(row, RowIndex) {
@@ -934,9 +996,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         for (let line of this.SelectedLines.Collection) {
 
             if (line.AmountToReconcile < 0)
-                this.TotalDebit += +line.AmountToReconcile * -1; //cast number
+                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
             else
-                this.TotalCredit += +line.AmountToReconcile;
+                this.TotalDebit += +line.AmountToReconcile;
 
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
@@ -984,7 +1046,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         return newEntity;
     }
     SubmitChanges(entity) {
-        this._ReconciliationExtendedPMService.insert(entity).subscribe(myResult => {
+        this._ReconciliationExtendedPMService.insert(entity).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var _callback:RecoCallback = mm.Result;
@@ -1041,73 +1103,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         // Type:    SourceTypeCode
         // Id:      SourceId
         // Display: SourceNumber
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(sourceTypeCode);
 
-        var tableName = "Journal";
-
-        switch (sourceTypeCode) {
-
-            // 1-Journal
-            case '1': {
-                tableName = "Journal";
-                break;
-            }
-
-            // 2-ARInvoice
-            case '2': {
-                tableName = "ARInvoice";
-                break;
-            }
-
-            // 3-ARPayment
-            case '3': {
-                tableName = "ARPayment";
-
-                break;
-            }
-
-            // 4-APInvoice
-            case '4': {
-                tableName = "APInvoice";
-
-                break;
-            }
-
-            // 5-APPayment
-            case '5': {
-                tableName = "APPayment";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case '6': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case '7': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case '8': {
-                tableName = "Revaluation";
-
-                break;
-            }
-
-            // 9-PaymentCheque
-            case '9': {
-                tableName = "PaymentCheque";
-
-                break;
-            }
-
-        }
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {

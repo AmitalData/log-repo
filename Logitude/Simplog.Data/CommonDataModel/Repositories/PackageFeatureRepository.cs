@@ -38,7 +38,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.PackageCode == packageCode && a.FeatureId == featureId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-        
+
+        public PackageFeature GetSinglePackageFeatureByPackageAndFeatureUCode(string packageCode, string featureUniqeCode, int tenant)
+        {
+            return (from a in context.PackageFeatures
+                    where a.PackageCode == packageCode && a.FeatureUniqeCode == featureUniqeCode && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
         public IQueryable<PackageFeature> GetPackageFeaturesByTenant(int tenant)
         {
             return (from a in context.PackageFeatures

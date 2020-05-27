@@ -33,7 +33,7 @@ import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM'
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ActivityInputTemplate.html',
 })
 
@@ -45,7 +45,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
     public Durations: ActivtyDuration[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor() {
         super();
         this.entityPM = new ActivityPM();
@@ -125,7 +125,6 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         this.GetDueDateObjectField();
         this.GetDescriptionFlowDirection();
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
         this.RefreshDescriptionTextAlgimentVariables();
 
         if ((this.TypeCode == "EO" || this.TypeCode == "EI") && this.OnEditModeVisibility == true) {
@@ -299,7 +298,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -580,7 +579,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
             }
             else {
                 var listService: UserListService = new UserListService();
-                listService.getSingleFromCache(value).subscribe(result => {
+                listService.getSingleFromCache(value).subscribe((result:any) => {
                     var list: UserList = result.Result;
                     if (list != null)
                         this.entityPM.BusinessUnitId = list.BusinessUnitId;
@@ -656,7 +655,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         var myContactId: string = null;
         if (!AppTool.IsNullOrEmpty(value)) {
             var cardService: CardListService = new CardListService();
-            cardService.getSingle(value).subscribe(result => {
+            cardService.getSingle(value).subscribe((result:any) => {
                 var card: CardList = result.Result;
                 if (card != null) {
                     this.CustomerName = card.EnglishName;
@@ -893,34 +892,14 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         this.MeetingSummaryFlowDirection = myResult;
     }
 
-    public MeetingSummaryBackgroundAlignLeft = "transparent";
-    public MeetingSummaryBackgroundAlignRight = "transparent";
-    private GetMeetingSummaryBackgroundAlignLeft() {
-        if (!AppTool.IsNullOrEmpty(this.MeetingSummaryFlowDirection)) {
-            this.MeetingSummaryBackgroundAlignLeft = this.MeetingSummaryFlowDirection == "ltr" ? "#FDD59D" : "transparent";
-        }
-    }
-    private GetMeetingSummaryBackgroundAlignRight() {
-        if (!AppTool.IsNullOrEmpty(this.MeetingSummaryFlowDirection)) {
-            this.MeetingSummaryBackgroundAlignRight = this.MeetingSummaryFlowDirection == "rtl" ? "#FDD59D" : "transparent";
-        }
-    }
-
     public AlignMeetingSummaryLeftClicked() {
         this.entityPM.MeetingSummaryRightToLeft = false;
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
     }
 
     public AlignMeetingSummaryRightClicked() {
         this.entityPM.MeetingSummaryRightToLeft = true;
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
-    }
-
-    private RefreshTextAlgimentVariables() {
-        this.GetMeetingSummaryBackgroundAlignLeft();
-        this.GetMeetingSummaryBackgroundAlignRight();
     }
 
     get DescriptionRightToLeft() { return this.entityPM.DescriptionRightToLeft; }
@@ -1191,7 +1170,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         });
     }
     AddCustomerClicked() {
-        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe((response:any) => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = "New Potential Customer";
             var logWindow = new LogitudeWindow();

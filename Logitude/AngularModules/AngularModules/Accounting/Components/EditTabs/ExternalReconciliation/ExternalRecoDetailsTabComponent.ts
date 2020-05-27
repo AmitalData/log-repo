@@ -41,7 +41,7 @@ import {ReconcileExternalPageExtendedListService} from '../../../Services/Extend
 import {CurrencyPMService} from '../../../../Common/Services/StandardPMs/CurrencyPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExternalRecoDetailsTabComponent.html',
 })
 
@@ -94,7 +94,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             this.ledgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.Result) {
                     var result = serviceResponse.Result;
-                    var transaction = result.Result; // get the data
+                    var transaction = result; // get the data
                     this.openAmountCurrency = transaction ? transaction.CurrencyCode : "";
                     this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
                     this.bankAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -103,7 +103,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             });
         }
         else {
-            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult) => {
+            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult:any) => {
                 var currency = myResult.Result;
                 this.openAmountCurrency = currency ? currency.Code : "";
                 this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -144,7 +144,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
     }
     GetBankLines(bankPageLinesIds, transactionsLinesIds) {
-        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult) => {
+        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:ServiceResponse) => {
             var result = myResult.Result;
             var list = result.Result;
 
@@ -176,9 +176,9 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         // 2- get ledger transactions lines
         if (transactionsLinesIds.length > 0) {
-            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult) => {
+            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult: ServiceResponse) => {
                 var result = myResult.Result;
-                var list = result.Result;
+                var list = result;
 
                 // Incapsulate transactions
                 var transactionsItems: TransactionLineModel[] = [];
@@ -232,73 +232,8 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
         // Type:    SourceTypeCode
         // Id:      SourceId
         // Display: SourceNumber
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(type);
 
-        var tableName = "Journal";
-
-        switch (type) {
-
-            // 1-Journal
-            case '1': {
-                tableName = "Journal";
-                break;
-            }
-
-            // 2-ARInvoice
-            case '2': {
-                tableName = "ARInvoice";
-                break;
-            }
-
-            // 3-ARPayment
-            case '3': {
-                tableName = "ARPayment";
-
-                break;
-            }
-
-            // 4-APInvoice
-            case '4': {
-                tableName = "APInvoice";
-
-                break;
-            }
-
-            // 5-APPayment
-            case '5': {
-                tableName = "APPayment";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case '6': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case '7': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case '8': {
-                tableName = "Revaluation";
-
-                break;
-            }
-
-            // 9-PaymentCheque
-            case '9': {
-                tableName = "PaymentCheque";
-
-                break;
-            }
-
-        }
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {

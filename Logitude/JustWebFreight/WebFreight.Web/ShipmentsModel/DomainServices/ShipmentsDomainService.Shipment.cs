@@ -90,6 +90,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
             bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
             bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
+            bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
 
             string loggedUserEmail = ServiceContext.User.Identity.Name;
             string loggedContactId = null;
@@ -102,7 +103,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             shipmentQuery = new ShipmentQuery(tenant);
 
-            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
+            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
 
             return myResult;
         }
@@ -343,6 +344,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              OperationalDate = f.OperationalDate,
                              CutoffDate = f.CutoffDate,
                              NumberOfHouses = f.NumberOfHouses,
+                             WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
+                             LastFinalDestination = f.LastFinalDestination,
+                             EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                          };
 
             query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
@@ -411,7 +415,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 ContactTenantPM contactTenant = contactTenantsRepository.GetContactTenantForUser(contact.Id, tenant);
                 List<RestrictionPM> restrictions = restrictionQuery.GetResitrictionsByObjectTableAndContact(contactTenant.Id, objectTable.Id, tenant).ToList();
                 var query = from restriction in restrictions
-                            group restriction by restriction.ObjectFieldId into objectTableGroup
+                            group restriction by restriction.ObjectFieldCode into objectTableGroup
                             select new
                             {
                                 key = objectTableGroup.Key,
@@ -538,7 +542,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-                                                       CutoffDate = myShipment.CutoffDate,
+                         
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -626,6 +630,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
+                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,
@@ -1383,7 +1388,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-                                                       CutoffDate = myShipment.CutoffDate,
+                                                    
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -1474,6 +1479,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
+                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,

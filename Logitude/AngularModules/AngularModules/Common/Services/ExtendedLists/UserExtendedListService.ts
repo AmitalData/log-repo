@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse} from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -10,10 +11,10 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 @Injectable()
 
 export class UserExtendedListService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/userextended';
     }
 
@@ -50,12 +51,10 @@ export class UserExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var serviceResponse: ServiceResponse = response.body ;
+                
 
                 var _mappedListsArray: Array<UserExtendedList> = [];
                 if (serviceResponse.Result) {
@@ -73,7 +72,7 @@ export class UserExtendedListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -96,16 +95,16 @@ export class UserExtendedListService {
 
         var url = this._apiUrl + '/GetUserLicensesCountForUser?userId=' + userId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 }
@@ -121,7 +120,9 @@ export class UserExtendedList {
     public Email: string;
     public AdditionalPackagesOnly: boolean;
     public SearchFields: string;
-    
+    public InActive: boolean;
+
+    public PackageCode0: string;
     public PackageCode1: string;
     public PackageCode2: string;
     public PackageCode3: string;
@@ -133,6 +134,7 @@ export class UserExtendedList {
     public PackageCode9: string;
     public PackageCode10: string;
 
+    public IsChecked0: boolean;
     public IsChecked1: boolean;
     public IsChecked2: boolean;
     public IsChecked3: boolean;

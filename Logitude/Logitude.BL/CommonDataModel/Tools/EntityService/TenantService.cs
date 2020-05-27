@@ -19,6 +19,8 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -27,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Tenant Poco { get; set; }
-
+        public LogBoxTenantSetting LBtenantsettingPoco { get; set; }
         //public int Tenant
         //{
         //    get { return tenant; }
@@ -43,11 +45,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private TenantPM entityPM;
         private ICommonDataContext objectContext;
         private TenantRepository entityRepository;
+        private LogBoxTenantSettingPM LBTenantSettingentityPM;
+        private LogBoxTenantSettingRepository LBsettingentityRepository;
         public TenantService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new TenantRepository(objectContext);
+            this.LBsettingentityRepository = new LogBoxTenantSettingRepository(objectContext);
         }
 
         public void Create(TenantPM theEntityPm)
@@ -55,7 +60,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-
             
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -64,11 +68,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 scope.Complete();
             }
 
+            PackageRepository packageRepository = new PackageRepository(0);
+            List<Package> packages = packageRepository.GetPackages().ToList();
+
+            string packageCode = "BUSN";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 SettingRepository settingRepository = new SettingRepository();
                 Setting setting = settingRepository.GetSingleSetting("1");
-                string packageCode = "BUSN";
+                
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -79,7 +87,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
+                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();                
+
                 GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
                 GlobalTenant globalTenant = new GlobalTenant()
@@ -106,8 +115,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     PackageCode = packageCode,
                     NumberOfUsers = 1,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",                   
+                    AWBMessagesCCSTypeCode = "CHAMP",                        
                 };
+
+                Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                if (tenantPackage != null)
+                {
+                    tenantManagement.PackageName = tenantPackage.Name;
+                }
 
                 if (packageCode == "IMPO")
                 {
@@ -121,16 +136,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     tenantManagement.TenantTypeCode = "FOR";
                     tenantManagement.Technology = "AG";
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
-                }            
-
+                }
+                
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
+
+                
                 scope.Complete();
             }
 
             this.Poco = new Tenant();
             this.Poco.Id = this.entityPM.Id;
-
+            this.LBtenantsettingPoco = new LogBoxTenantSetting();
+            this.LBtenantsettingPoco.Id = this.entityPM.Id;
             this.InitializeComponent();
 
             TenantValidating.Validate(theEntityPm);
@@ -139,13 +157,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             AesFunction aesFunction = new AesFunction();
             Poco.StorageEncryptionKey = aesFunction.GenerateAesKey();
-
-
+            
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            CreateDWHSettings();
+            LBsettingentityRepository.Add(LBtenantsettingPoco);
+            LBsettingentityRepository.SubmitChanges();
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository();
+            //    TenantManagementLicense tenantManagementLicense = new TenantManagementLicense()
+            //    {
+            //        Id = IdCounter.GetNumber("TenantManagementLicense", Poco.Id),
+            //        Tenant = Poco.Id,
+            //        NumberOfUsers = 1,
+            //        PackageCode = packageCode,
+            //    };
+            //    tenantManagementLicenseRepository.Add(tenantManagementLicense);
+            //    tenantManagementLicenseRepository.SubmitChanges();
 
+            //    scope.Complete();
+            //}
+
+            CreateDWHSettings();
         }
         public void Update(TenantPM theEntityPm)
         {
@@ -162,6 +196,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
+            this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
+            this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
+            LBsettingentityRepository.Update(this.LBtenantsettingPoco);
+            LBsettingentityRepository.SubmitChanges();
         }
 
         private void InitializeComponent()

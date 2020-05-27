@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מקור רישום הליקוי&quot;"
   DefaultText="&quot;Procedural Fault Input Process Type&quot;"
-  Code="&quot;8146&quot;"
-  Name="&quot;Customs.ProceduralFaultInProcessType Query Group&quot;"
+  Code="&quot;FPQG&quot;"
+  Name="&quot;Customs.ProceduralFaultInProcessType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;1a4246f1-5655-4abd-bae9-823fa3fb113f&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ProceduralFaultInProcessType&quot;"
+    ObjectTableName="&quot;Customs.ProceduralFaultInProcessType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ProceduralFaultInProcessType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;FPQG&quot;"
+    QueryGroupName="&quot;Customs.ProceduralFaultInProcessType&quot;"
+    LocalTextCode="&quot;מקור רישום הליקוי&quot;"
+    TextCode="&quot;Procedural Fault Input Process Type&quot;"
+    TextCodeCode="&quot;Customs.ProceduralFaultInProcessType.Q.InputProcessTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PROCEDURALFAULTINPUTPROCESS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ProceduralFaultInProcessType.Features.ProceduralFaultInProcessType&quot;"
+    FeatureDefaultText="&quot;Procedural Fault Input Process Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ProceduralFaultInProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ProceduralFaultInProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ProceduralFaultInProcessType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ProceduralFaultInProcessType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ProceduralFaultInProcessType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ProceduralFaultInProcessType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -1,10 +1,7 @@
-/// <reference path="../../../infrastructure/datacontracts/serviceresponse.ts" />
-
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-//import 'rxjs/add/operator/map';
-//import Rx from 'rxjs/Rx';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ViewResponse} from '../../../Infrastructure/DataContracts/ViewResponse';
@@ -15,11 +12,11 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 export class HybridPartnerExtendedListService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private _serviceArgs: ServiceArgs;
 	private CachedData: Array<HybridPartnerList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/HybridPartnerExtendedList';  
     }
 
@@ -31,42 +28,13 @@ export class HybridPartnerExtendedListService {
   //  }
     
 
-    GetHybridPartnerLists(tenant : number) {
-	   var authHeader = new Headers();
-       authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-       return Observable.defer(() => {
-           return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
-
-              var allLists = response.json();
-              var _mappedListsArray: Array<HybridPartnerList> = [];
-		      if(allLists)
-			  {
-				for (var key in  allLists) {
-				
-				   var entity: HybridPartnerList;
-                   entity = this.MapJsonToEntityList(allLists[key]);
-				   _mappedListsArray.push(entity);
-
-				 }
-               }
-                return _mappedListsArray;
-            });
-        }
-
-        );
-    }
-
-    GetHybridPartnerListWithNoRequest(tenant: number) {
+    GetHybridPartnerLists(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<HybridPartnerList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -78,7 +46,30 @@ export class HybridPartnerExtendedListService {
                     }
                 }
                 return _mappedListsArray;
-            });
+            }));
+        }
+
+        );
+    }
+
+    GetHybridPartnerListWithNoRequest(tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var allLists = response;
+                var _mappedListsArray: Array<HybridPartnerList> = [];
+                if (allLists) {
+                    for (var key in allLists) {
+                        var entity: HybridPartnerList;
+                        entity = this.MapJsonToEntityList(allLists[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+                return _mappedListsArray;
+            }));
         }
 
         );
@@ -86,21 +77,17 @@ export class HybridPartnerExtendedListService {
 
 
 
-
     GetAllowdHybridPartnerLists(hybridPartnerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId, {
-                headers: authHeader
-            }).map(response => {
-
-                var allLists = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;
                 return pmresponse;
-            });
+            }));
         }
 
         );
@@ -109,21 +96,16 @@ export class HybridPartnerExtendedListService {
     GetAllowingHybridPartnerLists(hybridPartnerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAllowingHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetAllowingHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;
 
-
-
-
                 return pmresponse;
-            });
+            }));
         }
 
         );

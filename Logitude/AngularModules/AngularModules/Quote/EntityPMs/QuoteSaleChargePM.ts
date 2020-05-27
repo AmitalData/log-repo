@@ -370,6 +370,26 @@ export class QuoteSaleChargePM {
     public set ContainerType5MarkUpText(newValue: string) { if (this.containerType5MarkUpText != newValue) { this.containerType5MarkUpText = newValue; this.MarkAsDirty("ContainerType5MarkUpText"); } }
        
 	 
+    private chargesGroupViewOrder: number;
+    public get ChargesGroupViewOrder() { return this.chargesGroupViewOrder; }
+    public set ChargesGroupViewOrder(newValue: number) { if (this.chargesGroupViewOrder != newValue) { this.chargesGroupViewOrder = newValue; this.MarkAsDirty("ChargesGroupViewOrder"); } }
+       
+	 
+    private chargesTypeViewOrder: number;
+    public get ChargesTypeViewOrder() { return this.chargesTypeViewOrder; }
+    public set ChargesTypeViewOrder(newValue: number) { if (this.chargesTypeViewOrder != newValue) { this.chargesTypeViewOrder = newValue; this.MarkAsDirty("ChargesTypeViewOrder"); } }
+       
+	 
+    private chargesGroupName: string;
+    public get ChargesGroupName() { return this.chargesGroupName; }
+    public set ChargesGroupName(newValue: string) { if (this.chargesGroupName != newValue) { this.chargesGroupName = newValue; this.MarkAsDirty("ChargesGroupName"); } }
+       
+	 
+    private isChargeBySteps: boolean;
+    public get IsChargeBySteps() { return this.isChargeBySteps; }
+    public set IsChargeBySteps(newValue: boolean) { if (this.isChargeBySteps != newValue) { this.isChargeBySteps = newValue; this.MarkAsDirty("IsChargeBySteps"); } }
+       
+	 
 
     public OldEntityPM: QuoteSaleChargePM;
 		

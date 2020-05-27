@@ -22,7 +22,7 @@ import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewConnectedGLAccountComponent.html',
 
 })
@@ -47,7 +47,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
 
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
@@ -121,7 +121,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                           if (response.Result) 
                               {
 
-                                  this.accountPM.AccountTypeCode = "2";
+                                  this.accountPM.AccountTypeCode = this.entityPM.AccountTypeCode;
                                   this.accountPM.DisplayNumber = this.entityPM.DisplayNumber + "\\" + this.CurrencyCode;
                                   this.accountPM.LocalName = this.entityPM.LocalName + "\\" + this.CurrencyCode;
                                   this.accountPM.EnglishName = this.entityPM.EnglishName + "\\" + this.CurrencyCode;

@@ -122,6 +122,31 @@ export class APPaymentPM {
     public set AccountingPaymentMethodId(newValue: string) { if (this.accountingPaymentMethodId != newValue) { this.accountingPaymentMethodId = newValue; this.MarkAsDirty("AccountingPaymentMethodId"); } }
        
 	 
+    private vendorBankAddress: string;
+    public get VendorBankAddress() { return this.vendorBankAddress; }
+    public set VendorBankAddress(newValue: string) { if (this.vendorBankAddress != newValue) { this.vendorBankAddress = newValue; this.MarkAsDirty("VendorBankAddress"); } }
+       
+	 
+    private vendorBankName: string;
+    public get VendorBankName() { return this.vendorBankName; }
+    public set VendorBankName(newValue: string) { if (this.vendorBankName != newValue) { this.vendorBankName = newValue; this.MarkAsDirty("VendorBankName"); } }
+       
+	 
+    private vendorBankAccountNumber: string;
+    public get VendorBankAccountNumber() { return this.vendorBankAccountNumber; }
+    public set VendorBankAccountNumber(newValue: string) { if (this.vendorBankAccountNumber != newValue) { this.vendorBankAccountNumber = newValue; this.MarkAsDirty("VendorBankAccountNumber"); } }
+       
+	 
+    private vendorSwift: string;
+    public get VendorSwift() { return this.vendorSwift; }
+    public set VendorSwift(newValue: string) { if (this.vendorSwift != newValue) { this.vendorSwift = newValue; this.MarkAsDirty("VendorSwift"); } }
+       
+	 
+    private vendorIBANNumber: string;
+    public get VendorIBANNumber() { return this.vendorIBANNumber; }
+    public set VendorIBANNumber(newValue: string) { if (this.vendorIBANNumber != newValue) { this.vendorIBANNumber = newValue; this.MarkAsDirty("VendorIBANNumber"); } }
+       
+	 
     private vendorId: string;
     public get VendorId() { return this.vendorId; }
     public set VendorId(newValue: string) { if (this.vendorId != newValue) { this.vendorId = newValue; this.MarkAsDirty("VendorId"); } }
@@ -227,6 +252,11 @@ export class APPaymentPM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
+    private vendorLocalName: string;
+    public get VendorLocalName() { return this.vendorLocalName; }
+    public set VendorLocalName(newValue: string) { if (this.vendorLocalName != newValue) { this.vendorLocalName = newValue; this.MarkAsDirty("VendorLocalName"); } }
+       
+	 
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
@@ -245,6 +275,11 @@ export class APPaymentPM {
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
+       
+	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
     private updateDate: Date;
@@ -358,14 +393,124 @@ export class APPaymentPM {
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
 	 
-    private branchName: string;
-    public get BranchName() { return this.branchName; }
-    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
-       
-	 
     private automaticPaymentCheque: boolean;
     public get AutomaticPaymentCheque() { return this.automaticPaymentCheque; }
     public set AutomaticPaymentCheque(newValue: boolean) { if (this.automaticPaymentCheque != newValue) { this.automaticPaymentCheque = newValue; this.MarkAsDirty("AutomaticPaymentCheque"); } }
+       
+	 
+    private paymentChequeCreationPayToName: string;
+    public get PaymentChequeCreationPayToName() { return this.paymentChequeCreationPayToName; }
+    public set PaymentChequeCreationPayToName(newValue: string) { if (this.paymentChequeCreationPayToName != newValue) { this.paymentChequeCreationPayToName = newValue; this.MarkAsDirty("PaymentChequeCreationPayToName"); } }
+       
+	 
+    private paymentChequeCreationNotes: string;
+    public get PaymentChequeCreationNotes() { return this.paymentChequeCreationNotes; }
+    public set PaymentChequeCreationNotes(newValue: string) { if (this.paymentChequeCreationNotes != newValue) { this.paymentChequeCreationNotes = newValue; this.MarkAsDirty("PaymentChequeCreationNotes"); } }
+       
+	 
+    private excludeFromDeductionReport: boolean;
+    public get ExcludeFromDeductionReport() { return this.excludeFromDeductionReport; }
+    public set ExcludeFromDeductionReport(newValue: boolean) { if (this.excludeFromDeductionReport != newValue) { this.excludeFromDeductionReport = newValue; this.MarkAsDirty("ExcludeFromDeductionReport"); } }
+       
+	 
+    private vendorGLAccountId: string;
+    public get VendorGLAccountId() { return this.vendorGLAccountId; }
+    public set VendorGLAccountId(newValue: string) { if (this.vendorGLAccountId != newValue) { this.vendorGLAccountId = newValue; this.MarkAsDirty("VendorGLAccountId"); } }
+       
+	 
+    private journalId: string;
+    public get JournalId() { return this.journalId; }
+    public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
+       
+	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private accountingCancelationDate: Date;
+    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
+    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
+       
+	 
+    private dontIncludeInDeductionReport: boolean;
+    public get DontIncludeInDeductionReport() { return this.dontIncludeInDeductionReport; }
+    public set DontIncludeInDeductionReport(newValue: boolean) { if (this.dontIncludeInDeductionReport != newValue) { this.dontIncludeInDeductionReport = newValue; this.MarkAsDirty("DontIncludeInDeductionReport"); } }
+       
+	 
+    private cancelationNotes: string;
+    public get CancelationNotes() { return this.cancelationNotes; }
+    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
+       
+	 
+    private field1: CustomFieldClass;
+    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "APPayment");} return this.field1; }
+    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+       
+	 
+    private field2: CustomFieldClass;
+    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "APPayment");} return this.field2; }
+    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+       
+	 
+    private field3: CustomFieldClass;
+    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "APPayment");} return this.field3; }
+    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+       
+	 
+    private field4: CustomFieldClass;
+    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "APPayment");} return this.field4; }
+    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+       
+	 
+    private field5: CustomFieldClass;
+    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "APPayment");} return this.field5; }
+    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+       
+	 
+    private field6: CustomFieldClass;
+    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "APPayment");} return this.field6; }
+    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+       
+	 
+    private field7: CustomFieldClass;
+    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "APPayment");} return this.field7; }
+    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+       
+	 
+    private field8: CustomFieldClass;
+    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "APPayment");} return this.field8; }
+    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+       
+	 
+    private field9: CustomFieldClass;
+    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "APPayment");} return this.field9; }
+    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+       
+	 
+    private field10: CustomFieldClass;
+    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "APPayment");} return this.field10; }
+    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
+    private externalPaymentAmount: number;
+    public get ExternalPaymentAmount() { return this.externalPaymentAmount; }
+    public set ExternalPaymentAmount(newValue: number) { if (this.externalPaymentAmount != newValue) { this.externalPaymentAmount = newValue; this.MarkAsDirty("ExternalPaymentAmount"); } }
+       
+	 
+    private externalPaymentDate: Date;
+    public get ExternalPaymentDate() { return this.externalPaymentDate; }
+    public set ExternalPaymentDate(newValue: Date) { if (this.externalPaymentDate != newValue) { this.externalPaymentDate = newValue; this.MarkAsDirty("ExternalPaymentDate"); } }
+       
+	 
+    private externalPaymentNotes: string;
+    public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
+    public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
        
 	 
 

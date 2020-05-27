@@ -1,40 +1,30 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
+
 
 export class InboundEmailWebService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InboundEmailWebService';
     }
 
-    SendInboundEmailAsync(Recepient: string, Tenant: number, Subject: string, Body:string, entityId: string){
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+    SendInboundEmailAsync(Recepient: string, Tenant: number, Subject: string, Body: string, entityId: string) {
         var url = this._apiUrl + '/GetMessageResult?recepient=' + Recepient + '&tenant=' + Tenant + '&subject=' + Subject + '&body=' + Body + '&entityId=' + entityId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var mappedResult = response.json();
-                //if (myJsonResult) {
-                //    var jsonListKeys = Object.keys(myJsonResult);
-                //    for (var key in jsonListKeys) {
-                //        var property = jsonListKeys[key];
-                //        mappedResult[property] = myJsonResult[property];
-                //    }
-                //}
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var mappedResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
+
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

@@ -36,7 +36,7 @@ import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/Controls
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { SupplierInvoiceItemPM } from '../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSplitComponent.html',
 })
 
@@ -348,7 +348,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName = documentFiling.DocumentId;

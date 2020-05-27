@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class HybridPartnerUpdateClass
-   {  
+   {  		
+		public const string HashString = "7cf7967d309e2b84f072543fdff5594a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,68 +84,203 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "HybridPartner",
+			      				    IsNew =  false,
 			      				    DBTableName =  "HybridPartners",
+			      				    OldDBTableName =  "HybridPartners",
 			      				    ObjectTableSingular =  "Hybrid Partner",
 			      				    ObjectTablePlural =  "Hybrid Partners",
-			      				    DefaultText =  "Hybrid Partner",
-			      				    Name =  "HybridPartners",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
-			      				    NewWizardControlName =  "Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand",
 			      				    LookUp1 =  "Name",
 			      				    LookUp2 =  "LocalName",
-			      				    HasCustomFilter =  false,
+			      				    CodeField =  "Name",
+			      				    NameField =  "Name",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "HybridPartner,HybridPartners,Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  true,
-			      				    IsEditable =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    CodeField =  "Code",
-			      				    NameField =  "Name",
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand",
+			      				    DefaultText =  "Hybrid Partner",
+			      				    Code =  "CTHP",
+			      				    Name =  "HybridPartners",
+			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/NewHybridPartnerComponent",
-			      				    Code =  "CTHP",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  true,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "HybridPartner,HybridPartners,Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand,Id,",
+			      				    HashString =  HybridPartnerUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
+					  						ObjectTableName =  "HybridPartner",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "HybridPartner",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "SearchFields",
+					  						FullLocalDefaultText =  "SearchFields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "SearchFields",
+					  						ListLocalDefaultText =  "SearchFields",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "HybridPartner",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "HybridPartner",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "Tenant",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Tenant",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Name",
+					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "HybridPartner",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -155,58 +291,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Name",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  "Name",
+					  						FullLocalDefaultText =  "שם",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
+					  						ListLocalDefaultText =  "שם",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
-					  						Code =  "Name",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
-					  						FullLocalDefaultText =  "שם",
-					  						ListLocalDefaultText =  "שם",
-					  						HelpLocalDefaultText =  "שם",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "HybridPartner",
-					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  25,
-					  						IsCustom =  false,
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -217,55 +357,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
 					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  1,
-					  						DisplayInSearchWindowFiltersIndex =  1,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "LocalName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  1,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
-					  						FullFieldLable =  "Local Name",
+					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Local Name",
-					  						Code =  "LocalName",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PartnerTenant",
+					  						OldFieldName =  "PartnerTenant",
 					  						ObjectTableName =  "HybridPartner",
 					  						FieldsDataType =  "Integer",
-					  						DataTypeCode =  "Integer",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -276,56 +421,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PartnerTenant",
 					  						ListPropertyPath =  "PartnerTenant",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "HybridPartner",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "HybridPartner",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PartnerTenant",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "PartnerTenant",
 					  						DefaultText =  "Partner Tenant",
 					  						ListFieldLable =  "PartnerTenantListLable",
 					  						ListLableDefaultText =  "Partner Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PartnerTenant",
-					  						Code =  "PartnerTenant",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsMislakaActivated",
+					  						OldFieldName =  "IsMislakaActivated",
 					  						ObjectTableName =  "HybridPartner",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "IsMislakaActivated",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -336,54 +486,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "IsMislakaActivated",
 					  						ListPropertyPath =  "IsMislakaActivated",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "IsMislakaActivated",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "IsMislakaActivated",
 					  						DefaultText =  "Is Mislaka Activated",
 					  						ListFieldLable =  "IsMislakaActivatedListLable",
 					  						ListLableDefaultText =  "IsMislakaActivated",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "IsMislakaActivated",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HypridPartnerId",
+					  						OldFieldName =  "HypridPartnerId",
 					  						ObjectTableName =  "HybridPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TenantManagmentPrivateLabels",
-					  						Code =  "HypridPartnerId",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -394,71 +551,105 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "HypridPartnerId",
 					  						ListPropertyPath =  "HypridPartnerId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "HypridPartnerId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "HypridPartnerId",
+					  						DefaultText =  "Hyprid Partner",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "HypridPartnerId",
-					  						DefaultText =  "Hyprid Partner",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "HypridPartnerId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup HybridPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTHP", Name = "HybridPartners" }, queryGroupRepository);
+	        QueryGroup HybridPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTHP", Name = "HybridPartners" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup HybridPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9700", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable HybridPartnerObjectTable = objectTables.ContainsKey("HybridPartner") ? objectTables["HybridPartner"] : null;
+            if (HybridPartnerObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable HybridPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> HybridPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "HybridPartner").ToList();   
+                HybridPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode HybridPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = @"Hybrid Partner",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HYBRIDPARTNERS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.HybridPartners", NameTextCodeDefaultText = "HybridPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode HybridPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = @"Hybrid Partner",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature HybridPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HYBRIDPARTNERS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.HybridPartners", NameTextCodeDefaultText = "HybridPartners", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,HybridPartnerObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, ObjectTableName = "HybridPartner", Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 0, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "HybridPartner.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 1, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "HybridPartner.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id, IndexOrder = 2, ObjectFieldId = HybridPartnerObjectFields.Where(d => d.FieldName == "PartnerTenant" && d.ObjectTableId == HybridPartnerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "HybridPartner.PartnerTenant" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> HybridPartnerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "HybridPartner").ToList();
+		       
+	      
+
+	         Screen HybridPartnerHybridPartnerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HybridPartner.HeaderScreen", Name = "HybridPartnerHeaderScreen", ObjectTableId = HybridPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    HybridPartnerObjectTable.HeaderScreenId = HybridPartnerHybridPartnerHeaderScreenScreen0.Id;
+		    HybridPartnerObjectTable.HeaderScreenCode = HybridPartnerHybridPartnerHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -468,19 +659,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode HybridPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature HybridPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,HybridPartnerObjectTable);
  
                  
 			   TextCode HybridPartnerPermissionsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.Permissions", DefaultText = "Permissions",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerPermissionsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature HybridPartnerPermissionsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,HybridPartnerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPGT",HtmlComponentName = "HybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerTabComponent", FeatureId = HybridPartnerGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.HybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPGT",HtmlComponentName = "HybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerTabComponent", FeatureId = HybridPartnerGeneralFeature_TH0.Id,FeatureUniqeCode = HybridPartnerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.HybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerGeneralTextCode_TH0.Id, TabNameTextCodeCode = HybridPartnerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPPE",HtmlComponentName = "PermissionsHybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/PermissionsHybridPartnerTabComponent", FeatureId = HybridPartnerPermissionsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.PermissionsHybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerPermissionsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "HPPE",HtmlComponentName = "PermissionsHybridPartnerTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/PermissionsHybridPartnerTabComponent", FeatureId = HybridPartnerPermissionsFeature_TH1.Id,FeatureUniqeCode = HybridPartnerPermissionsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.HybridPartner.PermissionsHybridPartnerTabControl", ObjectTableId = HybridPartnerObjectTable.Id, TabNameTextCodeId = HybridPartnerPermissionsTextCode_TH1.Id, TabNameTextCodeCode = HybridPartnerPermissionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -488,16 +679,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature HybridPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.PackageFeature", NameTextCodeDefaultText = "HybridPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature HybridPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.PackageFeature", NameTextCodeDefaultText = "HybridPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = HybridPartnerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = HybridPartnerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

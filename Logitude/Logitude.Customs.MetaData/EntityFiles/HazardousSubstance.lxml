@@ -65,7 +65,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;1d5d976c-f765-4109-a284-53da8d994aa2&quot;"
     FieldName="&quot;Code&quot;"
@@ -430,41 +432,50 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
   <Query
     Code="&quot;HazardousSubstanceQ&quot;"
-    TextCode="&quot;Hazardous Substance Query&quot;"
-    LocalTextCode="&quot;Hazardous Substance Query&quot;"
-    QueryGroupCode="&quot;cee3&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.HazardousSubstance&quot;"
-    QuerySection="&quot;Customs.HazardousSubstance&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Ascending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.HazardousSubstance&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;cee3&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    LocalTextCode="&quot;Hazardous Substance Query&quot;"
+    TextCode="&quot;Hazardous Substance Query&quot;"
+    TextCodeCode="&quot;HazardousSubstance.Q.HazardousSubstanceQ&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;HazardousSubstance.Q.HazardousSubstanceQ&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;HazardousSubstance.Features.HazardousSubstanceQ&quot;"
+    FeatureDefaultText="&quot;HazardousSubstanceQ&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;HazardousSubstanceQ&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;HazardousSubstanceQ&quot;" />
       <QueryColumn
-        QueryCode="&quot;HazardousSubstanceQ&quot;"
         IndexOrder="1"
+        ColumnWidth="200"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="200" />
+        QueryCode="&quot;HazardousSubstanceQ&quot;" />
       <QueryColumn
-        QueryCode="&quot;HazardousSubstanceQ&quot;"
         IndexOrder="2"
+        ColumnWidth="200"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="200" />
+        QueryCode="&quot;HazardousSubstanceQ&quot;" />
       <QueryColumn
-        QueryCode="&quot;HazardousSubstanceQ&quot;"
         IndexOrder="3"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;HazardousSubstanceQ&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -472,10 +483,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.HazardousSubstance&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -485,10 +497,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.HazardousSubstance&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -496,8 +509,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

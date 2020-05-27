@@ -37,8 +37,8 @@
   NewWizardControlName="&quot;Logitude.Customs.Views.NewCustomBankControlCommand&quot;"
   LocalDefaultText="&quot;בנקים סוכן / יבואן&quot;"
   DefaultText="&quot;Custom Bank&quot;"
-  Code="&quot;4226&quot;"
-  Name="&quot;Customs.CustomBank Query Group&quot;"
+  Code="&quot;CSBK&quot;"
+  Name="&quot;Customs.CustomBank&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -48,7 +48,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;890d8f36-0af6-4fb8-adf3-845e7ce9923f&quot;"
     FieldName="&quot;Id&quot;"
@@ -92,7 +94,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -145,7 +147,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -1206,22 +1208,237 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <Tab
+    Code="&quot;CBGN&quot;"
+    ObjectTableName="&quot;Customs.CustomBank&quot;"
+    IndexOrder="0"
+    TextCode="&quot;Customs.CustomBank.TH.General&quot;"
+    ControlPath="&quot; &quot;"
+    TabLocalName="&quot;כללי&quot;"
+    TabName="&quot;General&quot;"
+    IsSpellChecked="false"
+    IsPackagable="False"
+    FeatureCode="&quot;GENERAL&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomBank.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
+  <Tab
+    Code="&quot;CBEV&quot;"
+    ObjectTableName="&quot;Customs.CustomBank&quot;"
+    IndexOrder="1"
+    TextCode="&quot;Customs.CustomBank.TH.Events&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    TabName="&quot;Events&quot;"
+    IsSpellChecked="false"
+    IsPackagable="False"
+    FeatureCode="&quot;EVENTS&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomBank.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;" />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CustomBank.O.Required&quot;"
+      DefaultText="&quot;Related Client value is required&quot;"
+      LocalDefaultText="&quot;ערך לקוח קשור נדרש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomBank.O.Exist&quot;"
+      DefaultText="&quot;Sorry you can't choose an existing client&quot;"
+      LocalDefaultText="&quot;לא ניתן לבחור קוד לקוח קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomBank.O.BankNotConnectedToCustomer&quot;"
+      DefaultText="&quot;This bank is not connected to this customer&quot;"
+      LocalDefaultText="&quot;בנק זה לא מקושר ללקוח - לא ניתן לבחור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomBank.O.InternalCodekAlreadyExist&quot;"
+      DefaultText="&quot;This internal code already exists&quot;"
+      LocalDefaultText="&quot;קוד פנימי זה כבר קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomBanks&quot;"
+    ObjectTableName="&quot;Customs.CustomBank&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;CustomBanks&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CSBK&quot;"
+    QueryGroupName="&quot;Customs.CustomBank&quot;"
+    LocalTextCode="&quot;בנקים מותאמים אישית&quot;"
+    TextCode="&quot;Custom Banks&quot;"
+    TextCodeCode="&quot;Customs.CustomBank.Q.CustomBankQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMBANKS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomBank.Features.CustomBanks&quot;"
+    FeatureDefaultText="&quot;Custom Banks&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;InternalCode&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;BankName&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;BranchName&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;AccountNumber&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;PayerTypeName&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;BankAddress&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ClientBank&quot;"
+        QueryCode="&quot;CustomBanks&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;Customs.CustomBank.HeaderScreen&quot;"
+    Name="&quot;Header Screen&quot;"
+    ObjectTableName="&quot;Customs.CustomBank&quot;"
+    IsHeaderScreen="true"
+    IsReadOnly="true"
+    NumberOfRows="1"
+    NumberOfColumns="3">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;InternalCode&quot;"
+        ScreenName="Customs.CustomBank.HeaderScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;BankCode&quot;"
+        ScreenName="Customs.CustomBank.HeaderScreen"
+        Row="0"
+        Column="1" />
+      <ScreenField
+        ObjectFieldName="&quot;BranchCode&quot;"
+        ScreenName="Customs.CustomBank.HeaderScreen"
+        Row="0"
+        Column="2" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Code="&quot;Customs.CustomBank.GeneralTabScreen&quot;"
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;Customs.CustomBank&quot;"
+    IsHeaderScreen="false"
+    IsReadOnly="false"
+    NumberOfRows="6"
+    NumberOfColumns="2">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;InternalCode&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;BankCode&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="1"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;BranchCode&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="2"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;AccountNumber&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="3"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="4"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;InActive&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="0"
+        Column="1" />
+      <ScreenField
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="1"
+        Column="1" />
+      <ScreenField
+        ObjectFieldName="&quot;PayerTypeCode&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="2"
+        Column="1" />
+      <ScreenField
+        ObjectFieldName="&quot;BankAddress&quot;"
+        ScreenName="Customs.CustomBank.GeneralTabScreen"
+        Row="3"
+        Column="1" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomBank&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomBank&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

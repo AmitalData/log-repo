@@ -15,13 +15,13 @@ import { ExceptionReasonPMService } from '../../../../Customs/Services/StandardP
 import { ExceptionReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/ExceptionReasonExtendedListService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AddExceptionReasonToUnifreightStatusComponent.html',
 })
 
-export class AddExceptionReasonToUnifreightStatusComponent
-    extends BaseComponent
-    implements OnInit {
+export class AddExceptionReasonToUnifreightStatusComponent extends BaseComponent implements OnInit {
+  public Code: any;
+  public FooterMethods: any;
+
 
     public DataContext: AddExceptionReasonToUnifreightStatusComponent = this;
     public ObjectTableName: string = "Customs.ExceptionReason";
@@ -54,7 +54,7 @@ export class AddExceptionReasonToUnifreightStatusComponent
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                this._ExceptionReasonExtendedListService.GetExceptionReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
+                this._ExceptionReasonExtendedListService.GetExceptionReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe((response:any) => {
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     var ExceptionReasonResult: ExceptionReasonPM[] = response.Result;
                     this.BuildExceptionReason(ExceptionReasonResult);
@@ -118,7 +118,7 @@ export class AddExceptionReasonToUnifreightStatusComponent
         if (this.DeleteExceptionReasonList != null) {
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.DeleteExceptionReasonList.Collection.forEach((deleteItem: ExceptionReasonLineComponent) => {
-                this._ExceptionReasonExtendedListService.DeleteExceptionReasonByUnifreightStatus(deleteItem.Code).subscribe(response => {
+                this._ExceptionReasonExtendedListService.DeleteExceptionReasonByUnifreightStatus(deleteItem.Code).subscribe((response:any) => {
                     if (response.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(response.ErrorsArray[0]);

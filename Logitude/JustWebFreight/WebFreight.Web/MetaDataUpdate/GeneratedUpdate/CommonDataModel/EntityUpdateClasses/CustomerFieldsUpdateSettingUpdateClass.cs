@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerFieldsUpdateSettingUpdateClass
-   {  
+   {  		
+		public const string HashString = "b143f8a47d0b2025e30f308c4e66e585";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,51 +84,58 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "CustomerFieldsUpdateSetting",
+			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerFieldsUpdateSettings",
 			      				    ObjectTableSingular =  "Customer Fields Update Setting",
 			      				    ObjectTablePlural =  "Customer Fields Update Setting",
-			      				    DefaultText =  "Customer Fields Update Setting",
-			      				    Name =  "CustomerFieldsUpdateSettings",
-			      				    IsNewWizard =  true,
-			      				    NewWizardControlName =  "Simplog.Infrastructure.NewCustomerFieldsUpdateSettingCommand",
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  true,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "CustomerFieldsUpdateSetting,CustomerFieldsUpdateSettings,Simplog.Infrastructure.NewCustomerFieldsUpdateSettingCommand,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsEditable =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Simplog.Infrastructure.NewCustomerFieldsUpdateSettingCommand",
+			      				    DefaultText =  "Customer Fields Update Setting",
+			      				    Code =  "CPQU",
+			      				    Name =  "CustomerFieldsUpdateSettings",
+			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/CustomerFieldsUpdateSetting/AddEditCustomerFieldsUpdateSettingComponent",
-			      				    Code =  "CPQU",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "CustomerFieldsUpdateSetting,CustomerFieldsUpdateSettings,Simplog.Infrastructure.NewCustomerFieldsUpdateSettingCommand,Id,",
+			      				    HashString =  CustomerFieldsUpdateSettingUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -136,11 +144,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ObjectFieldName",
 					  						ObjectTableName =  "CustomerFieldsUpdateSetting",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  200,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -151,43 +160,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ObjectFieldName",
 					  						ListPropertyPath =  "ObjectFieldName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ObjectFieldName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectFieldName",
 					  						DefaultText =  "Object Field Name",
 					  						ListFieldLable =  "ObjectFieldNameListLable",
 					  						ListLableDefaultText =  "Object Field Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectFieldName",
-					  						Code =  "ObjectFieldName",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,58 +209,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "CustomerFieldsUpdateSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
-					  						DataTypeCode =  "LookUp",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ObjectFieldId",
 					  						ListPropertyPath =  "ObjectFieldId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ObjectFieldId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectFieldId",
 					  						DefaultText =  "Object Field",
 					  						ListFieldLable =  "ObjectFieldIdListLable",
 					  						ListLableDefaultText =  "Object Field",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ObjectFieldId",
-					  						Code =  "ObjectFieldId",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,11 +273,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "UpdateDirection",
 					  						ObjectTableName =  "CustomerFieldsUpdateSetting",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -272,88 +289,224 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "UpdateDirection",
 					  						ListPropertyPath =  "UpdateDirection",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdateDirection",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdateDirection",
 					  						DefaultText =  "Update Direction",
 					  						ListFieldLable =  "UpdateDirectionListLable",
 					  						ListLableDefaultText =  "Update Direction",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDirection",
-					  						Code =  "UpdateDirection",
-					  						DependencyFilter3IsList =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ObjectFieldCode",
+					  						ObjectTableName =  "CustomerFieldsUpdateSetting",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ObjectFieldCode",
+					  						ListPropertyPath =  "ObjectFieldCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerFieldsUpdateSetting",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ObjectFieldCode",
+					  						DefaultText =  "Object Field Code",
+					  						ListFieldLable =  "ObjectFieldCodeListLable",
+					  						ListLableDefaultText =  "Object Field Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "CustomerFieldsUpdateSetting",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search ...",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomerFieldsUpdateSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CPQU", Name = "CustomerFieldsUpdateSettings" }, queryGroupRepository);
+	        QueryGroup CustomerFieldsUpdateSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CPQU", Name = "CustomerFieldsUpdateSettings" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomerFieldsUpdateSettingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8ece", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CustomerFieldsUpdateSettingObjectTable = objectTables.ContainsKey("CustomerFieldsUpdateSetting") ? objectTables["CustomerFieldsUpdateSetting"] : null;
+            if (CustomerFieldsUpdateSettingObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable CustomerFieldsUpdateSettingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> CustomerFieldsUpdateSettingObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerFieldsUpdateSetting").ToList();   
+                CustomerFieldsUpdateSettingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode CustomerFieldsUpdateSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.Q.AllCustomerFieldsUpdateSettings", DefaultText = @"All Customer Fields Update Settings",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFieldsUpdateSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCUSTOMERFIELDSUPDATESETTING", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.AllCustomerFieldsUpdateSetting", NameTextCodeDefaultText = "All Customer Fields Update Setting", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode CustomerFieldsUpdateSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.Q.AllCustomerFieldsUpdateSettings", DefaultText = @"All Customer Fields Update Settings",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFieldsUpdateSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCUSTOMERFIELDSUPDATESETTING", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.AllCustomerFieldsUpdateSetting", NameTextCodeDefaultText = "All Customer Fields Update Setting", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerFieldsUpdateSettingObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomerFieldsUpdateQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerFieldsUpdateSettingTextCode_0.Id, Code = "All Customer Fields Update",  EditWizardComponentPath = "./Common/Components/Maintenance/CustomerFieldsUpdateSetting/AddEditCustomerFieldsUpdateSettingComponent",
-			   QueryGroupCode = "CPQU", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, QuerySection = "CustomerFieldsUpdateSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFieldsUpdateSettingFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCustomerFieldsUpdateQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerFieldsUpdateSettingTextCode_0.Id, NameTextCodeCode = CustomerFieldsUpdateSettingTextCode_0.Code, ObjectTableName = "CustomerFieldsUpdateSetting", Code = "All Customer Fields Update",  EditWizardComponentPath = "./Common/Components/Maintenance/CustomerFieldsUpdateSetting/AddEditCustomerFieldsUpdateSettingComponent",
+			   QueryGroupCode = "CPQU", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, QuerySection = "CustomerFieldsUpdateSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFieldsUpdateSettingFeature_0.Id,FeatureUniqeCode= CustomerFieldsUpdateSettingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCustomerFieldsUpdateQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerFieldsUpdateQuery.Id, IndexOrder = 1, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "ObjectFieldName" && d.ObjectTableId == CustomerFieldsUpdateSettingObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerFieldsUpdateQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerFieldsUpdateQuery.Id,QueryCode = AllCustomerFieldsUpdateQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomerFieldsUpdateSetting.ObjectFieldName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCustomerFieldsUpdateQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerFieldsUpdateQuery.Id, IndexOrder = 2, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "UpdateDirection" && d.ObjectTableId == CustomerFieldsUpdateSettingObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCustomerFieldsUpdateQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerFieldsUpdateQuery.Id,QueryCode = AllCustomerFieldsUpdateQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomerFieldsUpdateSetting.UpdateDirection" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerFieldsUpdateSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerFieldsUpdateSetting").ToList();
+		   //List<ObjectField> CustomerFieldsUpdateSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerFieldsUpdateSetting").ToList();
 		       
 	      
 
 	         Screen CustomerFieldsUpdateSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerFieldsUpdateSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "ObjectFieldName").FirstOrDefault().Id, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.ObjectFieldName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "UpdateDirection").FirstOrDefault().Id, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerFieldsUpdateSettingCustomerFieldsUpdateSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id,ScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerFieldsUpdateSetting.UpdateDirection", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerFieldsUpdateSettingObjectTable.HeaderScreenId = CustomerFieldsUpdateSettingHeaderScreenScreen0.Id;
+		    CustomerFieldsUpdateSettingObjectTable.HeaderScreenCode = CustomerFieldsUpdateSettingHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -364,13 +517,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomerFieldsUpdateSettingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerFieldsUpdateSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFieldsUpdateSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerFieldsUpdateSettingObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CFUG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerFieldsUpdateSettingGeneralFeature_TH0.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.CustomerFieldsUpdateSetting.EditCustomerFieldsUpdateSettingControl", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, TabNameTextCodeId = CustomerFieldsUpdateSettingGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CFUG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerFieldsUpdateSettingGeneralFeature_TH0.Id,FeatureUniqeCode = CustomerFieldsUpdateSettingGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.CustomerFieldsUpdateSetting.EditCustomerFieldsUpdateSettingControl", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, TabNameTextCodeId = CustomerFieldsUpdateSettingGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomerFieldsUpdateSettingGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -378,16 +531,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomerFieldsUpdateSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFieldsUpdateSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFieldsUpdateSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFieldsUpdateSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomerFieldsUpdateSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomerFieldsUpdateSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerFieldsUpdateSettingObjectTable);
+		   Feature CustomerFieldsUpdateSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerFieldsUpdateSettingObjectTable);
+		   Feature CustomerFieldsUpdateSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerFieldsUpdateSettingObjectTable);
+		   Feature CustomerFieldsUpdateSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomerFieldsUpdateSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerFieldsUpdateSettingObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

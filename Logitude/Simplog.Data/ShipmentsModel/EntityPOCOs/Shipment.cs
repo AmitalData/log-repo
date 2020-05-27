@@ -50,6 +50,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FNAReason { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public string CurrentUserId { get; set; }
@@ -187,7 +188,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field40 { get; set; }
 
         public string SearchFields { get; set; }
-        public DateTime? CutoffDate { get; set; }
         public double? Volume { get; set; }
 
         public string AWBSpecialHandlingCodeId1 { get; set; }
@@ -438,6 +438,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Currency AWBCurrency { get; set; }
         public virtual Card ShipperCard { get; set; }
         public virtual Card AgentCard { get; set; }
+        public virtual Card AgentComputedCard { get; set; }
         public virtual Card CustomAgentImportCard { get; set; }
         public virtual Card Notify1Card { get; set; }
         public virtual Card Notify2Card { get; set; }
@@ -673,6 +674,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
         public DateTime? ITDate { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
@@ -742,6 +744,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public INTTRABookingStatus INTTRABookingStatus { get; set; }
         public string INTTRABookingStatusCode { get; set; }
 
+        public string INTTRABookingError { get; set; }
+        public string INTTRALastBookingResponse { get; set; }
+        
+
         #endregion
 
         public string OnCarriageAdditionalTransportModeCode { get; set; }
@@ -781,8 +787,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool HasContainerException { get; set; }
         public string ARInvoices { get; set; }
 
+        public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
 
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public int? WarehouseStorageFreeDays { get; set; }
 
-
+        public string SLAC { get; set; }
     }
 }

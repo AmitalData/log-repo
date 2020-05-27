@@ -32,13 +32,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Collateral Answer Type&quot;"
-  Code="&quot;d7cd&quot;"
-  Name="&quot;Customs.CollateralAnswerType Query Group&quot;"
+  Code="&quot;COAT&quot;"
+  Name="&quot;Customs.CollateralAnswerType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e5100ded-48ed-4fde-a2fa-4166d703cdd2&quot;"
     FieldName="&quot;Code&quot;"
@@ -300,21 +302,99 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,בקשה לערבות&quot;"
+      Inactive="false"
+      LocalName="&quot;בקשה לערבות&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,תיק ערבות&quot;"
+      Inactive="false"
+      LocalName="&quot;תיק ערבות&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,בקשה לפיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;בקשה לפיקדון&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,תיק פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;תיק פיקדון&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CollateralAnswerType&quot;"
+    ObjectTableName="&quot;Customs.CollateralAnswerType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CollateralAnswerType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;COAT&quot;"
+    QueryGroupName="&quot;Customs.CollateralAnswerType&quot;"
+    LocalTextCode="&quot;סוג מענה לבטוחה&quot;"
+    TextCode="&quot;Collateral Answer Types&quot;"
+    TextCodeCode="&quot;Customs.CollateralAnswerType.Q.CollateralAnswerTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;COLLATERALANSWERTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CollateralAnswerType.Features.CollateralAnswerTypes&quot;"
+    FeatureDefaultText="&quot;Collateral Answer Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CollateralAnswerType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CollateralAnswerType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CollateralAnswerType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CollateralAnswerType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CollateralAnswerType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CollateralAnswerType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

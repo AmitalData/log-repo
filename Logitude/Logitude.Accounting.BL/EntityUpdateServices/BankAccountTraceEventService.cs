@@ -37,18 +37,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // get the logged contact.
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
             string eventNotes = "";
+            // this code needs to check for nulls
             //Type bankAccountTypePM = entityPM.GetType();
-         
+
             //PropertyInfo[] properties = bankAccountTypePM.GetProperties();
             //PropertyInfo[] pocoProperties = entityPOCO.GetType().GetProperties();
             //foreach (PropertyInfo pi in properties)
             //{
             //    var pmPropertyName = pi.Name;
             //    var pmPropertyValue = pi.GetValue(entityPM, null);
-               
+
             //    var pocoProperty = pocoProperties.Where(d => d.Name == pmPropertyName).FirstOrDefault();
             //    var pocoPropertyValue = pocoProperty.GetValue(entityPOCO);
-            //    if(pocoPropertyValue != pmPropertyValue)
+            //    if (!pocoPropertyValue.Equals(pmPropertyValue))
             //    {
             //        eventNotes = pmPropertyName + " updated new value:" + pmPropertyValue + " old value: " + pocoPropertyValue;
             //    }
@@ -82,7 +83,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-
+        
         public void CreateActivateOrDeactivateEvent(BankAccountPM entityPM,ContactPM loggedContact,string eventNotes)
         {
             if (entityPM.Inactive == true)

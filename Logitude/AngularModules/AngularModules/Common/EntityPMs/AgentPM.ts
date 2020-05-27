@@ -286,9 +286,9 @@ export class AgentPM {
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
        
 	 
-    private card: string;
+    private card: any;
     public get Card() { return this.card; }
-    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -400,6 +400,16 @@ export class AgentPM {
     private usoCFDICode: string;
     public get UsoCFDICode() { return this.usoCFDICode; }
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
+       
+	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
+    private storageFreeDays: number;
+    public get StorageFreeDays() { return this.storageFreeDays; }
+    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
 

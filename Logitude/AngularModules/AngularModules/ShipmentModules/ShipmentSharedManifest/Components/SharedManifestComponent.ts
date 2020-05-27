@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestComponent',
     templateUrl: './SharedManifestComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],
@@ -67,10 +67,10 @@ export class SharedManifestComponent {
 
       
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(res => {
-            this._entityResourceService.getEntityResourceByTableName("Master").subscribe(res1 => {
+        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((res:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Master").subscribe((res1:any) => {
                 this.IsLoadComponent = true;
-                this._sharedAgentManifestService.get(this.EntityList.Id).subscribe(response => {
+                this._sharedAgentManifestService.get(this.EntityList.Id).subscribe((response:any) => {
   
                     if (!response.HasError) {
                     
@@ -125,7 +125,7 @@ export class SharedManifestComponent {
 
 
         // Check if Shipment Create Or Not and Enable Edit
-            this._sharedAgentManifestService.getAgentSharedManifesRefShipmentListsByIds(this.agentManifestSharedRefListIds).subscribe(res => {
+            this._sharedAgentManifestService.getAgentSharedManifesRefShipmentListsByIds(this.agentManifestSharedRefListIds).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var result: AgentSharedManifesRefShipment[] = pmResponse.Result;
@@ -283,7 +283,7 @@ export class SharedManifestComponent {
 
         this.CurrentEntity.StatusCode = status;
         this.CurrentEntity.UpdateDate = DateTool.GetCurrentDateAsUtc();
-        this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe(res => {
+        this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe((res:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.RefreshSharedManifiestoStatus();
         });
@@ -319,7 +319,7 @@ export class SharedManifestComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private timerToken: any;
     private Retries: number = 0;
 
@@ -349,7 +349,7 @@ export class SharedManifestComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunSharedManifestHeaderComponent(), 1);
         }
     }

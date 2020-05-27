@@ -276,6 +276,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new WarehouseMap());
             modelBuilder.Configurations.Add(new WeightUnitMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
@@ -311,12 +312,16 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+
             modelBuilder.Configurations.Add(new OtherParticipantIdMap());
             modelBuilder.Configurations.Add(new ShipmentAdditionalCloudDataMap());
+
             modelBuilder.Configurations.Add(new FBLStockMap());
+
             modelBuilder.Configurations.Add(new CustomsTransmissionsStatusMap());
             modelBuilder.Configurations.Add(new OBLTypeMap());
             modelBuilder.Configurations.Add(new ShipmentCustomsMessageTypeMap());
+
             modelBuilder.Configurations.Add(new INTTRAStatusMap());
             modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
             modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
@@ -328,7 +333,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
-
+            modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
+            modelBuilder.Configurations.Add(new CustomsTransferLineMap());
+            modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -419,6 +426,24 @@ namespace Simplog.Data.ShipmentsModel
         }
 
         public IDbSet<ShipmentAssembly> ShipmentAssemblies
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferType> CustomsTransferTypes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferLine> CustomsTransferLines
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferHeader> CustomsTransferHeaders
         {
             get;
             set;

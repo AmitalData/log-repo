@@ -2,18 +2,10 @@
 declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import * as Rx from 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
-//import {CORE_DIRECTIVES, Control, NgFormControl} from '@angular/common';
-//import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-//import {IconButton} from '../../../Controls/IconButton';
-//import {LogGridComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
-//import {AdvanceSearchComponent} from '../../../Infrastructure/Components/AdvanceSearchComponent/AdvanceSearchComponent';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { Http } from '@angular/http';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { EntityResourceService } from '../../Services/EntityResourceService';
@@ -23,11 +15,9 @@ import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-//import {SearchTextBox} from '../../../Controls/SearchTextBox';
 import { LogEvents } from '../../../Infrastructure/Utilities/LogEvents';
 import { PubSubService } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
 import { PubSubService1 } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent1';
-//import {QueryListComponent} from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/QueryListComponent';
 import { AppTool, DateTool } from '../../Tools';
 import { ListComponentArgs, NewEntityArgs } from '../../Args';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
@@ -36,7 +26,6 @@ import { EntityPMService } from '../../Services/EntityPMService';
 import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { QueryColumnsPMService } from '../../../Infrastructure/Services/StandardPMs/QueryColumnsPMService';
-import { QueryColumnPM } from '../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { GeneralEntitiesArgs } from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
 import { GeneralEntitiesService } from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -49,10 +38,13 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
@@ -61,7 +53,7 @@ import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGrid
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
-    
+    public IsDemoTenant: boolean = false;
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
     @Output() BackCompleted = new EventEmitter();
@@ -91,6 +83,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
 
+
     //public Title: string;
     private title: string;//= "";
     get Title() { return this.title; }
@@ -116,6 +109,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     onColumnsClick() {
         var windowArgs: any = {};
         windowArgs.queryId = this.SelectedQueryId;
+        windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
@@ -131,7 +125,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.QueryValueChanged({ QueryId: this.SelectedQueryId, Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+            this.QueryValueChanged({ QueryCode: this.SelectedQueryCode,Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
@@ -152,7 +146,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     SearchMethod() {
-        this.ApplyPreDefinedFilters();
+        //this.ApplyPreDefinedFilters();
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
         //if (this.searchFields && this.searchFields != "") {
         //    this.searchFields = this.searchFields.replace(/"/g, '');
@@ -163,7 +157,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //}
         //if (this.ClearMySearch == false) {
         this.CurrentQueryFilters.addAdditionalFilter("SearchFields", this.searchFields, null, null, "Contains", false, true, false, "String");
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
         //}
         //else {
         //    this.ClearMySearch = false;
@@ -176,7 +170,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.MethodName.indexOf("Customs.") > -1) {
                 this.MethodName = this.MethodName.split('.')[1];
             }
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -193,8 +189,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
         }
         this.CurrentQueryFilters = new ApiQueryFilters();
-        if (window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id) != null) {
-            var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id);
+        if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
+            var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode);
             predefinedFilters.forEach((filter, key) => {
                 var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                 var value1 = filter.PredefinedValue;
@@ -202,7 +198,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (value2 != null) {
                     filterOperator = "Between";
                 }
-                if (filter.DataTypeCode == "DateTime") {
+                if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                     var TodayDate = new Date();
                     TodayDate.setHours(0, 0, 0, 0);
 
@@ -219,7 +215,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                     var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                     LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                    var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                     CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                     var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                     CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -263,7 +259,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         filterOperator = "NoDate";
                     }
                 }
-                var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+              var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                 if (field) {
                     this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                 }
@@ -430,6 +426,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public QueryColumns: any[];
     public firstCall: boolean = true;
     public SelectedQueryId: string;
+    public SelectedQueryCode: string;
     private _SelectedQuery: any = null;
     public get SelectedQuery(): any {
         return this._SelectedQuery;
@@ -449,10 +446,22 @@ export class ListComponent implements OnInit, AfterViewInit {
     AdvanceQFiltersService: PubSubService;
     public TenantPM: TenantPM;
     MethodName: string = null;
+    ListComponentId: string;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs:ListComponentArgs , private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs,private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+
+        if (this.CurrentSession == null) {
+            this.ListComponentId = "ListComponentId_-1_-1";
+           
+        }
+
+        else {
+            this.ListComponentId = "ListComponentId_" + this.CurrentSession.LogitudeGridHelper.GetLListComponentIndexId();
+           
+        }
+
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
@@ -524,7 +533,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -599,7 +608,12 @@ export class ListComponent implements OnInit, AfterViewInit {
     NewButtonId: string;
 
     ngOnInit() {
-         this.NewButtonId = "NewButton_" + this.ObjectTableName;
+
+        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
+            this.IsDemoTenant = true;
+        }
+
+        this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
             this.IsNewEntityButtonDisabled = true;
@@ -652,6 +666,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     IsShowAddFromLibraryLink: boolean;
+    IsShowAddReportFromLibraryLink: boolean = false;
     HasExcelExportButton: boolean;
 
     LinkAddDocumentFromLibraryClcik() {
@@ -680,6 +695,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
+    LinkAddReportFromLibraryClick() {
+        var windowTitle = "Add Report From Library";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        var windowArgs: any = {};
+        windowArgs.IsCopyFromLibrary = true;
+        windowArgs.FolderId = this.listArgs.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.ComponentLoaded.subscribe(s => {
+            //
+        });
+    }
 
 
     IsShowAddQuoteTemplateFromLibraryLink: boolean;
@@ -708,8 +738,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
+   View:string;
     RunComponent() {
-
 
 
         if (window.Tips) {
@@ -729,8 +759,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTable.Name == "Customer") {
-
+          this.View ="View"
         }
+else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (FeatureLocator.HasFeaturePermession("General", "EXPORTEXCEL")) {
             if (!AppTool.IsNullOrEmpty(this.ObjectTable.DownloadToExcelFeatureCode)) {
                 if (FeatureLocator.HasFeaturePermession(this.ObjectTable.Name, this.ObjectTable.DownloadToExcelFeatureCode)) {
@@ -752,6 +783,15 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             else {
                 this.IsShowAddFromLibraryLink = false;
+            }
+
+        }
+
+        if (this.ObjectTable.Name == "BIReport") {
+            if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
+                if (SessionLocator.Tenant != 0) {
+                    this.IsShowAddReportFromLibraryLink = true;
+                }
             }
 
         }
@@ -821,52 +861,56 @@ export class ListComponent implements OnInit, AfterViewInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
-    Run(args: ListComponentArgs) {
-        this.CurrentSession.AddMenuReference(this.ComponentRef);
-        this.CurrentSession.AddListComponent(this);
+    ResourcesLoaded: boolean = false;
+  Run(args: ListComponentArgs) {
+    this.CurrentSession.AddMenuReference(this.ComponentRef);
+    this.CurrentSession.AddListComponent(this);
 
-        this.listArgs = args;
-        if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
-            this.Title = this.listArgs.DisplayTitle;
-        }
-        this.QueryCode = args.QueryCode;
-        this.ObjectTableName = args.ObjectTableName;
-        this.SetAddButtonTitle();
-        this.MethodName = args.MethodName;
-        this.BackBtnTitle = args.BackButtonTitle;
-        this.ShowViews = args.ShowViews;
-        this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-        this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
+    this.listArgs = args;
+    if (!this.IsDemoTenant) {
+      if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
+        this.Title = this.listArgs.DisplayTitle;
+      }
+      //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
+      this.QueryCode = args.QueryCode;
+      this.ObjectTableName = args.ObjectTableName;
+      this.SetAddButtonTitle();
+      this.MethodName = args.MethodName;
+      this.BackBtnTitle = args.BackButtonTitle;
+      this.ShowViews = args.ShowViews;
+      this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+      this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
-        this.SearchTextValue = new FormControl();
-        this.NewButtonLable = args.NewButtonLabel;
-        this.SearchTextValue.valueChanges
-            .debounceTime(500)
-            .distinctUntilChanged()
-            .subscribe((search: string): any => {
-                this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
-                this.SearchFieldchangeevent.emit(this.searchFields);
-            });
+      this.SearchTextValue = new FormControl();
+      this.NewButtonLable = args.NewButtonLabel;
 
-        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-        this.GetQueries();
-        this.RunComponent();
+      this.SearchTextValue.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged()
+        ).subscribe((search: string): any => {
+          this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
+          this.SearchFieldchangeevent.emit(this.searchFields);
+        });
 
-        //});NewEntityButtonLabel
+      this.GetQueries();
+      this.RunComponent();
     }
+  }
 
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
+            this.ResourcesLoaded = true;
             this.ViewQuery(this.listArgs.Filters, this.listArgs.DisplayTitle, this.listArgs.BackButtonTitle, this.listArgs.IsReadOnlyList, this.listArgs.IsBackToCurrentListView);
             //this.CD.detectChanges();
         });
@@ -909,30 +953,45 @@ export class ListComponent implements OnInit, AfterViewInit {
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
-        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId) && x.SystemLevel == true);
+        if(!this.ObjectTable.IsClosed){
+            this.Queries = allQueries.filter(x =>  FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) );
+        
+        }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
+            this.SelectedQuery = this.Queries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+           if(this.QueryCode.includes(this.ObjectTableName+".")){
+            this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (/*this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+*/this.QueryCode))[0];
+           }
+           else{
+            this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
+           }
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGranted(f.FeatureId) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = allQueries.filter(f => f.Code == this.QueryCode)[0];
+        
+            if(this.QueryCode.includes(this.ObjectTableName+".")){
+                this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (/*this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+*/this.QueryCode))[0];
+            }
+               else{
+                this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
+            }
         }
 
         else {
-            this.SelectedQuery = allQueries[0];
+            this.SelectedQuery = this.Queries[0];
         }
         let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
 
@@ -957,14 +1016,16 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
         }
         if (this.SelectedQuery != null) {
-            this.QueryCode = this.SelectedQuery.Code;
+            this.QueryCode = this.SelectedQuery.UniqueCode;
         }
-        if (AppTool.IsNullOrEmpty(this.Title)) {
+        if (AppTool.IsNullOrEmpty(this.Title) && this.SelectedQuery) {
             this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
         }
         if (this.SelectedQuery != null) {
             //console.log(this.SelectedQuery);
             this.SelectedQueryId = this.SelectedQuery.Id;
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
+
             //this.Query = this.SelectedQuery;
 
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
@@ -985,8 +1046,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             }
             //console.log("dataSource", this.dataSource);
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-                this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+                this.ResourcesLoaded = true;
+                this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
         }
 
@@ -994,15 +1056,19 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.SetAddButton();
     }
 
-    GetQueryColumns(queryId, userId) {
+    GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryid=" + queryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
-            .subscribe((response) => {
-                this.QueryColumns = response.json();
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
+            .subscribe((response: any) => {
+                this.QueryColumns = response;
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
-                    this.columnsObjectFields.push(window.ObjectFields.filter(x => x.Id === value.ObjectFieldId)[0]);
+                    var mutaztouch0 = value.ObjectFieldCode;
+                    var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
+                    var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
+
+                    this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
                 for (var i = 0; i < this.QueryColumns.length; i++) {
@@ -1018,7 +1084,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
                             ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'TransportModeCellDisplayListTemplate',
                             ObjectField: this.columnsObjectFields[i],
-                            QueryId: queryId
+                            QueryCode: queryCode
                             //ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
                         });
                     }
@@ -1028,8 +1094,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     ClearMySearch: boolean = false;
     QueryValueChanged(Args) {
-
-        this.AdvanceFilters = new ApiQueryFilters();
+         this.AdvanceFilters = new ApiQueryFilters();
         if (ObjectsLocator.GlobalSetting.WorkEnvironment != "customs") {
             if (Args.IgnoreSearchFields != true) {
                 this.searchFields = "";
@@ -1042,22 +1107,24 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.columnsObjectFields = [];
         if (this.Queries == null || this.Queries.length == 0) {
             var MyQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-            this.SelectedQuery = MyQueries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = MyQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
         else {
-            this.SelectedQuery = this.Queries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = this.Queries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
 
         if (this.SelectedQuery == null) {
-            this.SelectedQuery = this.UserQueries.filter(x => x.Id === Args.QueryId)[0];
+            this.SelectedQuery = this.UserQueries.filter(x => x.UniqueCode ===  Args.QueryCode)[0];
         }
         if (this.SelectedQuery != null) {
-            this.QueryCode = this.SelectedQuery.Code;
+            this.QueryCode = this.SelectedQuery.UniqueCode;
             this.MethodName = this.SelectedQuery.QuerySection;
             if (this.MethodName.indexOf("Customs.") > -1) {
                 this.MethodName = this.MethodName.split('.')[1];
             }
+            this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
+
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
             }
@@ -1070,8 +1137,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
             }
-            if (window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id);
+            if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                     var value1 = filter.PredefinedValue;
@@ -1080,7 +1147,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                         var TommorowDate = DateTool.AddDays((new Date()), 1);
                         TommorowDate.setUTCHours(0, 0, 0, 0);
                         var TodayDate = new Date();
@@ -1093,7 +1160,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1189,7 +1256,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             filterOperator = "NoDate";
                         }
                     }
-                    var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                    var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
                         if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.ObjectFieldName).length > 0) {
                             Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.ObjectFieldName);
@@ -1199,7 +1266,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             }
 
-            this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+            this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
         //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
@@ -1209,7 +1276,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         //console.log("QueryValueChanged()", queryId);
         //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
         //this.GetQueryColumns(queryId, this.UserId);
-        this.SelectedQueryId = Args.QueryId;
+        this.SelectedQueryCode =  Args.QueryCode;
+        //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
             pageSize: 30,
@@ -1221,7 +1289,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             },
         };
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: Args.Filters, Reload: true });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: Args.Filters, Reload: true });
         this.SetNewEntityButton();
         this.SetAddButton();
     }
@@ -1229,7 +1297,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     QueriesChangedEvent(Args) {
         //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
-        this.QueryCode = Args.Code;
+        this.QueryCode = Args.UniqueCode;
         //this.GetQueries();
         //var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
@@ -1243,7 +1311,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //    this.Queries = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective);
         //}
         if (this.QueryCode) {
-            SelectedQuery = this.Queries.filter(x => x.Code === this.QueryCode)[0] != null ? this.Queries.filter(x => x.Code === this.QueryCode)[0] : this.UserQueries.filter(x => x.Code === this.QueryCode)[0];
+            SelectedQuery = this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] != null ? this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] : this.UserQueries.filter(x => x.UniqueCode === this.QueryCode)[0];
         }
         else {
             SelectedQuery = this.Queries.filter(x => x.IndexOrder === 0)[0] != null ? this.Queries.filter(x => x.IndexOrder === 0)[0] != null : this.UserQueries.filter(x => x.IndexOrder === 0)[0] != null;
@@ -1268,7 +1336,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!AppTool.IsNullOrEmpty(queryDisplayName)) {
             this.Title = queryDisplayName;
         }
-        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Code == this.QueryCode)[0];
+        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.QueryCode)[0];
 
         //if (!AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
         //    this.EnableSpotLight = true;
@@ -1283,8 +1351,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             //    this.Title = TextCodeTranslator.Translate(query.NameTextCodeCode);
             //    //this.CD.detectChanges();
             //}
-            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+            if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                     var value1 = filter.PredefinedValue;
@@ -1292,7 +1360,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
-                    if (filter.DataTypeCode == "DateTime") {
+                    if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();
                         TodayDate.setUTCHours(0, 0, 0, 0);
@@ -1308,7 +1376,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                         var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                         LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                         CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                         var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                         CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -1404,7 +1472,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             filterOperator = "NoDate";
                         }
                     }
-                    var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                    var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
                         filterAgrs.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                     }
@@ -1440,7 +1508,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     filterAgrs.AdditionalFilters.push(filter);
                 });
             }
-            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs });
+            var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
+            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryCode: query.UniqueCode, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
     }
     onMenuHeaderchanged(event) {
@@ -1510,11 +1579,18 @@ export class ListComponent implements OnInit, AfterViewInit {
             return;
         }
 
-        if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
-            this._ListComponentArgs.SuppressOnRowSelectedField = false;
-            console.log("SuppressOnRowSelectedField");
-            return;
+        var myObjectTableName = this.ObjectTableName;
+
+        if (this.ObjectTableName ==  "OccasionContact"){
+            myObjectTableName = "Contact";
         }
+
+
+        // if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
+        //     this._ListComponentArgs.SuppressOnRowSelectedField = false;
+        //     console.log("SuppressOnRowSelectedField");
+        //     return;
+        // }
 
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         //var BackGridEvent = $event.BackFromEdit;
@@ -1522,7 +1598,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (!this.isEditControlOpened) {
                 var entityList = $event.rowData;
                 var selectedEntityId = $event.rowData.Id;
-                switch (this.ObjectTableName) {
+
+                switch (myObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
@@ -1538,13 +1615,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.DeclarationReferantData":
                         selectedEntityId = $event.rowData.DeclarationId;
                     default:
-
-                        break;
+                        {
+                            break;
+                        }
                 }
-
-
-                //if (this.ObjectTableName != "Customs.ProceduralFault" && this.ObjectTableName != "TicketEscalation") {
-                if (this.ObjectTableName != "TicketEscalation") {
+                
+                if (myObjectTableName != "TicketEscalation") {
 
                     this.isEditControlOpened = true;
 
@@ -1552,7 +1628,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     myCodes.push("EAWB");
                     myCodes.push("BUBK");
 
-                    if (FeatureLocator.IsPackageOneOf(myCodes) && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master")) {
+                    if (FeatureLocator.IsPackageOneOf(myCodes) && (myObjectTableName == "Shipment" || myObjectTableName == "Master")) {
 
                         var isFullWizard = false;
                         var windowTitle = null;
@@ -1607,9 +1683,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                         var showHeaderButtons: boolean = true;
 
-                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
+                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(myObjectTableName));
 
-                        switch (this.ObjectTableName) {
+                        switch (myObjectTableName) {
                             case "ContainerFollowUp": {
                                 showHeaderButtons = false;
                                 break;
@@ -1638,8 +1714,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                         });
                     }
 
-                    else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || this.ObjectTableName == "AgentSharedManifest" || this.ObjectTableName == "Customs.CourierMaster") {
+                    else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || myObjectTableName == "AgentSharedManifest" || myObjectTableName == "Customs.CourierMaster") {
 
+                        if (this.SelectedQuery.EditWizardName == "SimulatorBookingComponent") {
+                            this.ShowINTTRABookingWizard(selectedEntityId, $event);
+                        }
                         if (this.SelectedQuery.EditWizardName == "Simplog.ShipmentLib.Views.AWBWizardEditControl") {
                             var isFullWizard = false;
                             var windowTitle = null;
@@ -1680,13 +1759,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                             });
                         }
 
-                        else if (this.ObjectTableName == "Customs.CourierMaster") {
+                        else if (myObjectTableName == "Customs.CourierMaster") {
                             var windowArgs: any = {};
-                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1719,7 +1798,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                         else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName)) {
 
-                            switch (this.ObjectTableName) {
+                            switch (myObjectTableName) {
                                 case 'TenantManagmentPrivateLabels': {
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 960;
@@ -1774,9 +1853,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 case 'Customs.Client': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1808,9 +1887,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 }
                                 case 'Customs.CustomsVendor': {
                                     if (!AppTool.IsNullOrEmpty(selectedEntityId)) {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
-                                                this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+                                                this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                     res.subscribe((myResponse: any) => {
 
                                                         if (myResponse.HasError) {
@@ -1863,14 +1942,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 case 'Customs.CustomsCollateral': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
 
 
-                                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                             res.subscribe((myResponse: any) => {
 
                                                                 if (myResponse.HasError) {
@@ -1908,9 +1987,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 }
                                 case 'Customs.ProceduralFault': {
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe((response:any) => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1983,9 +2062,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 case 'Customs.DeclarationCargoSplit': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                            this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                            this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
 
                                                     if (myResponse.HasError) {
@@ -2040,7 +2119,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         }
                     }
 
-                    else if (this.ObjectTableName == "BIReport") {
+                    else if (myObjectTableName == "BIReport") {
                         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
@@ -2054,6 +2133,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)
+                                    this.RefreshBtnClick();
                                 });
                             });
                     }
@@ -2181,7 +2261,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
                                     EntityId: selectedEntityId,///$event.rowData.Id
-                                    ObjectTableName: this.ObjectTableName,
+                                    ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
@@ -2198,6 +2278,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             //this.CurrentSession.StopBusyIndicator();
         }
+    }
+
+    private ShowINTTRABookingWizard(selectedEntityId: string, $event) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "INTTRA e-booking Wizard";
+        logWindow.Width = 1020;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = selectedEntityId;
+        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingLoadComponent');
+
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            this.isEditControlOpened = false;
+            this.OnBackFromEdit(selectedEntityId, $event)
+        });
     }
 
     public MyScrollTop: number = 0;
@@ -2336,18 +2430,23 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                 var tempText = TextCodeTranslator.Translate(this.listArgs.ObjectTableName + ".NewButton");
-                if (!AppTool.IsNullOrEmpty(tempText)) {
+                if (!AppTool.IsNullOrEmpty(tempText) ) {
                     this.listArgs.NewButtonLabel = tempText;
                 }
             }
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-                if (useLocal == true) {
+                if (useLocal == true ) {
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-                    var ChangedText = GeneralText.split('%')[0];
-                    var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-                    var FinalText = NewText + " " + ChangedText;
+                  
+                        var ChangedText = GeneralText.split('%')[0];
+                        var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                        var FinalText = NewText + " " + ChangedText;
+                    if (this.ObjectTableName == "Customer") {
+                        FinalText = "New" + " " + NewText;
+                    }
                     this.NewEntityButtonLabel = FinalText;//TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+                    
                 }
                 else {
                     this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
@@ -2459,6 +2558,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+
+                    case "OccasionContact":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2504,11 +2609,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
-                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+                    this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
-                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
-                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
+                        if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {
+                            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQuery.OriginalQueryCode)[0];
                             if (query.Code == "Masters" || query.Code == "Open Payables Masters" || query.Code == "All Masters") {
                                 IsOriginalMaster = true;
                             }
@@ -2699,6 +2805,21 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 220;
                         break;
                     }
+                case "InterestBasesType":
+                    {
+                        logWindow.Width = 680;
+                        logWindow.Height = 400;
+                        var windowArgs: any = {};
+                        windowArgs.IsNew = true;
+                        logWindow.WindowArgs = windowArgs;
+                        break;
+                    }
+                case "InterestReport":
+                    {
+                        logWindow.Width = 400;
+                        logWindow.Height = 200;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -2722,6 +2843,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
+
+
 
             if (this.ObjectTableName == "Customs.CustomsVendor") {
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
@@ -2750,23 +2873,51 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                 if (this.ObjectTableName == "Tariff") {
                     var QueryCodeOriginal = this.QueryCode;
-                    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
-                        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
-                        QueryCodeOriginal = query.Code;
+                    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryCode)) {
+                        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQuery.OriginalQueryCode)[0];
+                        QueryCodeOriginal = query.UniqueCode;
                     }
 
                     var windowArgs: any = {};
                     logWindow.Width = 850;
                     logWindow.Height = 500;
 
-                    if (QueryCodeOriginal == "Air Freight Cost Tariffs") {
-                        logWindow.Title = "New Air Freight Cost";
-                        windowArgs.TypeCode = "AFC";
-                    }
-                    else {
-                        "Air Surcharges Cost Tariffs";
-                        logWindow.Title = "New Air Surcharges Cost";
-                        windowArgs.TypeCode = "ASC";
+                    switch (QueryCodeOriginal) {
+                        case "Tariff.Air Freight Cost Tariffs": {
+                            logWindow.Title = "New Air Freight Cost";
+                            windowArgs.TypeCode = "AFC";
+                            break;
+                        }
+
+                        case "Tariff.Air Surcharges Cost Tariffs": {
+                            logWindow.Title = "New Air Surcharges Cost";
+                            windowArgs.TypeCode = "ASC";
+                            break;
+                        }
+
+                        case "Tariff.Ocean LCL Freight Cost": {
+                            logWindow.Title = "New Ocean LCL Freight Cost";
+                            windowArgs.TypeCode = "OLC";
+                            break;
+                        }
+
+                        case "Tariff.Ocean.LCL.Surcharges.Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                            windowArgs.TypeCode = "OSC";
+                            break;
+                        }
+                            
+                        case "Tariff.Ocean FCL Freight Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
+                            windowArgs.TypeCode = "OFC";
+                            break;
+                        }
+
+                        case "Tariff.Ocean FCL Surcharges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
+                            windowArgs.TypeCode = "OFS";
+                            break;
+                        }
                     }
                  
                     logWindow.WindowArgs = windowArgs;
@@ -2846,6 +2997,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             }
 
+            if (this.ObjectTableName == "InterestBasesType") {
+                FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
@@ -2855,7 +3009,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
     private OnNewEntityWindowClosed($event: any) {
-        this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters });
     }
 
     ShowIt: boolean = true;
@@ -2922,11 +3076,11 @@ export class ListComponent implements OnInit, AfterViewInit {
             return;
         }
         else {
-            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQueryId)[0];
+            var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.SelectedQueryCode)[0];
             if (query != null) {
 
-                if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+                if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
+                    var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                     predefinedFilters.forEach((filter, key) => {
                         var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
                         var value1 = filter.PredefinedValue;
@@ -2934,7 +3088,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (value2 != null) {
                             filterOperator = "Between";
                         }
-                        if (filter.DataTypeCode == "DateTime") {
+                        if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
                             var TodayDate = new Date();
                             TodayDate.setUTCHours(0, 0, 0, 0);
 
@@ -2949,7 +3103,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
                             LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
-                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 2);
                             CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
                             var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
                             CurrentYearToDate.setUTCHours(0, 0, 0, 0);
@@ -2989,7 +3143,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 filterOperator = "Between";
                             }
                         }
-                        var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                        var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                         this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                     });
                 }
@@ -3026,7 +3180,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     this.CurrentQueryFilters.AdditionalFilters.push(filter);
                 });
             }
-            this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters, Reload: false });
+            this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
             //     else {
             //         this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
             //     }
@@ -3045,7 +3199,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //    this.myQueryColumnsPMService = new QueryColumnsPMService();
         //    this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //}
-        //this.myQueryColumnsPMService.update(QColumn).subscribe(myResult => {
+        //this.myQueryColumnsPMService.update(QColumn).subscribe((myResult:any) => {
         //});
         this.SaveColNewChanges(Param);
         //console.log("Oh Yea !!");
@@ -3053,9 +3207,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SaveColNewChanges(Param: any) {
         var QColumns = null;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryid=" + Param.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
-            .subscribe((response) => {
-                QColumns = response.json();
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
+            .subscribe((response: any) => {
+                QColumns = response;
                 if (QColumns != null) {
                     if (this.GeneralEntitiesArgs == null) {
                         this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
@@ -3078,7 +3232,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                     }
                     else {
@@ -3097,7 +3251,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                         // });
                     }

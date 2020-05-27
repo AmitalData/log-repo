@@ -20,17 +20,49 @@ namespace Logitude.Customs.BL
    {
        public List<VehicleTypeDetails> GetAll()
        {
-		    var all = new List<VehicleTypeDetails>(); 
+		    var all = new List<VehicleTypeDetails>();  
+            all.Add(new VehicleTypeDetails()
+            {    
+                Code = "1", 
+                EnglishName = "seat", 
+                SearchFields = "seat,1", 
+                Inactive = false, 
+                LocalName = "seat", 
+			});
+			 
+            all.Add(new VehicleTypeDetails()
+            {    
+                Code = "CN", 
+                EnglishName = "CN", 
+                SearchFields = "CN", 
+                Inactive = false, 
+                LocalName = "CN", 
+			});
+			 
+            all.Add(new VehicleTypeDetails()
+            {    
+                Code = "ZZZ", 
+                EnglishName = "zzzz", 
+                SearchFields = "zzzz", 
+                Inactive = false, 
+                LocalName = "zzzz", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(VehicleType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(VehicleType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -38,6 +38,16 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string DestinationPortName  { get; set; }
        [DataMember]
        public string DestinationPortCode  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string OriginPortCombinedCode  { get; set; }
+       [DataMember]
+       public string DestinationPortCombinedCode  { get; set; }
+       [DataMember]
+       public string TransitTime  { get; set; }
    }
 
 }

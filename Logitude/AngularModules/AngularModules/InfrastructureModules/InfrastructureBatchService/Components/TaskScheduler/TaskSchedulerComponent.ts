@@ -1,11 +1,11 @@
-import { Component, Output, EventEmitter, OnInit} from '@angular/core';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {TaskSchedulerHistoryList} from '../../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
-import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfrastructureDomainService } from '../../../../Infrastructure/Services/InfrastructureDomainService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TaskSchedulerHistoryList } from '../../../../Infrastructure/EntityLists/TaskSchedulerHistoryList';
+import { TasksSchedulerPM } from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
 import { SchedulerDetails, FTPSchedulerDetails } from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
@@ -13,22 +13,24 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaskSchedulerComponent.html',
 })
 
-export class TaskSchedulerComponent implements OnInit  {
+export class TaskSchedulerComponent implements OnInit {
     public ItemsSource: TaskSchedulerItemClass[] = [];
     public FixedItemsSource: TaskSchedulerItemClass[] = [];
-    public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
+    public HistoryItemsSource: TaskSchedulerHistoryList[] = [];
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
     IsEnableAddButton: boolean = false;
-
-   
     public columns: any[] = null;
-    @Output() CustomColumnsReady = new EventEmitter();
-    @Output() MenuHeaderchangeevent = new EventEmitter();
+    public Taskscolumns: any[] = null;
+    @Output() TasksCustomColumnsReady = new EventEmitter();
+    @Output() SelectedRowChanged = new EventEmitter();
+    @Output() ShowUTCTimes = new EventEmitter();
+    @Output() MenuHeaderchangeeventTasks = new EventEmitter();
+
     filterAgrs: ApiQueryFilters;
     ShowUTCTimesLabel: string = "Show UTC Time";
     ShowUTCTimeEnabled: boolean = false;
@@ -38,28 +40,29 @@ export class TaskSchedulerComponent implements OnInit  {
         this.infraDomainService = new InfrastructureDomainService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
             this.HasUTCFeature = true;
-		}
-		if (FeatureLocator.HasFeaturePermession("TasksScheduler", "NEW")) this.IsEnableAddButton = true;
-       
+        }
+        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "NEW")) this.IsEnableAddButton = true;
     }
 
     ngOnInit() {
-        this.LoadTaskHistories();
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event.Name == "ReloadTasks") {
+                this.RefreshButtonClicked(); 
+            } 
+        });
     }
 
     SchedulerType: string = "";
     public LoadData(schedulerType: string) {
         this.SchedulerType = schedulerType;
-        this.GetTasksSchedular();
-    }     
-
+        this.LoadTaskSchedulers();
+        //this.GetTasksSchedular();
+    }
 
     public GetTasksSchedular() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.IsHistoryGridVsisible = false;
-
-        this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe(myResult => {
+        this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe((myResult: ServiceResponse) => {
             if (myResult == null) {
                 this.ItemsSource = [];
                 this.FixedItemsSource = [];
@@ -69,26 +72,23 @@ export class TaskSchedulerComponent implements OnInit  {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     this.loadedDataList = myResponse.Result;
-                   
+
                     this.BuildItemsSource();
-                    this.LoadTaskHistories();
                 }
             }
         });
     }
 
-  
     public RefreshTasksSchedular(entityPM: TasksSchedulerPM) {
         var index = this.loadedDataList.indexOf(entityPM);
         if (index > -1) {
             this.loadedDataList[index] = entityPM;
         } else this.loadedDataList.push(entityPM);
 
-       
+
         this.BuildItemsSource();
 
     }
-
 
     BuildItemsSource() {
         this.ItemsSource = [];
@@ -112,44 +112,16 @@ export class TaskSchedulerComponent implements OnInit  {
         else {
             this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
         }
-        
+
 
         this.CurrentSession.StopBusyIndicator();
     }
 
-    public IsHistoryGridVsisible = false;
     public ShowArrow = false;
-    public SelectedRow: TaskSchedulerItemClass;
-    Selecting(item: TaskSchedulerItemClass) {
-        this.SelectedRow = item;
-
-        if (item == null) {
-            this.IsHistoryGridVsisible = false;
-        }
-
-        else {
-           // this.LoadHistoryList();
-            this.LoadTaskHistories();
-        }
-    }
-    
-    private LoadHistoryList() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        this.infraDomainService.GetTaskSchedulerHistory(this.SelectedRow.Id).subscribe(myResult => {
-            if (myResult == null) {
-                this.HistoryItemsSource = [];
-            }
-
-            else {
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    this.HistoryItemsSource = myResponse.Result;
-                    this.IsHistoryGridVsisible = true;
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            }
-        });
+    public SelectedRow: any;
+    onRowSelected(item: any) {
+        this.SelectedRow = item.rowData;//new TaskSchedulerItemClass(item.rowData, this, true);//item;
+        this.SelectedRowChanged.emit(this.SelectedRow);
     }
 
     NewTaskClicked() {
@@ -158,7 +130,7 @@ export class TaskSchedulerComponent implements OnInit  {
         newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
         newItem.TriggerType = "O";
         newItem.Tenant = SessionLocator.Tenant;
-        
+
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
         logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
@@ -175,7 +147,7 @@ export class TaskSchedulerComponent implements OnInit  {
 
     EditClicked(item: TaskSchedulerItemClass) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = this.SchedulerType  + " Scheduler Details";
+        logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = item;
         logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
         logWindow.Width = 900;
@@ -188,141 +160,202 @@ export class TaskSchedulerComponent implements OnInit  {
     }
 
     RefreshButtonClicked() {
-        this.GetTasksSchedular();
+        //this.GetTasksSchedular();
+        this.LoadTaskSchedulers();
     }
 
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    BuildColumns() { 
-        this.columns = [];
-        this.columns.push({
-            FieldName: "Log",
+    BuildTasksColumns() {
+        this.Taskscolumns = [];
+        this.Taskscolumns.push({
+            FieldName: "Name",
             DataTypeCode: 'String',
-            Display: 'Log',
-            Styles: { width: '280px' },
-            HtmlListComponentName: 'SchedulerDateListTemplate',
-            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+            Display: 'Task Name',
+            Styles: { width: '200px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false
+            ServerSideSortable: true,
+            SortByName: "Name"
         });
         if (this.ShowUTCTimeEnabled == false) {
-            this.columns.push({
-                FieldName: "StartDateTime",
+            this.Taskscolumns.push({
+                FieldName: "NextRunTime",
                 DataTypeCode: 'String',
-                Display: 'Start Date',
-                Styles: { width: '200px' },
+                Display: 'Next Run Time',
+                Styles: { width: '160px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: false,
-                SortByName: "StartDateTime"
+                ServerSideSortable: true,
+                SortByName: "NextRunTime"
             });
-            this.columns.push({
-                FieldName: "EndDateTime",
+
+            this.Taskscolumns.push({
+                FieldName: "LastRunStartTime",
                 DataTypeCode: 'String',
-                Display: 'End Date',
-                Styles: { width: '200px' },
+                Display: 'Last Run Start Time',
+                Styles: { width: '160px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: false,
-                SortByName: "EndDateTime"
+                ServerSideSortable: true,
+                SortByName: "LastRunStartTime"
+            });
+            this.Taskscolumns.push({
+                FieldName: "LastRunEndTime",
+                DataTypeCode: 'String',
+                Display: 'Last Run End Time',
+                Styles: { width: '160px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "LastRunEndTime"
             });
         }
         else {
-            this.columns.push({
-                FieldName: "StartDateTimeUTC",
+
+            this.Taskscolumns.push({
+                FieldName: "NextRunTimeUTC",
                 DataTypeCode: 'String',
-                Display: 'Start Date UTC',
-                Styles: { width: '200px' },
+                Display: 'Next Run Time UTC',
+                Styles: { width: '160px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: false,
-                SortByName: "StartDateTime"
+                ServerSideSortable: true,
+                SortByName: "NextRunTimeUTC"
             });
-            this.columns.push({
-                FieldName: "EndDateTimeUTC",
+
+            this.Taskscolumns.push({
+                FieldName: "LastRunStartTimeUTC",
                 DataTypeCode: 'String',
-                Display: 'End Date UTC',
-                Styles: { width: '200px' },
+                Display: 'Last Run Start Time UTC',
+                Styles: { width: '160px' },
                 HtmlListComponentName: 'SchedulerDateListTemplate',
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
-                ServerSideSortable: false,
-                SortByName: "EndDateTime"
+                ServerSideSortable: true,
+                SortByName: "LastRunStartTimeUTC"
+            });
+            this.Taskscolumns.push({
+                FieldName: "LastRunEndTimeUTC",
+                DataTypeCode: 'String',
+                Display: 'Last Run End Time UTC',
+                Styles: { width: '160px' },
+                HtmlListComponentName: 'SchedulerDateListTemplate',
+                HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: "LastRunEndTimeUTC"
             });
         }
-        this.columns.push({
-            FieldName: "Duration",
+        this.Taskscolumns.push({
+            FieldName: "MyDuration",
             DataTypeCode: 'String',
-            Display: 'Duration',
-            Styles: { width: '100px' },
+            Display: 'Avg. Run Time',
+            Styles: { width: '90px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
         });
-        this.columns.push({
-            FieldName: "ViewLog",
+
+        this.Taskscolumns.push({
+            FieldName: "Status",
+            DataTypeCode: 'String',
+            Display: 'Status',
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false
+        });
+
+        this.Taskscolumns.push({
+            FieldName: "InActive",
+            DataTypeCode: 'Boolean',
+            Display: 'In Active',
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'SchedulerDateListTemplate',
+            HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false
+        });
+
+        this.Taskscolumns.push({
+            FieldName: "EditTaskButton;" + this.SchedulerType,
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '100px' },
+            Styles: { width: '30px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: false
         });
-        /////
-        //this.columns.push({
-        //    FieldName: "RunResult",
-        //    DataTypeCode: 'String',
-        //    Display: 'Run Result',
-        //    Styles: { width: '200px' },
-        //    IsCustomTemplate: true,
-        //    ServerSideSortable: false
-        //});
-         
-        this.CustomColumnsReady.emit(this.columns);
+
+
+        this.TasksCustomColumnsReady.emit(this.Taskscolumns);
     }
 
-    DataSource = {
+    TasksDataSource = {
         pageSize: 20,
         rowCount: null,
-       
+
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-          
+            var tempo = this.geTaskstRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+
             return tempo;
         },
     };
 
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-       
+    geTaskstRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
-     // filters.SortDirection = "Desc";
-        sortingCol = "StartDateTimeUTC";
-        sortingDir = "descending"; 
-        if (!this.SelectedRow) {
-            //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-            //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-            //}
-           filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
-          
+        // filters.SortDirection = "Desc";
+        if (!sortingCol) {
+            sortingCol = "NextRunTime";
+            sortingDir = "descending";
+        }
+        //if (!this.SelectedRow) {
+        //    //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //    //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //    //}
+        //    filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+
+        //}
+        //else {
+        //    if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+        //        if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //        }
+        //        filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
+        //    }
+
+        //return
+        //}
+        if (this.filterTypeCode == "AL") {
+            filters.AdditionalFilters = [];//addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
+        }
+        else if (this.filterTypeCode == "IN") {
+            if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
+                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "InActive");
+            }
+            filters.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "Boolean");
         }
         else {
-            if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
-                if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-                }
-                filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
+            if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
+                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "InActive");
             }
-            //return
+            filters.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
-
+        if (filters.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -333,57 +366,33 @@ export class TaskSchedulerComponent implements OnInit  {
             filters.SortDirection = sortingDir;
         }
         filters.Tenant = SessionLocator.Tenant;
-         
-        return this._entityListService.getByFilters("TaskSchedulerHistory", filters);
+
+        return this._entityListService.getByFilters("TasksScheduler", filters);
     }
-    private LoadTaskHistories() {
-        this.IsHistoryGridVsisible = true;
-        this.BuildColumns();
-       
+
+    private LoadTaskSchedulers() {
+
+        this.BuildTasksColumns();
+
         this.filterAgrs = new ApiQueryFilters();
-        if (!this.SelectedRow) {
-            return;
+        
+
+        if (this.filterTypeCode == "AL") {
+            this.filterAgrs.AdditionalFilters = []; 
         }
-         
-        if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
-            this.filterAgrs.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
+        else if (this.filterTypeCode == "IN") {
+            this.filterAgrs.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "Boolean");
+        }
+        else {
+            this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
 
-        //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsCancelled').length > 0) {
-        //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsCancelled');
-        //}
-        //this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
-        //}
-
-        //this.filterAgrs.addAdditionalFilter("IsMissingDocument", false, null, null, "Equals", false, false, false, "Boolean");
-        //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
-        //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", false, null, null, "Equals", false, false, false, "Boolean");
-        //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", false, null, null, "Equals", false, false, false, "Boolean");
-        //if (this.SelectedTransportFilter != "All") {
-        //    this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
-        //}
-        //else {
-        //    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
-        //        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
-        //    }
-        //}
-        //if (this.SelectedArchiveFilter != "All") {
-        //    this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedArchiveFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedArchiveFilter == "All" ? true : false);
-        //}
-        //else {
-        //    if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
-        //        this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
-        //    }
-        //}
-
-        //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedTransportFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", true);
-
-        //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", "null", null, null, "Equals", false, true, false, "string", true);
-
-        //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", true, null, null, "Equals", false, true, false, "string", true);
- 
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
     ShowUTCTimesClicked() {
@@ -395,7 +404,8 @@ export class TaskSchedulerComponent implements OnInit  {
             this.ShowUTCTimeEnabled = true;
             this.ShowUTCTimesLabel = "Hide UTC Time";
         }
-        this.LoadTaskHistories();
+        this.LoadTaskSchedulers();
+        this.ShowUTCTimes.emit(this.ShowUTCTimeEnabled);
     }
 
     private filterTypeCode: string = "AC";
@@ -403,15 +413,16 @@ export class TaskSchedulerComponent implements OnInit  {
     public set FilterTypeCode(value: string) {
         if (this.filterTypeCode != value) {
             this.filterTypeCode = value;
-            if (value == "AC") {
-                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
-            }
-            else if (value == "IN") {
-                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
-            }
-            else{
-                this.ItemsSource = this.FixedItemsSource;
-            }
+            this.LoadTaskSchedulers();
+            //if (value == "AC") {
+            //    this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+            //}
+            //else if (value == "IN") {
+            //    this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            //}
+            //else {
+            //    this.ItemsSource = this.FixedItemsSource;
+            //}
         }
     }
 }
@@ -422,7 +433,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public IsNew: boolean = false;
     private newValueinDateFormat: Date;
 
- 
+
 
 
     FTPDetails: FTPSchedulerDetails;
@@ -450,7 +461,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get LastRunEndTimeUTC() { return this.EntityPM.LastRunEndTimeUTC; }
 
-   
+
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {
@@ -486,7 +497,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
             this.EntityPM.TriggerType = newValue;
         }
     }
-   
+
     get StartDateTime() { return this.EntityPM.StartDateTime; }
     set StartDateTime(newValue: Date) {
 
@@ -494,17 +505,17 @@ export class TaskSchedulerItemClass extends BaseComponent {
             this.EntityPM.StartDateTime = newValue;
             this.newValueinDateFormat = new Date(newValue);
             this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
-           
-        } 
+
+        }
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
     set RepeatInMinutes(newValue: number) {
         if (this.EntityPM.RepeatInMinutes != newValue) {
-            
-            
-                this.EntityPM.RepeatInMinutes = newValue;
-            
+
+
+            this.EntityPM.RepeatInMinutes = newValue;
+
         }
     }
 
@@ -568,7 +579,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get Type() {
         return this.EntityPM.Type ? this.EntityPM.Type : "";
     }
-   
+
     get Host() {
         return this.FTPDetails ? this.FTPDetails.Host : "";
     }
@@ -691,10 +702,12 @@ export class TaskSchedulerItemClass extends BaseComponent {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
                     schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
-                    
+
+
                 }
                 this.FTPDetails = schedulerDetailsData.FTPDetails;
 
+                this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
 
             }
         }

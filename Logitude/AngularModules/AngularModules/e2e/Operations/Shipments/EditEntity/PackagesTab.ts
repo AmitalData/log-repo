@@ -66,7 +66,7 @@ export class PackagesTabComponent {
     this.Helper.WaitByIdAndClick('AddPackage');
 
     var containerTypeValue = this.Helper.WaitByIdAndFill('ShipmentPackage_PackageTypeId', containerType);
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPackage_PackageTypeId', containerType);
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_ContainerNumber', containerNo);
      this.Helper.WaitByIdAndFill('ShipmentPackage_Weight', grossWeight);
@@ -86,7 +86,7 @@ export class PackagesTabComponent {
     this.Helper.WaitByIdAndClick('AddPackage');
 
     var containerTypeValue = this.Helper.WaitByIdAndFill('ShipmentPackage_PackageTypeId', containerType);
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPackage_PackageTypeId', containerType);
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_ContainerNumber', containerNo);
 

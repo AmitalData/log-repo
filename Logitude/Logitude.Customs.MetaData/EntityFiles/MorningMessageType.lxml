@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Morning Message Type&quot;"
-  Code="&quot;69ea&quot;"
-  Name="&quot;Customs.MorningMessageType Query Group&quot;"
+  Code="&quot;MMTG&quot;"
+  Name="&quot;Customs.MorningMessageType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;03c98dc9-50b6-494b-b288-b28b64c1a83e&quot;"
     FieldName="&quot;Code&quot;"
@@ -304,21 +306,89 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,כללי&quot;"
+      Inactive="false"
+      LocalName="&quot;כללי&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,תפעול&quot;"
+      Inactive="false"
+      LocalName="&quot;תפעול&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;MorningMessageType&quot;"
+    ObjectTableName="&quot;Customs.MorningMessageType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.MorningMessageType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;MMTG&quot;"
+    QueryGroupName="&quot;Customs.MorningMessageType&quot;"
+    LocalTextCode="&quot;בוקר סוג ההודעה&quot;"
+    TextCode="&quot;Morning Message Type&quot;"
+    TextCodeCode="&quot;Customs.MorningMessageType.Q.MorningMessageTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;MORNINGMESSAGETYPEQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.MorningMessageType.Features.MorningMessageType&quot;"
+    FeatureDefaultText="&quot;Morning Message Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;MorningMessageType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;MorningMessageType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;MorningMessageType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;MorningMessageType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.MorningMessageType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.MorningMessageType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

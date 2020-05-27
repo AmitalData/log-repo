@@ -50,7 +50,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;c9eb82b6-693a-4886-a5ea-2e81617ca7f5&quot;"
     FieldName="&quot;Code&quot;"
@@ -341,39 +343,49 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;SplitOrMergeReason&quot;"
-    TextCode="&quot;SplitOrMergeReasonQuery&quot;"
-    QueryGroupCode="&quot;7dff&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.SplitOrMergeReason&quot;"
-    QuerySection="&quot;Customs.SplitOrMergeReason&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SplitOrMergeReason&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;7dff&quot;"
+    QueryGroupName="&quot;Customs.SplitOrMergeReason Query Group&quot;"
+    TextCode="&quot;SplitOrMergeReasonQuery&quot;"
+    TextCodeCode="&quot;SplitOrMergeReason.Q.SplitOrMergeReason&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SplitOrMergeReason.Q.SplitOrMergeReason&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;SplitOrMergeReason.Features.SplitOrMergeReason&quot;"
+    FeatureDefaultText="&quot;SplitOrMergeReason&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;SplitOrMergeReason&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SplitOrMergeReason&quot;" />
       <QueryColumn
-        QueryCode="&quot;SplitOrMergeReason&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SplitOrMergeReason&quot;" />
       <QueryColumn
-        QueryCode="&quot;SplitOrMergeReason&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SplitOrMergeReason&quot;" />
       <QueryColumn
-        QueryCode="&quot;SplitOrMergeReason&quot;"
         IndexOrder="3"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SplitOrMergeReason&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -381,18 +393,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SplitOrMergeReason&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SplitOrMergeReason&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

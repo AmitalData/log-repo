@@ -26,7 +26,7 @@ import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/S
 import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CreateEditTicketComponent.html',
 })
 
@@ -65,6 +65,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     public FilterSelectedValue: string;
     ExemptionFilterSelectedValue: string = 'other';
     IsSearchIconVisibile: boolean;
+    private currentSession=SessionLocator.SelectedSession;
     SetWindowArgs(args: any) {
 
         this.IsSearchIconVisibile = false;
@@ -338,7 +339,7 @@ export class CreateEditTicketComponent extends BaseComponent {
             return;
 
         var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
-        this.documentsFilingPMService.get(documentsFilingId).subscribe(data => {
+        this.documentsFilingPMService.get(documentsFilingId).subscribe((data:any) => {
             if (data.Result == null) {
 
                 let msg = new MessageWindow();
@@ -690,7 +691,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._CardListService.getSingle(this.Parent.DeclarationPM.CustomerId)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 let cardList: CardList = res.Result;
                 let unifaceCustId: string = ""
                 if (!AppTool.IsNullOrEmpty(cardList)) {
@@ -766,8 +767,8 @@ export class CreateEditTicketComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();

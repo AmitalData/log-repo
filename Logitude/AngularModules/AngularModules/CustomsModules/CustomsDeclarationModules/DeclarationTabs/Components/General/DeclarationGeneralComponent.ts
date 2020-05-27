@@ -33,7 +33,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationGeneralComponent.html',
     providers: [DeclarationExtendedListService],
 })
@@ -63,16 +63,17 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
-                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
+                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
+
 
                                                 this.EntityPM = this.entityArgs.EntityPM;
                                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -1274,7 +1275,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });

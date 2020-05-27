@@ -241,7 +241,7 @@
 
         var _DefaultJornalPM = '<% =GetDefaultJornalPM()%>';
         var _DefaultGLaccountPM = '{"AutomaticReconcile": null,"Category1": null,"Category2": null,"Category3": null,"Category4": null,"Category5": null,"ChartOfAccount": null,"ChartOfAccountsType": null,"ControlAccount": null,"Currency": null,"GLAccountType": 1,"PreviousChartOfAccount": null,"ReconcileMethod": null,"RevenueExpense": null,"Id": "","Tenant": 989,"InternalNumber": "1000","AccountTypeCode": "1","DisplayNumber": "Customers","LocalName": "יהי טוב","EnglishName": "Customer xx","SearchFields": "לקוחות","IsMultiCurrency": true,"CurrencyId": null,"RevenueExpenseType": "1","IsControlAccount": false,"ChartOfAccountsId": "1-105","Inactive": false,"ChartOfAccountsTypeCode": "3","ReconcileMethodCode": "0","ControlAccountId": null,"AutomaticReconcileId": null,"PreviousEnglishName": null,"PreviousEnglishNameChangeDate": "2016-11-23T07:00:35.407","PreviousLocalName": null,"PreviousLocalNameChangeDate": "2016-11-23T07:00:35.407","PreviousNumber": null,"PreviousNumberChangeDate": "2016-11-23T07:00:35.407","PreviousChartOfAccountsId": null,"PreviousChartOfAccountsChangeDate": "2016-11-23T07:00:35.407","CustomerGLAccountId": null,"BalanceInLocalCurrency": null,"RevaluationEnabled": null,"ParentAccountId": null,"Category1Id": null,"Category2Id": null,"Category3Id": null,"Category4Id": null,"Category5Id": null,"IsVATExempt": null}';
-        var _DefaultChartOfAccountsPM = '{"Id": null,  "Tenant": 1064,  "Code": "2521",  "EncodeBase64NVARCHARFieldsBy": "windows-1255",  "LocalName": "5OX24OX6IOvs7Onl+g==",  "EnglishName": null,  "ParentId": null,  "TypeCode": "2",  "Inactive": null,  "TypeName": null,  "ParentName": null,  "SearchFields": null}';
+        var _DefaultChartOfAccountsPM = '{"Id": null,  "Tenant": 62,  "Code": "2521",  "EncodeBase64NVARCHARFieldsBy": "windows-1255",  "LocalName": "5OX24OX6IOvs7Onl+g==",  "EnglishName": null,  "ParentId": null,  "TypeCode": "2",  "Inactive": null,  "TypeName": null,  "ParentName": null,  "SearchFields": null}';
         
 
         var urlBase = '<% =GetHost() %>';
@@ -267,6 +267,8 @@
         
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
         var _ReconciliationAfterConversionUrl = urlBase + '/api/ReconciliationAfterConversion';
+        var _ReconciliationStageBUrl = urlBase + '/api/ReconciliationStageB';
+        var _CardGLAccountConnectUrl = urlBase + '/api/CardGLAccountConnect';
         var _RevaluationUrl = urlBase + '/api/RevaluationOp';
 
         var _ARPaymentChequeUrl = urlBase + '/api/ARPaymentChequeOp';
@@ -484,7 +486,7 @@
 
 
 
-        
+
         function OnClickButtonReconcileAfterConversion() {
 
             var defaultParam = new Object();
@@ -514,11 +516,143 @@
             else {
                 myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum;
             }
-            
+
             //alert(myUrl);
 
 
             $(".class_LabelLog").val("OnClickButtonReconcileAfterConversion ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
+
+        function OnClickButtonReconcileAfterConversionNoBatch() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+            defaultParam.FromExtNum = "1";
+            defaultParam.ToExtNum = "99";
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+                myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+            }
+            else {
+                myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum + "&noBatch=1";
+            }
+
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileAfterConversionNoBatch ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
+        function OnClickButtonReconcileStageB() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant;
+            
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageB ..." + _ResponseToken);
             $.ajax({
                 url: myUrl,
                 type: 'GET',
@@ -552,7 +686,141 @@
 
             return false;
         }
-  
+
+
+
+
+        function OnClickButtonReconcileStageBNoBatch() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+            defaultParam.GLAccountId = "1-clear2get_all";
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            if (objToCheck1.GLAccountId == "")
+            {
+                myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+            }
+            else
+            {
+                 myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&gLAccountId=" + objToCheck1.GLAccountId + "&noBatch=1";
+           }
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageB ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response, arryColumns);
+
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
+
+     
+        function OnClickButtonCardGLAccountConnect() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _CardGLAccountConnectUrl + "?tenant=" + objToCheck1.Tenant;
+            
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonCardGLAccountConnect ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8',  
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response,arryColumns);
+                    
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
 
 
         function OnClickButtonRevaluationsBatch() {
@@ -778,7 +1046,10 @@
             });
             return false;
         }
-
+        function Clear_ResponseToken(){
+            _ResponseToken = null;
+            return false;
+        }
 
         function SendJornal() {
             if (!_ResponseToken) {
@@ -863,15 +1134,15 @@
             if ($(".class_loginParameter").val() == "") {
                 var loginParameter =
                         {
-                            Email: "basel@amital.co.il",
-                            Password: "!B123456",
+                            Email: "yaronc@amital.co.il",
+                            Password: "!Y123456",
                             IsUser: true,
                             CardId: null,
                             CardType: null,
                             ByToken: false,
                             IsMobileLogin: false,
                             GetToken: true,
-                            Tenant: 989
+                            Tenant: 62
 
                         };
                 $(".class_loginParameter").val(JSON.stringify(loginParameter));
@@ -893,6 +1164,7 @@
             }
            
         });
+        
     </script>
   <%--  <script> alert(Date(-62135596800000));
         alert(Date(1461704400000));
@@ -959,6 +1231,9 @@ div#two {
                 <li>JournalApproveService
                     <ul>
                         <li>
+                        <button id="btnClear_ResponseToken" onclick="javascript:return Clear_ResponseToken();" >Clear _ResponseToken</button>
+                            </li>
+                        <li>
                             <asp:Button ID="_ButtonJournalApproveQueue" runat="server" Text=".Queue" OnClick="_ButtonJournalApproveQueue_Click" /></li>
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
@@ -971,6 +1246,7 @@ div#two {
                     <button id="_ButtonCreateNewJournal1" onclick="javascript: $('.classTextBoxParam').val(_DefaultJornalPM);  return false;" >example Journal</button>
                     
                     <a href="http://www.jsoneditoronline.org/" > format json</a>
+                    
                     <button id="btnSendJournal" onclick="javascript:return SendJornal();" >btnSendJournal</button>
                     <asp:Button ID="_ButtonCreateRandomJournal" runat="server" Text="Create RandomJournal" OnClick="_ButtonCreateRandomJournal_Click" />
                     <br />
@@ -1003,11 +1279,18 @@ div#two {
                     <a href="Reconcile.aspx">Reconcile.aspx</a>
                     <a href="TrailReport.aspx">TrailReport.aspx</a>
                     <button id="ButtonReconcileAfterConversion"  onclick="javascript:return OnClickButtonReconcileAfterConversion();">Reconcile After Conversion</button>        
+                    <button id="ButtonReconcileStageB"  onclick="javascript:return OnClickButtonReconcileStageB();">Reconcile Stage B</button>        
+                    <asp:Button id="_ButtonExternalReconcile" runat="server" onclick="_ButtonExternalReconcile_click"   Text="ExternalReconcile" />
+                    <button id="ButtonReconcileAfterConversionNoBatch"  onclick="javascript:return OnClickButtonReconcileAfterConversionNoBatch();">Reconcile After Conversion - No Batch</button>        
+                    <button id="ButtonReconcileStageBNoBatch"  onclick="javascript:return OnClickButtonReconcileStageBNoBatch();">Reco Stage B - No Batch</button>        
                 </li>
                 <li>
                     <button id="ButtonRevaluationsBatch" onclick="javascript:return OnClickButtonRevaluationsBatch();" >RevaluationsBatch</button>
                     <%--<button id="ButtonCardIndex" onclick="javascript:return OnClickButtonLedgerTransactionCardIndex();" >CardIndex</button>--%>
                     <asp:Button id="ButtonCardIndex" runat="server" Text="Card Index" OnClick="_ButtonLedgerTransactionCardIndex_Click" />
+                    <%--<asp:Button ID="ButtonCardGLAccountConnect" runat="server" Text="Card GLAccount Connect (Tenant)" OnClick="ButtonCardGLAccountConnect_Click" />--%>        
+                    <button id="ButtonCardGLAccountConnect"  onclick="javascript:return OnClickButtonCardGLAccountConnect();">Card GLAccount Connect (Tenant)</button>        
+                    <asp:Button id="_ButtonCardIndexNew" runat="server" Text="Card Index New" OnClick="_ButtonCardIndexNew_Click" />
                 </li>
                 <li>
                     <button id="ButtonPostDatedChequeRedemptionBatch" onclick="javascript:return OnClickButtonPostDatedChequeRedemptionBatch();" >PostDatedChequeRedemptionBatch</button>

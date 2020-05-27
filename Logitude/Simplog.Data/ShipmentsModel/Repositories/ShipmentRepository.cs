@@ -645,6 +645,17 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return shipments;
         }
 
+
+        public IQueryable<Shipment> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
+        {
+            IQueryable<Shipment> shipments = from a in context.Shipments.Include("Direction").Include("TransportMode")
+                                             where shipmentIds.Contains(a.Id) && a.Tenant == tenant
+                                             select a;
+            return shipments;
+        }
+
+
+
         public void Add(Shipment entity)
         {
             context.Shipments.Add(entity);

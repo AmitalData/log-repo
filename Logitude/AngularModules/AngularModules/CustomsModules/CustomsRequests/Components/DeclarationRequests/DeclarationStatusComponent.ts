@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'DeclarationStatusComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationStatusComponent.html',
 })
 

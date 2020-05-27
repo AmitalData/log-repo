@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Invoice Type&quot;"
-  Code="&quot;7a9a&quot;"
-  Name="&quot;Customs.InvoiceType Query Group&quot;"
+  Code="&quot;INVT&quot;"
+  Name="&quot;Customs.InvoiceType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2549858f-c59c-4a92-8e3b-4b8433aca5f0&quot;"
     FieldName="&quot;Code&quot;"
@@ -309,21 +311,109 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;325&quot;"
+      SearchFields="&quot;325,פרופורמה,,&quot;"
+      Inactive="false"
+      LocalName="&quot;פרופורמה&quot;" />
+    <Record
+      Code="&quot;326&quot;"
+      SearchFields="&quot;326,חשבון חלקי,,&quot;"
+      Inactive="false"
+      LocalName="&quot;חשבון חלקי&quot;" />
+    <Record
+      Code="&quot;380&quot;"
+      SearchFields="&quot;380,חשבון מכר,,&quot;"
+      Inactive="false"
+      LocalName="&quot;חשבון מכר&quot;" />
+    <Record
+      Code="&quot;I01&quot;"
+      SearchFields="&quot;I01,טופס 130 (תחליף חשבון),,&quot;"
+      Inactive="false"
+      LocalName="&quot;טופס 130 (תחליף חשבון)&quot;" />
+    <Record
+      Code="&quot;I02&quot;"
+      SearchFields="&quot;I02,פטור מחשבון,,&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור מחשבון&quot;" />
+    <Record
+      Code="&quot;I03&quot;"
+      SearchFields="&quot;I03,חשבון הסבות,,&quot;"
+      Inactive="false"
+      LocalName="&quot;חשבון הסבות&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;InvoiceType&quot;"
+    ObjectTableName="&quot;Customs.InvoiceType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.InvoiceType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;INVT&quot;"
+    QueryGroupName="&quot;Customs.InvoiceType&quot;"
+    LocalTextCode="&quot;סוג חשבון&quot;"
+    TextCode="&quot;Invoice Types&quot;"
+    TextCodeCode="&quot;Customs.InvoiceType.Q.InvoiceTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;INVOICETYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.InvoiceType.Features.InvoiceTypes&quot;"
+    FeatureDefaultText="&quot;Invoice Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;InvoiceType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;InvoiceType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;InvoiceType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;InvoiceType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.InvoiceType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.InvoiceType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

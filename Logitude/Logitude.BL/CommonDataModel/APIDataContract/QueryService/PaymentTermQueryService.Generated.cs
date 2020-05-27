@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -58,6 +59,44 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByExternalId(ExternalId,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("PaymentTerm with ExternalId " + ExternalId + " doesn't exist");
+
+				return PaymentTermDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("PaymentTerm with Code " + Code + " doesn't exist");
+
+				return PaymentTermDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public PaymentTerm PaymentTermDataMapping(PaymentTermPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -67,7 +106,11 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
-				   temp.Days = MyEntityPM.Days;					
+				   temp.Days = MyEntityPM.Days;
+				   temp.ExternalId = MyEntityPM.ExternalId;
+				   temp.Code = MyEntityPM.Code;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"PaymentTerm");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -86,18 +129,63 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					if (!string.IsNullOrEmpty(MyEntity.ExternalId))
 					{
-					    throw new ApplicationException("PaymentTerm with Id " + MyEntity.Id + " doesn't exist");
+						temp = query.GetSinglePMByExternalId(MyEntity.ExternalId, Tenant);
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"PaymentTerm");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("PaymentTerm with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
+					if(temp == null)
+					{   
+					    throw new ApplicationException("PaymentTerm with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("PaymentTerm with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
-					temp.Days = MyEntity.Days;					   
+					temp.Days = MyEntity.Days;
+					temp.ExternalId = MyEntity.ExternalId;
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						temp.Code = MyEntity.Code;
+					}
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						temp.Code = MyEntity.PartnerCode;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)

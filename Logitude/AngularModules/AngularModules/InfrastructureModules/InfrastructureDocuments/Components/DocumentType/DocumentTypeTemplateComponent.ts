@@ -1,4 +1,3 @@
-﻿import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -16,7 +15,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeTemplate',
     templateUrl: './DocumentTypeTemplateComponent.html',
     inputs: ['DocumentType','DocumentTypeTemplates', 'TypeTab'],
@@ -56,12 +55,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         if (this.DocumentType) {
             if (this.TypeTab == "Document") {
 
-                this.Title =   TextCodeTranslator.Translate("DocumentType.TH.Templates")
+                this.Title =   TextCodeTranslator.Translate("DocumentType.O.Templates")
                 this.TemplateTabCode = "P";
             }
             else {
                 this.TemplateTabCode = "M";
-                this.Title =    TextCodeTranslator.Translate("DocumentType.TH.HTMLTemplates")
+                this.Title =    TextCodeTranslator.Translate("DocumentType.O.HTMLTemplates")
             }
 
             this.FillDocumentTypeTemplate();
@@ -314,7 +313,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
-        this.documentTypeTemplatePMService.update(item).subscribe(res=> {
+        this.documentTypeTemplatePMService.update(item).subscribe((res:any) => {
 
         });
     }

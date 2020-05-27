@@ -14,12 +14,13 @@ import { VehicleReductionTypeList } from '../../../../Customs/EntityLists/Vehicl
 
 @Component({
     selector: 'VehicleModificationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './VehicleModificationsComponent.html',
 })
 
 
 export class VehicleModificationsComponent extends BaseComponent {
+  public ObjectTableName: any;
 
     EntityPM: DeclarationPM;
     entityListService: EntityListService = new EntityListService();
@@ -36,9 +37,9 @@ export class VehicleModificationsComponent extends BaseComponent {
         super();
         let myVehicleReductionTypeListService = new VehicleReductionTypeListService();
         myVehicleReductionTypeListService.getAllFromCache().
-            subscribe(res => {
+            subscribe((res:any) => {
                 this._VehicleReductionTypeList = res.Result;
-                this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
                     this.Loaded = true;
                 });
             });
@@ -112,7 +113,7 @@ export class VehicleModificationsComponent extends BaseComponent {
             .GetDeclarationVehicleModification(this.EntityPM.Id,
             chassisNumber, adjustmentTypeCode
             , this.EntityPM.Tenant).
-            subscribe(res => {
+            subscribe((res:any) => {
                 let aryDeclarationVehicleModificationList: DeclarationVehicleModificationList[];
                 aryDeclarationVehicleModificationList = res.Result;
                 this.VehicleModiGroupList = [];

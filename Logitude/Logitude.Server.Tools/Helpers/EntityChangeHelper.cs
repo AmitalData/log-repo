@@ -12,6 +12,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -55,6 +56,7 @@ namespace Logitude.Server.Tools.Helpers
         List<c> Changefields = new List<c>();
         bool IsDelayAutomation = false;
         public bool IsChangeSLA = false;
+        public Object ExternalEntity = null;
         public void AddEntityChange(Object entityPM, Object oldentityPM, string processtype, string entityChangeFieldXml, string tableName, DateTime? startDate = null)
         {
             DateTime dateBefore = DateTime.Now;
@@ -147,20 +149,12 @@ namespace Logitude.Server.Tools.Helpers
                     #region OtherAutomations
                     if (IsRunMasterHouseAutomation)
                     {
-                        if (otherAutomations != null)
-                        {
-                            foreach (Automation item in otherAutomations)
-                            {
-                                automations.Add(item);
-                            }
-                        }
-
+                        if (otherAutomations != null) automations = automations.Concat(otherAutomations).ToList();
                         if (otherAutomationsObjectFieldLists != null)
                         {
                             foreach (ObjectField item in otherAutomationsObjectFieldLists)
                             {
                                 if (!automationsObjectFieldLists.Contains(item)) automationsObjectFieldLists.Add(item);
-
                             }
                         }
 
@@ -172,9 +166,10 @@ namespace Logitude.Server.Tools.Helpers
                     #endregion
 
                     #region Bluid EntityChanges
-                    List<Field> automationFieldLists = new List<Field>();
+                    List<Field> automationConditionFieldLists = new List<Field>();
                     AutomationConditionFields automationConditionFields = new AutomationConditionFields();
-                    foreach (ObjectField objectField in automationsObjectFieldLists)
+
+                    foreach (ObjectField objectField in automationsObjectFieldLists.Where(d => d.ObjectTableId == tableId))
                     {
                         string objectTableName = shipmentobjectTable != null ? shipmentobjectTable.Name : objectTable != null ? objectTable.Name : "";
                         string currentvalue = GetValue(entityPM, objectField);
@@ -217,16 +212,22 @@ namespace Logitude.Server.Tools.Helpers
 
                         Field automationConditionField = new Field()
                         {
-                            Id = objectField.Id,
+                            FieldCode = objectField.FieldCode,
                             Value = currentvalue != null ? currentvalue : "",
+                            OldValue = oldvalue != null ? oldvalue : "",
                             IsChange = ischange,
                             PropertyName = objectField.FieldName,
                         };
 
-                        automationFieldLists.Add(automationConditionField);
+                        automationConditionFieldLists.Add(automationConditionField);
+                    }
+                    List<Field> externalEntityAutomationConditionFieldLists = GetExternalEntityAutomationConditionFieldLists(automationsObjectFieldLists, automationConditionFieldLists, tenant);
+                    if (externalEntityAutomationConditionFieldLists.Count() > 0)
+                    {
+                        automationConditionFieldLists = automationConditionFieldLists.Concat(externalEntityAutomationConditionFieldLists).ToList();
                     }
 
-                    automationConditionFields.Fields = automationFieldLists;
+                    automationConditionFields.Fields = automationConditionFieldLists;
                     automationConditionFields.LastUpdateDate = automationLastUpdate != null ? automationLastUpdate.LastUpdateDate : null;
                     automationConditionFields.ObjectTableId = objectTable.Id;
                     automationConditionFields.OtherObjectTableIdWithLastUpdate = OtherObjectTableIdWithLastUpdate;
@@ -248,7 +249,7 @@ namespace Logitude.Server.Tools.Helpers
                     List<Automation> followUpautomationsList = automations.Where(d => d.ResultCode == "FOLLOWUP" || d.ResultCode == "DOCOUTFOLLOWUP" || d.ResultCode == "DOCINFOLLOWUP").ToList();
                     if (followUpautomationsList.Count > 0)
                     {
-                        ApplyFollowUpAutomation(entityPM, followUpautomationsList, entityChange, automationFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
+                        ApplyFollowUpAutomation(entityPM, followUpautomationsList, entityChange, automationConditionFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
                     }
                     #endregion
 
@@ -256,7 +257,7 @@ namespace Logitude.Server.Tools.Helpers
                     List<Automation> fieldSetAutomationsList = automations.Where(d => d.ResultCode == "FIELDSET").ToList();
                     if (fieldSetAutomationsList.Count > 0)
                     {
-                        ApplySetValueAutomation(entityPM, fieldSetAutomationsList, entityChange, automationFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
+                        ApplySetValueAutomation(entityPM, fieldSetAutomationsList, entityChange, automationConditionFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
                     }
                     #endregion
 
@@ -264,7 +265,7 @@ namespace Logitude.Server.Tools.Helpers
                     List<Automation> setSLAAutomationsList = automations.Where(d => d.ResultCode == "SETSLA").ToList();
                     if (setSLAAutomationsList.Count > 0)
                     {
-                        ApplySetSLAValueAutomation(entityPM, setSLAAutomationsList, entityChange, automationFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
+                        ApplySetSLAValueAutomation(entityPM, setSLAAutomationsList, entityChange, automationConditionFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
                     }
                     #endregion
 
@@ -272,7 +273,7 @@ namespace Logitude.Server.Tools.Helpers
                     List<Automation> QueueautomationsList = automations.Where(d => d.ResultCode == "QUEUE").ToList();
                     if (QueueautomationsList.Count > 0)
                     {
-                        this.ApplyQueuedTaskAutomation(entityPM, QueueautomationsList, entityChange, automationFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
+                        this.ApplyQueuedTaskAutomation(entityPM, QueueautomationsList, entityChange, automationConditionFieldLists, lastUpdateDate, oldentityPM, processtype, entityId, OtherObjectTableIdWithLastUpdate);
                     }
                     #endregion
 
@@ -314,6 +315,57 @@ namespace Logitude.Server.Tools.Helpers
             entityChangeRepository.SubmitChanges();
         }
 
+        #region EntityAutomationFields
+
+        private List<Field> GetExternalEntityAutomationConditionFieldLists(List<ObjectField> automationsObjectFieldLists, List<Field> automationConditionFieldLists, int tenant)
+        {
+            List<Field> externalEntityAutomationConditionFieldLists = new List<Field>();
+            foreach (ObjectField externalEnitityObjectField in automationsObjectFieldLists.Where(d => d.DisplayInAutomationAsEnitity).ToList())
+            {
+                Field externalEntityAutomationConditionField = automationConditionFieldLists.Where(d => d.FieldCode == externalEnitityObjectField.FieldCode).FirstOrDefault();
+                if (externalEntityAutomationConditionField != null)
+                {
+                    List<ObjectField> externalEntityAutomationObjectFieldLists = automationsObjectFieldLists.Where(d => d.ObjectTableId == externalEnitityObjectField.LookUpTableId).ToList();
+                    if (externalEntityAutomationObjectFieldLists.Count() > 0)
+                    {
+                        object externalEntity = GetEntityByIdAndObjectField(externalEntityAutomationConditionField.Value, externalEnitityObjectField, tenant);
+                        List<Field> externalEntityAutomationConditionFieldsValueLists = GetExternalEntityAutomationConditionFieldsValueFromEntity(externalEnitityObjectField, externalEntityAutomationObjectFieldLists, externalEntity);
+                        externalEntityAutomationConditionFieldLists = externalEntityAutomationConditionFieldLists.Concat(externalEntityAutomationConditionFieldsValueLists).ToList();
+                    }
+                }
+            }
+            return externalEntityAutomationConditionFieldLists;
+        }
+
+        private object GetEntityByIdAndObjectField(string entityId, ObjectField objectField, int tenant)
+        {
+            object automationEntity = null;
+            if (!string.IsNullOrEmpty(entityId) && objectField.ObjectTable_LookUpTable != null)
+            {
+                if (objectField.ObjectTable_LookUpTable.Name == "Shipment" && ExternalEntity != null) automationEntity = ExternalEntity;
+                else automationEntity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(objectField.ObjectTable_LookUpTable.Name, entityId, tenant);
+            }
+
+            return automationEntity;
+        }
+
+        private List<Field> GetExternalEntityAutomationConditionFieldsValueFromEntity(ObjectField externalEnitityObjectField, List<ObjectField> externalEntityAutomationObjectFieldLists, object externalEntity)
+        {
+            List<Field> automationFieldLists = new List<Field>();
+            foreach (ObjectField externalEntityAutomationObjectField in externalEntityAutomationObjectFieldLists)
+            {
+                string currentvalue = externalEntity != null ? GetValue(externalEntity, externalEntityAutomationObjectField) : "";
+                Field automationConditionField = new Field() { FieldCode = externalEntityAutomationObjectField.FieldCode, Value = currentvalue != null ? currentvalue : "", OldValue = "", PropertyName = externalEntityAutomationObjectField.FieldName, PartnerObjectFieldCode = externalEnitityObjectField.FieldCode };
+                automationFieldLists.Add(automationConditionField);
+
+            }
+
+            return automationFieldLists;
+        }
+
+        #endregion
+
+
         private EntityChange CreateEntityChange(string entityChangeFieldXml, ObjectTable shipmentobjectTable, int tenant, string entityId, ObjectTable objectTable)
         {
             return new EntityChange()
@@ -328,8 +380,6 @@ namespace Logitude.Server.Tools.Helpers
                 CheckStartDate = TenantServerConfigration.GetCurrentDateTime(tenant),
             };
         }
-
-
         private string GetLoggedContactId(int tenant)
         {
             string loggedContactId = string.Empty;
@@ -435,18 +485,25 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         if (automationCondition.OperatorCode.Contains("F"))
                         {
-                            ObjectField customobjectField = objectFieldLists.Where(d => d.Id == automationCondition.Value).FirstOrDefault();
+                            ObjectField customobjectField = objectFieldLists.Where(d => d.FieldCode == automationCondition.Value).FirstOrDefault();
                             if (customobjectField != null && !customObjectFieldLists.Contains(customobjectField))
                             {
                                 customObjectFieldLists.Add(customobjectField);
                             }
                         }
 
-                        ObjectField objectField = objectFieldLists.Where(d => d.Id == automationCondition.ObjectFieldId).FirstOrDefault();
+                        ObjectField objectField = objectFieldLists.Where(d => d.FieldCode == automationCondition.ObjectFieldCode).FirstOrDefault();
                         if (objectField != null && !customObjectFieldLists.Contains(objectField))
                         {
                             customObjectFieldLists.Add(objectField);
                         }
+
+                        ObjectField partnerObjectField = objectFieldLists.Where(d => d.FieldCode == automationCondition.PartnerObjectFieldCode).FirstOrDefault();
+                        if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
+                        {
+                            customObjectFieldLists.Add(partnerObjectField);
+                        }
+
                     }
                 }
                 #endregion
@@ -459,7 +516,7 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         if (automationSetValue.OperatorCode.Contains("F"))
                         {
-                            ObjectField objectFieldValue = objectFieldLists.Where(d => d.Id == automationSetValue.Value).FirstOrDefault();
+                            ObjectField objectFieldValue = objectFieldLists.Where(d => d.FieldCode == automationSetValue.Value).FirstOrDefault();
                             if (objectFieldValue != null && !customObjectFieldLists.Contains(objectFieldValue))
                             {
                                 customObjectFieldLists.Add(objectFieldValue);
@@ -475,7 +532,7 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     if (automationFollowUp.OwnerFieldType == "Field")
                     {
-                        ObjectField objectFieldValue = objectFieldLists.Where(d => d.Id == automationFollowUp.OwnerValue).FirstOrDefault();
+                        ObjectField objectFieldValue = objectFieldLists.Where(d => d.FieldCode == automationFollowUp.OwnerValue).FirstOrDefault();
                         if (objectFieldValue != null && !customObjectFieldLists.Contains(objectFieldValue))
                         {
                             customObjectFieldLists.Add(objectFieldValue);
@@ -485,7 +542,7 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (automationFollowUp.DateValue != null)
                     {
-                        ObjectField objectFieldValue = objectFieldLists.Where(d => d.Id == automationFollowUp.DateValue.ToString()).FirstOrDefault();
+                        ObjectField objectFieldValue = objectFieldLists.Where(d => d.FieldCode == automationFollowUp.DateValue.ToString()).FirstOrDefault();
                         if (objectFieldValue != null && !customObjectFieldLists.Contains(objectFieldValue))
                         {
                             customObjectFieldLists.Add(objectFieldValue);
@@ -502,14 +559,14 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         if (delayedautomationCondition.OperatorCode.Contains("F"))
                         {
-                            ObjectField customobjectField = objectFieldLists.Where(d => d.Id == delayedautomationCondition.Value).FirstOrDefault();
+                            ObjectField customobjectField = objectFieldLists.Where(d => d.FieldCode == delayedautomationCondition.Value).FirstOrDefault();
                             if (customobjectField != null && !customObjectFieldLists.Contains(customobjectField))
                             {
                                 customObjectFieldLists.Add(customobjectField);
                             }
                         }
 
-                        ObjectField objectField = objectFieldLists.Where(d => d.Id == delayedautomationCondition.ObjectFieldId).FirstOrDefault();
+                        ObjectField objectField = objectFieldLists.Where(d => d.FieldCode == delayedautomationCondition.ObjectFieldCode).FirstOrDefault();
                         if (objectField != null && !customObjectFieldLists.Contains(objectField))
                         {
                             customObjectFieldLists.Add(objectField);
@@ -524,7 +581,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 foreach (AutomationResultEmailRecipient automationResultEmailRecipient in resultEmailRecipient)
                 {
-                    ObjectField objectField = objectFieldLists.Where(d => d.Id == automationResultEmailRecipient.RecipientValue).FirstOrDefault();
+                    ObjectField objectField = objectFieldLists.Where(d => d.FieldCode == automationResultEmailRecipient.RecipientValue).FirstOrDefault();
 
                     if (objectField != null && !customObjectFieldLists.Contains(objectField))
                     {
@@ -648,7 +705,7 @@ namespace Logitude.Server.Tools.Helpers
                     propInfo.SetValue(entityPM, newValue, null);
                     c fieldc = new c()
                     {
-                        f = AutomationSetSLAValue.ObjectFieldId,
+                        f = AutomationSetSLAValue.ObjectFieldCode,
                         o = oldValue.ToString(),
                         n = newValue.ToString(),
                     };
@@ -740,43 +797,14 @@ namespace Logitude.Server.Tools.Helpers
 
             #region Set Field Value
 
-            object oldValue;
-            object newValue = "";
 
             foreach (AutomationSetValue item in AutomationSetValueLists)
             {
                 PropertyInfo propInfo = entityPM.GetType().GetProperty(item.FieldName);
-
                 if (propInfo != null)
                 {
-                    oldValue = propInfo.GetValue(entityPM);
-
-                    #region Get New Value
-
-                    if (item.OperatorCode.Contains("F"))
-                    {
-                        Field field = automationFieldLists.Where(d => d.Id == item.Value).FirstOrDefault();
-                        if (field != null) newValue = field.Value;
-                    }
-
-                    else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
-                    {
-                        newValue = ConvertToDate(item.Value);
-                    }
-
-                    else if (item.DataTypeCode.Trim() == "Boolean")
-                    {
-                        if (!string.IsNullOrEmpty(item.Value))
-                        {
-                            newValue = item.Value.ToLower() == "true" ? true : false;
-                        }
-
-                        else newValue = false;
-                    }
-
-                    else newValue = item.Value;
-
-                    #endregion
+                    object oldValue = propInfo.GetValue(entityPM);
+                    object newValue = ResolveSetFieldValue(automationFieldLists, item);
 
                     if (oldValue == null) oldValue = "";
                     if (newValue == null) newValue = "";
@@ -786,7 +814,7 @@ namespace Logitude.Server.Tools.Helpers
                         propInfo.SetValue(entityPM, newValue, null);
                         c fieldc = new c()
                         {
-                            f = item.ObjectFieldId,
+                            f = item.ObjectFieldCode,
                             o = oldValue.ToString(),
                             n = newValue.ToString(),
                         };
@@ -804,14 +832,44 @@ namespace Logitude.Server.Tools.Helpers
             entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
         }
 
+        private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
+        {
+            object result = null;
+
+            if (item.OperatorCode.Contains("F"))
+            {
+                Field field = automationFieldLists.Where(d => d.FieldCode == item.Value).FirstOrDefault();
+                if (field != null) result = field.Value;
+            }
+
+            else if (item.DataTypeCode.Trim() == "DateTime" || item.DataTypeCode.Trim() == "Date")
+            {
+                result = ConvertToDate(item.Value);
+            }
+
+            else if (item.DataTypeCode.Trim() == "Boolean")
+            {
+                if (!string.IsNullOrEmpty(item.Value)) result = !string.IsNullOrEmpty(item.Value) && item.Value.ToLower() == "true" ? true : false;
+            }
+
+            else if (item.DataTypeCode.Trim() == "Integer")
+            {
+                result = !string.IsNullOrEmpty(item.Value) ? Int32.Parse(item.Value) : 0;
+            }
+            else result = item.Value;
+
+
+            return result;
+        }
+
         #endregion
 
         #region Validate Automation And Condition
         private bool ValidateCondition(List<Field> automationConditionFieldLists, AutomationCondition automationCondition, EntityChange entityChange)
         {
             bool isValid = true;
-
-            Field automationConditionField = automationConditionFieldLists.Where(d => d.Id == automationCondition.ObjectFieldId).FirstOrDefault();
+            string automationConditionPartnerObjectFieldCode = !string.IsNullOrEmpty(automationCondition.PartnerObjectFieldCode) ? automationCondition.PartnerObjectFieldCode : null;
+            Field automationConditionField = automationConditionFieldLists.Where(d => d.FieldCode == automationCondition.ObjectFieldCode && automationConditionPartnerObjectFieldCode == d.PartnerObjectFieldCode).FirstOrDefault();
 
             if (automationConditionField != null)
             {
@@ -825,7 +883,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (automationCondition.OperatorCode.Contains("F"))
                 {
-                    Field item = automationConditionFieldLists.Where(d => d.Id == automationConditionvalue).FirstOrDefault();
+                    Field item = automationConditionFieldLists.Where(d => d.FieldCode == automationConditionvalue).FirstOrDefault();
 
                     if (item != null)
                     {
@@ -853,11 +911,16 @@ namespace Logitude.Server.Tools.Helpers
                             {
                                 int days = 0;
                                 if (!string.IsNullOrEmpty(datearray[1])) days = Int32.Parse(datearray[1]);
-                                DateTime date = TenantServerConfigration.GetCurrentDateTime(automationCondition.Tenant);
-                                int dateEscalationTime = datearray[0] == "@today+" ? days : days * -1;
-                                date = date.AddDays(dateEscalationTime);
+                                int dateEscalationTime = 0;
+                                DateTime? date = datearray[0].Contains("old") ? FieldValueResolver.ConvertToDate(automationConditionField.OldValue) : TenantServerConfigration.GetCurrentDateTime(automationCondition.Tenant);
                                 CustomFieldClass customFieldClass = new CustomFieldClass();
-                                automationConditionvalue = customFieldClass.ConvertToString(Convert.ToDateTime(date));
+
+                                dateEscalationTime = (datearray[0] == "@today+" || datearray[0] == "@old value+") ? days : days * -1;
+                                if (date != null)
+                                {
+                                    date = date.Value.AddDays(dateEscalationTime);
+                                    automationConditionvalue = customFieldClass.ConvertToString(Convert.ToDateTime(date));
+                                }
                             }
                         }
 
@@ -865,6 +928,12 @@ namespace Logitude.Server.Tools.Helpers
                         if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Length >= 9) automationConditionFieldValue = automationConditionFieldValue.Remove(8);
                     }
                 }
+
+                else if (automationCondition.ObjectFieldType == "Decimal" || automationCondition.ObjectFieldType == "Integer" || automationCondition.ObjectFieldType == "Double")
+                {
+                    automationConditionvalue = FieldValueResolver.GetFieldStringValue(new ObjectField() { DataTypeCode = automationCondition.ObjectFieldType }, automationCondition.Value);
+                }
+
 
                 else if (!string.IsNullOrEmpty(automationCondition.Value) && automationCondition.Value.Contains("@StatusName:"))
                 {
@@ -1193,14 +1262,14 @@ namespace Logitude.Server.Tools.Helpers
                 if (automationFollowUp.OwnerFieldType == "Field")
                 {
                     ownerId = "";
-                    Field field = automationFieldLists.Where(d => d.Id == automationFollowUp.OwnerValue).FirstOrDefault();
+                    Field field = automationFieldLists.Where(d => d.FieldCode == automationFollowUp.OwnerValue).FirstOrDefault();
                     if (field != null) ownerId = field.Value;
                 }
 
                 //Date
                 if (!string.IsNullOrEmpty(automationFollowUp.DateValue))
                 {
-                    Field field = automationFieldLists.Where(d => d.Id == automationFollowUp.DateValue).FirstOrDefault();
+                    Field field = automationFieldLists.Where(d => d.FieldCode == automationFollowUp.DateValue).FirstOrDefault();
                     if (field != null)
                     {
                         followUpDateFieldName = field.PropertyName;
@@ -1702,5 +1771,18 @@ namespace Logitude.Server.Tools.Helpers
 
             return lastUpdate;
         }
+
+        public static bool IsShowLogBoxAutomationFields()
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.LogitudeURL == "http://localhost:9996"))
+            {
+                result = true;
+            }
+            return result;
+        }
+
+
+
     }
 }

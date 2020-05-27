@@ -36,6 +36,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -377,7 +378,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             CardRepository cardRepository = new CardRepository(commonContext);
             BranchRepository branchRepository = new BranchRepository(commonContext);
             CurrencyRepository currencyRepository = new CurrencyRepository(commonContext);
-
+            MeasurementRepository measurementRepository = new MeasurementRepository(commonContext);
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(commonContext);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
 
@@ -386,6 +387,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(entityPM.Tenant);
 
             List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(entityPM.Tenant).ToList();
+            List<Measurement> allMeasurements = measurementRepository.GetMeasurements(entityPM.Tenant).ToList();
             //List<VatType> vatTypes = vatTypeRepository.GetVatTypes(entityPM.Tenant).ToList();
 
             if (entityPM.InvoiceLines.All(l => allChargesTypes.First(c => c.Id == l.ChargesTypeId).IsExpense == true))//l.IsExpense == true &&
@@ -436,6 +438,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                 throw new ApplicationException("Company Vat Number is required");
             }
 
+            if (entityPM.InvoiceDate == null)
+            {
+                throw new ApplicationException("Invoice Date is required");
+            }
 
             //if (string.IsNullOrEmpty(billToCard.VatNumber))
             //{
@@ -530,9 +536,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             comprobante.Version = "3.3";
             comprobante.Folio = folio;
             DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            comprobante.Fecha = entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;
+            // var invoiceDate = entityPM.InvoiceDate.Value.ToUniversalTime();
+            comprobante.Fecha = entityPM.InvoiceDate.Value;//entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;c
             comprobante.Fecha = new DateTime(comprobante.Fecha.Year, comprobante.Fecha.Month, comprobante.Fecha.Day, currentDateTime.Hour, currentDateTime.Minute, currentDateTime.Second);
-
+            //comprobante.Fecha = comprobante.Fecha.ToUniversalTime();
             //comprobante.formaDePago = "una sola exhibición";
 
             comprobante.FormaPago = satPaymentMethod.Code;
@@ -640,11 +647,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                     concepto.Descripcion = line.Description;
                     concepto.Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)));
                     decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
-                    concepto.ValorUnitario = GetDecimalWith2DigitsAfterPoint(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
+                    concepto.ValorUnitario = GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
 
                     concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
-                    concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(line.MeasurementCode, "G-Profact", "Measurement");//"C81";
-                                                                                                                                                       //line.mea
+                    var lineMeasurement = allMeasurements.FirstOrDefault(m => m.Id == line.MeasurementId);
+                    if (lineMeasurement != null)
+                        concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(lineMeasurement.Code, "G-Profact", "Measurement");//"C81";
+                                                                                                                                                           //line.mea
                     if (string.IsNullOrEmpty(concepto.ClaveProdServ))
                     {
                         throw new Exception("Measurement on charge type is required");
@@ -693,11 +702,22 @@ namespace Logitude.BL.InvoiceModel.Tools
                     profitAmountTotal += record.ProfitCurrencyVATAmount;
                     invoiceVatableAmountTotal += record.InvoiceCurrencyVatableAmount;
                 }
-                var subtotal = Math.Abs(invoiceVatableAmountTotal.Value);
-                var total = Math.Abs((invoiceVatableAmountTotal + invoiceAmountTotal).Value);
-                comprobante.SubTotal = Math.Abs((decimal)subtotal);
-                comprobante.Total = Math.Abs((decimal)total);
+                //var subtotal = Math.Abs(invoiceVatableAmountTotal.Value);
+                //var total = Math.Abs((invoiceVatableAmountTotal + invoiceAmountTotal).Value);
+                //comprobante.SubTotal = Math.Abs((decimal)subtotal);
+                //comprobante.Total = Math.Abs((decimal)total);
 
+                double subtotal = 0;
+                List<ARInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
+                foreach (var line in myDataLines)
+                {
+                    subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
+                }
+
+                comprobante.SubTotal = Math.Abs((decimal)subtotal);
+                var total = Math.Abs((subtotal + invoiceAmountTotal).Value);
+                comprobante.Total = Math.Abs((decimal)total);
+                //comprobante.Total = Math.Abs((decimal)total);
             }
 
 
@@ -712,7 +732,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     string total_tasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";
                     Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);//&& (totalVat.VATPercent != 0)
                     if (traslado == null
-                        || (traslado!= null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000") 
+                        || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
                     {
                         //if (totalVat.VATPercent != 0)
@@ -948,7 +968,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ExternalVATCard;
+                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1111,7 +1131,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (traslado.TipoFactor == "Tasa")
                     {
-                        traslado.TasaOCuota = line.VatPercentage != 0 ?(line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                        traslado.TasaOCuota = line.VatPercentage != 0 ? (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                         traslado.Importe = GetImporte(line.InvoiceCurrencyAmount, line.VatPercentage);//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
                         traslado.ImporteSpecified = true;
                         traslado.TasaOCuotaSpecified = true;
@@ -1160,7 +1180,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ExternalVATCard;
+                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1227,7 +1247,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.TasaOCuota = lineTotal.VATPercent != 0 ?(lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                            traslado.TasaOCuota = lineTotal.VATPercent != 0 ? (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                             traslado.Importe = (decimal)lineTotal.InvoiceCurrencyVATAmount;//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2));
                             traslado.ImporteSpecified = true;
                             traslado.TasaOCuotaSpecified = true;
@@ -1376,6 +1396,9 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         private void SendProfactoCancellationRequest33(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
+            if (entityPoco.SATTransferStatusCode == "TG")
+                throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
+
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {
                 Encoding encoding = Encoding.UTF8;
@@ -1455,8 +1478,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
 
 
-            ContactRepository contactRepository = new ContactRepository(commonContext);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            //ContactRepository contactRepository = new ContactRepository(commonContext);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);//contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
 
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
@@ -1571,7 +1594,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 LocalCurrencyAmount = item.LocalCurrencyAmount,
                                 InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                 ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                ExternalVatCard = lineVatType.ExternalVATCard,
+                                ExternalVatCard = lineVatType.ReceivablesExternalId,
                                 ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                             };
 
@@ -1595,7 +1618,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                 if (vatType != null)
                                 {
-                                    newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                     newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                 }
 
@@ -1947,7 +1970,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             TimeSpan time = new TimeSpan(12, 00, 00);
             DateTime resultdate = pagoItem.FechaPago.Date + time;
             pagoItem.FechaPago = resultdate;
-            if (entityPM.FechaPago != null && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
+            if (entityPM.FechaPago != null)// && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
             {
                 pagoItem.FechaPago = entityPM.FechaPago.Value;
             }
@@ -1956,6 +1979,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             int number = 1;
             paymentARInvoices.ForEach(invoice =>
             {
+                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
                                                              where a.ARInvoiceId == invoice.Id && a.Tenant == invoice.Tenant
                                                              select a).ToList();
@@ -1968,7 +1993,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 ARInvoicePayment currentARInvoicePayment = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == entityPM.Id);
                 decimal previouslySentPaymentsTotal = 0;
-                decimal invoiceAmount = (decimal)invoice.AmountInInvoiceCurrency.Value;
+                decimal invoiceAmount = (decimal)invoiceComprobante.Total;//invoice.AmountInInvoiceCurrency.Value; // 
                 decimal currentPaymentAmount = (decimal)currentARInvoicePayment.ForeignAmount;
 
                 if (entityPM.AmountInPaymentCurrency == invoice.AmountInInvoiceCurrency) // one payment
@@ -1998,7 +2023,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 }
 
-
+                 
                 decimal imSaldoAnt = (invoiceAmount - previouslySentPaymentsTotal);
                 doctoItem.ImpSaldoAnt = GetDecimalWith2DigitsAfterPoint((invoiceAmount - previouslySentPaymentsTotal)); // previous amount (not sent to profact amount)
                 doctoItem.ImpSaldoAntSpecified = true;
@@ -2016,7 +2041,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     if (paymentCurrency.Code == "MXN" || paymentCurrency.Code == "MX")
                     {
                         decimal tipoCambioDR = 1 / (decimal)paymentInvoice.ExchangeRate.Value;
-                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR));
+                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR)) + decimal.Parse("0.000001");
                     }
                     else
                         doctoItem.TipoCambioDR = (decimal)paymentInvoice.ExchangeRate.Value;
@@ -2024,7 +2049,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                     doctoItem.TipoCambioDRSpecified = true;
                 }
 
-                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
 
                 if (invoiceComprobante.Complemento.Any != null)
                 {
@@ -2285,7 +2309,13 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
 
 
-
+        private decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
+        {
+            decimal result = decimal.Parse(dNumber.ToString("0.00"));
+            if (result == 0 && dNumber != 0)
+                result = decimal.Parse(dNumber.ToString("0.000"));
+            return result;
+        }
         private decimal GetDecimalWith2DigitsAfterPoint(decimal dNumber)
         {
             return decimal.Parse(dNumber.ToString("0.00"));

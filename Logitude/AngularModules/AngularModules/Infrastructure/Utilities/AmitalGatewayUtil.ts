@@ -565,12 +565,12 @@ export class AmitalGatewayUtil {
                 SessionLocator.SelectedSession.SessionLocation.viewContainerRef
                 //SessionLocator.AllSessions[1].SessionLocation.viewContainerRef
             )
-                .then(cmpRef => {
+                .then((cmpRef:any) => {
                      //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
                     let myEditComponent: EditComponent = cmpRef.instance;
                     let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
-                    this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe(data => {
+                    this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
                         cmpRef.instance.Run({
                             EntityId: (data && data.Result) ? data.Result.Id : unifreightMessage.LogitudeEntityNumber, //unifreightMessage.LogitudeEntityNumber,//"1-103991"
  
@@ -642,7 +642,7 @@ export class AmitalGatewayUtil {
                                             mySelectedInvoiceItem.CounterKey,
                                             mySelectedInvoiceItem.LineNumber,
                                             mySelectedInvoiceItem.Tenant).subscribe(
-                                            serviceResponse => {
+                                            (serviceResponse:any) => {
                                                 let xmlSupplierInvoiceSelector: string
                                                     = serviceResponse.Result;
                                                 //xmlSupplierInvoiceSelector = serviceResponse.

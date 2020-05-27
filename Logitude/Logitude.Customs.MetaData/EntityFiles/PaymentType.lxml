@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Payment Type&quot;"
-  Code="&quot;a390&quot;"
-  Name="&quot;Customs.PaymentType Query Group&quot;"
+  Code="&quot;PAYT&quot;"
+  Name="&quot;Customs.PaymentType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;30460176-6e74-4e05-889a-2c37587dd485&quot;"
     FieldName="&quot;Code&quot;"
@@ -311,21 +313,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,מזומן&quot;"
+      Inactive="false"
+      LocalName="&quot;מזומן&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,אשראי&quot;"
+      Inactive="false"
+      LocalName="&quot;אשראי&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,כתב התחייבות&quot;"
+      Inactive="false"
+      LocalName="&quot;כתב התחייבות&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PaymentType&quot;"
+    ObjectTableName="&quot;Customs.PaymentType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PaymentType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PAYT&quot;"
+    QueryGroupName="&quot;Customs.PaymentType&quot;"
+    LocalTextCode="&quot;סוג אמצעי תשלום&quot;"
+    TextCode="&quot;Invoice Payment Method Types&quot;"
+    TextCodeCode="&quot;Customs.PaymentType.Q.PaymentTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PAYMENTTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PaymentType.Features.PaymentTypes&quot;"
+    FeatureDefaultText="&quot;Payment Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PaymentType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PaymentType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PaymentType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PaymentType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PaymentType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PaymentType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -71,6 +72,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 myDataProvider.HouseNumber = shipmentPM.House != null ? shipmentPM.House : "";
+                myDataProvider.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
 
                 #region Amounts
                 if (shipmentPM.GrossWeight != null)
@@ -233,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.HouseNumber = myDataProvider.HouseNumber;
                     newlabel.UserName = myDataProvider.UserName;
                     newlabel.ConsigneePhoneNumber = myDataProvider.ConsigneePhoneNumber;
+                    newlabel.AirlineLogo = myDataProvider.AirlineLogo;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);
@@ -249,10 +252,11 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBLabelsDataProvider myDataProvider, int tenant)
         {
-            if (User != null)
+            string contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contactPM = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                ContactPM contactPM = contactQuery.GetContactByEmailOnly(contactEmail, tenant);
 
                 if (contactPM != null)
                 {

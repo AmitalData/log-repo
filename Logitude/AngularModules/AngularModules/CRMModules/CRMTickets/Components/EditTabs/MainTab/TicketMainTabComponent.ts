@@ -19,30 +19,24 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 import {UserList} from '../../../../../Common/EntityLists/UserList';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
-import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
 import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
-import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {SendEmailArgs, ActivityInputArgs} from '../../../../../CRM/Args';
 import {TicketValidator} from '../../../../../CRM/Validators/TicketValidator';
-import {RatingList} from '../../../../../CRM/EntityLists/RatingList';
-import {RatingListService} from '../../../../../CRM/Services/StandardLists/RatingListService';
-import {ListComponentArgs} from '../../../../../Infrastructure/Args';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService'
 import {ActivityList} from '../../../../../CRM/EntityLists/ActivityList';
 import {DateTimePipe} from '../../../../../Controls/Pipes/DateTimePipe';
 import {CommunicationLogPM} from '../../../../../Common/EntityPMs/CommunicationLogPM';
-import {CommunicationLogPMService} from '../../../../../Common/Services/StandardPMs/CommunicationLogPMService';
-import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ContactList} from '../../../../../Common/EntityLists/ContactList';
-import {ContactListService} from '../../../../../Common/Services/StandardLists/ContactListService';
-declare var window: any;
+import { ContactListService } from '../../../../../Common/Services/StandardLists/ContactListService';
+import { ContactPMService } from '../../../../../Common/Services/StandardPMs/ContactPMService';
+import { ContactPM } from '../../../../../Common/EntityPMs/ContactPM';
 
+declare var window: any;
 
 @Component({
     selector: 'MainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketMainTabComponent.html',
 })
 
@@ -672,7 +666,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -747,7 +741,6 @@ export class CorrespondenceViewModelData extends BaseComponent {
         this.Height = this.myBaseHight;
         this.ImageSrc = CRMTool.GetActivityImageSrc(this.entityPM.ActivityTypeCode);
         this.AttachmentsList = this.FillAttachments();
-        //this.OnTextBoxLoaded();
         this.RunComponentTimer();
         this.GetFlowDirection();
         this.RefreshTextAlgimentVariables();
@@ -756,7 +749,101 @@ export class CorrespondenceViewModelData extends BaseComponent {
         this._TextAreaId2 = "TextArea_2" + idIndex;
         this.timerToken = setTimeout(() => this.GetRecipients(), 1);
         this.SourceText = this.GetSourceText();
-        //this.GetRecipients();
+        this.UserImageDetailId = item.ContactImageDetailId;
+
+        this.ComputeUserNameImage();
+    }
+
+    UserImageDetailId: string;
+    UserImagebackground: string;
+    UserNameImage: string;
+    private ComputeUserNameImage() {
+        if (!this.UserImageDetailId) {
+            if (this.entityPM.ContactName) {
+                var Name: string[] = this.entityPM.ContactName.split(' ');
+
+                var userNameImage = "";
+
+                if (Name.length == 1) {
+                    if (Name[0]) {
+                        if (Name[0].length > 2) {
+                            userNameImage = Name[0].charAt(0);
+                            userNameImage += Name[0].charAt(1);
+                        }
+                        else {
+                            userNameImage = Name[0];
+                        }
+                    }
+
+                }
+                else if (Name.length > 1) {
+
+                    if (Name[0]) {
+                        if (Name[0].length > 1) {
+                            userNameImage += Name[0].charAt(0);
+                        }
+                        else {
+                            userNameImage += Name[0];
+                        }
+                    }
+
+                    if (Name[1]) {
+
+                        if (Name[1].length > 1) {
+                            userNameImage += Name[1].charAt(0);
+                        }
+                        else {
+                            userNameImage += Name[1];
+                        }
+                    }
+                    else {
+
+                        if (Name[0].length > 2) {
+
+                            userNameImage = Name[0].charAt(0);
+                            userNameImage += Name[0].charAt(1);
+
+
+                        }
+                        else {
+                            userNameImage = Name[0];
+                        }
+                    }
+
+                }
+
+                if (userNameImage) this.UserNameImage = userNameImage.toUpperCase();
+
+            }
+        }
+
+        this.UserImagebackground = this.entityPM.ContactDefaultColor;
+    }
+
+    ImageUploadedCompleted(event) {
+        var contactService: ContactPMService = new ContactPMService();
+        contactService.get(this.entityPM.CreatedByContactId).subscribe((res:any) => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError && pmResponse.Result) {
+                var contactPM: ContactPM = pmResponse.Result;
+
+                if (contactPM != null) {
+                    if (this.UserImageDetailId != event) {
+                        this.CurrentSession.StartBusyIndicatorSaving();
+
+                        this.UserImageDetailId = event;
+                        contactPM.ImageDetailId = event;
+                        contactService.update(contactPM).subscribe((res:any) => {
+                            var pmResponse: ServiceResponse = res;
+
+                            this.CurrentSession.StopBusyIndicator();
+                        });
+
+                        //this.BuildItemsSource();
+                    }
+                }
+            }
+        });
     }
 
     private myBaseHight = "90px";
@@ -821,7 +908,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.OnTextBoxLoaded(), 1);
         }
     }
@@ -1159,7 +1246,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     }
 
     EditActivity() {
-        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -1473,7 +1560,7 @@ export class ActivityItemClass extends BaseComponent {
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

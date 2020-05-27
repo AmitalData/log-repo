@@ -43,7 +43,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
-        
+        public IQueryable<RuleConditionField> GetRuleConditionFieldsByRuleId(string ruleId,int tenant)
+        {
+            IQueryable<RuleConditionField> ruleConditionFields = from a in context.RuleConditionFields.Include("ObjectField")
+                                                                 where a.Tenant == tenant && a.ObjectTableRuleId == ruleId
+                                                                 select a;
+            return ruleConditionFields;
+
+        }
+
 
         public static List<RuleConditionField> GetObjectRuleConditionFieldsByTenant(int tenant)
         {
@@ -86,7 +94,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 foreach (RuleConditionField field in ruleConditionField)
                 {
                     RuleConditionField existedRuleField = (from a in selectedFields
-                                                   where a.ObjectFieldId == field.ObjectFieldId && a.ObjectTableRuleId == field.ObjectTableRuleId
+                                                   where a.ObjectFieldCode == field.ObjectFieldCode && a.ObjectTableRuleId == field.ObjectTableRuleId
                                                    select a).FirstOrDefault();
                     if (existedRuleField != null)
                     {

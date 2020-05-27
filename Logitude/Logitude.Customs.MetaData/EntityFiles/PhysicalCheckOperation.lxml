@@ -36,7 +36,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;77d51423-a9ad-4068-a887-fa1cd9e924b7&quot;"
     FieldName="&quot;Code&quot;"
@@ -311,21 +313,74 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,invite,זימון&quot;"
+      Inactive="false"
+      LocalName="&quot;זימון&quot;"
+      EnglishName="&quot;Invite&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,update,עדכון&quot;"
+      Inactive="false"
+      LocalName="&quot;עדכון&quot;"
+      EnglishName="&quot;Update&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,cancel,ביטול&quot;"
+      Inactive="false"
+      LocalName="&quot;ביטול&quot;"
+      EnglishName="&quot;Cancel&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,cancel invitation,ביטול יזום&quot;"
+      Inactive="false"
+      LocalName="&quot;ביטול יזום&quot;"
+      EnglishName="&quot;Cancel Invitation&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,end - moved to another site,סיום -העברה לאתר אחר&quot;"
+      Inactive="false"
+      LocalName="&quot;סיום -העברה לאתר אחר&quot;"
+      EnglishName="&quot;End - moved to another site&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,end - moved to customer,סיום -העברה לאתר אחר&quot;"
+      Inactive="false"
+      LocalName="&quot;סיום -העברה לאתר אחר&quot;"
+      EnglishName="&quot;End - Moved to Customer&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PhysicalCheckOperation&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PhysicalCheckOperation&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

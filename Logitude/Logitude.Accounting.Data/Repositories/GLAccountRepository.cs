@@ -38,6 +38,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
+        public List<GLAccount> GetChildAccountsQ(IQueryable<String> gLAccountIdQ, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b)
+                    select a).ToList();
+        }
+
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
         {
             return (from a in context.GLAccounts
@@ -207,12 +214,13 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
-             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId)
+             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
+             string ChartOfAccountsTypeCode)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode)
             .Select(a => a.Id);
 
         }
@@ -324,7 +332,8 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
-            string Category1, string Category2, string Category3, string Category4, string Category5)
+            string Category1, string Category2, string Category3, string Category4, string Category5,
+            string ChartOfAccountsTypeCode)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -367,6 +376,10 @@ namespace Logitude.Accounting.Data.Repositories
             if (!string.IsNullOrWhiteSpace(Category5))
             {
                 q = q.Where(a => a.Category5Id == Category5);
+            }
+            if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
+            {
+                q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
             }
             return q;
         }
@@ -633,8 +646,15 @@ namespace Logitude.Accounting.Data.Repositories
             }
 
         }
-       
-       public List<GLAccount> GetByInternalNumber(String internalNumber, int tenant)
+        public List<string> GetIdsByInternalNumber(String internalNumber, int tenant)
+        {
+            IQueryable<GLAccount> query = from a in context.GLAccounts
+                                          where a.InternalNumber == internalNumber && a.Tenant == tenant
+                                          select a;
+            return query.Select(r => r.Id).ToList();
+
+        }
+        public List<GLAccount> GetByInternalNumber(String internalNumber, int tenant)
         {
             if (String.IsNullOrEmpty(internalNumber))
             {
@@ -839,6 +859,32 @@ namespace Logitude.Accounting.Data.Repositories
                }
            }
        }
+
+        public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
+        {
+            if (String.IsNullOrEmpty(displayNumber) || String.IsNullOrEmpty(accTypeCode))
+            {
+                List<GLAccount> rv = new List<GLAccount>();
+                return rv;
+            }
+            else
+            {
+                IQueryable<GLAccount> query = from a in context.GLAccounts
+                                              where a.DisplayNumber == displayNumber && a.AccountTypeCode == accTypeCode && a.Tenant == tenant
+                                              select a;
+                if (query.Any())
+                {
+                    return (query).ToList();
+                }
+                else
+                {
+                    List<GLAccount> rv = new List<GLAccount>();
+                    return rv;
+                }
+            }
+        }
+
+
         public IQueryable<string> GetQId(List<string> AllIdAccounts,int tenant)
         {
             return

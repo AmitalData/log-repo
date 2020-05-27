@@ -41,6 +41,13 @@ public void GeneratePM(string xmlFilePath,string outputFilePath)
 	 pmnamespacestring = GetPMNameSpace(outputFilePath);
     }
 var entity = FromPMFile(xmlFilePath);
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 WritePMMethod(entity);
 SavePMOutput(outputFilePath);
 }

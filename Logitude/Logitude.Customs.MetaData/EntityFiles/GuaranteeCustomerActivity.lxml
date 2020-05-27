@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג פעילות לקוח ערבות&quot;"
   DefaultText="&quot;Guarantee Customer Activity&quot;"
-  Code="&quot;ae81&quot;"
-  Name="&quot;Customs.GuaranteeCustomerActivity Query Group&quot;"
+  Code="&quot;GAQG&quot;"
+  Name="&quot;Customs.GuaranteeCustomerActivity&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;eac38074-f607-4f4a-9de9-43ae373ffe7e&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,78 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;GuaranteeCustomerActivity&quot;"
+    ObjectTableName="&quot;Customs.GuaranteeCustomerActivity&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.GuaranteeCustomerActivity&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;GAQG&quot;"
+    QueryGroupName="&quot;Customs.GuaranteeCustomerActivity&quot;"
+    LocalTextCode="&quot;סוג פעילות לקוח ערבות&quot;"
+    TextCode="&quot;GuaranteeCustomerActivity&quot;"
+    TextCodeCode="&quot;Customs.GuaranteeCustomerActivity.Q.GuaranteeCustomerActivityQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;GUARANTEECUSTOMERACTIVITY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.GuaranteeCustomerActivity.Features.GuaranteeCustomerActivity&quot;"
+    FeatureDefaultText="&quot;GuaranteeCustomerActivity&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;GuaranteeCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;GuaranteeCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;GuaranteeCustomerActivity&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;GuaranteeCustomerActivity&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.GuaranteeCustomerActivity&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.GuaranteeCustomerActivity&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -59,6 +59,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                           CanTransferToDropbox = a.CanTransferToDropbox,
                           AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
+                          CanTransferToFTP = a.CanTransferToFTP,
                       }).FirstOrDefault();
           });
         }
@@ -89,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                         CanTransferToDropbox = a.CanTransferToDropbox,
                         AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-
+                        CanTransferToFTP = a.CanTransferToFTP,
                     }).FirstOrDefault();
         }
 
@@ -120,7 +121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                         CanTransferToDropbox = a.CanTransferToDropbox,
                         AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-
+                        CanTransferToFTP = a.CanTransferToFTP,
                     }).FirstOrDefault();
         }
 
@@ -149,7 +150,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                        CanTransferToDropbox = a.CanTransferToDropbox,
                        AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-
+                       CanTransferToFTP = a.CanTransferToFTP,
                    };
         }
 
@@ -178,7 +179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AllowARPaymentsTransfer = entity.AllowARPaymentsTransfer,
                              CanTransferToDropbox = entity.CanTransferToDropbox,
                              AllowAPPaymentsTransfer = entity.AllowAPPaymentsTransfer,
-
+                             CanTransferToFTP = entity.CanTransferToFTP,
                          };
 
             return result;

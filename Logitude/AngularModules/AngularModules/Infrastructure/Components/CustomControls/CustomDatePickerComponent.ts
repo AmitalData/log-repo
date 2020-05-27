@@ -7,17 +7,18 @@ import {FormGroup, FormBuilder} from '@angular/forms';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'CustomDatePicker',
     templateUrl: './CustomDatePickerComponent.html',
-    inputs: ['ObjectField', 'QueryId', 'IsDisabled']
+    inputs: ['ObjectField', 'QueryId', 'QueryCode', 'IsDisabled']
 })
 
 export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     public myForm: FormGroup;
     DataContext: any = this;
     QueryId: string;
+    QueryCode: string;
     public FromDate: any = null;
     public ToDate: any = null;
     public Text: string = null;
@@ -113,7 +114,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.LastYear += " - ";
         this.LastYear += AppTool.PadLeft(lastYearDateParts2.Day + "", 2, "0") + '-' + AppTool.PadLeft(lastYearDateParts2.Month + "", 2, "0") + '-' + lastYearDateParts2.Year;
 
-        var predefinedFilter = window.PreDefinedFilters.filter(d => d.ObjectFieldId == this.ObjectField.Id && d.QueryId == this.QueryId)[0];
+        var predefinedFilter = window.PreDefinedFilters.filter(d => d.ObjectFieldId == this.ObjectField.Id && d.QueryCode == this.QueryCode)[0];
         if (predefinedFilter != null && (this.ObjectField.DataTypeCode == "DateTime" || this.ObjectField.DataTypeCode == "Date")) {
             this.SelectedItem = predefinedFilter.PredefinedValue;
             if (this.SelectedItem == "NoDate") {
@@ -148,6 +149,9 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
             this.SetDisplayText();
         }
         if (this.ObjectField.IsRequiered == true) {
+            this.NoDateVisibile = false;
+        }
+        if (this.ObjectField.FieldName == "CreateDateTime") {
             this.NoDateVisibile = false;
         }
     }

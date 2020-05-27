@@ -38,8 +38,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Custom Document Type&quot;"
-  Code="&quot;0865&quot;"
-  Name="&quot;Customs.CustomDocumentType Query Group&quot;"
+  Code="&quot;CUDT&quot;"
+  Name="&quot;Customs.CustomDocumentType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;755f71f9-6c1f-446e-9305-d1adf80b64d2&quot;"
     FieldName="&quot;Code&quot;"
@@ -651,7 +653,7 @@
     OldFieldName="&quot;IsCourierManadatory&quot;"
     IsNew="true"
     IsChecked="true"
-    IsDeleted="true"
+    IsDeleted="false"
     ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
@@ -791,46 +793,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="6"
-    IsReadOnly="true"
-    IsHeaderScreen="false">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;PointerLevel&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="4"
-        ObjectFieldName="&quot;IsDiamondManadatory&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="5"
-        ObjectFieldName="&quot;IsCourierManadatory&quot;"
-        ScreenName="GeneralTabScreen" />
-    </ScreenFields>
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -838,10 +800,15 @@
     Code="&quot;DTGN&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.CustomDocumentType.TH.General&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="0"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CustomDocumentType.Tab.General&quot;"
+    FeatureTextCodeCode="&quot;CustomDocumentType.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -849,18 +816,125 @@
     Code="&quot;DOEV&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CustomDocumentType.TH.Events&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="1"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CustomDocumentType.Tab.Events&quot;"
+    FeatureTextCodeCode="&quot;CustomDocumentType.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomDocumentType&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomDocumentType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUDT&quot;"
+    QueryGroupName="&quot;Customs.CustomDocumentType&quot;"
+    LocalTextCode="&quot;סוגי מסמך&quot;"
+    TextCode="&quot;Document Types&quot;"
+    TextCodeCode="&quot;Customs.CustomDocumentType.Q.CustomDocumentTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMDOCUMENTTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomDocumentType.Features.CustomDocumentTypes&quot;"
+    FeatureDefaultText="&quot;Custom Document Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;PointerLevelName&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="200"
+        ObjectFieldName="&quot;IsCourierManadatory&quot;"
+        QueryCode="&quot;CustomDocumentType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;CustomDocumentType.GeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    IsHeaderScreen="false"
+    IsReadOnly="true"
+    NumberOfRows="6"
+    NumberOfColumns="1">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="1"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;PointerLevel&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="2"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="3"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;IsCourierManadatory&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="4"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;IsDiamondManadatory&quot;"
+        ScreenName="CustomDocumentType.GeneralTabScreen"
+        Row="5"
+        Column="0" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -870,10 +944,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -881,8 +956,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

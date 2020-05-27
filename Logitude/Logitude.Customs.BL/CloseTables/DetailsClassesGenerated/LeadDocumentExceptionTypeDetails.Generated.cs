@@ -20,17 +20,67 @@ namespace Logitude.Customs.BL
    {
        public List<LeadDocumentExceptionTypeDetails> GetAll()
        {
-		    var all = new List<LeadDocumentExceptionTypeDetails>(); 
+		    var all = new List<LeadDocumentExceptionTypeDetails>();  
+            all.Add(new LeadDocumentExceptionTypeDetails()
+            {    
+                Code = "1", 
+                EnglishName = "Error", 
+                SearchFields = "1,שגיאה", 
+                Inactive = false, 
+                LocalName = "שגיאה", 
+			});
+			 
+            all.Add(new LeadDocumentExceptionTypeDetails()
+            {    
+                Code = "2", 
+                EnglishName = "Serving constraint", 
+                SearchFields = "2,אילוץ הגשה", 
+                Inactive = false, 
+                LocalName = "אילוץ הגשה", 
+			});
+			 
+            all.Add(new LeadDocumentExceptionTypeDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Forcing warned", 
+                SearchFields = "3,אילוץ התרה", 
+                Inactive = false, 
+                LocalName = "אילוץ התרה", 
+			});
+			 
+            all.Add(new LeadDocumentExceptionTypeDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Warning", 
+                SearchFields = "4,אזהרה", 
+                Inactive = false, 
+                LocalName = "אזהרה", 
+			});
+			 
+            all.Add(new LeadDocumentExceptionTypeDetails()
+            {    
+                Code = "5", 
+                EnglishName = "Severe warning", 
+                SearchFields = "5,אזהרה חמורה", 
+                Inactive = false, 
+                LocalName = "אזהרה חמורה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(LeadDocumentExceptionType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(LeadDocumentExceptionType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

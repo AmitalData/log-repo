@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -14,11 +14,14 @@ import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefern
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
+    providers:[ListComponentArgs],
 })
 
 export class FieldTemplateComponent {
+  public IsDisplayOnly: boolean = false;
+
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
@@ -29,7 +32,7 @@ export class FieldTemplateComponent {
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     private _ListComponentArgs: ListComponentArgs;
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
     constructor(private CD: ChangeDetectorRef) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
@@ -90,7 +93,7 @@ export class FieldTemplateComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -98,8 +101,8 @@ export class FieldTemplateComponent {
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
-        //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+        //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) {
+            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) {
             this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
                 if (response) {
                     if (!response.HasError) {

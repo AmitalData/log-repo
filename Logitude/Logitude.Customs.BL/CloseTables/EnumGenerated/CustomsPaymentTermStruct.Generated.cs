@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct CustomsPaymentTermValues
     {   
+       public const string ללאתשלום = "1";  
+       public const string מזומן(תשלוםמראש) = "2";  
+       public const string תשלוםנדחה(אשראי) = "3";  
     }
 }
 

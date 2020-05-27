@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג מזהה רכב&quot;"
   DefaultText="&quot;CargoIdentityQualifier&quot;"
-  Code="&quot;c4b1&quot;"
-  Name="&quot;Customs.CargoIdentityQualifier Query Group&quot;"
+  Code="&quot;CQQG&quot;"
+  Name="&quot;Customs.CargoIdentityQualifier&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;092b0319-3b06-4b18-95ad-6c3d69ca1650&quot;"
     FieldName="&quot;Code&quot;"
@@ -303,21 +305,91 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;CN&quot;"
+      EnglishName="&quot;CN&quot;"
+      SearchFields="&quot;CN&quot;"
+      InActive="false"
+      LocalName="&quot;CN&quot;" />
+    <Record
+      Code="&quot;ZZZ&quot;"
+      EnglishName="&quot;zzzzz&quot;"
+      SearchFields="&quot;ZZZ&quot;"
+      InActive="false"
+      LocalName="&quot;zzz&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CargoIdentityQualifier&quot;"
+    ObjectTableName="&quot;Customs.CargoIdentityQualifier&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CargoIdentityQualifier&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CQQG&quot;"
+    QueryGroupName="&quot;Customs.CargoIdentityQualifier&quot;"
+    LocalTextCode="&quot;סוג מזהה רכב&quot;"
+    TextCode="&quot;CargoIdentity Qualifier&quot;"
+    TextCodeCode="&quot;Customs.CargoIdentityQualifier.Q.CargoIdentityQualifierQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CARGOQUALIFIRE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CargoIdentityQualifier.Features.CargoIdentityQualifier&quot;"
+    FeatureDefaultText="&quot;CargoIdentity Qualifier&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CargoIdentityQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CargoIdentityQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CargoIdentityQualifier&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;InActive&quot;"
+        QueryCode="&quot;CargoIdentityQualifier&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CargoIdentityQualifier&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CargoIdentityQualifier&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

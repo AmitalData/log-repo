@@ -12,16 +12,21 @@ export class ReportSearch {
   }
 
   QuickSearch(reportName) {
-    this.logitudeTab.GoToMainMenu('General.MH.Reports');
-   // this.UseSearchBox('null_Search', 'Unpaid Invoices');
-    this.UseSearchBox('null_Search',reportName);
+      this.logitudeTab.GoToMainMenu2('General.MH.Reports');
+      this.Helper.ItemsVisibility('Report')   
+      this.UseSearchBox('null_Search', reportName);
+
 
   }
 
-  UseSearchBox(searchFeildId: string, searchByRef: string) {
-    this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.HyperlinkQueryButtonControl', 0);
+    UseSearchBox(searchFeildId: string, searchByRef: string) {
     
+    this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+    this.Helper.WaitByIdAndClick("BI");
+    this.Helper.WaitByIdAndClick("Report")
+    this.Helper.ItemsVisibility('ReportID')
+    this.Helper.WaitByIdAndClick('ReportID')
+
   }
 }
 

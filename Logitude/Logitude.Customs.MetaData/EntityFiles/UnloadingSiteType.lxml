@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Unloading Site Type&quot;"
-  Code="&quot;7041&quot;"
-  Name="&quot;Customs.UnloadingSiteType Query Group&quot;"
+  Code="&quot;USTG&quot;"
+  Name="&quot;Customs.UnloadingSiteTypes&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e696a0d3-a04a-4854-b498-f77ee122e150&quot;"
     FieldName="&quot;Code&quot;"
@@ -302,21 +304,250 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;13086&quot;"
+      SearchFields="&quot;13086,אלנבי&quot;"
+      Inactive="false"
+      LocalName="&quot;אלנבי&quot;" />
+    <Record
+      Code="&quot;13087&quot;"
+      SearchFields="&quot;13087,ניצנה&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצנה&quot;" />
+    <Record
+      Code="&quot;13089&quot;"
+      SearchFields="&quot;13089,קונטרה&quot;"
+      Inactive="false"
+      LocalName="&quot;קונטרה&quot;" />
+    <Record
+      Code="&quot;13090&quot;"
+      SearchFields="&quot;13090,אולם 18&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 18&quot;" />
+    <Record
+      Code="&quot;13091&quot;"
+      SearchFields="&quot;13091,אולם 16&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 16&quot;" />
+    <Record
+      Code="&quot;13092&quot;"
+      SearchFields="&quot;13092,אולם 15&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 15&quot;" />
+    <Record
+      Code="&quot;13093&quot;"
+      SearchFields="&quot;13093,אולם 14&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 14&quot;" />
+    <Record
+      Code="&quot;13094&quot;"
+      SearchFields="&quot;13094,שיקוף מכולות&quot;"
+      Inactive="false"
+      LocalName="&quot;שיקוף מכולות&quot;" />
+    <Record
+      Code="&quot;13095&quot;"
+      SearchFields="&quot;13095,תפזורות&quot;"
+      Inactive="false"
+      LocalName="&quot;תפזורות&quot;" />
+    <Record
+      Code="&quot;13096&quot;"
+      SearchFields="&quot;13096,מלט במשאבות&quot;"
+      Inactive="false"
+      LocalName="&quot;מלט במשאבות&quot;" />
+    <Record
+      Code="&quot;13097&quot;"
+      SearchFields="&quot;13097,טובין חריגים&quot;"
+      Inactive="false"
+      LocalName="&quot;טובין חריגים&quot;" />
+    <Record
+      Code="&quot;13098&quot;"
+      SearchFields="&quot;13098,חומרים מסוכנים&quot;"
+      Inactive="false"
+      LocalName="&quot;חומרים מסוכנים&quot;" />
+    <Record
+      Code="&quot;13099&quot;"
+      SearchFields="&quot;13099,אגף רכב&quot;"
+      Inactive="false"
+      LocalName="&quot;אגף רכב&quot;" />
+    <Record
+      Code="&quot;13100&quot;"
+      SearchFields="&quot;13100,רמפה בידוק&quot;"
+      Inactive="false"
+      LocalName="&quot;רמפה בידוק&quot;" />
+    <Record
+      Code="&quot;13101&quot;"
+      SearchFields="&quot;13101,סככה בידוק&quot;"
+      Inactive="false"
+      LocalName="&quot;סככה בידוק&quot;" />
+    <Record
+      Code="&quot;13106&quot;"
+      SearchFields="&quot;13106,מעבר גבול טאבה&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול טאבה&quot;" />
+    <Record
+      Code="&quot;13226&quot;"
+      SearchFields="&quot;13226,מעבר גבול ע&quot;ש יצחק רבין&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול ע&quot;ש יצחק רבין&quot;" />
+    <Record
+      Code="&quot;265&quot;"
+      SearchFields="&quot;265,שדה תעופה אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;שדה תעופה אילת&quot;" />
+    <Record
+      Code="&quot;273&quot;"
+      SearchFields="&quot;273,שדה תעופה חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;שדה תעופה חיפה&quot;" />
+    <Record
+      Code="&quot;Code&quot;"
+      EnglishName="&quot;EnglishName&quot;"
+      SearchFields="&quot;SearchFields&quot;"
+      Inactive="true"
+      LocalName="&quot;LocalName&quot;" />
+    <Record
+      Code="&quot;ILALN&quot;"
+      SearchFields="&quot;ILALN,מעבר גבול אלנבי&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול אלנבי&quot;" />
+    <Record
+      Code="&quot;ILARV&quot;"
+      SearchFields="&quot;ILARV,מעבר גבול רבין (ערבה)&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול רבין (ערבה)&quot;" />
+    <Record
+      Code="&quot;ILASB&quot;"
+      SearchFields="&quot;ILASB,אשדוד בונדד- אוירי&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד בונדד- אוירי&quot;" />
+    <Record
+      Code="&quot;ILASH&quot;"
+      SearchFields="&quot;ILASH,נמל אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל אשדוד&quot;" />
+    <Record
+      Code="&quot;ILBGA&quot;"
+      SearchFields="&quot;ILBGA,נמל תעופה בן גוריון&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל תעופה בן גוריון&quot;" />
+    <Record
+      Code="&quot;ILETH&quot;"
+      SearchFields="&quot;ILETH,נמל אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל אילת&quot;" />
+    <Record
+      Code="&quot;ILHFA&quot;"
+      SearchFields="&quot;ILHFA,נמל חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל חיפה&quot;" />
+    <Record
+      Code="&quot;ILJOR&quot;"
+      SearchFields="&quot;ILJOR,מעבר גבול גשר נהר הירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול גשר נהר הירדן&quot;" />
+    <Record
+      Code="&quot;ILKRM&quot;"
+      SearchFields="&quot;ILKRM,כרם שלום&quot;"
+      Inactive="false"
+      LocalName="&quot;כרם שלום&quot;" />
+    <Record
+      Code="&quot;ILMMN&quot;"
+      SearchFields="&quot;ILMMN,ממן מסופי מטען וניטול בעמ&quot;"
+      Inactive="false"
+      LocalName="&quot;ממן מסופי מטען וניטול בעמ&quot;" />
+    <Record
+      Code="&quot;ILMSP&quot;"
+      SearchFields="&quot;ILMSP,מספנות ישראל&quot;"
+      Inactive="false"
+      LocalName="&quot;מספנות ישראל&quot;" />
+    <Record
+      Code="&quot;ILNZN&quot;"
+      SearchFields="&quot;ILNZN,מעבר גבול ניצנה&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול ניצנה&quot;" />
+    <Record
+      Code="&quot;ILSWS&quot;"
+      SearchFields="&quot;ILSWS,סוויספורט&quot;"
+      Inactive="false"
+      LocalName="&quot;סוויספורט&quot;" />
+    <Record
+      Code="&quot;ILVDA&quot;"
+      SearchFields="&quot;ILVDA,אולם נוסעים עובדה&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם נוסעים עובדה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;UnloadingSiteType&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.UnloadingSiteType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;USTG&quot;"
+    QueryGroupName="&quot;Customs.UnloadingSiteTypes&quot;"
+    LocalTextCode="&quot;סוג האתר פריקה&quot;"
+    TextCode="&quot;Unloading Site Type&quot;"
+    TextCodeCode="&quot;Customs.UnloadingSiteType.Q.UnloadingSiteTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;UNLOADINGSITETYPEQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.UnloadingSiteType.Features.UnloadingSiteTypes&quot;"
+    FeatureDefaultText="&quot;Unloading Site Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

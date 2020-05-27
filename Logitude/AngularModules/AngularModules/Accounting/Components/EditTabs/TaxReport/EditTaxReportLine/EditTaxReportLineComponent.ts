@@ -20,7 +20,7 @@ import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxRepo
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditTaxReportLineComponent.html'
 })
 
@@ -110,7 +110,13 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
     SetUIProperties() {
         if (this.TaxReportLinePM.OutputOrInput == "O") {
-            this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            if (this.TaxReportLinePM.StatusCode == "7") {
+                this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            }
+           
             this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
@@ -147,16 +153,16 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         // save(reprot)
         this.CurrentSession.StartBusyIndicatorSaving();
-        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 // this.CurrentSession.CloseCurrentWindowEmit("ok");
-                this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
+                this._TaxReportPMService.update(this.TaxReportPM).subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
 
                         //     var mm: ServiceResponse = myResult;
                         //     if (!mm.HasError) {

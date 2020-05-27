@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Terms Of Sale Type&quot;"
-  Code="&quot;9d1d&quot;"
-  Name="&quot;Customs.TermsOfSaleType Query Group&quot;"
+  Code="&quot;TOST&quot;"
+  Name="&quot;Customs.TermsOfSaleType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;857d1c96-c5fa-420d-849e-fb67f9268af8&quot;"
     FieldName="&quot;Code&quot;"
@@ -311,21 +313,154 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;CFR&quot;"
+      SearchFields="&quot;CFR,CFR&quot;"
+      Inactive="false"
+      LocalName="&quot;CFR&quot;" />
+    <Record
+      Code="&quot;CIF&quot;"
+      SearchFields="&quot;CIF,CIF&quot;"
+      Inactive="false"
+      LocalName="&quot;CIF&quot;" />
+    <Record
+      Code="&quot;CIP&quot;"
+      SearchFields="&quot;CIP,CIP&quot;"
+      Inactive="false"
+      LocalName="&quot;CIP&quot;" />
+    <Record
+      Code="&quot;CPT&quot;"
+      SearchFields="&quot;CPT,CPT&quot;"
+      Inactive="false"
+      LocalName="&quot;CPT&quot;" />
+    <Record
+      Code="&quot;DAF&quot;"
+      SearchFields="&quot;DAF,DAF&quot;"
+      Inactive="false"
+      LocalName="&quot;DAF&quot;" />
+    <Record
+      Code="&quot;DAP&quot;"
+      SearchFields="&quot;DAP,DAP&quot;"
+      Inactive="false"
+      LocalName="&quot;DAP&quot;" />
+    <Record
+      Code="&quot;DAT&quot;"
+      SearchFields="&quot;DAT,DAT&quot;"
+      Inactive="false"
+      LocalName="&quot;DAT&quot;" />
+    <Record
+      Code="&quot;DDP&quot;"
+      SearchFields="&quot;DDP,DDP&quot;"
+      Inactive="false"
+      LocalName="&quot;DDP&quot;" />
+    <Record
+      Code="&quot;DDU&quot;"
+      SearchFields="&quot;DDU,DDU&quot;"
+      Inactive="false"
+      LocalName="&quot;DDU&quot;" />
+    <Record
+      Code="&quot;DEQ&quot;"
+      SearchFields="&quot;DEQ,DEQ&quot;"
+      Inactive="false"
+      LocalName="&quot;DEQ&quot;" />
+    <Record
+      Code="&quot;DES&quot;"
+      SearchFields="&quot;DES,DES&quot;"
+      Inactive="false"
+      LocalName="&quot;DES&quot;" />
+    <Record
+      Code="&quot;EXW&quot;"
+      SearchFields="&quot;EXW,EXW&quot;"
+      Inactive="false"
+      LocalName="&quot;EXW&quot;" />
+    <Record
+      Code="&quot;FAS&quot;"
+      SearchFields="&quot;FAS,FAS&quot;"
+      Inactive="false"
+      LocalName="&quot;FAS&quot;" />
+    <Record
+      Code="&quot;FCA&quot;"
+      SearchFields="&quot;FCA,FCA&quot;"
+      Inactive="false"
+      LocalName="&quot;FCA&quot;" />
+    <Record
+      Code="&quot;FOB&quot;"
+      SearchFields="&quot;FOB,FOB&quot;"
+      Inactive="false"
+      LocalName="&quot;FOB&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;TermsOfSaleType&quot;"
+    ObjectTableName="&quot;Customs.TermsOfSaleType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.TermsOfSaleType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;TOST&quot;"
+    QueryGroupName="&quot;Customs.TermsOfSaleType&quot;"
+    LocalTextCode="&quot;תנאי מכר&quot;"
+    TextCode="&quot;Terms Of Sale Types&quot;"
+    TextCodeCode="&quot;Customs.TermsOfSaleType.Q.TermsOfSaleTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;TERMSOFSALETYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.TermsOfSaleType.Features.TermsOfSaleTypes&quot;"
+    FeatureDefaultText="&quot;Terms Of Sale Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;TermsOfSaleType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;TermsOfSaleType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;TermsOfSaleType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;TermsOfSaleType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.TermsOfSaleType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.TermsOfSaleType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

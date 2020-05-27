@@ -46,8 +46,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TemplateHeaderHeight = entityPM.TemplateHeaderHeight;
             poco.TemplateTechnologyCode = entityPM.TemplateTechnologyCode;
             poco.CC = entityPM.CC;
-           
-         
+            poco.BCC = entityPM.BCC;
 
         }
     }

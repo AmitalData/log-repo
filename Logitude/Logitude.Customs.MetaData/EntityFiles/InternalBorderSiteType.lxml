@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Internal Border Site Type&quot;"
-  Code="&quot;9b5a&quot;"
-  Name="&quot;Customs.InternalBorderSiteType Query Group&quot;"
+  Code="&quot;IBST&quot;"
+  Name="&quot;Customs.InternalBorderSiteType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;18edc73b-c99b-4407-a3c3-c29cdc229f87&quot;"
     FieldName="&quot;Code&quot;"
@@ -307,21 +309,169 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;-1&quot;"
+      SearchFields="&quot;-1,סופה&quot;"
+      Inactive="true"
+      LocalName="&quot;סופה&quot;" />
+    <Record
+      Code="&quot;-16&quot;"
+      SearchFields="&quot;-16,חסם צהוב&quot;"
+      Inactive="true"
+      LocalName="&quot;חסם צהוב&quot;" />
+    <Record
+      Code="&quot;-2&quot;"
+      SearchFields="&quot;-2,מזמוריה-הר חומה&quot;"
+      Inactive="true"
+      LocalName="&quot;מזמוריה-הר חומה&quot;" />
+    <Record
+      Code="&quot;12725&quot;"
+      SearchFields="&quot;12725,תרקומיה&quot;"
+      Inactive="false"
+      LocalName="&quot;תרקומיה&quot;" />
+    <Record
+      Code="&quot;12734&quot;"
+      SearchFields="&quot;12734,חסם צהוב&quot;"
+      Inactive="false"
+      LocalName="&quot;חסם צהוב&quot;" />
+    <Record
+      Code="&quot;139514&quot;"
+      SearchFields="&quot;139514,ארז&quot;"
+      Inactive="false"
+      LocalName="&quot;ארז&quot;" />
+    <Record
+      Code="&quot;139530&quot;"
+      SearchFields="&quot;139530,כרם שלום מעבר יבשתי&quot;"
+      Inactive="false"
+      LocalName="&quot;כרם שלום מעבר יבשתי&quot;" />
+    <Record
+      Code="&quot;139555&quot;"
+      SearchFields="&quot;139555,ג'אלמה-גלבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;ג'אלמה-גלבוע&quot;" />
+    <Record
+      Code="&quot;139563&quot;"
+      SearchFields="&quot;139563,שער אפרים&quot;"
+      Inactive="false"
+      LocalName="&quot;שער אפרים&quot;" />
+    <Record
+      Code="&quot;139571&quot;"
+      SearchFields="&quot;139571,ביטוניה-עופר&quot;"
+      Inactive="false"
+      LocalName="&quot;ביטוניה-עופר&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,קרני&quot;"
+      Inactive="true"
+      LocalName="&quot;קרני&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,ארז&quot;"
+      Inactive="true"
+      LocalName="&quot;ארז&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,שער אפרים&quot;"
+      Inactive="true"
+      LocalName="&quot;שער אפרים&quot;" />
+    <Record
+      Code="&quot;25&quot;"
+      SearchFields="&quot;25,ביטוניה-עופר&quot;"
+      Inactive="true"
+      LocalName="&quot;ביטוניה-עופר&quot;" />
+    <Record
+      Code="&quot;27&quot;"
+      SearchFields="&quot;27,תרקומיה&quot;"
+      Inactive="true"
+      LocalName="&quot;תרקומיה&quot;" />
+    <Record
+      Code="&quot;29&quot;"
+      SearchFields="&quot;29,ג'אלמה-גלבוע&quot;"
+      Inactive="true"
+      LocalName="&quot;ג'אלמה-גלבוע&quot;" />
+    <Record
+      Code="&quot;30&quot;"
+      SearchFields="&quot;30,שמעה&quot;"
+      Inactive="true"
+      LocalName="&quot;שמעה&quot;" />
+    <Record
+      Code="&quot;79&quot;"
+      SearchFields="&quot;79,כרם שלום&quot;"
+      Inactive="true"
+      LocalName="&quot;כרם שלום&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;InternalBorderSiteType&quot;"
+    ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.InternalBorderSiteType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;IBST&quot;"
+    QueryGroupName="&quot;Customs.InternalBorderSiteType&quot;"
+    LocalTextCode="&quot;Internal Border Site Type&quot;"
+    TextCode="&quot;Internal Border Site Type&quot;"
+    TextCodeCode="&quot;Customs.InternalBorderSiteType.Q.InternalBorderSiteTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;INTERNALBORDERSITETYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.InternalBorderSiteType.Features.InternalBorderSiteType&quot;"
+    FeatureDefaultText="&quot;Internal Border Site Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;InternalBorderSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;InternalBorderSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;InternalBorderSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;InternalBorderSiteType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

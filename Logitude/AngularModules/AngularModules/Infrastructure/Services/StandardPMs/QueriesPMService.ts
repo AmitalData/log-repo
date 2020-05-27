@@ -1,12 +1,13 @@
 
 import {Injectable, Query} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {QueryPM} from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -16,10 +17,10 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 export class QueriesPMService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private _serviceArgs: ServiceArgs;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/objectfields';    
     }
 
@@ -29,32 +30,32 @@ export class QueriesPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/queries';
     }
 
-    get(id: string) {
+    get(UniqueCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
-                var entity: QueryPM;
-                if (pm) {
-                    entity = this.MapJsonToEntityPM(pm);
-                }
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'UniqueCode=' + UniqueCode, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
+                        var entity: QueryPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                
-                return serviceResponse;
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-            }).catch(ServiceHelper.HandleServiceError);
+                        return serviceResponse;
+
+                    }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     insert(entityPM: QueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -67,43 +68,42 @@ export class QueriesPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var response: EntityPMServiceResponse;
-            response = new EntityPMServiceResponse();
+            var serviceResponse: EntityPMServiceResponse;
+            serviceResponse = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: QueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: QueryPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            response.Result = mappedResult;
-                        }
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: QueryPM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
 
 
-                        return response;
+                            return serviceResponse;
 
-                    });
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
-                response.HasError = true;
-                response.ErrorsArray = errorsArray;
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(serviceResponse);
 
             }
-        }
-
-        );
+        });
     }
 
     update(entityPM: QueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -116,43 +116,42 @@ export class QueriesPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var response: EntityPMServiceResponse;
-            response = new EntityPMServiceResponse();
+            var serviceResponse: EntityPMServiceResponse;
+            serviceResponse = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: QueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: QueryPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            response.Result = mappedResult;
-                        }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: QueryPM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
 
 
-                        return response;
+                            return serviceResponse;
 
-                    });
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
-                response.HasError = true;
-                response.ErrorsArray = errorsArray;
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(serviceResponse);
 
             }
-        }
-
-        );
+        });
     }
 
-    delete(entityPM: QueryPM, userId:string) {
+    delete(entityPM: QueryPM, userId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -162,29 +161,30 @@ export class QueriesPMService {
             validator = new ClassLevelValidator();
             var errorsArray = [];
 
-            var response: EntityPMServiceResponse;
-            response = new EntityPMServiceResponse();
+            var serviceResponse: EntityPMServiceResponse;
+            serviceResponse = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: QueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&userId=' + userId,
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: QueryPM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            response.Result = mappedResult;
-                        }
+                return this._http.delete(this._apiUrl + '?UniqueCode=' + entityPM.UniqueCode + '&userId=' + userId, ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: QueryPM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-                        return response;
-                    });
+                            return serviceResponse;
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
 
             else {
-                response.HasError = true;
-                response.ErrorsArray = errorsArray;
-                return Observable.of(response);
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
             }
         });
     }

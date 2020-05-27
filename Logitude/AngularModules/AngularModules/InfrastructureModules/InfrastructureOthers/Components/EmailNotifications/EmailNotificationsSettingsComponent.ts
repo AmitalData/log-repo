@@ -17,11 +17,13 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 @Component({
     selector: 'EmailNotificationsSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './EmailNotificationsSettingsComponent.html',
     providers: [EmailAlertSettingPMService],
 })
 export class EmailNotificationsSettingsComponent extends BaseComponent{
+  public imgNgStyle: any = null;
+
     //public EntityPM: EmailAlertSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "EmailAlertSetting";
@@ -39,7 +41,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     }
 
     LoadData() {
-        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe(response => {
+        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.AllAlerts = response.Result;
                 var ownerArr = this.AllAlerts.filter(a => a.SettingLevelCode == "OWNR");
@@ -84,7 +86,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
             return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe(response => {
+        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (response.HasError)
             {
@@ -101,8 +103,9 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     ToEmail: string;
     IsCloseSendToContact: boolean = false;
     PartnersObslist: EntityPartner[] = [];
+    SelectedEmailAlertSettingDataViewModel: EmailAlertSettingDataViewModel;
     ShowSendToEmail(item) {
-
+        this.SelectedEmailAlertSettingDataViewModel = item;
         //this.PartnersObslist.push(new EntityPartner("All", "1", false))
         this.IsCloseSendToContact = false;
         this.OnCloseSendToContactsEvent.subscribe(($event: any) => {
@@ -110,21 +113,21 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
                 this.IsCloseSendToContact = true;
 
                 this.ToEmail = "";
-               
-                
+
+
                 if ($event.ToEmailLists && $event.ToEmailLists.length > 0) {
                     $event.ToEmailLists.forEach((item) => {
                         this.ToEmail += item + ";";
 
                     });
 
-                    item.To = this.ToEmail;
+                    if (this.SelectedEmailAlertSettingDataViewModel) {
+                        this.SelectedEmailAlertSettingDataViewModel.To = this.ToEmail;
+                    }
                 }
-                else
-                    item.To = null;
-
-               
-
+                else if (this.SelectedEmailAlertSettingDataViewModel) {
+                    this.SelectedEmailAlertSettingDataViewModel.To = null;
+                }
             }
         });
         var windowArgs: any = {};
@@ -145,7 +148,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SendMessageContacts/SendToContactsComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            
+
         });
 
 

@@ -34,7 +34,7 @@ export class BIFolderReportComponent {
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "BIRefresh") {
+            if (s == "ReloadAllList") {
                 this.LoadData();
             }
         });
@@ -121,7 +121,7 @@ export class BIFolderReportComponent {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         // save
-                        this._InfrastructureDomainService.DeleteFolder(item.FolderId).subscribe(myResult => {
+                        this._InfrastructureDomainService.DeleteFolder(item.FolderId).subscribe((myResult: ServiceResponse) => {
                             if (!myResult.HasError) {
                                 this.LoadData();
                             }

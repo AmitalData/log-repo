@@ -35,7 +35,9 @@
   Name="&quot;Customs.PropertiesDetailsHistory Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;4e0a59f7-41f7-455b-92cb-bac04ee4f392&quot;"
     FieldName="&quot;CustomsItemID&quot;"
@@ -152,10 +154,10 @@
     Id="&quot;51e4780c-9e7d-4528-828f-7cbe29592b35&quot;"
     FieldName="&quot;StartDate&quot;"
     ObjectTableName="&quot;Customs.PropertiesDetailsHistory&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     DisplayOnLookUp="false"
     CanFilter="false"
     DisplayOnly="false"
@@ -206,10 +208,10 @@
     Id="&quot;5ccef2ca-9387-4a90-a622-9bb6e58adb9c&quot;"
     FieldName="&quot;EndDate&quot;"
     ObjectTableName="&quot;Customs.PropertiesDetailsHistory&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     DisplayOnLookUp="false"
     CanFilter="false"
     DisplayOnly="false"
@@ -316,7 +318,7 @@
     ObjectTableName="&quot;Customs.PropertiesDetailsHistory&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -364,21 +366,37 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.PropertiesDetailsHistory&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.PropertiesDetailsHistory&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

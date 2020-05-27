@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure.DataContracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
@@ -13,6 +14,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public int Tenant { get; set; }
         public bool IsSecured { get; set; }
         public string InternalNumber { get; set; }
+
+        public bool CreatedFromAPI { get; set; }
+        public string ShipmentTransportModeId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceNumber { get; set; }
@@ -71,6 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MainEntityReference { get; set; }
         public string SearchFields { get; set; }
         public string VendorName { get; set; }
+        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string VendorType { get; set; }
         public string PaymentTermName { get; set; }
@@ -84,7 +89,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? RefundAmount { get; set; }
         public double? AmountDueInLocalCurrency { get; set; }
         public double? AmountDueInProfitCurrency { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public string ConnectedEntityReferences { get; set; }
         public string HouseNumber {get; set;}
         public string MasterNumber {get; set;}
@@ -120,6 +129,45 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstApproveDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field1 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field2 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field3 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field4 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field5 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field6 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field7 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field8 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field9 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field10 { get; set; }
 
         private List<APInvoiceLinePM> invoiceLines;
         [Include]
@@ -277,8 +325,13 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetReSendQBO { get; set; }
 
         public string JournalNumber { get; set; }
-
+        public string JournalId { get; set; }
         public string ShipmentConcurrencyGUID { get; set; }
         public string ShipmentNewConcurrencyGUID { get; set; }
+
+        public string VendorCity { get; set; }
+        public string VendorCountry { get; set; }
+
+        public string CreatedByPartner { get; set; }
     }
 }

@@ -11,13 +11,13 @@ declare var window: any;
 
 @Component({
     selector: 'DWQueryBuilderFilters',
-    moduleId: module.id,
+    
     templateUrl: './DWQueryBuilderFiltersComponent.html',
     inputs: ['SelectedFiltersDataSource', 'DataContext', 'SelectedFiltersDataSourceChanged']
 })
 
 export class DWQueryBuilderFiltersComponent implements OnInit {
-
+  public Types: any[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];
@@ -58,8 +58,8 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
         //});
         //this.AllFieldsWithChildrenDataSource = ObsList;
         //this.DataSourceChanged.emit(ObsList);
-        //this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
-        //    this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
+        //this._DWObjectTablePMService.get("Fact_Shipments").subscribe((myResult:any) => {
+        //    this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
         //        if (!Result.HasError) {
         //            Result.Result.forEach((field) => {
         //                if (field.DisplayInQueryBuilder == true) {

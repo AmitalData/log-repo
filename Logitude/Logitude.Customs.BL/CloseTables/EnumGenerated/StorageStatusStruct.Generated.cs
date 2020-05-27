@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct StorageStatusValues
     {   
+       public const string מאושר = "1";  
+       public const string נדחה = "2";  
+       public const string ממתין = "3";  
     }
 }
 

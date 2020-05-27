@@ -17,6 +17,7 @@ namespace Logitude.BL.InvoiceModel.CloseTables
        public const string Invoice = "IN";  
        public const string ManifestInvoice = "MN";  
        public const string TaxInvoice = "TX";  
+       public const string InterestInvoice = "IT";  
     }
 }
 

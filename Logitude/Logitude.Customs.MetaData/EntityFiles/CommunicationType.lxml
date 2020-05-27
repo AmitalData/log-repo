@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Communication Type&quot;"
-  Code="&quot;bc36&quot;"
-  Name="&quot;Customs.CommunicationType Query Group&quot;"
+  Code="&quot;COMT&quot;"
+  Name="&quot;Customs.CommunicationType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;4a6d7d8c-d189-4c4c-abb6-d3a8f0aa2a2e&quot;"
     FieldName="&quot;Code&quot;"
@@ -312,21 +314,110 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1&quot;"
+      Inactive="false"
+      LocalName="&quot;111&quot;"
+      EnglishName="&quot;11&quot;" />
+    <Record
+      Code="&quot;AH&quot;"
+      SearchFields="&quot;AH,אתר אינטרנט&quot;"
+      Inactive="false"
+      LocalName="&quot;אתר אינטרנט&quot;" />
+    <Record
+      Code="&quot;AL&quot;"
+      SearchFields="&quot;AL,נייד&quot;"
+      Inactive="false"
+      LocalName="&quot;נייד&quot;" />
+    <Record
+      Code="&quot;EM&quot;"
+      SearchFields="&quot;EM,דואר אלקטרוני&quot;"
+      Inactive="false"
+      LocalName="&quot;דואר אלקטרוני&quot;" />
+    <Record
+      Code="&quot;FX&quot;"
+      SearchFields="&quot;FX,פקס&quot;"
+      Inactive="false"
+      LocalName="&quot;פקס&quot;" />
+    <Record
+      Code="&quot;TE&quot;"
+      SearchFields="&quot;TE,נייח&quot;"
+      Inactive="false"
+      LocalName="&quot;נייח&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CommunicationType&quot;"
+    ObjectTableName="&quot;Customs.CommunicationType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CommunicationType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;COMT&quot;"
+    QueryGroupName="&quot;Customs.CommunicationType&quot;"
+    LocalTextCode="&quot;סוג תקשורת&quot;"
+    TextCode="&quot;Communication Types&quot;"
+    TextCodeCode="&quot;Customs.CommunicationType.Q.CommunicationTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;COMMUNICATIONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CommunicationType.Features.CommunicationTypes&quot;"
+    FeatureDefaultText="&quot;Communication Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CommunicationType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CommunicationType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CommunicationType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CommunicationType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CommunicationType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CommunicationType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

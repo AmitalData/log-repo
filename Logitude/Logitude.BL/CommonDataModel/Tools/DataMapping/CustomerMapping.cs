@@ -63,6 +63,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.LastCallDate = entityPM.LastCallDate;
             entityPOCO.LastMeetingDate = entityPM.LastMeetingDate;
             entityPOCO.LastOpportunityDate = entityPM.LastOpportunityDate;
+            entityPOCO.LastOpportunitySubject = entityPM.LastOpportunitySubject;
+            entityPOCO.LastOpportunityStatus = entityPM.LastOpportunityStatus;
             entityPOCO.LastQuoteDate = entityPM.LastQuoteDate;
             entityPOCO.LastInteractionDate = entityPM.LastInteractionDate;
             entityPOCO.ActivityWatch = entityPM.ActivityWatch;
@@ -130,6 +132,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATPaymentMethodCode = entityPM.PaymentMethodCode;
             entityCard.ExternalId2 = entityPM.ExternalId2;
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
+            entityCard.ClassifierId = entityPM.ClassifierId;
+            entityCard.CollectorId= entityPM.CollectorId;
+            entityCard.StorageFreeDays = entityPM.StorageFreeDays;
 
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
@@ -150,7 +155,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPM.SavedForActivation = false;
             entityPM.SetAsPotential = false;
             entityPM.CodeMyCustomer = entityPM.IsCustomer ? entityCard.Code + " (Customer)" : entityCard.Code;
-
+            entityCard.CreatedByPartner = entityPM.CreatedByPartner;
             BuildSearchFields(entityPM, entityCard, isNewState);
             BuildCompetitorFields(entityPM, entityPOCO);
         }
@@ -345,6 +350,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                                     LastCallDate = a.LastCallDate,
                                     LastMeetingDate = a.LastMeetingDate,
                                     LastOpportunityDate = a.LastOpportunityDate,
+                                    LastOpportunityStatus = a.LastOpportunityStatus,
+                                    LastOpportunitySubject = a.LastOpportunitySubject,
                                     FirstInvoiceDate = a.FirstInvoiceDate,
                                     FirstShipmentDate = a.FirstShipmentDate,
                                     LastShipmentDate = a.LastShipmentDate,

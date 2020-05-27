@@ -9,7 +9,7 @@ import {DocumentTypeCopyPM} from '../../../../Common/EntityPMs/DocumentTypeCopyP
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedDocumentsPermissionsComponent',
     templateUrl: './SharedDocumentsPermissionsComponent.html',
     providers: [DocumentTypePMExtendedService],
@@ -40,7 +40,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     LoadData() {
         this.DocumentPermissiosLists = [];
         this.AllDocumentPermissiosLists = [];
-        this._documentTypePMExtendedService.GetDocumentTypesPMByObjectTableIdForDocumentPremissions(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._documentTypePMExtendedService.GetDocumentTypesPMByObjectTableIdForDocumentPremissions(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myList = pmResponse.Result;
@@ -93,7 +93,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
 
         if (documentTypePMList.length > 0) {
 
-            this._documentTypePMExtendedService.update(documentTypePMList).subscribe(res => {
+            this._documentTypePMExtendedService.update(documentTypePMList).subscribe((res:any) => {
                 this.CloseButtonClicked();
             });
         }

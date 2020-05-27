@@ -5,7 +5,7 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 
-describe('CRM Module', function () {
+describe('GLAccount Module', function () {
   var gn1 = new GeneralFunctions();
   var h = new FieldsHelper();
   browser.driver.manage().window().maximize();
@@ -20,13 +20,13 @@ describe('CRM Module', function () {
 
 
     browser.ignoreSynchronization = true;
-    gn1.GoToMainMenu('General.MH.FullAccounting');
+    gn1.GoToMainMenu2('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');
     var GlaccountNumber = gn1.RandomNum();
-    
+      var s = 'My Auto GLAccount';
 
-    GLA.CreateNewGLAccount('My Auto GLAccount', GlaccountNumber);
-    EditGLA.EditGLAccount(GlaccountNumber);
+    GLA.CreateNewGLAccount(s+GlaccountNumber);
+      EditGLA.EditGLAccount(s +GlaccountNumber);
    
 
 

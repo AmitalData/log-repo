@@ -16,6 +16,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -193,11 +194,27 @@ namespace Logitude.Accounting.Data.Repositories
                      select a);
             return q;
         }
+        public IQueryable<Journal> GetQueryablePending2Approve_LedgerNotCreated(int tenant)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where a.IsLedgerCreated== false//index 
+                     where (a.StatusCode == "2" || a.StatusCode == "3")
+                     //3 voided 
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where IsNull( a.Transaction)
+                     
+                     select a);
+            return q;
+        }
+
         public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where a.QueueId == null
+                     //where a.QueueId == null
+                     where !a.IsLedgerCreated//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
@@ -222,6 +239,17 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
+        {
+            fromTruncateTime = fromTruncateTime.Date;
+            toTruncateTime = toTruncateTime.Date;
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where EntityFunctions.TruncateTime(a.AccountingDate) >= fromTruncateTime && EntityFunctions.TruncateTime(a.AccountingDate) <= toTruncateTime
+                     select a);
+            return q;
+
+        }
         public IQueryable<Journal> GetQueryableApprovedBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
         {
             var q = (from a in context.Journals
@@ -263,6 +291,17 @@ namespace Logitude.Accounting.Data.Repositories
             return Journal;
         }
 
+        public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
+        {
+            List<string> entityIdsWithCodes = interestTransactionLists.Select(d => d.EntityId+ "," +( d.InterestEntityTypeCode == InterestEntities.ARInvoice ? AccountingEntities.ARInvoice :
+                                                                                                      d.InterestEntityTypeCode == InterestEntities.ARPayment ? AccountingEntities.ARPayment : AccountingEntities.Journal)).ToList();
+            List<string> JournalNumbers = (from a in context.Journals
+                                     where entityIdsWithCodes.Contains(a.AccountingEntityId+","+a.AccountingEntityCode)  && a.Tenant == tenant
+                                     select a.JournalNumber+","+ a.AccountingEntityId + ","  +(a.AccountingEntityCode == AccountingEntities.ARInvoice ? InterestEntities.ARInvoice :
+                                                                                               a.AccountingEntityCode == AccountingEntities.ARPayment ? InterestEntities.ARPayment : InterestEntities.Journal)).ToList();
+            return JournalNumbers;
+        }
+
         public Journal GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem ,int tenant)
         {
            
@@ -301,6 +340,22 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
+
+        public JournalEntity GetJournalByARInvoiceEntity(string entityId, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          where a.AccountingEntityId == entityId && a.AccountingEntityCode == AccountingEntities.ARInvoice
+                          select new JournalEntity
+                          {
+                              JournalId = a.Id,
+                              JournalNumber = a.JournalNumber,
+
+                          }).FirstOrDefault();
+
+            return entity;
+        }
+
         public JournalEntity GetJournalByAccountingEntityId(string entityId, int tenant)
         {
             var entity = (from a in context.Journals
@@ -322,6 +377,16 @@ namespace Logitude.Accounting.Data.Repositories
                           where a.Tenant == tenant
                           && a.AccountingEntityId == entityId
                           && a.AccountingEntityCode == accountingEntityCode
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+        public Journal GetApprovedJournalByAccountingEntityId(string entityId, string accountingEntityCode, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          && a.AccountingEntityId == entityId
+                          && a.AccountingEntityCode == accountingEntityCode &&a.StatusCode =="2"
                           select a).FirstOrDefault();
 
             return entity;
@@ -351,6 +416,7 @@ namespace Logitude.Accounting.Data.Repositories
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
+                                    && a.AccountingEntityCode == "2"
                             select a);
 
             return journals;
@@ -463,9 +529,9 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<Journal> GetByJournalsAccountingIds(List<string> ids, int tenant)
         {
-            var journals = (from a in context.Journals
+            var journals = (from a in context.Journals 
                             where a.Tenant == tenant
-                            where ids.Contains(a.Id)
+                            && ids.Contains(a.Id)
                             select a);
 
             return journals;

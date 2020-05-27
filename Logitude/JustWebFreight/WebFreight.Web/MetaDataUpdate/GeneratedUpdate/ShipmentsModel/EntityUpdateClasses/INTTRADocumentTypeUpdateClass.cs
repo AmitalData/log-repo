@@ -68,10 +68,15 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class INTTRADocumentTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "c6ce43b348150bb2a6ace2d5d83534e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,13 +125,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    IsTabsHidden =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
+			      				    HashString =  INTTRADocumentTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -135,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "INTTRADocumentType",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "INTTRADocumentType.Code",
 					  						Code =  "Code",
 					  						MaxLength =  4,
 					  						IsCustom =  false,
@@ -175,15 +183,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "INTTRADocumentType.F.Code",
+					  						HelpTextCodeCode =  "INTTRADocumentType.CodeHelpText",
+					  						ListTextCodeCode =  "INTTRADocumentType.CH.CodeListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -192,6 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "INTTRADocumentType",
 					  						FieldsDataType =  "Text",
+					  						FieldCode =  "INTTRADocumentType.Name",
 					  						Code =  "Name",
 					  						MaxLength =  40,
 					  						IsCustom =  false,
@@ -232,15 +247,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "INTTRADocumentType.F.Name",
+					  						HelpTextCodeCode =  "INTTRADocumentType.NameHelpText",
+					  						ListTextCodeCode =  "INTTRADocumentType.CH.NameListLable",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -248,7 +269,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "INTTRADocumentType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
+					  						FieldCode =  "INTTRADocumentType.SearchFields",
 					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
@@ -287,19 +309,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						FullNameTextCodeCode =  "INTTRADocumentType.F.SearchFields",
+					  						HelpTextCodeCode =  "INTTRADocumentType.SearchFieldsHelpText",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
+					  						EnableFullscreenTextBox =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -326,15 +353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable INTTRADocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "INTTRADocumentType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode INTTRADocumentTypeTextCode_INTTRADocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "INTTRADocumentType", DefaultText = "INTTRA Document Type",LocalDefaultText = null, ObjectTableId = INTTRADocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

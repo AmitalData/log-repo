@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;7ead0950-7fc7-4169-b1f9-f99fb0ed716b&quot;"
     FieldName="&quot;Code&quot;"
@@ -647,39 +649,287 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records>
+    <Record
+      Code="&quot;AUD&quot;"
+      SearchFields="&quot;AUD,דולר אוסטרלי&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר אוסטרלי&quot;" />
+    <Record
+      Code="&quot;BGN&quot;"
+      SearchFields="&quot;BGN,לב בולגרי&quot;"
+      Inactive="false"
+      LocalName="&quot;לב בולגרי&quot;" />
+    <Record
+      Code="&quot;BRL&quot;"
+      SearchFields="&quot;BRL,ריאל ברזיל&quot;"
+      Inactive="false"
+      LocalName="&quot;ריאל ברזיל&quot;" />
+    <Record
+      Code="&quot;BYR&quot;"
+      SearchFields="&quot;BYR,רובל בילרוסי&quot;"
+      Inactive="false"
+      LocalName="&quot;רובל בילרוסי&quot;" />
+    <Record
+      Code="&quot;CAD&quot;"
+      SearchFields="&quot;CAD,דולר קנדי&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר קנדי&quot;" />
+    <Record
+      Code="&quot;CHF&quot;"
+      SearchFields="&quot;CHF,פרנק שויצרי&quot;"
+      Inactive="false"
+      LocalName="&quot;פרנק שויצרי&quot;" />
+    <Record
+      Code="&quot;CLP&quot;"
+      SearchFields="&quot;CLP,פזו צ'יליאני&quot;"
+      Inactive="false"
+      LocalName="&quot;פזו צ'יליאני&quot;" />
+    <Record
+      Code="&quot;CNY&quot;"
+      SearchFields="&quot;CNY,יואן סיני&quot;"
+      Inactive="false"
+      LocalName="&quot;יואן סיני&quot;" />
+    <Record
+      Code="&quot;CZK&quot;"
+      SearchFields="&quot;CZK,כתר צ'כי&quot;"
+      Inactive="false"
+      LocalName="&quot;כתר צ'כי&quot;" />
+    <Record
+      Code="&quot;DKK&quot;"
+      SearchFields="&quot;DKK,כתר דני&quot;"
+      Inactive="false"
+      LocalName="&quot;כתר דני&quot;" />
+    <Record
+      Code="&quot;EGP&quot;"
+      SearchFields="&quot;EGP,לירה מצרית&quot;"
+      Inactive="false"
+      LocalName="&quot;לירה מצרית&quot;" />
+    <Record
+      Code="&quot;EUR&quot;"
+      SearchFields="&quot;EUR,אירו&quot;"
+      Inactive="false"
+      LocalName="&quot;אירו&quot;" />
+    <Record
+      Code="&quot;GBP&quot;"
+      SearchFields="&quot;GBP,לירה שטרלינג&quot;"
+      Inactive="false"
+      LocalName="&quot;לירה שטרלינג&quot;" />
+    <Record
+      Code="&quot;HKD&quot;"
+      SearchFields="&quot;HKD,דולר הונג-קונג&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר הונג-קונג&quot;" />
+    <Record
+      Code="&quot;HUF&quot;"
+      SearchFields="&quot;HUF,פורינט הונגרי&quot;"
+      Inactive="false"
+      LocalName="&quot;פורינט הונגרי&quot;" />
+    <Record
+      Code="&quot;ILS&quot;"
+      SearchFields="&quot;ILS,שקל ישראלי חדש&quot;"
+      Inactive="false"
+      LocalName="&quot;שקל ישראלי חדש&quot;" />
+    <Record
+      Code="&quot;INR&quot;"
+      SearchFields="&quot;INR,רופיה הודית&quot;"
+      Inactive="false"
+      LocalName="&quot;רופיה הודית&quot;" />
+    <Record
+      Code="&quot;ISK&quot;"
+      SearchFields="&quot;ISK,כתר איסלנדי&quot;"
+      Inactive="false"
+      LocalName="&quot;כתר איסלנדי&quot;" />
+    <Record
+      Code="&quot;JOD&quot;"
+      SearchFields="&quot;JOD,דינר ירדני&quot;"
+      Inactive="false"
+      LocalName="&quot;דינר ירדני&quot;" />
+    <Record
+      Code="&quot;JPY&quot;"
+      SearchFields="&quot;JPY,יין יפני&quot;"
+      Inactive="false"
+      LocalName="&quot;יין יפני&quot;" />
+    <Record
+      Code="&quot;KRW&quot;"
+      SearchFields="&quot;KRW,ואן דרום קוריאה&quot;"
+      Inactive="false"
+      LocalName="&quot;ואן דרום קוריאה&quot;" />
+    <Record
+      Code="&quot;LBP&quot;"
+      SearchFields="&quot;LBP,לירה לבנונית&quot;"
+      Inactive="false"
+      LocalName="&quot;לירה לבנונית&quot;" />
+    <Record
+      Code="&quot;LTL&quot;"
+      SearchFields="&quot;LTL,ליטאס ליטאי&quot;"
+      Inactive="false"
+      LocalName="&quot;ליטאס ליטאי&quot;" />
+    <Record
+      Code="&quot;LVL&quot;"
+      SearchFields="&quot;LVL,לטס לטבי&quot;"
+      Inactive="false"
+      LocalName="&quot;לטס לטבי&quot;" />
+    <Record
+      Code="&quot;MXN&quot;"
+      SearchFields="&quot;MXN,פזו מקסיקני&quot;"
+      Inactive="false"
+      LocalName="&quot;פזו מקסיקני&quot;" />
+    <Record
+      Code="&quot;NOK&quot;"
+      SearchFields="&quot;NOK,כתר נורבגי&quot;"
+      Inactive="false"
+      LocalName="&quot;כתר נורבגי&quot;" />
+    <Record
+      Code="&quot;NPR&quot;"
+      SearchFields="&quot;NPR,רופי נפאלי&quot;"
+      Inactive="false"
+      LocalName="&quot;רופי נפאלי&quot;" />
+    <Record
+      Code="&quot;NZD&quot;"
+      SearchFields="&quot;NZD,דולר ניו זילנדי&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר ניו זילנדי&quot;" />
+    <Record
+      Code="&quot;PHP&quot;"
+      SearchFields="&quot;PHP,פזו פיליפיני&quot;"
+      Inactive="false"
+      LocalName="&quot;פזו פיליפיני&quot;" />
+    <Record
+      Code="&quot;PLN&quot;"
+      SearchFields="&quot;PLN,זלוטי פולין&quot;"
+      Inactive="false"
+      LocalName="&quot;זלוטי פולין&quot;" />
+    <Record
+      Code="&quot;RON&quot;"
+      SearchFields="&quot;RON,ניו לאוי רומניה&quot;"
+      Inactive="false"
+      LocalName="&quot;ניו לאוי רומניה&quot;" />
+    <Record
+      Code="&quot;RUB&quot;"
+      SearchFields="&quot;RUB,רובל רוסי&quot;"
+      Inactive="false"
+      LocalName="&quot;רובל רוסי&quot;" />
+    <Record
+      Code="&quot;SEK&quot;"
+      SearchFields="&quot;SEK,קורונה שוודי&quot;"
+      Inactive="false"
+      LocalName="&quot;קורונה שוודי&quot;" />
+    <Record
+      Code="&quot;SGD&quot;"
+      SearchFields="&quot;SGD,דולר סינגפור&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר סינגפור&quot;" />
+    <Record
+      Code="&quot;THB&quot;"
+      SearchFields="&quot;THB,באט תאילנד&quot;"
+      Inactive="false"
+      LocalName="&quot;באט תאילנד&quot;" />
+    <Record
+      Code="&quot;TRY&quot;"
+      SearchFields="&quot;TRY,לירה טורקית חדשה&quot;"
+      Inactive="false"
+      LocalName="&quot;לירה טורקית חדשה&quot;" />
+    <Record
+      Code="&quot;TWD&quot;"
+      SearchFields="&quot;TWD,דולר טיוואני&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר טיוואני&quot;" />
+    <Record
+      Code="&quot;UAH&quot;"
+      SearchFields="&quot;UAH,הריבניה אוקריאנה&quot;"
+      Inactive="false"
+      LocalName="&quot;הריבניה אוקריאנה&quot;" />
+    <Record
+      Code="&quot;USD&quot;"
+      SearchFields="&quot;USD,דולר ארה&quot;ב&quot;"
+      Inactive="false"
+      LocalName="&quot;דולר ארה&quot;ב&quot;" />
+    <Record
+      Code="&quot;ZAR&quot;"
+      SearchFields="&quot;ZAR,רנד ד. אפריקה&quot;"
+      Inactive="false"
+      LocalName="&quot;רנד ד. אפריקה&quot;" />
+  </Records>
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CurrencyType&quot;"
+    ObjectTableName="&quot;Customs.CurrencyType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CurrencyType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CURT&quot;"
+    QueryGroupName="&quot;Customs.CurrencyType&quot;"
+    LocalTextCode="&quot;סוג מטבע&quot;"
+    TextCode="&quot;Currency Types&quot;"
+    TextCodeCode="&quot;Customs.CurrencyType.Q.CurrencyTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CURRENCYTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;"
+    FeatureDefaultText="&quot;Currency Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CurrencyType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CurrencyType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CurrencyType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CurrencyType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
+    Code="&quot;CurrencyType.GeneralTabScreen&quot;"
     Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;Customs.CurrencyType&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="3"
+    IsHeaderScreen="false"
     IsReadOnly="false"
-    IsHeaderScreen="false">
+    NumberOfRows="3"
+    NumberOfColumns="1">
     <ScreenFields>
       <ScreenField
-        Column="0"
-        Row="0"
         ObjectFieldName="&quot;Code&quot;"
-        ScreenName="GeneralTabScreen" />
+        ScreenName="CurrencyType.GeneralTabScreen"
+        Row="0"
+        Column="0" />
       <ScreenField
-        Column="0"
-        Row="1"
         ObjectFieldName="&quot;MehesInactive&quot;"
-        ScreenName="GeneralTabScreen" />
+        ScreenName="CurrencyType.GeneralTabScreen"
+        Row="1"
+        Column="0" />
       <ScreenField
-        Column="0"
-        Row="2"
         ObjectFieldName="&quot;TenantInactive&quot;"
-        ScreenName="GeneralTabScreen" />
+        ScreenName="CurrencyType.GeneralTabScreen"
+        Row="2"
+        Column="0" />
     </ScreenFields>
   </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CurrencyType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -689,10 +939,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CurrencyType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -700,8 +951,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

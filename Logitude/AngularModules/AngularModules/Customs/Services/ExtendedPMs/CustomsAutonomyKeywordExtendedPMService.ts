@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -23,10 +24,10 @@ import {CustomsAutonomyKeywordPM} from '../../EntityPMs/CustomsAutonomyKeywordPM
 @Injectable()
 
 export class CustomsAutonomyKeywordExtendedPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customsautonomykeywords';      
     }
 
@@ -34,11 +35,9 @@ export class CustomsAutonomyKeywordExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getByKeywordtypeCode?' + 'KeywordtypeCode=' + KeywordtypeCode + '&tenant=' + tenant.toString(), {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getByKeywordtypeCode?' + 'KeywordtypeCode=' + KeywordtypeCode + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                    var pm = response.body;
 
                    
 					
@@ -57,21 +56,21 @@ export class CustomsAutonomyKeywordExtendedPMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
     deleteByid(id: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-            return this._http.delete(this._apiUrl + '/DeleteById/?' + '&id=' + id, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+            return this._http.delete(this._apiUrl + '/DeleteById/?' + '&id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map((response:HttpResponse<any>) => {
+                var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 	

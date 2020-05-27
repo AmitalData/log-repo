@@ -49,7 +49,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;a81e9922-7a5e-4ee9-b65f-3b93170dba3e&quot;"
     FieldName="&quot;Code&quot;"
@@ -328,34 +330,65 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts>
+    <DataContract
+      Name="&quot;Customs.FreightPaymentMethodApiV1&quot;"
+      ComputingPartnerName="&quot;&quot;">
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="true"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false" />
+      <DCField
+        DCFieldName="&quot;LocalName&quot;"
+        FieldName="&quot;LocalName&quot;"
+        IsKey="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false" />
+    </DataContract>
+  </DataContracts>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;FreightPaymentMethod&quot;"
-    TextCode="&quot;FreightPaymentMethodQuery&quot;"
-    QueryGroupCode="&quot;f557&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.FreightPaymentMethod&quot;"
-    QuerySection="&quot;Customs.FreightPaymentMethod&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.FreightPaymentMethod&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;f557&quot;"
+    QueryGroupName="&quot;Customs.FreightPaymentMethod Query Group&quot;"
+    TextCode="&quot;FreightPaymentMethodQuery&quot;"
+    TextCodeCode="&quot;FreightPaymentMethod.Q.FreightPaymentMethod&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;FreightPaymentMethod.Q.FreightPaymentMethod&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;FreightPaymentMethod.Features.FreightPaymentMethod&quot;"
+    FeatureDefaultText="&quot;FreightPaymentMethod&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;FreightPaymentMethod&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;FreightPaymentMethod&quot;" />
       <QueryColumn
-        QueryCode="&quot;FreightPaymentMethod&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;FreightPaymentMethod&quot;" />
       <QueryColumn
-        QueryCode="&quot;FreightPaymentMethod&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;FreightPaymentMethod&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -363,19 +396,33 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.FreightPaymentMethod&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.FreightPaymentMethod&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
+  
   <DataContracts>
     <DataContract
       Name="&quot;Customs.FreightPaymentMethodApiV1&quot;"

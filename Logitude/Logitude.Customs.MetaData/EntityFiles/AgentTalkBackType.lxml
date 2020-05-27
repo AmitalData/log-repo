@@ -49,7 +49,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;97a30943-58aa-436f-a3b9-d94556f5d4be&quot;"
     FieldName="&quot;Code&quot;"
@@ -325,34 +327,44 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;AgentTalkBackType&quot;"
-    TextCode="&quot;AgentTalkBackTypeQuery&quot;"
-    QueryGroupCode="&quot;016d&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.AgentTalkBackType&quot;"
-    QuerySection="&quot;Customs.AgentTalkBackType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Ascending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AgentTalkBackType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;016d&quot;"
+    QueryGroupName="&quot;Customs.AgentTalkBackType Query Group&quot;"
+    TextCode="&quot;AgentTalkBackTypeQuery&quot;"
+    TextCodeCode="&quot;AgentTalkBackType.Q.AgentTalkBackType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;AgentTalkBackType.Q.AgentTalkBackType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;AgentTalkBackType.Features.AgentTalkBackType&quot;"
+    FeatureDefaultText="&quot;AgentTalkBackType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;AgentTalkBackType&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;AgentTalkBackType&quot;" />
       <QueryColumn
-        QueryCode="&quot;AgentTalkBackType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;AgentTalkBackType&quot;" />
       <QueryColumn
-        QueryCode="&quot;AgentTalkBackType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;AgentTalkBackType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -360,18 +372,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AgentTalkBackType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AgentTalkBackType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

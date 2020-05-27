@@ -11,7 +11,7 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import { HybridTenantThresholdPMService } from '../../../../Common/Services/StandardPMs/HybridTenantThresholdPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HybridTenantThresholdComponent',
     templateUrl: './HybridTenantThresholdComponent.html',
 })
@@ -23,10 +23,11 @@ export class HybridTenantThresholdComponent extends BaseComponent {
     public EntityPM: HybridTenantThresholdPM;
     public Isupdate: boolean = false;
     public DataLoaded: boolean = false;
+    private service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
     LoadHybridTenantThreshold() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        var service: CommonDomainService = new CommonDomainService();
-        service.GetHybridTenantThresholdByIdTenant().subscribe(res => {
+        
+        this.service.get(SessionLocator.Tenant).subscribe((res:any) => {
             if (!res.HasError) {
                 this.EntityPM = res.Result;
                 if (this.EntityPM == null) {
@@ -80,14 +81,14 @@ export class HybridTenantThresholdComponent extends BaseComponent {
 
     CloseButtonClicked() { this.CurrentSession.CloseCurrentWindow(); }
     SaveButtonClicked() {
-        var service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
+         
         if (!this.Isupdate) {
-            service.insert(this.EntityPM).subscribe(res => {
+            this.service.insert(this.EntityPM).subscribe((res:any) => {
                 this.CurrentSession.CloseCurrentWindow();
             });
         }
         else {
-            service.update(this.EntityPM).subscribe(res => {
+            this.service.update(this.EntityPM).subscribe((res:any) => {
                 this.CurrentSession.CloseCurrentWindow();
             });
         }

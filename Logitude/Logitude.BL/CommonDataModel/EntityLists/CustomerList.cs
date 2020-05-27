@@ -308,6 +308,12 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? LastOpportunityDate { get; set; }
 
         [DataMember]
+        public string LastOpportunitySubject { get; set; }
+
+        [DataMember]
+        public string LastOpportunityStatus { get; set; }
+
+        [DataMember]
         public DateTime? FirstInvoiceDate { get; set; }
 
         [DataMember]
@@ -407,7 +413,12 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string LeadSourceName { get; set; }
-        
 
+        public string CreatedByPartner { get; set; }
+
+        [DataMember]
+        public string StateName { get; set; }
+        [DataMember]
+        public int? StorageFreeDays { get; set; }
     }
 }

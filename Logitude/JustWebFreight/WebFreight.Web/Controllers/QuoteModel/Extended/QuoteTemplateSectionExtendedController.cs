@@ -204,12 +204,13 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string from = "";
                     string replyTo = "";
                     string cc = "";
+                    string bcc = "";
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
 
                     if (objectTable != null)
                     {
-                        bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, quoteTemplateBuildArges.QuotePM);
+                        bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc,ref bcc, quoteTemplateBuildArges.QuotePM);
                     }
 
                 }

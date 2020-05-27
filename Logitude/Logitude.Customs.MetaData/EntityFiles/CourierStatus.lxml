@@ -329,34 +329,44 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;CourierStatus&quot;"
-    TextCode="&quot;CourierStatusQuery&quot;"
-    QueryGroupCode="&quot;5d5d&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.CourierStatus&quot;"
-    QuerySection="&quot;Customs.CourierStatus&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="false"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CourierStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;5d5d&quot;"
+    QueryGroupName="&quot;Customs.CourierStatus Query Group&quot;"
+    TextCode="&quot;CourierStatusQuery&quot;"
+    TextCodeCode="&quot;CourierStatus.Q.CourierStatus&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CourierStatus.Q.CourierStatus&quot;"
+    IsPackagable="false"
+    FeatureTextCodeCode="&quot;CourierStatus.Features.CourierStatus&quot;"
+    FeatureDefaultText="&quot;CourierStatus&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CourierStatus&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;CourierStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CourierStatus&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CourierStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CourierStatus&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CourierStatus&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -364,18 +374,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CourierStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CourierStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

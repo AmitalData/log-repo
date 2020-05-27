@@ -19,8 +19,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string BankAccountId  { get; set; }
-       [DataMember]
        public string GLAccountId  { get; set; }
        [DataMember]
        public int PageNo  { get; set; }
@@ -54,6 +52,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string EntryTypeEnglishName  { get; set; }
        [DataMember]
        public string EntryTypeLocalName  { get; set; }
+       [DataMember]
+       public string ObjectTableId  { get; set; }
+       [DataMember]
+       public string EntityId  { get; set; }
    }
 
 }

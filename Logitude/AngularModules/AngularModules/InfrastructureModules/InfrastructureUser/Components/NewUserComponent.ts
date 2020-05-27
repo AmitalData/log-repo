@@ -12,26 +12,26 @@ import {UserPMService} from '../../../Common/Services/StandardPMs/UserPMService'
 import {RoleExtendedPMService} from '../../../Common/Services/ExtendedPMs/RoleExtendedPMService';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewUser',
     templateUrl: './NewUserComponent.html',
     providers: [PasswordChangeService, UserPMService, RoleExtendedPMService]
 })
 
 export class NewUserComponent extends BaseComponent implements OnInit {
-    public myForm: FormGroup;
+  public AdditionalPackagesOnly: boolean = false;
+
     ReTypePassword: string = "";
     UserId: string;
     validator: ClassLevelValidator;
     Info1Text: string;
     IsPasswordDisable: boolean;
-    Info1Visibility: boolean ;
+    Info1Visibility: boolean;
     ObjectFieldHelp: string = "";
     LicencedUserVisible: boolean;
     ExpirationDateVisible: boolean;
@@ -51,14 +51,13 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     NewUserPM: UserPM = new UserPM();
     private userPMService: UserPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(fb: FormBuilder,  public _passwordChangeService: PasswordChangeService, public _roleExtendedPMService: RoleExtendedPMService) {
+    constructor(public _passwordChangeService: PasswordChangeService, public _roleExtendedPMService: RoleExtendedPMService) {
         super();
-  
+
         if (this.userPMService == null) {
             this.userPMService = new UserPMService();
         }
 
-        this.myForm = fb.group({});
         this.validator = new ClassLevelValidator();
         this.NewUserPM.Tenant = SessionLocator.Tenant;
         this.NewUserPM.BusinessUnitId = SessionLocator.Tenant.toString();
@@ -75,9 +74,9 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
         }
 
-        
+
     }
-    
+
     ngOnInit() {
         this.Run();
     }
@@ -110,16 +109,16 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
 
 
-          var  result = new Date();
-          result.setUTCFullYear(year);
-          result.setUTCMonth(month);
-          result.setUTCDate(day+7);
+            var result = new Date();
+            result.setUTCFullYear(year);
+            result.setUTCMonth(month);
+            result.setUTCDate(day + 7);
 
-          this.NewUserPM.ExpirationDate = result;
-       }
+            this.NewUserPM.ExpirationDate = result;
+        }
 
 
-       this.SetUiProperties_Visibility();
+        this.SetUiProperties_Visibility();
         this.SetUiProperties_IsEnabled();
 
         this.LoadUserRolesMethod();
@@ -132,7 +131,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     }
 
     LoadUserRolesMethod() {
-        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe(res => {
+        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -143,7 +142,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
         });
     }
-    
+
     public ValidationErrorsList: string[];
     SaveButtonClicked() {
         var Password = "";
@@ -168,7 +167,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.AddRoleToUser"));
             }
-      
+
             if (Password != this.ReTypePassword) {
 
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
@@ -184,7 +183,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                this.userPMService.insert(this.NewUserPM).subscribe(myResult=> {
+                this.userPMService.insert(this.NewUserPM).subscribe((myResult:any) => {
                     if (myResult) {
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -202,7 +201,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                     }
 
 
-                }, error=> {
+                }, error => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var dd: any = error;
                     console.log(dd.text);
@@ -216,7 +215,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         }
     }
-    
+
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -229,7 +228,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
         }
     }
-    
+
     EmailKeyUpMethod(email: string) {
         this.IsPasswordDisable = false;
         this.Info1Text = "";
@@ -240,7 +239,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             email = email.trim();
 
             if (email.indexOf('.') > 0 && email.indexOf('@') > 0) {
-                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe(res => {
+                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -306,16 +305,16 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         if (SessionInfo.LoggedUserTenant == 65 && SessionInfo.LoggedUserPM.IsCustomerCare) this.ExpirationDateVisible = true;
         else this.ExpirationDateVisible = false;
-        
+
         if (SessionInfo.LoggedUserTenant != 0) {
             this.IsDistributorVisible = false;
             this.DistributorCodeVisible = false;
         }
-        
+
         if (FeatureLocator.HasFeaturePermession("User", "ROLES")) this.IsSalesmanVisible = true;
         else this.IsSalesmanVisible = false;
 
-        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied && SessionLocator.TenantManagementJS.IsMultiPackage) {
             this.IsAdditionalPackagesOnlyVisible = true;
         }
     }
@@ -333,7 +332,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         this.NewUserPM.UIProperties.SetEnabled("DepartmentId", "User", this.IsScreenEnabled);
         this.NewUserPM.UIProperties.SetEnabled("BranchId", "User", this.IsScreenEnabled);
         this.NewUserPM.UIProperties.SetEnabled("BusinessUnitId", "User", this.IsScreenEnabled);
-        this.NewUserPM.UIProperties.SetEnabled("Notes", "User", this.IsScreenEnabled);     
+        this.NewUserPM.UIProperties.SetEnabled("Notes", "User", this.IsScreenEnabled);
     }
 
     EditRole(myRole: RolePM) {
@@ -390,16 +389,16 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            var adminRole = this.allRoles.filter(d=> d.Code == "ADMN")[0];
+            var adminRole = this.allRoles.filter(d => d.Code == "ADMN")[0];
             if (adminRole) {
                 var adminItem = new UserRolesItemClass(adminRole, this.NewUserPM, this);
                 adminItem.IsActive = true;
                 this.ObsList.push(adminItem);
             }
 
-         
-      
+
+
         }
 
-    }   
+    }
 }

@@ -329,7 +329,8 @@
                                                     [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
-                                                    <div></div>
+                                                  <div>
+                                                  </div>
                                                 </td>
                                             </tr>
 
@@ -368,7 +369,9 @@
 
                                             <tr>
                                                 <td>
-                                                    <div></div>
+                                                  
+                                                   <div></div>
+                                                
                                                 </td>
                                             </tr>
 
@@ -386,110 +389,114 @@
 
                     <tr style="height: 20px;">
                         <td>
-                            <div></div>
+                          <div>
+                            <div *ngIf="IsTesterButtonVisibile">
+                              <IconButton [Name]="'Add'" (click)="NewLineButtonClicked()" [disabled]="false"></IconButton>
+                            </div>
+                          </div>
                         </td>
                     </tr>
 
                     <!-- Toolbar -->
                     <tr style="height: 20px;">
-                        <td>
+                      <td>
 
-                            <!-- Filters -->
-                            <div *ngIf="reportCounters" float-start class="noselect">
+                        <!-- Filters -->
+                        <div *ngIf="reportCounters" float-start class="noselect">
 
-                                <ul class="FiltersMenu">
+                          <ul class="FiltersMenu">
 
-                                    <li id="TaxableTransactions" (click)="FilterItemClicked('TaxableTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'TaxableTransactions'">
-                                        {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}} ({{reportCounters.TaxableTransactions}})
-                                    </li>
+                            <li id="TaxableTransactions" (click)="FilterItemClicked('TaxableTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'TaxableTransactions'">
+                              {{'Accounting.O.TaxableTransactions' | TextCodeTranslationPipe}} ({{reportCounters.TaxableTransactions}})
+                            </li>
 
-                                    <li id="ExemptTransactions" (click)="FilterItemClicked('ExemptTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'ExemptTransactions'">
-                                        {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}} ({{reportCounters.ExcemptTransactions}})
-                                    </li>
+                            <li id="ExemptTransactions" (click)="FilterItemClicked('ExemptTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'ExemptTransactions'">
+                              {{'Accounting.O.ExemptTransactions' | TextCodeTranslationPipe}} ({{reportCounters.ExcemptTransactions}})
+                            </li>
 
-                                    <li id="AllTransactions" (click)="FilterItemClicked('AllTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'AllTransactions'">
-                                        {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}} ({{reportCounters.AllTransaxtions}})
-                                    </li>
+                            <li id="AllTransactions" (click)="FilterItemClicked('AllTransactions')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'AllTransactions'">
+                              {{'Accounting.O.AllTransactions' | TextCodeTranslationPipe}} ({{reportCounters.AllTransaxtions}})
+                            </li>
 
-                                    <li id="InputsEquipments" (click)="FilterItemClicked('InputsEquipments')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'InputsEquipments'">
-                                        {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}} ({{reportCounters.InputEquipments}})
-                                    </li>
+                            <li id="InputsEquipments" (click)="FilterItemClicked('InputsEquipments')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'InputsEquipments'">
+                              {{'Accounting.O.InputsEquipments' | TextCodeTranslationPipe}} ({{reportCounters.InputEquipments}})
+                            </li>
 
-                                    <li id="InputsOther" (click)="FilterItemClicked('InputsOther')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'InputsOther'">
-                                        {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}} ({{reportCounters.InputOthers}})
-                                    </li>
+                            <li id="InputsOther" (click)="FilterItemClicked('InputsOther')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'InputsOther'">
+                              {{'Accounting.O.InputsOther' | TextCodeTranslationPipe}} ({{reportCounters.InputOthers}})
+                            </li>
 
-                                    <li id="All" (click)="FilterItemClicked('All')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
-                                        [class.SelectedFilter]="FilterSelectedValue === 'All'">
-                                        {{'Accounting.General.O.All' | TextCodeTranslationPipe}} ({{reportCounters.All}})
-                                    </li>
+                            <li id="All" (click)="FilterItemClicked('All')" class="MyFilterItem" [style.float]="isRTL ? 'right' : 'left'"
+                                [class.SelectedFilter]="FilterSelectedValue === 'All'">
+                              {{'Accounting.General.O.All' | TextCodeTranslationPipe}} ({{reportCounters.All}})
+                            </li>
 
-                                </ul>
+                          </ul>
 
+                        </div>
+
+                        <!-- DDL -->
+                        <div float-start style="padding: 0 15px;" class="noselect">
+                          <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.StatusCode'">
+                            <div class="class-dropdown-content">
+                              <div style="width:250px;">
+                                <table>
+                                  <tr style="height:5px;">
+                                    <td>
+                                      <div></div>
+                                    </td>
+                                  </tr>
+
+                                  <tr style="height: 25px;"
+                                      *ngFor="let item of StatusItems; let i=index;">
+                                    <td>
+                                      <div style="margin-right:5px;">
+
+                                        <CheckBox style="margin-right:5px;float:right;"
+                                                  (Checked)="$event == true ? PushStatus(item) : PopStatus(item)">
+                                        </CheckBox>
+
+                                        <span [title]="showLocals ? item.LocalName : item.EnglishName"
+                                              style="margin-right:5px;float:right; width: 200px;text-overflow: ellipsis;overflow: hidden;">
+                                          {{showLocals ? item.LocalName : item.EnglishName}}
+                                        </span>
+
+                                      </div>
+                                    </td>
+
+
+
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <div></div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
                             </div>
+                          </dropdown-button>
+                        </div>
 
-                            <!-- DDL -->
-                            <div float-start style="padding: 0 15px;" class="noselect">
-                                <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.StatusCode'">
-                                    <div class="class-dropdown-content">
-                                        <div style="width:250px;">
-                                            <table>
-                                                <tr style="height:5px;">
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
+                        <!-- Search -->
+                        <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 4px; width: 250px;">
+                          <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                        </div>
+                       
+                        <!-- Buttons -->
+                        <div style="width: 30px;margin-top: 4px;margin-left: 10px;" [style.float]="isRTL ? 'left' : 'right'">
+                          <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>
+                        </div>
+                        <div style="width: 30px;margin-top: 4px;" [style.float]="isRTL ? 'left' : 'right'">
+                          <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </div>
 
-                                                <tr style="height: 25px;"
-                                                    *ngFor="let item of StatusItems; let i=index;">
-                                                    <td>
-                                                        <div style="margin-right:5px;">
-
-                                                            <CheckBox style="margin-right:5px;float:right;"
-                                                                      (Checked)="$event == true ? PushStatus(item) : PopStatus(item)">
-                                                            </CheckBox>
-
-                                                            <span [title]="showLocals ? item.LocalName : item.EnglishName"
-                                                                  style="margin-right:5px;float:right; width: 200px;text-overflow: ellipsis;overflow: hidden;">
-                                                                {{showLocals ? item.LocalName : item.EnglishName}}
-                                                            </span>
-
-                                                        </div>
-                                                    </td>
-
-
-
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </dropdown-button>
-                            </div>
-
-                            <!-- Search -->
-                            <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 4px; width: 250px;">
-                                <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                            </div>
-
-                            <!-- Buttons -->
-                            <div style="width: 30px;margin-top: 4px;margin-left: 10px;" [style.float]="isRTL ? 'left' : 'right'">
-                                <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>
-                            </div>
-                            <div style="width: 30px;margin-top: 4px;" [style.float]="isRTL ? 'left' : 'right'">
-                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                            </div>
-
-                        </td>
+                      </td>
                     </tr>
 
                     <tr>
@@ -501,7 +508,8 @@
                                     [ObjectTable]="'TaxReportLine'"
                                     [dataSource]="DataSource"
                                     [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                    [columns]="columns" [autoLoad]="true"
+                                    [columns]="columns"
+                                    [autoLoad]="true"
                                     [QueryChangeEvent]="onQueryChangeEvent"
                                     [IsCustomTemplate]="true"
                                     [CustomColumnsReady]="TaxReportColumnsReady">

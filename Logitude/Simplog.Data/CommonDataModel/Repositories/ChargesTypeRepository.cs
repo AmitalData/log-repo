@@ -46,12 +46,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             ChargesType entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+               
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        var currencies = (from a in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
+                        var currencies = (from a in context.ChargesTypes.Include("Measurement").Include("VatType").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
                                           where a.Tenant == tenant
                                           select a);
 
@@ -69,17 +68,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (ChargesType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    entity = (from record in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+             
             }
             else
             {
                 ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                entity = (from record in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                entity = (from record in context.ChargesTypes.Include("Measurement").Include("VatType").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
             }
             return entity;           
         }
@@ -87,7 +82,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ChargesType GetSingleChargesType(string id, int tenant)
         {
 
-            ChargesType entity = (from a in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount").Include("ChargesGroup")
+            ChargesType entity = (from a in context.ChargesTypes.Include("Measurement").Include("VatType").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount").Include("ChargesGroup")
                                   where a.Tenant == tenant && a.Id == id
                                           select a).FirstOrDefault();
             return entity;
@@ -96,7 +91,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ChargesType GetSingleChargesTypeByCode(string code, int tenant)
         {
 
-            ChargesType entity = (from a in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
+            ChargesType entity = (from a in context.ChargesTypes.Include("Measurement").Include("VatType").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount")
                                   where a.Tenant == tenant && a.Code == code
                                   select a).FirstOrDefault();
             return entity;

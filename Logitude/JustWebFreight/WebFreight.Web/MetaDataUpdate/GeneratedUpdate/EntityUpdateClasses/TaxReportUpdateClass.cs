@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
-   {  
+   {  		
+		public const string HashString = "10dd34ac1c6586c8c30d897df0117082";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TaxReport",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TaxReports",
-			      				    OldDBTableName =  "TaxReports",
 			      				    ObjectTableSingular =  "Tax Report",
 			      				    ObjectTablePlural =  "Tax Reports",
 			      				    HasCustomFilter =  false,
@@ -133,18 +133,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  TaxReportUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -195,18 +195,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -254,18 +254,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastUpdateDate",
-					  						OldFieldName =  "LastUpdateDate",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -316,18 +316,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -374,18 +374,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -433,20 +433,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxReportMonth",
-					  						OldFieldName =  "TaxReportMonth",
 					  						ObjectTableName =  "TaxReport",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
@@ -495,18 +495,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxReportNumber",
-					  						OldFieldName =  "TaxReportNumber",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -557,18 +557,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -619,18 +619,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxReportTypeCode",
-					  						OldFieldName =  "TaxReportTypeCode",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -681,18 +681,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCancelled",
-					  						OldFieldName =  "IsCancelled",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -743,18 +743,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxableOutputAmount",
-					  						OldFieldName =  "TaxableOutputAmount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -807,18 +807,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OutputTaxAmount",
-					  						OldFieldName =  "OutputTaxAmount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -871,18 +871,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxableOutputsWithDiffPercent",
-					  						OldFieldName =  "TaxableOutputsWithDiffPercent",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -935,18 +935,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OutputTaxAmountWithDiffPercent",
-					  						OldFieldName =  "OutputTaxAmountWithDiffPercent",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -999,18 +999,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExemptTaxableOutput",
-					  						OldFieldName =  "ExemptTaxableOutput",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1063,18 +1063,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OutputLinesCount",
-					  						OldFieldName =  "OutputLinesCount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1125,18 +1125,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OtherInputsTaxAmount",
-					  						OldFieldName =  "OtherInputsTaxAmount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1189,18 +1189,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EquipmentInputsTaxAmount",
-					  						OldFieldName =  "EquipmentInputsTaxAmount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1253,18 +1253,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InputLinesCount",
-					  						OldFieldName =  "InputLinesCount",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1315,18 +1315,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmountForPayRefund",
-					  						OldFieldName =  "AmountForPayRefund",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1379,18 +1379,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1441,18 +1441,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProcessStartDate",
-					  						OldFieldName =  "ProcessStartDate",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1501,18 +1501,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProcessEndDate",
-					  						OldFieldName =  "ProcessEndDate",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1561,18 +1561,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProcessProgress",
-					  						OldFieldName =  "ProcessProgress",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1621,18 +1621,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatusLocalName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1683,18 +1683,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1745,18 +1745,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Year",
-					  						OldFieldName =  "Year",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1803,18 +1803,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatusEnglishName",
-					  						OldFieldName =  "StatusEnglishName",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1865,18 +1865,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxReportLineLastLine",
-					  						OldFieldName =  "TaxReportLineLastLine",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1921,18 +1921,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "NeedsRebulid",
-					  						OldFieldName =  "NeedsRebulid",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1977,18 +1977,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsNew",
-					  						OldFieldName =  "IsNew",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2033,60 +2033,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TaxReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "97c2", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup TaxReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3b44", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TaxReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "97c2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TaxReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3b44", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable TaxReportObjectTable = objectTables.ContainsKey("TaxReport") ? objectTables["TaxReport"] : null;
+            if (TaxReportObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable TaxReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> TaxReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxReport").ToList();   
+                TaxReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode TaxReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", DefaultText = @"Tax Reports",LocalDefaultText = "דוח מע\"מ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TaxReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.ALLTAXREPORTS", NameTextCodeDefaultText = "ALLTAXREPORTS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode TaxReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", DefaultText = @"Tax Reports",LocalDefaultText = "דוח מע\"מ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TaxReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.ALLTAXREPORTS", NameTextCodeDefaultText = "ALLTAXREPORTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaxReportObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ALLTAXREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxReportTextCode_0.Id, NameTextCodeCode = TaxReportTextCode_0.Code, ObjectTableName = "TaxReport", Code = "ALLTAXREPORTS",  QueryGroupCode = "97c2", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxReportObjectTable.Id, QuerySection = "TaxReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxReportFeature_0.Id,FeatureUniqeCode= TaxReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ALLTAXREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id,QueryCode = ALLTAXREPORTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TaxReport.TaxReportMonth" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id,QueryCode = ALLTAXREPORTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxReport.StatusEnglishName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 2, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id,QueryCode = ALLTAXREPORTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxReport.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 3, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ALLTAXREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id,QueryCode = ALLTAXREPORTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxReport.CreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TaxReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxReport").ToList();
+		   //List<ObjectField> TaxReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxReport").ToList();
 		       
 	      
 
-	         Screen TaxReportTaxReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxReport.HeaderScreen", Name = "TaxReportHeaderScreen", ObjectTableId = TaxReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TaxReportTaxReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxReport.HeaderScreen", Name = "TaxReportHeaderScreen", ObjectTableId = TaxReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxReportTaxReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportNumber").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxReportTaxReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.TaxReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxReportTaxReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth").FirstOrDefault().Id, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxReportTaxReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.TaxReportMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField TaxReportTaxReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxReportTaxReportHeaderScreenScreen0.Id,ScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code, ObjectFieldCode = "TaxReport.StatusEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxReportObjectTable.HeaderScreenId = TaxReportTaxReportHeaderScreenScreen0.Id;
+		    TaxReportObjectTable.HeaderScreenCode = TaxReportTaxReportHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -2097,13 +2118,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TaxReportDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TaxReportDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Tab.Details", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.TRDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TaxReportDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Tab.Details", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.TRDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id,FeatureUniqeCode = TaxReportDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, TabNameTextCodeCode = TaxReportDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2111,10 +2132,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TaxReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.PackageFeature", NameTextCodeDefaultText = "TaxReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TaxReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable);
+		   Feature TaxReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable);
+		   Feature TaxReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable);
+		   Feature TaxReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.PackageFeature", NameTextCodeDefaultText = "TaxReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature TaxReportFeature_TaxReport_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Menu", NameTextCodeDefaultText = @"Tax Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable);
+
+		   Feature TaxReportFeature_TaxReport_Features_TestButton = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Features.TestButton", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.TaxReport.Features.TestButton", NameTextCodeDefaultText = @"Test Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxReportObjectTable);
+
+   
 	    
 		}
 
@@ -2197,10 +2226,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature TaxReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRDL", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TaxReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCN", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature TaxReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRDL", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
+             			   Feature TaxReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCN", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2216,7 +2245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton TaxReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "TRMR",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "TaxReport.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -2227,6 +2256,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TaxReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2244,6 +2276,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  TaxReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TaxReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2261,6 +2296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  TaxReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -2275,6 +2313,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOFileBigNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.FileBigNumber", DefaultText = "There is a number with big value",LocalDefaultText = @"ישנו מספר עם ערך גדול", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportOCancelLaterReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CancelLaterReports", DefaultText = "The report cannot be cancel, you should cancel later reports before.",LocalDefaultText = @"לא ניתן לבטל את הדוח מכיוון שקיימים דוחות מאוחרים יותר, ראשית יש לבטל אותם", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportTextCode_TaxReportOCantApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CantApprove", DefaultText = "Can't approve report since there are lines without Transmit Status, please update",LocalDefaultText = @"קיימות שורות ללא סטטוס שידור , יש לעדכן אותן לפני אישור הדוח", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

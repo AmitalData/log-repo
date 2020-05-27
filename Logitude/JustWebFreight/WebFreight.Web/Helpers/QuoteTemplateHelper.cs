@@ -97,7 +97,7 @@ namespace WebFreight.Web.Helpers
                 QuoteTemplateService quoteTemplateService = new QuoteTemplateService(objectContext, Tenant);
                 quoteTemplateService.Create(quoteTemplatePM);
                 CreateQuoteTemplateSection(quoteTemplatePM.Id, Tenant);
-                CreateQuoteTemplateTextCode(quoteTemplatePM.Id, Tenant);
+                CreateQuoteTemplateTextCode(quoteTemplatePM, Tenant);
 
             }
 
@@ -400,10 +400,10 @@ namespace WebFreight.Web.Helpers
 
         #region CreateQuoteTemplateTextCode
 
-        private void CreateQuoteTemplateTextCode(string quoteTemplateId, int tenant)
+        private void CreateQuoteTemplateTextCode(QuoteTemplatePM quoteTemplatePM, int tenant)
         {
             Tenant = tenant;
-            QuoteTemplateId = quoteTemplateId;
+            QuoteTemplateId = quoteTemplatePM.Id;
 
             QuoteTemplateTextCodeRepository quoteTemplateTextCodeRepository = new QuoteTemplateTextCodeRepository(Tenant);
 
@@ -413,16 +413,21 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEDESCRIPTIONCONTAINERS", "Charge Description", "Charge Description", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEPACKAGES", "Charge", "Charge", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGECONTAINERS", "Charge", "Charge", "Containers"));
-
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITSPACKAGES", "Units", "Units", "Packages"));
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITPRICEPACKAGES", "Unit Price", "Unit Price", "Packages"));
+            string unitPriceLable = quoteTemplatePM.TemplateTypeCode == "P" ? "Step: Unit Price" : "Unit Price";
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITPRICEPACKAGES", unitPriceLable, unitPriceLable, "Packages"));
+
+
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("MEASUREMENTPACKAGES", "Measurement", "Measurement", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("MEASUREMENTCONTAINERS", "Measurement", "Measurement", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALPACKAGES", "Total", "Total", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALCONTAINERS", "Total", "Total", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALAMOUNTPACKAGES", "Local Amount", "Local Amount", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALAMOUNTCONTAINERS", "Local Amount", "Local Amount", "Containers"));
+
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("FIXEDPRICECONTAINERS", "Fixed Price", "Fixed Price", "Containers"));
+
+
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Containers"));
 
@@ -433,6 +438,11 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXPACKAGES", "Min/Max", "Min/Max", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXCONTAINERS", "Min/Max", "Min/Max", "Containers"));
 
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGEPACKAGES", "VAT Percentage", "VAT Percentage", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGECONTAINERS", "VAT Percentage", "VAT Percentage", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPEPACKAGES", "VAT Type", "VAT Type", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPECONTAINERS", "VAT Type", "VAT Type", "Containers"));
 
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTEDATE", "Quote Date", "Quote Date", "QuoteHeader"));
@@ -477,7 +487,7 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEABLEWEIGHT", "Chargeable Weight", "Chargeable Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("GROSSWEIGHT", "Gross Weight", "Gross Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUME", "Volume", "Volume", "QuoteDetails"));
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUMETRICWEIGHT", "Volumetric Weight", "Volumetric Weight", "QuoteDetails"));
+            //quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUMETRICWEIGHT", "Volumetric Weight", "Volumetric Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFPACKAGES", "Number Of Packages", "Number Of Packages", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFCONTAINERS", "Number Of Containers", "Number Of Containers", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSITTIME", "Transit Time", "Transit Time", "QuoteDetails"));
@@ -487,6 +497,12 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYNAME", "Notify Name", "Notify Name", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYADDRESS", "Notify Address", "Notify Address", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYCONTACT", "Notify Contact", "Notify Contact", "QuoteDetails"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "TotalPerContainers"));
+
+
             quoteTemplateTextCodeRepository.SubmitChanges();
         }   
 
@@ -792,7 +808,12 @@ namespace WebFreight.Web.Helpers
                     SpaceLinesBeforeQuoteDetails = setting.SpaceLinesBeforeQuoteDetails,
                     SpaceLinesBeforeQuoteHeaders = setting.SpaceLinesBeforeQuoteHeaders,
                     SpaceLinesBeforePerContainers = setting.SpaceLinesBeforePerContainers,
-
+                    QuoteTemplatePDFMarginTop = setting.QuoteTemplatePDFMarginTop,
+                    QuoteTemplatePDFMarginBottom = setting.QuoteTemplatePDFMarginBottom,
+                    ShowVATPercentageContainers = setting.ShowVATPercentageContainers,
+                    ShowVATPercentagePackages = setting.ShowVATPercentagePackages,
+                    ShowVATTypeContainers = setting.ShowVATTypeContainers,
+                    ShowVATTypePackages = setting.ShowVATTypePackages,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

@@ -1,122 +1,87 @@
-﻿// FileLoggerService  1st check is 
+// FileLoggerService  1st check is 
 //------------------------------------------------------------------------------
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {Guid} from '../../Utilities/Guid';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
-
-import {ErrorLogPM} from '../../EntityPMs/ErrorLogPM';
-
+import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
+import { InfraSettings } from '../../Utilities/InfraSettings';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { ErrorLogPM } from '../../EntityPMs/ErrorLogPM';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { defer, of } from 'rxjs';
 
 @Injectable()
-
 export class ErrorLogPMFileLoggerService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FileLogger';
     }
 
     get(id: string) {
-
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        var url = this._apiUrl + '/GetSingle?' + 'appSettingKeyValueIsLogUntilDateyyyyMMdd=' + id;
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingle?' + 'appSettingKeyValueIsLogUntilDateyyyyMMdd=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
+                    var pm = response;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = pm;
 
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ErrorLog", "GetSinglePM", 'id=' + id);
 
-
-                //var entity: ErrorLogPM;
-                //if (pm) {
-                //    entity = this.MapJsonToEntityPM(pm);
-                //}
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
-
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ErrorLog", "GetSinglePM", 'id=' + id);
-
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    return serviceResponse;
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     insert(entityPM: ErrorLogPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var validator: ClassLevelValidator;
-
             validator = new ClassLevelValidator();
-
             var errorsArray = validator.Validate("ErrorLog", entityPM);
-
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
+
             if (errorsArray.length == 0) {
                 var mappedEntity: ErrorLogPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-                        var pm = response.json();
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response;
                         if (pm) {
                             var mappedResult: ErrorLogPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                             serviceResponse.Result = mappedResult;
                         }
-
-
                         var servertime = response.headers.get('ServerExecutionTime');
                         PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ErrorLog", "SaveChanges", "");
 
-
                         return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
-
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
-
+                return of(serviceResponse);
             }
-        }
-
-        );
+        });
     }
 
-
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ErrorLogPM = null) {
-
-
         if (!entityPM) {
-
             entityPM = new ErrorLogPM();
         }
 
@@ -145,9 +110,6 @@ export class ErrorLogPMFileLoggerService {
 
         }
 
-
-
-
         if (mapParent) {
             entityPM.OldEntityPM = this.clone(entityPM);
 
@@ -159,7 +121,6 @@ export class ErrorLogPMFileLoggerService {
         entityPM.IsDirty = false;
         return entityPM;
     }
-
 
     public clone(jsonPM: any) {
         var entityPM: any;

@@ -10,6 +10,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct VehicleSafeAccessoryInstlTypeValues
     {   
+       public const string האביזרהותקןכברברכב = "1";  
+       public const string האביזרעדייןלאהותקןברכב = "2";  
     }
 }
 

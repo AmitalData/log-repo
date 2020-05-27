@@ -14,7 +14,7 @@ import {CodeNameClass} from './CodeNameClass';
 import {EAWBFilterComponent} from '../../../Report/Components/FilterReportComponent/EAWBFilterComponent';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'BookingFilterComponent',
     templateUrl: './BookingFilterComponent.html',
     inputs: ['ReportsPreview']

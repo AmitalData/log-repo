@@ -114,6 +114,9 @@ export class JournalMenuButtonsHandler {
                                     button.IsDisabled = true;
                                 }
 
+                                if(this.EntityPM.ExternalSystem)
+                                    button.IsDisabled = true;
+
 
                                 // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
                                 //     button.IsDisabled = true;
@@ -280,7 +283,7 @@ export class JournalMenuButtonsHandler {
 
                 //3
                 //Get document out
-                this._documentOutPMService.getCreateDocumentOut(documentType.Id, this.EntityPM.Id, null, null, objectTableId, SessionLocator.Tenant).subscribe(res => {
+                this._documentOutPMService.getCreateDocumentOut(documentType.Id, this.EntityPM.Id, null, null, objectTableId, SessionLocator.Tenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var documentout: DocumentOutPM = pmResponse.Result;
@@ -293,7 +296,7 @@ export class JournalMenuButtonsHandler {
                             //if (documentOutCopy) {
                                 //4
                                 //Export to pdf
-                                this._exportDocumentService.getDocumentPdfFile(documentType.Id, this.EntityPM.Id, objectTableId, null, null, documentout.Id, documentout.Tenant, documentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
+                                this._exportDocumentService.getDocumentPdfFile(documentType.Id, this.EntityPM.Id, objectTableId, null, null, documentout.Id, documentout.Tenant, documentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
                                     var pmResponse: ServiceResponse = res;
                                     if (!pmResponse.HasError) {
                                         console.log("_exportDocumentService.getDocumentPdfFile", pmResponse)

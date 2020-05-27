@@ -13,7 +13,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'NewTaskComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTaskComponent.html',
 })
 
@@ -21,7 +21,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Activity";
     public DataContext: NewTaskComponent = this;
     public EntityPM: ActivityPM;    
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private myActivityPMService: ActivityPMService;
     private entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -56,7 +56,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -155,7 +155,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     }
 
     AddCustomerClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
             this.entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response1 => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "New Potential Customer";

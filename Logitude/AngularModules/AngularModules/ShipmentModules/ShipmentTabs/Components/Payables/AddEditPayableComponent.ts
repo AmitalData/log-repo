@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -7,13 +7,17 @@ import {ShipmentPayableItem} from './PayablesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import {ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import {CardList } from '../../../../Common/EntityLists/CardList';
+import {CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import {ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPayableComponent.html',
 })
 
-export class AddEditPayableComponent {
+export class AddEditPayableComponent implements OnDestroy {
     public EntityPM: ShipmentPayablePM;
     public DataContext: ShipmentPayableItem;
     public ObjectTableName: string = "ShipmentPayable";
@@ -22,8 +26,14 @@ export class AddEditPayableComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsOrangeInfoVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    private PropertyChangedEvent: any = null;
 
+    constructor() {
+        
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
     SetDataContext(dataContext: ShipmentPayableItem) {
@@ -32,8 +42,9 @@ export class AddEditPayableComponent {
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.IsOrangeInfoVisible = AppTool.IsNullOrEmpty(this.EntityPM.ShipmentPayableParentId) ? false : true;
         this.SetDependencies();
-        this.BuildQueryFilters(); 
+        this.BuildQueryFilters();
         this.Clone();
+        this.ListenPropertyChanged();
     }
 
     public MeasurementDependencyProperty1: any = null;
@@ -85,7 +96,6 @@ export class AddEditPayableComponent {
     }
 
     OkButtonClicked() {
-
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
@@ -108,39 +118,128 @@ export class AddEditPayableComponent {
         }
 
         // Back To Back Check
-        
 
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
+            if (this.DataContext.VendorId != null && this.DataContext.VendorCardEntity != null) {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(this.DataContext.ShipmentPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var vendorCardOfShipment = myResponse.Result;
+                        if (vendorCardOfShipment != null && this.DataContext.VendorCardEntity.PartnerTypeId == vendorCardOfShipment.PartnerTypeId) {
+                            if (this.DataContext.VendorId != this.DataContext.ShipmentPM.MainCarriageCarrierId) {
+                                var confirmWindow = new ConfirmWindow();
+                                confirmWindow.Show("Confirm adding a payable with a different vendor than the main carriage carrier.");
+                                confirmWindow.WindowClosed.subscribe((event: any) => {
+                                    if (confirmWindow.Yes) {
+                                        this.AddPayable();
+                                    }
+                                    if (confirmWindow.No) {
+                                        //nothing
+                                    }
+                                });
+                            }
+                            else {
+                                this.AddPayable();
+                            }
+                        }
+                        else {
+                            this.AddPayable();
+                        }
+                    }
+                });
+            }
+            else {
+                this.AddPayable();
+            }
+        }
+    }
+    AddPayable() {
+        if (this.DataContext.IsByContainerType) {
+            this.AddByContainerEntities();
+            this.DataContext.fatherComponent.BuildItemsSource();
 
-            if (this.DataContext.IsByContainerType) {
-                this.AddByContainerEntities();
-                this.DataContext.fatherComponent.BuildItemsSource();
-
-                if (this.DataContext.ChargesGroupCode == "FRT") {
-                    this.DataContext.fatherComponent.OnFreightAmountChanged();
-                }
-
-                this.DataContext.fatherComponent.ComputeShipmentFields();
+            if (this.DataContext.ChargesGroupCode == "FRT") {
+                this.DataContext.fatherComponent.OnFreightAmountChanged();
             }
 
-            else if (this.DataContext.IsNewEntity) {
-                this.DataContext.ShipmentPM.AddPayable(this.EntityPM);
-                this.DataContext.fatherComponent.BuildItemsSource();
+            this.DataContext.fatherComponent.ComputeShipmentFields();
+        }
 
-                if (this.DataContext.ChargesGroupCode == "FRT") {
-                    this.DataContext.fatherComponent.OnFreightAmountChanged();
-                }
+        else if (this.DataContext.IsNewEntity) {
+            this.DataContext.ShipmentPM.AddPayable(this.EntityPM);
+            this.DataContext.fatherComponent.BuildItemsSource();
 
-                this.DataContext.fatherComponent.ComputeShipmentFields();
+            if (this.DataContext.ChargesGroupCode == "FRT") {
+                this.DataContext.fatherComponent.OnFreightAmountChanged();
             }
 
+            this.DataContext.fatherComponent.ComputeShipmentFields();
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
+
+            var property = this.propertiesChanges.filter(a => a != "Notes" && a != "Quantity" && a != "PrepaidCollectId"
+                && a !=  "ExpectedAmount"
+                && a !=  "ExpectedAmountLocal"
+                && a != "ExpectedAmountInProfitCurrency"
+                && a !=  "OpenAmount"
+                && a !=  "OpenAmountInLocalCurrency"
+                && a !=  "OpenAmountInProfitCurrency"
+                && a !=  "CorrectionAmount"
+                && a !=  "AccountedAmount"
+                && a !=  "AccountedAmountInLocalCurrency"
+                && a !=  "AccountedAmountInProfitCurrency"
+            )[0];
+
+            if (property) {
+                this.ShowTariffDisconnectionWindow();
+            }
+            else {
+                this.DataContext.IsNewEntity = false;
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+        }
+        else {
             this.DataContext.IsNewEntity = false;
-            this.CurrentSession.CloseCurrentWindowEmit("OK");            
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
+    private propertiesChanges = [];
+    private ListenPropertyChanged() {
+
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                this.propertiesChanges.push(s.PropertyName);
+            }
+        });
+    }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.MinAmount = null;
+                this.DataContext.TariffNumber = null;
+                this.DataContext.IsNewEntity = false;
+                this.EntityPM.PayablesDisconnectedFromTariff = true;
+                this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
+    }
     AddByContainerEntities() {
         if (this.DataContext.IsByContainerType) {
             var _Amount: number = null;
@@ -234,6 +333,7 @@ export class AddEditPayableComponent {
         this.myCloner.AddField('PrepaidCollectId');
         this.myCloner.AddField('VendorId');
         this.myCloner.AddField('Notes');
+        this.myCloner.AddField('TariffId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

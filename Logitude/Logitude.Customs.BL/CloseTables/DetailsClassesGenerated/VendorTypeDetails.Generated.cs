@@ -20,17 +20,39 @@ namespace Logitude.Customs.BL
    {
        public List<VendorTypeDetails> GetAll()
        {
-		    var all = new List<VendorTypeDetails>(); 
+		    var all = new List<VendorTypeDetails>();  
+            all.Add(new VendorTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,ספק", 
+                Inactive = false, 
+                LocalName = "ספק", 
+                EnglishName = "lll", 
+			});
+			 
+            all.Add(new VendorTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,לקוח חו''ל", 
+                Inactive = false, 
+                LocalName = "לקוח חו''ל", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(VendorType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(VendorType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

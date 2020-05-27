@@ -196,7 +196,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                     .GetQByJournalIds(listOfJournalIds, tenant)
                     .Where(r => r.AccountId == glAccountBillTOId);
                 var LedgerOfBilltoByJournalIdList = qLedgerOfBilltoByJournalId.ToList();
-
+                if (!LedgerOfBilltoByJournalIdList.Any())
+                {
+                    throw new Exception("could not found any ledger-to the source journal  withe the ARPayment  BillTo ");
+                }
                 foreach(var l in LedgerOfBilltoByJournalIdList)
                 {
                     var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();

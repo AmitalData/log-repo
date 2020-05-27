@@ -45,12 +45,14 @@
                                                     <!-- MamanSpecialActionCode -->
                                                     <log-column [header]="'Customs.DeclarationMamanSpecialAction.F.MamanSpecialActionCode' | TextCodeTranslationPipe"
                                                                 [width]="'140'" [Alignment]="'right'" [binding]="'MamanSpecialActionCode'" [Editable]="true">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div class="TextTrimming RightCenter">
                                                                 <span>{{item.MamanSpecialActionCode}}</span>
                                                             </div>
 
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
 
@@ -59,23 +61,27 @@
                                                     <!-- MamanSpecialActionStatusCode -->
                                                     <log-column [header]="'Customs.DeclarationMamanSpecialAction.F.MamanSpecialActionStatusCode' | TextCodeTranslationPipe"
                                                                 [width]="'140'" [Alignment]="'right'" [binding]="'MamanSpecialActionStatusName'" [Editable]="true">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div class="TextTrimming RightCenter">
                                                                 <span>{{item.MamanSpecialActionStatusName}}</span>
                                                             </div>
 
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
 
                                                     <!-- MamanSpecialActionsErrorXml -->
                                                     <log-column [header]="'Customs.DeclarationMamanSpecialAction.F.MamanSpecialActionsErrorXml' | TextCodeTranslationPipe"
                                                                 [width]="'430'" [Alignment]="'right'" [binding]="'MamanSpecialActionsErrorXml'" [Editable]="true">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div class="TextTrimming RightCenter">
                                                                 <span>{{item.MamanSpecialActionsErrorXml}}</span>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
 

@@ -136,7 +136,7 @@
                                                             [SelectedValue]="VendorId"
                                                             [LookUpTableName]="'Card'"
                                                             [HideLastColumn]="true"
-                                                            [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1Value]="'AC,CS,AG,AL,CG,SG,SL,TR,VD,WH'"
                                                             [DependencyFilter1IsList]="true">
                                                     </LogLov>
 
@@ -245,7 +245,7 @@
                                                     <div style="width:191px;">
                                                         <LogTextBox [HideColumns]="true" [ObjectFieldName]="'AmountInPaymentCurrency'" [Text]="AmountInPaymentCurrency"
                                                             [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"></LogTextBox>
+                                                            [DataContext]="DataContext" [DigitsAfterPoint]="2"></LogTextBox>
                                                     </div>
                                                 </td>
 
@@ -479,6 +479,7 @@
                                                             <td style="width:150px; left: -10px;">
                                                                 <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                             </td>
+                                                            <td></td>
 
                                                         </tr>
                                                     </table>
@@ -512,7 +513,7 @@
                                             <tr class="customtrclass">
 
                                                 <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [Text]="AmountInPaymentCurrency" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
                                                 <td style="width:150px;" *ngIf="BankAccountIdVisibility">
@@ -580,13 +581,14 @@
 
                                                 </td>
 
-
-                                                <td *ngIf="IsChequeLinkVisibile">
+                                                 
+                                                <td>
+                                                     
                                                     <table>
                                                         <tr>
 
                                                             <td style="width:50px;text-align:center">
-                                                                <a style="font-size:12px; color:green" (click)="ViewPaymentCheque(item)">{{EntityPM.ChequeOrPaymentRef}}</a>
+                                                                <a style="font-size:12px; color:green" (click)="ViewPaymentCheque()">{{EntityPM.ChequeOrPaymentRef}}</a>
                                                             </td>
 
                                                             <td><div></div></td>
@@ -664,147 +666,171 @@
 
                                     <!-- IsConnected -->
                                     <log-column [width]="'25'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsFilled]="true" [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
-                                                <CheckBox *ngIf="!item.ConnectFeature && !item.NotMatchedVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="You have no permission to connect invoices" [IsEnabled]="false"></CheckBox>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsFilled]="true" [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                    <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
+                                                    <CheckBox *ngIf="!item.ConnectFeature && !item.NotMatchedVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="You have no permission to connect invoices" [IsEnabled]="false"></CheckBox>
 
-                                                <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="{{item.NoPermision}}" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
-                                            </div>
-                                        </log-cell-template>
+                                                    <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" title="{{item.NoPermision}}" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- InvoiceNumber -->
                                     <log-column [width]="'90'" [header]="'APInvoice.CH.InvoiceNumberListLable' | TextCodeTranslationPipe" [SortFieldName]="'InvoiceNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <Hyperlink [FontSize]="12" (click)="ViewEntity(item)">{{item.InvoiceNumber}}</Hyperlink>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <Hyperlink [FontSize]="12" (click)="ViewEntity(item)">{{item.InvoiceNumber}}</Hyperlink>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'110'" [header]="'APInvoice.CH.AmountInInvoiceCurrencyListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'ForeignAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <div style="width: 100%;">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <div style="width: 100%;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:1px;">
+                                                                {{item.InvoiceAmount | NumbersPipe:'N2'}}
+                                                            </td>
+
+                                                            <td style="width:5px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:30px;">
+                                                                <div style="width: 30px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.CurrencyCodeColor,background: item.CurrencyCodeBackground}">
+                                                                    {{item.CurrencyCode}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- AmountDue -->
+                                    <log-column [width]="'110'" [header]="'APInvoice.CH.AmountDueListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountDue'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                                {{item.AmountDue | NumbersPipe:'N2'}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- OtherPaymentsAmount -->
+                                    <log-column [width]="'110'" [header]="'APPayment.O.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                                {{item.OtherPaymentsAmount | NumbersPipe:'N2'}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- AmountPaid (invoice) -->
+                                    <log-column [width]="'100'" [header]="'APPayment.O.AmountToPay' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <div style="width: 100%;">
+                                                    <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- AmountPaid (Payment) -->
+                                    <log-column *ngIf="IsMultiCurrency" [width]="'135'" [Alignment]="'center'">
+                                        <ng-template let-item>
+                                            <log-header-template>
+                                                <div class="GridHeaderCellTemplate">
+                                                    <span>{{'APPayment.O.AmountToPay' | TextCodeTranslationPipe}}</span>
+                                                    <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
+                                                </div>
+                                            </log-header-template>
+                                        </ng-template>
+
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                                <span *ngIf="item.IsConnected">{{item.ConnectedAmount_PAY | NumbersPipe:'N2'}}</span>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Exchange Rate -->
+                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'APInvoice.CH.InvoiceCurrencyExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                                <table *ngIf="item.IsAdvancedButtonVisible">
+                                                    <tr>
+                                                        <td>{{item.ExchangeRate | NumbersPipe:'N5'}}</td>
+
+                                                        <td style="width: 3px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 1px;">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.AdvancedClicked()"></IconButton>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- DueDate -->
+                                    <log-column [width]="'100'" [header]="'Accounting.General.O.APPaymentDueDate' | TextCodeTranslationPipe" [SortFieldName]="'DueDate'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}" style="width: 100%;">
+                                                    {{item.DueDate | DateTimeToDatePipe}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Status -->
+                                    <log-column [width]="'140'" [header]="'APInvoice.CH.StatusNameListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
                                                 <table>
                                                     <tr>
                                                         <td>
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:1px;">
-                                                            {{item.InvoiceAmount | NumbersPipe:'N2'}}
-                                                        </td>
-
-                                                        <td style="width:5px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width:30px;">
-                                                            <div style="width: 30px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.CurrencyCodeColor,background: item.CurrencyCodeBackground}">
-                                                                {{item.CurrencyCode}}
+                                                        <td style="width: 1px;">
+                                                            <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.Status | StringToColorPipe, background: item.StatusBackground}">
+                                                                {{item.Status}}
                                                             </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- AmountDue -->
-                                    <log-column [width]="'110'" [header]="'APInvoice.CH.AmountDueListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountDue'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'"  [CellColor]="item.CellBackground">
-                                            {{item.AmountDue | NumbersPipe:'N2'}}
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- OtherPaymentsAmount -->
-                                    <log-column [width]="'110'" [header]="'APPayment.CH.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'"  [CellColor]="item.CellBackground">
-                                            {{item.OtherPaymentsAmount | NumbersPipe:'N2'}}
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- AmountPaid (invoice) -->
-                                    <log-column [width]="'100'" [header]="'APPayment.CH.AmountToPay' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <div style="width: 100%;">
-                                                <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- AmountPaid (Payment) -->
-                                    <log-column *ngIf="IsMultiCurrency" [width]="'135'" [Alignment]="'center'">
-                                        <log-header-template template="let item">
-                                            <div class="GridHeaderCellTemplate">
-                                                <span>{{'APPayment.CH.AmountToPay' | TextCodeTranslationPipe}}</span>
-                                                <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
-                                            </div>
-                                        </log-header-template>
-
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
-                                            <span *ngIf="item.IsConnected">{{item.ConnectedAmount_PAY | NumbersPipe:'N2'}}</span>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Exchange Rate -->
-                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'APInvoice.CH.InvoiceCurrencyExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
-                                            <table *ngIf="item.IsAdvancedButtonVisible">
-                                                <tr>
-                                                    <td>{{item.ExchangeRate | NumbersPipe:'N5'}}</td>
-
-                                                    <td style="width: 3px;">
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="width: 1px;">
-                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.AdvancedClicked()"></IconButton>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- DueDate -->
-                                    <log-column [width]="'100'" [header]="'Accounting.General.O.APPaymentDueDate' | TextCodeTranslationPipe" [SortFieldName]="'DueDate'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}" style="width: 100%;">
-                                                {{item.DueDate | DateTimeToDatePipe}}
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                    <!-- Status -->
-                                    <log-column [width]="'140'" [header]="'APInvoice.CH.StatusNameListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="width: 1px;">
-                                                        <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.Status | StringToColorPipe, background: item.StatusBackground}">
-                                                            {{item.Status}}
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Shipment -->
-                                    <log-column [width]="'100'" [header]="'APPayment.CH.ShipmentNo' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                            <div style="width: 100%; color:#1B90CB; font-size: 11px;">
-                                                {{item.ShipmentNumber}}
-                                            </div>
-                                        </log-cell-template>
+                                    <log-column [width]="'100'" [header]="'APPayment.O.ShipmentNo' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                                <div style="width: 100%; color:#1B90CB; font-size: 11px;">
+                                                    {{item.ShipmentNumber}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -833,19 +859,30 @@
                                 <tr style="width:100%;">
                                     <td style="vertical-align: middle">
 
+                                        <!-- Payment Amount -->
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;color:#282E30">{{Summary_Amount | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'APPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
                                         </div>
 
+                                        <!-- Invoices Paid Amount -->
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;margin-left:15px;">  -  </div>
                                             <div></div>
                                         </div>
-
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_AmountPaidColor}">{{Summary_AmountPaid | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'APPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
+                                        </div>
+
+                                        <!-- External Amount -->
+                                        <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'" *ngIf="IsExternalPaymentVisible">
+                                            <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;margin-left:15px;">  -  </div>
+                                            <div></div>
+                                        </div>
+                                        <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'" *ngIf="IsExternalPaymentVisible">
+                                            <div style="font-size: 24px; text-align: center; cursor: pointer; text-decoration: underline;" [ngStyle]="{color: Summary_ExternalAmountColor}" (click)="EnterExternalPaymentClicked()">{{Summary_ExternalAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">External Amount</div>
                                         </div>
 
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
@@ -886,7 +923,7 @@
                                     <tr>
                                         <td>
                                             <div class="MediaFill">
-                                                <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                             </div>
                                         </td>
                                     </tr>

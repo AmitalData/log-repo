@@ -11,5 +11,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string SearchFields { get; set; }
         public int Tenant { get; set; }
         public string LocalName { get; set; }
+        public int ViewOrder { get; set; }
     }
 }

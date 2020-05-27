@@ -76,6 +76,13 @@ namespace WebFreight.Web.CRMModel.DomainServices
             DocumentsFilingQuery query = new DocumentsFilingQuery(tenant);
             List<DocumentsFilingPM> docsIn = query.GetDocumentsFilingPMsByEntityId(tenant,entityPM.Id,table.Id);
 
+
+            if (!string.IsNullOrEmpty(entityPM.QuoteId))
+            {
+                DocumentsFilingPM documentsFilingPM = GetQuotationLastVersionDocumentsFilingPM(entityPM);
+                if (documentsFilingPM != null) docsIn.Add(documentsFilingPM);
+            }
+
             CorrespondenceQueryService correspondenceQuery = new CorrespondenceQueryService(tenant);
             List<CorrespondencePM> correspondencesList = correspondenceQuery.GetAllCorrespondencesByEntityIdAndTenant(entityPM.Id, tenant);
 
@@ -139,6 +146,16 @@ namespace WebFreight.Web.CRMModel.DomainServices
             
 
             return entityPM;
+        }
+
+        private static DocumentsFilingPM GetQuotationLastVersionDocumentsFilingPM(TicketPM entityPM)
+        {
+            string objectTableId = ObjectTableRepository.GetObjectTableByName("Quote");
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(entityPM.Tenant);
+            var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode("QUOTE", entityPM.Tenant);
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
+            DocumentsFilingPM documentsFilingPM = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityPM.QuoteId, objectTableId, documentTypeId, entityPM.Tenant);
+            return documentsFilingPM;
         }
 
         public TicketList GetSingleTicketList(string id, int tenant)
@@ -351,7 +368,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 CreatedByContactId = entityPM.CreatedByContactId,
             };
 
-            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId);
+            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId, entityPM.SupportMailboxId);
 
             InboundEmailLinePM line = new InboundEmailLinePM()
             {

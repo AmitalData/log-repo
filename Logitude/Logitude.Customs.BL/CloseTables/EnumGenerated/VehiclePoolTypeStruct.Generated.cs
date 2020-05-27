@@ -10,6 +10,7 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct VehiclePoolTypeValues
     {   
+       public const string seat = "1";  
     }
 }
 

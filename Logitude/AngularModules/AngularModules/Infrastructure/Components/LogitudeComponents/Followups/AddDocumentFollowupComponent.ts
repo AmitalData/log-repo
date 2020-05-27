@@ -8,7 +8,7 @@ import {QuoteFollowUpPM} from '../../../../Quote/EntityPMs/QuoteFollowUpPM';
 import {FollowUpPM} from '../../../../Infrastructure/EntityPMs/FollowUpPM';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DocumentFollowUp',
     templateUrl: './AddDocumentFollowupComponent.html',

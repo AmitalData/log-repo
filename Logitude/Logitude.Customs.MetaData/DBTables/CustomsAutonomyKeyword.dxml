@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsAutonomyKeywords"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="KeywordtypeCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="KeywordsList"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

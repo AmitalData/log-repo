@@ -48,7 +48,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ab55563d-9304-4442-af46-998b45cd0f08&quot;"
     FieldName="&quot;Code&quot;"
@@ -326,40 +328,50 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;CargoStatus&quot;"
-    TextCode="&quot;Cargo Statuses&quot;"
-    LocalTextCode="&quot;סטאטוס מטען&quot;"
-    QueryGroupCode="&quot;1362&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.CargoStatus&quot;"
-    QuerySection="&quot;Customs.CargoStatus&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Ascending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CargoStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;1362&quot;"
+    QueryGroupName="&quot;Customs.CargoStatus Query Group&quot;"
+    LocalTextCode="&quot;סטאטוס מטען&quot;"
+    TextCode="&quot;Cargo Statuses&quot;"
+    TextCodeCode="&quot;CargoStatus.Q.CargoStatus&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CargoStatus.Q.CargoStatus&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CargoStatus.Features.CargoStatus&quot;"
+    FeatureDefaultText="&quot;CargoStatus&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CargoStatus&quot;"
         IndexOrder="0"
+        ColumnWidth="120"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="120" />
+        QueryCode="&quot;CargoStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoStatus&quot;"
         IndexOrder="1"
+        ColumnWidth="120"
         ObjectFieldName="&quot;Name&quot;"
-        ColumnWidth="120" />
+        QueryCode="&quot;CargoStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoStatus&quot;"
         IndexOrder="2"
+        ColumnWidth="120"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="120" />
+        QueryCode="&quot;CargoStatus&quot;" />
       <QueryColumn
-        QueryCode="&quot;CargoStatus&quot;"
         IndexOrder="3"
+        ColumnWidth="120"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="120" />
+        QueryCode="&quot;CargoStatus&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -367,18 +379,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CargoStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CargoStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

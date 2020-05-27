@@ -17,6 +17,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string ObjectTableId { get; set; }
 
+        public string ShortTextCodeCode { get; set; }
+
         [ForeignKey("ObjectTableId")]
         //[Association("ObjectTableTip", "ObjectTableId", "Id", IsForeignKey = true)]
         public virtual ObjectTable ObjectTable { get; set; }

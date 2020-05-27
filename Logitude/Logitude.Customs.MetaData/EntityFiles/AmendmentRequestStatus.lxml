@@ -35,8 +35,8 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטאטוס בקשה לתיקון מסמך&quot;"
   DefaultText="&quot;Amendment Request Status&quot;"
-  Code="&quot;9dda&quot;"
-  Name="&quot;Customs.AmendmentRequestStatus Query Group&quot;"
+  Code="&quot;ARQG&quot;"
+  Name="&quot;Customs.AmendmentRequestStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -47,7 +47,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;7be461a4-5b0b-4daf-b0b7-2505667f8f83&quot;"
     FieldName="&quot;Code&quot;"
@@ -322,21 +324,78 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AmendmentRequestStatus&quot;"
+    ObjectTableName="&quot;Customs.AmendmentRequestStatus&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AmendmentRequestStatus&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;ARQG&quot;"
+    QueryGroupName="&quot;Customs.AmendmentRequestStatus&quot;"
+    LocalTextCode="&quot;סטאטוס בקשה לתיקון מסמך&quot;"
+    TextCode="&quot;Amendment Request Status&quot;"
+    TextCodeCode="&quot;Customs.AmendmentRequestStatus.Q.AmendmentRequestStatusQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;AMEDMENTREQUESTSTATUS&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AmendmentRequestStatus.Features.AmendmentRequestStatus&quot;"
+    FeatureDefaultText="&quot;AmendmentRequestStatus&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AmendmentRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AmendmentRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AmendmentRequestStatus&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AmendmentRequestStatus&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AmendmentRequestStatus&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AmendmentRequestStatus&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

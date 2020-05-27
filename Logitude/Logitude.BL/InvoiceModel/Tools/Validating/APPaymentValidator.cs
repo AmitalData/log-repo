@@ -3,6 +3,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
@@ -23,7 +24,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APPaymentValidator
     {
-        public static void Validate(APPaymentPM entityPM)
+        public static void Validate(APPaymentPM entityPM, APPayment entityPOCO, bool isNew)
         {
             int tenant = entityPM.Tenant;
 
@@ -142,6 +143,31 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateAirlineRestriction(entityPM.VendorId, tenant);
             ValidateFullAccounting(entityPM);
+            ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
+            ValidateOnVoiding(entityPM);
+        }
+
+        private static void ValidateUnUpdateFields(APPaymentPM entityPM, APPayment entityPOCO, bool isNew)
+        {
+            if (!isNew)
+            {
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
+
+                if (!isEditingEnabled)
+                {
+                    if (entityPM.PaymentCurrencyExchangeRate != entityPOCO.PaymentCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("APPayment.F.PaymentCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+
+                    if (entityPM.AmountInPaymentCurrency != entityPOCO.AmountInPaymentCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("APPayment.F.AmountInPaymentCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+                }
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -183,9 +209,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             var errors = "";
             var tenant = entityPM.Tenant;
-            bool useLocal = true;
-            ContactPM user = GetLoggedContact(tenant);
-            useLocal = user == null ? true : (!user.DontShowLocal);
+            
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
 
             string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
             TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -225,10 +250,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     errors += msg + ";";
                     //throw new ApplicationException(msg);
                 }
+
+
+
                 decimal? percentage = null;
                 IGLAccountWithholdingTaxQueryServiceExt gLAccountWithholdingTaxQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountWithholdingTaxQueryServiceExt), "GLAccountWithholdingTaxQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountWithholdingTaxQueryServiceExt;
                 CardRepository cardRep = new CardRepository(tenant);
                 Card card = cardRep.GetSingleCard(entityPM.VendorId, tenant);
+
+
+                if (entityPM.SetApproved && card.CountryId == null)
+                {
+                    string msg = TranslateTextsClass.Translate("APPayment.O.NoVendorCountry", tenant, useLocal);
+                    errors += msg + ";";
+                }
+
                 GLAccountWithholdingTaxPM withholdingTaxPM = gLAccountWithholdingTaxQueryService.GetAccountWithholdingTaxPMByglAccountAndDate(card.GLAccountId, entityPM.RegisterDate, tenant);
                 if (withholdingTaxPM == null)
                 {
@@ -285,6 +321,52 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
+        }
+
+        private static bool IsEditingEntityEnabled(APPayment entityPOCO)
+        {
+            bool myResult = false;
+
+            if (entityPOCO != null)
+            {
+                if (string.IsNullOrEmpty(entityPOCO.StatusCode) || entityPOCO.StatusCode == "DR")
+                {
+                    myResult = true;
+                }
+            }
+
+            return myResult;
+        }
+
+        private static void ValidateOnVoiding(APPaymentPM entityPM)
+        {
+            if (entityPM.SetVoided)
+            {
+                bool hasConnectedInvoices = entityPM.PaymentInvoices.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any();
+                bool hasExternalPaymentAmount = (entityPM.ExternalPaymentAmount != null && entityPM.ExternalPaymentAmount != 0) ? true : false;
+
+                if (hasConnectedInvoices || hasExternalPaymentAmount)
+                {
+                    string msg = null;
+
+                    if (hasConnectedInvoices && hasExternalPaymentAmount)
+                    {
+                        msg = "Please disconnect all invoices and external payment amount";
+                    }
+
+                    else if (hasConnectedInvoices && !hasExternalPaymentAmount)
+                    {
+                        msg = TranslateTextsClass.Translate("APPayment.M.DisconnectInvoices", entityPM.Tenant);
+                    }
+
+                    else if (!hasConnectedInvoices && hasExternalPaymentAmount)
+                    {
+                        msg = "Please disconnect external payment amount";
+                    }
+
+                    throw new ApplicationException(msg);
+                }
+            }
         }
     }
 }

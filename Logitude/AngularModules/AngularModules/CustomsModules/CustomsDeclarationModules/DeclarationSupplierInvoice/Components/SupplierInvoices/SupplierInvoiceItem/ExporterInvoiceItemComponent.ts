@@ -13,7 +13,7 @@ import { SupplierInvoiceItemProcesTypePM } from "../../../../../../Customs/Entit
 import { Validator } from "../../../../../../Infrastructure/Validators/Validator";
   
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExporterInvoiceItemComponent.html',
 })
 

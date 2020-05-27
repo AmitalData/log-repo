@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<PayerActivityTypeDetails> GetAll()
        {
-		    var all = new List<PayerActivityTypeDetails>(); 
+		    var all = new List<PayerActivityTypeDetails>();  
+            all.Add(new PayerActivityTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,סוכן,,", 
+                Inactive = false, 
+                LocalName = "סוכן", 
+			});
+			 
+            all.Add(new PayerActivityTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,יבואן,,", 
+                Inactive = false, 
+                LocalName = "יבואן", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PayerActivityType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PayerActivityType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

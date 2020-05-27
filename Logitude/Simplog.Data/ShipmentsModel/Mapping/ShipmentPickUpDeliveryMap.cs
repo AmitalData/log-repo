@@ -13,7 +13,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CarrierNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notes).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PickUpDeliveryNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.PickUpDeliveryNumber).IsRequired().HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.FromPartnerCardId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Driver).HasMaxLength(40).IsUnicode(false);

@@ -113,7 +113,11 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                         showIsConstituentInvoice = false;
                         queryableData = queryableData.Where(d => d.TransferStatusCode == "TR");
                     }
-
+                    else if (item.FieldName == "OpenInvoices")
+                    {
+                        showIsConstituentInvoice = false;
+                        queryableData = queryableData.Where(d => d.AmountDue != 0);
+                    }
                     else if (item.FieldName == "IsConsolidationInvoice")
                     {
                         if (item.FieldValue != null)

@@ -254,11 +254,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -266,11 +268,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -278,11 +282,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -290,11 +296,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -302,18 +310,21 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
                                 <!-- DepositionStatusCode -->
                                 <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
                                             [width]="'150'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
 
                                             <span>
@@ -334,6 +345,7 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                     
                                 </log-column>
                             </logitude-edit-grid>
@@ -545,11 +557,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -557,11 +571,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -569,11 +585,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -581,11 +599,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -593,18 +613,21 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
                                 <!-- DepositionStatusCode -->
                                 <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
 
                                             <span>
@@ -625,6 +648,7 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 

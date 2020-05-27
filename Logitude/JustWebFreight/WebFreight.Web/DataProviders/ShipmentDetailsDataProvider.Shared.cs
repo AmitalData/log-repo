@@ -16,6 +16,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string Direction { get; set; }
         public string ShipmentId { get; set; }
+        public string ShipmentLevel { get; set; }
         public string Shipper { get; set; }
         public string BUShipper { get; set; }
         public string ShipperRef1 { get; set; }

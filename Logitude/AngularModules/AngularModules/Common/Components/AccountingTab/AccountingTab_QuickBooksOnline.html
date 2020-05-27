@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
 
         <!-- Card Receivable Only Or Card Payable Only  -->
@@ -115,8 +115,8 @@
                         <table>
                             <tr>
                                 <td style="width: 150px; min-width: 150px;max-width:150px">Currency</td>
-                                <td style="width: 200px; min-width: 200px;max-width:200px">Account Receivables External Id</td>
-                                <td style="width: 200px; min-width: 200px;max-width:200px">Account Payables External Id</td>
+                                <td style="width: 230px; min-width: 230px;max-width:230px">Account Receivables External Id</td>
+                                <td style="width: 230px; min-width: 230px;max-width:230px">Account Payables External Id</td>
                                 <td class="LastChild"></td>
                             </tr>
                         </table>
@@ -133,10 +133,10 @@
                                                 <div>{{currency.CurrencyCode}}</div>
                                             </td>
 
-                                            <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
+                                            <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
                                                 <table>
                                                     <tr>
-                                                        <td>
+                                                        <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.RecievableCustomerExternalName}}">
                                                             <span class="Value">{{currency.RecievableCustomerExternalName}}</span>
 
                                                         </td>
@@ -159,10 +159,10 @@
                                                 </table>
                                             </td>
 
-                                            <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
+                                            <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
                                                 <table>
                                                     <tr>
-                                                        <td>
+                                                        <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.PayableCustomerExternalName}}">
                                                             <span class="Value">{{currency.PayableCustomerExternalName}}</span>
 
                                                         </td>

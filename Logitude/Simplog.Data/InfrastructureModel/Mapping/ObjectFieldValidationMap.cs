@@ -41,6 +41,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
+            this.Property(t => t.ObjectFieldCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ObjectFieldValidations");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -51,6 +55,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ValidationOrder).HasColumnName("ValidationOrder");
             this.Property(t => t.Condition).HasColumnName("Condition");
             this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
 
             // Relationships
             //this.HasRequired(t => t.ObjectField)

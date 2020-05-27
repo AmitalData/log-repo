@@ -15,10 +15,11 @@ import {ObjectTableRulePM} from '../../../../../Infrastructure/EntityPMs/ObjectT
 import {RuleConditionFieldPM} from '../../../../../Infrastructure/EntityPMs/RuleConditionFieldPM';
 import {ObjectTableRuleFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectTableRuleFieldPM';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RulesMainComponent.html',
 })
 
@@ -52,7 +53,7 @@ export class RulesMainComponent {
     LoadRules() {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-        this._objectTableRulePMService.getAllByTenant(SessionLocator.Tenant).subscribe(response => {
+        this._objectTableRulePMService.getAllByTenant(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {
 
                 window.ObjectTableRules = response.Result;
@@ -61,7 +62,7 @@ export class RulesMainComponent {
                 this.TableRulesItems = this.AllTableRules;
             }
 
-            this._objectTableRuleFieldPMService.getAllByTenant(SessionLocator.Tenant).subscribe(response2 => {
+            this._objectTableRuleFieldPMService.getAllByTenant(SessionLocator.Tenant).subscribe((response2: ServiceResponse) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!response2.HasError && response2.Result) {
@@ -96,7 +97,7 @@ export class RulesMainComponent {
             //RulesMainComponent
         if (item) {
            var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
-           this.entityResourceService.getEntityResourceByTableName(ObjectTable.Name, 0).subscribe(response => {
+           this.entityResourceService.getEntityResourceByTableName(ObjectTable.Name, 0).subscribe((response:any) => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTableId = this.ObjectTableId;
                 windowArgs.EntityPM = item;
@@ -118,9 +119,50 @@ export class RulesMainComponent {
         
     }
 
+
+    OnRestoreRule(item) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Are you sure you want to restore current rule?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                this._objectTableRulePMService.restoreDefaultRule(item.Id).subscribe((response:any) => {
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    if (!response.HasError) {
+                        this.LoadRules();
+                    }
+
+                });
+            }
+        });
+    }
+
+    OnViewRuleHistory(item) {
+        var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
+        this.entityResourceService.getEntityResourceByTableName("RuleUpdateHistory", 0).subscribe((response:any) => {
+            var windowArgs: any = {};
+            windowArgs.ObjectTableId = this.ObjectTableId;
+            windowArgs.EntityPM = item;
+           
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = "Events History";
+            logWindow.ShowCloseButton = true;
+           // logWindow.
+            //logWindow.IsFillScreen_115 = true;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/RulesComponents/RuleUpdateHistoryComponent');
+
+            logWindow.WindowClosed.subscribe(($event: string) => {
+                 
+            });
+
+        });
+    }
+
     OnAddRule() {
         var ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
-        this.entityResourceService.getEntityResourceByTableName(ObjectTable.Name, 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName(ObjectTable.Name, 0).subscribe((response:any) => {
             var windowArgs: any = {};
             windowArgs.ObjectTableId = this.ObjectTableId;
             windowArgs.EntityPM = new ObjectTableRulePM();

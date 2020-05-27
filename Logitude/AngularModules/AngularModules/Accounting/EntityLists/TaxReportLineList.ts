@@ -30,6 +30,8 @@ export class TaxReportLineList {
 	StatusLocalName: string;
 	StatusEnglishName: string;
 	JournalNumber: string;
+	IsExternalLine: boolean;
+	TotalInvoiceAmount: number;
 	
 }
  

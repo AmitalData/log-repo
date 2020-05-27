@@ -57,5 +57,6 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
+        public string Notes { get; set; }
     }
 }

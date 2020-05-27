@@ -30,6 +30,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ClassifierId { get; set; }
         public string CollectorId { get; set; } 
         public string CustomerSizeId { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public virtual Card Card { get; set; }
 
@@ -107,6 +108,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? LastCallDate { get; set; }
         public DateTime? LastMeetingDate { get; set; }
         public DateTime? LastOpportunityDate { get; set; }
+        public string LastOpportunitySubject { get; set; }
+        public string LastOpportunityStatus { get; set; }
         public DateTime? FirstInvoiceDate { get; set; }
         public DateTime? FirstShipmentDate { get; set; }
         public DateTime? LastQuoteDate { get; set; }
@@ -126,5 +129,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
+
     }
 }

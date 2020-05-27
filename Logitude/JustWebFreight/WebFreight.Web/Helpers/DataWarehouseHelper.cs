@@ -14,12 +14,12 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant, bool isSample = false)
+        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, string fieldTypeCode,int tenant, bool isSample = false)
         {
             string result = string.Empty;
 
             if (operationCode == "Between") result = ResolveBetweenDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
-           else if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
+           else if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, fieldTypeCode, tenant, isSample);
             else
             {
                 if (ValidateFieldValue(operationCode, fieldValue))
@@ -109,34 +109,39 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private string FormatDate(DateTime DateToFormat, int tenant)
+        private string FormatDate(DateTime DateToFormat, int tenant , bool includeTime = false)
         {
-            string DateTimeFormat = "{0:yyyy-MM-dd}";
+            string DateTimeFormat = "{0:" + "yyyy-MM-dd" + (includeTime ? " HH:mm" :"") + "}";
+
             string FormatedDate = "";
             TenantQuery TenantQuery = new TenantQuery(tenant);
             TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
             if (tenantPm.DateTimeFormat != null)
             {
                 DateTimeFormat = tenantPm.DateTimeFormat;
-            }
+                if(includeTime) DateTimeFormat += (" HH:mm");
 
+            }
+ 
             FormatedDate = DateToFormat.ToString(DateTimeFormat, CultureInfo.CurrentCulture);
             return FormatedDate;
 
         }
-        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldValue, int tenant, bool isSample = false)
+        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldValue, string fieldTypeCode,  int tenant, bool isSample = false)
         {
             DateTime date = DateTime.Parse(fieldValue);
-
+            bool isTime = fieldTypeCode == "DateTime" ? true : false;
             if (operationCode == "After" && !string.IsNullOrEmpty(fieldValue))
             {
-                fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue).AddDays(1));
+                string format = isTime  ?  "{0:yyyy-MM-dd HH:mm}" : "{0:yyyy-MM-dd}";
+                fieldValue = string.Format(format, DateTime.Parse(fieldValue));
             }
+
             string operationSimpol = operationCode == "After" ? " >'" : "<'";
             string result = fieldName + operationSimpol + fieldValue + "'";
             if (isSample)
             {
-                result = operationSimpol.Replace("'", "") + " " + FormatDate(DateTime.Parse(fieldValue),tenant);
+                result = operationSimpol.Replace("'", "") + " " + FormatDate(DateTime.Parse(fieldValue),tenant, isTime);
             }
 
             return result;
@@ -364,4 +369,6 @@ namespace WebFreight.Web.Helpers
         }
 
     }
+
+
 }

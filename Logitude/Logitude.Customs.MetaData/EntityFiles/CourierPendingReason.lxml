@@ -62,7 +62,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;180affa8-0daa-4cae-804f-5651aae38885&quot;"
     FieldName="&quot;Code&quot;"
@@ -553,7 +555,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -710,79 +712,6 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
-  <Query
-    Code="&quot;AllCouriersPending&quot;"
-    TextCode="&quot;All Couriers Pending&quot;"
-    LocalTextCode="&quot;Pending Reason&quot;"
-    QueryGroupCode="&quot;aef0&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
-    QuerySection="&quot;Customs.CourierPendingReason&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="true"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="150" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;ErrorPlaceName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="4"
-        ObjectFieldName="&quot;UnifreightStatusCode&quot;"
-        ColumnWidth="167" />
-      <QueryColumn
-        QueryCode="&quot;AllCouriersPending&quot;"
-        IndexOrder="5"
-        ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;Customs.CourierPendingReasonHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
-    NumberOfColumns="3"
-    NumberOfRows="1"
-    IsReadOnly="true"
-    IsHeaderScreen="true">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="Customs.CourierPendingReasonHeaderScreen" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="Customs.CourierPendingReasonHeaderScreen" />
-      <ScreenField
-        Column="2"
-        Row="0"
-        ObjectFieldName="&quot;ErrorPlaceName&quot;"
-        ScreenName="Customs.CourierPendingReasonHeaderScreen" />
-    </ScreenFields>
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -790,12 +719,15 @@
     Code="&quot;CPGT&quot;"
     ControlPath="&quot;&quot;"
     TextCode="&quot;Customs.CourierPendingReason.TH.General&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent&quot;"
     HtmlComponentName="&quot;AddEditCourierPendingReasonComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    FeatureCode="&quot;CourierPendingReason.Tab.General&quot;"
+    FeatureTextCodeCode="&quot;CourierPendingReason.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -803,18 +735,107 @@
     Code="&quot;CPET&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CourierPendingReason.TH.Events&quot;"
-    IsPackagable="false"
+    IsPackagable="False"
     IndexOrder="1"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    FeatureCode="&quot;CourierPendingReason.Tab.Events&quot;"
+    FeatureTextCodeCode="&quot;CourierPendingReason.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AllCouriersPending&quot;"
+    ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="true"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CourierPendingReason&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;aef0&quot;"
+    QueryGroupName="&quot;Customs.CourierPendingReason Query Group&quot;"
+    LocalTextCode="&quot;Pending Reason&quot;"
+    TextCode="&quot;All Couriers Pending&quot;"
+    TextCodeCode="&quot;CourierPendingReason.Q.AllCouriersPending&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CourierPendingReason.Q.AllCouriersPending&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CourierPendingReason.Features.AllCouriersPending&quot;"
+    FeatureDefaultText="&quot;AllCouriersPending&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="150"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="150"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;ErrorPlaceName&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="167"
+        ObjectFieldName="&quot;UnifreightStatusCode&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="50"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AllCouriersPending&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;CourierPendingReason.Customs.CourierPendingReasonHeaderScreen&quot;"
+    Name="&quot;Customs.CourierPendingReasonHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
+    IsHeaderScreen="true"
+    IsReadOnly="true"
+    NumberOfRows="1"
+    NumberOfColumns="3">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="CourierPendingReason.Customs.CourierPendingReasonHeaderScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CourierPendingReason.Customs.CourierPendingReasonHeaderScreen"
+        Row="0"
+        Column="1" />
+      <ScreenField
+        ObjectFieldName="&quot;ErrorPlaceName&quot;"
+        ScreenName="CourierPendingReason.Customs.CourierPendingReasonHeaderScreen"
+        Row="0"
+        Column="2" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -824,10 +845,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CourierPendingReason&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -835,8 +857,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

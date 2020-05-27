@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Modification And Discount Type&quot;"
-  Code="&quot;9eff&quot;"
-  Name="&quot;Customs.ModificationAndDiscountType Query Group&quot;"
+  Code="&quot;MADT&quot;"
+  Name="&quot;Customs.ModificationAndDiscountType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;8310fd7e-3dfb-475a-8008-a07d064bf13d&quot;"
     FieldName="&quot;Code&quot;"
@@ -309,21 +311,134 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,אגרת חקלאות&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת חקלאות&quot;" />
+    <Record
+      Code="&quot;101&quot;"
+      SearchFields="&quot;101,אגרת נמל מוצהרת&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת נמל מוצהרת&quot;" />
+    <Record
+      Code="&quot;102&quot;"
+      SearchFields="&quot;102,אגרת נמל מחושבת&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת נמל מחושבת&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,אגרת השגחה&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת השגחה&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,אגרת תעודת מכס&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת תעודת מכס&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,אגרת מיכלים&quot;"
+      Inactive="false"
+      LocalName="&quot;אגרת מיכלים&quot;" />
+    <Record
+      Code="&quot;160&quot;"
+      SearchFields="&quot;160,הוצאות נוספות&quot;"
+      Inactive="false"
+      LocalName="&quot;הוצאות נוספות&quot;" />
+    <Record
+      Code="&quot;202&quot;"
+      SearchFields="&quot;202,ריבית&quot;"
+      Inactive="false"
+      LocalName="&quot;ריבית&quot;" />
+    <Record
+      Code="&quot;490&quot;"
+      SearchFields="&quot;490,פיצוי&quot;"
+      Inactive="false"
+      LocalName="&quot;פיצוי&quot;" />
+    <Record
+      Code="&quot;527&quot;"
+      SearchFields="&quot;527,הנחות מסחריות&quot;"
+      Inactive="false"
+      LocalName="&quot;הנחות מסחריות&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,ערך הרמה שקל&quot;"
+      Inactive="false"
+      LocalName="&quot;ערך הרמה שקל&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ModificationAndDiscountType&quot;"
+    ObjectTableName="&quot;Customs.ModificationAndDiscountType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ModificationAndDiscountType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;MADT&quot;"
+    QueryGroupName="&quot;Customs.ModificationAndDiscountType&quot;"
+    LocalTextCode="&quot;סוג ההתאמה&quot;"
+    TextCode="&quot;Modification And Discount Types&quot;"
+    TextCodeCode="&quot;Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;MODIFICATIONANDDISCOUNTTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes&quot;"
+    FeatureDefaultText="&quot;Modification And Discount Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ModificationAndDiscountType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ModificationAndDiscountType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ModificationAndDiscountType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ModificationAndDiscountType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ModificationAndDiscountType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ModificationAndDiscountType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

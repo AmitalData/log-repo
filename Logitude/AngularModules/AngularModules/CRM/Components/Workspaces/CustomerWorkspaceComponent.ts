@@ -17,7 +17,7 @@ import {CustomerList} from '../../../Common/EntityLists/CustomerList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerWorkspaceComponent.html',
 })
 
@@ -361,10 +361,8 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         this.DecreasedShipmentsDataTypeList.push(new CodeNameClass("C", "Chargeable Weight"));
 
         // TimeRange
-        var todayDateTime = DateTool.GetCurrentDateAsUtc();
-        var last1MonthDateTime = DateTool.GetDateByMonth(-1);
-        var last2MonthDateTime = DateTool.GetDateByMonth(-2);
-
+        var last1MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 1));
+        var last2MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 2));
         var date1Formats: DateFormats = DateTool.GetDateFormats(last1MonthDateTime);
         var date2Formats: DateFormats = DateTool.GetDateFormats(last2MonthDateTime);
         var last1MonthLabel: string = date1Formats.MonthName + " " + date1Formats.DateParts.Year;
@@ -442,7 +440,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
     public Customers_Active: number;
     public Customers_Inactive: number;
     private LoadQueriesCounts() {
-        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CRMSummary = myResponse.Result;
@@ -497,7 +495,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
 
         var myStartDateTime = DateTool.GetDateByMonth(-1);
 
-        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CompareDataClass[] = myResponse.Result;

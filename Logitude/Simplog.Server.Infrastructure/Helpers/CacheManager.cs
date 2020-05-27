@@ -75,14 +75,17 @@ namespace Simplog.Server.Infrastructure.Helpers
                 EntityPM = GetNewObject();
                 if (EntityPM != null)
                 {
-                    CacheManager.CacheWrapper.Insert(entityKeyString, EntityPM);
+                    CacheManager.CacheWrapper.Insert(entityKeyString, EntityPM,
+                        null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
                 }
                 else
                 {
                     if (!donotCacheNull)
                     {
-                    CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache());
-                }
+                    CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache(),
+                        null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
             }
             }
             return EntityPM;

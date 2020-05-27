@@ -33,7 +33,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = contactRepository;
         }
+        public ContactPM GetSinglePMFromCache(string id, int tenant)
+        {
+            string key = $"GetSinglePMFromCache({id},{tenant})";
+            return CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
+            {
+                return GetSinglePM(id, tenant);
+            });
 
+        }
         public ContactPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
@@ -54,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           InActive = a.InActive,
                                           LocalName = a.LocalName,
                                           SearchFields = a.SearchFields,
+                                          DontShowLocalLabels = a.DontShowLocalLabels,
                                           Mobile = a.Mobile,
                                           Notes = a.Notes,
                                           Tenant = a.Tenant,
@@ -73,7 +82,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ExternalId = a.ExternalId,
                                           CompanyName = a.CompanyName,
                                           CreateDate = a.CreateDate,
-                                          IndexColor = a.IndexColor,                                          
+                                          IndexColor = a.IndexColor,
                                       }).FirstOrDefault();
 
                 if (instance != null)
@@ -83,8 +92,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IGlobalContext globalContext = GlobalContext.GetContext();
                         ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == instance.Email.ToLower()).FirstOrDefault();
                         GlobalContact globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == instance.Email.ToLower() && cn.GlobalTenantId == tenant).FirstOrDefault();
-                        
-                        if(globalContact != null)
+
+                        if (globalContact != null)
                         {
                             instance.IsUser = globalContact.IsUser;
                         }
@@ -113,6 +122,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         instance.IsOceanImport = cardContact.IsOceanImport;
                         instance.IsInlandDomestic = cardContact.IsInlandDomestic;
                         instance.IsCustomsImport = cardContact.IsCustomsImport;
+
+                        //CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
+                        //CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
+                        //instance.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant).ToList();
                     }
                 }
 
@@ -163,7 +176,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c=> contacts.Any(ct=> ct.Email == c.Email) ).ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => contacts.Any(ct => ct.Email == c.Email)).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -179,6 +192,47 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
             }
+
+            return contacts;
+        }
+
+        public List<ContactPM> GetContactPMsWithoutPassWordsByTenant(int tenant)
+        {
+            List<ContactPM> contacts = (from a in repository.context.Contacts
+                                        where a.Tenant == tenant && a.UserType == "R"
+                                        select new ContactPM()
+                                        {
+                                            Anniversary = a.Anniversary,
+                                            Birthday = a.Birthday,
+                                            BusinessPhone = a.BusinessPhone,
+                                            Email = a.Email,
+                                            EnglishName = a.EnglishName,
+                                            FacebookId = a.FacebookId,
+                                            Fax = a.Fax,
+                                            Id = a.Id,
+                                            InActive = a.InActive,
+                                            LocalName = a.LocalName,
+                                            SearchFields = a.SearchFields,
+                                            Mobile = a.Mobile,
+                                            Notes = a.Notes,
+                                            Tenant = a.Tenant,
+                                            Signature = a.Signature,
+                                            SignatureHtml = a.SignatureHtml,
+                                            ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                            DisplayGettingStarted = a.DisplayGettingStarted,
+                                            DontShowLocal = a.DontShowLocalLabels,
+                                            BirthdayReminder = a.BirthdayReminder,
+                                            AnniversaryReminder = a.AnniversaryReminder,
+                                            ImageDetailId = a.ImageDetailId,
+                                            DoneDate = a.DoneDate,
+                                            BirthDayOfYear = a.BirthDayOfYear,
+                                            ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                            Position = a.Position,
+                                            ExternalId = a.ExternalId,
+                                            IndexColor = a.IndexColor,
+                                            CompanyName = a.CompanyName,
+                                            CreateDate = a.CreateDate,
+                                        }).ToList(); 
 
             return contacts;
         }
@@ -226,7 +280,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-				List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -681,6 +735,247 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
+        public ContactPM GetContactById(string id, int tenant)
+        {
+            id = id.ToLower();
+            string entityName = "ContactPM" + id + tenant;
+            entityName = entityName.ToLower();
+            ContactPM entity;
+            UserRepository usersRepository = new UserRepository(tenant);
+
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    bool isTenant0User = false;
+                    ContactPM contact = (from a in repository.context.Contacts
+                                         where a.Email == id && a.InActive == false //  && a.UserType == "R" by Islam: all tracing classes call this method with the system user
+                                         && a.Tenant == tenant
+                                         select new ContactPM()
+                                         {
+                                             Anniversary = a.Anniversary,
+                                             Birthday = a.Birthday,
+                                             BusinessPhone = a.BusinessPhone,
+                                             Email = a.Email,
+                                             SearchFields = a.SearchFields,
+                                             EnglishName = a.EnglishName,
+                                             FacebookId = a.FacebookId,
+                                             Fax = a.Fax,
+                                             Id = a.Id,
+                                             InActive = a.InActive,
+                                             LocalName = a.LocalName,
+                                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                             Mobile = a.Mobile,
+                                             Notes = a.Notes,
+                                             Tenant = a.Tenant,
+                                             Signature = a.Signature,
+                                             SignatureHtml = a.SignatureHtml,
+                                             DontShowLocal = a.DontShowLocalLabels,
+                                             DisplayGettingStarted = a.DisplayGettingStarted,
+                                             BirthdayReminder = a.BirthdayReminder,
+                                             AnniversaryReminder = a.AnniversaryReminder,
+                                             ImageDetailId = a.ImageDetailId,
+                                             DoneDate = a.DoneDate,
+                                             BirthDayOfYear = a.BirthDayOfYear,
+                                             ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                             Position = a.Position,
+                                             ExternalId = a.ExternalId,
+                                             IndexColor = a.IndexColor,
+                                             CompanyName = a.CompanyName,
+                                             CreateDate = a.CreateDate,
+                                         }).FirstOrDefault();
+
+                    if (contact == null)
+                    {
+                        contact = (from a in repository.context.Contacts
+                                   where a.Email == id
+                                   && a.Tenant == 0 && a.InActive == false
+                                   select new ContactPM()
+                                   {
+                                       Anniversary = a.Anniversary,
+                                       Birthday = a.Birthday,
+                                       BusinessPhone = a.BusinessPhone,
+                                       Email = a.Email,
+                                       SearchFields = a.SearchFields,
+                                       EnglishName = a.EnglishName,
+                                       FacebookId = a.FacebookId,
+                                       Fax = a.Fax,
+                                       Id = a.Id,
+                                       InActive = a.InActive,
+                                       LocalName = a.LocalName,
+                                       ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                       Mobile = a.Mobile,
+                                       Notes = a.Notes,
+                                       Tenant = a.Tenant,
+                                       Signature = a.Signature,
+                                       SignatureHtml = a.SignatureHtml,
+                                       DontShowLocal = a.DontShowLocalLabels,
+                                       DisplayGettingStarted = a.DisplayGettingStarted,
+                                       BirthdayReminder = a.BirthdayReminder,
+                                       AnniversaryReminder = a.AnniversaryReminder,
+                                       ImageDetailId = a.ImageDetailId,
+                                       DoneDate = a.DoneDate,
+                                       BirthDayOfYear = a.BirthDayOfYear,
+                                       ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                       Position = a.Position,
+                                       ExternalId = a.ExternalId,
+                                       IndexColor = a.IndexColor,
+                                       CompanyName = a.CompanyName,
+                                       CreateDate = a.CreateDate,
+                                   }).FirstOrDefault();
+
+                        isTenant0User = true;
+                    }
+
+                    if (contact != null)
+                    {
+                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        {
+                            IGlobalContext globalContext = GlobalContext.GetContext();
+                            ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email.ToLower()).FirstOrDefault();
+                            GlobalContact globalContact = null;
+
+                            if (isTenant0User)
+                            {
+                                globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == contact.Email.ToLower() && cn.GlobalTenantId == 0).FirstOrDefault();
+                            }
+
+                            else
+                            {
+                                globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == contact.Email.ToLower() && cn.GlobalTenantId == tenant).FirstOrDefault();
+                            }
+
+                            if (contactPassword != null)
+                            {
+                                contact.IsUser = globalContact.IsUser;
+                                contact.HasPassword = true;
+                                contact.IsLocked = contactPassword.IsLocked;
+                                contact.MustChangePassword = contactPassword.MustChangePassword;
+                                contact.NumberOfRetries = contactPassword.NumberOfRetries;
+                            }
+                        }
+                    }
+
+                    entity = contact;
+                    if (entity != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                }
+
+                else
+                {
+                    entity = (ContactPM)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+
+            else
+            {
+                bool isTenant0User = false;
+                ContactPM contact = (from a in repository.context.Contacts
+                                     where a.Email == id && a.UserType == "R"
+                                     && a.Tenant == tenant
+                                     select new ContactPM()
+                                     {
+                                         Anniversary = a.Anniversary,
+                                         Birthday = a.Birthday,
+                                         BusinessPhone = a.BusinessPhone,
+                                         Email = a.Email,
+                                         SearchFields = a.SearchFields,
+                                         EnglishName = a.EnglishName,
+                                         FacebookId = a.FacebookId,
+                                         Fax = a.Fax,
+                                         Id = a.Id,
+                                         InActive = a.InActive,
+                                         LocalName = a.LocalName,
+                                         ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                         Mobile = a.Mobile,
+                                         Notes = a.Notes,
+                                         Tenant = a.Tenant,
+                                         Signature = a.Signature,
+                                         SignatureHtml = a.SignatureHtml,
+                                         DontShowLocal = a.DontShowLocalLabels,
+                                         DisplayGettingStarted = a.DisplayGettingStarted,
+                                         BirthdayReminder = a.BirthdayReminder,
+                                         AnniversaryReminder = a.AnniversaryReminder,
+                                         ImageDetailId = a.ImageDetailId,
+                                         DoneDate = a.DoneDate,
+                                         BirthDayOfYear = a.BirthDayOfYear,
+                                         ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                         Position = a.Position,
+                                         ExternalId = a.ExternalId,
+                                         IndexColor = a.IndexColor,
+                                         CompanyName = a.CompanyName,
+                                         CreateDate = a.CreateDate,
+                                     }).FirstOrDefault();
+
+                if (contact == null)
+                {
+                    contact = (from a in repository.context.Contacts
+                               where a.Email == id
+                               && a.Tenant == 0
+                               select new ContactPM()
+                               {
+                                   Anniversary = a.Anniversary,
+                                   Birthday = a.Birthday,
+                                   BusinessPhone = a.BusinessPhone,
+                                   Email = a.Email,
+                                   SearchFields = a.SearchFields,
+                                   EnglishName = a.EnglishName,
+                                   FacebookId = a.FacebookId,
+                                   Fax = a.Fax,
+                                   Id = a.Id,
+                                   InActive = a.InActive,
+                                   LocalName = a.LocalName,
+                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                   Mobile = a.Mobile,
+                                   Notes = a.Notes,
+                                   Tenant = a.Tenant,
+                                   Signature = a.Signature,
+                                   SignatureHtml = a.SignatureHtml,
+                                   DontShowLocal = a.DontShowLocalLabels,
+                                   DisplayGettingStarted = a.DisplayGettingStarted,
+                                   BirthdayReminder = a.BirthdayReminder,
+                                   AnniversaryReminder = a.AnniversaryReminder,
+                                   ImageDetailId = a.ImageDetailId,
+                                   DoneDate = a.DoneDate,
+                                   BirthDayOfYear = a.BirthDayOfYear,
+                                   ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                   Position = a.Position,
+                                   ExternalId = a.ExternalId,
+                                   IndexColor = a.IndexColor,
+                                   CompanyName = a.CompanyName,
+                                   CreateDate = a.CreateDate,
+                               }).FirstOrDefault();
+
+                    isTenant0User = true;
+                }
+
+                if (contact != null)
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IGlobalContext globalContext = GlobalContext.GetContext();
+                        ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email.ToLower()).FirstOrDefault();
+
+                        if (contactPassword != null)
+                        {
+                            contact.IsLocked = contactPassword.IsLocked;
+                            contact.MustChangePassword = contactPassword.MustChangePassword;
+                            contact.NumberOfRetries = contactPassword.NumberOfRetries;
+                        }
+                    }
+                }
+
+                entity = contact;
+            }
+
+            return entity;
+        }
+
         public ContactPM GetContactByNameAndTenant(string name, int tenant, bool getFromCache)
         {
             name = name.ToLower();
@@ -736,7 +1031,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
                                 IGlobalContext globalContext = GlobalContext.GetContext();
-								List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
+                                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
 
                                 ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == entity.Email).FirstOrDefault();
                                 if (contactPassword != null)
@@ -919,40 +1214,55 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<ContactPM> GetContactsbyCardId(string id, int tenant)
         {
             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+            CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(tenant);
+            IQueryable<CardContact> cardContacts = cardContactRepository.GetCardContacts(tenant);
 
-            var contacts = cardContactRepository.GetCardContacts(tenant).Where(c => c.CardId == id && c.ContactId == c.ContactId && c.Tenant == tenant).Select(a => new ContactPM
+            IQueryable<ContactPM> contacts = from a in cardContacts
+                                             where a.CardId == id && a.Tenant == tenant
+                                             select new ContactPM()
+                                             {
+                                                 Anniversary = a.Contact.Anniversary,
+                                                 Birthday = a.Contact.Birthday,
+                                                 BusinessPhone = a.Contact.BusinessPhone,
+                                                 Email = a.Contact.Email,
+                                                 EnglishName = a.Contact.EnglishName,
+                                                 FacebookId = a.Contact.FacebookId,
+                                                 Fax = a.Contact.Fax,
+                                                 Id = a.Contact.Id,
+                                                 InActive = a.Contact.InActive,
+                                                 LocalName = a.Contact.LocalName,
+                                                 Mobile = a.Contact.Mobile,
+                                                 Notes = a.Contact.Notes,
+                                                 Tenant = a.Contact.Tenant,
+                                                 CardId = id,
+                                                 Position = a.Contact.Position,
+                                                 IsAirExport = a.IsAirExport,
+                                                 IsAirImport = a.IsAirImport,
+                                                 IsOceanExport = a.IsOceanExport,
+                                                 IsOceanImport = a.IsOceanImport,
+                                                 IsAll = a.IsAll,
+                                                 IsInlandDomestic = a.IsInlandDomestic,
+                                                 IsCustomsImport = a.IsCustomsImport,
+                                                 IsInlandExport = a.IsInlandExport,
+                                                 IsInlandImport = a.IsInlandImport,
+                                                 ExternalId = a.Contact.ExternalId,
+                                                 IndexColor = a.Contact.IndexColor,
+                                                 CompanyName = a.Contact.CompanyName,
+                                                 CreateDate = a.Contact.CreateDate,
+                                             };
+
+            List<ContactPM> entityList = contacts.ToList();
+
+            foreach (ContactPM contact in entityList)
             {
-                Anniversary = a.Contact.Anniversary,
-                Birthday = a.Contact.Birthday,
-                BusinessPhone = a.Contact.BusinessPhone,
-                Email = a.Contact.Email,
-                EnglishName = a.Contact.EnglishName,
-                FacebookId = a.Contact.FacebookId,
-                Fax = a.Contact.Fax,
-                Id = a.Contact.Id,
-                InActive = a.Contact.InActive,
-                LocalName = a.Contact.LocalName,
-                Mobile = a.Contact.Mobile,
-                Notes = a.Contact.Notes,
-                Tenant = a.Contact.Tenant,
-                CardId = id,
-                Position = a.Contact.Position,
-                IsAirExport = a.IsAirExport,
-                IsAirImport = a.IsAirImport,
-                IsOceanExport = a.IsOceanExport,
-                IsOceanImport = a.IsOceanImport,
-                IsAll = a.IsAll,
-                IsInlandDomestic = a.IsInlandDomestic,
-                IsCustomsImport = a.IsCustomsImport,
-                IsInlandExport = a.IsInlandExport,
-                IsInlandImport = a.IsInlandImport,
-                ExternalId = a.Contact.ExternalId,
-                IndexColor = a.Contact.IndexColor,
-                CompanyName = a.Contact.CompanyName,
-                CreateDate = a.Contact.CreateDate,
-            });
+                CardContact cardContact = cardContacts.Where(d => d.CardId == id && d.ContactId == contact.Id).FirstOrDefault();
+                if (cardContact != null)
+                {
+                    contact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant);
+                }
+            }
 
-            return contacts;
+            return entityList.AsQueryable();
         }
 
         public IQueryable<ContactList> GetContactListsbyCardId(string id, int tenant)
@@ -1129,19 +1439,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string GetContactEmailById(string id, int tenant)
         {
-         
-
-
             string email = (from a in repository.context.Contacts
-                                   where a.Id == id && a.Tenant == tenant
-                                   && a.Tenant == tenant
-                                   select new ContactPM()
-                                   {
-                                       Id = a.Id,
-                                       Tenant = a.Tenant,
-                                       Email = a.Email,
-                                      
-                                   }.Email).FirstOrDefault();
+                            where a.Id == id
+                            && a.Tenant == tenant
+                            select new ContactPM()
+                            {
+                                Id = a.Id,
+                                Tenant = a.Tenant,
+                                Email = a.Email,
+
+                            }.Email).FirstOrDefault();
 
             return email;
         }
@@ -1171,11 +1478,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (mycontact != null)
                     {
                         contacts.Add(new ContactList()
-                                {
-                                    Email = mycontact.Email,
-                                    EnglishName = mycontact.EnglishName,
-                                    SearchFields = mycontact.SearchFields,
-                                });
+                        {
+                            Email = mycontact.Email,
+                            EnglishName = mycontact.EnglishName,
+                            SearchFields = mycontact.SearchFields,
+                        });
                     }
                     else
                     {
@@ -1193,7 +1500,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public IQueryable<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
+        public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
         {
             IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
                                                     where contactIds.Contains(a.Id) && a.Tenant == tenant
@@ -1206,7 +1513,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         Mobile = a.Mobile,
                                                         Fax = a.Fax,
                                                         BusinessPhone = a.BusinessPhone,
-                                                        InActive =a.InActive,
+                                                        InActive = a.InActive,
                                                     });
             return contactLists;
         }
@@ -1236,7 +1543,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (!string.IsNullOrEmpty(id))
             {
                 ContactPM instance = (from a in repository.context.Contacts
-                                      where  a.UserType == "R"
+                                      where a.UserType == "R"
                                       && a.Id == id
                                       select new ContactPM()
                                       {
@@ -1508,8 +1815,60 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public IQueryable<ContactList> GetDemoTenantContactList(IQueryable<Contact> iQueryable, string loggedUserId, int tenant)
+        {
+            List<ContactList> result = new List<ContactList>();
 
+            int index = 1;
+            foreach (Contact contact in iQueryable)
+            {
+                string email = contact.Email;
+                string name = contact.EnglishName;
 
+                if (contact.Id != loggedUserId)
+                {
+                    if (!string.IsNullOrEmpty(email))
+                    {
+                        string[] emailParts = contact.Email.Split('@');
+                        email = "contact" + index + "@democompany.com ";
+                    }
+                    name = "Contact" + index;
+                }
+
+                ContactList newItem = new ContactList()
+                {
+                    Email = email,
+                    EnglishName = name,
+                    Id = contact.Id,
+                    Anniversary = contact.Anniversary,
+                    Birthday = contact.Birthday,
+                    BusinessPhone = contact.BusinessPhone,
+                    SearchFields = contact.SearchFields,
+                    Fax = contact.Fax,
+                    InActive = contact.InActive,
+                    LocalName = contact.LocalName,
+                    Mobile = contact.Mobile,
+                    Notes = contact.Notes,
+                    Tenant = contact.Tenant,
+                    DontShowLocal = contact.DontShowLocalLabels,
+                    DisplayGettingStarted = contact.DisplayGettingStarted,
+                    BirthdayReminder = contact.BirthdayReminder,
+                    AnniversaryReminder = contact.AnniversaryReminder,
+                    ImageDetailId = contact.ImageDetailId,
+                    DoneDate = contact.DoneDate,
+                    BirthDayOfYear = contact.BirthDayOfYear,
+                    ContactDoneMethodCode = contact.ContactDoneMethod != null ? contact.ContactDoneMethod.Code : null,
+                    Position = contact.Position,
+                    IndexColor = contact.IndexColor,
+                    CompanyName = contact.CompanyName,
+                    CreateDate = contact.CreateDate,
+                };
+                result.Add(newItem);
+                index++;
+            }
+
+            return result.AsQueryable();
+        }
 
     }
 }

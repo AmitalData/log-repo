@@ -9,7 +9,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 
 @Component({
     selector: 'DocumentFilingInboxTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DocumentFilingInboxTabComponent.html',
 })
 

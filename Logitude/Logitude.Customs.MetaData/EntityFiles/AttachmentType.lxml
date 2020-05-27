@@ -36,8 +36,8 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Attachment Type&quot;"
-  Code="&quot;e78a&quot;"
-  Name="&quot;Customs.AttachmentType Query Group&quot;"
+  Code="&quot;ATTT&quot;"
+  Name="&quot;Customs.AttachmentType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
@@ -50,7 +50,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;3832b004-185a-4fb9-aa58-53f208f0ad1f&quot;"
     FieldName="&quot;Code&quot;"
@@ -338,22 +340,100 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,אישור/רישיון ידני&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור/רישיון ידני&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,אישור/רישיון ממוחשב&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור/רישיון ממוחשב&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,צרופה סרוקה&quot;"
+      Inactive="false"
+      LocalName="&quot;צרופה סרוקה&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,פטור מאישור/רישיון&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור מאישור/רישיון&quot;" />
+  </Records>
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AttachmentType&quot;"
+    ObjectTableName="&quot;Customs.AttachmentType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AttachmentType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;ATTT&quot;"
+    QueryGroupName="&quot;Customs.AttachmentType&quot;"
+    LocalTextCode="&quot;סוג צרופה&quot;"
+    TextCode="&quot;Attachment Types&quot;"
+    TextCodeCode="&quot;Customs.AttachmentType.Q.AttachmentTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ATTACHMENTTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AttachmentType.Features.AttachmentTypes&quot;"
+    FeatureDefaultText="&quot;Attachment Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AttachmentType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AttachmentType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AttachmentType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AttachmentType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AttachmentType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AttachmentType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

@@ -71,8 +71,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
            
         }
 
-
-
+         
+		
 
         public HttpResponseMessage Post(QuoteTemplateSettingPM entityPM)
         {
@@ -86,10 +86,20 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateSettingService service = new QuoteTemplateSettingService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
+				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QuoteTemplateSetting", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -104,7 +114,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -133,12 +143,23 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         {
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
-
+                
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateSettingService service = new QuoteTemplateSettingService(MyContext, entityPM.Tenant);
-
+ 
                         service.Update(entityPM);
-                        
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QuoteTemplateSetting", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -152,15 +173,28 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
 
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
 
 
+		
+          
+			
+			 
+		  
+        
 
-
+		
+			 		
+      
     }
 }
 	 

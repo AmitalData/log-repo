@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class ApiCredintialsUpdateClass
-   {  
+   {  		
+		public const string HashString = "5250a1176991ed756a9560699b0d9081";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,12 +128,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ApiCredintials,ApiCredintials,Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl,,",
+			      				    HashString =  ApiCredintialsUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -141,7 +144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "HashedPrimaryAccessKey",
 					  						OldFieldName =  "HashedPrimaryAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
@@ -193,11 +196,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HashedPrimaryAccessKey",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -206,7 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "HashedSeconderyAccessKey",
 					  						OldFieldName =  "HashedSeconderyAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
@@ -258,11 +263,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HashedSeconderyAccessKey",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -271,10 +278,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "UsedFor",
 					  						OldFieldName =  "UsedFor",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -321,11 +328,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UsedFor",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -382,11 +391,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -443,11 +454,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -456,7 +469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "AllowedIPs",
 					  						OldFieldName =  "AllowedIPs",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  true,
@@ -506,11 +519,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowedIPs",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -569,11 +584,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CreatedBy",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -584,7 +601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  250,
+					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -632,11 +649,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdatedBy",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -645,7 +664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "maskedPrimaryAccessKey",
 					  						OldFieldName =  "maskedPrimaryAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
@@ -695,11 +714,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "maskedPrimaryAccessKey",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -708,7 +729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 						FieldName =  "maskedSeconderyAccessKey",
 					  						OldFieldName =  "maskedSeconderyAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
@@ -758,53 +779,126 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "masked Secondery Access Key",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "ApiCredintials",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ApiCredintialsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APIC", Name = "ApiCredintials" }, queryGroupRepository);
-						QueryGroup ApiCredintialsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "45d4", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ApiCredintialsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APIC", Name = "ApiCredintials" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ApiCredintialsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "45d4", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ApiCredintialsObjectTable = objectTables.ContainsKey("ApiCredintials") ? objectTables["ApiCredintials"] : null;
+            if (ApiCredintialsObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable ApiCredintialsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ApiCredintials" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> ApiCredintialsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ApiCredintials").ToList();   
+                ApiCredintialsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ApiCredintials" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode ApiCredintialsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApiCredintials.Q.ApiCredintials", DefaultText = @"All API Credentials",LocalDefaultText = null, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ApiCredintialsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApiCredintialsQ", ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.ApiCredintials", NameTextCodeDefaultText = "API Credintials", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode ApiCredintialsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApiCredintials.Q.ApiCredintials", DefaultText = @"All API Credentials",LocalDefaultText = null, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ApiCredintialsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApiCredintialsQ", ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.ApiCredintials", NameTextCodeDefaultText = "API Credintials", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ApiCredintialsObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ApiCredintialsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApiCredintialsTextCode_0.Id, Code = "ApiCredintials",  EditWizardName = "Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl",
+			  Query ApiCredintialsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApiCredintialsTextCode_0.Id, NameTextCodeCode = ApiCredintialsTextCode_0.Code, ObjectTableName = "ApiCredintials", Code = "ApiCredintials",  EditWizardName = "Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl",
 			   EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ApiCredintials/ApiCredintialsComponent",
-			   QueryGroupCode = "APIC", IndexOrder = 0, Tenant = 0, ObjectTableId = ApiCredintialsObjectTable.Id, QuerySection = "ApiCredintials", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ApiCredintialsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "APIC", IndexOrder = 0, Tenant = 0, ObjectTableId = ApiCredintialsObjectTable.Id, QuerySection = "ApiCredintials", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ApiCredintialsFeature_0.Id,FeatureUniqeCode= ApiCredintialsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ApiCredintialsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 0, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "UsedFor" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ApiCredintials.UsedFor" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 1, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "maskedPrimaryAccessKey" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ApiCredintials.maskedPrimaryAccessKey" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 2, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "maskedSeconderyAccessKey" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ApiCredintials.maskedSeconderyAccessKey" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 3, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "AllowedIPs" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ApiCredintials.AllowedIPs" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 4, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ApiCredintials.CreateDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 5, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ApiCredintials.UpdateDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 6, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "CreatedBy" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ApiCredintialsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ApiCredintials.CreatedBy" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ApiCredintialsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 7, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "UpdatedBy" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ApiCredintialsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id,QueryCode = ApiCredintialsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ApiCredintials.UpdatedBy" , ColumnWidth = 200 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -820,10 +914,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable ApiCredintialsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ApiCredintials" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ApiCredintialsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ApiCredintialsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ApiCredintialsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ApiCredintialsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.PackageFeature", NameTextCodeDefaultText = "ApiCredintials Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ApiCredintialsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ApiCredintialsObjectTable);
+		   Feature ApiCredintialsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ApiCredintialsObjectTable);
+		   Feature ApiCredintialsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ApiCredintialsObjectTable);
+		   Feature ApiCredintialsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ApiCredintialsObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApiCredintials.Features.PackageFeature", NameTextCodeDefaultText = "ApiCredintials Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ApiCredintialsObjectTable);    
 	    
 		}
 

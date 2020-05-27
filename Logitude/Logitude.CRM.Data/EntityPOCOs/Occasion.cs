@@ -69,6 +69,14 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string OccasionStatusId { get; set; }
 	      
         public virtual OccasionStatus OccasionStatus { get; set; }
+        [Column("ParticipatedCustomers")]
+	    public int ParticipatedCustomers { get; set; }
+        [Column("ParticipatedContacts")]
+	    public int ParticipatedContacts { get; set; }
+        [Column("InvitedCustomers")]
+	    public int InvitedCustomers { get; set; }
+        [Column("InvitedContacts")]
+	    public int InvitedContacts { get; set; }
     }
 }
 	 

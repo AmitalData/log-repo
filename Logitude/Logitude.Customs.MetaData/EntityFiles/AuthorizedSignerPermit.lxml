@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;היתר חותם מורשה&quot;"
   DefaultText="&quot;Authorized Signer Permit&quot;"
-  Code="&quot;fa65&quot;"
-  Name="&quot;Customs.AuthorizedSignerPermit Query Group&quot;"
+  Code="&quot;AUSP&quot;"
+  Name="&quot;Customs.AuthorizedSignerPermit&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;8cbb2557-840d-44dd-897f-5e65c68865c1&quot;"
     FieldName="&quot;Code&quot;"
@@ -306,21 +308,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,כללי&quot;"
+      Inactive="false"
+      LocalName="&quot;כללי&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,כספים&quot;"
+      Inactive="false"
+      LocalName="&quot;כספים&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,יצואן מאושר&quot;"
+      Inactive="false"
+      LocalName="&quot;יצואן מאושר&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AuthorizedSignerPermit&quot;"
+    ObjectTableName="&quot;Customs.AuthorizedSignerPermit&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AuthorizedSignerPermit&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;AUSP&quot;"
+    QueryGroupName="&quot;Customs.AuthorizedSignerPermit&quot;"
+    LocalTextCode="&quot;סוגי הרשאה למורשה חתימה&quot;"
+    TextCode="&quot;Authorized Signer Permits&quot;"
+    TextCodeCode="&quot;Customs.AuthorizedSignerPermit.Q.AuthorizedSignerPermitQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;AUTHORIZEDSIGNERPERMIT&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AuthorizedSignerPermit.Features.AuthorizedSignerPermits&quot;"
+    FeatureDefaultText="&quot;Authorized Signer Permits&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AuthorizedSignerPermit&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AuthorizedSignerPermit&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AuthorizedSignerPermit&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AuthorizedSignerPermit&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AuthorizedSignerPermit&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AuthorizedSignerPermit&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

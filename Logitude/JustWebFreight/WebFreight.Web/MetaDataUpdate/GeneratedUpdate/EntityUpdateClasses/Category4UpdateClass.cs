@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class Category4UpdateClass
-   {  
+   {  		
+		public const string HashString = "118a34ba3ac0c01c1640570912990b74";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,11 +133,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    HashString =  Category4UpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -194,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -252,7 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -300,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
 					  						ListLocalDefaultText =  "לא פעיל",
-					  						IsMaxLength =  true,
+					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -310,7 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -366,66 +368,84 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup Category4QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6cbf", Name = "Category4 Query Group" }, queryGroupRepository);
-						QueryGroup Category4QueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2d82", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup Category4QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6cbf", Name = "Category4 Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup Category4QueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2d82", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable Category4ObjectTable = objectTables.ContainsKey("Category4") ? objectTables["Category4"] : null;
+            if (Category4ObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable Category4ObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> Category4ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Category4").ToList();   
+                Category4ObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode Category4TextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category4.Q.allcategories4", DefaultText = @"Categories 4",LocalDefaultText = null, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature Category4Feature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Q.allcategories4", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.allcategories4", NameTextCodeDefaultText = "allcategories4", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode Category4TextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category4.Q.allcategories4", DefaultText = @"Categories 4",LocalDefaultText = null, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature Category4Feature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Q.allcategories4", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.allcategories4", NameTextCodeDefaultText = "allcategories4", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,Category4ObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategories4Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category4TextCode_0.Id, Code = "allcategories4",  QueryGroupCode = "6cbf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category4ObjectTable.Id, QuerySection = "Category4", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category4Feature_0.Id, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query allcategories4Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category4TextCode_0.Id, NameTextCodeCode = Category4TextCode_0.Code, ObjectTableName = "Category4", Code = "allcategories4",  QueryGroupCode = "6cbf", IndexOrder = 0, Tenant = 0, ObjectTableId = Category4ObjectTable.Id, QuerySection = "Category4", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category4Feature_0.Id,FeatureUniqeCode= Category4Feature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn allcategories4QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id, IndexOrder = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == Category4ObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn allcategories4QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id,QueryCode = allcategories4Query.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Category4.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allcategories4QueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id, IndexOrder = 1, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == Category4ObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn allcategories4QueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id,QueryCode = allcategories4Query.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Category4.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allcategories4QueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id, IndexOrder = 2, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == Category4ObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn allcategories4QueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategories4Query.Id,QueryCode = allcategories4Query.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Category4.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> Category4ObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Category4").ToList();
+		   //List<ObjectField> Category4ObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Category4").ToList();
 		       
 	      
 
 	         Screen Category4HeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Category4.HeaderScreen", Name = "HeaderScreen", ObjectTableId = Category4ObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField Category4Category4HeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = Category4HeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4HeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category4HeaderScreenScreen0.Id,ScreenCode = Category4HeaderScreenScreen0.Code, ObjectFieldCode = "Category4.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField Category4Category4HeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = Category4HeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4HeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category4HeaderScreenScreen0.Id,ScreenCode = Category4HeaderScreenScreen0.Code, ObjectFieldCode = "Category4.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField Category4Category4HeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = Category4HeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4HeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = Category4HeaderScreenScreen0.Id,ScreenCode = Category4HeaderScreenScreen0.Code, ObjectFieldCode = "Category4.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    Category4ObjectTable.HeaderScreenId = Category4HeaderScreenScreen0.Id;
+		    Category4ObjectTable.HeaderScreenCode = Category4HeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen Category4GeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Category4.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = Category4ObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField Category4Category4GeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = Category4GeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4GeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = Category4GeneralTabScreenScreen1.Id,ScreenCode = Category4GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category4.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField Category4Category4GeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = Category4GeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4GeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = Category4GeneralTabScreenScreen1.Id,ScreenCode = Category4GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category4.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField Category4Category4GeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = Category4ObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = Category4GeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField Category4Category4GeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = Category4GeneralTabScreenScreen1.Id,ScreenCode = Category4GeneralTabScreenScreen1.Code, ObjectFieldCode = "Category4.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -436,19 +456,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode Category4GeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category4.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature Category4GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Tab.General", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature Category4GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Tab.General", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,Category4ObjectTable);
  
                  
 			   TextCode Category4EventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category4.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature Category4EventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Tab.Events", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature Category4EventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Tab.Events", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,Category4ObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C4GT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category4GeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = Category4ObjectTable.Id, TabNameTextCodeId = Category4GeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C4GT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category4GeneralFeature_TH0.Id,FeatureUniqeCode = Category4GeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = Category4ObjectTable.Id, TabNameTextCodeId = Category4GeneralTextCode_TH0.Id, TabNameTextCodeCode = Category4GeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C4ET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category4EventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = Category4ObjectTable.Id, TabNameTextCodeId = Category4EventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "C4ET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = Category4EventsFeature_TH1.Id,FeatureUniqeCode = Category4EventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = Category4ObjectTable.Id, TabNameTextCodeId = Category4EventsTextCode_TH1.Id, TabNameTextCodeCode = Category4EventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -456,10 +476,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature Category4FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category4FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category4FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category4FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.PackageFeature", NameTextCodeDefaultText = "Category4 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature Category4FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category4ObjectTable);
+		   Feature Category4FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category4ObjectTable);
+		   Feature Category4FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category4ObjectTable);
+		   Feature Category4FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.PackageFeature", NameTextCodeDefaultText = "Category4 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category4ObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature Category4Feature_Category4_Features_Category4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category4.Features.Category4", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = Category4ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category4.Features.Category4", NameTextCodeDefaultText = @"Category 4" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category4ObjectTable);
+
+   
 	    
 		}
 
@@ -511,7 +537,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable Category4ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category4" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode Category4TextCode_GeneralMCACCCategory4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Category4", DefaultText = "Category 1",LocalDefaultText = @"Category 1", ObjectTableId = Category4ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

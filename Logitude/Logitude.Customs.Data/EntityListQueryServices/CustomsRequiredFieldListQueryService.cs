@@ -28,6 +28,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ObjectTableId = a.ObjectTableId,
                                                                  Id = a.Id,
                                                                  ObjectfieldId = a.ObjectfieldId,
+                                                                 ObjectfieldCode = a.ObjectfieldCode,
                                                                  Tenant = a.Tenant,
                                                              });
             return query;

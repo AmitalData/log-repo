@@ -36,6 +36,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ARPaymentPM paymentPM = GetARPaymentPMById(paymentTransaction.SourceId, paymentTransaction.Tenant);
 
+                paymentPM.PaymentInvoices = new List<ARPaymentInvoicePM>(); // [!] payment invoices removed in order to avoid validation (CheckLinesAmountToReconcileTotal) in ARPayment service, in this block we only need to update open amount and status , WI 58101
+
                 CalculatePaymentOpenAmount(paymentPM);
 
                 CalculatePaymentStatus(paymentPM);
@@ -197,12 +199,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private double GetGLAccountCurrencyRate(string accountCurrencyId, string tenantCurrencyId, int tenant)
         {
+            double rate = 1;
             RatesTableQuery rateQuery = new RatesTableQuery(tenant);
-            LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
 
-            if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
+            if (accountCurrencyId == tenantCurrencyId)
+                rate = 1;
+            else
+            {
+                LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
+                if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
 
-            return (double)glaToLocalRate.Rate;
+                rate = (double)glaToLocalRate.Rate;
+            }
+
+            return rate;
 
         }
 

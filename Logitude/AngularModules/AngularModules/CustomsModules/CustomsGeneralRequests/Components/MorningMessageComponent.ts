@@ -22,7 +22,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 @Component({
-    moduleId: module.id,
+    
     selector: 'MorningMessageComponent',
     
     templateUrl: './MorningMessageComponent.html',

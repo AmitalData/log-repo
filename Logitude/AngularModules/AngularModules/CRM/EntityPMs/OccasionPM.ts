@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {OccasionInviteePM} from './OccasionInviteePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -134,6 +135,79 @@ export class OccasionPM {
     public set IndustryName(newValue: string) { if (this.industryName != newValue) { this.industryName = newValue; this.MarkAsDirty("IndustryName"); } }
        
 	 
+     
+	private occasionInvitees: OccasionInviteePM[];
+    get  OccasionInvitees() {
+        if (this.occasionInvitees == null) {
+            this.occasionInvitees = [];
+        }
+
+        return this.occasionInvitees;
+    }
+    set  OccasionInvitees(newValue: OccasionInviteePM[]) {
+        if (this.occasionInvitees != newValue) {
+            this.occasionInvitees = newValue;
+        }
+    }
+    public AddOccasionInvitee(item: OccasionInviteePM) {
+        if (item != null) {
+            var index = this. OccasionInvitees.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. OccasionInvitees.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveOccasionInvitee(item: OccasionInviteePM) {
+        if (item != null) {
+            var index = this. OccasionInvitees.indexOf(item);
+            if (index > -1) {
+                this. OccasionInvitees.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public OccasionInvitees: Array<OccasionInviteePM>= [];
+     private participatedCustomers: number;
+    public get ParticipatedCustomers() { return this.participatedCustomers; }
+    public set ParticipatedCustomers(newValue: number) { if (this.participatedCustomers != newValue) { this.participatedCustomers = newValue; this.MarkAsDirty("ParticipatedCustomers"); } }
+       
+	 
+    private participatedContacts: number;
+    public get ParticipatedContacts() { return this.participatedContacts; }
+    public set ParticipatedContacts(newValue: number) { if (this.participatedContacts != newValue) { this.participatedContacts = newValue; this.MarkAsDirty("ParticipatedContacts"); } }
+       
+	 
+    private invitedCustomers: number;
+    public get InvitedCustomers() { return this.invitedCustomers; }
+    public set InvitedCustomers(newValue: number) { if (this.invitedCustomers != newValue) { this.invitedCustomers = newValue; this.MarkAsDirty("InvitedCustomers"); } }
+       
+	 
+    private invitedContacts: number;
+    public get InvitedContacts() { return this.invitedContacts; }
+    public set InvitedContacts(newValue: number) { if (this.invitedContacts != newValue) { this.invitedContacts = newValue; this.MarkAsDirty("InvitedContacts"); } }
+       
+	 
+    private isAllAdded: boolean;
+    public get IsAllAdded() { return this.isAllAdded; }
+    public set IsAllAdded(newValue: boolean) { if (this.isAllAdded != newValue) { this.isAllAdded = newValue; this.MarkAsDirty("IsAllAdded"); } }
+       
+	 
+     
+	private removedOccasionInvitees: OccasionInviteePM[];
+    get  RemovedOccasionInvitees() {
+        if (this.removedOccasionInvitees == null) {
+            this.removedOccasionInvitees = [];
+        }
+
+        return this.removedOccasionInvitees;
+    }
+    set  RemovedOccasionInvitees(newValue: OccasionInviteePM[]) {
+        if (this.removedOccasionInvitees != newValue) {
+            this.removedOccasionInvitees = newValue;
+        }
+    }
 
     public OldEntityPM: OccasionPM;
 		

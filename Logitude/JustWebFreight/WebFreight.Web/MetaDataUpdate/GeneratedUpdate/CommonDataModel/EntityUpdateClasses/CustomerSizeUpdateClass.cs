@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerSizeUpdateClass
-   {  
+   {  		
+		public const string HashString = "081d89941f14a738817338ec94951bb1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,11 +84,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "CustomerSize",
+			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerSizes",
 			      				    ObjectTableSingular =  "Customer Size",
 			      				    ObjectTablePlural =  "Customer Sizes",
-			      				    DefaultText =  "Customer Size",
-			      				    Name =  "Customer Size",
+			      				    DescriptionDefaultText =  "Define sizes for evaluating the volume of customer business.",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Id",
@@ -96,34 +103,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  true,
 			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
+			      				    EnableEditFromLOV =  true,
 			      				    SortingByObjectField =  "Order",
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "CustomerSize,CustomerSizes,,Id,Order",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Customer Size",
+			      				    Code =  "CUSS",
+			      				    Name =  "Customer Size",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
-			      				    IsEditable =  true,
-			      				    ClientModuleName =  "Common",
-			      				    Code =  "CUSS",
-			      				    DescriptionDefaultText =  "Define sizes for evaluating the volume of customer business.",
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "CustomerSize,CustomerSizes,,Id,Order",
+			      				    HashString =  CustomerSizeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -132,11 +145,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "CustomerSize",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -147,43 +161,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerSize",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerSize",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "InActive",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						HelpTextCode =  "InActive",
-					  						Code =  "InActive",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -192,11 +209,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "CustomerSize",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -207,43 +225,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  1,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerSize",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerSize",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Name",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
 					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
-					  						Code =  "Name",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Name",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -252,11 +273,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomerSize",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -266,41 +288,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerSize",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerSize",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search Names/Orders ...",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Names/Orders ...",
-					  						HelpTextCode =  "SearchFields",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "SearchFields",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -309,11 +334,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Order",
 					  						ObjectTableName =  "CustomerSize",
 					  						FieldsDataType =  "Integer",
-					  						DataTypeCode =  "Integer",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -324,99 +350,121 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
 					  						PMPropertyPath =  "Order",
 					  						ListPropertyPath =  "Order",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  1,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "CustomerSize",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomerSize",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Order",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowFiltersIndex =  1,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Order",
 					  						DefaultText =  "Order",
 					  						ListFieldLable =  "OrderListLable",
 					  						ListLableDefaultText =  "Order",
-					  						HelpTextCode =  "Order",
-					  						Code =  "Order",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Order",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomerSizeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUSS", Name = "Customer Size" }, queryGroupRepository);
+	        QueryGroup CustomerSizeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUSS", Name = "Customer Size" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomerSizeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9878", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CustomerSizeObjectTable = objectTables.ContainsKey("CustomerSize") ? objectTables["CustomerSize"] : null;
+            if (CustomerSizeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable CustomerSizeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> CustomerSizeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();   
+                CustomerSizeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode CustomerSizeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = @"Customer Sizes",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerSizeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCUSTOMERSIZES", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.AllCustomerSizes", NameTextCodeDefaultText = "All Customer Sizes", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode CustomerSizeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = @"Customer Sizes",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerSizeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCUSTOMERSIZES", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.AllCustomerSizes", NameTextCodeDefaultText = "All Customer Sizes", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CustomerSizeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCustomerSizesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerSizeTextCode_0.Id, Code = "All Customer Sizes",  QueryGroupCode = "CUSS", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerSizeObjectTable.Id, QuerySection = "CustomerSize", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerSizeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCustomerSizesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerSizeTextCode_0.Id, NameTextCodeCode = CustomerSizeTextCode_0.Code, ObjectTableName = "CustomerSize", Code = "All Customer Sizes",  QueryGroupCode = "CUSS", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerSizeObjectTable.Id, QuerySection = "CustomerSize", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerSizeFeature_0.Id,FeatureUniqeCode= CustomerSizeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCustomerSizesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id, IndexOrder = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerSizesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomerSize.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCustomerSizesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id, IndexOrder = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerSizesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomerSize.Order" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCustomerSizesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id, IndexOrder = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCustomerSizesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomerSize.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
+		   //List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
 		       
 	      
 
 	         Screen CustomerSizeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerSizeObjectTable.HeaderScreenId = CustomerSizeHeaderScreenScreen0.Id;
+		    CustomerSizeObjectTable.HeaderScreenCode = CustomerSizeHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
-	         Screen CustomerSizeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen CustomerSizeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -427,19 +475,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomerSizeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerSizeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerSize.Tab.General", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerSizeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerSize.Tab.General", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerSizeObjectTable);
  
                  
 			   TextCode CustomerSizeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerSizeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerSize.Tab.Events", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerSizeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerSize.Tab.Events", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerSizeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeGeneralFeature_TH0.Id,FeatureUniqeCode = CustomerSizeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomerSizeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CZEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerSizeEventsFeature_TH1.Id,FeatureUniqeCode = CustomerSizeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerSizeObjectTable.Id, TabNameTextCodeId = CustomerSizeEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomerSizeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -447,10 +495,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomerSizeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerSizeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerSizeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerSizeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.PackageFeature", NameTextCodeDefaultText = "CustomerSize Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomerSizeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerSizeObjectTable);
+		   Feature CustomerSizeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerSizeObjectTable);
+		   Feature CustomerSizeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerSizeObjectTable);
+		   Feature CustomerSizeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.PackageFeature", NameTextCodeDefaultText = "CustomerSize Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerSizeObjectTable);    
 	    
 		}
 
@@ -460,10 +508,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPCZ",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Customer Size Updated",
                 EnglishName =  "Customer Size Updated",
+                LocalName =  "Customer Size Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -479,10 +527,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRCZ",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

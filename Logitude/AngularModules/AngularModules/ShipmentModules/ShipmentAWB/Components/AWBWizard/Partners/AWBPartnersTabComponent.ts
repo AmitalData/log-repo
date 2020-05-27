@@ -21,7 +21,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'PartnersTabComponent',
     templateUrl: './AWBPartnersTabComponent.html',
 })
@@ -267,6 +267,11 @@ export class AWBPartnersTabComponent extends BaseComponent
         if (this.EntityPM.ShipmentLevelCode == "C") {
             myDependency = "AG";
             myDependencyIsList = false;
+            
+            if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                myDependency = "CS,AG";
+                myDependencyIsList = true;
+            }
         }
 
         else {

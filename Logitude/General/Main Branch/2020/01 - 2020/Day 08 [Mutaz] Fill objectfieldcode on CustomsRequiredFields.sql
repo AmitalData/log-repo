@@ -1,0 +1,1 @@
+update CustomsRequiredFields set ObjectfieldCode =(select ObjectFields.FieldCode from ObjectFields where id=CustomsRequiredFields.ObjectFieldId)

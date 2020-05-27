@@ -17,13 +17,24 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using System.Diagnostics;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.Validators
 {
     public partial class GLAccountValidator
     {
 
-        public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM)
+        public static ValidationResult IsGLAccountValidCacheDueFromJournal(GLAccountPM myGLAccountPM)
+        {
+            string key = $"IsGLAccountValidFromCache({myGLAccountPM.Id})";
+            return CacheManager.GetOrInsertNewObject<ValidationResult>(key, () =>
+            {
+                return GLAccountValidator.IsGLAccountValid(myGLAccountPM);
+            });
+
+        }
+        public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM,bool FromFullAccountingProvider=false)
         {
             // GET logged contact, RTL
             ContactPM contact = GetLoggedContact(myGLAccountPM.Tenant);
@@ -142,7 +153,7 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (String.IsNullOrWhiteSpace(myGLAccountPM.CustomerGLAccountId))
                 {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, showLocals));
+                  //  return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountMissing", myGLAccountPM.Tenant, showLocals));
                 }
                 else
                 {
@@ -161,14 +172,21 @@ namespace Logitude.Accounting.BL.Validators
             }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
-                var fullPM =FullAccountingSettingQueryService.Get(myGLAccountPM.Tenant);
-                if (fullPM==null)
+                if (FromFullAccountingProvider)
                 {
-                    return null;
+                    AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
+                    Debug.WriteLine("Is control account - A void Check due FromFullAccountingProvider");
                 }
-                var list = new List<string> ()
+                else
                 {
-                        
+                    var fullPM = FullAccountingSettingQueryService.Get(myGLAccountPM.Tenant);
+                    if (fullPM == null)
+                    {
+                        return null;
+                    }
+                    var list = new List<string>()
+                {
+
                         fullPM.AirExportJobControlAccountId ,
                         fullPM.AirImportJobControlAccountId ,
                         fullPM.CustomerControlAccountId ,
@@ -176,14 +194,15 @@ namespace Logitude.Accounting.BL.Validators
                         fullPM.OceanImportJobControlAccountId,
                         fullPM.VendorControlAccountId,
                         fullPM.FileControlAccountId,
-                        
+
                 };
-                if (list.Contains(myGLAccountPM.Id) == false)
-                {
-                    return new ValidationResult(
-                       // "The Account is defined as a Control Account but is not connected to the Full Accounting Settings"
-                        TextCodesTranslator.TranslateText("GLAccounts.O.ControlAccountNotDefined", myGLAccountPM.Tenant)
-                        );
+                    if (list.Contains(myGLAccountPM.Id) == false)
+                    {
+                        return new ValidationResult(
+                            // "The Account is defined as a Control Account but is not connected to the Full Accounting Settings"
+                            TextCodesTranslator.TranslateText("GLAccounts.O.ControlAccountNotDefined", myGLAccountPM.Tenant)
+                            );
+                    }
                 }
             }
             else if (String.IsNullOrWhiteSpace(myGLAccountPM.ControlAccountId) && (myGLAccountPM.AccountTypeCode == "4" || myGLAccountPM.AccountTypeCode == "5" || myGLAccountPM.AccountTypeCode == "2" || myGLAccountPM.AccountTypeCode == "3"))
@@ -352,7 +371,7 @@ namespace Logitude.Accounting.BL.Validators
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             GLAccountQueryService query = new GLAccountQueryService(accountingContext);
-            GLAccountPM acc = query.GetByInternalNumber(internalNumber, tenant).FirstOrDefault<GLAccountPM>();
+            GLAccountPM acc = query.GetByInternalNumber(internalNumber, tenant)/*.FirstOrDefault<GLAccountPM>()*/;
             if (acc != null)
             {
                 return acc.Id;

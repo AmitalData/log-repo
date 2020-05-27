@@ -12,7 +12,7 @@ import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ActivityZoomControl',
     templateUrl: './ActivityZoomComponent.html',
     inputs: ['PartnerTypeId', 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],
@@ -81,7 +81,7 @@ export class ActivityZoomComponent implements OnInit {
        
        this.ActivityList = [];
        this.ActivityDetailsList = [];
-       this._sharedLogisticsService.getCardLogDetails(this.PartnerTypeId, this.DateParameter , SessionInfo.LoggedUserTenant).subscribe(res => {
+       this._sharedLogisticsService.getCardLogDetails(this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -116,7 +116,7 @@ export class ActivityZoomComponent implements OnInit {
             if (this.ActivityZoomSelectedItemViewModel) {
                 this.ActivityDetailsList = [];
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                this._sharedLogisticsService.getCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe(res => {
+                this._sharedLogisticsService.getCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
 
              

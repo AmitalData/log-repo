@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג מחירון&quot;"
   DefaultText="&quot;Vehicle Price List Type&quot;"
-  Code="&quot;1cd1&quot;"
-  Name="&quot;Customs.VehiclePriceListType Query Group&quot;"
+  Code="&quot;VLQG&quot;"
+  Name="&quot;Customs.VehiclePriceListType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2509c8eb-332d-4b62-9475-43788e551a9a&quot;"
     FieldName="&quot;Code&quot;"
@@ -298,21 +300,85 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;price1&quot;"
+      SearchFields="&quot;price1,1&quot;"
+      Inactive="false"
+      LocalName="&quot;price1&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;VehiclePriceListType&quot;"
+    ObjectTableName="&quot;Customs.VehiclePriceListType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.VehiclePriceListType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;VLQG&quot;"
+    QueryGroupName="&quot;Customs.VehiclePriceListType&quot;"
+    LocalTextCode="&quot;סוג מחירון רכב&quot;"
+    TextCode="&quot;Vehicle Price List Type&quot;"
+    TextCodeCode="&quot;Customs.VehiclePriceListType.Q.VehiclePriceListTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;VEHICLEPRICELIST&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.VehiclePriceListType.Features.VehiclePriceListType&quot;"
+    FeatureDefaultText="&quot;Vehicle Price List Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;VehiclePriceListType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;VehiclePriceListType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;VehiclePriceListType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;VehiclePriceListType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.VehiclePriceListType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.VehiclePriceListType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

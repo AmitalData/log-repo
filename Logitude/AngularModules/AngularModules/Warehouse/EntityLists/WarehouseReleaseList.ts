@@ -48,6 +48,14 @@ export class WarehouseReleaseList {
 	ReleaseDate: Date;
 	TotalQuantity: number;
 	ChargeableWeightUnitCode: string;
+	ConnectedTo: string;
+	FromPortId: string;
+	ToPortId: string;
+	CustomerAddressId: string;
+	TotalVolumetricWeight: number;
+	Ratio: number;
+	TruckerId: string;
+	TruckerReference: string;
 	
 }
  

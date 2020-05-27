@@ -10,7 +10,7 @@ import {QuoteListService} from '../../../Quote/Services/StandardLists/QuoteListS
 import {QuoteList} from '../../../Quote/EntityLists/QuoteList'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ChooseEntityComponent.html',
 })
 
@@ -142,6 +142,8 @@ export class ChooseEntityComponent {
         filters.PageSize = 100;
         filters.GetAll = false;
         filters.GetCount = true;
+        filters.SortBy = "OpenDate";
+        filters.SortDirection = "Descending";
         var searchValue = null;
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {

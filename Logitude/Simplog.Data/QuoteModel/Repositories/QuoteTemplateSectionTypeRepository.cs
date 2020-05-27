@@ -32,8 +32,7 @@ namespace Simplog.Data.QuoteModel.Repositories
                 if (getFromCache)
                 {
                     string entityName = "QuoteTemplateSectionType" + code ;
-                    if (HttpContext.Current != null)
-                    {
+                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
 
@@ -58,11 +57,8 @@ namespace Simplog.Data.QuoteModel.Repositories
                             entity = (QuoteTemplateSectionType)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
-                    else
-                    {
-                        entity = (from record in quotesContext.QuoteTemplateSectionTypes where record.Code == code select record).FirstOrDefault();
-                    }
+                    
+                
                 }
                 else
                 {

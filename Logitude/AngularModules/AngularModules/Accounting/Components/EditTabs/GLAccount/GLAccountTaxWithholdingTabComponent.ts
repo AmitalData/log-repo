@@ -13,7 +13,7 @@ import { DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountTaxWithholdingTabComponent.html',
  
 })
@@ -21,6 +21,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
+  public DeductionType: any;
+  public DeductionFileType: any;
+  public AssessingOffice: any;
 
     public  ObjectTableName:string= "GLAccount";
     public DataContext: any = this;

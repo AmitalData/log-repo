@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Lead Document Type&quot;"
-  Code="&quot;6203&quot;"
-  Name="&quot;Customs.LeadDocumentType Query Group&quot;"
+  Code="&quot;LEDT&quot;"
+  Name="&quot;Customs.LeadDocumentType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;155e556d-cdc9-4408-b163-f4e87981dbe8&quot;"
     FieldName="&quot;Code&quot;"
@@ -313,21 +315,109 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,הצהרת יבוא&quot;"
+      Inactive="false"
+      LocalName="&quot;הצהרת יבוא&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,הצהרת יצוא&quot;"
+      Inactive="false"
+      LocalName="&quot;הצהרת יצוא&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,הצהרת שטעון&quot;"
+      Inactive="false"
+      LocalName="&quot;הצהרת שטעון&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,קרנה&quot;"
+      Inactive="false"
+      LocalName="&quot;קרנה&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,מ.ב. 161&quot;"
+      Inactive="false"
+      LocalName="&quot;מ.ב. 161&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,פח&quot;ן מעריך&quot;"
+      Inactive="false"
+      LocalName="&quot;פח&quot;ן מעריך&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;LeadDocumentType&quot;"
+    ObjectTableName="&quot;Customs.LeadDocumentType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.LeadDocumentType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;LEDT&quot;"
+    QueryGroupName="&quot;Customs.LeadDocumentType&quot;"
+    LocalTextCode="&quot;סוג מסמך על&quot;"
+    TextCode="&quot;Lead Document Types&quot;"
+    TextCodeCode="&quot;Customs.LeadDocumentType.Q.LeadDocumentTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;LEADDOCUMENTTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.LeadDocumentType.Features.LeadDocumentTypes&quot;"
+    FeatureDefaultText="&quot;Lead Document Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;LeadDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;LeadDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;LeadDocumentType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;LeadDocumentType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.LeadDocumentType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.LeadDocumentType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

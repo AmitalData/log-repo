@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./ARInvoiceShortTitleComponent.html",
 })
 
@@ -29,8 +29,8 @@ export class ARInvoiceShortTitleComponent {
     }
 
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.entityArgs.EditComponent != null) {
+            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.BuildComponent();
@@ -48,19 +48,24 @@ export class ARInvoiceShortTitleComponent {
 
     public IsConnectedToConsolidation: boolean = false;
     private BuildComponent() {
+        var isConnectedToConsolidation: boolean = false;
+
         if (this.EntityPM != null) {
             if (this.EntityPM.IsConstituentInvoice && this.EntityPM.ConsolidationInvoiceId != null) {
-                this.IsConnectedToConsolidation = true;
+                isConnectedToConsolidation = true;
 
             }
 
             this.GetEntityNumber();
         }
+
+        this.IsConnectedToConsolidation = isConnectedToConsolidation;
     }
 
     public EntityNumber: string = null;
     GetEntityNumber() {
-        if (this.EntityPM.StatusCode == "DR") {
+
+        if (this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "LL") {
             if (this.EntityPM.DraftNumber) {
                 this.EntityNumber = this.EntityPM.DraftNumber + ", ";
             }
@@ -79,6 +84,31 @@ export class ARInvoiceShortTitleComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: invoiceId, ObjectTableName: 'ARInvoice', BackButtonLabel: "A/R Invoice: " + this.EntityPM.InvoiceNumber });
+
+                    let isEditComponentSaved = false;
+
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if (isEditComponentSaved) {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
+
+                        else if (cmpRef.instance.NeedRefresh) {
+                            this.entityArgs.EditComponent.NeedRefresh = true;
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
+                    });
+
+                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
+
+                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
                 });
         }
     }

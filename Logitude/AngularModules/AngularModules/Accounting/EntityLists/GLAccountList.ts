@@ -100,6 +100,14 @@ export class GLAccountList {
 	UpdatedByUserName: string;
 	CreatedByLocalName: string;
 	UpdatedByLocalName: string;
+	AllowEditChequePayToName: boolean;
+	ActiveForInterest: boolean;
+	InterestCalculationStartDate: Date;
+	ActiveForInterestCreditInvoice: boolean;
+	InterestCreditLimit: number;
+	NameForPrintingCheques: string;
+	Smallcashbook: boolean;
+	MinimumInterestInvoiceBilling: number;
 	
 }
  

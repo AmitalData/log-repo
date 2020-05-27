@@ -76,51 +76,63 @@
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ErrorsResultList">
                                 <log-column [header]="'שורה באקסל'"
                                             [width]="'80'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.ExcelRow}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                                 <log-column [header]="'מספר תיק'"
                                             [width]="'80'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CustomfileNr}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                                 <log-column [header]="'מספר הצהרה'"
                                             [width]="'100'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.DeclarationId}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                                 <log-column [header]="'מספר חשבון ספק'"
                                             [width]="'80'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.SupplierItemInvoice}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                                 <log-column [header]="'דגם'"
                                             [width]="'80'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.Model}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                                 <log-column [header]="'הודעת שגיאה'"
                                             [width]="'190'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.Errors}}</span>
                                         </div>
                                     </log-cell-template>
+                                </ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

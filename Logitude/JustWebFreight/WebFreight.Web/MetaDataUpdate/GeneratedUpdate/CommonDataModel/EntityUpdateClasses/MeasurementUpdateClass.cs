@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class MeasurementUpdateClass
-   {  
+   {  		
+		public const string HashString = "13a66aec654233b1fb75f0cb4e1aaa26";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -134,11 +135,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DescriptionDefaultText =  "Manage the unit of measurement names to be printed in documents.",
 			      				    CodeField =  "Code",
 			      				    NameField =  "Name",
+			      				    HashString =  MeasurementUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -149,7 +151,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Measurement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
@@ -195,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsContainer",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -206,7 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Measurement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
@@ -253,7 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsContainerMeasurement",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -313,7 +315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -373,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -433,7 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShortName",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -493,7 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -504,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Measurement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
@@ -554,7 +556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -612,59 +614,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup MeasurementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MMQG", Name = "Measurement" }, queryGroupRepository);
-						QueryGroup MeasurementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f5db", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup MeasurementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MMQG", Name = "Measurement" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup MeasurementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f5db", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable MeasurementObjectTable = objectTables.ContainsKey("Measurement") ? objectTables["Measurement"] : null;
+            if (MeasurementObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable MeasurementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Measurement" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> MeasurementObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Measurement").ToList();   
+                MeasurementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Measurement" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode MeasurementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.Q.Measurements", DefaultText = @"Measurements",LocalDefaultText = null, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MeasurementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Q.AllQuery", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.AllMeasurements", NameTextCodeDefaultText = "All Measurements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode MeasurementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.Q.Measurements", DefaultText = @"Measurements",LocalDefaultText = null, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature MeasurementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Q.AllQuery", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.AllMeasurements", NameTextCodeDefaultText = "All Measurements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MeasurementObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMeasurementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurementTextCode_0.Id, Code = "All Measurements",  QueryGroupCode = "MMQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurementObjectTable.Id, QuerySection = "Measurement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurementFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMeasurementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurementTextCode_0.Id, NameTextCodeCode = MeasurementTextCode_0.Code, ObjectTableName = "Measurement", Code = "All Measurements",  QueryGroupCode = "MMQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurementObjectTable.Id, QuerySection = "Measurement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurementFeature_0.Id,FeatureUniqeCode= MeasurementFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllMeasurementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 0, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMeasurementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Measurement.Code" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllMeasurementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 1, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMeasurementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Measurement.Name" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllMeasurementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 2, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMeasurementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Measurement.LocalName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllMeasurementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 3, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMeasurementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Measurement.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "IsContainer" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = AllMeasurementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Measurement.IsContainer", PredefinedValue = "false",PredefinedValue2 = null, QueryId = AllMeasurementsQuery.Id,QueryCode = AllMeasurementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable MeasurementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Measurement" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> MeasurementObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Measurement").ToList();
+		   //List<ObjectField> MeasurementObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Measurement").ToList();
 		       
 	      
 
 	         Screen MeasurementHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Measurement.HeaderScreen", Name = "Header Screen", ObjectTableId = MeasurementObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MeasurementMeasurementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MeasurementMeasurementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MeasurementHeaderScreenScreen0.Id,ScreenCode = MeasurementHeaderScreenScreen0.Code, ObjectFieldCode = "Measurement.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MeasurementMeasurementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = MeasurementHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MeasurementMeasurementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MeasurementHeaderScreenScreen0.Id,ScreenCode = MeasurementHeaderScreenScreen0.Code, ObjectFieldCode = "Measurement.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MeasurementObjectTable.HeaderScreenId = MeasurementHeaderScreenScreen0.Id;
+		    MeasurementObjectTable.HeaderScreenCode = MeasurementHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -675,19 +695,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable MeasurementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Measurement" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode MeasurementGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MeasurementGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Tab.General", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MeasurementGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Tab.General", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MeasurementObjectTable);
  
                  
 			   TextCode MeasurementEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Measurement.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MeasurementEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Tab.Events", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MeasurementEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.Tab.Events", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MeasurementObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMGN",HtmlComponentName = "MeasurementGeneralComponent",HtmlComponentUrl = "./Common/Components/Maintenance/Measurement/MeasurementGeneralComponent", FeatureId = MeasurementGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.TabsControls.MeasurementGeneralTabControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMGN",HtmlComponentName = "MeasurementGeneralComponent",HtmlComponentUrl = "./Common/Components/Maintenance/Measurement/MeasurementGeneralComponent", FeatureId = MeasurementGeneralFeature_TH0.Id,FeatureUniqeCode = MeasurementGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.TabsControls.MeasurementGeneralTabControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementGeneralTextCode_TH0.Id, TabNameTextCodeCode = MeasurementGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MeasurementEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MeasurementEventsFeature_TH1.Id,FeatureUniqeCode = MeasurementEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MeasurementObjectTable.Id, TabNameTextCodeId = MeasurementEventsTextCode_TH1.Id, TabNameTextCodeCode = MeasurementEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -695,10 +715,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable MeasurementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Measurement" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature MeasurementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MeasurementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MeasurementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MeasurementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.PackageFeature", NameTextCodeDefaultText = "Measurement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature MeasurementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MeasurementObjectTable);
+		   Feature MeasurementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MeasurementObjectTable);
+		   Feature MeasurementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MeasurementObjectTable);
+		   Feature MeasurementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.PackageFeature", NameTextCodeDefaultText = "Measurement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MeasurementObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature MeasurementFeature_Measurement_M_Measurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.M.Measurements", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Measurements", NameTextCodeDefaultText = @"Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MeasurementObjectTable);
+
+   
 	    
 		}
 

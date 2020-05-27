@@ -30,9 +30,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Tenant = entityPM.Tenant;
             poco.Description = entityPM.Description;
             poco.LocalDescription = entityPM.LocalDescription;
-            poco.ExternalVATCard = entityPM.ExternalVATCard;
+            poco.ReceivablesExternalId = entityPM.ReceivablesExternalId;
+            poco.PayablesExternalId = entityPM.PayablesExternalId;
             poco.ExternalTAXItemId = entityPM.ExternalTAXItemId;
             poco.IsMultiPercentage = entityPM.IsMultiPercentage;
+            poco.RecognizedPercentage = entityPM.RecognizedPercentage;
+            poco.IsRegionalTax = entityPM.IsRegionalTax;
         }
     }
 }

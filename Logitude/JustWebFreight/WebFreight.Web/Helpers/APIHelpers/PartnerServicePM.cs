@@ -29,5 +29,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public AirlinePM Airline { get; set; }
         public ShippingLinePM ShippingLine { get; set; }
         public TruckerPM Trucker { get; set; }
+        public AccountingPartnerPM AccountingPartner { get; set; }
+
     }
 }

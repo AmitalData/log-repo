@@ -47,13 +47,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         NameTextCodeId = a.NameTextCodeId,
                         ObjectTableId = a.ObjectTableId,
                         Tenant = a.Tenant,
-                        NameTextCodeCode = a.NameTextCode.Code,
+                        NameTextCodeCode = a.NameTextCodeCode,
                         Packagable = a.Packagable,
                         FeatureTypeCode = a.FeatureTypeCode,
                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
                         ToggleCode = a.ToggleCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).FirstOrDefault();
         }
 
@@ -68,13 +69,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         NameTextCodeId = a.NameTextCodeId,
                         ObjectTableId = a.ObjectTableId,
                         Tenant = a.Tenant,
-                        NameTextCodeCode = a.NameTextCode.Code,
+                        NameTextCodeCode = a.NameTextCodeCode,
                         Packagable = a.Packagable,
                         FeatureTypeCode = a.FeatureTypeCode,
                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
                         ToggleCode = a.ToggleCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
 
@@ -89,7 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         NameTextCodeId = a.NameTextCodeId,
                         ObjectTableId = a.ObjectTableId,
                         Tenant = a.Tenant,
-                        NameTextCodeCode = a.NameTextCode.Code,
+                        NameTextCodeCode = a.NameTextCodeCode,
                         Packagable = a.Packagable,
                         FeatureTypeCode = a.FeatureTypeCode,
                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
@@ -97,6 +99,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsCoreFeature = a.IsCoreFeature,
                         ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                         FeatureTypeName = a.FeatureType == null ? "" : a.FeatureType.Name,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
 
@@ -121,7 +124,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Tenant = a.Tenant,
                                    NameTextCodeId = a.NameTextCodeId,
                                    ObjectTableId = a.ObjectTableId,
-                                   NameTextCodeCode = a.NameTextCode.Code,
+                                   NameTextCodeCode = a.NameTextCodeCode,
                                    FeatureTypeCode = a.FeatureTypeCode,
                                    Packagable = a.Packagable,
                                    IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
@@ -133,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsCustomRole = myRole.IsCustomRole,
                                    ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                                    ToggleCode = a.ToggleCode,
+                                   FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
                 #endregion
 
@@ -151,7 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         foreach (RoleFeature item in allRoleFeatures.Where(d => d.RoleId == myRole.ParentRoleId))
                         {
-                            FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                            FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                             if (myFeature != null)
                             {
@@ -162,7 +166,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         foreach (RoleFeature item in allRoleFeatures.Where(d => d.RoleId == myRole.Id))
                         {
-                            FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                            FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                             if (myFeature != null)
                             {
@@ -182,7 +186,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        FeaturePM myFeature = (from a in allFeatures where a.Id == item.FeatureId select a).FirstOrDefault();
+                        FeaturePM myFeature = (from a in allFeatures where a.FeatureUniqeCode == item.FeatureUniqeCode select a).FirstOrDefault();
 
                         if (myFeature != null)
                         {
@@ -211,7 +215,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         {
                             foreach (PackageFeature item in allPackageFeatures)
                             {
-                                FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                                FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                                 if (myFeature != null)
                                 {
                                     if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
@@ -270,13 +274,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             NameTextCodeId = a.NameTextCodeId,
                                             ObjectTableId = a.ObjectTableId,
                                             Tenant = a.Tenant,
-                                            NameTextCodeCode = a.NameTextCode.Code,
+                                            NameTextCodeCode = a.NameTextCodeCode,
                                             FeatureTypeCode = a.FeatureTypeCode,
                                             Packagable = a.Packagable,
                                             IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                                             IsOld = a.IsOld,
                                             IsCoreFeature = a.IsCoreFeature,
                                             ToggleCode = a.ToggleCode,
+                                            FeatureUniqeCode = a.FeatureUniqeCode
                                         }).ToList();
 
             List<FeaturePM> ffffff = features.Where(d => d.ObjectTableId == "1-1301").ToList();
@@ -284,7 +289,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             foreach (PackageFeature item in packageFeature)
             {
                 FeaturePM feature = (from a in features
-                                     where a.Id == item.FeatureId
+                                     where a.FeatureUniqeCode == item.FeatureUniqeCode
                                      select a).FirstOrDefault();
 
                 if (feature != null)
@@ -409,7 +414,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Code,
                                    Tenant = a.Tenant,
                                    NameTextCodeId = a.NameTextCodeId,
-                                   NameTextCodeCode = a.NameTextCode.Code,
+                                   NameTextCodeCode = a.NameTextCodeCode,
                                    ObjectTableId = a.ObjectTableId,
                                    Packagable = a.Packagable,
                                    FeatureTypeCode = a.FeatureTypeCode,
@@ -417,6 +422,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsOld = a.IsOld,
                                    IsCoreFeature = a.IsCoreFeature,
                                    ToggleCode = a.ToggleCode,
+                                   FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
                 #endregion
 
@@ -435,7 +441,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allChildFeatures)
                     {
-                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureId == item.FeatureId).FirstOrDefault();
+                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
 
                         if (item.IsDeleted)
                         {
@@ -471,7 +477,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
@@ -487,7 +493,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!myResult.Where(d => d.Id == myFeature.Id).Any())
@@ -532,7 +538,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
-        public bool CheckIfFeatureshasAccess(string myRoleId, List<string> allowedPackages, int tenant,string FeatureCode,string ObjectTableId)
+        public bool CheckIfFeatureshasAccess(string myRoleId, List<string> allowedPackages, int tenant, string FeatureCode, string ObjectTableId)
         {
             //List<FeaturePM> myResult = new List<FeaturePM>();
             bool hasAccess = false;
@@ -540,28 +546,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 Role myRole = (from d in repository.context.Roles where d.Id == myRoleId select d).FirstOrDefault();
 
-                
+
                 List<RoleFeature> allRoleFeatures = new List<RoleFeature>();
                 List<PackageFeature> allPackageFeatures = new List<PackageFeature>();
 
                 #region allFeatures
-                IQueryable<FeaturePM>  allFeatures = (from a in repository.context.Features.Include("NameTextCode")
-                               where (a.Tenant == 0 || a.Tenant == tenant)
-                               select new FeaturePM()
-                               {
-                                   Id = a.Id,
-                                   Code = a.Code,
-                                   Tenant = a.Tenant,
-                                   NameTextCodeId = a.NameTextCodeId,
-                                   NameTextCodeCode = a.NameTextCode.Code,
-                                   ObjectTableId = a.ObjectTableId,
-                                   Packagable = a.Packagable,
-                                   FeatureTypeCode = a.FeatureTypeCode,
-                                   IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                   IsOld = a.IsOld,
-                                   IsCoreFeature = a.IsCoreFeature,
-                                   ToggleCode = a.ToggleCode,
-                               });
+                IQueryable<FeaturePM> allFeatures = (from a in repository.context.Features.Include("NameTextCode")
+                                                     where (a.Tenant == 0 || a.Tenant == tenant)
+                                                     select new FeaturePM()
+                                                     {
+                                                         Id = a.Id,
+                                                         Code = a.Code,
+                                                         Tenant = a.Tenant,
+                                                         NameTextCodeId = a.NameTextCodeId,
+                                                         NameTextCodeCode = a.NameTextCodeCode,
+                                                         ObjectTableId = a.ObjectTableId,
+                                                         Packagable = a.Packagable,
+                                                         FeatureTypeCode = a.FeatureTypeCode,
+                                                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+                                                         IsOld = a.IsOld,
+                                                         IsCoreFeature = a.IsCoreFeature,
+                                                         ToggleCode = a.ToggleCode,
+                                                         FeatureUniqeCode = a.FeatureUniqeCode
+                                                     });
                 #endregion
 
                 #region allRoleFeatures
@@ -578,7 +585,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (RoleFeature item in allChildFeatures)
                     {
-                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureId == item.FeatureId).FirstOrDefault();
+                        RoleFeature myParentItem = allRoleFeatures.Where(d => d.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
 
                         if (item.IsDeleted)
                         {
@@ -600,7 +607,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 else
                 {
-                    allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.Id && a.Feature.Code == FeatureCode && a.Feature.ObjectTableId == ObjectTableId select a).ToList(); 
+                    allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.Id && a.Feature.Code == FeatureCode && a.Feature.ObjectTableId == ObjectTableId select a).ToList();
                 }
                 #endregion
 
@@ -613,10 +620,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.Id == item.FeatureId && f.ObjectTableId == ObjectTableId).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode && f.ObjectTableId == ObjectTableId).FirstOrDefault();
                         if (myFeature != null)
                         {
-                            if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
+                            if (!allAllowedPackageFeatures.Where(d => d.FeatureUniqeCode == myFeature.FeatureUniqeCode).Any())
                             {
                                 allAllowedPackageFeatures.Add(myFeature);
                             }
@@ -631,22 +638,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FeaturePM myFeature = allFeatures.Where(f => f.Code == FeatureCode && f.ObjectTableId == ObjectTableId).FirstOrDefault();
                         if (myFeature != null)
                         {
-                                myFeature.RoleId = item.RoleId;
+                            myFeature.RoleId = item.RoleId;
 
-                                if (myFeature.Packagable)
-                                {
-                                    FeaturePM myAllowedPackageFeature = allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).FirstOrDefault();
-                                    if (myAllowedPackageFeature != null)
-                                    {
-                                        hasAccess = true;
-                                    }
-                                }
-
-                                else
+                            if (myFeature.Packagable)
+                            {
+                                FeaturePM myAllowedPackageFeature = allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).FirstOrDefault();
+                                if (myAllowedPackageFeature != null)
                                 {
                                     hasAccess = true;
                                 }
-                           
+                            }
+
+                            else
+                            {
+                                hasAccess = true;
+                            }
+
                         }
                     }
                 }
@@ -655,15 +662,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     hasAccess = false;
                 }
 
-               
 
-                
+
+
             }
 
             return hasAccess;
         }
 
         private List<string> GetAllPackagesCodes(string loggedUserId, int tenant, bool isCustomerCare)
+        {
+            PackagesCodesManager iManager = new PackagesCodesManager(tenant, loggedUserId, isCustomerCare);
+            return iManager.BasePackagesCodes;
+        }
+
+        private List<string> GetAllPackagesCodes_Old(string loggedUserId, int tenant, bool isCustomerCare)
         {
             List<string> myResult = new List<string>();
 
@@ -825,5 +838,198 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         public List<FeaturePM> Features { get; set; }
         public List<string> AllowedPackagesCodes { get; set; }
+    }
+
+    public class PackagesCodesManager
+    {
+        public int Tenant { get; set; }
+        public string LoggedUserId { get; set; }
+        public bool IsCustomerCare { get; set; }
+        public string MainPackageCode { get; set; }
+        public bool IsMultiPackage { get; set; }
+        public bool MainAdditionalPackageApplied { get; set; }
+        private bool IsUserAdditionalPackagesOnly { get; set; }
+        public List<string> BasePackagesCodes { get; set; }
+        public List<string> AdonsPackagesCodes { get; set; }
+        public List<string> AdditionalPackagesCodes { get; set; }
+
+        private TenantManagement tenantManagement;
+        private ICommonDataContext iCommonContext;
+        public PackagesCodesManager(int tenant, string loggedUserId, bool isCustomerCare)
+        {
+            this.Tenant = tenant;
+            this.LoggedUserId = loggedUserId;
+            this.IsCustomerCare = isCustomerCare;
+            this.BasePackagesCodes = new List<string>();
+            this.AdonsPackagesCodes = new List<string>();
+            this.AdditionalPackagesCodes = new List<string>();
+            this.iCommonContext = CommonDataContext.GetContext(this.Tenant);
+            this.GetGlobalData();
+            this.GetUserData();
+            this.BuildPackages();
+        }
+
+        private void GetGlobalData()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                IGlobalContext globalContext = GlobalContext.GetContext();
+
+                this.tenantManagement = (from d in globalContext.TenantManagements where d.Id == this.Tenant select d).FirstOrDefault();
+
+                this.AdonsPackagesCodes = (from d in globalContext.TenantAddOns
+                                           where d.Tenant == this.Tenant
+                                           group d by d.PackageCode into g
+                                           select g.Key).ToList();
+
+                this.AdditionalPackagesCodes = (from d in globalContext.TenantManagementLicenses
+                                                where d.Tenant == this.Tenant
+                                                group d by d.PackageCode into g
+                                                select g.Key).ToList();
+                this.GetTenantManagementData();
+
+                scope.Complete();
+            }
+        }
+
+        private void GetTenantManagementData()
+        {
+            if (this.tenantManagement != null)
+            {
+                this.Tenant = this.tenantManagement.Id;
+                this.MainPackageCode = this.tenantManagement.PackageCode;
+                this.IsMultiPackage = this.tenantManagement.IsMultiPackage;
+                this.MainAdditionalPackageApplied = this.tenantManagement.MainAdditionalPackageApplied;
+
+                if (!string.IsNullOrEmpty(this.tenantManagement.TemporalPackageCode) && this.tenantManagement.TemporalStartDate != null && this.tenantManagement.TemporalEndDate != null)
+                {
+                    if (this.tenantManagement.TemporalStartDate.Value.Date <= DateTime.Now.Date && DateTime.Now.Date <= this.tenantManagement.TemporalEndDate.Value.Date)
+                    {
+                        this.MainPackageCode = this.tenantManagement.TemporalPackageCode;
+                    }
+                }
+            }
+        }
+
+        private void GetUserData()
+        {
+            User loggedUser = this.iCommonContext.Users.Where(d => d.Id == this.LoggedUserId).FirstOrDefault();
+            if(loggedUser != null)
+            {
+                this.IsUserAdditionalPackagesOnly = loggedUser.AdditionalPackagesOnly;
+            }
+        }
+
+        private void BuildPackages()
+        {
+            if (this.MainAdditionalPackageApplied)
+            {
+                this.BuildPackagesFromMainAdditional();
+            }
+
+            else
+            {
+                this.BuildPackagesFromSingleMulti();
+            }
+
+            this.FillBasePackages(this.GetConnectedPackages(this.AdonsPackagesCodes));
+        }
+
+        public void BuildPackagesFromMainAdditional()
+        {
+            List<string> allCodes = new List<string>();
+
+            if (this.IsMultiPackage)
+            {
+                allCodes.AddRange(this.AdditionalPackagesCodes);
+
+                if (!this.IsCustomerCare)
+                {
+                    allCodes = this.FilterPackagesUserLicenses(allCodes);
+                }
+            }
+
+            if (!this.IsUserAdditionalPackagesOnly && !allCodes.Contains(this.MainPackageCode))
+            {
+                allCodes.Add(this.MainPackageCode);
+            }
+
+            this.FillBasePackages(this.GetConnectedPackages(allCodes));
+        }
+
+        public void BuildPackagesFromSingleMulti()
+        {
+            if (this.IsMultiPackage)
+            {
+                if (this.AdditionalPackagesCodes.Count > 0)
+                {
+                    if (!this.IsCustomerCare)
+                    {
+                        AdditionalPackagesCodes = this.FilterPackagesUserLicenses(AdditionalPackagesCodes);
+                    }
+                }
+
+                this.FillBasePackages(this.GetConnectedPackages(this.AdditionalPackagesCodes));
+            }
+
+            else
+            {
+                Package myPackage = (from a in iCommonContext.Packages where a.Code == this.MainPackageCode select a).FirstOrDefault();
+                if (myPackage != null)
+                {
+                    if (myPackage.FeaturePackageTypeCode == "BS")
+                    {
+                        if (!this.BasePackagesCodes.Contains(this.MainPackageCode))
+                        {
+                            this.BasePackagesCodes.Add(this.MainPackageCode);
+                        }
+                    }
+
+                    else
+                    {
+                        this.FillBasePackages(this.GetConnectedPackages(new List<string>() { this.MainPackageCode }));
+                    }
+                }
+            }
+        }
+
+        private List<string> FilterPackagesUserLicenses(List<string> iPackagesCodes)
+        {
+            List<string> allUserLicenses = (from a in iCommonContext.UserLicenses
+                                            where a.Tenant == this.Tenant
+                                            && a.UserId == this.LoggedUserId
+                                            group a by a.PackageCode into g
+                                            select g.Key).ToList();
+
+            iPackagesCodes = (from a in iPackagesCodes where allUserLicenses.Contains(a) select a).ToList();
+
+            return iPackagesCodes;
+        }
+
+        private List<string> GetConnectedPackages(List<string> iPackagesCodes)
+        {
+            List<string> iConnectedCodes = new List<string>();
+
+            if (iPackagesCodes.Count > 0)
+            {
+                iConnectedCodes = (from a in iCommonContext.PackageConnectedPackages
+                                   where iPackagesCodes.Contains(a.PackageCode)
+                                   group a by a.ConnectedPackageCode into g
+                                   select g.Key).ToList();
+            }
+
+            return iConnectedCodes;
+        }
+
+        private void FillBasePackages(List<string> iPackagesCodes)
+        {
+            foreach (string itemCode in iPackagesCodes)
+            {
+                if (!this.BasePackagesCodes.Contains(itemCode))
+                {
+                    this.BasePackagesCodes.Add(itemCode);
+                }
+            }
+        }
     }
 }

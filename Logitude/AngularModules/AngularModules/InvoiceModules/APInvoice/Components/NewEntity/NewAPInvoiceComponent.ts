@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
@@ -31,9 +31,11 @@ import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainSe
 import {InvoiceTotalsClass} from '../../../../Invoice/Args';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewAPInvoiceComponent.html',
 })
 
@@ -52,12 +54,87 @@ export class NewAPInvoiceComponent extends BaseComponent {
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    ngOnInit() {
+        this.BuildAdditionalFields();
+    }
+
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;	
+    private additionalFieldsScreenCode = "APInvoice.AdditionalFields";
+    public ShowAdditionalFieldsScreen: boolean = false;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
+    BuildAdditionalFields() {
+
+        var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
+        var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == this.additionalFieldsScreenCode.toLowerCase())[0];
+
+        if (myScreen != null) {
+
+            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+            if (myScreenFields.length == 0) {
+                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+            }
+
+            if (myScreenFields.length != 0) {
+                this.ShowAdditionalFieldsScreen = true;
+                this.RunComponent();
+            }
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+
+                this.GeneratedComponent = cmpRef.instance;
+
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+
+                var screenCode = this.additionalFieldsScreenCode;
+                cmpRef.instance.LabelWidth = 160;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
+
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    SetUIProperties_GeneratedComponent() {
+        if (this.GeneratedComponent) {
+            this.GeneratedComponent.SetEnabled(true);
         }
     }
 
@@ -158,7 +235,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
 
         this.SetUIProperties_DueDate();
-        this.SetUIProperties_ExchangeRate();        
+        this.SetUIProperties_ExchangeRate();
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -188,7 +265,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);
     }
 
-    // Load Data 
+    // Load Data
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
@@ -268,7 +345,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
         return myResult;
     }
-   
+
     // Vendor Properties
     get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
 
@@ -294,7 +371,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
-                            this.VendorName = list.EnglishName;
+                            this.VendorName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
 
@@ -304,7 +381,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                             if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                                 this.PaymentTermId = list.PaymentTermId;
-                            }                            
+                            }
                         }
                     }
                 });
@@ -323,6 +400,12 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             this.EntityPM.InvoiceNumber = value;
+            //this.CheckDuplication();
+        }
+    }
+
+    OnInvoiceNumberLostFocus(input: string) {
+        if (!AppTool.IsNullOrEmpty(input)) {
             this.CheckDuplication();
         }
     }
@@ -332,10 +415,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.FillWarnings(warnings);
 
         if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
-            
+
             this.myInvoiceDomainService.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    
+
                     var isDuplicated: boolean = myResponse.Result;
 
                     if (isDuplicated) {
@@ -351,7 +434,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
-            this.EntityPM.InvoiceCurrencyId = value;            
+            this.EntityPM.InvoiceCurrencyId = value;
             this.SetCurrencyRateData();
             this.SetUIProperties();
 
@@ -432,7 +515,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set ProfitCurrencyId(value: string) {
         if (this.EntityPM.ProfitCurrencyId != value) {
             this.EntityPM.ProfitCurrencyId = value;
-            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);   
+            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
         }
     }
 
@@ -511,7 +594,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: PaymentTermList = myResponse.Result;
                         if (list != null) {
                             this.PaymentTermName = list.EnglishName;
-                        }                        
+                        }
                     }
                 });
             }
@@ -556,7 +639,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
-          
+
             if (value == null) {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             }
@@ -570,7 +653,14 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
 
-    // Commands    
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
+    // Commands
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
         if (warnings != null && warnings.length > 0) {
@@ -628,6 +718,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
         if (this.IsAccountingActivated && this.AccountingDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
         }
 
         this.ValidationErrorsList = errors;
@@ -743,7 +837,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
-                            invoiceLine.LocalDescription = list.LocalName;                            
+                            invoiceLine.LocalDescription = list.LocalName;
                         }
                     }
                 });
@@ -955,7 +1049,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.AmountDueInProfitCurrency = setValue;
         }
     }
-    
+
     get SubTotalInLocalCurrency() {
         return this.EntityPM.SubTotalInLocalCurrency;
     }
@@ -966,7 +1060,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.SubTotalInLocalCurrency = setValue;
         }
     }
-    
+
     get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
     set SubTotalInInvoiceCurrency(value: number) {
         var setValue = AppTool.Round(value, 2);

@@ -32,7 +32,7 @@ namespace WebFreight.Web.CommonDataModel
 
                 SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
                 param2.Direction = ParameterDirection.Input;
-                param2.Value = tenant;
+                param2.Value = tenant; 
                 cmd.Parameters.Add(param2);
 
                 cmd.CommandTimeout = 10800; //3 Hours
@@ -90,7 +90,7 @@ namespace WebFreight.Web.CommonDataModel
 
                 cmd.Parameters.AddWithValue("@Tenant", tenant);
                 cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
- 
+
                 cn.Open();
 
                 var iResult = cmd.ExecuteScalar();
@@ -122,7 +122,16 @@ namespace WebFreight.Web.CommonDataModel
                     cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
                     cmd.Parameters.AddWithValue("@EndDateTime", endDateTime);
                     cmd.Parameters.AddWithValue("@HasException", hasException);
-                    cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
+                    if (exceptionMessage == null)
+                    {
+                        cmd.Parameters.AddWithValue("@ExceptionMessage", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
+                    }
+
+
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -144,7 +153,7 @@ namespace WebFreight.Web.CommonDataModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;

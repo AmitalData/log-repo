@@ -88,6 +88,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string IRSPlace { get; set; }
         public string IRSNumber { get; set; }
         public string StateName { get; set; }
+        public string RankId { get; set; }
+        public string IndustryId { get; set; }
 
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]
@@ -184,9 +186,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
+        public string CustomerStatusCode { get; set; }
+        
+
         [DataMember]
         public string CalculatedLocalName { get; set; }
         [DataMember]
         public string CalculatedEnglishName { get; set; }
+        [DataMember]
+        public bool IsDisconnectedFromGLAccount { get; set; }
+        public string CreatedByPartner { get; set; }
+        public int? StorageFreeDays { get; set; }
     }
 }

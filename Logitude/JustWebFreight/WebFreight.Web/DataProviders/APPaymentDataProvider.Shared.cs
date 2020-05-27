@@ -10,6 +10,8 @@ namespace WebFreight.Web.DataProviders
         public string PaymentMethodName { get; set; }
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }
+        public string PaymentCurrencyName { get; set; }
+
         public string PaidBy { get; set; } // custom
         public string PrintNotes { get; set; }
         public string IssuedByUserName { get; set; }
@@ -34,7 +36,15 @@ namespace WebFreight.Web.DataProviders
         public string VendorSwift { get; set; }
         public string VendorBankAccountNumber { get; set; }
         public string VendorIBANNo { get; set; }
-
+        public string BankAddress { get; set; }
+        public string BankName { get; set; }
+        public string AccountNumber { get; set; }
+        public string IBANNumber { get; set; }
+        public string Swift { get; set; }
+        public string BankAccountNumber { get; set; }
+        public string PaidToCode  { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string BankAccountName { get; set; }
         //tenant data
         public string Signature { get; set; }
         public string TenantData { get; set; }
@@ -43,7 +53,7 @@ namespace WebFreight.Web.DataProviders
         public string FaxLable { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-
+        public string Company { get; set; }
         public double? OutstandingBalance { get; set; }
         public double? TotalAmount { get; set; }
         public double? TotalPayment { get; set; }
@@ -58,7 +68,20 @@ namespace WebFreight.Web.DataProviders
         public string CustomerField8 { get; set; }
         public string CustomerField9 { get; set; }
         public string CustomerField10 { get; set; }
+
+        public string APPaymentField1 { get; set; }
+        public string APPaymentField2 { get; set; }
+        public string APPaymentField3 { get; set; }
+        public string APPaymentField4 { get; set; }
+        public string APPaymentField5 { get; set; }
+        public string APPaymentField6 { get; set; }
+        public string APPaymentField7 { get; set; }
+        public string APPaymentField8 { get; set; }
+        public string APPaymentField9 { get; set; }
+        public string APPaymentField10 { get; set; }
+
         public string BranchAddress { get; set; }
+        public string BranchName { get; set; }
 
         public DateTime? TodayLocal { get; set; }
 

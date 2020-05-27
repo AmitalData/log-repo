@@ -30,13 +30,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Payment Term&quot;"
-  Code="&quot;a8ca&quot;"
-  Name="&quot;Customs.CustomsPaymentTerm Query Group&quot;"
+  Code="&quot;CUPT&quot;"
+  Name="&quot;Customs.CustomsPaymentTerm&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;b9dcaf2c-3018-40d4-8246-5b094827204e&quot;"
     FieldName="&quot;Code&quot;"
@@ -308,21 +310,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,ללא תשלום&quot;"
+      Inactive="false"
+      LocalName="&quot;ללא תשלום&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,מזומן (תשלום מראש)&quot;"
+      Inactive="false"
+      LocalName="&quot;מזומן (תשלום מראש)&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,תשלום נדחה (אשראי)&quot;"
+      Inactive="false"
+      LocalName="&quot;תשלום נדחה (אשראי)&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomsPaymentTerm&quot;"
+    ObjectTableName="&quot;Customs.CustomsPaymentTerm&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomsPaymentTerm&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CUPT&quot;"
+    QueryGroupName="&quot;Customs.CustomsPaymentTerm&quot;"
+    LocalTextCode="&quot;תנאי תשלום&quot;"
+    TextCode="&quot;Payment Terms&quot;"
+    TextCodeCode="&quot;Customs.CustomsPaymentTerm.Q.CustomsPaymentTermQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMSPAYMENTTERM&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomsPaymentTerm.Features.CustomsPaymentTerms&quot;"
+    FeatureDefaultText="&quot;Customs Payment Terms&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomsPaymentTerm&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomsPaymentTerm&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomsPaymentTerm&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomsPaymentTerm&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomsPaymentTerm&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomsPaymentTerm&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

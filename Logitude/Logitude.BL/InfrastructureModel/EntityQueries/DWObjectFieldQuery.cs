@@ -31,7 +31,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public DWObjectFieldPM GetSingleDWObjectFieldPM(string id, int tenant)
         {
-            return (from a in repository.webFreightContext.DWObjectFields
+            DWObjectFieldPM dWObjectFieldPM   = (from a in repository.webFreightContext.DWObjectFields
                     where a.Id == id && a.Tenant == tenant
                     select new DWObjectFieldPM()
                     {
@@ -56,7 +56,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
                     }).FirstOrDefault();
+
+
+            //if (dWObjectFieldPM != null)
+            //{
+            //    ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            //    var objectField = objectFieldQuery.GetObjectFieldByFieldCode(dWObjectFieldPM.OriginalObjectFieldCode, tenant);
+            //    if (objectField != null)
+            //    {
+            //        dWObjectFieldPM.FullNameTextCodeDefaultText = objectField.FullNameTextCodeDefaultText;
+            //    }
+            //}
+            return dWObjectFieldPM;
         }
 
 
@@ -87,6 +100,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     }
                   );
         }
@@ -118,6 +133,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     }
                   );
         }
@@ -130,7 +147,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
             List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
             dimensionTable.Add("DIM_CustomPickLists");
-            Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
+            //Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
             IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(tenant, dimensionTable);
 
             foreach (var parent in Parents)
@@ -149,7 +166,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 }
             }
 
-            return FinalList;
+
+            return SetDWFullNameTextCode(tenant, FinalList); 
         }
 
         private IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
@@ -180,6 +198,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 CannotFilter = a.CannotFilter,
                                 HelpText = a.HelpText,
                                 IsCustom = a.IsCustom,
+                                OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
 
                             }
                   );
@@ -209,8 +229,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 CannotFilter = item.CannotFilter,
                 HelpText = item.HelpText,
                 IsCustom = item.IsCustom,
-                DisplayName = parent.Name + " " + item.Name,
                 DimensionTableDisplayName = parent.Name,
+                OriginalObjectFieldCode = item.OriginalObjectFieldCode,
+                PartnerOriginalObjectFieldCode = parent.OriginalObjectFieldCode,
+                DisplayName = item.Name,
             };
         }
 
@@ -239,6 +261,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                                   CannotFilter = a.CannotFilter,
                                                                                                   HelpText = a.HelpText,
                                                                                                   IsCustom = a.IsCustom,
+                                                                                                  OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                                                                                               }
                    ).ToList().GroupBy(d => d.DWObjectTableCode);
 
@@ -271,6 +295,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     }).FirstOrDefault();
         }
 
@@ -301,6 +327,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
                         IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     });
         }
 
@@ -329,6 +357,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CannotFilter = a.CannotFilter,
                                                        HelpText = a.HelpText,
                                                        IsCustom = a.IsCustom,
+                                                       OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                                                    };
 
             return result;
@@ -367,7 +397,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
-                        IsCustom = a.IsCustom
+                        IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     }).FirstOrDefault();
         }
 
@@ -409,44 +441,75 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
                         HelpText = a.HelpText,
-                        IsCustom = a.IsCustom
+                        IsCustom = a.IsCustom,
+                        OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+
                     }).FirstOrDefault();
         }
 
-        public IQueryable<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
+        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode)
         {
-            return (from aa in repository.webFreightContext.DWObjectFieldCategories
-                    join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
-                    join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
-                    where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
-                    select new DWObjectFieldPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        Name = a.Name,
-                        Code = a.Code,
-                        DimensionTableCode = a.DimensionTableCode,
-                        DataTypeCode = a.DataTypeCode,
-                        DWObjectTableCode = a.DWObjectTableCode,
-                        IsRequiered = a.IsRequired,
-                        MaxLength = a.MaxLength,
-                        MinLength = a.MinLength,
-                        IsPrimaryKey = a.IsPrimaryKey,
-                        IsMeasurement = a.IsMeasurement,
-                        AggregationTypeCode = a.AggregationTypeCode,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                        //Category1 = a.Category1,
-                        //Category2 = a.Category2,
-                        LOVAdditionalColumns = a.LOVAdditionalColumns,
-                        Category = aa.DWCategory.Name,
-                        CategoryIndex = b.Index,
-                        HideTree = a.HideTree,
-                        CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText,
-                        IsCustom = a.IsCustom
-                    }
-                  );
+
+
+            List<DWObjectFieldPM> results = (from aa in repository.webFreightContext.DWObjectFieldCategories
+                                             join a in repository.webFreightContext.DWObjectFields on aa.DWObjectFieldCode equals a.Code
+                                             join b in repository.webFreightContext.DWCategories on aa.DWCategoryCode equals b.Code
+                                             where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && aa.DWObjectTableCode == dwotCode
+                                             select new DWObjectFieldPM()
+                                             {
+                                                 Id = a.Id,
+                                                 Tenant = a.Tenant,
+                                                 Name = a.Name,
+                                                 Code = a.Code,
+                                                 DimensionTableCode = a.DimensionTableCode,
+                                                 DataTypeCode = a.DataTypeCode,
+                                                 DWObjectTableCode = a.DWObjectTableCode,
+                                                 IsRequiered = a.IsRequired,
+                                                 MaxLength = a.MaxLength,
+                                                 MinLength = a.MinLength,
+                                                 IsPrimaryKey = a.IsPrimaryKey,
+                                                 IsMeasurement = a.IsMeasurement,
+                                                 AggregationTypeCode = a.AggregationTypeCode,
+                                                 DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                                 //Category1 = a.Category1,
+                                                 //Category2 = a.Category2,
+                                                 LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                                 Category = aa.DWCategory.Name,
+                                                 CategoryIndex = b.Index,
+                                                 HideTree = a.HideTree,
+                                                 CannotFilter = a.CannotFilter,
+                                                 HelpText = a.HelpText,
+                                                 IsCustom = a.IsCustom,
+                                                 OriginalObjectFieldCode = a.OriginalObjectFieldCode,
+                                             }
+                  ).ToList();
+
+            results = SetDWFullNameTextCode(tenant, results);
+
+            return results;
         }
 
+        private  List<DWObjectFieldPM> SetDWFullNameTextCode(int tenant, List<DWObjectFieldPM> dWObjectFieldPMs)
+        {
+            List<DWObjectFieldPM> results = dWObjectFieldPMs;
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            var objectFields = objectFieldQuery.GetObjectFieldsUsedInDWData(tenant);
+            if (objectFields.Count > 0)
+            {
+                foreach (DWObjectFieldPM dWObjectFieldPM in results.Where(d => !string.IsNullOrEmpty(d.OriginalObjectFieldCode) || !string.IsNullOrEmpty(d.PartnerOriginalObjectFieldCode)))
+                {
+                    var objectField = objectFields.Where(d => d.FieldCode == dWObjectFieldPM.OriginalObjectFieldCode).FirstOrDefault();
+                    if (objectField != null) dWObjectFieldPM.FullNameTextCodeCode = objectField.FullNameTextCodeCode;
+
+                    var partnerObjectField = objectFields.Where(d => d.FieldCode == dWObjectFieldPM.PartnerOriginalObjectFieldCode).FirstOrDefault();
+                    if (partnerObjectField != null)
+                    {
+                        dWObjectFieldPM.PartnerFullNameTextCodeCode = partnerObjectField.FullNameTextCodeCode;
+                    }
+       
+                }
+            }
+            return results;
+        }
     }
 }

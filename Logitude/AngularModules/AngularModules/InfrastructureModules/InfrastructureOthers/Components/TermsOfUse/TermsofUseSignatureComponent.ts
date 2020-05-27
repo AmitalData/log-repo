@@ -14,7 +14,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'TermsofUseSignature',
     templateUrl: './TermsofUseSignatureComponent.html',
@@ -52,7 +52,7 @@ export class TermsofUseSignatureComponent implements OnInit {
     LoadData() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.TermsofUseSignaturePMLists = [];
-        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(res => {
+        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

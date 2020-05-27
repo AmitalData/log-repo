@@ -104,6 +104,16 @@ export class VatTypePM {
     public set ExternalVATCard(newValue: string) { if (this.externalVATCard != newValue) { this.externalVATCard = newValue; this.MarkAsDirty("ExternalVATCard"); } }
        
 	 
+    private payablesExternalId: string;
+    public get PayablesExternalId() { return this.payablesExternalId; }
+    public set PayablesExternalId(newValue: string) { if (this.payablesExternalId != newValue) { this.payablesExternalId = newValue; this.MarkAsDirty("PayablesExternalId"); } }
+       
+	 
+    private receivablesExternalId: string;
+    public get ReceivablesExternalId() { return this.receivablesExternalId; }
+    public set ReceivablesExternalId(newValue: string) { if (this.receivablesExternalId != newValue) { this.receivablesExternalId = newValue; this.MarkAsDirty("ReceivablesExternalId"); } }
+       
+	 
     private externalTAXItemId: string;
     public get ExternalTAXItemId() { return this.externalTAXItemId; }
     public set ExternalTAXItemId(newValue: string) { if (this.externalTAXItemId != newValue) { this.externalTAXItemId = newValue; this.MarkAsDirty("ExternalTAXItemId"); } }
@@ -122,6 +132,11 @@ export class VatTypePM {
     private isMultiPercentage: boolean;
     public get IsMultiPercentage() { return this.isMultiPercentage; }
     public set IsMultiPercentage(newValue: boolean) { if (this.isMultiPercentage != newValue) { this.isMultiPercentage = newValue; this.MarkAsDirty("IsMultiPercentage"); } }
+       
+	 
+    private recognizedPercentage: number;
+    public get RecognizedPercentage() { return this.recognizedPercentage; }
+    public set RecognizedPercentage(newValue: number) { if (this.recognizedPercentage != newValue) { this.recognizedPercentage = newValue; this.MarkAsDirty("RecognizedPercentage"); } }
        
 	 
      
@@ -196,7 +211,12 @@ export class VatTypePM {
         }
     }
 	    //public VatTypeGroups: Array<VATTypesGroupPMPM>= [];
- 
+     private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+       
+	 
+
     public OldEntityPM: VatTypePM;
 		
     public IsDirty: boolean;

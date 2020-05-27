@@ -31,12 +31,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
-            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-
-
+            SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
 
             // TASK 43057
@@ -51,9 +49,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // Update Journal
-            JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
-            if (journalPM != null)
+            //JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, false);
+            if (journalAdditionalDataPM != null)
             {
                 journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
                 journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
@@ -63,98 +61,28 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
-
-        protected override void Validate(TaxReportLinePM entityPM)
+        private  void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
         {
-            //for output lines
-            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            //ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
+       
+            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);           
+            string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
             entityPM.StatusCode = "6";
-            entityPM.VatNumber = entityPM.VatNumber != null ? entityPM.VatNumber.Trim() : null;
-            string  trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
+            entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
+            string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
             if (entityPM.OutputOrInput == "O")
             {
-
-
-
-                if (entityPM.VatNumber == tenantPM.VatNumber)
+               
+                if(entityPM.ReferenceDate.Value.Month != entityPM.TaxReportDate.Month)
+                {
+                    entityPM.StatusCode = "7";
+                }
+                if (entityPM.VatNumber == vatNumber)
                 {
                     entityPM.LineTypeCode = "M";
 
                 }
 
-
-                if (entityPM.VatNumber == null)
-                {
-                    entityPM.StatusCode = "1";
-                }
-                else if(entityPM.VatNumber != null)
-                {
-                     zerosVatNumber = trimmedZeros == "" ? true : false;
-                    if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
-                    {
-                        entityPM.StatusCode = "2";
-                    }
-                    else
-                    {
-                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
-                        {
-                            entityPM.StatusCode = "6";
-                            return;
-                        }
-                        else
-                        {
-                            var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
-                            if (chars.Count == 0)
-                            {
-                                var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
-                                if (digit != 0)
-                                {
-                                    entityPM.StatusCode = "2";
-                                }
-
-                            }
-                            else
-                            {
-                                entityPM.StatusCode = "2";
-                            }
-                        }
-                        
-                    }
-                }
-
-                if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
-                {
-                  //  string s = entityPM.VatableInvoiceAmount.ToString();
-                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
-                    if (amount.Count() > 1 && amount[1] != "00" )
-                    {
-                        entityPM.StatusCode = "4";
-                    }
-                   
-                }
-
-
-                 if (entityPM.Reference != null)
-                {
-                    var chars = Regex.Matches(entityPM.Reference, @"[^\d{9}$]");
-                    if (chars.Count != 0)
-                    {
-                        entityPM.StatusCode = "3";
-                    }
-                    
-                }
-
-               
-
-            }
-
-            //for input line
-
-           else  {
 
                 if (entityPM.VatNumber == null)
                 {
@@ -169,10 +97,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-
-                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
+                        if ( entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = "6";
+                            entityPM.StatusCode  =entityPM.LineTypeCode =="K"? "6" :"2";
                             return;
                         }
                         else
@@ -192,37 +119,127 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 entityPM.StatusCode = "2";
                             }
                         }
+
+                    }
+                }
+
+                if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
+                {
+                    //  string s = entityPM.VatableInvoiceAmount.ToString();
+                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
+                    if (amount.Count() > 1 && amount[1] != "00")
+                    {
+                        entityPM.StatusCode = "4";
+                    }
+
+                }
+
+
+                if (entityPM.Reference != null)
+                {
+                    var chars = Regex.Matches(entityPM.Reference.Trim(), @"[^\d{9}$]");
+                    if (chars.Count != 0)
+                    {
+                        entityPM.StatusCode = "3";
+                    }
+
+                }
+
+
+
+            }
+
+            //for input line
+
+            else
+            {
+
+                if (entityPM.VatNumber == null)
+                {
+                    entityPM.StatusCode = "1";
+                }
+                else if (entityPM.VatNumber != null)
+                {
+                    zerosVatNumber = trimmedZeros == "" ? true : false;
+                    if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
+                    {
+                        entityPM.StatusCode = "2";
+                    }
+                    else
+                    {
+                        if(entityPM.VatNumber == "000000000")
+                        {
+                            entityPM.StatusCode = entityPM.LineTypeCode == "K" ? "6" : "2";
+                            return;
+                        }
                        
+                        else
+                        {
+                            var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                            if (chars.Count == 0)
+                            {
+                                var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                                if (digit != 0)
+                                {
+                                    entityPM.StatusCode = "2";
+                                }
+
+                            }
+                            else
+                            {
+                                entityPM.StatusCode = "2";
+                            }
+                        }
+
                     }
                 }
 
                 if (entityPM.Reference != null)
                 {
-                    var chars = Regex.Matches(entityPM.Reference, @"[^\d{9}$]");
+                    var chars = Regex.Matches(entityPM.Reference.Trim(), @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
                         entityPM.StatusCode = "3";
                     }
-                   
+
                 }
 
-                if(entityPM.VatableInvoiceAmount != 0 && entityPM.VatableInvoiceAmount != null)
+                if (entityPM.VatableInvoiceAmount != 0 && entityPM.VatableInvoiceAmount != null)
                 {
                     //string s = entityPM.VatableInvoiceAmount.ToString();
                     string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
-                    if (amount.Count()>1 && amount[1] != "00" )
+                    if (amount.Count() > 1 && amount[1] != "00")
                     {
                         entityPM.StatusCode = "4";
                     }
-                   
-                }
-                
 
+                }
+            }
 
 
             }
-            base.Validate(entityPM);
+        private string ModifyVatNumberToValidLength(string vatnumber)
+        {
+            string vatNumber = null;
+            if (vatnumber != null ) {
+                vatNumber= vatnumber.Trim();
+                if(vatNumber.Length > 9)
+                {
+                    vatNumber = vatNumber.Substring(1, 9);
+                }
+
+            }
+
+            return vatNumber;
         }
 
+
+        protected override void Validate(TaxReportLinePM entityPM)
+        {
+            
+           
+            base.Validate(entityPM);
+        }
+       
     }
 }

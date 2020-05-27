@@ -13,6 +13,8 @@ using Logitude.Server.Tools.Helpers;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
+using Logitude.BL.Resolvers;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -55,7 +57,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
-            Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
+            ContactPM contact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {

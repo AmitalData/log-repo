@@ -8,10 +8,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MeatadataGeneratorTool
 {
-
     public class ObjectFieldsViewModel : PropertyChangedImplementation
     {
-        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]", "BigInteger", "Binary", "Time", "Raw" }; } }
         public List<string> DependencyFiltersList { get { return new List<string>() { "Constant", "Path", }; } }
         public List<string> TextCaseList { get { return new List<string>() { "Lower", "Upper", }; } }
         public List<string> OperatorsList { get; set; }
@@ -115,6 +114,20 @@ namespace MeatadataGeneratorTool
         {
             get { return oldfieldName; }
             set { oldfieldName = value; FirePropertyChanged("OldFieldName");}
+        }
+
+        string oldNames;
+        public string OldNames
+        {
+            get { return oldNames; }
+            set { oldNames = value; FirePropertyChanged("OldNames"); }
+        }
+
+        string shortName;
+        public string ShortName
+        {
+            get { return shortName; }
+            set { shortName = value; FirePropertyChanged("ShortName"); }
         }
 
         private void SetPMandList(string value)
@@ -912,6 +925,13 @@ namespace MeatadataGeneratorTool
             set { isForeignKey = value; FirePropertyChanged("IsForeignKey"); FirePropertyChanged("ForeignEntityFontWeight"); }
         }
 
+        bool dontBuildRelationOnDB;
+        public bool DontBuildRelationOnDB
+        {
+            get { return dontBuildRelationOnDB; }
+            set { dontBuildRelationOnDB = value; FirePropertyChanged("DontBuildRelationOnDB"); FirePropertyChanged("ForeignEntityFontWeight"); }
+        }
+
         string foreignEntity;
         public string ForeignEntity
         {
@@ -1037,6 +1057,42 @@ namespace MeatadataGeneratorTool
                 FirePropertyChanged("CanAutomateSetValue");
             }
         }
+
+
+        private bool displayInAutomationAsEnitity;
+        public bool DisplayInAutomationAsEnitity
+        {
+            get
+            {
+                return displayInAutomationAsEnitity;
+            }
+            set
+            {
+                displayInAutomationAsEnitity = value;
+                FirePropertyChanged("DisplayInAutomationAsEnitity");
+            }
+        }
+
+
+        private string recordType;
+        public string RecordType
+        {
+            get
+            {
+                return recordType;
+            }
+            set
+            {
+                recordType = value;
+                FirePropertyChanged("RecordType");
+            }
+        }
+
+
+
+
+
+
 
         string hTMLListComponentURL;
         public string HtmlListComponentUrl

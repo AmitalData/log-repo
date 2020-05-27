@@ -63,6 +63,8 @@ namespace WebFreight.Web.WcfApi
                         if (country != null)
                         {
                             entityPM.CountryId = country.Id;
+                            entityPM.CountryCode = country.Code;
+
                         }
                         else
                         {

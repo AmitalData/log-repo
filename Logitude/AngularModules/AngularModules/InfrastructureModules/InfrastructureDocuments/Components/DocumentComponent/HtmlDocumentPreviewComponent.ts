@@ -26,7 +26,7 @@ import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/Exte
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HtmlDocumentPreview',
     templateUrl: './HtmlDocumentPreviewComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeTemplatePMService, HtmlEditorService]
@@ -46,7 +46,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     IsShowFromInputBox: boolean;
     IsShowReplyToInputBox: boolean;
     IsShowCCInputBox: boolean;
-	
+    IsShowBCCInputBox: boolean;
 
     IsShowUploadAndDownloadButtons: boolean = false;
     HtmlTemplateEditor: string;
@@ -70,8 +70,12 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     SubjectId: string;
     FromId: string;
     ReplyToId: string;
-	CCId:string;
-	CC:string;
+    CCId: string;
+    BCCId: string;
+
+    CC: string;
+    BCC: string;
+    
     Mode: string = "Preview";
     ObjectType: string = "PM";
     public TemplatePMLists: any[];
@@ -174,8 +178,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.SubjectId = Guid.newGuid();
         this.FromId = Guid.newGuid();
         this.ReplyToId = Guid.newGuid();
-		this.CCId = Guid.newGuid();
-		
+        this.CCId = Guid.newGuid();
+        this.BCCId = Guid.newGuid();
+        
 
         this.IsShowButtonSaveAs = true;
         this.froalaEditorSetting.IsDisableEdit = false;
@@ -281,7 +286,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 else {
 
 
-                    this._documentTypeTemplatePMExtendedService.GetSingleDocumentTypeTemplate(this.TemplateId, this.Tenant).subscribe(res => {
+                    this._documentTypeTemplatePMExtendedService.GetSingleDocumentTypeTemplate(this.TemplateId, this.Tenant).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -318,7 +323,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     LoadReportTemplateDate() {
 
         var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
-        reportsTemplatePMExtendedService.GetMessageReportsTemplateBodyByReportTemplateIdAndVersion(this.template.Id, this.template.CurrentVersion).subscribe(res => {
+        reportsTemplatePMExtendedService.GetMessageReportsTemplateBodyByReportTemplateIdAndVersion(this.template.Id, this.template.CurrentVersion).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -344,7 +349,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
     LoadSignatureData() {
 
-        this._documentTypeTemplatePMExtendedService.GetTemplateBodyhtmlOrJsonByDocumentTemplateId(this.TemplateId, this.Tenant, true, this.PageType).subscribe(res => {
+        this._documentTypeTemplatePMExtendedService.GetTemplateBodyhtmlOrJsonByDocumentTemplateId(this.TemplateId, this.Tenant, true, this.PageType).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -443,8 +448,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             this.Subject = !AppTool.IsNullOrEmpty(this.template.Subject) ? this.template.Subject : "";   
             this.From = !AppTool.IsNullOrEmpty(this.template.From) ? this.template.From : ""; 
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.template.ReplyTo) ? this.template.ReplyTo : ""; 
-            this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC:"" ;
-
+            this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC : "";
+            this.BCC = !AppTool.IsNullOrEmpty(this.template.BCC) ? this.template.BCC : "";
             if (this.From) {
                 this.IsShowFromInputBox = true;
                 this.froalaEditorSetting.Height -= 30;
@@ -461,12 +466,20 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.froalaEditorSetting.Height -= 30;
 
             }
+
+            if (this.BCC) {
+                this.IsShowBCCInputBox = true;
+                this.froalaEditorSetting.Height -= 30;
+
+            }
+
+            
         }
     }
 
     LoadHtmlTemplateData() {
 
-        this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.TemplateId, this.Subject).subscribe(res => {
+        this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.TemplateId, this.Subject).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -519,7 +532,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
 
         this.template.TemplateData = StringToBase64(this.froalaEditorSetting.froalaEditorComponent.getHtml());
-        reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe(res => {
+        reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -556,7 +569,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         filter.Subject = this.Subject;
         filter.Processtype = this.PageType;
 
-        this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
+        this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -580,6 +593,13 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.froalaEditorSetting.Height -=30;
         this.ReloadFroalaEditor();
     }
+
+
+     AddBCCLinkClick() {
+         this.IsShowBCCInputBox = true;
+         this.froalaEditorSetting.Height -= 30;
+         this.ReloadFroalaEditor();
+     }
 
 
     AddReplyToLinkClick() {
@@ -629,10 +649,22 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     return;
                 }
 
+
+                if (!this.CheckIsValidEmails(this.BCC)) {
+
+                    this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    return;
+                }
+
+
+
+
                 this.template.Subject = this.Subject;
                 this.template.From = this.From;
                 this.template.ReplyTo = this.ReplyTo;
                 this.template.CC = this.CC;
+                this.template.BCC = this.BCC;
 
                 if (this.PageType == "ReportTemplate") {
 
@@ -647,7 +679,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     this.template.TemplateFooterHtml = this.TemplateFooterHtml;
                     this.template.TemplateFooterHeight = this.TemplateFooterHeight;
 
-                    this.documentTypeTemplatePMService.update(this.template).subscribe(res => {
+                    this.documentTypeTemplatePMService.update(this.template).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -737,10 +769,10 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         var table = window.ObjectTables.filter(d => d.Id == tableId)[0];
         if (table) tableName = table.Name;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
 
             if (table) {
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
                     this.ViewDataField(type, this.objecttypeField, tableId);
                 });
             }
@@ -806,13 +838,13 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     this.ReplyTo = $event;
                 }
                 else if (type == "CC") {
-
-                    if (this.CC && $event ) {
-                        this.CC +=";";
-                    }
+                    if (this.CC && $event) this.CC += ";";
                     this.CC += $event;
                 }
-
+                else if (type == "BCC") {
+                    if (this.BCC && $event) this.BCC += ";";
+                    this.BCC += $event;
+                }
                 else if (type == "FroalaEditor") {
                     this.froalaEditorSetting.froalaEditorComponent.InSertHtml($event);
                     this.ReloadFroalaEditor();
@@ -832,7 +864,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             if (this.PageType != "ReportTemplate") {
                 this.template.TemplateBodyHtml = templateByte;
-                this.documentTypeTemplatePMService.update(this.template).subscribe(res => {
+                this.documentTypeTemplatePMService.update(this.template).subscribe((res:any) => {
                     this.IsOpenHeaderAndFooter = false;
                     this.IsDownLoadButtonClick = false;
                     this.OldDataTemplateByte = templateByte;
@@ -842,7 +874,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
                 var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
                 this.template.TemplateData = templateByte;
-                reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe(res => {
+                reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe((res:any) => {
                     this.IsOpenHeaderAndFooter = false;
                     this.IsDownLoadButtonClick = false;
                     this.OldDataTemplateByte = templateByte;
@@ -871,7 +903,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             //            if (this.PageType != "ReportTemplate") {
             //                this.template.TemplateBodyHtml = templateByte;
-            //                this.documentTypeTemplatePMService.update(this.template).subscribe(res => {
+            //                this.documentTypeTemplatePMService.update(this.template).subscribe((res:any) => {
             //                    this.IsOpenHeaderAndFooter = false;
             //                    this.IsDownLoadButtonClick = false;
             //                    this.OldDataTemplateByte = templateByte;
@@ -882,7 +914,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             //            else {
             //                var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
             //                this.template.TemplateData = templateByte;
-            //                reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe(res => {
+            //                reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe((res:any) => {
             //                    this.IsOpenHeaderAndFooter = false;
             //                    this.IsDownLoadButtonClick = false;
             //                    this.OldDataTemplateByte = templateByte;
@@ -953,7 +985,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             }
 
             if (viewmodel && binary) {
-                viewmodel._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(window.btoa(binary)).subscribe(res => {
+                viewmodel._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(window.btoa(binary)).subscribe((res:any) => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {

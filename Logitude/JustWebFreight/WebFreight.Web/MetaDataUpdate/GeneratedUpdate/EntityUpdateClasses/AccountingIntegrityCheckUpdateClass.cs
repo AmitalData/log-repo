@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccountingIntegrityCheckUpdateClass
-   {  
+   {  		
+		public const string HashString = "8984cc9872e11af3a32ad7d5a6f10853";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,11 +133,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  AccountingIntegrityCheckUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -209,7 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "IntegrityCheckStatus",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -258,7 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -317,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,7 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -435,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -494,7 +497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -553,7 +556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -613,7 +616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -673,7 +676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -730,60 +733,137 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShouldFix",
+					  						OldFieldName =  "ShouldFix",
+					  						ObjectTableName =  "AccountingIntegrityCheck",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShouldFix",
+					  						ListPropertyPath =  "ShouldFix",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AccountingIntegrityCheck",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShouldFix",
+					  						DefaultText =  "Should Fix",
+					  						ListFieldLable =  "ShouldFixListLable",
+					  						ListLableDefaultText =  "Should Fix",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingIntegrityCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cd6d", Name = "AccountingIntegrityCheck Query Group" }, queryGroupRepository);
-						QueryGroup AccountingIntegrityCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fe5a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingIntegrityCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cd6d", Name = "AccountingIntegrityCheck Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingIntegrityCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fe5a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AccountingIntegrityCheckObjectTable = objectTables.ContainsKey("AccountingIntegrityCheck") ? objectTables["AccountingIntegrityCheck"] : null;
+            if (AccountingIntegrityCheckObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable AccountingIntegrityCheckObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> AccountingIntegrityCheckObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingIntegrityCheck").ToList();   
+                AccountingIntegrityCheckObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode AccountingIntegrityCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", DefaultText = @"All Integrity Checks",LocalDefaultText = "All Integrity Checks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingIntegrityCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AllChecks", NameTextCodeDefaultText = "AllChecks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode AccountingIntegrityCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", DefaultText = @"All Integrity Checks",LocalDefaultText = "All Integrity Checks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingIntegrityCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AllChecks", NameTextCodeDefaultText = "AllChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingIntegrityCheckObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingIntegrityCheckTextCode_0.Id, Code = "AllChecks",  QueryGroupCode = "cd6d", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, QuerySection = "AccountingIntegrityCheck", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingIntegrityCheckFeature_0.Id, DefaultSortName = "CreateDateTimeUTC", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingIntegrityCheckTextCode_0.Id, NameTextCodeCode = AccountingIntegrityCheckTextCode_0.Code, ObjectTableName = "AccountingIntegrityCheck", Code = "AllChecks",  QueryGroupCode = "cd6d", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, QuerySection = "AccountingIntegrityCheck", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingIntegrityCheckFeature_0.Id,FeatureUniqeCode= AccountingIntegrityCheckFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTimeUTC", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "CreateDateTimeUTC" && d.ObjectTableId == AccountingIntegrityCheckObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 152 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingIntegrityCheck.CreateDateTimeUTC" , ColumnWidth = 152 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "DoneDateTimeUTC" && d.ObjectTableId == AccountingIntegrityCheckObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingIntegrityCheck.DoneDateTimeUTC" , ColumnWidth = 142 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "HasException" && d.ObjectTableId == AccountingIntegrityCheckObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingIntegrityCheck.HasException" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id, IndexOrder = 3, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == AccountingIntegrityCheckObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 169 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingIntegrityCheck.StatusName" , ColumnWidth = 169 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AccountingIntegrityCheckObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingIntegrityCheck").ToList();
+		   //List<ObjectField> AccountingIntegrityCheckObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingIntegrityCheck").ToList();
 		       
 	      
 
 	         Screen AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingIntegrityCheck.HeaderScreen", Name = "AccountingIntegrityCheckHeaderScreen", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "CreateDateTimeUTC").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id,ScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingIntegrityCheck.CreateDateTimeUTC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "DoneDateTimeUTC").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id,ScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingIntegrityCheck.DoneDateTimeUTC", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id,ScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingIntegrityCheck.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AccountingIntegrityCheckObjectFields.Where(d => d.FieldName == "HasException").FirstOrDefault().Id, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id,ScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingIntegrityCheck.ShouldFix", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingIntegrityCheckObjectTable.HeaderScreenId = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Id;
+		    AccountingIntegrityCheckObjectTable.HeaderScreenCode = AccountingIntegrityCheckAccountingIntegrityCheckHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -794,13 +874,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingIntegrityCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingIntegrityCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Tab.General", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AICG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingIntegrityCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Tab.General", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AICG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingIntegrityCheckObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AICG",HtmlComponentName = "IntegrityCheckTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent", FeatureId = AccountingIntegrityCheckGeneralFeature_TH0.Id, ControlPath = "IntegrityCheckTabComponent", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, TabNameTextCodeId = AccountingIntegrityCheckGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AICG",HtmlComponentName = "IntegrityCheckTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent", FeatureId = AccountingIntegrityCheckGeneralFeature_TH0.Id,FeatureUniqeCode = AccountingIntegrityCheckGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "IntegrityCheckTabComponent", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, TabNameTextCodeId = AccountingIntegrityCheckGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingIntegrityCheckGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -808,10 +888,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingIntegrityCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.PackageFeature", NameTextCodeDefaultText = "AccountingIntegrityCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature AccountingIntegrityCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.PackageFeature", NameTextCodeDefaultText = "AccountingIntegrityCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature AccountingIntegrityCheckFeature_AccountingIntegrityCheck_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = @"Accounting Integrity Checks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+
+   
 	    
 		}
 

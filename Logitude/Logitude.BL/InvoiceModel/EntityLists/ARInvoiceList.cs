@@ -71,6 +71,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
         public bool IsPrinted { get; set; }
         public string PaymentTermExternalId { get; set; }
         public bool IsConstituentInvoice { get; set; }
@@ -101,7 +102,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
         public DateTime? OperationalDate { get; set; }
-        public DateTime? DateForVATInterest { get; set; }
+        public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
@@ -131,7 +132,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
         public Decimal? TotalVAT { get; set; }
         public DateTime? SATApprovalDate { get; set; }
-
+        public string DocumentFilingId { get; set; }
         public bool IsFullAccounting { get; set; }
         public string ARInvoiceStockId { get; set; }
         public bool IsInvoiceNumberFromStock { get; set; }
@@ -168,5 +169,17 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         //    }
         //}
         #endregion
+
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
+        public string CreatedByPartner { get; set; }
+
+        public string SATXML { get; set; }
+
+        public string BillToGLAccountId { get; set; }
+
+        public string RegionalTaxId { get; set; }
+        public double? RegionalTaxPercentage { get; set; }
+
     }
 }

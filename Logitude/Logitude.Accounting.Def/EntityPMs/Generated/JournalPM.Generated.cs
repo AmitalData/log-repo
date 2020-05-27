@@ -870,6 +870,131 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	   private List<JournalExternalReconcilePM> journalExternalReconciles;
+	 
+		     
+	   [Include]
+	   [Association("JournalJournalExternalReconciles", "Id","JournalId")]
+	   [DataMember]
+	   public virtual List<JournalExternalReconcilePM> JournalExternalReconciles  
+	   {
+	        get
+             {
+                 if (journalExternalReconciles == null)
+                 {
+                     journalExternalReconciles = new List<JournalExternalReconcilePM>();
+                 }
+                 return journalExternalReconciles;
+              }
+             set { journalExternalReconciles = value; }
+	    }
+		   
+	   private List<JournalExternalReconcilePM>  deletedJournalExternalReconciles;
+	   public virtual List<JournalExternalReconcilePM> DeletedJournalExternalReconciles  
+	   {
+	        get
+             {
+                 if ( deletedJournalExternalReconciles == null)
+                 {
+                      deletedJournalExternalReconciles = new List<JournalExternalReconcilePM>();
+                 }
+                 return  deletedJournalExternalReconciles;
+              }
+             set {  deletedJournalExternalReconciles = value; }
+	    }
+	  	  private string lineCreditAccountTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LineCreditAccountTypeCode  
+	   {
+	    
+	     get
+		{
+		   return lineCreditAccountTypeCode;
+		 }
+		 set
+		 {
+		   if(lineCreditAccountTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineCreditAccountTypeCode",OldValue=lineCreditAccountTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lineCreditAccountTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private int taxReportJournalLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int TaxReportJournalLineNumber  
+	   {
+	    
+	     get
+		{
+		   return taxReportJournalLineNumber;
+		 }
+		 set
+		 {
+		   if(taxReportJournalLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportJournalLineNumber",OldValue=taxReportJournalLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   taxReportJournalLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? documentDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DocumentDate  
+	   {
+	    
+	     get
+		{
+		   return documentDate;
+		 }
+		 set
+		 {
+		   if(documentDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentDate",OldValue=documentDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   documentDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? dueDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DueDate  
+	   {
+	    
+	     get
+		{
+		   return dueDate;
+		 }
+		 set
+		 {
+		   if(dueDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueDate",OldValue=dueDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   dueDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

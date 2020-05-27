@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מזהה לקוח&quot;"
   DefaultText="&quot;Customer Identify Type&quot;"
-  Code="&quot;ab57&quot;"
-  Name="&quot;Customs.CustomerIdentifyType Query Group&quot;"
+  Code="&quot;CIQG&quot;"
+  Name="&quot;Customs.CustomerIdentifyType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;828e230a-c174-4e09-a814-51a3b95643fa&quot;"
     FieldName="&quot;Code&quot;"
@@ -294,21 +296,97 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;IL&quot;"
+      SearchFields="&quot;1,il,il&quot;"
+      Inactive="false"
+      LocalName="&quot;IL&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      EnglishName="&quot;P&quot;"
+      SearchFields="&quot;2,p,p&quot;"
+      Inactive="false"
+      LocalName="&quot;P&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;F&quot;"
+      SearchFields="&quot;3,f,f&quot;"
+      Inactive="false"
+      LocalName="&quot;F&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
+  <Query
+    Code="&quot;CustomerIdentifyType&quot;"
+    ObjectTableName="&quot;Customs.CustomerIdentifyType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomerIdentifyType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CIQG&quot;"
+    QueryGroupName="&quot;Customs.CustomerIdentifyType&quot;"
+    LocalTextCode="&quot;מזהה לקוח&quot;"
+    TextCode="&quot;Customer Identify Type&quot;"
+    TextCodeCode="&quot;Customs.CustomerIdentifyType.Q.CustomerIdentifyTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMERIDENTIFYTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomerIdentifyType.Features.CustomerIdentifyType&quot;"
+    FeatureDefaultText="&quot;CustomerIdentifyType&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomerIdentifyType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomerIdentifyType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomerIdentifyType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomerIdentifyType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomerIdentifyType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomerIdentifyType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

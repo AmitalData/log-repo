@@ -1,11 +1,11 @@
+import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
-
+import { defer, of } from 'rxjs';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CertificateErrorView } from '../../../CustomsModules/CustomsGeneralRequests/Components/ReceiptCertificateFromFileComponent';
 
@@ -13,10 +13,10 @@ import { CertificateErrorView } from '../../../CustomsModules/CustomsGeneralRequ
 @Injectable()
 
 export class SupplierInvioceItemCertificatsService {
-    private _http: Http
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvioceItemCertificats';
 
     }
@@ -24,11 +24,9 @@ export class SupplierInvioceItemCertificatsService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + "/PutSupplierInvioceItemCertificatFromFileRequest?" + "tenant=" + tenant
-                + "&clientId=" + clientId, JSON.stringify(fileUploadParamerter), {
-                headers: authHeader,
-            }).map(response => {
+                + "&clientId=" + clientId, JSON.stringify(fileUploadParamerter),ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
                 var result = response.json();
                 var _mappedListsArray: Array<CertificateErrorView> = [];
                 if (result) {
@@ -42,9 +40,10 @@ export class SupplierInvioceItemCertificatsService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        }
-        );
+            }),catchError(ServiceHelper.HandleServiceError));
+        
+        });
+        
     }
     MapJsonToEntityPM(jsonPM: any) {
 

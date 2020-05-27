@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="TermsofUses"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Version"
+    ShortName="Version_"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Date"
+    ShortName="Date_"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

@@ -50,7 +50,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;792541a2-d021-42be-a420-1a228166bf8f&quot;"
     FieldName="&quot;Code&quot;"
@@ -384,67 +386,6 @@
     CanAutomateSetValue="false"
     HasTemplate="false"
     IsCustom="false" />
-  <Query
-    Code="&quot;UIMessage&quot;"
-    TextCode="&quot;UIMessageQuery&quot;"
-    QueryGroupCode="&quot;ea48&quot;"
-    IndexOrder="0"
-    ObjectTableName="&quot;Customs.UIMessage&quot;"
-    QuerySection="&quot;Customs.UIMessage&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;UIMessage&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;UIMessage&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UIMessage&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;UIMessage&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;Sort&quot;"
-        ColumnWidth="50" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.UIMessage&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="3"
-    IsReadOnly="true"
-    IsHeaderScreen="false">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;Sort&quot;"
-        ScreenName="GeneralTabScreen" />
-    </ScreenFields>
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -452,8 +393,14 @@
     Code="&quot;UMGN&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.UIMessage.TH.General&quot;"
-    IsPackagable="false"
-    IndexOrder="0" />
+    IsPackagable="False"
+    IndexOrder="0"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;UIMessage.Tab.General&quot;"
+    FeatureTextCodeCode="&quot;UIMessage.Features.General&quot;"
+    FeatureDefaultText="&quot;General&quot;" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -461,24 +408,114 @@
     Code="&quot;UMEV&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.UIMessage.TH.Events&quot;"
-    IsPackagable="false"
-    IndexOrder="1" />
+    IsPackagable="False"
+    IndexOrder="1"
+    HtmlComponentName="&quot;&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;UIMessage.Tab.Events&quot;"
+    FeatureTextCodeCode="&quot;UIMessage.Features.Events&quot;"
+    FeatureDefaultText="&quot;Events&quot;" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;UIMessage&quot;"
+    ObjectTableName="&quot;Customs.UIMessage&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.UIMessage&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;ea48&quot;"
+    QueryGroupName="&quot;Customs.UIMessage Query Group&quot;"
+    TextCode="&quot;UIMessageQuery&quot;"
+    TextCodeCode="&quot;UIMessage.Q.UIMessage&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;UIMessage.Q.UIMessage&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;UIMessage.Features.UIMessage&quot;"
+    FeatureDefaultText="&quot;UIMessage&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="50"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;UIMessage&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;UIMessage&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="100"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;UIMessage&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="50"
+        ObjectFieldName="&quot;Sort&quot;"
+        QueryCode="&quot;UIMessage&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Code="&quot;UIMessage.GeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.UIMessage&quot;"
+    IsHeaderScreen="false"
+    IsReadOnly="true"
+    NumberOfRows="3"
+    NumberOfColumns="1">
+    <ScreenFields>
+      <ScreenField
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="UIMessage.GeneralTabScreen"
+        Row="0"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="UIMessage.GeneralTabScreen"
+        Row="1"
+        Column="0" />
+      <ScreenField
+        ObjectFieldName="&quot;Sort&quot;"
+        ScreenName="UIMessage.GeneralTabScreen"
+        Row="2"
+        Column="0" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.UIMessage&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.UIMessage&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>

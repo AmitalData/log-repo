@@ -16,11 +16,13 @@ import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityAr
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientDrivingLicenseTabComponent.html',
 })
 
 export class ClientDrivingLicenseTabComponent extends BaseComponent {
+  public DrivingLicenseNumber: any;
+  public DriversLicenseTypeCode: any;
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: ClientDrivingLicenseTabComponent = this;

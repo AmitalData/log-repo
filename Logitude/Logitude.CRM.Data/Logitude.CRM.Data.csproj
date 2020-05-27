@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.CRM.Data</RootNamespace>
     <AssemblyName>Logitude.CRM.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -98,6 +99,7 @@
     <None Include="CRMContext.Views.cs" />
     <Compile Include="CustomFilters\ActivityCustomFilter.cs" />
     <Compile Include="CustomFilters\CRMFilterSettingCustomFilters.cs" />
+    <Compile Include="CustomFilters\OccasionContactCustomFilter.cs" />
     <Compile Include="CustomFilters\OpportunityCustomFilter.cs" />
     <Compile Include="CustomFilters\TicketClassificationCustomFilter.cs" />
     <Compile Include="CustomFilters\TicketCustomFilter.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="EntityKeys\EmployeeGroupLineKeys.cs" />
     <Compile Include="EntityKeys\EscalationActionTimeIndicatorKeys.cs" />
     <Compile Include="EntityKeys\EscalationPreDefinitionKeys.cs" />
+    <Compile Include="EntityKeys\OccasionInviteeKeys.cs" />
     <Compile Include="EntityKeys\OccasionKeys.cs" />
     <Compile Include="EntityKeys\OccasionStatusKeys.cs" />
     <Compile Include="EntityKeys\OccasionTypeKeys.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="EntityKeys\SLAHeaderKeys.cs" />
     <Compile Include="EntityKeys\SLALineKeys.cs" />
     <Compile Include="EntityKeys\StageKeys.cs" />
+    <Compile Include="EntityKeys\SupportMailboxKeys.cs" />
     <Compile Include="EntityKeys\TicketClassificationKeys.cs" />
     <Compile Include="EntityKeys\TicketCreatedByTypeKeys.cs" />
     <Compile Include="EntityKeys\TicketEscalationKeys.cs" />
@@ -183,6 +187,7 @@
     <Compile Include="EntityListQueryServices\Generated\EmployeeGroupListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EscalationActionTimeIndicatorListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EscalationPreDefinitionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OccasionInviteeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OccasionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OccasionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OccasionTypeListQueryService.Generated.cs" />
@@ -205,6 +210,7 @@
     <Compile Include="EntityListQueryServices\Generated\SLAHeaderListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SLALineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupportMailboxListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketCreatedByTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketEscalationListQueryService.Generated.cs" />
@@ -214,6 +220,8 @@
     <Compile Include="EntityListQueryServices\Generated\TicketStageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TimeUnitListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\OccasionContactListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OccasionInviteeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionTypeListQueryService.cs" />
@@ -236,6 +244,7 @@
     <Compile Include="EntityListQueryServices\SLAHeaderListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SLALineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupportMailboxListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketCreatedByTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TicketEscalationListQueryService.cs" />
@@ -263,6 +272,8 @@
     <Compile Include="EntityLists\Generated\EmployeeGroupList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EscalationActionTimeIndicatorList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EscalationPreDefinitionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OccasionContactList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OccasionInviteeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionTypeList.Generated.cs" />
@@ -285,6 +296,7 @@
     <Compile Include="EntityLists\Generated\SLAHeaderList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SLALineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\StageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupportMailboxList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketCreatedByTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TicketEscalationList.Generated.cs" />
@@ -315,6 +327,7 @@
     <Compile Include="EntityMapping\EmployeeGroupMap.cs" />
     <Compile Include="EntityMapping\EscalationActionTimeIndicatorMap.cs" />
     <Compile Include="EntityMapping\EscalationPreDefinitionMap.cs" />
+    <Compile Include="EntityMapping\OccasionInviteeMap.cs" />
     <Compile Include="EntityMapping\OccasionMap.cs" />
     <Compile Include="EntityMapping\OccasionStatusMap.cs" />
     <Compile Include="EntityMapping\OccasionTypeMap.cs" />
@@ -337,6 +350,7 @@
     <Compile Include="EntityMapping\SLAHeaderMap.cs" />
     <Compile Include="EntityMapping\SLALineMap.cs" />
     <Compile Include="EntityMapping\StageMap.cs" />
+    <Compile Include="EntityMapping\SupportMailboxMap.cs" />
     <Compile Include="EntityMapping\TicketClassificationMap.cs" />
     <Compile Include="EntityMapping\TicketCreatedByTypeMap.cs" />
     <Compile Include="EntityMapping\TicketEscalationMap.cs" />
@@ -364,6 +378,7 @@
     <Compile Include="EntityPOCOs\EscalationActionTimeIndicator.cs" />
     <Compile Include="EntityPOCOs\EscalationPreDefinition.cs" />
     <Compile Include="EntityPOCOs\Occasion.cs" />
+    <Compile Include="EntityPOCOs\OccasionInvitee.cs" />
     <Compile Include="EntityPOCOs\OccasionStatus.cs" />
     <Compile Include="EntityPOCOs\OccasionType.cs" />
     <Compile Include="EntityPOCOs\Opportunity.cs" />
@@ -385,6 +400,7 @@
     <Compile Include="EntityPOCOs\SLAHeader.cs" />
     <Compile Include="EntityPOCOs\SLALine.cs" />
     <Compile Include="EntityPOCOs\Stage.cs" />
+    <Compile Include="EntityPOCOs\SupportMailbox.cs" />
     <Compile Include="EntityPOCOs\Ticket.cs" />
     <Compile Include="EntityPOCOs\TicketClassification.cs" />
     <Compile Include="EntityPOCOs\TicketCreatedByType.cs" />
@@ -432,6 +448,7 @@
     <Compile Include="Repsitories\Generated\EmployeeGroupRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\EscalationActionTimeIndicatorRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\EscalationPreDefinitionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\OccasionInviteeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OccasionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OccasionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OccasionTypeRepository.Generated.cs" />
@@ -454,6 +471,7 @@
     <Compile Include="Repsitories\Generated\SLAHeaderRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SLALineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StageRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupportMailboxRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketCreatedByTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketEscalationRepository.Generated.cs" />
@@ -463,6 +481,7 @@
     <Compile Include="Repsitories\Generated\TicketStageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TicketTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TimeUnitRepository.Generated.cs" />
+    <Compile Include="Repsitories\OccasionInviteeRepository.cs" />
     <Compile Include="Repsitories\OccasionRepository.cs" />
     <Compile Include="Repsitories\OccasionStatusRepository.cs" />
     <Compile Include="Repsitories\OccasionTypeRepository.cs" />
@@ -485,6 +504,7 @@
     <Compile Include="Repsitories\SLAHeaderRepository.cs" />
     <Compile Include="Repsitories\SLALineRepository.cs" />
     <Compile Include="Repsitories\StageRepository.cs" />
+    <Compile Include="Repsitories\SupportMailboxRepository.cs" />
     <Compile Include="Repsitories\TicketClassificationRepository.cs" />
     <Compile Include="Repsitories\TicketCreatedByTypeRepository.cs" />
     <Compile Include="Repsitories\TicketEscalationRepository.cs" />

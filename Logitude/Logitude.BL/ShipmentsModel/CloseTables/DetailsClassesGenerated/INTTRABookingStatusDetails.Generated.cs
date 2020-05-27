@@ -76,6 +76,27 @@ namespace Logitude.BL.ShipmentsModel
                 Name = "Error", 
                 SearchFields = "ER,Error", 
 			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Waiting For Confirmation", 
+                Code = "WC", 
+                SearchFields = "Waiting For Confirmation,WC", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Rejected by User", 
+                Code = "RU", 
+                SearchFields = "Rejected by User,RU", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Shipping Instructions", 
+                SearchFields = "SI,Shipping Instructions", 
+                Code = "SI", 
+			});
 			
             return all;
        }

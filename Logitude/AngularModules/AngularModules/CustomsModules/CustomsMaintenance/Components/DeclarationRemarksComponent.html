@@ -11,47 +11,56 @@
                         <log-column [header]="'תםריך'"
                                     [binding]="'CurrencyTypeId'"
                                     [width]="'80'" [Alignment]="'Right'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div class="RightCenter">
                                     <span>{{item.StatusDate}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
                         <!-- StatusDate -->
                         <log-column [header]="'שעה'"
                                     [width]="'80'" [Alignment]="'Right'"
                                     [binding]="'StatusDate'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div class="RightCenter">
                                     <span>{{item.StatusTime}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
                         <!-- StatuseTime -->
                         <log-column [header]="'סטטוס'"
                                     [width]="'100'" [Alignment]="'Right'"
                                     [binding]="'StatuseTime'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div class="RightCenter">
                                     <span>{{item.StatusName}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
                         <!--<log-column [header]="'הערות'"
                                     [binding]="'StatusComment'"
                                     [width]="'200'" [Alignment]="'Right'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div class="RightCenter">
                                     <span>{{item.StatusComment}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>-->
 
                         <log-column [header]="'הערות'"
                                     [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
-                            <log-cell-template template="let item" #logcelltemplate>
-                                <div class="TextTrimming" style="text-align:right">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                <div class="TextTrimming"  style="text-align:right">
                                     <span>{{item.StatusComment}}</span>
                                 </div>
                                 <div style="height: 100%; width: 100%;">
@@ -60,18 +69,21 @@
                                                 [IsMultiline]="true" [NoObjectField]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
 
                         <!--<log-column [header]="'הערות'"
                                     [binding]="'StatusComment'"
                                     [width]="'100'" [Alignment]="'Right'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div class="RightCenter">
                                      <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Id'" [NoObjectField]="true" [Text]="item.StatusComment" [DataContext]="item" [ObjectTableName]="'Customs.Declaration'" [HideColumns]="true"></LogTextBox>
 
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>-->
                     </logitude-edit-grid>
                 </div>

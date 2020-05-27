@@ -74,13 +74,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Longtitude = a.Longtitude,
                                       Notes = a.Notes,
                                       Tenant = a.Tenant,
-                                      CountryName = a.Country.EnglishName,
-                                      CountryCode = a.Country.Code,
+                                      CountryName = a.CountryName,
+                                      CountryCode = a.CountryCode,
                                       ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                       SearchFields = a.SearchFields,
                                       CountryEC = a.Country.EC,
                                       StateId = a.StateId,
                                       CombinedCode = a.CombinedCode,
+                                      StateCode = a.StateCode,
                                       StateName = a.StateName,
                                   }).FirstOrDefault();
 
@@ -128,14 +129,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Longtitude = a.Longtitude,
                                   Notes = a.Notes,
                                   Tenant = a.Tenant,
-                                  CountryName = a.Country.EnglishName,
-                                  CountryCode = a.Country.Code,
+                                  CountryName = a.CountryName,
+                                  CountryCode = a.CountryCode,
                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                   SearchFields = a.SearchFields,
                                   StateId = a.StateId,
                                   CombinedCode = a.CombinedCode,
                                   CountryEC = a.Country.EC,
                                   StateName = a.StateName,
+                                  StateCode = a.StateCode,
                               }).FirstOrDefault();
                 }
 
@@ -155,14 +157,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 PortPM entity;
 
                 if (getFromCache)
-                {
-                    if (HttpContext.Current != null)
-                    {
+                {                  
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             PortRepository myRepository = new PortRepository(tenant);
 
-                            entity = (from a in myRepository.context.Ports.Include("Country").Include("State")
+                            entity = (from a in myRepository.context.Ports.Include("Country")
                                       where a.Tenant == tenant && a.Id == id
                                       select new PortPM()
                                       {
@@ -190,13 +190,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           Longtitude = a.Longtitude,
                                           Notes = a.Notes,
                                           Tenant = a.Tenant,
-                                          CountryName = a.Country.EnglishName,
-                                          CountryCode = a.Country.Code,
+                                          CountryName = a.CountryName,
+                                          CountryCode = a.CountryCode,
                                           ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                           SearchFields = a.SearchFields,
                                           CountryEC = a.Country.EC,
                                           StateId = a.StateId,
-                                          StateCode = a.State == null ? null : a.State.Code,
+                                          StateCode = a.StateCode,
                                           CombinedCode = a.CombinedCode,
                                           StateName = a.StateName,
                                           CountryIsNorthAmerica = a.Country.IsNorthAmerica,
@@ -212,59 +212,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         {
                             entity = (PortPM)CacheManager.CacheWrapper.Get(entityName);
                         }
-                    }
+                    
 
-                    else
-                    {
-                        PortRepository myRepository = new PortRepository(tenant);
-
-                        entity = (from a in myRepository.context.Ports.Include("Country").Include("State")
-                                  where a.Tenant == tenant && a.Id == id
-                                  select new PortPM()
-                                  {
-                                      AddedManually = a.AddedManually,
-                                      Code = a.Code,
-                                      CountryId = a.CountryId,
-                                      EnglishName = a.EnglishName,
-                                      Field1 = a.Field1,
-                                      Field2 = a.Field2,
-                                      Field3 = a.Field3,
-                                      Field4 = a.Field4,
-                                      Field5 = a.Field5,
-                                      Field6 = a.Field6,
-                                      Field7 = a.Field7,
-                                      Field8 = a.Field8,
-                                      Field9 = a.Field9,
-                                      Field10 = a.Field10,
-                                      Id = a.Id,
-                                      InActive = a.InActive,
-                                      IsAir = a.IsAir,
-                                      IsInland = a.IsInland,
-                                      IsOcean = a.IsOcean,
-                                      Latitude = a.Latitude,
-                                      LocalName = a.LocalName,
-                                      Longtitude = a.Longtitude,
-                                      Notes = a.Notes,
-                                      Tenant = a.Tenant,
-                                      CountryName = a.Country.EnglishName,
-                                      CountryCode = a.Country.Code,
-                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                      SearchFields = a.SearchFields,
-                                      CountryEC = a.Country.EC,
-                                      StateId = a.StateId,
-                                      StateCode = a.State == null ? null : a.State.Code,
-                                      CombinedCode = a.CombinedCode,
-                                      StateName = a.StateName,
-                                      CountryIsNorthAmerica = a.Country.IsNorthAmerica,
-                                  }).FirstOrDefault();
-                    }
+                   
                 }
 
                 else
                 {
                     PortRepository myRepository = new PortRepository(tenant);
 
-                    entity = (from a in myRepository.context.Ports.Include("Country").Include("State")
+                    entity = (from a in myRepository.context.Ports.Include("Country")
                               where a.Tenant == tenant && a.Id == id
                               select new PortPM()
                               {
@@ -292,13 +249,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Longtitude = a.Longtitude,
                                   Notes = a.Notes,
                                   Tenant = a.Tenant,
-                                  CountryName = a.Country.EnglishName,
-                                  CountryCode = a.Country.Code,
+                                  CountryName = a.CountryName,
+                                  CountryCode = a.CountryCode,
                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                   SearchFields = a.SearchFields,
                                   CountryEC = a.Country.EC,
                                   StateId = a.StateId,
-                                  StateCode = a.State == null ? null : a.State.Code,
+                                  StateCode = a.StateCode,
                                   CombinedCode = a.CombinedCode,
                                   StateName = a.StateName,
                                   CountryIsNorthAmerica = a.Country.IsNorthAmerica,
@@ -341,13 +298,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Longtitude = a.Longtitude,
                                             Notes = a.Notes,
                                             Tenant = a.Tenant,
-                                            CountryName = a.Country.EnglishName,
-                                            CountryCode = a.Country.Code,
+                                            CountryName = a.CountryName,
+                                            CountryCode = a.CountryCode,
                                             SearchFields = a.SearchFields,
                                             CountryEC = a.Country.EC,
                                             StateId = a.StateId,
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
+                                            StateCode = a.StateCode,
                                         });
             return ports;
         }
@@ -382,13 +340,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Longtitude = a.Longtitude,
                                             Notes = a.Notes,
                                             Tenant = a.Tenant,
-                                            CountryName = a.Country.EnglishName,
+                                            CountryName = a.CountryName,
                                             SearchFields = a.SearchFields,
-                                            CountryCode = a.Country.Code,
+                                            CountryCode = a.CountryCode,
                                             CountryEC = a.Country.EC,
                                             StateId = a.StateId,
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
+                                            StateCode = a.StateCode,
                                         });
             return ports;
         }
@@ -425,13 +384,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Longtitude = a.Longtitude,
                                                 Notes = a.Notes,
                                                 Tenant = a.Tenant,
-                                                CountryName = a.Country.EnglishName,
+                                                CountryName = a.CountryName,
                                                 SearchFields = a.SearchFields,
-                                                CountryCode = a.Country.Code,
+                                                CountryCode = a.CountryCode,
                                                 CountryEC = a.Country.EC,
                                                 StateId = a.StateId,
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
+                                                StateCode = a.StateCode,
                                             });
                 return ports;
             }
@@ -465,13 +425,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Longtitude = a.Longtitude,
                                                 Notes = a.Notes,
                                                 Tenant = a.Tenant,
-                                                CountryName = a.Country.EnglishName,
+                                                CountryName = a.CountryName,
                                                 SearchFields = a.SearchFields,
-                                                CountryCode = a.Country.Code,
+                                                CountryCode = a.CountryCode,
                                                 CountryEC = a.Country.EC,
                                                 StateId = a.StateId,
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
+                                                StateCode = a.StateCode,
                                             });
                 return ports;
             }
@@ -513,13 +474,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Longtitude = a.Longtitude,
                              Notes = a.Notes,
                              Tenant = a.Tenant,
-                             CountryName = a.Country.EnglishName,
+                             CountryName = a.CountryName,
                              SearchFields = a.SearchFields,
-                             CountryCode = a.Country.Code,
+                             CountryCode = a.CountryCode,
                              CountryEC = a.Country.EC,
                              StateId = a.StateId,
                              CombinedCode = a.CombinedCode,
                              StateName = a.StateName,
+                             StateCode = a.StateCode,
                          }).AsQueryable();
 
             IQueryable<PortPM> query2 = null;
@@ -564,8 +526,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Notes = f.Notes,
                                               InActive = f.InActive,
                                               CountryId = f.CountryId,
-                                              CountryCode = f.Country.Code,
-                                              CountryName = f.Country.EnglishName,
+                                              CountryCode = f.CountryCode,
+                                              CountryName = f.CountryName,
                                               CountryEC = f.Country.EC,
                                               AddedManually = f.AddedManually,
                                               SearchFields = f.SearchFields,
@@ -573,6 +535,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               StateId = f.StateId,
                                               CombinedCode = f.CombinedCode,
                                               StateName = f.StateName,
+                                              StateCode = f.StateCode,
                                           };
             return result;
         }
@@ -713,6 +676,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Notes = port.Notes,
                     CombinedCode = port.CombinedCode,
                     StateName = port.StateName,
+                    StateCode = port.StateCode,
+                    CountryCode = port.CountryCode,
+                    CountryName = port.CountryName,
                 };
 
                 portRepository.Add(newPort);
@@ -732,8 +698,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 EnglishName = newPort.EnglishName,
                 Id = newPort.Id,
                 Tenant = newPort.Tenant,
-                CountryCode = country.Code,
-                CountryName = country.EnglishName,
+                CountryCode = newPort.CountryCode,
+                CountryName = newPort.CountryName,
                 CountryEC = country.EC,
                 IsAir = newPort.IsAir,
                 IsOcean = newPort.IsOcean,
@@ -745,6 +711,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 TransportModeId = (newPort.IsAir ? "A" : "") + (newPort.IsInland ? "I" : "") + (newPort.IsOcean ? "O" : ""),
                 CombinedCode = newPort.CombinedCode,
                 StateName = newPort.StateName,
+                StateCode = newPort.StateCode,
             };
 
             return portList;
@@ -786,13 +753,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Longtitude = a.Longtitude,
                                                 Notes = a.Notes,
                                                 Tenant = a.Tenant,
-                                                CountryName = a.Country.EnglishName,
+                                                CountryName = a.CountryName,
                                                 SearchFields = a.SearchFields,
-                                                CountryCode = a.Country.Code,
+                                                CountryCode = a.CountryCode,
                                                 CountryEC = a.Country.EC,
                                                 StateId = a.StateId,
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
+                                                StateCode = a.StateCode,
                                             });
                 var port = ports.FirstOrDefault();
                 if (port == null)
@@ -825,13 +793,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Longtitude = a.Longtitude,
                                         Notes = a.Notes,
                                         Tenant = a.Tenant,
-                                        CountryName = a.Country.EnglishName,
+                                        CountryName = a.CountryName,
                                         SearchFields = a.SearchFields,
-                                        CountryCode = a.Country.Code,
+                                        CountryCode = a.CountryCode,
                                         CountryEC = a.Country.EC,
                                         StateId = a.StateId,
                                         CombinedCode = a.CombinedCode,
                                         StateName = a.StateName,
+                                        StateCode = a.StateCode,
                                     }).FirstOrDefault();
 
                     if (zeroport != null)
@@ -852,10 +821,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             Tenant = newport.Tenant,
                             CountryName = newport.CountryName,
                             SearchFields = newport.SearchFields,
-                            CountryCode = newport.Code,
+                            CountryCode = newport.CountryCode,
                             StateId = newport.StateId,
                             CombinedCode = newport.CombinedCode,
                             StateName = newport.StateName,
+                            StateCode = newport.StateCode,
                         };
                     }
                 }
@@ -893,13 +863,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             Longtitude = a.Longtitude,
                                             Notes = a.Notes,
                                             Tenant = a.Tenant,
-                                            CountryName = a.Country.EnglishName,
+                                            CountryName = a.CountryName,
                                             SearchFields = a.SearchFields,
-                                            CountryCode = a.Country.Code,
+                                            CountryCode = a.CountryCode,
                                             CountryEC = a.Country.EC,
                                             StateId = a.StateId,
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
+                                            StateCode = a.StateCode,
                                         });
 
             var port = ports.FirstOrDefault();
@@ -933,13 +904,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     Longtitude = a.Longtitude,
                                     Notes = a.Notes,
                                     Tenant = a.Tenant,
-                                    CountryName = a.Country.EnglishName,
+                                    CountryName = a.CountryName,
                                     SearchFields = a.SearchFields,
-                                    CountryCode = a.Country.Code,
+                                    CountryCode = a.CountryCode,
                                     CountryEC = a.Country.EC,
                                     StateId = a.StateId,
                                     CombinedCode = a.CombinedCode,
                                     StateName = a.StateName,
+                                    StateCode = a.StateCode,
                                 }).FirstOrDefault();
 
                 if (zeroport != null)
@@ -960,10 +932,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = newport.Tenant,
                         CountryName = newport.CountryName,
                         SearchFields = newport.SearchFields,
-                        CountryCode = newport.Code,
+                        CountryCode = newport.CountryCode,
                         StateId = newport.StateId,
                         CombinedCode = newport.CombinedCode,
                         StateName = newport.StateName,
+                        StateCode = newport.StateCode,
                     };
                 }
             }

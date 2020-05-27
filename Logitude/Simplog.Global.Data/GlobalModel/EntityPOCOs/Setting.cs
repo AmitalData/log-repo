@@ -73,13 +73,13 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string INTTRAProdFTPHost { get; set; }
         public string INTTRATestFTPHost { get; set; }
         public string OceanInsightsToken { get; set; }
-        public bool IsFullBuildDWRunning { get; set; }
-        public bool IsIncrementalDWRunning { get; set; }
         public int EmailSendingQuota { get; set; }
-        public DateTime? DWNextRunTime { get; set; }
         public string ReleaseNotesURL { get; set; }
         public string CPUIntensiveWebServicesURL { get; set; }
-       
+        public int QBOOAuthDefault { get; set; }
+        public string QBOClientID { get; set; }
+        public string QBOClientSecret { get; set; }
+        public string TMPersonalAccessToken { get; set; }
 
     }
 }

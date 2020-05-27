@@ -18,6 +18,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             roleFeature.Tenant = roleFeaturePm.Tenant;
             roleFeature.RoleId = roleFeaturePm.RoleId;
             roleFeature.FeatureAccessLevelCode = roleFeaturePm.FeatureAccessLevelCode;
+            roleFeature.FeatureUniqeCode = roleFeaturePm.FeatureUniqeCode;
         }
     }
 }

@@ -17,8 +17,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string ClassName { get; set; }
         public string Parameter1 { get; set; }
         public string Parameter2 { get; set; }
+        public string QueueDefinitionCode { get; set; }
 
-       public BatchServicesDefinitionMods BatchServicesDefinitionMods { get; set; } 
+        public BatchServicesDefinitionMods BatchServicesDefinitionMods { get; set; } 
 
     }
 }

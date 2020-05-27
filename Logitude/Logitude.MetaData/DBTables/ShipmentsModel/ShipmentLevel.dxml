@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ShipmentLevels"
+  Schema="dbo"
+  DBType="Main"
+  Module="Shipment">
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
+</Table>

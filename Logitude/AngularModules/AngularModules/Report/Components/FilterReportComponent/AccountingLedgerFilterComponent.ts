@@ -9,7 +9,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AccountingLedgerFilterComponent',
     templateUrl: './AccountingLedgerFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -139,7 +139,7 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
             this.ReportsPreview.CleanPartnersObslist();
 
             if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
-                this.ReportsPreview.AddPartner("Customer", this.CustomerId);
+                this.ReportsPreview.AddPartner("Partner", this.CustomerId);
             }
 
             this.ReportsPreview.GenerateReport(this.reportFliter, true);

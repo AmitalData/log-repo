@@ -1,13 +1,14 @@
-﻿<style>
+
+<style>
     .MessageText {
         white-space: normal;
         word-wrap: break-word;
         overflow-x: hidden;
         overflow-y: auto;
-        line-height:18px;
+        line-height: 18px;
     }
 </style>
- 
+
 <table>
 
 
@@ -18,127 +19,186 @@
         <td style="height:100% ;position: relative;vertical-align:top">
             <table>
 
-                <tr style="height:15px"> <td><div></div></td>   </tr>
+                <tr style="height:15px">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
                 <!--Activate Shared Logistics-->
                 <tr style="height:30px;">
-                    <td style="width:5px;"><div style="width:5px"></div></td>
+                    <td style="width:5px;">
+                        <div style="width:5px"></div>
+                    </td>
                     <td style="width:20px;text-align:left;">
                         <div class="CheckBox">
                             <input [attr.id]="IsSharedLogisticsActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivatedEnable" [(ngModel)]="IsSharedLogisticsActivated" class="CenterCenter" (change)="OnShardLogisticChange()" id="test" type="checkbox" />
                             <label [attr.for]="IsSharedLogisticsActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                         </div>
                     </td>
-                    <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Shared Logistics</div></td>
+                    <td>
+                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Shared Logistics</div>
+                    </td>
                 </tr>
 
                 <!--Box-->
                 <tr style="height:100%">
                     <td colspan="3">
                         <div style="border:1px solid gray;height:100%">
-                            <table>
+                            <ScrollViewer>
+                                <table>
 
-                                <tr style="height:5px"><td></td></tr>
-
-
-                                <!-- Activate Web Access-->
-                                <tr *ngIf="IsShowActivateWebAccessArea" style="height:100px;vertical-align:top">
-                                    <td>
-                                        <table style="text-align:left">
-                                            <tr style="height:30px;">
-                                                <td style="width:5px;"><div style="width:5px"></div></td>
-                                                <td style="width:20px;text-align:left;">
-                                                    <div class="CheckBox">
-                                                        <input [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                        <label [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                    </div>
-                                                </td>
-                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Web Access</div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="3" style="vertical-align:top">
-                                                 
-                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the shared logistics module.</div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <tr style="height:5px">
+                                        <td></td>
+                                    </tr>
 
 
-                                    </td>
+                                    <!-- Activate Web Access-->
+                                    <tr *ngIf="IsShowActivateWebAccessArea" style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <input [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Web Access</div>
+                                                    </td>
+                                                </tr>
 
-                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
 
-
-                     <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton " style="height:50px"><td></td></tr>
-
-                                <!--Activate Mobile-->
-                                <tr *ngIf="IsShowMobileActivateArea" style="height:100px;vertical-align:top">
-                                    <td>
-                                        <table style="text-align:left">
-                                            <tr style="height:30px;">
-                                                <td style="width:5px;"><div style="width:5px"></div></td>
-                                                <td style="width:20px;text-align:left;">
-                                                    <div class="CheckBox">
-                                                        <input [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                        <label [attr.for]="IsMobileActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                    </div>
-                                                </td>
-                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Mobile</div></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="3" style="vertical-align:top">
-
-                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;">This option will allow your partners to view specific information about their shipments using our mobile app</div>
-
-
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the shared logistics module.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
 
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        </td>
+
+                                    </tr>
 
 
-                                    </td>
+                                    <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton " style="height:50px">
+                                        <td></td>
+                                    </tr>
 
-                                </tr>
+                                    <!--Activate Mobile-->
+                                    <tr *ngIf="IsShowMobileActivateArea" style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <input [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="IsMobileActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Mobile</div>
+                                                    </td>
+                                                </tr>
 
-                                <tr *ngIf="!IsShowActivateWebAccessArea && IsShowMobileActivateArea && IsShowAreaColseAndCancelButton" style="height:50px"><td></td></tr>
-                         
-                                <!--Send Link in email messages to your partners.-->
-                                <tr style="height:60px;vertical-align:top">
-                                    <td>
-                                        <table style="text-align:left">
-                                            <tr style="height:30px;">
-                                                <td style="width:5px;"><div style="width:5px"></div></td>
-                                                <td style="width:20px;text-align:left;">
-                                                    <div class="CheckBox">
-                                                        <input [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" class="CenterCenter" id="test" type="checkbox" />
-                                                        <label [attr.for]="SharedLogisticsMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                    </div>
-                                                </td>
-                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Send Link in email messages to your partners.</div></td>
-                                            </tr>
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
 
-                                            <tr>
-                                                <td colspan="3" style="vertical-align:top">
-                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will automatically send a link within each email message sent to the partners, that will enable shipment viewing.</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-
-                                    </td>
-
-                                </tr>
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;">This option will allow your partners to view specific information about their shipments using our mobile app</div>
 
 
 
 
-                                <tr><td></td></tr>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
 
-                            </table>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="!IsShowActivateWebAccessArea && IsShowMobileActivateArea && IsShowAreaColseAndCancelButton" style="height:50px">
+                                        <td></td>
+                                    </tr>
+
+                                    <!--Send Link in email messages to your partners.-->
+                                    <tr style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <input [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="SharedLogisticsMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Send Link in email messages to your partners.</div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will automatically send a link within each email message sent to the partners, that will enable shipment viewing.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <!-- DisplayDocumentsAndEvents -->
+                                    <tr style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <CheckBox [IsChecked]="DisplayDocumentsAndEvents" (Checked)="DisplayDocumentsAndEvents = $event"></CheckBox>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Display Documents & Events in messages link</div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </ScrollViewer>
                         </div>
                     </td>
                 </tr>
@@ -152,7 +212,11 @@
 
     </tr>
 
-    <tr *ngIf="IsShowAreaColseAndCancelButton" style="height:10px"> <td><div></div></td>   </tr>
+    <tr *ngIf="IsShowAreaColseAndCancelButton" style="height:10px">
+        <td>
+            <div></div>
+        </td>
+    </tr>
     <tr *ngIf="IsShowAreaColseAndCancelButton" style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">

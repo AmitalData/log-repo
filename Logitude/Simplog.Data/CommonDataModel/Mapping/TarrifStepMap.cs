@@ -27,10 +27,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.TarrifHeaderId).HasColumnName("TarrifHeaderId");
-            this.Property(t => t.Step).HasColumnName("Step");
-            this.Property(t => t.UnitPrice).HasColumnName("UnitPrice");
-            this.Property(t => t.MinPrice).HasColumnName("MinPrice");
-            this.Property(t => t.MaxPrice).HasColumnName("MaxPrice");
+            this.Property(t => t.Step).HasColumnName("Step").HasPrecision(14, 3);
+            this.Property(t => t.UnitPrice).HasColumnName("UnitPrice").HasPrecision(14, 3);
+            this.Property(t => t.MinPrice).HasColumnName("MinPrice").HasPrecision(14, 3);
+            this.Property(t => t.MaxPrice).HasColumnName("MaxPrice").HasPrecision(14, 3);
 
             // Relationships
             this.HasRequired(t => t.TarrifHeader)

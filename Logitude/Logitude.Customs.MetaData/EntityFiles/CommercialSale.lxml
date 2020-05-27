@@ -38,7 +38,9 @@
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;749c68d8-8f50-4639-bb4a-9579a018477e&quot;"
     FieldName="&quot;Code&quot;"
@@ -300,34 +302,43 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;CommercialSale&quot;"
-    TextCode="&quot;CommercialSaleQuery&quot;"
-    QueryGroupCode="&quot;2177&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.CommercialSale&quot;"
-    QuerySection="&quot;Customs.CommercialSale&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    DefaultSortDirection="&quot;Desending&quot;"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;">
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CommercialSale&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;2177&quot;"
+    QueryGroupName="&quot;Customs.CommercialSale Query Group&quot;"
+    TextCode="&quot;CommercialSaleQuery&quot;"
+    TextCodeCode="&quot;CommercialSale.Q.CommercialSale&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CommercialSale.Q.CommercialSale&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;CommercialSale.Features.CommercialSale&quot;"
+    FeatureDefaultText="&quot;CommercialSale&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CommercialSale&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;CommercialSale&quot;" />
       <QueryColumn
-        QueryCode="&quot;CommercialSale&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CommercialSale&quot;" />
       <QueryColumn
-        QueryCode="&quot;CommercialSale&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;CommercialSale&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -335,17 +346,30 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CommercialSale&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CommercialSale&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

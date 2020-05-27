@@ -1,0 +1,1 @@
+update QueryColumns set QueryCode = (select Queries.UniqueCode from Queries where Id = QueryColumns.QueryId)

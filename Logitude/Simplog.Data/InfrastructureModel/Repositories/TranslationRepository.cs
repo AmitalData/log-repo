@@ -76,8 +76,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 			string entityName = "LastTranslationsByTenant" + tenant;
 			Translation lastTranslation = null;
 
-			if (HttpContext.Current != null)
-			{
+			
 				if (CacheManager.CacheWrapper.Get(entityName) != null)
 				{
 					lastTranslation = (Translation)CacheManager.CacheWrapper.Get(entityName);
@@ -100,14 +99,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 							CacheManager.CacheWrapper.Insert(entityName, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 					}
 				}
-			}
-			else
-			{
-
-				lastTranslation = (from a in context.Translations
-								   where a.Tenant == tenant && a.UpdateDateGMT != null
-								   select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
-			}
+			
+	
 
 			return lastTranslation;
 
@@ -124,14 +117,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 		private static void InvalidateLastTranslationCache(Translation entity)
 		{
-			if (HttpContext.Current != null)
-			{
+			
 				string entityName = "LastTranslationsByTenant" + entity.Tenant;
 				if (CacheManager.CacheWrapper.Get(entityName) != null)
 				{
 					CacheManager.CacheWrapper.Invalidate(entityName);
 				}
-			}
+			
 		}
 
 		public void Remove(Translation entity)

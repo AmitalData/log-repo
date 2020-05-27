@@ -13,7 +13,7 @@ import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CASSReportFilterComponent',
     templateUrl: './CASSReportFilterComponent.html',
     inputs: ['ReportsPreview']

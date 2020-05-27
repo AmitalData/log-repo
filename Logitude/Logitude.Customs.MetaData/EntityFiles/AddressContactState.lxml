@@ -32,13 +32,15 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מדינה לטפל קשר&quot;"
   DefaultText="&quot;Address Contact State&quot;"
-  Code="&quot;84f3&quot;"
-  Name="&quot;Customs.AddressContactState Query Group&quot;"
+  Code="&quot;ADCS&quot;"
+  Name="&quot;Customs.AddressContactState&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;fff2328f-dcb7-4ca5-85c8-7e81e02922d8&quot;"
     FieldName="&quot;Code&quot;"
@@ -307,21 +309,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,כתובת בתוקף מאומתת&quot;"
+      Inactive="false"
+      LocalName="&quot;כתובת בתוקף מאומתת&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,כתובת בתוקף, לא  מאומתת&quot;"
+      Inactive="false"
+      LocalName="&quot;כתובת בתוקף, לא  מאומתת&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,כתובת לא בתוקף (נמחקה)&quot;"
+      Inactive="false"
+      LocalName="&quot;כתובת לא בתוקף (נמחקה)&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;AddressContactState&quot;"
+    ObjectTableName="&quot;Customs.AddressContactState&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.AddressContactState&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;ADCS&quot;"
+    QueryGroupName="&quot;Customs.AddressContactState&quot;"
+    LocalTextCode="&quot;מצב כתובת או איש קשר&quot;"
+    TextCode="&quot;Address Contact States&quot;"
+    TextCodeCode="&quot;Customs.AddressContactState.Q.AddressContactStateQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ADDRESSCONTACTSTATE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.AddressContactState.Features.AddressContactStates&quot;"
+    FeatureDefaultText="&quot;Address Contact States&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;AddressContactState&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;AddressContactState&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;AddressContactState&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;AddressContactState&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.AddressContactState&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.AddressContactState&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

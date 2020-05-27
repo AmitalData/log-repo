@@ -58,10 +58,10 @@ namespace Logitude.BL.QuoteModel.EntityOtherServices
             return document.Id;
         }
 
-        public byte[] GetQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null)
+        public byte[] GetQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, int? versionNumber = null)
         {
             IQuoteTemplateReportHelper helper = ContainerAccessor.Container.Resolve(typeof(IQuoteTemplateReportHelper), "QuoteTemplateReportHelper", new ParameterOverride("", 1)) as IQuoteTemplateReportHelper;
-            return helper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, templateSections , userTenant);
+            return helper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, templateSections , userTenant,null, versionNumber);
             
         }
     }

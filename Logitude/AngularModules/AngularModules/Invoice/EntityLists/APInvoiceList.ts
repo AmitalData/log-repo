@@ -39,6 +39,7 @@ export class APInvoiceList {
 		UpdateDate: Date;
 		APInvoiceTypeCode: string;
 		VendorName: string;
+		VendorLocalName: string;
 		VendorCode: string;
 		PaymentTermName: string;
 		InvoiceCurrencyCode: string;
@@ -54,6 +55,7 @@ export class APInvoiceList {
 		AmountDueInLocalCurrency: number;
 		AmountDueInProfitCurrency: number;
 		BranchId: string;
+		BranchName: string;
 		HouseNumber: string;
 		MasterNumber: string;
 		Description: string;
@@ -77,5 +79,18 @@ export class APInvoiceList {
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
 		FirstApproveDate: Date;
+		VendorCity: string;
+		VendorCountry: string;
+		CreatedByPartner: string;
+		Field1: string;
+		Field2: string;
+		Field3: string;
+		Field4: string;
+		Field5: string;
+		Field6: string;
+		Field7: string;
+		Field8: string;
+		Field9: string;
+		Field10: string;
 	
 }

@@ -31,14 +31,16 @@ import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'FCLChargesComponent',
-    moduleId: module.id,
+    
     templateUrl: './FCLChargesComponent.html',
 })
 
 export class FCLChargesComponent extends BaseComponent implements OnDestroy {
+
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
     public DataContext = this;
@@ -49,8 +51,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyId: string;
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
-    IsShowTotalPerContainer: boolean = true;
+    IsShowTotalPerContainer: boolean = false;
+    IsRouteRate: boolean = false;
+    public IsPriceCheckVisible: boolean = false;
+    private entityResourceService: EntityResourceService = new EntityResourceService();;
+    public ComponentRef: any;
+
     private CurrentSession = SessionLocator.SelectedSession;
+    public HideFCLAllIn: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -61,12 +69,15 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
+        this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
 
-       //if( FeatureLocator.HasFeaturePermession("Quote", "QUOTEQUOTATION")) {
-       //     this.IsShowTotalPerContainer = true;
-       // }
+       if( FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
+            this.IsShowTotalPerContainer = true;
+        }
 
-     
+
+        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
+
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();
@@ -75,7 +86,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetGridColumns();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.GetQuoteType();
         this.Listen();
+    }
+
+    GetQuoteType() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.QuoteTypeCode == "P") {
+                this.IsRouteRate = true;
+            }
+        }
     }
 
     private SessionEvent: any = null;
@@ -686,6 +706,65 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
         return myResult;
     }
+    PriceCheck() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+
+            if (this.EntityPM.DirectionId == "I") {
+                betweenDate = this.EntityPM.ETA;
+            }
+            else {
+                betweenDate = this.EntityPM.ETD;
+            }
+
+            var tariffType = "";
+            if (this.EntityPM.TransportModeId == "A") {
+                tariffType = "AFC";
+            }
+            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                tariffType = "OLC";
+            }
+
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.FromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                IsQuote: true,
+                FatherComponent: this,
+                TariffType: tariffType
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 1200;
+            logWindow.Title = "Price Check";
+            logWindow.ComponentLoaded.subscribe(cmpRef => {
+                this.ComponentRef = cmpRef;
+                if (WindowArgs != null) {
+                    if (this.ComponentRef['SetWindowArgs']) {
+                        this.ComponentRef.SetWindowArgs(WindowArgs);
+                    }
+                }
+            });
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });
+    }
+    EditTariffClicked(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+        }
+    }
 
     // Profit
     InitializeProfit() {
@@ -712,16 +791,28 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFixedSameCurrency(setType: string) {
         this.IsFixedCurrency = null;
         this.IsSameCostCurrency = null;
+        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
         if (setType == "F") {
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
+
             this.IsFixedCurrency = true;
             this.IsSameCostCurrency = false;
             this.IsSaleCurrencySameAsCost = false;
             this.OnFixedSameChanges();
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = true;
+            });
         }
 
         else {
-            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+            var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
+
+            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("You can't switch to multi-currency mode till you drop the all-in checks");
                 messageWindow.WindowClosed.subscribe((event: any) => {
@@ -732,10 +823,19 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.IsFixedCurrency = false;
                 this.IsSameCostCurrency = true;
                 this.IsSaleCurrencySameAsCost = this.IsSameCostCurrency;
                 this.OnFixedSameChanges();
+
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = true;
+                });
             }
         }
     }
@@ -817,6 +917,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
             this.SetUIProperties_Summary();
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
             this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
 
@@ -839,15 +940,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
                 });
 
-                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
-                    if (item.IsAllIN) {
-                        item.EntityPM.IsAllIN = false;
-                        item.IsAllIN = true;
-                    }
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = true;
                 });
 
                 this.ComputeTotals();
@@ -867,16 +969,18 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
 
             this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
             });
 
-            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
-                if (item.IsAllIN) {
-                    item.EntityPM.IsAllIN = false;
-                    item.IsAllIN = true;
-                }
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = true;
             });
 
             this.ComputeTotals();
@@ -939,6 +1043,20 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    get EstimatedProfitInLocal() { return this.EntityPM.EstimatedProfitInLocal; }
+    set EstimatedProfitInLocal(value: number) {
+        if (this.EntityPM.EstimatedProfitInLocal != value) {
+            this.EntityPM.EstimatedProfitInLocal = AppTool.Round(value, 2);
+        }
+    }
+
+    get EstimatedProfitInProfit() { return this.EntityPM.EstimatedProfitInProfit; }
+    set EstimatedProfitInProfit(value: number) {
+        if (this.EntityPM.EstimatedProfitInProfit != value) {
+            this.EntityPM.EstimatedProfitInProfit = AppTool.Round(value, 2);
+        }
+    }
+
     get EstimateProfitEdited() { return this.EntityPM.EstimateProfitEdited; }
     set EstimateProfitEdited(newValue: boolean) {
         if (this.EntityPM.EstimateProfitEdited != newValue) {
@@ -983,7 +1101,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.SummaryHeader = TextCodeTranslator.Translate("Quote.F.ProfitInSaleCurrency.Short") + " (" + this.SelectedCurrencyCode + ")";
+                this.SummaryHeader = TextCodeTranslator.Translate("Quote.S.Charges.ProfitInSaleCurrency") + " (" + this.SelectedCurrencyCode + ")";
                 if (!AppTool.IsNullOrZero(this.ExchangeRate)) {
                     this.SummaryCostAmount = AppTool.Round(myCostAmountLocal / this.ExchangeRate, 2);
                     this.SummarySaleAmount = AppTool.Round(mySaleAmountLocal / this.ExchangeRate, 2);
@@ -1010,6 +1128,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
+    
 
     // Update Quantities
     public UpdateQuantitiesMessage: string;
@@ -1031,10 +1150,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
 
-            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != this.EntityPM.NumberOfContainers).length > 0) {
                 isDifferentOrders = true;
             }
-            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != this.EntityPM.NumberOfContainers).length > 0) {
                 isDifferentOrders = true;
             }
 
@@ -1064,7 +1183,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         })
-
         //this.SetUIProperties_UpdateCharges();
     }
     UpdateCharges() {
@@ -1216,7 +1334,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                     item.VatTypeId = vatTypeId;
                     item.VatPercent = itemVatPercentage;
                     item.VatTypeCell = itemVatTypeCell;
-                    item.ExternalVATCard = vat.ExternalVATCard;
+                    item.ExternalVATCard = vat.ReceivablesExternalId;
                     item.ExternalTAXItemId = vat.ExternalTAXItemId;
                     item.QuoteCurrencyVatableAmount = myVatableAmount;
                     item.LocalCurrencyVatableAmount = myVatableAmountLocal;
@@ -1303,7 +1421,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SetUIProperties_SaleMinMax();
 
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
@@ -1318,43 +1435,57 @@ export class FCLQuoteChargeItem extends BaseComponent {
         var isAllInCheckBoxVisible = false;
         var isAllInInfoIconVisible = false;
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
-            isAllInCheckBoxVisible = false;
-            //isAllInInfoIconVisible = false;
-        }
+        if (this.ChargesGroupCode != "FRT" && this.IsAdhoc) {
+            var itemFrieght: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
 
-        if (this.ChargesGroupCode == "FRT") {
-            isAllInCheckBoxVisible = false;
-            isAllInInfoIconVisible = false;
-        }
+            if (itemFrieght) {
+                if (this.CostMeasurementId == itemFrieght.CostMeasurementId && this.CostCurrencyId == itemFrieght.CostCurrencyId) {
+                    isAllInCheckBoxVisible = true;
+                }
 
-        //else if (this.IsRoutingRate) {
-        //    isAllInCheckBoxVisible = false;
-        //    isAllInInfoIconVisible = false;
-        //}
-
-        else if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length == 0) {
-            isAllInCheckBoxVisible = false;
-            isAllInInfoIconVisible = false;
-        }
-
-        else {
-            var freightCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
-
-            if (this.CostMeasurementId == freightCharge.CostMeasurementId && this.CostCurrencyId == freightCharge.CostCurrencyId) {
-                isAllInCheckBoxVisible = true;
-            }
-
-            else {
-                isAllInInfoIconVisible = true;
+                else {
+                    isAllInInfoIconVisible = true;
+                }
             }
         }
 
         this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
         this.IsAllInInfoIconVisible = isAllInInfoIconVisible;
-        this.IsAllInInfoIconVisible_AmoutLocal = this.IsAllIN && this.CostMeasurementCode == "BCNT" ? true : false;                
+        this.IsAllInInfoIconVisible_AmoutLocal = this.IsAllIN && this.CostMeasurementCode == "BCNT" ? true : false;
+        this.SetUIProperties_AllIn_CostCurrency();
+    }
+    SetUIProperties_AllIn_CostCurrency() {
+
+        var isEnabled_CostCurrencyId = false;
+
+        if (this.IsEditingEnabled) {
+            isEnabled_CostCurrencyId = true;
+
+            if (this.IsAllIN) {
+                isEnabled_CostCurrencyId = false;
+            }
+
+            else if (this.ChargesGroupCode == "FRT" && this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+                isEnabled_CostCurrencyId = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
     }
 
+    SetUIProperties_AllInCost() {
+        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
+        var isEnabled_CostCurrencyId = true;
+        if (this.IsCostAllIn || this.TariffId != null) {
+            isEnabled_CostCurrencyId = false;
+        }
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+        this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
+    }
+
+    
     public IsEnabled_CostQuantity: boolean = false;
     public IsEnabled_CostUnitPrice: boolean = false;
     public IsEnabled_CostMinAmount: boolean = false;
@@ -1440,6 +1571,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
+        //this.SetUIProperties_AllInCost();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;
@@ -1904,6 +2036,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostCurrencyId = null;
             this.EntityPM.IsBackToBack = false;
         }
+
+        this.SetUIProperties();
     }
 
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }
@@ -1963,7 +2097,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                         if (list) {
                             this.VatTypeName = list.EnglishName;
                             this.VatIsMultiPercentage = list.IsMultiPercentage;
-                            this.EntityPM.ExternalVATCard = list.ExternalVATCard;
+                            this.EntityPM.ExternalVATCard = list.ReceivablesExternalId;
                             this.EntityPM.ExternalTAXItemId = list.ExternalTAXItemId;
 
                             if (list.IsMultiPercentage) {
@@ -2285,6 +2419,34 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.ComputeCostAmounts();
             this.ComputeCostInSalePrice5();
+        }
+    }
+
+    get IsCostAllIn() { return this.EntityPM.IsCostAllIn; }
+    set IsCostAllIn(value: boolean) {
+        if (this.EntityPM.IsCostAllIn != value) {
+            this.EntityPM.IsCostAllIn = value;
+        }
+    }
+
+    get TariffNumber() { return this.EntityPM.TariffNumber; }
+    set TariffNumber(value: string) {
+        if (value != this.EntityPM.TariffNumber) {
+            this.EntityPM.TariffNumber = value;
+        }
+    }
+    get TariffId() {
+        return this.EntityPM.TariffId;
+    }
+    set TariffId(value: string) {
+        if (value != this.EntityPM.TariffId) {
+            this.EntityPM.TariffId = value;
+        }
+    }
+    get TariffVersion() { return this.EntityPM.TariffVersion; }
+    set TariffVersion(value: number) {
+        if (value != this.EntityPM.TariffVersion) {
+            this.EntityPM.TariffVersion = value;
         }
     }
 
@@ -2990,7 +3152,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType1UnitPrice;
             var markup = this.ContainerType1MarkUpValue == null ? 0 : this.ContainerType1MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType1MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice1InSaleCurrency + (this.CostUnitPrice1InSaleCurrency * (markup / 100));
             }
 
@@ -3014,7 +3176,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType2UnitPrice;
             var markup = this.ContainerType2MarkUpValue == null ? 0 : this.ContainerType2MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType2MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice2InSaleCurrency + (this.CostUnitPrice2InSaleCurrency * (markup / 100));
             }
 
@@ -3038,7 +3200,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType3UnitPrice;
             var markup = this.ContainerType3MarkUpValue == null ? 0 : this.ContainerType3MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType3MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice3InSaleCurrency + (this.CostUnitPrice3InSaleCurrency * (markup / 100));
             }
 
@@ -3062,7 +3224,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType4UnitPrice;
             var markup = this.ContainerType4MarkUpValue == null ? 0 : this.ContainerType4MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType4MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice4InSaleCurrency + (this.CostUnitPrice4InSaleCurrency * (markup / 100));
             }
 
@@ -3086,7 +3248,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType5UnitPrice;
             var markup = this.ContainerType5MarkUpValue == null ? 0 : this.ContainerType5MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType5MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice5InSaleCurrency + (this.CostUnitPrice5InSaleCurrency * (markup / 100));
             }
 
@@ -3125,8 +3287,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     var myMarkUpValueInput = value.replace("-", "").replace("+", "").replace("%", "");
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
-
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3157,7 +3323,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3195,7 +3366,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3226,7 +3402,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3264,7 +3446,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3295,7 +3482,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3333,7 +3526,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3364,7 +3562,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3402,7 +3606,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3433,7 +3642,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3471,7 +3686,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
 
-                        myMarkUpValue = +myMarkUpValueInput;
+                        if (myMarkUpValueInput.indexOf(',') > -1) {
+                            myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                        }
+                        else {
+                            myMarkUpValue = +myMarkUpValueInput;
+                        }
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -3502,7 +3722,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
+
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
@@ -3983,10 +4209,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.IsAllIN != newValue) {
             this.EntityPM.IsAllIN = newValue;
             this.SetUIProperties_AllIn();
-
-            this.UpdateCostSaleDataVisibility();
-            this.UpdateAllInFreight();
+            this.ApplyAllIn();
         }
+    }
+
+    ApplyAllIn() {
+        this.UpdateCostSaleDataVisibility();
+        this.UpdateAllInFreight();
     }
 
     private UpdateAllInFreight() {

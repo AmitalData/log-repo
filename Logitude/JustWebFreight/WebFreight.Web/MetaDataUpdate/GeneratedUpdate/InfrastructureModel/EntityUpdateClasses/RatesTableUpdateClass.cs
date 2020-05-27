@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class RatesTableUpdateClass
-   {  
+   {  		
+		public const string HashString = "9c0ce9ff1fe9f25d6aa38a81091841aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    OldDBTableName =  "RatesTables",
 			      				    ObjectTableSingular =  "Rates Table",
 			      				    ObjectTablePlural =  "RatesTables",
+			      				    DescriptionDefaultText =  "Insert the daily exchange rates of currencies to your base currency.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -98,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -126,12 +128,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "RatesTable,RatesTables,,Id,",
+			      				    HashString =  RatesTableUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -193,12 +197,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ForeignCurrencyId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -260,12 +265,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ForeignCurrencyCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,12 +330,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BaseCurrencyId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -340,8 +347,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -391,12 +398,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Rate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -407,8 +415,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -458,12 +466,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ValueDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -523,45 +532,74 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup RatesTableQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RATE", Name = "Rates" }, queryGroupRepository);
-						QueryGroup RatesTableQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "24f1", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup RatesTableQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RATE", Name = "Rates" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup RatesTableQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "24f1", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable RatesTableObjectTable = objectTables.ContainsKey("RatesTable") ? objectTables["RatesTable"] : null;
+            if (RatesTableObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable RatesTableObjectTable = objectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> RatesTableObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "RatesTable").ToList();   
+                RatesTableObjectTable = objectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode RatesTableTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.Q.RatesTables", DefaultText = @"Rates",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RatesTableFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RATESTABLE", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTable.Features.Rates", NameTextCodeDefaultText = "Rates", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode RatesTableTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.Q.RatesTables", DefaultText = @"Rates",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature RatesTableFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RATESTABLE", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTable.Features.Rates", NameTextCodeDefaultText = "Rates", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,RatesTableObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query RatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RatesTableTextCode_0.Id, NameTextCodeCode = RatesTableTextCode_0.Code, ObjectTableName = "RatesTable", Code = "Rates",  QueryGroupCode = "RATE", IndexOrder = 0, Tenant = 0, ObjectTableId = RatesTableObjectTable.Id, QuerySection = "RatesTable", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RatesTableFeature_0.Id,FeatureUniqeCode= RatesTableFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn RatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 0, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ForeignCurrencyCode" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "RatesTable.ForeignCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 1, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "ValueDate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "RatesTable.ValueDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id, IndexOrder = 2, ObjectFieldId = RatesTableObjectFields.Where(d => d.FieldName == "Rate" && d.ObjectTableId == RatesTableObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn RatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RatesQuery.Id,QueryCode = RatesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "RatesTable.Rate" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> RatesTableObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "RatesTable").ToList();
+		       
+	      
+
+	         Screen RatesTableRatesTableHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RatesTable.HeaderScreen", Name = "RatesTableHeaderScreen", ObjectTableId = RatesTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    RatesTableObjectTable.HeaderScreenId = RatesTableRatesTableHeaderScreenScreen0.Id;
+		    RatesTableObjectTable.HeaderScreenCode = RatesTableRatesTableHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -571,19 +609,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RatesTableGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Main", DefaultText = "General",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RatesTableGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.General", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTMA", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RatesTableGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.General", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTMA", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RatesTableObjectTable);
  
                  
 			   TextCode RatesTableEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RatesTableEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.Events", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RatesTableEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RatesTable.Tab.Events", ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, NameTextCodeCode = "RatesTableFeatures.RTEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RatesTableObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableGeneralFeature_TH0.Id, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTMA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableGeneralFeature_TH0.Id,FeatureUniqeCode = RatesTableGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.FreightLib.Views.CurrencyRates.RatesTableMainTabControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableGeneralTextCode_TH0.Id, TabNameTextCodeCode = RatesTableGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = RatesTableEventsFeature_TH1.Id,FeatureUniqeCode = RatesTableEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = RatesTableObjectTable.Id, TabNameTextCodeId = RatesTableEventsTextCode_TH1.Id, TabNameTextCodeCode = RatesTableEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

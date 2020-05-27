@@ -7,7 +7,6 @@ import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/St
 import {QueriesPMService} from '../../../Infrastructure/Services/StandardPMs/QueriesPMService';
 import {TextCodePMService} from '../../../Infrastructure/Services/StandardPMs/TextCodePMService';
 import {GeneralEntitiesService} from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
-import {Http} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
@@ -34,17 +33,21 @@ import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
 import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPMService'; 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewViewComponent.html',
-    inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
-    providers: [Http, ServiceArgs],
+    inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],
+    providers: [HttpClient, ServiceArgs],
 })
 
 export class NewViewComponent {
+    public ViewNameId: any = null;
+    public LayoutDirection: any = null;
+
     public EntityPM: QueryPM = null;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     @Output() onDataSourceChangedEvent = new EventEmitter();
@@ -64,6 +67,7 @@ export class NewViewComponent {
     unselected: any[];
     Fixedunselected: any[];
     QueryId: string;
+    QueryCode: string;
     CurrentObjectTable: string;
     IsEnabled: boolean;
     ObjectTable: any;
@@ -77,7 +81,7 @@ export class NewViewComponent {
     ValidationErrorsList: string[] = []; 
     CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
     public serviceArgs: ServiceArgs;
-    public _http: Http;
+    public _http: HttpClient;
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
@@ -86,8 +90,8 @@ export class NewViewComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
-        this._http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.HttpClient;
         this.removedQueryFilters = [];
         if (this.GeneralEntitiesArgs == null) {
             this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
@@ -125,6 +129,7 @@ export class NewViewComponent {
         this.pubSubAdvanceQueryFiltersService = args.pubSubAdvanceQueryFiltersService;
         
         this.QueryId = args.queryId;
+        this.QueryCode = args.queryCode;
         this.CurrentObjectTable = args.currentObjectTable;
         this.IsEnabled = false;
         this.ObjectTable = window.ObjectTables.filter((d:any) => d.Name == args.currentObjectTable)[0];
@@ -134,7 +139,6 @@ export class NewViewComponent {
         this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
 
-        this.LoadUsers();
 
         if (!this.IsNew) {
             this.QueryName = args.QueryName;
@@ -153,8 +157,18 @@ export class NewViewComponent {
             this.ShareTabIsVisible = true;
         }
 
-        this.FillShareValuesList();
-        this.SetSelectedSharedValue();
+        if (this.ShareTabIsVisible) {
+            this.LoadUsers();
+            this.FillShareValuesList();
+            this.SetSelectedSharedValue();
+        }
+
+        else {
+            if (!this.IsNew) {
+                this.LoadQueryPM();
+            }
+        }
+
         this.Run();
     }
 
@@ -164,14 +178,13 @@ export class NewViewComponent {
         filters.SortBy = "EnglishName";
         filters.SortDirection = "Ascending";
         filters.PageIndex = 0;
-        //filters.PageSize = 100;
-        filters.GetAll = true;
+        filters.PageSize = 1000;
         filters.Tenant = SessionLocator.Tenant;
 
-        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        //filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
         var userService: UserListService = new UserListService();
-        userService.getByFilters(filters).subscribe(res => {
+        userService.getByFilters(filters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myUsersList = pmResponse.Result;
@@ -188,7 +201,7 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
 
-        myService.get(this.QueryId).subscribe(myResult => {
+        myService.get(this.QueryCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
@@ -301,10 +314,9 @@ export class NewViewComponent {
         ServiceLocator.SendTotangoUserActivity("Customization", "QueryDefinition");
         var copy = false;
 
-        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
 
-        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
-
+ 
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
 
@@ -321,16 +333,16 @@ export class NewViewComponent {
                 this.ShowInSpotLight = currentQuery.SpotlightModeActivated;
             }
 
-            this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
+            this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
                 .subscribe((response: any) => {
-                    this.queryColumnsList = response.json();
+                    this.queryColumnsList = response;
                     this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
                     if (this.queryColumnsList.length == 0) {
                         var zeroColumnsList: any[] = [];
-                        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                            .subscribe((response) => {
-                                zeroColumnsList = response.json();
+                        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
+                            .subscribe((response: any) => {
+                                zeroColumnsList = response;
                                 zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                                 zeroColumnsList.forEach((querycolumn, key) => {
                                     var newcolumn = new QueryColumnPM();
@@ -352,6 +364,7 @@ export class NewViewComponent {
                                     newcolumn.QueryId = querycolumn.QueryId;
                                     newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName;
                                     newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode;
+                                    newcolumn.ObjectFieldCode = querycolumn.ObjectFieldCode;
                                     this.queryColumnsList.push(newcolumn);
                                     this.addedQueryColumnList.push(newcolumn);
                                 });
@@ -359,9 +372,9 @@ export class NewViewComponent {
                     }
 
 
-                    this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                    this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
-                    var listColumns = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                    var listColumns = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
 
                     this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
@@ -369,7 +382,7 @@ export class NewViewComponent {
 
                     this.unselected = [];
                     this.unselectedObjectFields.forEach((field, key) => {
-                        var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
+                        var xx = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && q.ObjectFieldCode == field.FieldCode && field.FieldName != "TimeFrameFilter");
                         if (xx.length == 0) {
                             this.unselected.push(field);
                         }
@@ -392,13 +405,13 @@ export class NewViewComponent {
                     this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
                     this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
                 });
-            this.QueryFilterChangedAction(this.QueryId);
+            this.QueryFilterChangedAction(this.QueryCode);
             var xx = this.NEWallFilterFieldsClass;
         }
     }
 
     public IsChooseUsersVisible: boolean = false;
-    public ShareValuesList: CodeNameClass[];
+    public ShareValuesList: CodeNameClass[]=[];
     private FillShareValuesList() {
         this.ShareValuesList = [];
         
@@ -589,10 +602,10 @@ export class NewViewComponent {
 
             this.ReorderColumnsList();
             //var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
-            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
+            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode == item.ObjectFieldCode)[0];
 
             if (i > 0) {
-                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != upColumn.ObjectFieldId);
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode != upColumn.ObjectFieldCode);
                 this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i - 1)[0].IndexOrder = i;
                 upColumn.IndexOrder = i - 1;
                 this.OrderedQueryColumnsList.splice(i - 1, 0, upColumn);
@@ -613,10 +626,10 @@ export class NewViewComponent {
             this.ReorderColumnsList();
 
             //var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
-            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
+            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode == item.ObjectFieldCode)[0];
 
             if (i < this.OrderedQueryColumnsList.length - 1) {
-                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != downColumn.ObjectFieldId);
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode != downColumn.ObjectFieldCode);
 
                 this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i + 1)[0].IndexOrder = i;
                 downColumn.IndexOrder = i + 1;
@@ -634,7 +647,7 @@ export class NewViewComponent {
 
             var field = this.FieldSelectedItem;
 
-            var queryColumn = this.unSelectedList.filter(a => a.QueryId == this.QueryId && a.FieldName == field.FieldName)[0];
+            var queryColumn = this.unSelectedList.filter(a => a.QueryCode == this.QueryCode && a.FieldName == field.FieldName)[0];
             if (queryColumn) {
                 this.removedQueryColumnList = this.removedQueryColumnList.filter(a => a.FieldName != queryColumn.FieldName);
             }
@@ -642,6 +655,7 @@ export class NewViewComponent {
                 if (queryColumn.Id) {
                     var newQueryColumn = new QueryColumnPM();
 
+                    newQueryColumn.QueryCode = this.QueryCode;
                     newQueryColumn.QueryId = this.QueryId;
                     newQueryColumn.ObjectFieldId = field.Id;
                     newQueryColumn.ObjectFieldName = field.FieldName;
@@ -655,6 +669,7 @@ export class NewViewComponent {
                     newQueryColumn.DisplayInList = true;
                     newQueryColumn.UserId = SessionInfo.LoggedUserId;
                     newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode;
+                    newQueryColumn.ObjectFieldCode = field.FieldCode;
 
                     this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
                     this.addedQueryColumnList.push(newQueryColumn);
@@ -669,6 +684,7 @@ export class NewViewComponent {
             else {
                 var newQueryColumn = new QueryColumnPM();
 
+                newQueryColumn.QueryCode = this.QueryCode;
                 newQueryColumn.QueryId = this.QueryId;
                 newQueryColumn.ObjectFieldId = field.Id;
                 newQueryColumn.ObjectFieldName = field.FieldName;
@@ -682,6 +698,7 @@ export class NewViewComponent {
                 newQueryColumn.DisplayInList = true;
                 newQueryColumn.UserId = SessionInfo.LoggedUserId;
                 newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode;
+                newQueryColumn.ObjectFieldCode = field.FieldCode;
 
                 this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
                 this.addedQueryColumnList.push(newQueryColumn);
@@ -708,23 +725,23 @@ export class NewViewComponent {
         if (this.SelectedItem) {
             var queryColumn = this.SelectedItem;
 
-            var objectField = window.ObjectFields.filter(a => a.Id == queryColumn.ObjectFieldId)[0];
+            var objectField = window.ObjectFields.filter(a => a.FieldCode == queryColumn.ObjectFieldCode)[0];
 
             this.unSelectedList.push(objectField);
             //-----
-            this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldId != queryColumn.ObjectFieldId);
+            this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldCode != queryColumn.ObjectFieldCode);
 
 
-            var pm = this.queryColumnsList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+            var pm = this.queryColumnsList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.QueryCode == this.QueryCode)[0];
 
             if (pm != null) {
                 this.removedQueryColumnList.push(pm);
             }
 
-            var queryColumn2 = this.addedQueryColumnList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+            var queryColumn2 = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.QueryCode == this.QueryCode)[0];
 
             if (queryColumn2 != null) {
-                this.addedQueryColumnList = this.addedQueryColumnList.filter(a => a.ObjectFieldId != queryColumn2.ObjectFieldId);
+                this.addedQueryColumnList = this.addedQueryColumnList.filter(a => a.ObjectFieldCode != queryColumn2.ObjectFieldCode);
             }
 
             this.OrderedQueryColumnsList.forEach((column, key) => {
@@ -760,7 +777,7 @@ export class NewViewComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CurrentWindow.Close(this.QueryId);
+        this.CurrentSession.CurrentWindow.Close(this.QueryCode);
     }
 
     DeleteButtonClicked() {
@@ -787,14 +804,14 @@ export class NewViewComponent {
     }
     private DoDelete(userId: string) {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        var query = window.Queries.filter(q => q.Id == this.EntityPM.Id)[0];
+        var query = window.Queries.filter(q => q.UniqueCode == this.EntityPM.UniqueCode)[0];
 
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-        myService.delete(query, userId).subscribe(myResult => {
+        myService.delete(query, userId).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
-            window.Queries = window.Queries.filter(a => a.Id != query.Id);
+            window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
             var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
 
@@ -818,7 +835,7 @@ export class NewViewComponent {
         //this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         //var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
         //myQCService.setServiceArgs(this.serviceArgs);
-        //myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, userId).subscribe(myResult => {
+        //myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, userId).subscribe((myResult:any) => {
         //    var queryColumns = myResult;
 
         //    queryColumns.forEach((column, key) => {
@@ -830,7 +847,7 @@ export class NewViewComponent {
         //    }
 
         //    this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-        //    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, userId, this.EntityPM.Id).subscribe(myResult => {
+        //    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, userId, this.EntityPM.Id).subscribe((myResult:any) => {
         //        if (myResult == null) {
         //            this.AdvancedQueryFilterPMs = [];
         //        }
@@ -848,8 +865,8 @@ export class NewViewComponent {
         //        myService.setServiceArgs(this.serviceArgs);
         //        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         //        myGeneralService.setServiceArgs(this.serviceArgs);
-        //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-        //            myService.delete(query).subscribe(myResult => {
+        //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+        //            myService.delete(query).subscribe((myResult:any) => {
         //                this.CurrentSession.StopBusyIndicator();
         //                window.Queries = window.Queries.filter(a => a.Id != query.Id);
         //                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
@@ -883,7 +900,7 @@ export class NewViewComponent {
     public ObjectFields: any;
     public FieldsValues: FieldsValues;
     currentQuery: QueryPM;
-    QueryFilterChangedAction(QueryID: string) {
+    QueryFilterChangedAction(QueryCode: string) {
         this.allFilterFields = [];
         this.constantFilterFieldsList = [];
         this.CurrentFilters = [];
@@ -896,12 +913,12 @@ export class NewViewComponent {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryID).subscribe(myResult => {
-            this.GetFiltersComplete(myResult, QueryID);
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
+            this.GetFiltersComplete(myResult, QueryCode);
         });
     }
 
-    GetFiltersComplete(myResult: any, QueryID: any) {
+    GetFiltersComplete(myResult: any, QueryCode: any) {
         if (myResult == null) {
             this.AdvancedQueryFilterPMs = [];
         }
@@ -911,7 +928,7 @@ export class NewViewComponent {
         }
         this.timeFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.FieldsValues = new FieldsValues();
-        this.currentQuery = window.Queries.filter(q => q.Id == QueryID)[0];
+        this.currentQuery = window.Queries.filter(q => q.UniqueCode == QueryCode)[0];
 
         if (!this.currentQuery) {
             
@@ -929,22 +946,22 @@ export class NewViewComponent {
 
                 this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true)));
 
-                this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
+                this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.UniqueCode, myResult);
 
-                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true))), this.currentQuery.Id, myResult);
+                this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || (o.ObjectTableId == this.ObjectTable.Id && o.IsCustom == true))), this.currentQuery.UniqueCode, myResult);
 
             }
             else {
                 this.allFilterFields = [];
                 this.constantFilterFieldsList = [];
 
-                this.NEWallFilterFieldsClass.AddFiltersList([], this.currentQuery.Id, myResult);
+                this.NEWallFilterFieldsClass.AddFiltersList([], this.currentQuery.UniqueCode, myResult);
             }
 
 
-            this.filterFields.AddFiltersList(this.allFilterFields, this.currentQuery.Id, myResult);
+            this.filterFields.AddFiltersList(this.allFilterFields, this.currentQuery.UniqueCode, myResult);
 
-            this.constantFilterFields.AddFiltersList(this.constantFilterFieldsList, this.currentQuery.Id, myResult);
+            this.constantFilterFields.AddFiltersList(this.constantFilterFieldsList, this.currentQuery.UniqueCode, myResult);
 
             this.fieldsStaticList = this.NEWallFilterFieldsClass.FilterFields;
 
@@ -954,10 +971,10 @@ export class NewViewComponent {
             OFPM.FieldName = "NoFilter";
             OFPM.FullNameTextCodeCode = "No Filter";
 
-            this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, true, myResult, this, this.pubSubAdvanceQueryFiltersService);
+            this.noFiltersField = new FilterField(OFPM, this.currentQuery.UniqueCode, true, myResult, this, this.pubSubAdvanceQueryFiltersService);
             this.timeFrameFields.push(this.noFiltersField);
             //if (!this.IsNew) {
-            this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryID);
+            this.advancedQueryFiltersList = myResult.filter(q => q.QueryCode == QueryCode);
             //}
             //else {
             //    this.advancedQueryFiltersList = [];
@@ -972,7 +989,7 @@ export class NewViewComponent {
         //}
         //else {
         this.advancedQueryFiltersList.forEach((item, key) => {
-            this.objectField = window.ObjectFields.filter(o => o.Id === item.ObjectFieldId)[0];
+            this.objectField = window.ObjectFields.filter(o => o.FieldCode === item.ObjectFieldCode)[0];
             var xx = this.MapJsonToEntityPM(this.objectField);
             this.AddFilterField(xx);
         });
@@ -1003,13 +1020,13 @@ export class NewViewComponent {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
         } 
-        var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id);
+        var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null) {
-            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id)[0].PredefinedValue;
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
             this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (!this.IsNew) {
-            this.SelectedObjectFields.push(new FilterField(field, this.QueryId, true, filters, this, this.pubSubAdvanceQueryFiltersService));
+            this.SelectedObjectFields.push(new FilterField(field, this.QueryCode, true, filters, this, this.pubSubAdvanceQueryFiltersService));
         }
         else {
             this.SelectedObjectFields.push(new FilterField(field, "", true, filters, this, this.pubSubAdvanceQueryFiltersService));
@@ -1029,9 +1046,9 @@ export class NewViewComponent {
         }
     }
     
-    OnQueryFilterChanged(QueryID: string) {
-        this.QueryId = QueryID;
-        this.QueryFilterChangedAction(this.QueryId);
+    OnQueryFilterChanged(QueryCode: string) {
+        this.QueryCode = QueryCode;
+        this.QueryFilterChangedAction(this.QueryCode);
         //if (this.IsOpened) {
         //    this.SaveChangesAndRecreate();
         //}
@@ -1066,7 +1083,7 @@ export class NewViewComponent {
         //    var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
         //var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
         //myService.setServiceArgs(this.serviceArgs);
-        //myService.delete(advanceFilter).subscribe(myResult => {
+        //myService.delete(advanceFilter).subscribe((myResult:any) => {
         if (this.SelectedObjectFields != null) {
             this.removedQueryFilters.push(this.SelectedObjectFields.filter(a => a.ObjectField.Id == field.ObjectField.Id)[0]);
             this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
@@ -1139,7 +1156,7 @@ export class NewViewComponent {
             if (DoSaving) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-                var theCurrentQuery = (window.Queries.filter(q => q.Id == this.QueryId)[0]);
+                var theCurrentQuery = (window.Queries.filter(q => q.UniqueCode == this.QueryCode)[0]);
                 var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                 var maxIndex = temp[temp.length - 1];
                 
@@ -1152,7 +1169,7 @@ export class NewViewComponent {
                 this.EntityPM.IndexOrder = maxIndex.IndexOrder + 1;
                 this.EntityPM.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard;
                 this.EntityPM.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName;
-                this.EntityPM.OriginalQueryId = theCurrentQuery.Id;
+                this.EntityPM.OriginalQueryCode = theCurrentQuery.UniqueCode;
                 this.EntityPM.QueryGroupCode = theCurrentQuery.QueryGroupCode;
                 this.EntityPM.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled;
                 this.EntityPM.NewViewName = queryName;
@@ -1226,8 +1243,8 @@ export class NewViewComponent {
                 
                 myService.setServiceArgs(this.serviceArgs);
                 textCodesService.setServiceArgs(this.serviceArgs);
-                myService.insert(this.EntityPM).subscribe(myResult => {
-                    textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
+                myService.insert(this.EntityPM).subscribe((myResult:any) => {
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
                         window.TextCodesTranslations.push(res);
                         this.AddFiltersAndColumns(myResult.Result);
                         window.Queries.push(myResult.Result);
@@ -1250,6 +1267,7 @@ export class NewViewComponent {
             newColumn.IndexOrder = column.IndexOrder;
             newColumn.ObjectFieldId = column.ObjectFieldId;
             newColumn.QueryId = this.IsNew ? newQuery.Id : this.QueryId;
+            newColumn.QueryCode = this.IsNew ? newQuery.UniqueCode : this.QueryCode;
             newColumn.Tenant = newQuery.Tenant;
             newColumn.ColumnWidth = column.ColumnWidth;
             newColumn.ConverterName = column.ConverterName;
@@ -1257,9 +1275,10 @@ export class NewViewComponent {
             newColumn.ObjectFieldFieldLableTextCodeDefaultText = column.ObjectFieldFieldLableTextCodeDefaultText;
             newColumn.ObjectFieldListLabelTextCodeCode = column.ObjectFieldListLabelTextCodeCode;
             newColumn.ObjectFieldName = column.ObjectFieldName;
-            newColumn.QueryCode = column.QueryCode;
+            //newColumn.QueryCode = column.QueryCode;
             newColumn.QueryObjectTableName = column.QueryObjectTableName;
             newColumn.DisplayInList = true;
+            newColumn.ObjectFieldCode = column.ObjectFieldCode;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                 newColumn.UserId = this.EntityPM.SharedByUserId;
@@ -1278,18 +1297,19 @@ export class NewViewComponent {
                 advanceFilter.Tenant = SessionInfo.LoggedUserTenant;
                 advanceFilter.ObjectFieldId = field.ObjectField.Id;
                 advanceFilter.QueryId = this.IsNew ? newQuery.Id : this.QueryId;
+                advanceFilter.QueryCode = this.IsNew ? newQuery.UniqueCode : this.QueryCode;
                 advanceFilter.DataTypeCode = field.ObjectField.DataTypeCode;
                 advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
                 advanceFilter.IsCustomFilter = field.ObjectField.IsCustomFilter;
                 advanceFilter.ObjectFieldName = field.ObjectField.FieldName;
-                advanceFilter.QueryCode = this.currentQuery.Code;
+                //advanceFilter.QueryCode = this.currentQuery.Code;
                 advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
                 advanceFilter.QueryUserId = this.currentQuery.UserId;
                 advanceFilter.ObjectFieldOperator = field.ObjectField.Operator;
                 advanceFilter.Operator = field.Operation.Code;
                 advanceFilter.PredefinedValue = field.TextValue;
                 advanceFilter.IsPredefined = true;
-
+                advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                     advanceFilter.UserId = this.EntityPM.SharedByUserId;
                 }
@@ -1322,18 +1342,18 @@ export class NewViewComponent {
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
         if (this.IsNew) {
-            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                 myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                     window.PreDefinedFilters.push(filter);
                 });
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                this.CurrentSession.CurrentWindow.Close(newQuery.Id);
+                this.CurrentSession.CurrentWindow.Close(newQuery.UniqueCode);
             });
         }
         else {
-            myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+            myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                this.CurrentSession.CurrentWindow.Close(newQuery.Id);
+                this.CurrentSession.CurrentWindow.Close(newQuery.UniqueCode);
             });
         }
     }
@@ -1455,27 +1475,27 @@ export class NewViewComponent {
 
             myService.setServiceArgs(this.serviceArgs);
             textCodesService.setServiceArgs(this.serviceArgs);
-            myService.update(this.EntityPM).subscribe(myResult => {
+            myService.update(this.EntityPM).subscribe((myResult:any) => {
                 if (!SessionLocator.UseCachedData) {
-                    textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
-                        window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
+                        window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeCode != myResult.Result.NameTextCodeCode);
                         window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
                         window.TextCodesTranslations.push(res);
                         window.TranslationsCache.push(res);
                         this.UpdateColumnsAndFilters();
-                        var CurrentQuery = window.Queries.filter(x => x.Id == this.QueryId)[0];
+                        var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
                         CurrentQuery = this.EntityPM;
                     });
                 }
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                         this.UpdateColumnsAndFilters();
-                        var CurrentQuery = window.Queries.filter(x => x.Id == this.QueryId)[0];
+                        var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
                         CurrentQuery = this.EntityPM;
                     });
                 }
 
-                var oldItem = window.Queries.filter(t => t.Id == this.EntityPM.Id)[0];
+                var oldItem = window.Queries.filter(t => t.Code == this.EntityPM.Code)[0];
                 if (oldItem) {
                     var index = window.Queries.indexOf(oldItem);
                     window.Queries.splice(index, 1);
@@ -1501,8 +1521,8 @@ export class NewViewComponent {
         this.removedQueryFilters.forEach((item, key) => {
             if (item != null && item.AdvancedQueryFilterPM != null) {
                 this.GeneralEntitiesArgs.RemovedQueryFilters.push(item.AdvancedQueryFilterPM);
-                window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
-                this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
+                window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.ObjectFieldCode != item.AdvancedQueryFilterPM.ObjectFieldCode);
+                this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != item.AdvancedQueryFilterPM.ObjectFieldCode);
             }
         });
 
@@ -1545,17 +1565,20 @@ export class NewViewComponent {
                 advanceFilter.Tenant = SessionInfo.LoggedUserTenant;
                 advanceFilter.ObjectFieldId = item.ObjectField.Id;
                 advanceFilter.QueryId = this.QueryId;
+                advanceFilter.QueryCode = this.QueryCode;
                 advanceFilter.DataTypeCode = item.ObjectField.DataTypeCode;
                 advanceFilter.DisplayInList = item.ObjectField.DisplayInList;
                 advanceFilter.IsCustomFilter = item.ObjectField.IsCustomFilter;
                 advanceFilter.ObjectFieldName = item.ObjectField.FieldName;
-                advanceFilter.QueryCode = this.currentQuery.Code;
+                //advanceFilter.QueryCode = this.currentQuery.Code;
                 advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
                 advanceFilter.QueryUserId = this.currentQuery.UserId;
                 advanceFilter.ObjectFieldOperator = item.ObjectField.Operator;
                 advanceFilter.Operator = item.Operation.Code;
                 advanceFilter.PredefinedValue = item.TextValue;
                 advanceFilter.IsPredefined = true;
+                advanceFilter.ObjectFieldCode = item.ObjectField.FieldCode;
+                
 
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                     advanceFilter.UserId = this.EntityPM.SharedByUserId;
@@ -1588,7 +1611,7 @@ export class NewViewComponent {
 
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
-        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
             myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                 if (window.PreDefinedFilters.filter(o => o.Id === filter.Id).length == 0) {
                     window.PreDefinedFilters.push(filter);
@@ -1607,7 +1630,7 @@ export class NewViewComponent {
             });
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.CurrentSession.CurrentWindow.Close(this.QueryId);
+            this.CurrentSession.CurrentWindow.Close(this.QueryCode);
         });
     }
 }

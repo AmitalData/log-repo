@@ -31,6 +31,14 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public string AmountInHebrew { get; set; }
         public Image AccountingLogo { get; set; }
         public Image BankLogo { get; set; }
+        public string Telephone { get; set; }
+        public string APPaymentNumber { get; set; }
+        public decimal? TaxDeductionLocalAmount { get; set; }
+        public int? TaxDeductionPercentage { get; set; }
+        public double? AmountInLocalCurrency { get; set; }
+        public string PrintNotes { get; set; }
+        public string AccountDisplayNumber { get; set; }
+        public DateTime? PrintDate { get; set; }
     }
 
     

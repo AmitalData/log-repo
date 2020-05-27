@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Check Representative Type&quot;"
-  Code="&quot;5333&quot;"
-  Name="&quot;Customs.CheckRepresentativeType Query Group&quot;"
+  Code="&quot;CHRT&quot;"
+  Name="&quot;Customs.CheckRepresentativeType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;32b8041d-eb93-4dbb-a9cf-6577a56184e8&quot;"
     FieldName="&quot;Code&quot;"
@@ -313,21 +315,94 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,יבואן&quot;"
+      Inactive="false"
+      LocalName="&quot;יבואן&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,סוכן מכס&quot;"
+      Inactive="false"
+      LocalName="&quot;סוכן מכס&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,רשות מוסמכת&quot;"
+      Inactive="false"
+      LocalName="&quot;רשות מוסמכת&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CheckRepresentativeType&quot;"
+    ObjectTableName="&quot;Customs.CheckRepresentativeType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CheckRepresentativeType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CHRT&quot;"
+    QueryGroupName="&quot;Customs.CheckRepresentativeType&quot;"
+    LocalTextCode="&quot;בדקו סוג הנציג&quot;"
+    TextCode="&quot;Check Representative Types&quot;"
+    TextCodeCode="&quot;Customs.CheckRepresentativeType.Q.CheckRepresentativeTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CHECKREPRESENTATIVETYPE&quot;"
+    IsPackagable="false"
+    FeatureTextCodeCode="&quot;Customs.checkRepresentativeType.Features.Read&quot;"
+    FeatureDefaultText="&quot;Check Representative Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CheckRepresentativeType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CheckRepresentativeType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CheckRepresentativeType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CheckRepresentativeType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CheckRepresentativeType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CheckRepresentativeType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

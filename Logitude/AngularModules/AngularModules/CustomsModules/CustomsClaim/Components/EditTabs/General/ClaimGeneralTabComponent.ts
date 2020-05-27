@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -12,7 +11,7 @@ import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
+import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
@@ -23,11 +22,14 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimGeneralTabComponent.html',
 })
 
 export class ClaimGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public FooterMethods: any;
+
     public DataContext: ClaimGeneralTabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
     public ObjectTableName: string = "Customs.Claim";
@@ -40,23 +42,23 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
-    private IsClientPassportEnabled: boolean = false;
+    IsClientPassportEnabled: boolean = false;
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
-
+    private currentSession=SessionLocator.SelectedSession;
     IsLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntitiesObslist = new ObservableCollection([]);
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
+        this.currentSession.StartBusyIndicator("");
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.currentSession.StopBusyIndicator();
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();
@@ -370,7 +372,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         this.CurrentSearchAddressMode = item.AddressMode;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
             var windowArgs: any = {};
             windowArgs.EntityPM = item.ClientPM;
             windowArgs.Parent = this;
@@ -512,7 +514,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
 
-    CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
+    CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent) {
         if (!this.IsControlEnabled) return;
 
         if (AppTool.IsNullOrEmpty(item.entityPM.TapagNumber)) {

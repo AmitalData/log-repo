@@ -22,6 +22,10 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -64,7 +68,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+            var personalAccessToken = this.GetPersonalKey(); 
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -76,27 +80,31 @@ namespace WebFreight.Web.Helpers
             try
             {
                 // Get the specified work item
-                WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                var s = new StringBuilder();
+                var workitemResult = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations);
+                if (workitemResult != null)
+                {
+                    WorkItem workitem = workitemResult.Result;
+                    var s = new StringBuilder();
 
-                // Output the work item's field values
-                projectNo = workitem.Fields.Where(a => a.Key == "LogitudeProcess.ProjectNumber").Select(a => a.Value).FirstOrDefault();
-                if (isFirst && isOutSide)
-                {
-                    WorkItem workitem_description = witClient.GetWorkItemAsync(Int32.Parse(this.Details.WorkItemId), null, null, WorkItemExpand.Relations).Result;
-                    Description = workitem_description.Fields.Where(a => a.Key == "System.Title").Select(a => a.Value).FirstOrDefault();
-                }
-                if (projectNo == null)
-                {
-                    if (workitem.Relations != null)
+                    // Output the work item's field values
+                    projectNo = workitem.Fields.Where(a => a.Key == "LogitudeProcess.ProjectNumber").Select(a => a.Value).FirstOrDefault();
+                    if (isFirst && isOutSide)
                     {
-                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-
-                        if (relation != null)
+                        WorkItem workitem_description = witClient.GetWorkItemAsync(Int32.Parse(this.Details.WorkItemId), null, null, WorkItemExpand.Relations).Result;
+                        Description = workitem_description.Fields.Where(a => a.Key == "System.Title").Select(a => a.Value).FirstOrDefault();
+                    }
+                    if (projectNo == null)
+                    {
+                        if (workitem.Relations != null)
                         {
-                            isFirst = false;
-                            string last = relation.Url.Split('/').Last();
-                            return this.GetWorkItemById(Int32.Parse(last));
+                            var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
+
+                            if (relation != null)
+                            {
+                                isFirst = false;
+                                string last = relation.Url.Split('/').Last();
+                                return this.GetWorkItemById(Int32.Parse(last));
+                            }
                         }
                     }
                 }
@@ -106,13 +114,30 @@ namespace WebFreight.Web.Helpers
                 VssServiceException vssex = aex.InnerException as VssServiceException;
                 if (vssex != null)
                 {
-                    //Console.WriteLine(vssex.Message);
-                    throw new Exception(vssex.Message);
+                    ///throw new Exception(vssex.Message);
                 }
             }
-
-            return projectNo != null ? projectNo.ToString() : "";
+            return projectNo != null ? projectNo.ToString().Trim() : "";
         }
+
+        private string GetPersonalKey()
+        {
+            string personalAccessKey = "";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    personalAccessKey = setting.TMPersonalAccessToken;
+                }
+
+                scope.Complete();
+            }
+
+            return personalAccessKey;
+        }
+
         private void CheckComputingPartners()
         {
             ICommonDataContext context = CommonDataContext.GetContext(Tenant); ;

@@ -120,5 +120,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
+        public List<string> GetFactTablesNames()
+        {
+            return (from a in repository.webFreightContext.DWObjectTables
+                    where a.Tenant == 0 && a.TypeCode == "Fact"
+                    select a.Name).ToList();
+        }
     }
 }

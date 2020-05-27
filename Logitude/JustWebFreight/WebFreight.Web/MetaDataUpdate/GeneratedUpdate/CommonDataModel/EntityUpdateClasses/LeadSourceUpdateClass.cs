@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class LeadSourceUpdateClass
-   {  
+   {  		
+		public const string HashString = "3e093eec27d2acee659e0a6ad7534f86";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,11 +84,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "LeadSource",
+			      				    IsNew =  false,
 			      				    DBTableName =  "LeadSources",
 			      				    ObjectTableSingular =  "Lead Source",
 			      				    ObjectTablePlural =  "Lead Sources",
-			      				    DefaultText =  "Lead Source",
-			      				    Name =  "LeadSource",
+			      				    DescriptionDefaultText =  "Define the sources that supply you with information about  new customers.",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Id",
@@ -96,34 +103,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  true,
 			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
+			      				    EnableEditFromLOV =  true,
 			      				    SortingByObjectField =  "Name",
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "LeadSource,LeadSources,,Id,Name",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Lead Source",
+			      				    Code =  "LDSR",
+			      				    Name =  "LeadSource",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
-			      				    IsEditable =  true,
-			      				    ClientModuleName =  "Common",
-			      				    Code =  "LDSR",
-			      				    DescriptionDefaultText =  "Define the sources that supply you with information about  new customers.",
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "LeadSource,LeadSources,,Id,Name",
+			      				    HashString =  LeadSourceUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -132,11 +145,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  2,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -147,43 +161,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "LeadSource",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LeadSource",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Code",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
-					  						HelpTextCode =  "Code",
-					  						Code =  "Code",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Code",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -191,12 +208,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "LeadSource",
-					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  60,
-					  						IsCustom =  false,
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  true,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  true,
@@ -207,46 +225,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  1,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "LeadSource",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LeadSource",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Name",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  "Name",
+					  						FullLocalDefaultText =  "שם",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  "Name",
+					  						ListLocalDefaultText =  "שם",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						HelpTextCode =  "Name",
-					  						Code =  "Name",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullLocalDefaultText =  "שם",
-					  						ListLocalDefaultText =  "שם",
-					  						HelpLocalDefaultText =  "שם",
+					  						IsCustom =  false,
+					  						HelpTextCode =  "Name",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -255,11 +275,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -269,43 +290,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "LeadSource",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LeadSource",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search...",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "SearchFields",
-					  						HelpTextCode =  "SearchFields",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "SearchFields",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -314,11 +338,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -329,93 +354,115 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "LeadSource",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LeadSource",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
+					  						Code =  "InActive",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						HelpTextCode =  "InActive",
-					  						Code =  "InActive",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "InActive",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LeadSourceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDSR", Name = "LeadSource" }, queryGroupRepository);
+	        QueryGroup LeadSourceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDSR", Name = "LeadSource" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LeadSourceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "17af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable LeadSourceObjectTable = objectTables.ContainsKey("LeadSource") ? objectTables["LeadSource"] : null;
+            if (LeadSourceObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable LeadSourceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> LeadSourceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LeadSource").ToList();   
+                LeadSourceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode LeadSourceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = @"Lead Sources",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLLEADSOURCES", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.AllLeadSources", NameTextCodeDefaultText = "All Lead Sources", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode LeadSourceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = @"Lead Sources",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LeadSourceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLLEADSOURCES", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.AllLeadSources", NameTextCodeDefaultText = "All Lead Sources", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LeadSourceObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadSourceTextCode_0.Id, Code = "All Lead Sources",  QueryGroupCode = "LDSR", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadSourceObjectTable.Id, QuerySection = "LeadSource", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LeadSourceFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadSourceTextCode_0.Id, NameTextCodeCode = LeadSourceTextCode_0.Code, ObjectTableName = "LeadSource", Code = "All Lead Sources",  QueryGroupCode = "LDSR", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadSourceObjectTable.Id, QuerySection = "LeadSource", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LeadSourceFeature_0.Id,FeatureUniqeCode= LeadSourceFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id, IndexOrder = 0, ObjectFieldId = LeadSourceObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == LeadSourceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LeadSource.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id, IndexOrder = 1, ObjectFieldId = LeadSourceObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == LeadSourceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LeadSource.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable LeadSourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> LeadSourceObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LeadSource").ToList();
+		   //List<ObjectField> LeadSourceObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LeadSource").ToList();
 		       
 	      
 
 	         Screen LeadSourceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LeadSource.HeaderScreen", Name = "Header Screen", ObjectTableId = LeadSourceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField LeadSourceLeadSourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LeadSourceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = LeadSourceHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LeadSourceLeadSourceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceHeaderScreenScreen0.Id,ScreenCode = LeadSourceHeaderScreenScreen0.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    LeadSourceObjectTable.HeaderScreenId = LeadSourceHeaderScreenScreen0.Id;
+		    LeadSourceObjectTable.HeaderScreenCode = LeadSourceHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
-	         Screen LeadSourceGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LeadSource.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LeadSourceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen LeadSourceGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LeadSource.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LeadSourceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LeadSourceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = LeadSourceGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = LeadSourceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = LeadSourceGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LeadSourceLeadSourceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LeadSourceGeneralTabScreenScreen1.Id,ScreenCode = LeadSourceGeneralTabScreenScreen1.Code, ObjectFieldCode = "LeadSource.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -426,19 +473,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable LeadSourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode LeadSourceGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.General", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LeadSourceGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.General", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LeadSourceObjectTable);
  
                  
 			   TextCode LeadSourceEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.Events", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LeadSourceEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.Events", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LeadSourceObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LeadSourceGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LeadSourceObjectTable.Id, TabNameTextCodeId = LeadSourceGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LeadSourceGeneralFeature_TH0.Id,FeatureUniqeCode = LeadSourceGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LeadSourceObjectTable.Id, TabNameTextCodeId = LeadSourceGeneralTextCode_TH0.Id, TabNameTextCodeCode = LeadSourceGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LeadSourceEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = LeadSourceObjectTable.Id, TabNameTextCodeId = LeadSourceEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "LSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LeadSourceEventsFeature_TH1.Id,FeatureUniqeCode = LeadSourceEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = LeadSourceObjectTable.Id, TabNameTextCodeId = LeadSourceEventsTextCode_TH1.Id, TabNameTextCodeCode = LeadSourceEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -446,10 +493,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable LeadSourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature LeadSourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.PackageFeature", NameTextCodeDefaultText = "LeadSource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature LeadSourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.PackageFeature", NameTextCodeDefaultText = "LeadSource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);    
 	    
 		}
 
@@ -459,10 +506,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPLS",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Lead Source Updated",
                 EnglishName =  "Lead Source Updated",
+                LocalName =  "Lead Source Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -478,10 +525,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRLS",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     public partial class ReconcileExternalPagesExtendedController : ApiController
     {
         
-        public HttpResponseMessage GetBankPageByPageNo(int pageNumber, string bankAccountId)
+        public HttpResponseMessage GetPageByNumber(int pageNumber, string entityId, string objectTableName)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetBankPageByPageNo(pageNumber, bankAccountId, tenant);
+                var myPage = query.GetPageByNumber(pageNumber, entityId, objectTableName, tenant);
         
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -84,7 +84,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetPrevPageByPageNo(int pageNumber, string bankAccountId)
+        public HttpResponseMessage GetPreviousPageByNumber(int pageNumber, string entityId, string objectTableName)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetPrevPageNoByPageNo(pageNumber, bankAccountId, tenant);
+                var myPage = query.GetPreviousPageByNumber(pageNumber, entityId, objectTableName, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -113,7 +113,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetDraftPage(string bankAccountId)
+        public HttpResponseMessage GetDraftPage(string entityId, string objectTableName)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetDraftPage(bankAccountId, tenant);
+                var myPage = query.GetDraftPage(entityId, objectTableName, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
         [HttpGet]
-        public HttpResponseMessage getExternalReoncilioationsByFilter(string bankAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage getExternalReoncilioationsByFilter(string objectTableId, string entityId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -230,9 +230,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var qs = new ReconcileExternalPageListQueryService(accountingContext);
 
-                var callback = qs.GetOpenReconciliationFilterCallBack(queryOperations, bankAccountId, tenant);
+                var callback = qs.GetOpenReconciliationFilterCallBack(queryOperations, objectTableId, entityId, tenant);
 
-                var openReconciliation = qs.getExternalReoncilioationsByFilter(queryOperations, bankAccountId, tenant);
+                var openReconciliation = qs.getExternalReoncilioationsByFilter(queryOperations, objectTableId, entityId, tenant);
 
 
                 ServiceResponse response = new ServiceResponse();
@@ -291,7 +291,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [HttpGet]
-        public HttpResponseMessage GetCheckLastApprovedBankPageAndReconciledLine(string reconcileExternalPageId)
+        public HttpResponseMessage GetCheckLastApprovedBankPageAndReconciledLine(string reconcileExternalPageId, string objectTableName)
         {
             try
             {
@@ -302,7 +302,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 ReconcileExternalPagePM reconcileExternalPage = reconcileExternalPageQueryService.GetSingle(reconcileExternalPageId, false, false);
-                bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedBankPage(reconcileExternalPage, tenant);
+                bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedPage(reconcileExternalPage, objectTableName, tenant);
                 ServiceResponse response = new ServiceResponse();
                 ContactPM loggedContact = GetLoggedContact(authToken.Email, tenant);
                 bool showlocal = !loggedContact.DontShowLocal;
@@ -338,32 +338,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ReconcileExternalPagePM reconcileExternalPage = GetReconcileExternalBankPage(reconcileExternalPageId, tenant);
                 ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
 
-                bool OlderCancelledBankPage = false;
+                bool uncancelledPageExist = false;
                 if (reconcileExternalPage.StatusCode == "3")
                 {
-                     OlderCancelledBankPage = reconcileExternalPageQueryService.CheckFirstCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
+                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledPage(reconcileExternalPage.EntityId,"BankAccount", reconcileExternalPage.PageNo, tenant);
                 }
                 ServiceResponse response = new ServiceResponse();
-               
-                bool showlocal = GetShowLocal(authToken.Email, tenant);
-
-                if (OlderCancelledBankPage)
-                {
-                    response.Result = null;
-                }
-                else
-                {
-                    response.Result =  TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", tenant, showlocal);
-                }
-
+                response.Result = SetResponseResult(uncancelledPageExist, response, authToken);             
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
@@ -409,6 +396,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private AuthenticationToken GetAuthenticationToken()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+           return AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+        }
+         private string SetResponseResult(bool exist, ServiceResponse response,AuthenticationToken authToken)
+        {
+            bool showlocal = GetShowLocal(authToken.Email, authToken.Tenant);
+            if (exist)
+            {
+              return null;
+            }
+            else
+            {
+               return TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", authToken.Tenant, showlocal);
             }
         }
 

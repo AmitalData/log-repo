@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<AuthorizedSignerPermitDetails> GetAll()
        {
-		    var all = new List<AuthorizedSignerPermitDetails>(); 
+		    var all = new List<AuthorizedSignerPermitDetails>();  
+            all.Add(new AuthorizedSignerPermitDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,כללי", 
+                Inactive = false, 
+                LocalName = "כללי", 
+			});
+			 
+            all.Add(new AuthorizedSignerPermitDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,כספים", 
+                Inactive = false, 
+                LocalName = "כספים", 
+			});
+			 
+            all.Add(new AuthorizedSignerPermitDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,יצואן מאושר", 
+                Inactive = false, 
+                LocalName = "יצואן מאושר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(AuthorizedSignerPermit newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(AuthorizedSignerPermit rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

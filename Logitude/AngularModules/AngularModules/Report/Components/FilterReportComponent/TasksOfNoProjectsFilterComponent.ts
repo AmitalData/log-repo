@@ -7,7 +7,6 @@ import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
     selector: 'TasksOfNoProjectsFilterComponent',
     templateUrl: './TasksOfNoProjectsFilterComponent.html',
     inputs: ['ReportsPreview']

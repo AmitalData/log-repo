@@ -61,6 +61,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.StateName = entityPM.StateName;
             entityPOCO.IsInternationalPartner = entityPM.IsInternationalPartner;
             entityPOCO.IsAutonomy = entityPM.IsAutonomy;
+            entityPOCO.CreatedByPartner = entityPM.CreatedByPartner;
 
             BuildSearchFields(entityPM, entityPOCO);
         }

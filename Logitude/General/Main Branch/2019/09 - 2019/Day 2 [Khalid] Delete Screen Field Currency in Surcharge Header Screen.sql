@@ -1,0 +1,1 @@
+delete from ScreenFields where ScreenId=(Select Id from Screens where Code ='Tariff.SurchagesHeaderScreen')and ObjectFieldId = ( Select Id from ObjectFields where FieldName='CurrencyId' and ObjectTableId=(Select Id from ObjectTables where Name='Tariff'))

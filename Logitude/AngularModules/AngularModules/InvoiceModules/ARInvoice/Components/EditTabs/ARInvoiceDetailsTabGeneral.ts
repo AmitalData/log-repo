@@ -40,7 +40,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceDetailsTabGeneral.html',
 })
 
@@ -105,7 +105,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     private myCardListService: CardListService;
-    private myCurrencyListService: CurrencyListService;
+    public myCurrencyListService: CurrencyListService;
     private myPaymentTermListService: PaymentTermListService;
     public myVatTypeListService: VatTypeListService;
     public myChargesTypeListService: ChargesTypeListService;
@@ -132,14 +132,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public VATColumnWidth: number = 100;
     public RateColumnWidth: number = 100;
     SetGridColumns() {
-        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
+        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmountListLable").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
 
         var invoiceAmountHeader = null;
         var isInvoiceAmountHeaderVisible = false;
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId != SessionLocator.LocalCurrencyId) {
                 isInvoiceAmountHeaderVisible = true;
-                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountInvoice").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
+                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountListLable").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
             }
         }
 
@@ -1286,8 +1286,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var line: ARInvoiceLinePM = new ARInvoiceLinePM(null);
         line.Tenant = SessionLocator.TenantPM.Id;
         line.ARInvoiceId = this.EntityPM.Id;
-        line.ForiegnCurrencyId = this.InvoiceCurrencyId;
-        line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
+       line.ForiegnCurrencyId = "";
+        line.ForiegnCurrencyCode = "";
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
         line.LineActionCode = "1";
         var logWindow = new LogitudeWindow();
@@ -1333,6 +1333,11 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.ReadVatTypeData();
         this.ComputeRelativeRateDate();
         this.SetUIProperties();
+        if (this.EntityPM.ForiegnCurrencyCode != null) {
+            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.EntityPM.ForiegnCurrencyCode);
+        } else {
+            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", "");
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -1441,12 +1446,22 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.EntityReference = newValue;
         }
     }
-
+    public AmountForiegnLabel: string;
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
             this.EntityPM.ForiegnCurrencyId = newValue;
             this.SetCurrencyRateData();
+            this.fatherComponent.myCurrencyListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: CurrencyList = myResponse.Result;
+                    if (list != null) {
+                        this.ForiegnCurrencyCode = list.Code;
+                       
+                        this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.ForiegnCurrencyCode);
+                    }
+                }
+            });
         }
     }
 
@@ -1476,6 +1491,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     set ForiegnCurrencyCode(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyCode != newValue) {
             this.EntityPM.ForiegnCurrencyCode = newValue;
+          
         }
     }
 
@@ -1643,7 +1659,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.EntityPM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.EntityPM.VatPercentage != newValue) {
-            this.EntityPM.VatPercentage = AppTool.Round(newValue, 2);
+            this.EntityPM.VatPercentage = AppTool.Round(newValue, 3);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
         }
@@ -1657,9 +1673,11 @@ export class ARInvoiceLineItem extends BaseComponent {
         var myColor: string = "#282E30";
         var isUpdateVisible = false;
 
+        var pipe: NumbersPipe = new NumbersPipe();
+
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
             if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
+                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
                 myColor = "#282E30";
                 isUpdateVisible = false;
             }
@@ -1780,6 +1798,9 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
+    
+ 
+ 
     ReCalculateTotals() {
         if (this.Exists) {
             this.fatherComponent.ComputeTotals();
@@ -1848,18 +1869,20 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
     }
     OnInvoiceExchangeRateChanged() {
-        if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
-            this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+        if (this.fatherComponent.IsEditingEnabled) {
+            if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
+                this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
+            }
+
+            else {
+                this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
+            }
+
+            this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
+
+            this.ComputeRelativeRateDate();
+            this.CalculateInvoiceCurrencyAmount();
         }
-
-        else {
-            this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
-        }
-
-        this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
-
-        this.ComputeRelativeRateDate();
-        this.CalculateInvoiceCurrencyAmount();
     }
     CalculateInvoiceCurrencyAmount() {
         if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {

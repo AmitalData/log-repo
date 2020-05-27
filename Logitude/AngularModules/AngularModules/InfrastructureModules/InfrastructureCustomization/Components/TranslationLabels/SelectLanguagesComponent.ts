@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {CommonDomainService, TranslationHeader} from '../../../../Common/Services/CommonDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SelectLanguagesComponent.html',
 })
 

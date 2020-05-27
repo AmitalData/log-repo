@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public class AutomaticExternalReconcileService
     {
         public AutoSelectedExternalReconciliationLines AutomaticExternalReconcile(bool amountReconcile, bool referenceReconcile, bool refDateReconcile,
-            string bankAccountId, string glAccountId, QueryOperations transactionQueryOperations, QueryOperations bankPageLineQueryOperations, int tenant)
+            string objectTableId, string entityId, string glAccountId, QueryOperations transactionQueryOperations, QueryOperations bankPageLineQueryOperations, int tenant)
         {
 
             int resultedArrayLimit = 100;
@@ -53,14 +53,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             //smoke validation
             if (amountReconcile == false && referenceReconcile == false && refDateReconcile == false) throw new ApplicationException("Please select at least one choice");
-            if (bankAccountId == null) throw new ApplicationException("bank Account is not provided !!!");
+            if (objectTableId == null) throw new ApplicationException("objectTableId is not provided !!!");
             if (glAccountId == null) throw new ApplicationException("gl Account is not provided !!!");
             //
 
 
             // get filterd lines
             var accountingContext = AccountingContext.GetContext(tenant);
-            List<MyPageLine> filteredPageLines = GetFilteredPageLines(bankPageLineQueryOperations, bankAccountId, tenant);
+            List<MyPageLine> filteredPageLines = GetFilteredPageLines(bankPageLineQueryOperations, objectTableId, entityId, tenant);
             List<MyLedgerTransaction> filteredLedgerTransactions = GetFilteredLedgerTransactions(transactionQueryOperations, glAccountId, tenant);
 
             // prepare result array
@@ -346,13 +346,13 @@ namespace Logitude.Accounting.BL.CoreBL
             return result;
         }
 
-        List<MyPageLine> GetFilteredPageLines(QueryOperations bankPageLineQueryOperations, string bankAccountId, int tenant)
+        List<MyPageLine> GetFilteredPageLines(QueryOperations bankPageLineQueryOperations, string objectTableId, string entityId, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconcileExternalPageListQueryService query = new ReconcileExternalPageListQueryService(accountingContext);
 
             // Get list query with query filters 
-            IQueryable<ReconcileExternalPageLineList> iQuerableList = query.getPageLinesByFilter(bankPageLineQueryOperations, bankAccountId, tenant);
+            IQueryable<ReconcileExternalPageLineList> iQuerableList = query.getPageLinesByFilter(bankPageLineQueryOperations, objectTableId, entityId, tenant);
 
             // Ordering
             iQuerableList = iQuerableList.OrderByDescending(a => a.ReferenceDate);
@@ -518,6 +518,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //StatusLocalName = xxxx,
 
             };
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
 
             ReconcileExternalPagePM bankPage = new ReconcileExternalPagePM()
             {
@@ -528,7 +529,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = DateTime.Now,
 
                 GLAccountId = glAccountId,
-                BankAccountId = bankAccountId,
+                EntityId = bankAccountId,
+                ObjectTableId = bankAccountObjectTable.Id,
                 EntryTypeCode = "1", // 1- Manual
 
                 StartBalance = lastPageClosedAmount.Value,
@@ -815,7 +817,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-
+        private ObjectTable GetBankAccountObjectTable(int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable bankAccountObjectTable = objectTableRepository.GetObjectTableByName("BankAccount", tenant, false);
+            if (bankAccountObjectTable == null)
+                throw new ApplicationException("No objectfield for BankAccount!");
+            return bankAccountObjectTable;
+        }
     }
 
 

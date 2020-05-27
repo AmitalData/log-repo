@@ -11,20 +11,21 @@ export class DocsOutTabComponent {
     }
 
     public DocsOutTab() {
+
         this.Helper.WaitByIdAndClick('Shipment.TH.DocsOut');
+       this.Helper.WaitBusyIndicator();
+
     }
 
     QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
-        this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
+         this.Helper.WaitBusyIndicator();
+         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
     }
 
     UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {
-        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+         //this.Helper.WaitBusyIndicator();
+         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
         this.Helper.WaitByIdAndClick(docOutRow);
         this.Helper.WaitByIdAndClick(docOutId);
     }
-
-
-
-
 }

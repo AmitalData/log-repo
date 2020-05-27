@@ -25,8 +25,8 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 
-@Component({
-    moduleId: module.id,
+@Component({ 
+    
     templateUrl: './AddEditCustomsDocumentComponent.html',
 })
 

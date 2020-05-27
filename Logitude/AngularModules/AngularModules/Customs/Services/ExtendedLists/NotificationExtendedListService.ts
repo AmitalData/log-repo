@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -15,11 +16,11 @@ import {SelectedNotifications} from '../../DataContract/SelectedNotifications';
 
 export class NotificationExtendedListService{
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<NotificationList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationListExtended';
     }
 
@@ -56,13 +57,11 @@ export class NotificationExtendedListService{
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<NotificationList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -76,7 +75,7 @@ export class NotificationExtendedListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -114,17 +113,15 @@ export class NotificationExtendedListService{
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var entity = this.MapJsonToEntity(serviceResponse.Result);
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -134,7 +131,7 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -149,8 +146,8 @@ export class NotificationExtendedListService{
           
 
             return this._http.put(this._apiUrl + '/PutNotificationsStatus/', JSON.stringify(notification),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var pm = res;
                     if (pm) {
                        
                         serviceResponse.Result = pm;
@@ -159,7 +156,7 @@ export class NotificationExtendedListService{
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -171,7 +168,7 @@ export class NotificationExtendedListService{
     PutNotificationBadjCount(notification: NotificationPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -186,8 +183,8 @@ export class NotificationExtendedListService{
 
 
             return this._http.put(this._apiUrl + '/PutNotificationBadjCount/', JSON.stringify(notification),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var pm = res;
                     if (pm) {
 
                         serviceResponse.Result = pm;
@@ -196,7 +193,7 @@ export class NotificationExtendedListService{
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -209,12 +206,12 @@ export class NotificationExtendedListService{
 
         var url = this._apiUrl + '/GetTopTenNotifications';
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<NotificationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -228,7 +225,7 @@ export class NotificationExtendedListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }  
 
@@ -238,15 +235,15 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetOpenNotificationsCount?' + 'userId=' + userId;
 
-            return this._http.get(callURL, { headers: authHeader }).map(response => {
+            return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -260,15 +257,15 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetNotificationsBadjCount?' + 'userId=' + userId;
 
-            return this._http.get(callURL, { headers: authHeader }).map(response => {
+            return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -277,7 +274,7 @@ export class NotificationExtendedListService{
     }
 
     PutNotificationStatus(selectedNotifications: SelectedNotifications) {
-    return Observable.defer(() => {
+    return defer(() => {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -292,9 +289,9 @@ export class NotificationExtendedListService{
 
 
         return this._http.put(this._apiUrl + '/PutNotificationStatus/', JSON.stringify(selectedNotifications),
-            { headers: authHeader }).map((res) => {
+            ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = res.json();
+                serviceResponse.Result = res;
                 var _mappedListsArray: Array<NotificationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -308,7 +305,7 @@ export class NotificationExtendedListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     });
 
     }

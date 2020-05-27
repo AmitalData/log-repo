@@ -41,6 +41,8 @@ using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Reconcile;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -186,26 +188,25 @@ tenant);
 
 
 
-        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<LedgerTransactionList> OpenRecilationDrafts)
+        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<string> transactionsIds)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
-                //var accountingContext = AccountingContext.GetContext(tenant);
-                //LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
-                if (OpenRecilationDrafts == null || OpenRecilationDrafts.Count == 0)
-                {
-                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
-                }
+
 
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                var qs = new LedgerTransactionListQueryService(accountingContext);
+                LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(accountingContext);
+                List<LedgerTransactionList> transactions = transactionsQuery.GetTransactionsByIds(transactionsIds);
 
-                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), OpenRecilationDrafts.First().Tenant);
-                us.DelSertOpenRecilationDrafts(OpenRecilationDrafts);
+
+                if (transactions == null || transactions.Count == 0)
+                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
+
+                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                us.DelSertOpenRecilationDrafts(transactions);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
             }
@@ -250,11 +251,10 @@ tenant);
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
 
-                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -263,7 +263,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openReconciliation;
+                response.Result = openTransactions;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -274,6 +274,8 @@ tenant);
             }
 
         }
+
+      
         [HttpGet]
         public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
@@ -288,23 +290,23 @@ tenant);
 
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenLedgerTransactions(queryOperations, gLAccountId, TransferGlAccountId, tenant);
+                int transactionsCount = transactionQuery.GetOpenLedgerTransactionsCount(queryOperations, gLAccountId, TransferGlAccountId, tenant);
 
-                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
-                GenericCallBack callback_transfer = transactionQuery.GetReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant, false);
+                //GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
+                //GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
-                List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
 
-                openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
+                //List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                //List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
 
-                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+                //openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
+
+                //openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
-                {
-                    int count = callback.TotalRecord;
-                    response.Count = count;
-                }
+                    response.Count = transactionsCount;
 
                 response.Result = openReconciliation;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -409,7 +411,8 @@ tenant);
 
                         if (field.FieldName == "DueDate")
                         {
-                            value1 = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            var today = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            value1 = new DateTime(today.Year, today.Month, today.Day, 0, 0, 0, 0);
                         }
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
@@ -643,6 +646,32 @@ tenant);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, reco);
 
                 return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetSingleWithoutLines(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Reconciliation", "READ", authToken.Tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                ReconciliationQueryService reconciliationQuery = new ReconciliationQueryService(MyContext);
+                reconciliationQuery.InitializeSettings();
+                ReconciliationPM reconciliationPM = reconciliationQuery.GetSingle(id, false, false);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reconciliationPM);
             }
             catch (Exception ex)
             {

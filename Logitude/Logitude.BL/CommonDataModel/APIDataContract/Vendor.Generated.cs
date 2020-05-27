@@ -12,14 +12,16 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public class Vendor
+    public partial class Vendor
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public string EnglishName { get; set; }
@@ -36,7 +38,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public GLAccount GLAccount { get; set; }
     
+	[XmlAttribute]
     public string Code { get; set; }
+    
+	[XmlAttribute]
+    public string PartnerCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

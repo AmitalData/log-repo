@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
-   {  
+   {  		
+		public const string HashString = "f59d817416ec3afb7e882d60638d382d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,12 +86,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "WarehouseEntry",
 			      				    IsNew =  false,
 			      				    DBTableName =  "WarehouseEntries",
-			      				    OldDBTableName =  "WarehouseEntries",
 			      				    ObjectTableSingular =  "WarehouseEntry",
 			      				    ObjectTablePlural =  "WarehouseEntries",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
+			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  true,
 			      				    IsEditable =  false,
@@ -123,24 +123,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Warehouse",
 			      				    ServerModuleName =  "Warehouse",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  WarehouseEntryUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -188,17 +189,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -244,17 +246,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -302,17 +305,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -358,17 +362,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntryNumber",
-					  						OldFieldName =  "EntryNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -417,17 +422,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -475,17 +481,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -530,17 +537,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -553,7 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -588,17 +596,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "WarehouseId",
-					  						OldFieldName =  "WarehouseId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Warehouse",
@@ -646,17 +655,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExpectedEntryDate",
-					  						OldFieldName =  "ExpectedEntryDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -704,17 +714,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActualEntryDate",
-					  						OldFieldName =  "ActualEntryDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -763,17 +774,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ReceivedBy",
-					  						OldFieldName =  "ReceivedBy",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -822,17 +834,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SpecialInstruction",
-					  						OldFieldName =  "SpecialInstruction",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -881,17 +894,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WarehouseEntryStatus",
@@ -939,17 +953,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalPieces",
-					  						OldFieldName =  "TotalPieces",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -997,17 +1012,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalGrossWeight",
-					  						OldFieldName =  "TotalGrossWeight",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1057,17 +1073,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "GrossWeightUnitCode",
-					  						OldFieldName =  "GrossWeightUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1115,17 +1132,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalVolume",
-					  						OldFieldName =  "TotalVolume",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1175,17 +1193,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
-					  						OldFieldName =  "VolumeUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1233,17 +1252,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1292,17 +1312,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerRef1",
-					  						OldFieldName =  "CustomerRef1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1347,17 +1368,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerRef2",
-					  						OldFieldName =  "CustomerRef2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1402,17 +1424,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HouseNumber",
-					  						OldFieldName =  "HouseNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1461,17 +1484,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MasterNumber",
-					  						OldFieldName =  "MasterNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1520,17 +1544,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "WarehouseEntryPackages",
-					  						OldFieldName =  "WarehouseEntryPackages",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1576,17 +1601,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "WarehouseName",
-					  						OldFieldName =  "WarehouseName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1635,17 +1661,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1694,17 +1721,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "References",
-					  						OldFieldName =  "References",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1749,17 +1777,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1808,17 +1837,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DimensionsUnitCode",
-					  						OldFieldName =  "DimensionsUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1863,17 +1893,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentNumberWithType",
-					  						OldFieldName =  "ShipmentNumberWithType",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1918,17 +1949,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentLevelCode",
-					  						OldFieldName =  "ShipmentLevelCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentLevel",
@@ -1974,17 +2006,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -2029,23 +2062,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FromPortId",
-					  						OldFieldName =  "FromPortId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -2093,17 +2127,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ToPortId",
-					  						OldFieldName =  "ToPortId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -2151,17 +2186,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TruckerId",
-					  						OldFieldName =  "TruckerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2207,17 +2243,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TruckerReference",
-					  						OldFieldName =  "TruckerReference",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2262,17 +2299,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipperId",
-					  						OldFieldName =  "ShipperId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2318,17 +2356,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DirectionId",
-					  						OldFieldName =  "DirectionId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Direction",
@@ -2373,23 +2412,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "DirectionIdListLable",
 					  						ListLableDefaultText =  "Direction",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentTypeId",
-					  						OldFieldName =  "ShipmentTypeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentType",
@@ -2435,17 +2475,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntryReference",
-					  						OldFieldName =  "EntryReference",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2494,17 +2535,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2552,17 +2594,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Origin",
-					  						OldFieldName =  "Origin",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2611,17 +2654,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Destination",
-					  						OldFieldName =  "Destination",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2670,17 +2714,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierName",
-					  						OldFieldName =  "MainCarriageCarrierName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2725,17 +2770,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Routing",
-					  						OldFieldName =  "Routing",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2780,17 +2826,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityDate",
-					  						OldFieldName =  "ActivityDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2835,17 +2882,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityTypeName",
-					  						OldFieldName =  "ActivityTypeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2890,17 +2938,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityByUserName",
-					  						OldFieldName =  "ActivityByUserName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2945,17 +2994,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DirectionName",
-					  						OldFieldName =  "DirectionName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3000,17 +3050,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransportModeName",
-					  						OldFieldName =  "TransportModeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3055,17 +3106,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConnectedToShipment",
-					  						OldFieldName =  "ConnectedToShipment",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3110,17 +3162,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FromAddressId",
-					  						OldFieldName =  "FromAddressId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3165,17 +3218,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ToAddressId",
-					  						OldFieldName =  "ToAddressId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3220,17 +3274,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConsigneeId",
-					  						OldFieldName =  "ConsigneeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3276,17 +3331,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipperReference1",
-					  						OldFieldName =  "ShipperReference1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3331,17 +3387,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConsigneeReference1",
-					  						OldFieldName =  "ConsigneeReference1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3386,17 +3443,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConsigneeReference2",
-					  						OldFieldName =  "ConsigneeReference2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3441,17 +3499,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipperReference2",
-					  						OldFieldName =  "ShipperReference2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3496,17 +3555,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipperName",
-					  						OldFieldName =  "ShipperName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3553,17 +3613,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConsigneeName",
-					  						OldFieldName =  "ConsigneeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3610,17 +3671,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedEntries",
-					  						OldFieldName =  "CreatedEntries",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3665,17 +3727,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EnterredEntries",
-					  						OldFieldName =  "EnterredEntries",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3720,17 +3783,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Manufacturer",
-					  						OldFieldName =  "Manufacturer",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3778,17 +3842,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FromPartnerId",
-					  						OldFieldName =  "FromPartnerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3833,17 +3898,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ToPartnerId",
-					  						OldFieldName =  "ToPartnerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3888,17 +3954,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ChargeableWeightUnitCode",
-					  						OldFieldName =  "VolumetricWeightUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3943,10 +4010,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3972,6 +4041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalVolumetricWeight",
 					  						ListPropertyPath =  "TotalVolumetricWeight",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4001,251 +4071,781 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastStatusUpdateDate",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastStatusUpdateDate",
+					  						ListPropertyPath =  "LastStatusUpdateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastStatusUpdateDate",
+					  						DefaultText =  "Status Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MasterHouse",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MasterHouse",
+					  						ListPropertyPath =  "MasterHouse",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MasterHouse",
+					  						DefaultText =  "Master/House",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EntryReferencesAndDate",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  300,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EntryReferencesAndDate",
+					  						ListPropertyPath =  "EntryReferencesAndDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EntryReferencesAndDate",
+					  						DefaultText =  "Entry References/Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ConnectedTo",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ConnectedTo",
+					  						ListPropertyPath =  "ConnectedTo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ConnectedTo",
+					  						DefaultText =  "ConnectedTo",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Ratio",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Ratio",
+					  						ListPropertyPath =  "Ratio",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  3,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Ratio",
+					  						DefaultText =  "Ratio",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ToTypeCode",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ToTypeCode",
+					  						ListPropertyPath =  "ToTypeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ToTypeCode",
+					  						DefaultText =  "To Type Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FromTypeCode",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FromTypeCode",
+					  						ListPropertyPath =  "FromTypeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FromTypeCode",
+					  						DefaultText =  "From Type Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FromCountryId",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Country",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FromCountryId",
+					  						ListPropertyPath =  "FromCountryId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FromCountryId",
+					  						DefaultText =  "To Country",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ToCountryId",
+					  						ObjectTableName =  "WarehouseEntry",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Country",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ToCountryId",
+					  						ListPropertyPath =  "ToCountryId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ToCountryId",
+					  						DefaultText =  "To Country",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup WarehouseEntryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b972", Name = "WarehouseEntry Query Group" }, queryGroupRepository);
-						QueryGroup WarehouseEntryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d621", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup WarehouseEntryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b972", Name = "WarehouseEntry Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup WarehouseEntryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d621", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable WarehouseEntryObjectTable = objectTables.ContainsKey("WarehouseEntry") ? objectTables["WarehouseEntry"] : null;
+            if (WarehouseEntryObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable WarehouseEntryObjectTable = objectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> WarehouseEntryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseEntry").ToList();   
+                WarehouseEntryObjectTable = objectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode WarehouseEntryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.CreatedEntriesQuery", DefaultText = @"Created Entries",LocalDefaultText = "Created Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.CreatedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.CreatedEntriesQuery", NameTextCodeDefaultText = "CreatedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode WarehouseEntryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.CreatedEntriesQuery", DefaultText = @"Expected Arrival Entries",LocalDefaultText = "Expected Arrival Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseEntryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.CreatedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.CreatedEntriesQuery", NameTextCodeDefaultText = "CreatedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseEntryObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode WarehouseEntryTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.EnteredEntriesQuery", DefaultText = @"Entered Entries",LocalDefaultText = "Entered Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.EnteredEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.EnteredEntriesQuery", NameTextCodeDefaultText = "EnteredEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode WarehouseEntryTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.EnteredEntriesQuery", DefaultText = @"Entered Entries",LocalDefaultText = "Entered Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseEntryFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.EnteredEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.EnteredEntriesQuery", NameTextCodeDefaultText = "EnteredEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseEntryObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode WarehouseEntryTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.AllEntriesQuery", DefaultText = @"All Entries",LocalDefaultText = "All Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.AllEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.AllEntriesQuery", NameTextCodeDefaultText = "AllEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode WarehouseEntryTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.AllEntriesQuery", DefaultText = @"All Entries",LocalDefaultText = "All Entries", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseEntryFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.AllEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.AllEntriesQuery", NameTextCodeDefaultText = "AllEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseEntryObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode WarehouseEntryTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.ConnectedEntriesQuery", DefaultText = @"Connected to Shipments",LocalDefaultText = "Connected to Shipments", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.ConnectedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.ConnectedEntriesQuery", NameTextCodeDefaultText = "ConnectedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode WarehouseEntryTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.ConnectedEntriesQuery", DefaultText = @"Connected to Shipments",LocalDefaultText = "Connected to Shipments", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseEntryFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.ConnectedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.ConnectedEntriesQuery", NameTextCodeDefaultText = "ConnectedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseEntryObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode WarehouseEntryTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.NotConnectedEntriesQuery", DefaultText = @"Not Connected to Shipments",LocalDefaultText = "Not Connected to Shipments ", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.NotConnectedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.NotConnectedEntriesQuery", NameTextCodeDefaultText = "NotConnectedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode WarehouseEntryTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.Q.NotConnectedEntriesQuery", DefaultText = @"Not Connected to Shipments",LocalDefaultText = "Not Connected to Shipments ", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseEntryFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Q.NotConnectedEntriesQuery", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.NotConnectedEntriesQuery", NameTextCodeDefaultText = "NotConnectedEntriesQuery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseEntryObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CreatedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_0.Id, Code = "CreatedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CreatedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_0.Id, NameTextCodeCode = WarehouseEntryTextCode_0.Code, ObjectTableName = "WarehouseEntry", Code = "CreatedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_0.Id,FeatureUniqeCode= WarehouseEntryFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CreatedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseEntry.TransportModeId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseEntry.DirectionId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseEntry.EntryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseEntry.EntryReference" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseEntry.WarehouseName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseEntry.MasterNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 6, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseEntry.HouseNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 7, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseEntry.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 8, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 175 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseEntry.ActualEntryDate" , ColumnWidth = 175 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 9, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseEntry.Origin" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 10, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseEntry.Destination" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 11, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ReceivedBy" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseEntry.ReceivedBy" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 12, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "WarehouseEntry.Notes" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn CreatedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "WarehouseEntry.SpecialInstruction" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseEntry.CreatedEntries", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedEntriesQueryQuery.Id,QueryCode = CreatedEntriesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query EnteredEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_1.Id, Code = "EnteredEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 1, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query EnteredEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_1.Id, NameTextCodeCode = WarehouseEntryTextCode_1.Code, ObjectTableName = "WarehouseEntry", Code = "EnteredEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 1, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_1.Id,FeatureUniqeCode= WarehouseEntryFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn EnteredEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseEntry.TransportModeId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseEntry.DirectionId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseEntry.EntryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseEntry.EntryReference" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseEntry.WarehouseName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseEntry.MasterNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 6, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseEntry.HouseNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 7, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseEntry.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 8, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 175 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseEntry.ActualEntryDate" , ColumnWidth = 175 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 9, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseEntry.Origin" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 10, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseEntry.Destination" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 11, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ReceivedBy" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseEntry.ReceivedBy" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 12, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 191 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "WarehouseEntry.Notes" , ColumnWidth = 191 }, addedQueryColumns);
 
-			 QueryColumn EnteredEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EnteredEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "WarehouseEntry.SpecialInstruction" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = EnteredEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseEntry.EnterredEntries", PredefinedValue = "true",PredefinedValue2 = null, QueryId = EnteredEntriesQueryQuery.Id,QueryCode = EnteredEntriesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_2.Id, Code = "AllEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 2, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_2.Id, NameTextCodeCode = WarehouseEntryTextCode_2.Code, ObjectTableName = "WarehouseEntry", Code = "AllEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 2, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_2.Id,FeatureUniqeCode= WarehouseEntryFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseEntry.TransportModeId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseEntry.DirectionId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseEntry.EntryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseEntry.EntryReference" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseEntry.WarehouseName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseEntry.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 6, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseEntry.MasterNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 7, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseEntry.HouseNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 8, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseEntry.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 9, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 175 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseEntry.ActualEntryDate" , ColumnWidth = 175 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 10, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseEntry.Origin" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 11, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseEntry.Destination" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 12, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ReceivedBy" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "WarehouseEntry.ReceivedBy" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "WarehouseEntry.SpecialInstruction" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn AllEntriesQueryQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id, IndexOrder = 14, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEntriesQueryQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEntriesQueryQuery.Id,QueryCode = AllEntriesQueryQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "WarehouseEntry.Notes" , ColumnWidth = 190 }, addedQueryColumns);
   
 	      
 
-			  Query ConnectedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_3.Id, Code = "ConnectedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 3, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ConnectedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_3.Id, NameTextCodeCode = WarehouseEntryTextCode_3.Code, ObjectTableName = "WarehouseEntry", Code = "ConnectedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 3, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_3.Id,FeatureUniqeCode= WarehouseEntryFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ConnectedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseEntry.TransportModeId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseEntry.DirectionId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseEntry.EntryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseEntry.EntryReference" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseEntry.WarehouseName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseEntry.MasterNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 6, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseEntry.HouseNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 7, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseEntry.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 8, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 175 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseEntry.ActualEntryDate" , ColumnWidth = 175 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 9, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseEntry.Origin" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 10, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseEntry.Destination" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 11, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ReceivedBy" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseEntry.ReceivedBy" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 12, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "WarehouseEntry.SpecialInstruction" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn ConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "WarehouseEntry.Notes" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseEntry.ConnectedToShipment", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConnectedEntriesQueryQuery.Id,QueryCode = ConnectedEntriesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query NotConnectedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_4.Id, Code = "NotConnectedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 4, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query NotConnectedEntriesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseEntryTextCode_4.Id, NameTextCodeCode = WarehouseEntryTextCode_4.Code, ObjectTableName = "WarehouseEntry", Code = "NotConnectedEntriesQuery",  QueryGroupCode = "b972", IndexOrder = 4, Tenant = 0, ObjectTableId = WarehouseEntryObjectTable.Id, QuerySection = "WarehouseEntry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseEntryFeature_4.Id,FeatureUniqeCode= WarehouseEntryFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseEntry.TransportModeId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseEntry.DirectionId" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 2, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseEntry.EntryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 3, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseEntry.EntryReference" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 4, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseEntry.WarehouseName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 5, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseEntry.MasterNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 6, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseEntry.HouseNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 7, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseEntry.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 8, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 175 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseEntry.ActualEntryDate" , ColumnWidth = 175 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 9, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseEntry.Origin" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 10, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseEntry.Destination" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 11, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ReceivedBy" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseEntry.ReceivedBy" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 12, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "WarehouseEntry.SpecialInstruction" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn NotConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "WarehouseEntry.Notes" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseEntry.ConnectedToShipment", PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotConnectedEntriesQueryQuery.Id,QueryCode = NotConnectedEntriesQueryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> WarehouseEntryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseEntry").ToList();
+		   //List<ObjectField> WarehouseEntryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseEntry").ToList();
 		       
 	      
 
 	         Screen WarehouseEntryWarehouseEntryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntry.WarehouseEntryHeaderScreen", Name = "WarehouseEntryHeaderScreen", ObjectTableId = WarehouseEntryObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "WarehouseName").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.WarehouseName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EntryReference").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.EntryReference", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CustomerName").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "References").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.References", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "MasterNumber").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.MasterHouse", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "HouseNumber").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ShipmentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ActualEntryDate").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.ActualEntryDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Routing").FirstOrDefault().Id, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField WarehouseEntryWarehouseEntryWarehouseEntryHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id,ScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseEntry.LastStatusUpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    WarehouseEntryObjectTable.HeaderScreenId = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Id;
+		    WarehouseEntryObjectTable.HeaderScreenCode = WarehouseEntryWarehouseEntryHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -4256,55 +4856,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode WarehouseEntryGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.General", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.General", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryPartnersTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Partners", DefaultText = "Partners",LocalDefaultText = "Partners", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryPartnersFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Partners", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryPartnersFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Partners", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryPackagesTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Packages", DefaultText = "Packages",LocalDefaultText = "Packages", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryPackagesFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Packages", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryPackagesFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Packages", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryRoutingsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Routings", DefaultText = "Routings",LocalDefaultText = "Routings", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryRoutingsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Routings", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryRoutingsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Routings", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryDocsOutTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = "Docs Out", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryDocsOutFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.DocsOut", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryDocsOutFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.DocsOut", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = "Docs In", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.DocsIn", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.DocsIn", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryConnectedEntitiesTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.ConnectedEntities", DefaultText = "Connected Entities",LocalDefaultText = "Connected Entities", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryConnectedEntitiesFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.ConnectedEntities", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryConnectedEntitiesFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.ConnectedEntities", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
  
                  
 			   TextCode WarehouseEntryEventsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GWEN",HtmlComponentName = "EditWarehouseEntryComponent",HtmlComponentUrl = " ./Warehouse/Components/EditWarehouseEntryComponent", FeatureId = WarehouseEntryGeneralFeature_TH0.Id, ControlPath = " ./Warehouse/Components/EditWarehouseEntryComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GWEN",HtmlComponentName = "EditWarehouseEntryComponent",HtmlComponentUrl = " ./Warehouse/Components/EditWarehouseEntryComponent", FeatureId = WarehouseEntryGeneralFeature_TH0.Id,FeatureUniqeCode = WarehouseEntryGeneralFeature_TH0.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditWarehouseEntryComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryGeneralTextCode_TH0.Id, TabNameTextCodeCode = WarehouseEntryGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = WarehouseEntryPartnersFeature_TH1.Id, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPartnersTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = WarehouseEntryPartnersFeature_TH1.Id,FeatureUniqeCode = WarehouseEntryPartnersFeature_TH1.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPartnersTextCode_TH1.Id, TabNameTextCodeCode = WarehouseEntryPartnersTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = WarehouseEntryPackagesFeature_TH2.Id, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPackagesTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = WarehouseEntryPackagesFeature_TH2.Id,FeatureUniqeCode = WarehouseEntryPackagesFeature_TH2.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPackagesTextCode_TH2.Id, TabNameTextCodeCode = WarehouseEntryPackagesTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = WarehouseEntryRoutingsFeature_TH3.Id, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryRoutingsTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = WarehouseEntryRoutingsFeature_TH3.Id,FeatureUniqeCode = WarehouseEntryRoutingsFeature_TH3.FeatureUniqeCode, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryRoutingsTextCode_TH3.Id, TabNameTextCodeCode = WarehouseEntryRoutingsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = WarehouseEntryDocsOutFeature_TH4.Id, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsOutTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = WarehouseEntryDocsOutFeature_TH4.Id,FeatureUniqeCode = WarehouseEntryDocsOutFeature_TH4.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsOutTextCode_TH4.Id, TabNameTextCodeCode = WarehouseEntryDocsOutTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = WarehouseEntryDocsInFeature_TH5.Id, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsInTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = WarehouseEntryDocsInFeature_TH5.Id,FeatureUniqeCode = WarehouseEntryDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsInTextCode_TH5.Id, TabNameTextCodeCode = WarehouseEntryDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id,FeatureUniqeCode = WarehouseEntryConnectedEntitiesFeature_TH6.FeatureUniqeCode, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, TabNameTextCodeCode = WarehouseEntryConnectedEntitiesTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id,FeatureUniqeCode = WarehouseEntryEventsFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, TabNameTextCodeCode = WarehouseEntryEventsTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -4312,10 +4912,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature WarehouseEntryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseEntryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseEntryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseEntryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseEntry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WarehouseEntryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
+		   Feature WarehouseEntryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
+		   Feature WarehouseEntryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);
+		   Feature WarehouseEntryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseEntry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseEntryObjectTable);    
 	    
 		}
 
@@ -4398,14 +4998,103 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CAEA",
+                EnglishName =  "Cancelled",
+                LocalName =  "Cancelled",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = WarehouseEntryObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault();       
+    
+			   Feature WarehouseEntryFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelEntry", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.CancelEntry", NameTextCodeDefaultText = "Cancel Entry", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseEntryObjectTable);
+
+ 
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup WarehouseEntryMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "WarehouseEntryEdit",
+					Name = "WarehouseEntryEditButtonsGroup",
+					ObjectTableId = WarehouseEntryObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton WarehouseEntryMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CancelEntry",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "WarehouseEntry.B.CancelEntry",
+						LabelTextCodeDefaultText = "Cancel Entry",
+						Tenant = 0,
+						MenuButtonGroupId = WarehouseEntryMenuButtonGroup.Id,
+						ObjectTableId = WarehouseEntryObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = WarehouseEntryFeature_MB0.Id,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode = WarehouseEntryFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddPartners", DefaultText = "Add Partners",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Reference1", DefaultText = "Reference1",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Reference2", DefaultText = "Reference2",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersEditShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.EditShipper", DefaultText = "Edit Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersEditConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.EditConsignee", DefaultText = "Edit Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryMDeleteThisPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.M.DeleteThisPartner", DefaultText = "Delete This Partner?",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

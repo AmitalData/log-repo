@@ -31,13 +31,15 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Sales Tax Exemption Type&quot;"
-  Code="&quot;7407&quot;"
-  Name="&quot;Customs.SalesTaxExemptionType Query Group&quot;"
+  Code="&quot;STET&quot;"
+  Name="&quot;Customs.SalesTaxExemptionType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;708b8936-763d-4c16-a309-a2155670ac85&quot;"
     FieldName="&quot;Code&quot;"
@@ -312,21 +314,89 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,קוד 6 - פטור כללי ממס קניה&quot;"
+      Inactive="false"
+      LocalName="&quot;קוד 6 - פטור כללי ממס קניה&quot;" />
+    <Record
+      Code="&quot;7&quot;"
+      SearchFields="&quot;7,פטור ממס קניה לעוסק רשום&quot;"
+      Inactive="false"
+      LocalName="&quot;פטור ממס קניה לעוסק רשום&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;SalesTaxExemptionType&quot;"
+    ObjectTableName="&quot;Customs.SalesTaxExemptionType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SalesTaxExemptionType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;STET&quot;"
+    QueryGroupName="&quot;Customs.SalesTaxExemptionType&quot;"
+    LocalTextCode="&quot;סוג פטור ממס קנייה&quot;"
+    TextCode="&quot;Sales Tax Exemption Types&quot;"
+    TextCodeCode="&quot;Customs.SalesTaxExemptionType.Q.SalesTaxExemptionTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SALESTAXEXEMPTIONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.SalesTaxExemptionType.Features.SalesTaxExemptionTypes&quot;"
+    FeatureDefaultText="&quot;Sales Tax Exemption Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;SalesTaxExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;SalesTaxExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;SalesTaxExemptionType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;SalesTaxExemptionType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SalesTaxExemptionType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
+      ShortView="true"
       IsManualEntry="false"
-      ShortView="true" />
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SalesTaxExemptionType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
+      ShortView="false"
       IsManualEntry="false"
-      ShortView="false" />
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

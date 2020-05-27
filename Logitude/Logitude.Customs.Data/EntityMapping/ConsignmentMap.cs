@@ -53,9 +53,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.OriginCountryCode).HasColumnName("OriginCountryCode").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.ReceiverWarehouseCode).HasColumnName("ReceiverWarehouseCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.ReceiverWarehouseCode).HasColumnName("ReceiverWarehouseCode").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.DeliveryPlaceName).HasColumnName("DeliveryPlaceName").HasMaxLength(256).IsUnicode(false);
 
@@ -63,7 +63,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FinalDestinationPortCode).HasColumnName("FinalDestinationPortCode").HasMaxLength(17).IsUnicode(false);
 
-            this.Property(t => t.RecieverWareHouseCode).HasColumnName("RecieverWareHouseCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.RecieverWareHouseCode).HasColumnName("RecieverWareHouseCode").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

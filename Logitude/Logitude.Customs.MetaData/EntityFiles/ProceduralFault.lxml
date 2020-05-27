@@ -36,8 +36,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Procedural Fault&quot;"
-  Code="&quot;c413&quot;"
-  Name="&quot;Customs.ProceduralFault Query Group&quot;"
+  Code="&quot;PCQG&quot;"
+  Name="&quot;Customs.ProceduralFault&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -55,7 +55,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e9c1a3fc-efb5-42c1-bd2c-eef134800629&quot;"
     FieldName="&quot;Id&quot;"
@@ -108,7 +110,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -175,7 +177,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="false"
+    NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -2616,14 +2618,96 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;Procedural Faults&quot;"
+    ObjectTableName="&quot;Customs.ProceduralFault&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ProceduralFault&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PCQG&quot;"
+    QueryGroupName="&quot;Customs.ProceduralFault&quot;"
+    LocalTextCode="&quot;ליקויים&quot;"
+    TextCode="&quot;Procedural Faults&quot;"
+    TextCodeCode="&quot;Customs.ProceduralFault.Q.ProceduralFaults&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PROCEDURALFAULT&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ProceduralFault.Features.ProceduralFaults&quot;"
+    FeatureDefaultText="&quot;Procedural Faults&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.ProceduralFaultsControl&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ProceduralFaultNumber&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="4"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ProceduralFaultStatusName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="5"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ProceduralFaultInputProcesName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="6"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;ProceduralFaultName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="7"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;RansomViolationTypeName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="8"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsCustomerResponsibility&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="9"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;IsAgentProceduralFaultCountabl&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+      <QueryColumn
+        IndexOrder="10"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;SignedByUserName&quot;"
+        QueryCode="&quot;Procedural Faults&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ProceduralFault&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -2633,10 +2717,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ProceduralFault&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -2644,8 +2729,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

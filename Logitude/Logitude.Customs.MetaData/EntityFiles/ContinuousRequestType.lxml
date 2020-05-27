@@ -61,7 +61,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;cfd20688-ceba-45da-a601-ccafd0ebfef6&quot;"
     FieldName="&quot;Code&quot;"
@@ -423,40 +425,49 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
   <Query
     Code="&quot;ContinuousRequestType&quot;"
-    TextCode="&quot;ContinuousRequestTypeQuery&quot;"
-    QueryGroupCode="&quot;cc88&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.ContinuousRequestType&quot;"
-    QuerySection="&quot;Customs.ContinuousRequestType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ContinuousRequestType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;cc88&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    TextCode="&quot;ContinuousRequestTypeQuery&quot;"
+    TextCodeCode="&quot;ContinuousRequestType.Q.ContinuousRequestType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;ContinuousRequestType.Q.ContinuousRequestType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;ContinuousRequestType.Features.ContinuousRequestType&quot;"
+    FeatureDefaultText="&quot;ContinuousRequestType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;ContinuousRequestType&quot;"
         IndexOrder="0"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;ContinuousRequestType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ContinuousRequestType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ContinuousRequestType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ContinuousRequestType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;ContinuousRequestType&quot;" />
       <QueryColumn
-        QueryCode="&quot;ContinuousRequestType&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;ContinuousRequestType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -464,10 +475,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.ContinuousRequestType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -477,10 +489,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.ContinuousRequestType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -488,8 +501,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
 </entity>

@@ -186,7 +186,7 @@ export class BankDepositMenuButtonsHandler {
                 {
                     ///// save in server
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this._BankDepositExtendedPMService.cancelDeposit(this.EntityPM.Id).subscribe(myResult => {
+                    this._BankDepositExtendedPMService.cancelDeposit(this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
                         this.CurrentSession.StopBusyIndicator();
 
                         var mm: ServiceResponse = myResult;

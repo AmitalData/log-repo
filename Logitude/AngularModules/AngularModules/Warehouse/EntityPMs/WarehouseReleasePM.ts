@@ -259,6 +259,86 @@ export class WarehouseReleasePM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private connectedTo: string;
+    public get ConnectedTo() { return this.connectedTo; }
+    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
+       
+	 
+    private fromPortId: string;
+    public get FromPortId() { return this.fromPortId; }
+    public set FromPortId(newValue: string) { if (this.fromPortId != newValue) { this.fromPortId = newValue; this.MarkAsDirty("FromPortId"); } }
+       
+	 
+    private toPortId: string;
+    public get ToPortId() { return this.toPortId; }
+    public set ToPortId(newValue: string) { if (this.toPortId != newValue) { this.toPortId = newValue; this.MarkAsDirty("ToPortId"); } }
+       
+	 
+    private customerAddressId: string;
+    public get CustomerAddressId() { return this.customerAddressId; }
+    public set CustomerAddressId(newValue: string) { if (this.customerAddressId != newValue) { this.customerAddressId = newValue; this.MarkAsDirty("CustomerAddressId"); } }
+       
+	 
+    private totalVolumetricWeight: number;
+    public get TotalVolumetricWeight() { return this.totalVolumetricWeight; }
+    public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
+    private toTypeCode: string;
+    public get ToTypeCode() { return this.toTypeCode; }
+    public set ToTypeCode(newValue: string) { if (this.toTypeCode != newValue) { this.toTypeCode = newValue; this.MarkAsDirty("ToTypeCode"); } }
+       
+	 
+    private toPartnerCardId: string;
+    public get ToPartnerCardId() { return this.toPartnerCardId; }
+    public set ToPartnerCardId(newValue: string) { if (this.toPartnerCardId != newValue) { this.toPartnerCardId = newValue; this.MarkAsDirty("ToPartnerCardId"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
+       
+	 
+    private toAddressZipCode: string;
+    public get ToAddressZipCode() { return this.toAddressZipCode; }
+    public set ToAddressZipCode(newValue: string) { if (this.toAddressZipCode != newValue) { this.toAddressZipCode = newValue; this.MarkAsDirty("ToAddressZipCode"); } }
+       
+	 
+    private toAddressCity: string;
+    public get ToAddressCity() { return this.toAddressCity; }
+    public set ToAddressCity(newValue: string) { if (this.toAddressCity != newValue) { this.toAddressCity = newValue; this.MarkAsDirty("ToAddressCity"); } }
+       
+	 
+    private toAddressCountryId: string;
+    public get ToAddressCountryId() { return this.toAddressCountryId; }
+    public set ToAddressCountryId(newValue: string) { if (this.toAddressCountryId != newValue) { this.toAddressCountryId = newValue; this.MarkAsDirty("ToAddressCountryId"); } }
+       
+	 
+    private isUsed: boolean;
+    public get IsUsed() { return this.isUsed; }
+    public set IsUsed(newValue: boolean) { if (this.isUsed != newValue) { this.isUsed = newValue; this.MarkAsDirty("IsUsed"); } }
+       
+	 
+    private destination: string;
+    public get Destination() { return this.destination; }
+    public set Destination(newValue: string) { if (this.destination != newValue) { this.destination = newValue; this.MarkAsDirty("Destination"); } }
+       
+	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
+    private truckerReference: string;
+    public get TruckerReference() { return this.truckerReference; }
+    public set TruckerReference(newValue: string) { if (this.truckerReference != newValue) { this.truckerReference = newValue; this.MarkAsDirty("TruckerReference"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

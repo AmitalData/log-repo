@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.CustomerRoleType&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CustomerRoleTypes&quot;"
-  OldDBTableName="&quot;Customs.CustomerRoleTypes&quot;"
+  DBTableOldNames="Customs.CustomerRoleTypes"
   ObjectTableSingular="&quot;Customs.CustomerRoleType&quot;"
   ObjectTablePlural="&quot;Customs.CustomerRoleTypes&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג תפקיד לקוחות&quot;"
   DefaultText="&quot;Customer Role Type&quot;"
-  Code="&quot;97a7&quot;"
+  Code="&quot;839a&quot;"
   Name="&quot;Customs.CustomerRoleType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -56,17 +56,19 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
-  Code1="&quot;0aaa&quot;"
+  Code1="&quot;9c01&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;a8c51c17-e521-4868-ac7e-d8bc273ed7d8&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -114,6 +116,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -127,6 +130,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -137,7 +141,7 @@
   <field
     Id="&quot;143d9025-2950-44e1-930b-ad5c384dc44e&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -186,6 +190,7 @@
     ListLocalDefaultText="&quot;שם אנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -199,6 +204,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -209,7 +215,7 @@
   <field
     Id="&quot;16985cac-95d4-4420-a280-a7a82c7f991a&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -258,6 +264,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -271,6 +278,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -281,7 +289,7 @@
   <field
     Id="&quot;0a7dc7d5-ceb1-46eb-afa6-adc019aa66d2&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -328,6 +336,7 @@
     ListLableDefaultText="&quot;Search Fields&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -341,6 +350,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -351,7 +361,7 @@
   <field
     Id="&quot;c126475b-2612-4081-a98e-dad55aa35c55&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -401,6 +411,7 @@
     ListLocalDefaultText="&quot;לא פּעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -414,6 +425,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -421,44 +433,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;CustomerRoleType&quot;"
-    TextCode="&quot;Customer Role Types&quot;"
-    LocalTextCode="&quot;סוגי לקוחות&quot;"
-    QueryGroupCode="&quot;97a7&quot;"
-    IndexOrder="0"
+  <Screen
+    Name="&quot;Customs.CustomerRoleTypeHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.CustomerRoleType&quot;"
-    QuerySection="&quot;Customs.CustomerRoleType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;LocalName&quot;"
-    DefaultSortDirection="&quot;Ascending&quot;"
-    IsSpellChecked="false">
-    <QueryColumns>
-      <QueryColumn
-        QueryCode="&quot;CustomerRoleType&quot;"
-        IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="50" />
-      <QueryColumn
-        QueryCode="&quot;CustomerRoleType&quot;"
-        IndexOrder="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomerRoleType&quot;"
-        IndexOrder="2"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;CustomerRoleType&quot;"
-        IndexOrder="3"
-        ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -467,6 +450,7 @@
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
       ShortView="true"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -480,6 +464,7 @@
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
       ShortView="false"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -487,7 +472,18 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,סוכן,,&quot;"
+      Inactive="false"
+      LocalName="&quot;סוכן&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,יבואן,,&quot;"
+      Inactive="false"
+      LocalName="&quot;יבואן&quot;" />
+  </Records>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

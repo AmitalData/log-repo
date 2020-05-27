@@ -18,6 +18,9 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
        public const string Cancelled = "CA";  
        public const string Replaced = "RD";  
        public const string Error = "ER";  
+       public const string WaitingForConfirmation = "WC";  
+       public const string RejectedbyUser = "RU";  
+       public const string ShippingInstructions = "SI";  
     }
 }
 

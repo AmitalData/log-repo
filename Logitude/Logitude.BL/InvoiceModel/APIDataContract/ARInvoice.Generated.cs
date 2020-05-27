@@ -12,11 +12,12 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
    
-    public class ARInvoice
+    public partial class ARInvoice
     {
 
 	    
@@ -85,6 +86,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public bool IsMultiCurrency { get; set; }
     
     public string CreditARInvoice { get; set; }
+    
+    public string ExternalAccountingEntityId { get; set; }
+    
+    public string BillToGLAccount { get; set; }
+    
+    public ARInvoiceStatus Status { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

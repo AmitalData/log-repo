@@ -61,7 +61,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;4a1efed3-114b-48fb-b7ef-82c348272827&quot;"
     FieldName="&quot;Code&quot;"
@@ -408,40 +410,49 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false" />
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
   <Query
     Code="&quot;SeizureFactorType&quot;"
-    TextCode="&quot;SeizureFactorTypeQuery&quot;"
-    QueryGroupCode="&quot;a5be&quot;"
-    IndexOrder="0"
     ObjectTableName="&quot;Customs.SeizureFactorType&quot;"
-    QuerySection="&quot;Customs.SeizureFactorType&quot;"
-    SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    IsSpellChecked="false">
+    DefaultSortName="&quot;Code&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.SeizureFactorType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;a5be&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    TextCode="&quot;SeizureFactorTypeQuery&quot;"
+    TextCodeCode="&quot;SeizureFactorType.Q.SeizureFactorType&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;SeizureFactorType.Q.SeizureFactorType&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;SeizureFactorType.Features.SeizureFactorType&quot;"
+    FeatureDefaultText="&quot;SeizureFactorType&quot;">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;SeizureFactorType&quot;"
         IndexOrder="0"
+        ColumnWidth="100"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureFactorType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureFactorType&quot;"
         IndexOrder="1"
+        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureFactorType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureFactorType&quot;"
         IndexOrder="2"
+        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="100" />
+        QueryCode="&quot;SeizureFactorType&quot;" />
       <QueryColumn
-        QueryCode="&quot;SeizureFactorType&quot;"
         IndexOrder="3"
+        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="50" />
+        QueryCode="&quot;SeizureFactorType&quot;" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -449,10 +460,11 @@
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.SeizureFactorType&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
       ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -462,10 +474,11 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.SeizureFactorType&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
       ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
@@ -473,6 +486,4 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
-  <DataContracts />
 </entity>
