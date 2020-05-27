@@ -382,7 +382,7 @@ namespace Logitude.DBMigrations.Models
         private void ExitTool(string message)
         {
             Console.WriteLine(message);
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
     }
 }

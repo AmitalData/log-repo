@@ -13,7 +13,7 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
         private readonly RunSettings RunSettings;
@@ -26,8 +26,11 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
+            ValidateAppSettings();
+
             Arguments = arguments;
             RunSettings = runSettings;
+            DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
         }
 
         public void RunTool()
@@ -1853,10 +1856,39 @@ namespace Logitude.DBMigrations.Models
             return toolDxmlFilesNames;
         }
 
+        private void ValidateAppSettings()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+
+            if (String.IsNullOrEmpty(databaseType))
+            {
+                ExitTool("Error: Cannot Find DatabaseType in Configuration File");
+            }
+            if(databaseType != "msql" && databaseType != "oracle")
+            {
+                ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
+            }
+            if (String.IsNullOrEmpty(globalConnectionString))
+            {
+                ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(mainConnectionString))
+            {
+                ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(systemLogsConnectionString))
+            {
+                ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+        }
+
         private void ExitTool(string message)
         {
             Console.WriteLine(message);
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
     }
 }
