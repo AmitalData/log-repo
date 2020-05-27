@@ -304,8 +304,11 @@ namespace Logitude.Accounting.BL.DataContract
 
                 taxDeductionReportLine.VendorId = vendorId; 
                 taxDeductionReportLine.MonthOfRegisterDate = transaction.DocumentDate.Month;
-                LedgerTransaction oppositeTransaction = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).FirstOrDefault();
-                taxDeductionReportLine.AmountInLocalCurrency = oppositeTransaction != null ? (double?)oppositeTransaction.LocalAmountDebit: 0;
+                List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
+                if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
+                {
+                    taxDeductionReportLine.AmountInLocalCurrency =  (double?)oppositeTransactions.Sum(d=> d.LocalAmountDebit);
+                }
                 taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round( (transaction.LocalAmountCredit / (transaction.LocalAmountCredit * 2)),2));
                 GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
