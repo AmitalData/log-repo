@@ -39,17 +39,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             us.CommLogStepCanCancelledAction = CommLogStepCanCancelled;
             List<CustomsRequestsSheetPM> entityPMs= new List<CustomsRequestsSheetPM>();
             var qs = new CustomsRequestsSheetQueryService(tenant);
-
+            string errors = "";
             entityLists.ForEach(x =>
             {
-                CustomsRequestsSheetPM customsRequestsSheetPM = qs.GetSingle(x.Id, false,false);
+                try
+                {
+   CustomsRequestsSheetPM customsRequestsSheetPM = qs.GetSingle(x.Id, false,false);
                
                 customsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
                 customsRequestsSheetPM.RequestStatusCode = "99";
                 us.Update(customsRequestsSheetPM, true);
           //      entityPMs.Add(customsRequestsSheetPM);
+                }
+                catch (Exception ex)
+                {
+
+                    errors += ex.Message + '\n';
+                }
+
+             
             });
 
+            if(errors!="")
+            {
+                throw new Exception(errors);
+            }
          //    us.UpdateMulti(entityPMs, null, null, true);
         }
 
@@ -59,7 +73,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (entityPOCO.RequestStatusCode == "30")
             {
-                throw new Exception("Request already analyzed");
+                throw new Exception("Request already analyzed (CorrelationId: " + entityPM.CorrelationId);
             }
             nowIs = nowIs ?? DateTime.Now;
             bool isinteractive = false;
@@ -109,9 +123,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             if (canCancellAtTime != null)
                             {
-                                throw new Exception(GetMessage(canCancellAtTime));
+                                throw new Exception(GetMessage(canCancellAtTime)+" (CorrelationId: " + entityPM.CorrelationId);
                             }
-                            throw new Exception("Unable to cancel request. It has already been sent");
+                            throw new Exception("Unable to cancel request. It has already been sent (CorrelationId: " + entityPM.CorrelationId);
                         }
                     }
                     else if (currStep.StepNumber > (int)CustomsStepEnum.ReceivedCustomResponseCorrelation)
@@ -120,7 +134,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             throw new Exception(GetMessage(canCancellAtTime));
                         }
-                        throw new Exception("Unable to cancel request. It has already been sent");
+                        throw new Exception("Unable to cancel request. It has already been sent (CorrelationId: " + entityPM.CorrelationId);
 
                     }
                 }
