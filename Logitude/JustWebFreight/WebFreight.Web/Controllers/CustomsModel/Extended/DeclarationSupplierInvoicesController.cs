@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
-                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);
+                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant,true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, supplierInvoices);
             }
