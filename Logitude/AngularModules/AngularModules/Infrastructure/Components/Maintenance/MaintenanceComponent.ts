@@ -775,8 +775,8 @@ export class MaintenanceComponent {
                     let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
                     LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
                     let allowed = false;
-                    allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
-                    if (strict && !SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+                    allowed = SessionLocator.LoggedUserPM.IsCustomerCare || (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.")) ? true : false;
+                    if (!allowed) {
 
                         let messageWindow = new MessageWindow()
                         messageWindow.Show("Logged User Is not Customer Care ");
