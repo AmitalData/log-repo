@@ -409,6 +409,7 @@ export class NewBIReport extends BaseComponent {
                                                     cmpRef.instance.ComponentRef = cmpRef;
                                                     cmpRef.instance.Run({
                                                         DWQueryId: s.QID,
+                                                        Name: this.EntityPM.Name,
                                                         ObjectTableName: 'BIReport',
                                                         EntityId: this.EntityPM.Id,
                                                         BackButtonLable: this.IsCopy ? "BI Report :" + this.OriginalName : "BI Reports",

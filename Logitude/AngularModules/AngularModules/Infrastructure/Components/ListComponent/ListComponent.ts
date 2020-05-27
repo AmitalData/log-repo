@@ -2084,6 +2084,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
                                     DWQueryId: $event.rowData.DWQueryId,
+                                    Name: $event.rowData.Name,
                                     ObjectTableName: 'BIReport',
                                     EntityList: $event.rowData,
                                     EntityId: $event.rowData.Id
