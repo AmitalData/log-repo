@@ -1086,12 +1086,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
         {
-            if (nullable)
-            {
-                return null;
-            }
-
-            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            if (!nullable && type == "bit" && String.IsNullOrEmpty(defaultValue))
             {
                 return " DEFAULT(0)";
             }
