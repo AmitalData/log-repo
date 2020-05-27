@@ -716,7 +716,7 @@ namespace Logitude.DBMigrations.Models
                 string droppedColumnName = FormatNameLength("cdrop_" + columnMigration.CurrentColumn.Name, null).ToUpper();
                 string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.NewColumn.Size == 0 ? -1 : columnMigration.NewColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
-                alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
+                alterTypeScript += "-- Change Type From " + GetTypeForComment(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size) + " To " + GetTypeForComment(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size) + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                 alterTypeScript += "DECLARE ColumnCount NUMBER;\n";
                 alterTypeScript += "BEGIN\n";
                 alterTypeScript += "SELECT COUNT(*) INTO ColumnCount FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';\n";
@@ -740,7 +740,7 @@ namespace Logitude.DBMigrations.Models
             {
                 if (!IsDataTypeChangesArgumentProvided)
                 {
-                    alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
+                    alterTypeScript += "-- Change Type From " + GetTypeForComment(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size) + " To " + GetTypeForComment(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size) + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                     alterTypeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
                     alterTypeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
                     alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
@@ -1318,7 +1318,6 @@ namespace Logitude.DBMigrations.Models
             {
                 return true;
             }
-
             if (columnMigration.CurrentColumn.Type == "varchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size == -1)
             {
                 return true;
@@ -1345,6 +1344,36 @@ namespace Logitude.DBMigrations.Models
                 return true;
             }
             return false;
+        }
+
+        protected string GetTypeForComment(string type, int size)
+        {
+            if(type == "varchar" && size == -1)
+            {
+                return "clob";
+            }
+            if (type == "nvarchar" && size == -1)
+            {
+                return "nclob";
+            }
+            if (type == "varbinary")
+            {
+                return "blob";
+            }
+            if(type == "datetime")
+            {
+                return "timestamp(7)";
+            }
+            if (type == "time")
+            {
+                return "interval day(2) to second(6)";
+            }
+            if(type == "timestamp")
+            {
+                return "raw(8)";
+            }
+
+            return type;
         }
     }
 }
