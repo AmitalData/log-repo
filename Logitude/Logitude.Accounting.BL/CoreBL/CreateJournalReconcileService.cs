@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         DocumentDate = journal.CreateDate,
                         DueDate = journal.CreateDate,
-
+                        CreditAccountId = AdjustAccountId,
                     });
 
                     journal.JournalLines.Add(new JournalLinePM()
@@ -184,6 +184,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         ForeignAmount = totForeign,
                         DocumentDate = journal.CreateDate,
                         DueDate = journal.CreateDate,
+                        DebitAccountId = TheAccountId,
                     });
 
                 }
@@ -204,6 +205,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         DocumentDate = journal.CreateDate,
                         DueDate = journal.CreateDate,
+                        DebitAccountId = AdjustAccountId
 
                     });
 
@@ -224,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         DocumentDate = journal.CreateDate,
                         DueDate = journal.CreateDate,
-
+                        CreditAccountId = TheAccountId,
 
                     });
                 }
