@@ -510,7 +510,7 @@ export class DeclarationWebService {
 
     //Send declaration
     PostSendExportDeclaration(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -522,13 +522,13 @@ export class DeclarationWebService {
             return this._http.post(
                 this._apiUrl + '/PostSendExportDeclaration/',
                 JSON.stringify(genericRequestParams),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res:any) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
