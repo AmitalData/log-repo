@@ -93,6 +93,7 @@
     <Content Include="GeneratedScript\SystemLogsScript.sql" />
     <Content Include="GeneratedScript\MainScript.sql" />
     <Content Include="GeneratedScript\GlobalScript.sql" />
+    <Content Include="Warnings\MissingIndexesWarnings.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
