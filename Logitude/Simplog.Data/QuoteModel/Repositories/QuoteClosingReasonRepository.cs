@@ -27,10 +27,10 @@ namespace Simplog.Data.QuoteModel.Repositories
             quotesContext = QuotesContext.GetContext(tenant);
         }
 
-        public QuoteClosingReason GetSingleQuoteClosingReason(string code)
+        public QuoteClosingReason GetSingleQuoteClosingReason(string id, int tenant)
         {
             return (from a in context.QuoteClosingReasons
-                    where a.Code == code
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -38,9 +38,9 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             return context.QuoteClosingReasons;
         }
-        public IQueryable<QuoteClosingReason> GetQuoteClosingReasons()
+        public IQueryable<QuoteClosingReason> GetQuoteClosingReasons(int tenant)
         {
-            return context.QuoteClosingReasons;
+            return context.QuoteClosingReasons.Where(d => d.Tenant == tenant);
         }
 
         public void Add(QuoteClosingReason entity)

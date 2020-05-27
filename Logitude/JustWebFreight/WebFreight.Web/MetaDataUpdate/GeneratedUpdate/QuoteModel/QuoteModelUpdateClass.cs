@@ -449,10 +449,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
- 
-				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
-
- 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCostCharge", ObjectTables, QuoteCostChargeUpdateClass.HashString))
@@ -1581,8 +1577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   
 	   
-	   	   QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
-	
+	   
 	   
 	   	   QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
 	

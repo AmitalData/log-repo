@@ -224,6 +224,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public virtual QuoteStage Stage { get; set; }
 
         public string QuoteClosingReasonCode { get; set; }
+        public string QuoteClosingReasonId { get; set; }
         [ForeignKey("QuoteClosingReasonCode")]
         public virtual QuoteClosingReason QuoteClosingReason { get; set; }
 

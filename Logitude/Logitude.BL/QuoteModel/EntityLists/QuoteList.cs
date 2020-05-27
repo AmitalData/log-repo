@@ -123,7 +123,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string Routing { get; set; }
         public string LastQuoteActivityTypeName { get; set; }
         public string LastActivityByUserName { get; set; }
-        public DateTime LastQuoteActivityDate { get; set; }       
+        public DateTime LastQuoteActivityDate { get; set; }
+        public string QuoteClosingReasonId { get; set; }
         public string QuoteClosingReasonCode { get; set; }
         public string QuoteClosingReasonName { get; set; }
         public DateTime? SentDate { get; set; }
