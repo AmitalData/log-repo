@@ -107,7 +107,7 @@ namespace Logitude.DBMigrations.Models
                     GeneratedScript scriptsToSave = GetScriptsToSave(toolTablesScript, preGeneralScript, migrationsScript, postGeneralScript);
                     SaveScript(scriptsToSave);
 
-                    PrintMissingIndexesWarnings();
+                    ExportMissingIndexesWarnings();
                 }
                 else
                 {
@@ -361,21 +361,30 @@ namespace Logitude.DBMigrations.Models
 
         private void SaveScript(GeneratedScript generatedScript)
         {
-            string globalScript = !string.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !string.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !string.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
+            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
+            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
+            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
 
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
-            File.WriteAllText(globalScriptFilePath, globalScript);
+            if (File.Exists(globalScriptFilePath))
+            {
+                File.WriteAllText(globalScriptFilePath, globalScript);
+            }
 
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
-            File.WriteAllText(mainScriptFilePath, mainScript);
+            if (File.Exists(mainScriptFilePath))
+            {
+                File.WriteAllText(mainScriptFilePath, mainScript);
+            }
 
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
-            File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+            if (File.Exists(systemLogsScriptFilePath))
+            {
+                File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+            }
 
             if (IsGeneratedScriptsEmpty(generatedScript))
             {
@@ -494,11 +503,14 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void PrintMissingIndexesWarnings()
+        private void ExportMissingIndexesWarnings()
         {
-            if (!String.IsNullOrEmpty(MissingIndexesWarnings))
+            string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string missingIndexesWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingIndexesWarnings.txt");
+            if (File.Exists(missingIndexesWarningsFilePath))
             {
-                Console.WriteLine(MissingIndexesWarnings.TrimEnd('\n'));
+                File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
             }
         }
 
