@@ -256,11 +256,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
+
  "UCB8212"
  ,"2892" ,
 "UCB9999",
 "2751",
-"2757"};
+"2757",
+"8302" //בקשה לטופס הצהרה
+};
+
 
             return intrefaceTypeListDisplayOnly;
         }
