@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(MyContext);
                 SupplierInvoiceList supplierInvoiceList = supplierInvoiceQuery.GetSingle(declarationid, invoicecounterkey);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(MyContext);
                 List<SupplierInvoiceList> result = supplierInvoiceQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

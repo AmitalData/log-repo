@@ -583,7 +583,7 @@
   <Query
     Code="&quot;AllCustomsAutonomyKeyword&quot;"
     TextCode="&quot;All Autonomy Keyword&quot;"
-    LocalTextCode="&quot;Autonomy Keyword&quot;"
+    LocalTextCode="&quot;מילות מפתח להצהרת אוטונומיה &quot;"
     QueryGroupCode="&quot;3d96&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.CustomsAutonomyKeyword&quot;"

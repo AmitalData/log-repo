@@ -18289,10 +18289,17 @@
         IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.CourierPendingReason&quot;" />
       <MenuItem
+        EventCode="&quot;CourierPendingReasonDel&quot;"
+        DefaultText="&quot;Courier Pending Reason&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="10"
+        LocalDefaultText="&quot;מחיקת Pending&quot;"
+        IsPackagable="false" />
+      <MenuItem
         EventCode="&quot;Declaration Closure&quot;"
         DefaultText="&quot;Declaration Closure&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         LocalDefaultText="&quot;סגירת הצהרה&quot;"
         FeatureCode="&quot;DeclarationClosure&quot;"
         IsPackagable="true"
@@ -18301,7 +18308,7 @@
         EventCode="&quot;Cancel Declaration Closure&quot;"
         DefaultText="&quot;Cancel Declaration Closure&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         LocalDefaultText="&quot;ביטול סגירת הצהרה&quot;"
         IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.CancelDeclarationClosure&quot;" />
@@ -18309,7 +18316,7 @@
         EventCode="&quot;Declaration Customs Requests&quot;"
         DefaultText="&quot;Declaration Customs Requests&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         LocalDefaultText="&quot;בקשות מכס&quot;"
         FeatureCode="&quot;DeclarationCustomsRequests&quot;"
         IsPackagable="true"

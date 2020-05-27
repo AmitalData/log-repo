@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.CustomsRequiredField&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CustomsRequiredFields&quot;"
-  OldDBTableName="&quot;Customs.CustomsRequiredFields&quot;"
+  DBTableOldNames="Customs.CustomsRequiredFields"
   ObjectTableSingular="&quot;Customs.CustomsRequiredField&quot;"
   ObjectTablePlural="&quot;Customs.CustomsRequiredFields&quot;"
   HasCustomFilter="false"
@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שדה חובה מכס&quot;"
   DefaultText="&quot;Customs Required Field&quot;"
-  Code="&quot;bc81&quot;"
+  Code="&quot;b1b3&quot;"
   Name="&quot;Customs.CustomsRequiredField Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -64,7 +64,7 @@
   <field
     Id="&quot;45e1ce09-b94e-413a-90ff-9e04105dbd7e&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -111,6 +111,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -135,7 +136,7 @@
   <field
     Id="&quot;cce22adc-0d1d-4c4d-9545-9d4063f34810&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -182,6 +183,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -206,7 +208,7 @@
   <field
     Id="&quot;6e28f898-8fc8-4e79-92cb-73b2bc7380b9&quot;"
     FieldName="&quot;ObjectTableId&quot;"
-    OldFieldName="&quot;ObjectTableId&quot;"
+    OldNames="ObjectTableId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -254,6 +256,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ObjectTable"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ObjectTable"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -279,7 +282,7 @@
   <field
     Id="&quot;d6d1278e-cb66-4237-89be-932c411907b7&quot;"
     FieldName="&quot;ObjectfieldId&quot;"
-    OldFieldName="&quot;ObjectfieldId&quot;"
+    OldNames="ObjectfieldId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -327,6 +330,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ObjectField"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ObjectField"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -352,7 +356,7 @@
   <field
     Id="&quot;bcc996c0-03b0-490b-863d-761f8a19d095&quot;"
     FieldName="&quot;ObjectFieldName&quot;"
-    OldFieldName="&quot;ObjectFieldName&quot;"
+    OldNames="ObjectFieldName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -399,6 +403,7 @@
     ListLableDefaultText="&quot;ObjectFieldName&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -423,7 +428,7 @@
   <field
     Id="&quot;87f17dc1-3bbf-4edb-9a70-db11dd0616aa&quot;"
     FieldName="&quot;ObjectfieldCode&quot;"
-    OldFieldName="&quot;ObjectfieldCode&quot;"
+    OldNames="ObjectfieldCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -467,6 +472,7 @@
     DefaultText="&quot;Objectfield Code&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -528,5 +534,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;CSTMREQFIELDMTC&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsRequiredField.Features.CSTMREQFIELDMTC&quot;"
+      FeatureDefaultText="&quot;Requierd Fields selection window&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
