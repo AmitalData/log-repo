@@ -225,8 +225,7 @@ export class CustomsRequestsSheetExtendedListService {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
-
-                var serviceResponse: ServiceResponse;
+                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
                 var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
                 if (serviceResponse.Result) {
