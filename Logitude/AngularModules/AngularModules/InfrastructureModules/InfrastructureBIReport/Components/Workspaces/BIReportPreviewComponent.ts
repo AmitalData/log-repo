@@ -81,7 +81,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.HasRunFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportRun");
         if (!this.HasRunFeature) {
-            this.ValidationErrorsList.push('You have no permission to run the report. Please contact your system administrator.');
+            this.ValidationErrorsList.push('Sorry! You have no permission to run the report.');
         }
         else {
             this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
@@ -105,6 +105,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public Run(args: any) {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
+        this.BIReportName = args['Name'];
         this.EntityId = args['EntityId'];
         this.FolderId = args['FolderId'];
         this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports";
