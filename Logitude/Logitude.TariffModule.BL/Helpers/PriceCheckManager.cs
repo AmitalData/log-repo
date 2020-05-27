@@ -654,7 +654,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                 SurchargeItem.SellerName = sellerName;
                                                 SurchargeItem.MinPrice = minPriceSurcharge;
-
+                                                SurchargeItem.CurrencySign = AssignSignCode(Currencies, SurchargeItem.CurrencyId, SurchargeItem.UnitOfMesurmentCode);
                                                 surchargesList.Add(SurchargeItem);
                                             }
                                         }
@@ -759,6 +759,28 @@ namespace Logitude.TariffModule.BL.Helpers
 
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
+        }
+        private string AssignSignCode(Dictionary<string, string> currencies, string currencyId, string uom)
+        {
+            string code_sign = currencies.Keys.Contains(currencyId) ? currencies[currencyId] : null;
+            string sign = "";
+            if (!string.IsNullOrEmpty(code_sign))
+            {
+                string[] code_sign_array = code_sign.Split(',');
+
+                if (uom == "PRFR")
+                {
+                    sign = "%";
+                }
+                else
+                {
+                    if (code_sign_array.Count() > 1)
+                    {
+                        sign = code_sign_array[1];
+                    }
+                }
+            }
+            return sign;
         }
 
         private List<TariffSearchSummary> GetTariffSearchSummary_FCL()
@@ -977,6 +999,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                         SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                         SurchargeItem.SellerName = sellerName;
                                         SurchargeItem.LineId = ChargesfilteredLines.Id;
+                                        SurchargeItem.CurrencySign = AssignSignCode(currencies, SurchargeItem.CurrencyId, SurchargeItem.UnitOfMesurmentCode);
                                         surchargesList.Add(SurchargeItem);
                                     }
                                 }
