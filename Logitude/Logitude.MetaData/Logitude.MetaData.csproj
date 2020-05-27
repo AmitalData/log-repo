@@ -206,6 +206,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
     <None Include="DBScripts\QuoteModel\FillQuoteClosingReasonsDefaultValues.sxml" />
     <None Include="DBScripts\QuoteModel\FillQuoteClosingReasonForTenant0Values.sxml" />
+    <None Include="DBScripts\QuoteModel\SetQuoteClosingReasonIdFromCode.sxml" />
     <None Include="DBTables\CommonDataModel\ShipmentHeader.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />

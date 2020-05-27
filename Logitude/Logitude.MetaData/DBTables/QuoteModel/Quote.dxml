@@ -1378,11 +1378,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="QuoteClosingReasonCode"
-    ReferencedTable="QuoteClosingReasons"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="BusinessUnitId"
     ReferencedTable="BusinessUnits"
     ReferencedColumn="Id"
@@ -1455,6 +1450,11 @@
   <Relation
     ForeignKeyColumn="QuoteHTMLDocumentId"
     ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteClosingReasonId"
+    ReferencedTable="QuoteClosingReasons"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

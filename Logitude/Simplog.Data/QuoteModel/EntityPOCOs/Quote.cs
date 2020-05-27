@@ -225,7 +225,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public string QuoteClosingReasonCode { get; set; }
         public string QuoteClosingReasonId { get; set; }
-        [ForeignKey("QuoteClosingReasonCode")]
+        [ForeignKey("QuoteClosingReasonId")]
         public virtual QuoteClosingReason QuoteClosingReason { get; set; }
 
         public int? UsageCount { get; set; }

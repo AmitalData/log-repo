@@ -352,7 +352,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.FromAddressCountry).WithMany().HasForeignKey(d => d.FromAddressCountryId);            
             this.HasOptional(t => t.ToAddressCountry).WithMany().HasForeignKey(d => d.ToAddressCountryId);
             this.HasOptional(t => t.QuoteTemplate).WithMany().HasForeignKey(d => d.QuoteTemplateId);
-            this.HasOptional(t => t.QuoteClosingReason).WithMany().HasForeignKey(d => d.QuoteClosingReasonCode);
+            this.HasOptional(t => t.QuoteClosingReason).WithMany().HasForeignKey(d => d.QuoteClosingReasonId);
             this.HasOptional(t => t.FreelancerCard).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasOptional(t => t.FreelancerContact).WithMany().HasForeignKey(d => d.FreelancerContactId);
             this.HasOptional(t => t.FreelancerAdress).WithMany().HasForeignKey(d => d.FreelancerAddressId);
