@@ -463,55 +463,75 @@ namespace WebFreight.Web.Helpers
                             switch (column.ObjectFieldDataTypeCode)
                             {
                                 case "Text":
-                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                    break;
+                                    {
+                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                        break;
+                                    }
 
                                 case "Boolean":
-                                    Boolean b = false;
-                                    Boolean.TryParse(childNode.InnerText.Trim(), out b);
-                                    sheet.Range[cellRow, cellCol].Boolean = b;
-                                    break;
+                                    {
+                                        Boolean b = false;
+                                        Boolean.TryParse(childNode.InnerText.Trim(), out b);
+                                        sheet.Range[cellRow, cellCol].Boolean = b;
+                                        break;
+                                    }
 
                                 case "Constant":
-                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                    break;
+                                    {
+                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                        break;
+                                    }
 
                                 case "DateTime":
-                                    DateTime date;
-                                    if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
                                     {
-                                        sheet.Range[cellRow, cellCol].DateTime = date.Date;
-                                        string datetimeformat = @"dd\/MM\/yyyy";
-                                        if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                        DateTime date;
+                                        if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
                                         {
-                                            datetimeformat = CurTenant.DateTimeFormat;
+                                            sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                            string datetimeformat = @"dd\/MM\/yyyy";
+                                            if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                            {
+                                                datetimeformat = CurTenant.DateTimeFormat;
+                                            }
+                                            sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
                                         }
-                                        sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                        else
+                                        {
+                                            sheet.Range[cellRow, cellCol].Text = "";
+                                        }
+                                        break;
                                     }
-                                    else
-                                    {
-                                        sheet.Range[cellRow, cellCol].Text = "";
-                                    }
-                                    break;
+
                                 case "Decimal":
-                                    double dex = 0;
-                                    double.TryParse(childNode.InnerText.Trim(), out dex);
-                                    sheet.Range[cellRow, cellCol].Number = dex;
-                                    break;
+                                    {
+                                        double dex = 0;
+                                        double.TryParse(childNode.InnerText.Trim(), out dex);
+                                        sheet.Range[cellRow, cellCol].Number = dex;
+                                        break;
+                                    }
+
+                                case "SigDouble":
                                 case "Double":
-                                    double d = 0;
-                                    double.TryParse(childNode.InnerText.Trim(), out d);
-                                    sheet.Range[cellRow, cellCol].Number = d;
-                                    break;
+                                    {
+                                        double d = 0;
+                                        double.TryParse(childNode.InnerText.Trim(), out d);
+                                        sheet.Range[cellRow, cellCol].Number = d;
+                                        break;
+                                    }
+
                                 case "Integer":
-                                    int x = 0;
-                                    int.TryParse(childNode.InnerText.Trim(), out x);
-                                    sheet.Range[cellRow, cellCol].Number = x;
-                                    break;
+                                    {
+                                        int x = 0;
+                                        int.TryParse(childNode.InnerText.Trim(), out x);
+                                        sheet.Range[cellRow, cellCol].Number = x;
+                                        break;
+                                    }
 
                                 default:
-                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
-                                    break;
+                                    {
+                                        sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                        break;
+                                    }
                             }
 
                             //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
