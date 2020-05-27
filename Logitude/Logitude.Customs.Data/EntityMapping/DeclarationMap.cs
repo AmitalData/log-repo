@@ -257,7 +257,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsValidTicketsDiamond).HasColumnName("IsValidTicketsDiamond");
 
-            this.Property(t => t.AvailabilityDate).HasColumnName("AvailabilityDate").IsOptional();
+            this.Property(t => t.AvailabilityDate).HasColumnName("AvailabilityDate");
 
             this.Property(t => t.LoadingDateTime).HasColumnName("LoadingDateTime");
 

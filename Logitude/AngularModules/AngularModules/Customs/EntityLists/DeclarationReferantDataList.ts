@@ -38,7 +38,6 @@ export class DeclarationReferantDataList {
 	Actions: string;
 	DepartmentId: string;
 	ReferentUserId: string;
-	
 	AvailabilityDate: Date;
 	ClassifiedUserId: string;
 	ControllerUserId: string;
