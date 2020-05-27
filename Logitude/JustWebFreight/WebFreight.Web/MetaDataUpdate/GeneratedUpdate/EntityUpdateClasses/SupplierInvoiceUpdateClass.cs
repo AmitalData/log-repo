@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceUpdateClass
    {  		
-		public const string HashString = "f9528ad036f4af55cef2e40bf251abdc";
+		public const string HashString = "77abb0913aeeb1e45971751ae2995ad8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -110,14 +110,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חשבון",
 			      				    DefaultText =  "Supplier Invoice",
-			      				    Code =  "502f",
+			      				    Code =  "49bd",
 			      				    Name =  "Customs.SupplierInvoice Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

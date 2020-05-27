@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequiredFieldUpdateClass
    {  		
-		public const string HashString = "faf126ea8a7790c4462dfe10afe136c4";
+		public const string HashString = "a4554a057105b1ca01a16cb4394eaa2f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.CustomsRequiredField",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.CustomsRequiredFields",
-			      				    OldDBTableName =  "Customs.CustomsRequiredFields",
 			      				    ObjectTableSingular =  "Customs.CustomsRequiredField",
 			      				    ObjectTablePlural =  "Customs.CustomsRequiredFields",
 			      				    HasCustomFilter =  false,
@@ -118,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שדה חובה מכס",
 			      				    DefaultText =  "Customs Required Field",
-			      				    Code =  "bc81",
+			      				    Code =  "b1b3",
 			      				    Name =  "Customs.CustomsRequiredField Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -143,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -263,7 +260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						OldFieldName =  "ObjectTableId",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -323,7 +319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ObjectfieldId",
-					  						OldFieldName =  "ObjectfieldId",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -383,7 +378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ObjectFieldName",
-					  						OldFieldName =  "ObjectFieldName",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -443,7 +437,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ObjectfieldCode",
-					  						OldFieldName =  "ObjectfieldCode",
 					  						ObjectTableName =  "Customs.CustomsRequiredField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -529,7 +522,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsRequiredFieldFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsRequiredField.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
 		   Feature CustomsRequiredFieldFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsRequiredField.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
 		   Feature CustomsRequiredFieldFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsRequiredField.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
-		   Feature CustomsRequiredFieldFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsRequiredField.Features.PackageFeature", NameTextCodeDefaultText = "CustomsRequiredField Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);    
+		   Feature CustomsRequiredFieldFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsRequiredField.Features.PackageFeature", NameTextCodeDefaultText = "CustomsRequiredField Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomsRequiredFieldFeature_CSTMREQFIELDMTC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CSTMREQFIELDMTC", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsRequiredFieldObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsRequiredField.Features.CSTMREQFIELDMTC", NameTextCodeDefaultText = @"Requierd Fields selection window" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequiredFieldObjectTable);
+
+   
 	    
 		}
 

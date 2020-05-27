@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsAutonomyKeywordUpdateClass
    {  		
-		public const string HashString = "96ab1767a3cda129f8d093c017020308";
+		public const string HashString = "ef98e713b63fa49ca25fbdaf7bbd129d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = @"All Autonomy Keyword",LocalDefaultText = "Autonomy Keyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = @"All Autonomy Keyword",LocalDefaultText = "מילות מפתח להצהרת אוטונומיה ", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature CustomsAutonomyKeywordFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.AllCustomsAutonomyKeyword", NameTextCodeDefaultText = "AllCustomsAutonomyKeyword", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsAutonomyKeywordObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

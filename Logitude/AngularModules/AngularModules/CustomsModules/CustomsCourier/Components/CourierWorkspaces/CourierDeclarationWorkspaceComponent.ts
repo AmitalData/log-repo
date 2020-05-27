@@ -266,7 +266,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             listArgs.ObjectTableName = "Customs.Declaration";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Declarations");
-            listArgs.Perspective = "CourierMasterWS";
+            //listArgs.Perspective = "CourierMasterWS";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
