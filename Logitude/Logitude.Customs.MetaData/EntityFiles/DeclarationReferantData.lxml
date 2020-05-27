@@ -2309,10 +2309,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-	<field
+  <field
     Id="&quot;d4beba24-cabc-4d4e-95c7-1775afebe825&quot;"
     FieldName="&quot;AvailabilityDate&quot;"
-    OldFieldName="&quot;AvailabilityDate&quot;"
+    OldNames="AvailabilityDate"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2362,6 +2362,7 @@
     ListLocalDefaultText="&quot;תאריך זמינות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="false"
@@ -2375,6 +2376,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2382,10 +2384,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-	<field
+  <field
     Id="&quot;fe5bc41f-31d5-4a14-a4c5-7e676df4d5e0&quot;"
     FieldName="&quot;ClassifiedUserId&quot;"
-    OldFieldName="&quot;ClassifiedUserId&quot;"
+    OldNames="ClassifiedUserId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2436,6 +2438,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ClassifiedUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2450,6 +2453,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2457,10 +2461,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-	<field
+  <field
     Id="&quot;3510c70a-d64e-4b58-9ce1-8386a12e08d6&quot;"
     FieldName="&quot;ControllerUserId&quot;"
-    OldFieldName="&quot;CollectorUserId&quot;"
+    OldNames="ControllerUserId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2512,6 +2516,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ControllerUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2526,6 +2531,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2533,10 +2539,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-	<field
+  <field
     Id="&quot;fe520152-0898-428b-96c3-26c85a4cd970&quot;"
     FieldName="&quot;CollectorUserId&quot;"
-    OldFieldName="&quot;CollectorUserId&quot;"
+    OldNames="CollectorUserId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2588,6 +2594,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CollectorUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2602,6 +2609,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"

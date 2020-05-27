@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.CourierMaster&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CourierMasters&quot;"
-  OldDBTableName="&quot;Customs.CourierMasters&quot;"
+  DBTableOldNames="Customs.CourierMasters"
   ObjectTableSingular="&quot;CourierMaster&quot;"
   ObjectTablePlural="&quot;CourierMasters&quot;"
   HasCustomFilter="false"
@@ -66,7 +66,7 @@
   <field
     Id="&quot;f62c9cf8-87e9-4495-ac81-e9001bb164e1&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -115,6 +115,7 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -128,6 +129,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -138,7 +140,7 @@
   <field
     Id="&quot;a166c59d-7cc9-4a5a-8300-60af07677c67&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -187,6 +189,7 @@
     ListLocalDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -200,6 +203,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -210,7 +214,7 @@
   <field
     Id="&quot;037765e5-f108-4e04-bc6c-a70fc379ba7b&quot;"
     FieldName="&quot;CreateDateTime&quot;"
-    OldFieldName="&quot;CreateDateTime&quot;"
+    OldNames="CreateDateTime"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -260,6 +264,7 @@
     ListLocalDefaultText="&quot;תאריך יצירה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -273,6 +278,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -283,7 +289,7 @@
   <field
     Id="&quot;8c11256f-1037-4ba3-a346-6119af8eee7f&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
-    OldFieldName="&quot;CreatedByUserId&quot;"
+    OldNames="CreatedByUserId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -335,6 +341,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CreatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -349,6 +356,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -359,7 +367,7 @@
   <field
     Id="&quot;cc876a7d-1a92-4540-8714-4355adba8d1d&quot;"
     FieldName="&quot;UpdateDateTime&quot;"
-    OldFieldName="&quot;UpdateDateTime&quot;"
+    OldNames="UpdateDateTime"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -410,6 +418,7 @@
     ListLocalDefaultText="&quot;תאריך עדכון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -423,6 +432,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -433,7 +443,7 @@
   <field
     Id="&quot;0e767530-1e18-49dd-b4cb-4e4eb13dfc98&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -485,6 +495,7 @@
     HelpLocalDefaultText="&quot;חיפוש על ידי: &quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -498,6 +509,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -508,7 +520,7 @@
   <field
     Id="&quot;6630e72b-d2e9-47e3-8268-a978f0bfa483&quot;"
     FieldName="&quot;CreatedByUserName&quot;"
-    OldFieldName="&quot;CreatedByUserName&quot;"
+    OldNames="CreatedByUserName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -557,6 +569,7 @@
     ListLocalDefaultText="&quot;משתמש פותח בלדר ראשי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -570,6 +583,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -580,7 +594,7 @@
   <field
     Id="&quot;7ec3b33b-044c-4bce-850e-73810aaf73c7&quot;"
     FieldName="&quot;AirlineId&quot;"
-    OldFieldName="&quot;AirlineId&quot;"
+    OldNames="AirlineId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -631,6 +645,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="CustomsAirline"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CustomsAirline"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -645,6 +660,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -655,7 +671,7 @@
   <field
     Id="&quot;40e7905b-9c42-4d85-b969-89d5fdc7abe3&quot;"
     FieldName="&quot;AirlineName&quot;"
-    OldFieldName="&quot;AirlineName&quot;"
+    OldNames="AirlineName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -704,6 +720,7 @@
     ListLocalDefaultText="&quot;שם חברת תעופה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -717,6 +734,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -727,7 +745,7 @@
   <field
     Id="&quot;992246de-065f-46e9-a2f3-da8187dd1193&quot;"
     FieldName="&quot;MAWB&quot;"
-    OldFieldName="&quot;MAWB&quot;"
+    OldNames="MAWB"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -776,6 +794,7 @@
     ListLocalDefaultText="&quot;שטר מטען ראשי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -789,6 +808,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -799,7 +819,7 @@
   <field
     Id="&quot;208f010b-2273-469c-93c7-f7eb0266a176&quot;"
     FieldName="&quot;MAWBTypeName&quot;"
-    OldFieldName="&quot;MAWBTypeName&quot;"
+    OldNames="MAWBTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -848,6 +868,7 @@
     ListLocalDefaultText="&quot;סוג שטר מטען&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -861,6 +882,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -871,7 +893,7 @@
   <field
     Id="&quot;d601c807-3ecb-4a8f-8c98-3a30f66d4ff8&quot;"
     FieldName="&quot;HAWB&quot;"
-    OldFieldName="&quot;HAWB&quot;"
+    OldNames="HAWB"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -920,6 +942,7 @@
     ListLocalDefaultText="&quot;שטר מטען פנימי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -933,6 +956,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -943,7 +967,7 @@
   <field
     Id="&quot;992cb901-a96e-4304-b207-0b049c44d1c1&quot;"
     FieldName="&quot;EstimatedArrivalDate&quot;"
-    OldFieldName="&quot;EstimatedArrivalDate&quot;"
+    OldNames="EstimatedArrivalDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -994,6 +1018,7 @@
     ListLocalDefaultText="&quot;תאריך הגעה משוער&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1007,6 +1032,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1017,7 +1043,7 @@
   <field
     Id="&quot;35b05cbb-2ee5-409d-895f-e9d43c6f6552&quot;"
     FieldName="&quot;GatewayPortCode&quot;"
-    OldFieldName="&quot;GatewayPortCode&quot;"
+    OldNames="GatewayPortCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1069,6 +1095,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="InternationalSite"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="GatewayPort"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1083,6 +1110,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1093,7 +1121,7 @@
   <field
     Id="&quot;57f29ac8-7b57-471d-b343-6f2e65d59208&quot;"
     FieldName="&quot;GatewayPortName&quot;"
-    OldFieldName="&quot;GatewayPortName&quot;"
+    OldNames="GatewayPortName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1143,6 +1171,7 @@
     ListLocalDefaultText="&quot;נמל טעינה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1156,6 +1185,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1166,7 +1196,7 @@
   <field
     Id="&quot;461af7d8-d63b-4fce-aaee-b21ae5c7fffa&quot;"
     FieldName="&quot;OriginPortCode&quot;"
-    OldFieldName="&quot;OriginPortCode&quot;"
+    OldNames="OriginPortCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1218,6 +1248,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="InternationalSite"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="OriginPort"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1232,6 +1263,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1242,7 +1274,7 @@
   <field
     Id="&quot;2e5ba1da-04b8-4f39-9468-86784a14c176&quot;"
     FieldName="&quot;OriginPortName&quot;"
-    OldFieldName="&quot;OriginPortName&quot;"
+    OldNames="OriginPortName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1292,6 +1324,7 @@
     ListLocalDefaultText="&quot;נמל מוצא&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1305,6 +1338,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1315,7 +1349,7 @@
   <field
     Id="&quot;ee46b941-f4f7-460a-a020-4c23a3158655&quot;"
     FieldName="&quot;IsOpen&quot;"
-    OldFieldName="&quot;IsOpen&quot;"
+    OldNames="IsOpen"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1365,6 +1399,7 @@
     ListLocalDefaultText="&quot;פתוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1378,6 +1413,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1388,7 +1424,7 @@
   <field
     Id="&quot;8f35164d-d58a-45aa-b88e-080714b37dc0&quot;"
     FieldName="&quot;IsCancelled&quot;"
-    OldFieldName="&quot;IsCancelled&quot;"
+    OldNames="IsCancelled"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1438,6 +1474,7 @@
     ListLocalDefaultText="&quot;מבוטל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1451,6 +1488,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1461,7 +1499,7 @@
   <field
     Id="&quot;a44f22fd-43bc-4df5-a32b-1dd162621231&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
-    OldFieldName="&quot;UpdatedByUserId&quot;"
+    OldNames="UpdatedByUserId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1510,6 +1548,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="User"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1524,6 +1563,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1534,7 +1574,7 @@
   <field
     Id="&quot;f2261687-e487-41d4-97d2-2571a3d7ae48&quot;"
     FieldName="&quot;UpdatedByUserName&quot;"
-    OldFieldName="&quot;UpdatedByUserName&quot;"
+    OldNames="UpdatedByUserName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1581,6 +1621,7 @@
     ListLableDefaultText="&quot;Updated By&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1594,6 +1635,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1604,7 +1646,7 @@
   <field
     Id="&quot;075de0d1-b3e6-4a6a-9040-68fcddfe38f6&quot;"
     FieldName="&quot;AirlinePrefix&quot;"
-    OldFieldName="&quot;AirlinePrefix&quot;"
+    OldNames="AirlinePrefix"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1653,6 +1695,7 @@
     ListLocalDefaultText="&quot;קוד חברת תעופה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1666,6 +1709,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1676,7 +1720,7 @@
   <field
     Id="&quot;118031d1-4491-4962-b003-a5d52ec80623&quot;"
     FieldName="&quot;SelectedDeclarationChanged&quot;"
-    OldFieldName="&quot;SelectedDeclarationChanged&quot;"
+    OldNames="SelectedDeclarationChanged"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1720,6 +1764,7 @@
     DefaultText="&quot;SelectedDeclarationChanged&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1733,6 +1778,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1743,7 +1789,7 @@
   <field
     Id="&quot;76d874eb-b1b5-40f7-b189-9caf0afaf435&quot;"
     FieldName="&quot;ConnectedDeclarations&quot;"
-    OldFieldName="&quot;ConnectedDeclarations&quot;"
+    OldNames="ConnectedDeclarations"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1787,6 +1833,7 @@
     DefaultText="&quot;ConnectedDeclarations&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1800,6 +1847,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1810,7 +1858,7 @@
   <field
     Id="&quot;2599ae8c-79c7-4c20-8f1a-5ed9d6b014e7&quot;"
     FieldName="&quot;NotConnectedDeclarations&quot;"
-    OldFieldName="&quot;NotConnectedDeclarations&quot;"
+    OldNames="NotConnectedDeclarations"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1854,6 +1902,7 @@
     DefaultText="&quot;NotConnectedDeclarations&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1867,6 +1916,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1877,7 +1927,7 @@
   <field
     Id="&quot;ce4974b5-51d2-4994-9a9d-cab2ad4407e2&quot;"
     FieldName="&quot;MAWBTypeCode&quot;"
-    OldFieldName="&quot;MAWBTypeCode&quot;"
+    OldNames="MAWBTypeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1928,6 +1978,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="MAWBType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="MAWBType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1942,6 +1993,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1952,7 +2004,7 @@
   <field
     Id="&quot;596b8a44-99e1-4563-90b7-9be84f151260&quot;"
     FieldName="&quot;ManifestNumber&quot;"
-    OldFieldName="&quot;ManifestNumber&quot;"
+    OldNames="ManifestNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2002,6 +2054,7 @@
     ListLocalDefaultText="&quot;מספר מצהר&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2015,6 +2068,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2025,7 +2079,7 @@
   <field
     Id="&quot;ffc7afb8-06d0-4519-bd79-f509a63e51db&quot;"
     FieldName="&quot;PackageQuantity&quot;"
-    OldFieldName="&quot;PackageQuantity&quot;"
+    OldNames="PackageQuantity"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2075,6 +2129,7 @@
     ListLocalDefaultText="&quot;כמות אריזות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2088,6 +2143,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2098,7 +2154,7 @@
   <field
     Id="&quot;1659ff31-fb4e-4cc9-a09a-1a353d69ffd1&quot;"
     FieldName="&quot;GrossMassMeasure&quot;"
-    OldFieldName="&quot;GrossMassMeasure&quot;"
+    OldNames="GrossMassMeasure"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2150,6 +2206,7 @@
     ListLocalDefaultText="&quot;משקל אריזות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2163,6 +2220,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2173,7 +2231,7 @@
   <field
     Id="&quot;32a88155-1fd2-4414-8296-8ce3ad974008&quot;"
     FieldName="&quot;ShortHAWB&quot;"
-    OldFieldName="&quot;ShortHAWB&quot;"
+    OldNames="ShortHAWB"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2222,6 +2280,7 @@
     ListLocalDefaultText="&quot;שטר מטען פנימי מקוצר&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2235,6 +2294,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2245,7 +2305,7 @@
   <field
     Id="&quot;10bb0404-3541-4205-aebf-36b095db2f67&quot;"
     FieldName="&quot;FlightNumber&quot;"
-    OldFieldName="&quot;FlightNumber&quot;"
+    OldNames="FlightNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2294,6 +2354,7 @@
     ListLocalDefaultText="&quot;מספר טיסה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2308,6 +2369,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2318,7 +2380,7 @@
   <field
     Id="&quot;db358446-6718-48b9-94fa-304e2c5376e3&quot;"
     FieldName="&quot;DepartureDate&quot;"
-    OldFieldName="&quot;DepartureDate&quot;"
+    OldNames="DepartureDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2367,6 +2429,7 @@
     ListLocalDefaultText="&quot;תאריך המראה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2380,6 +2443,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2390,7 +2454,7 @@
   <field
     Id="&quot;503a79ce-f7c2-4f45-8f38-fd6de5b0877b&quot;"
     FieldName="&quot;EstimatedArrivalDateOnly&quot;"
-    OldFieldName="&quot;EstimatedArrivalDateOnly&quot;"
+    OldNames="EstimatedArrivalDateOnly"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2439,6 +2503,7 @@
     ListLocalDefaultText="&quot;תאריך הגעה משוער&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2452,6 +2517,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2462,7 +2528,7 @@
   <field
     Id="&quot;a1af9e8e-1aa1-45cf-b0f3-8bfcc89c7a52&quot;"
     FieldName="&quot;EstimatedArrivalTimeOnly&quot;"
-    OldFieldName="&quot;EstimatedArrivalTimeOnly&quot;"
+    OldNames="EstimatedArrivalTimeOnly"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2511,6 +2577,7 @@
     ListLocalDefaultText="&quot;שעת הגעה משוערת&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2524,6 +2591,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2534,7 +2602,7 @@
   <field
     Id="&quot;8cc78531-4054-4e2a-8a17-354a6b8094ba&quot;"
     FieldName="&quot;WeightValueCode&quot;"
-    OldFieldName="&quot;WeightValueCode&quot;"
+    OldNames="WeightValueCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2586,6 +2654,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="FreightPaymentMethod"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="FreightPaymentMethod"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2600,6 +2669,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2610,7 +2680,7 @@
   <field
     Id="&quot;285468f1-f779-4957-8897-dba3f9bac5cb&quot;"
     FieldName="&quot;WeightValueName&quot;"
-    OldFieldName="&quot;WeightValueName&quot;"
+    OldNames="WeightValueName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2660,6 +2730,7 @@
     ListLocalDefaultText="&quot;סוג תשלום&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2673,6 +2744,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2683,7 +2755,7 @@
   <field
     Id="&quot;55795b40-407c-4ddb-b7ae-d81ea736b7cb&quot;"
     FieldName="&quot;StorageSiteCode&quot;"
-    OldFieldName="&quot;StorageSiteCode&quot;"
+    OldNames="StorageSiteCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2735,6 +2807,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="DeliverySiteType"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="DeliverySiteType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2749,6 +2822,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2759,7 +2833,7 @@
   <field
     Id="&quot;5b197374-9e2b-4a34-87f5-7f4e3180aa22&quot;"
     FieldName="&quot;StorageSiteName&quot;"
-    OldFieldName="&quot;StorageSiteName&quot;"
+    OldNames="StorageSiteName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2809,6 +2883,7 @@
     ListLocalDefaultText="&quot;שם אתר אחסון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2822,6 +2897,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2832,7 +2908,7 @@
   <field
     Id="&quot;8db27637-fc67-426a-86f1-ca222d52e1bd&quot;"
     FieldName="&quot;TruckerId&quot;"
-    OldFieldName="&quot;TruckerId&quot;"
+    OldNames="TruckerId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2881,6 +2957,7 @@
     ListLocalDefaultText="&quot;קוד מוביל&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2894,6 +2971,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2904,7 +2982,7 @@
   <field
     Id="&quot;d61c2e02-bed6-4761-9ec5-e1c8a773379f&quot;"
     FieldName="&quot;IntegratorCode&quot;"
-    OldFieldName="&quot;IntegratorCode&quot;"
+    OldNames="IntegratorCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2956,6 +3034,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="Card"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Card"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -2970,6 +3049,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2980,7 +3060,7 @@
   <field
     Id="&quot;40df81c0-ffb9-405f-a78e-f0529e9efe79&quot;"
     FieldName="&quot;IntegratorName&quot;"
-    OldFieldName="&quot;IntegratorName&quot;"
+    OldNames="IntegratorName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3030,6 +3110,7 @@
     ListLocalDefaultText="&quot;אינטגרטור&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3043,6 +3124,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3053,7 +3135,7 @@
   <field
     Id="&quot;211ba587-5f02-45d8-bca8-0bfa90a57f95&quot;"
     FieldName="&quot;IntegratorNumber&quot;"
-    OldFieldName="&quot;IntegratorNumber&quot;"
+    OldNames="IntegratorNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3102,6 +3184,7 @@
     ListLocalDefaultText="&quot;אינטגרטור&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3115,6 +3198,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3125,7 +3209,7 @@
   <field
     Id="&quot;524c7720-1e9c-425e-a56c-001d0675894c&quot;"
     FieldName="&quot;IsReadyForInvoice&quot;"
-    OldFieldName="&quot;IsReadyForInvoice&quot;"
+    OldNames="IsReadyForInvoice"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -3175,6 +3259,7 @@
     ListLocalDefaultText="&quot;טיסה כמוכנה להפקת חשבונית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3188,6 +3273,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3198,7 +3284,7 @@
   <field
     Id="&quot;9f95a8a4-0d15-47a3-bf6a-a9944e97b042&quot;"
     FieldName="&quot;IsAllDecClosedForFollowUp&quot;"
-    OldFieldName="&quot;IsAllDecClosedForFollowUp&quot;"
+    OldNames="IsAllDecClosedForFollowUp"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3247,6 +3333,7 @@
     ListLocalDefaultText="&quot;שטרי מטען בלדר פתוחים&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3260,6 +3347,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3270,7 +3358,7 @@
   <field
     Id="&quot;5579e18c-f67a-426a-98ac-5e8b87e6bdaa&quot;"
     FieldName="&quot;CalcClosedForFollowUp&quot;"
-    OldFieldName="&quot;CalcClosedForFollowUp&quot;"
+    OldNames="CalcClosedForFollowUp"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3319,6 +3407,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות פתוחות&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3332,6 +3421,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3342,7 +3432,7 @@
   <field
     Id="&quot;6867bfa2-2106-4e0a-82f6-4ef7bff024be&quot;"
     FieldName="&quot;CalcMissingClassification&quot;"
-    OldFieldName="&quot;CalcMissingClassification&quot;"
+    OldNames="CalcMissingClassification"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3391,6 +3481,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות ללא סיווג&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3404,6 +3495,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3414,7 +3506,7 @@
   <field
     Id="&quot;49067348-3493-49ff-a2d5-15dccada99e2&quot;"
     FieldName="&quot;CalcMissingImporterId&quot;"
-    OldFieldName="&quot;CalcIsMissingImporterId&quot;"
+    OldNames="CalcMissingImporterId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3463,6 +3555,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות ללא תז&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3476,6 +3569,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3486,7 +3580,7 @@
   <field
     Id="&quot;0b0cff08-4eb2-4e62-8ae4-20dc45eddbea&quot;"
     FieldName="&quot;CalcPendingCustoms&quot;"
-    OldFieldName="&quot;CalcPendingCustoms&quot;"
+    OldNames="CalcPendingCustoms"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3535,6 +3629,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות מעוכב מכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3548,6 +3643,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3558,7 +3654,7 @@
   <field
     Id="&quot;d23fe8be-6a25-491d-aaf3-d4043734cc30&quot;"
     FieldName="&quot;CalcPending900&quot;"
-    OldFieldName="&quot;CalcPending900&quot;"
+    OldNames="CalcPending900"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3607,6 +3703,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות בתהליך גביה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3620,6 +3717,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3630,7 +3728,7 @@
   <field
     Id="&quot;1838f9a4-4e06-439a-b123-0a2adbe3d558&quot;"
     FieldName="&quot;CalcSuspendedDeclarations&quot;"
-    OldFieldName="&quot;PrefixMAWB&quot;"
+    OldNames="CalcSuspendedDeclarations"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3680,6 +3778,7 @@
     ListLocalDefaultText="&quot;כמות הצהרות מעוכב מכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3693,6 +3792,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3703,6 +3803,7 @@
   <field
     Id="&quot;a881a900-5a26-4f9b-bba2-e2da8e505d4e&quot;"
     FieldName="&quot;NoOfCourierHawb&quot;"
+    OldNames="NoOfCourierHawb"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3726,6 +3827,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;NoOfCourierHawb&quot;"
     ListPropertyPath="&quot;NoOfCourierHawb&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3750,6 +3852,7 @@
     ListLocalDefaultText="&quot;כמות שטרי מטען בלדר&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3763,6 +3866,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3773,6 +3877,7 @@
   <field
     Id="&quot;fc70ff34-b0e5-43c8-ae8b-d19a3b47c6e9&quot;"
     FieldName="&quot;IsAutomaticManifestSent&quot;"
+    OldNames="IsAutomaticManifestSent"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3796,6 +3901,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsAutomaticManifestSent&quot;"
     ListPropertyPath="&quot;IsAutomaticManifestSent&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3820,6 +3926,7 @@
     ListLocalDefaultText="&quot;האם שודר מצהר אוטומטי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -3833,6 +3940,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3840,83 +3948,85 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
-	<field	
-    Id="&quot;eb591e0b-5dc8-41f1-96b3-79fe5b0813f7&quot;"	
-    FieldName="&quot;IsEstimatedArrivalToDay&quot;"	
-    IsNew="true"	
-    IsChecked="true"	
-    IsDeleted="false"	
-    ObjectTableName="&quot;Customs.CourierMaster&quot;"	
-    FieldsDataType="&quot;Boolean&quot;"	
-    MinLength="0"	
-    MaxLength="0"	
-    IsRequired="false"	
-    CopyToDW="false"	
-    DisplayOnLookUp="false"	
-    DisplayOnLookUpLocal="false"	
-    CanFilter="true"	
-    DisplayOnly="false"	
-    SystemRequired="false"	
-    ObjectFieldNotRequired="false"	
-    SystemMaxLength="0"	
-    DisplayInList="true"	
-    IsCustomFilter="false"	
-    Operator="&quot;Equals&quot;"	
-    MultiLine="false"	
-    IsTimeFrameFilter="false"	
-    DisplayInSearchWindowList="false"	
-    PMPropertyPath="&quot;IsEstimatedArrivalToDay&quot;"	
-    ListPropertyPath="&quot;IsEstimatedArrivalToDay&quot;"	
-    AutomaticField="false"	
-    UniqueField="false"	
-    DisplayInSearchWindowListIndex="0"	
-    IsMulti="false"	
-    DependencyFilter1IsList="false"	
-    DependencyFilter2IsList="false"	
-    DependencyFilter3IsList="false"	
-    ValidForQuerySection1="&quot;Customs.CourierMaster&quot;"	
-    IsRestrictable="false"	
-    DisplayInEntityVariables="false"	
-    AllowedInCustomerFieldsSettings="false"	
-    DisplayInSearchWindowFilters="false"	
-    DisplayInSearchWindowFiltersIndex="0"	
-    DisplayInDocumentReferences="false"	
-    InActive="false"	
-    DisplayLongName="false"	
-    FullFieldLable="&quot;IsEstimatedArrivalToDay&quot;"	
-    DefaultText="&quot;Is Estimated Arrival today&quot;"	
-    FullLocalDefaultText="&quot;Is Estimated Arrival today&quot;"	
-    ListFieldLable="&quot;IsEstimatedArrivalToDayListLable&quot;"	
-    ListLableDefaultText="&quot;Is Estimated Arrival today&quot;"	
-    ListLocalDefaultText="&quot;Is Estimated Arrival today&quot;"	
-    IsNullable="true"	
-    IsForeignKey="false"	
-    IsPrimaryKey="false"	
-    HasDataBaseField="false"	
-    HasPMField="false"	
-    IsComposition="false"	
-    IsMaxLength="false"	
-    NoMetaDataField="false"	
-    GenerateInList="true"	
-    IsFixedLength="false"	
-    EnableAutoFill="false"	
-    IncludeInSearchField="false"	
-    AllowedinAutomationConditions="false"	
-    AutomationEmailRecipient="false"	
-    CanAutomateSetValue="false"	
-    HasTemplate="false"	
-    IsCustom="false"	
-    IsSpellCheckedFullFieldLable="false"	
-    IsSpellCheckedHelpLocalDefaultText="false"	
-    IsSpellCheckedShortLocalDefaultText="false"	
-    IsSpellCheckedListLocalDefaultText="false"	
+  <field
+    Id="&quot;eb591e0b-5dc8-41f1-96b3-79fe5b0813f7&quot;"
+    FieldName="&quot;IsEstimatedArrivalToDay&quot;"
+    OldNames="IsEstimatedArrivalToDay"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.CourierMaster&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsEstimatedArrivalToDay&quot;"
+    ListPropertyPath="&quot;IsEstimatedArrivalToDay&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.CourierMaster&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsEstimatedArrivalToDay&quot;"
+    DefaultText="&quot;Is Estimated Arrival today&quot;"
+    FullLocalDefaultText="&quot;Is Estimated Arrival today&quot;"
+    ListFieldLable="&quot;IsEstimatedArrivalToDayListLable&quot;"
+    ListLableDefaultText="&quot;Is Estimated Arrival today&quot;"
+    ListLocalDefaultText="&quot;Is Estimated Arrival today&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="false"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
-	<field
+  <field
     Id="&quot;eb591e0b-5dc8-41f1-96b3-79fe5b0813f7&quot;"
     FieldName="&quot;EstimatedArrivalColor&quot;"
-    OldFieldName="&quot;IsEstimatedArrivalToDay&quot;"
+    OldNames="EstimatedArrivalColor"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -3966,6 +4076,7 @@
     ListLocalDefaultText="&quot;Estimated Arrival Color&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="false"
@@ -3979,6 +4090,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -3986,7 +4098,283 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
+  <Query
+    Code="&quot;OPENCOURIERMASTERS&quot;"
+    TextCode="&quot;Open Courier Masters&quot;"
+    LocalTextCode="&quot;טיסות פתוחות&quot;"
+    QueryGroupCode="&quot;dcc9&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CourierMaster&quot;"
+    QuerySection="&quot;Customs.CourierMaster&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
+    TextCodeCode="&quot;CourierMaster.Q.OPENCOURIERMASTERS&quot;"
+    FeatureCode="&quot;CourierMaster.Q.OPENCOURIERMASTERS&quot;"
+    FeatureTextCodeCode="&quot;CourierMaster.Features.OPENCOURIERMASTERS&quot;"
+    FeatureDefaultText="&quot;OPENCOURIERMASTERS&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;AirlineName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IntegratorName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;MAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;HAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GatewayPortName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;IsOpen&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsOpen&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
+        PredefinedValue="&quot;0&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;CLOSECOURIERMASTERS&quot;"
+    TextCode="&quot;Close Courier Masters&quot;"
+    LocalTextCode="&quot;טיסות סגורות&quot;"
+    QueryGroupCode="&quot;dcc9&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.CourierMaster&quot;"
+    QuerySection="&quot;Customs.CourierMaster&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
+    TextCodeCode="&quot;CourierMaster.Q.CLOSECOURIERMASTERS&quot;"
+    FeatureCode="&quot;CourierMaster.Q.CLOSECOURIERMASTERS&quot;"
+    FeatureTextCodeCode="&quot;CourierMaster.Features.CLOSECOURIERMASTERS&quot;"
+    FeatureDefaultText="&quot;CLOSECOURIERMASTERS&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;AirlineName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IntegratorName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;MAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;HAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GatewayPortName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;IsOpen&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsOpen&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
+        PredefinedValue="&quot;0&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ALLCOURIERS&quot;"
+    TextCode="&quot;All Courier Masters&quot;"
+    LocalTextCode="&quot;כל הטיסות&quot;"
+    QueryGroupCode="&quot;dcc9&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.CourierMaster&quot;"
+    QuerySection="&quot;Customs.CourierMaster&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
+    TextCodeCode="&quot;CourierMaster.Q.ALLCOURIERS&quot;"
+    FeatureCode="&quot;CourierMaster.Q.ALLCOURIERS&quot;"
+    FeatureTextCodeCode="&quot;CourierMaster.Features.ALLCOURIERS&quot;"
+    FeatureDefaultText="&quot;ALLCOURIERS&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;AirlineName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IntegratorName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;MAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;HAWB&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;GatewayPortName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;IsOpen&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALLCOURIERS&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;Customs.CourierMasterHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CourierMaster&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="4"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;AirlineName&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;MAWB&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;HAWB&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;GatewayPortName&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ScreenName="Customs.CourierMasterHeaderScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -3994,15 +4382,15 @@
     Code="&quot;COGN&quot;"
     ControlPath="&quot;CourierMasterGeneralTabComponent&quot;"
     TextCode="&quot;Customs.CourierMaster.TH.General&quot;"
-    IsPackagable="True"
+    IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/EditTabs/CourierMasterGeneralTabComponent&quot;"
     HtmlComponentName="&quot;CourierMasterGeneralTabComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
     FeatureCode="&quot;CourierMaster.Tab.General&quot;"
     FeatureTextCodeCode="&quot;CourierMaster.Features.General&quot;"
-    FeatureDefaultText="&quot;General&quot;" />
+    FeatureDefaultText="&quot;General&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Connected Declaration&quot;"
     TabLocalName="&quot;הצהרות מקושרות&quot;"
@@ -4010,15 +4398,15 @@
     Code="&quot;COCD&quot;"
     ControlPath="&quot;ConnectedDeclarationTabComponent&quot;"
     TextCode="&quot;Customs.CourierMaster.TH.ConnectedDeclaration&quot;"
-    IsPackagable="True"
+    IsPackagable="true"
     IndexOrder="1"
     HtmlComponentURL="&quot;./CustomsModules/CustomsCourier/Components/EditTabs/CMConnectedDeclarationTabComponent&quot;"
     HtmlComponentName="&quot;CMConnectedDeclarationTabComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
     FeatureCode="&quot;CourierMaster.Tab.ConnectedDeclaration&quot;"
     FeatureTextCodeCode="&quot;CourierMaster.Features.ConnectedDeclaration&quot;"
-    FeatureDefaultText="&quot;Connected Declaration&quot;" />
+    FeatureDefaultText="&quot;Connected Declaration&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -4026,15 +4414,15 @@
     Code="&quot;COME&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CourierMaster.TH.Events&quot;"
-    IsPackagable="True"
+    IsPackagable="true"
     IndexOrder="2"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
-    HtmlComponentName="&quot;&quot;"
     HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CourierMaster.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;CourierMaster.Features.Events&quot;"
-    FeatureDefaultText="&quot;Events&quot;" />
+    FeatureDefaultText="&quot;Events&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Communications&quot;"
     TabLocalName="&quot;תקשורות&quot;"
@@ -4042,15 +4430,101 @@
     Code="&quot;COCM&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationsControl&quot;"
     TextCode="&quot;Customs.CourierMaster.TH.Communications&quot;"
-    IsPackagable="True"
+    IsPackagable="true"
     IndexOrder="3"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
-    HtmlComponentName="&quot;&quot;"
     HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CourierMaster.Tab.Communications&quot;"
     FeatureTextCodeCode="&quot;CourierMaster.Features.Communications&quot;"
-    FeatureDefaultText="&quot;Communications&quot;" />
+    FeatureDefaultText="&quot;Communications&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <EventTypes>
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;VGR&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Gatepass Movement Recived&quot;"
+      LocalName="&quot;בקשה לגייטפס העברות ממתינה לאישור&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;VGA&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Gatepass Movement Approved&quot;"
+      LocalName="&quot;בקשת גייטפס העברות אושרה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;VGE&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Gatepass Movement Error&quot;"
+      LocalName="&quot;בקשת גייטפס העברות שגויה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;VGD&quot;"
+      ObjectTableName="&quot;Customs.CourierMaster&quot;"
+      EnglishName="&quot;Gatepass Movement Reject&quot;"
+      LocalName="&quot;בקשת גייטפס העברות נדחתה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;LOG&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+  </EventTypes>
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
@@ -4434,7 +4908,7 @@
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
-  <Feature
+    <Feature
       Code="&quot;AllowAccounting&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.Allow Accounting&quot;"
@@ -4444,367 +4918,4 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
-  <Query
-    Code="&quot;OPENCOURIERMASTERS&quot;"
-    ObjectTableName="&quot;Customs.CourierMaster&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    DefaultSortName="&quot;CreateDateTime&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CourierMaster&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;dcc9&quot;"
-    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
-    LocalTextCode="&quot;טיסות פתוחות&quot;"
-    TextCode="&quot;Open Courier Masters&quot;"
-    TextCodeCode="&quot;CourierMaster.Q.OPENCOURIERMASTERS&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CourierMaster.Q.OPENCOURIERMASTERS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;CourierMaster.Features.OPENCOURIERMASTERS&quot;"
-    FeatureDefaultText="&quot;OPENCOURIERMASTERS&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;AirlineName&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;IntegratorName&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;MAWB&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;HAWB&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;GatewayPortName&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;IsOpen&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsOpen&quot;"
-        PredefinedValue="&quot;true&quot;" />
-      <QueryFilter
-        QueryCode="&quot;OPENCOURIERMASTERS&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        PredefinedValue="&quot;0&quot;"
-        Operator="&quot;Equal&quot;" />
-    </QueryFilters>
-  </Query>
-  <Query
-    Code="&quot;CLOSECOURIERMASTERS&quot;"
-    ObjectTableName="&quot;Customs.CourierMaster&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    DefaultSortName="&quot;CreateDateTime&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CourierMaster&quot;"
-    IndexOrder="1"
-    QueryGroupCode="&quot;dcc9&quot;"
-    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
-    LocalTextCode="&quot;טיסות סגורות&quot;"
-    TextCode="&quot;Close Courier Masters&quot;"
-    TextCodeCode="&quot;CourierMaster.Q.CLOSECOURIERMASTERS&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CourierMaster.Q.CLOSECOURIERMASTERS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;CourierMaster.Features.CLOSECOURIERMASTERS&quot;"
-    FeatureDefaultText="&quot;CLOSECOURIERMASTERS&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;AirlineName&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;IntegratorName&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;MAWB&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;HAWB&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;GatewayPortName&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;IsOpen&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;" />
-    </QueryColumns>
-    <QueryFilters>
-      <QueryFilter
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsOpen&quot;"
-        PredefinedValue="&quot;false&quot;" />
-      <QueryFilter
-        QueryCode="&quot;CLOSECOURIERMASTERS&quot;"
-        IndexOrder="0"
-        IsPredefined="true"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        PredefinedValue="&quot;0&quot;"
-        Operator="&quot;Equal&quot;" />
-    </QueryFilters>
-  </Query>
-  <Query
-    Code="&quot;ALLCOURIERS&quot;"
-    ObjectTableName="&quot;Customs.CourierMaster&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    DefaultSortName="&quot;CreateDateTime&quot;"
-    IsAddNewEntity="true"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CourierMaster&quot;"
-    IndexOrder="2"
-    QueryGroupCode="&quot;dcc9&quot;"
-    QueryGroupName="&quot;Customs.CourierMaster Query Group&quot;"
-    LocalTextCode="&quot;כל הטיסות&quot;"
-    TextCode="&quot;All Courier Masters&quot;"
-    TextCodeCode="&quot;CourierMaster.Q.ALLCOURIERS&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CourierMaster.Q.ALLCOURIERS&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;CourierMaster.Features.ALLCOURIERS&quot;"
-    FeatureDefaultText="&quot;ALLCOURIERS&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;AirlineName&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;IntegratorName&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;MAWB&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;HAWB&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;GatewayPortName&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="6"
-        ColumnWidth="150"
-        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="7"
-        ColumnWidth="120"
-        ObjectFieldName="&quot;IsOpen&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-      <QueryColumn
-        IndexOrder="8"
-        ColumnWidth="100"
-        ObjectFieldName="&quot;IsCancelled&quot;"
-        QueryCode="&quot;ALLCOURIERS&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Name="&quot;Customs.CourierMasterHeaderScreen&quot;"
-    ObjectTableName="&quot;Customs.CourierMaster&quot;"
-    NumberOfColumns="4"
-    NumberOfRows="2"
-    IsReadOnly="true"
-    IsHeaderScreen="true">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;AirlineName&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;EstimatedArrivalDate&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="1"
-        Row="0"
-        ObjectFieldName="&quot;MAWB&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="1"
-        Row="1"
-        ObjectFieldName="&quot;HAWB&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="2"
-        Row="0"
-        ObjectFieldName="&quot;GatewayPortName&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="2"
-        Row="1"
-        ObjectFieldName="&quot;CreateDateTime&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-      <ScreenField
-        Column="3"
-        Row="0"
-        ObjectFieldName="&quot;CreatedByUserName&quot;"
-        ScreenName="Customs.CourierMasterHeaderScreen" />
-    </ScreenFields>
-  </Screen>
-  <EventTypes>
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
-      EnglishName="&quot;Created&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
-      EnglishName="&quot;Updated&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;VGR&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;בקשה לגייטפס העברות ממתינה לאישור&quot;"
-      EnglishName="&quot;Gatepass Movement Recived&quot;"
-      EventTypeCategoryCode="&quot;LOG&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;VGA&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;בקשת גייטפס העברות אושרה&quot;"
-      EnglishName="&quot;Gatepass Movement Approved&quot;"
-      EventTypeCategoryCode="&quot;LOG&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;VGE&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;בקשת גייטפס העברות שגויה&quot;"
-      EnglishName="&quot;Gatepass Movement Error&quot;"
-      EventTypeCategoryCode="&quot;LOG&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;VGD&quot;"
-      ObjectTableName="&quot;Customs.CourierMaster&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;בקשת גייטפס העברות נדחתה&quot;"
-      EnglishName="&quot;Gatepass Movement Reject&quot;"
-      EventTypeCategoryCode="&quot;LOG&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-  </EventTypes>
 </entity>
