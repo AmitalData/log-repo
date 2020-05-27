@@ -938,77 +938,94 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     return isDuplicate;
   }
 
-  AddNewTariffPayable(newRecord: any, notes = null, packageId = null, quantity = null) {
-    this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
-      if (!myResponse.HasError) {
-        var chargesType: ChargesTypeList = myResponse.Result;
-        var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
-        shipmentPayable.TariffId = newRecord.TariffId;
-        shipmentPayable.TariffNumber = newRecord.TariffNumber;
-        shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
-        shipmentPayable.CurrencyId = newRecord.CurrencyId;
-        this.Generator.GetCurrencyCode(shipmentPayable);
-        shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
-        shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
-        shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
-        shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
+    AddNewTariffPayable(newRecord: any, notes = null, packageId = null, quantity = null) {
+        this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
+                shipmentPayable.TariffId = newRecord.TariffId;
+                shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
+                shipmentPayable.CurrencyId = newRecord.CurrencyId;
+                this.Generator.GetCurrencyCode(shipmentPayable);
+                shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
+                shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
+                shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
+                shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
 
-        var newQuantity = 1;
-        var expectedAmount;
-        if (packageId != null) {
-          this.CreateNewPayableFromTariffCharge_FCL(packageId, shipmentPayable);
-          var containerPrice = 0;
-          if (newRecord.ContainersPrices) {
-            var container = newRecord.ContainersPrices.filter(d => d.TariffId == newRecord.TariffId && d.ContainerId == packageId)[0];
-            if (container) {
-              containerPrice = container.Price;
-              newQuantity = container.Quantity;
+                var newQuantity = 1;
+                var expectedAmount;
+                if (packageId != null) {
+                    this.CreateNewPayableFromTariffCharge_FCL(packageId, shipmentPayable);
+                    var containerPrice = 0;
+                    if (newRecord.ContainersPrices) {
+                        var container = newRecord.ContainersPrices.filter(d => d.TariffId == newRecord.TariffId && d.ContainerId == packageId)[0];
+                        if (container) {
+                            containerPrice = container.Price;
+                            newQuantity = container.Quantity;
+                        }
+                    }
+                    expectedAmount = containerPrice;
+                }
+                else {
+                    expectedAmount = newRecord.ActualPrice;
+                    newQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode)
+                }
+
+                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
+                var expectedAmountLocal = expectedAmount * rate;
+
+                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
+                var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
+                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
+
+                if (newQuantity != null) {
+                    shipmentPayable.Quantity = AppTool.Round(newQuantity, 3);
+                    if (newRecord.UnitOfMesurmentCode == "PRVL" || newRecord.UnitOfMesurmentCode == "PRFR") {
+                        var price = shipmentPayable.ExpectedAmount * 100;
+                        shipmentPayable.UnitPrice = AppTool.Round(price / shipmentPayable.Quantity, 3);
+                    }
+                    else {
+                        shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
+                    }
+                }
+
+                shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
+                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
+                shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
+                shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
+                shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
+                shipmentPayable.AccountedAmount = 0;
+                shipmentPayable.AccountedAmountInLocalCurrency = 0;
+                shipmentPayable.AccountedAmountInProfitCurrency = 0;
+                shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                shipmentPayable.ShipmentId = this.FatherComponent.EntityPM.Id;
+                shipmentPayable.ShipmentNumber = this.FatherComponent.EntityPM.ShipmentNumber;
+                shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.Tenant = this.FatherComponent.EntityPM.Tenant;
+                shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.Notes = notes;
+                shipmentPayable.VendorId = newRecord.SellerId;
+                shipmentPayable.VendorName = newRecord.SellerName;
+                shipmentPayable.MinAmount = newRecord.MinPrice;
+               
+                this.TariffList_Shipment.push(shipmentPayable);
             }
-          }
-          expectedAmount = containerPrice;
-        }
-        else {
-          expectedAmount = newRecord.ActualPrice;
-          newQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode)
-        }
+        });
 
-        var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
-        var expectedAmountLocal = expectedAmount * rate;
+        this.OnAmountChanged(); 
+    }
 
-        var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
-        var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
-
-        if (newQuantity != null) {
-          shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
-          shipmentPayable.Quantity = AppTool.Round(newQuantity, 3);
-        }
-
-        shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
-        shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
-        shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
-        shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
-        shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
-        shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
-        shipmentPayable.AccountedAmount = 0;
-        shipmentPayable.AccountedAmountInLocalCurrency = 0;
-        shipmentPayable.AccountedAmountInProfitCurrency = 0;
-        shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
-        shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
-        shipmentPayable.ShipmentId = this.FatherComponent.EntityPM.Id;
-        shipmentPayable.ShipmentNumber = this.FatherComponent.EntityPM.ShipmentNumber;
-        shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
-        shipmentPayable.Tenant = this.FatherComponent.EntityPM.Tenant;
-        shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
-        shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-        shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
-        shipmentPayable.Notes = notes;
-        shipmentPayable.VendorId = newRecord.SellerId;
-        shipmentPayable.VendorName = newRecord.SellerName;
-        shipmentPayable.MinAmount = newRecord.MinPrice;
-        this.TariffList_Shipment.push(shipmentPayable);
-      }
-    });
-  }
+    OnAmountChanged() {
+        this.TariffList_Shipment.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
+            var newQuantity = this.GetQuantity(item.MeasurementCode);
+            var price = item.ExpectedAmount * 100;
+            item.UnitPrice = AppTool.Round(price / newQuantity, 3);
+        });
+    }
 
   private CreateNewPayableFromTariffCharge_FCL(myPackageTypeId: string, newItemPM: ShipmentPayablePM) {
     if (!AppTool.IsNullOrEmpty(myPackageTypeId)) {
@@ -1058,7 +1075,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
       case "BTEU": { myQuantity = this.FatherComponent.EntityPM.TEU; break; }
       case "FIXD": { myQuantity = 1; break; }
       case "PRVL": { myQuantity = this.FatherComponent.EntityPM.ValueOfGoods; break; }
-      case "PRFR": { myQuantity = ArrayTool.Sum(this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+      case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffList_Shipment.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
       case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
       case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
       case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
