@@ -587,7 +587,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 surchargeCode = CurrentCharge.Code;
                                                 surchargeChargeTypeId = CurrentCharge.Id;
                                             }
-                                            
+
                                             if (valueofSurcharge != null)
                                             {
                                                 decimal? CurrentSurchargePriceCalculation = 0;
@@ -678,14 +678,14 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.LastUsedDate = result.LastUsedDate;
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
 
-                    if(result.StartDate != null)
+                    if (result.StartDate != null)
                     {
                         tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", result.StartDate.Value);
                     }
 
-                    if(result.ExpirationDate != null)
+                    if (result.ExpirationDate != null)
                     {
-                        if(string.IsNullOrEmpty(tariffsSummary.ValidityDate))
+                        if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
                         {
                             tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", result.ExpirationDate.Value);
                         }
@@ -727,16 +727,26 @@ namespace Logitude.TariffModule.BL.Helpers
                         string code = null;
                         string sign = null;
                         string code_sign = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+
+
                         if (!string.IsNullOrEmpty(code_sign))
                         {
                             string[] code_sign_array = code_sign.Split(',');
                             code = code_sign_array[0];
 
-                            if (code_sign_array.Count() > 1)
+                            if (tariffsSummary.UnitOfMesurmentCode == "PRFR")
                             {
-                                sign = code_sign_array[1];
+                                sign = "%";
+                            }
+                            else
+                            {
+                                if (code_sign_array.Count() > 1)
+                                {
+                                    sign = code_sign_array[1];
+                                }
                             }
                         }
+
 
                         tariffsSummary.CurrencyCode = code;
                         tariffsSummary.CurrencySign = sign;
@@ -836,10 +846,16 @@ namespace Logitude.TariffModule.BL.Helpers
                         {
                             string[] code_sign_array = code_sign.Split(',');
                             code = code_sign_array[0];
-
-                            if (code_sign_array.Count() > 1)
+                            if (tariffsSummary.UnitOfMesurmentCode == "PRFR")
                             {
-                                sign = code_sign_array[1];
+                                sign = "%";
+                            }
+                            else
+                            {
+                                if (code_sign_array.Count() > 1)
+                                {
+                                    sign = code_sign_array[1];
+                                }
                             }
                         }
 
@@ -875,7 +891,8 @@ namespace Logitude.TariffModule.BL.Helpers
             this.tariffVersionList = this.tariffRepository.GetAllTariffVersionsByTariffIds(tariffids.ToArray(), tenant).ToList();
             this.GetRates();
 
-            this.currencies = commonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
+            this.currencies = commonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code + "," + p.Sign);
+
             this.tariffVersionAllInChargesList = this.tariffRepository.GetAllTariffAllInOnVersionsByTariffIds(tariffids.ToArray(), tariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
             this.surchargeTariffList = this.tariffRepository.GetSurchargeTariffsByCodeAndSellerId(tariffList.Select(p => p.SellerId).ToArray(),  tariffType, tenant).Where(p => !p.InActive).ToList();
             this.surchargeTariffList = FilterTariffsByContainers(surchargeTariffList, args);
