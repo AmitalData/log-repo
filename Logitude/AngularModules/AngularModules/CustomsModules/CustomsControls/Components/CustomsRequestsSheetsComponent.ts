@@ -193,10 +193,10 @@ export class CustomsRequestsSheetsComponent
 
                         }).forEach((item) => {
                             if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
-                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+                                 this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
 }
                             else if (!this.isReAnAnalysis ){
-                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false));
 
                             }
                         });
@@ -248,14 +248,16 @@ export class CustomsRequestsSheetsComponent
                     messageWindow.Width = 400;
                     messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
+                    messageWindow.Show(data.ErrorsArray[0]);
+
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
                 }
 
                 else {
                  var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
-                messageWindow.ShowErrorIcon = true;
+                    messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllSuccess"));
                 }
 
@@ -269,14 +271,14 @@ export class CustomsRequestsSheetsComponent
     }
 
     ReAnalysisByFilters() {
-        if (!this.CheckValidation("ReAnalysis")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
-            return;
-        }
+        //if (!this.CheckValidation("ReAnalysis")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //    messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
         this.CurrentSession.StartBusyIndicator("");
 
         this.InitFilter();
@@ -285,19 +287,19 @@ export class CustomsRequestsSheetsComponent
                 this.CurrentSession.StopBusyIndicator();
 
                 if (data.HasError) {
-               
-                        var messageWindow = new MessageWindow();
+                         var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
-                        messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(data.ErrorsArray[0]);
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
                   
                 }
                 else {
-    var messageWindow = new MessageWindow();
+              var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
-                messageWindow.ShowErrorIcon = true;
+                    messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.SendReAnalysisInBackground"));
                 }
             
@@ -690,11 +692,9 @@ export class CustomsRequestsSheetsComponent
     }
 
     GetRequestStatusString(filters: any) {
-        let RequestStatusString: string = "";
+         let RequestStatusString: string = "";
         if (this.AllCRSSChecked) return;
-
-
-        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
+         this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
 
             if (requestStatus.IsChecked) {
                 if (!AppTool.IsNullOrEmpty(RequestStatusString)) {
@@ -790,17 +790,19 @@ export class CustomsRequestsSheetsComponent
 
 ////////////////////////////////////////
 export class CustomsRequestsSheetStatusListVM {
-    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean) {
+    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
         var Code = MyItem.Code;
-        if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
-            this.IsChecked = true;
-        }
+         if (!isReAnAnalysis) {
+            if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
+                this.IsChecked = true;
+            }
 
-        if (//declarationPM != null
-            isdeclaration
-            && Code != "99") {
+            if (//declarationPM != null
+                isdeclaration
+                && Code != "99") {
 
-            this.IsChecked = true;
+                this.IsChecked = true;
+            }
         }
     }
     IsChecked: boolean;
