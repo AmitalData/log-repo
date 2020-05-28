@@ -478,6 +478,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             if (minutes != 0)
             {
+                double result = Math.Round(minutes / 525, 2);
+
+                iResult = result.ToString();
+            }
+
+            return iResult;
+        }
+
+        private string GetDaysFormatFromMinutes00(double minutes)
+        {
+            string iResult = "";
+
+            if (minutes != 0)
+            {
                 TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
 
 
@@ -497,6 +511,5 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             return iResult;
         }
-
     }
 }
