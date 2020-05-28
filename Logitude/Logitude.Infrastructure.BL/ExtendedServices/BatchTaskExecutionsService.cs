@@ -163,7 +163,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, myTimeSpan);
+                }, tenant, myTimeSpan);
             LogMessagingUtil.Instance.AppendLine("CreateQBatchTaskExecution:taskExe.Id:" + taskExe.Id);
             return taskExe.Id;
         }

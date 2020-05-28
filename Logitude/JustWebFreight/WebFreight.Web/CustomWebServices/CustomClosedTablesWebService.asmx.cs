@@ -92,7 +92,7 @@ namespace WebFreight.Web.CustomWebServices
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
 			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-			queueservice.Send(messageProperties);
+			queueservice.Send(messageProperties, tenant);
 
 		}
 

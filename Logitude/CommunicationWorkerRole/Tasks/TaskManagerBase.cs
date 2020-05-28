@@ -424,7 +424,7 @@ namespace CommunicationWorkerRole.Tasks
             var queueservice = new DbQueueService();
             var NextRunTime = DateTime.Now.AddSeconds(DelaySeconds + 0.0);
             queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() }, { "Retries", task.Retries.ToString() } }, null, null, null, NextRunTime);
+            queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() }, { "Retries", task.Retries.ToString() } }, task.Tenant, null, null, null, NextRunTime);
             //var objectContext = WebFreightContext.GetContext(task.Tenant);
             //TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             //service.Update(task);

@@ -864,7 +864,7 @@ namespace WebFreight.Web.App_Code
                 DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(exportDocumentArgs);
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, null, null, null, null);
+                queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, documentsExecutionLog.Tenant, null, null, null, null);
                 return Request.CreateResponse(HttpStatusCode.OK, documentsExecutionLog.Id);
             }
             catch (Exception ex)

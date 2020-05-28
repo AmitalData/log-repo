@@ -374,14 +374,14 @@ namespace CommunicationWorkerRole
                                                 if (IsImporterTenantHasExportFeatureForExportShipments(importerTenant, Shipment))
                                                 { 
                                                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "BatchNumber", BatchNumber } }, null, CustomerId, BatchNumber);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "ImporterTenant", importerTenant.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
                                                 }
 
                                             }
                                             foreach (var ImportId in ImportIdsList)
                                             {
                                                 queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);
-                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImportId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ImportId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
                                             }
                                             var TempLog = aPILogsRepository.GetSingleAPILogsByCorrelationId(StartLogCorrelationId, tenant);
                                             APILogsPM TempLogPM;

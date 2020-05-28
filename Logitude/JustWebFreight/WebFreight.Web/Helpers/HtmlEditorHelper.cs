@@ -2350,7 +2350,7 @@ namespace WebFreight.Web.Helpers
 
                     //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
                     DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
                 }
                 catch (Exception ex)
                 {
@@ -2734,7 +2734,7 @@ namespace WebFreight.Web.Helpers
 
                 //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
                 DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
             }
             catch (Exception ex)
             {

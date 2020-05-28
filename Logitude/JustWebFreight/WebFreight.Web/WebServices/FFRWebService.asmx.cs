@@ -643,7 +643,7 @@ namespace WebFreight.Web.WebServices
 					//}
 					//string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);//"emailqueue"
 					DbQueueService queueservice = new DbQueueService("EmailQueue", myTenant);
-					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", myTenant.ToString() } });
+					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", myTenant.ToString() } }, myTenant);
 				}
 
                 catch (Exception ex)

@@ -67,7 +67,7 @@ namespace WebFreight.Web
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("DrobBoxQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "Tenant", currentTenant.Tenant.ToString() } }, null, null);
+                                queueservice.Send(new Dictionary<string, string>() { { "Tenant", currentTenant.Tenant.ToString() } }, currentTenant.Tenant, null, null);
                             }
                         }
                     }

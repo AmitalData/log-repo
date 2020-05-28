@@ -41,6 +41,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ProcessingDateTime).HasColumnName("ProcessingDateTime");
             this.Property(t => t.CompleteDateTime).HasColumnName("CompleteDateTime");
             this.Property(t => t.RetryNumber).HasColumnName("RetryNumber");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.HasRequired(t => t.QueueDefinition).WithMany().HasForeignKey(d => d.QueueDefinitionCode);
             //this.HasRequired(t => t.QueueMessageMoreDetails).WithRequiredPrincipal(d => d.QueueMessage);

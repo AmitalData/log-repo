@@ -2299,7 +2299,7 @@ namespace WebFreight.Web.Helpers
 
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ReportExecutionLogQueue", reportExecutionLog.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, reportExecutionLog.Tenant, null, null, null, null);
             return reportFliter;
 
         }

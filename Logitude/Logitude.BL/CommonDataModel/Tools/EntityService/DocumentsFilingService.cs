@@ -323,7 +323,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                             }
 
                           
@@ -375,7 +375,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                     }
                 }
             }
@@ -564,7 +564,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                             }
 
                           
@@ -623,7 +623,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                    queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                 }
                 //}
             }
@@ -768,7 +768,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                             }
                         }
                         catch (Exception ex)
@@ -829,7 +829,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.EntityId }, { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                     }
                 }
                 //}
@@ -840,7 +840,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ResharedAgentDocumentQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "EntityId", entityPM.EntityId }, { "Tenant", entityPM.Tenant.ToString() }, { "DocumentTypeCode", entityPM.DocumentTypeCode }, { "SecurityId", entityPM.SecurityId } }, null, null, null, null);
+                queueservice.Send(new Dictionary<string, string>() { { "EntityId", entityPM.EntityId }, { "Tenant", entityPM.Tenant.ToString() }, { "DocumentTypeCode", entityPM.DocumentTypeCode }, { "SecurityId", entityPM.SecurityId } }, tenant, null, null, null, null);
                 entityPM.IsUpdateSharedDocument = false;
             }
 

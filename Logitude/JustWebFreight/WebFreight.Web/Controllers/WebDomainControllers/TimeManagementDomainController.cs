@@ -779,7 +779,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                });
+                }, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -842,7 +842,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                });
+                }, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
