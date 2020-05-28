@@ -303,7 +303,7 @@ namespace Logitude.Accounting.BL.DataContract
                 string vendorId = GetVendorId(transaction);
 
                 taxDeductionReportLine.VendorId = vendorId; 
-                taxDeductionReportLine.MonthOfRegisterDate = transaction.DocumentDate.Month;
+                taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
                 List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
                 if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
                 {
