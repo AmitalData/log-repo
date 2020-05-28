@@ -852,12 +852,17 @@ namespace Simplog.Server.Infrastructure.Helpers
                 if (filterItem.FieldValue != null)
                 {
                     filterItem.FieldValue = customFilterClass.SetFieldDataType(filterItem.FieldDataType, filterItem.FieldValue);
-                    //filterItem.FieldValue = customFilterClass.SetFieldDataType(filterItem.FieldValue.GetType().Name, filterItem.FieldValue);//
+                    if (filterItem.FieldValue != null && filterItem.FieldValue.ToString().ToLower() == "false")
+                        filterItem.FieldValue = null;
+                  
                 }
                 if (filterItem.FieldValue2 != null)
                 {
                     filterItem.FieldValue2 = customFilterClass.SetFieldDataType(filterItem.FieldDataType, filterItem.FieldValue2);
+                    if (filterItem.FieldValue2 != null && filterItem.FieldValue2.ToString().ToLower() == "false")
+                        filterItem.FieldValue2 = null;
                 }
+
             }
         }
 

@@ -27,11 +27,14 @@ import { CustomBanksCardPM } from '../../../../../Customs/EntityPMs/CustomBanksC
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrdersGeneralTabComponent.html',
 })
 
 export class PaymentOrdersGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public ProtestTypeCode: any;
+
     public DataContext: PaymentOrdersGeneralTabComponent = this;
     public EntityPM: PaymentOrderPM = new PaymentOrderPM();
     public ObjectTableName: string = "Customs.PaymentOrder";
@@ -70,12 +73,12 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
         this.banksList = [];
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         this.CurrentSession.StartBusyIndicator("");
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod").subscribe((response:any) => {
                             if (this.entityArgs.EntityPM != null) {
                                 this.EntityPM = this.entityArgs.EntityPM;
                                 this.ObjectTableName = this.entityArgs.ObjectTableName;

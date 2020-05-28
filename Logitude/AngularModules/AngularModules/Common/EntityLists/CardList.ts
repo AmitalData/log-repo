@@ -90,5 +90,11 @@ export class CardList {
 		IsAutonomy: boolean;
 		CalculatedLocalName: string;
 		CalculatedEnglishName: string;
+		CreatedByPartner: string;
+		OpenShipments: number;
+		BusinessPhone: string;
+		StorageFreeDays: number;
+		RankId: string;
+		IndustryId: string;
 	
 }

@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewClaimComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewClaimComponent.html',
 })
 
@@ -35,7 +35,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
 
         this.EntityPM = new ClaimPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => { });
     }
 
     SetWindowArgs(args: any) {
@@ -98,7 +98,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             }
         }
 
-        this._ClaimPMService.insert(this.EntityPM).subscribe(myResult => {
+        this._ClaimPMService.insert(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;

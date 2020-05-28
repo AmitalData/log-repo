@@ -38,6 +38,8 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.CloseTables;
+using System.Diagnostics;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -75,6 +77,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
                 entityPM.Number + ",";
+
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)
@@ -128,7 +131,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                 ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
                 LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                EntityQueryServices.ARPaymentChequeQueryService aRPaymentChequeQueryService = new EntityQueryServices.ARPaymentChequeQueryService(entityPM.Tenant);
 
                 // get transactions
                 List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
@@ -172,14 +175,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-                var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
-                var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
-                if (validationResult != null)
-                {
-                    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
-                                                                     //ThrowException(errorText);
-                    throw new Exception(errorText);
-                }
+                //var validContext = AccountingValidationContextServiceProvider.NewReconciliationValidatorContext((MainContext as IAccountingContext), entityPM);
+                //var validationResult = ReconciliationValidator.IsReconciliationValid(entityPM, validContext);
+                //if (validationResult != null)
+                //{
+                //    string errorText = validationResult.ErrorMessage;//+ ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
+                //                                                     //ThrowException(errorText);
+                //    throw new Exception(errorText);
+                //}
 
 
 
@@ -269,8 +272,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //get journal of reconciliation - WI39779
                 JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
-                JournalPM journal = journalQuery.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                if (journal != null)
+                JournalPM journal = journalQuery
+                    //.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                //10  התאמה Adjustment
+                .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
+                if (journal != null && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
                 {
                     // Void it!
                     var tenant = entityPM.Tenant;
@@ -290,6 +296,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnUpdating(entityPM, entityPOCO);
         }
 
+        private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
+        {
+
+            var typeregular = "1"; //1	Regular	רגיל	1,Regular,רגיל	0
+            var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
+            var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
+
+            return
+            JournalValidatorNotStatic
+                 .IsMonthOpenForAccountingDate(
+                accountingPeriodsByTypeRegular.AsQueryable(),
+                 new DateTime(accountingDate.Year, accountingDate.Month, 1)
+                 );
+           
+        }
+
         protected override void UpdateComposition(ReconciliationPM entityPM)
         {
             try
@@ -297,6 +319,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (this._CancelledAction)
                 {
+                    bool angular_DoNotUse_CancellReconciliation_Method = true;
+                    if (angular_DoNotUse_CancellReconciliation_Method)
+                    {
+                        if (entityPM.ReconciliationLines.Count == 0)
+                        {
+                            var reconciliationQueryService = new ReconciliationQueryService(this.MainContext as IAccountingContext);
+                            var pm = reconciliationQueryService.GetSingle(entityPM.Id, true, false);
+                            entityPM.ReconciliationLines.AddRange(pm.ReconciliationLines);
+                        }
+                    }
                     UpdateLedgerTransaction(entityPM);
                     return;
                 }
@@ -317,8 +349,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             if (item.Line == 0) item.Line = ++i;
                         }
                     }
-                    UpdateLedgerTransaction(entityPM);
 
+
+
+                    UpdateLedgerTransaction(entityPM);
+                    
                     ReconciliationLineUpdateService reconciliationLineUpdateService = new ReconciliationLineUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                     reconciliationLineUpdateService.UpdateMulti(entityPM.ReconciliationLines, entityPM.DeletedReconciliationLines, entityPM, false);
                 }
@@ -336,7 +371,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
             var qs = new LedgerTransactionQueryService(entityPM.Tenant);
             var LedgerTransactionPMsUpdated = qs.GetLedgerTransactionPMsByIdList(transactionIdList, entityPM.Tenant);
-
+            if (transactionIdList.Count() == 0)
+            {
+                throw new Exception("Unable to UpdateLedgerTransaction  due there is any ReconciliationLines");
+            }
             foreach (var reconciliationLine in entityPM.ReconciliationLines)
             {
                 var ledgerTransactionPM = LedgerTransactionPMsUpdated.First(r => r.Id == reconciliationLine.TransactionId);
@@ -350,12 +388,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    ledgerTransactionPM.OpenAmount = ledgerTransactionPM.OpenAmount - reconciliationLine.ReconciliationAmount;
+                    
+                    if (entityPM.CreatedByReconciliationAfterConversion)
+                    {
+                        //var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
+                        var repo = new JournalLineRepository(entityPM.Tenant);
+                        var jlList = repo.GetJournalLineByLedgerTransactionIdList(transactionIdList, entityPM.Tenant);
+                        List<string> errorsList = new List<string>();
+                        ReconciliationValidator.Validate_CreatedByReconciliationAfterConversion(errorsList, jlList);
+                        if (errorsList.Count > 0)
+                        {
+                            var errLines = string.Join(Environment.NewLine, errorsList);
+                            throw new Exception(errLines);
+                        }
+                        Debug.WriteLine("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
+                    }
+                    else
+                    {
+                        ledgerTransactionPM.OpenAmount = ledgerTransactionPM.OpenAmount - reconciliationLine.ReconciliationAmount;
+                    }
                     reconciliationLine.IsPartial = true;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
                         reconciliationLine.IsPartial = false;
                     }
+
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
 

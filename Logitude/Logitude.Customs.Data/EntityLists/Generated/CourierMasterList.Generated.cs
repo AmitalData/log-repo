@@ -113,6 +113,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsAutomaticManifestSent  { get; set; }
        [DataMember]
+       public bool? IsEstimatedArrivalToDay  { get; set; }
+       [DataMember]
        public string EstimatedArrivalColor  { get; set; }
    }
 

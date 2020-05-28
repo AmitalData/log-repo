@@ -366,7 +366,7 @@ namespace Logitude.Server.Tools.FTP
                 }
                 if (uploadAsTemp)
                 {
-                    v_temp_filename = "tmp_" + Guid.NewGuid() + ".tmp";
+                    v_temp_filename = "tmp_" + p_filename + ".tmp";
                     v_temp_filename_full = Path.GetDirectoryName(p_filename) + "\\" + v_temp_filename;
                     //File.Copy(p_filename, v_temp_filename_full);
                     Upload(v_temp_filename_full, filedata, true, false, out p_status, out p_message);

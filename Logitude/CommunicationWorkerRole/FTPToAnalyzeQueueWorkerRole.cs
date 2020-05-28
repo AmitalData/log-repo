@@ -46,6 +46,14 @@ namespace CommunicationWorkerRole
                             FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(item.InSettingsId, item.Tenant);
                             this.ReadFTPFiles(ftpDetail, "INTTRA");
                         }
+                        
+                        List<AccountingSetting> accountingSettings = myCommonContext.AccountingSettings.Where(d => d.TransferFTPDetailId != null).ToList();
+                        foreach (AccountingSetting item in accountingSettings)
+                        {
+                            FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(myCommonContext);
+                            FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(item.TransferFTPDetailId, item.Id);
+                            this.ReadFTPFiles(ftpDetail, "Transfer");
+                        }
 
                         LogDoneItemInMemory();
                         Thread.Sleep(60000);
@@ -121,6 +129,12 @@ namespace CommunicationWorkerRole
                                     SaveMessageToAnalyzeQueue_INTTRA(fileName, fileData, ftpDetail.Tenant);
                                     break;
                                 }
+
+                            case "Transfer":
+                                {
+                                    SaveMessageToAnalyzeQueue_Transfer(fileName, fileData, ftpDetail.Tenant);
+                                    break;
+                                }
                         }
 
                         ftpService.Delete(fileName);
@@ -179,6 +193,29 @@ namespace CommunicationWorkerRole
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
                 //Tenant = tenant,
+                FileSize = fileBytes.Length,
+                FileName = fileName,
+            };
+
+            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+            analyzeQueueReposiory.Add(analyzeQueue);
+            analyzeQueueReposiory.SubmitChanges();
+        }
+        private void SaveMessageToAnalyzeQueue_Transfer(string fileName, byte[] fileBytes, int tenant)
+        {
+            fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
+            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+
+            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                From = "Generic Interface",
+                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                MessageBody = fileBytes,
+                Status = "W",
+                Retries = 0,
+                ConnectedToEntity = false,
+                ConnectedToTenant = false,
                 FileSize = fileBytes.Length,
                 FileName = fileName,
             };

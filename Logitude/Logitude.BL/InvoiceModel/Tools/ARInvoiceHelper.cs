@@ -39,12 +39,33 @@ using Simplog.Server.Infrastructure.Azure;
 using Logitude.SystemLogs;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Global.Data.GlobalModel;
+using Intuit.Ipp.OAuth2PlatformClient;
+using System.Net;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
     public class ARInvoiceHelper
     {
-        private  int tenant { set; get; }
+        private int tenant;
+        private string loggedContactId;
+        public ARInvoiceHelper()
+        {
+
+        }
+        public ARInvoiceHelper(int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            this.tenant = tenant;
+            loggedContactId = loggedContact.Id;
+        }
+
+        public ARInvoiceHelper(int tenant, string loggedUserId)
+        {
+            this.tenant = tenant;
+            this.loggedContactId = loggedUserId;
+        }
+
         private  string tenantName { set; get; }
         private  ICommonDataContext commonContext;
         private IGlobalContext globalContext;
@@ -62,7 +83,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         private string OldTransferStatusCode;
         private string ExternalTableIdCustomerRef;
         public  string PaymentTermExternalCode = null;
-        private  string LoggedContactId { get; set; }
         private  List<string> ExternalChargesTypesCode;
         private  List<string> ExternalVatTypesCode;
         private  Boolean IsNewEntity;
@@ -116,9 +136,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                             GetObjectTableData();
                             documentRepository = new DocumentRepository(commonContext);
                             communicationLogRepository = new CommunicationLogRepository(commonContext);
-                            ContactRepository contactRepository = new ContactRepository(commonContext);
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                            LoggedContactId = loggedContact.Id;
+                            //ContactRepository contactRepository = new ContactRepository(commonContext);
+                            //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                            //LoggedContactId = loggedContact.Id;
 
                             entityPM.TransferStatusCode = "IP";
                             entityPM.TransferError = null;
@@ -155,9 +175,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                         objectContext = InvoiceContext;
                         invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
                         invoiceTotalVatRepository = new ARInvoiceTotalVATRepository(objectContext);
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                        LoggedContactId = loggedContact.Id;
+                        //ContactRepository contactRepository = new ContactRepository(commonContext);
+                        //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                        //LoggedContactId = loggedContact.Id;
                         lines = new List<ARInvoiceLinePM>();
 
                         if (loggedTenant.CurrencyId == entityPM.InvoiceCurrencyId)
@@ -205,7 +225,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                         {
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
-                                Address address2 = commonContext.Addresses.Include("Country").Where(p => p.CardId == entityPM.BillToId && p.Id == entityPM.BillToAddressId && p.Country.Code == "IN" ).FirstOrDefault();
+                                Simplog.Data.CommonDataModel.EntityPOCOs.Address address2 = commonContext.Addresses.Include("Country").Where(p => p.CardId == entityPM.BillToId && p.Id == entityPM.BillToAddressId && p.Country.Code == "IN" ).FirstOrDefault();
                                 if (address2!=null)
                                 {
                                     State state = commonContext.States.Include("Country").Where(p => p.Id == address2.StateId && p.Tenant == tenant).FirstOrDefault();
@@ -298,7 +318,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             }
                           
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);
-                            ExternalVatTypesCode.Add(myVatType.ExternalVATCard);
+                            ExternalVatTypesCode.Add(myVatType.ReceivablesExternalId);
 
                             if (line.VatPercentage != 0 || AccountingSystemCode == "QBOG")
                             {
@@ -311,7 +331,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                         myError = string.IsNullOrEmpty(myError) ? error : myError + ";" + error;                                    
                                 }
 
-                                if (FieldIsEmpty(myVatType.ExternalVATCard))
+                                if (FieldIsEmpty(myVatType.ReceivablesExternalId))
                                 {
                                     vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
                                     isReady = false;
@@ -355,10 +375,35 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Customer> customerQueryService = new QueryService<Intuit.Ipp.Data.Customer>(context);
                 List<Intuit.Ipp.Data.Customer> myResult = customerQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException(ex.ToString());
+
+            }
+
+
+        }
+
+
+        public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText2(String sql, String tenant)
+        {
+
+            try
+            {
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                QueryService<Intuit.Ipp.Data.Customer> customerQueryService = new QueryService<Intuit.Ipp.Data.Customer>(context);
+              List<Intuit.Ipp.Data.Customer> myResult = customerQueryService.ExecuteIdsQuery(sql).ToList();
+                return null;
 
 
 
@@ -381,7 +426,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Vendor> VendorQueryService = new QueryService<Intuit.Ipp.Data.Vendor>(context);
                 List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();                
                 return myResult;
@@ -400,7 +445,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.PaymentMethod> VendorQueryService = new QueryService<Intuit.Ipp.Data.PaymentMethod>(context);
                 List<Intuit.Ipp.Data.PaymentMethod> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;                
@@ -420,7 +465,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.TaxCode> TaxCodeQueryService = new QueryService<Intuit.Ipp.Data.TaxCode>(context);
                 List<Intuit.Ipp.Data.TaxCode> myResult = TaxCodeQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -444,7 +489,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             try
             {
 
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
 
                 QueryService<Intuit.Ipp.Data.Item> ItemQueryService = new QueryService<Intuit.Ipp.Data.Item>(context);
                 List<Intuit.Ipp.Data.Item> myResult = ItemQueryService.ExecuteIdsQuery(sql).ToList();
@@ -471,7 +516,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             try
             {
 
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
 
                 QueryService<Intuit.Ipp.Data.Account> AccountQueryService = new QueryService<Intuit.Ipp.Data.Account>(context);
                 List<Intuit.Ipp.Data.Account> myResult = AccountQueryService.ExecuteIdsQuery(sql).ToList();
@@ -501,7 +546,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.CompanyCurrency> CompanyCurrencyQueryService = new QueryService<Intuit.Ipp.Data.CompanyCurrency>(context);
                 List<Intuit.Ipp.Data.CompanyCurrency> myResult = CompanyCurrencyQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -524,7 +569,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Term> TermQueryService = new QueryService<Intuit.Ipp.Data.Term>(context);
                 List<Intuit.Ipp.Data.Term> myResult = TermQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -540,28 +585,13 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         }
 
-        private  ServiceContext getServiceContext(String tenant)
-        {
-
-            Setting mySetting = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository mySettingRepository = new SettingRepository();
-                mySetting = mySettingRepository.GetSingleSetting("1");
-
-                scope.Complete();
-            }
-
-            AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
-            AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-            OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
-            ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
 
 
 
-            return context;
 
-        }
+
+
+
 
 
         private  void Run(ARInvoicePM invoice)
@@ -840,6 +870,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -916,6 +947,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -991,6 +1023,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -1035,7 +1068,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationStatusTypeCode = "W",
-                CreatedByUserId = LoggedContactId,
+                CreatedByUserId = loggedContactId,
                 DocumentId = document.Id,
                 EntityReference = ARInvoice.InvoiceNumber,
                 SearchFields = ARInvoice.InvoiceNumber + "," + xmlTarget + "," + "O" + "," + xmlSubject,

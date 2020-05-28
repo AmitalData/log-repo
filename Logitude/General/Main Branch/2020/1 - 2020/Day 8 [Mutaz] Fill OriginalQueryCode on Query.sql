@@ -1,0 +1,1 @@
+update Queries set OriginalQueryCode = (select q1.UniqueCode from Queries q1 where q1.Id = Queries.OriginalQueryId)

@@ -39,6 +39,11 @@ export class TariffTypePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private transportModeCode: string;
+    public get TransportModeCode() { return this.transportModeCode; }
+    public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
+       
+	 
 
     public OldEntityPM: TariffTypePM;
 		

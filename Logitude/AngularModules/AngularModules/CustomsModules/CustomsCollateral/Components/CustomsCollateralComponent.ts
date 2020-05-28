@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsCollateralComponent.html',
 })
 
@@ -240,7 +240,7 @@ export class CustomsCollateralComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
              
-                this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
+                this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
                     var result = response.Result;
                     this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed  });
             this.IsUnClosedButtonEnabled = true;
@@ -272,7 +272,7 @@ export class CustomsCollateralComponent extends BaseComponent {
             if (confirmWindow.Yes) {
             
              
-                this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
+                this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
                     var result = response.Result;
                     this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed });
                     this.IsUnClosedButtonEnabled = false;
@@ -343,7 +343,7 @@ export class CustomsCollateralComponent extends BaseComponent {
         // this.ValidationErrorsList = errors;
         if (errors.length == 0) {
 
-            this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
+            this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
        
        
             if (this.CurrentEntity.CustomsCollateralsAnswers.length > 0) {

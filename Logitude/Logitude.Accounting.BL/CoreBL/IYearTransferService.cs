@@ -5,14 +5,14 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public interface ICheckAndQYearTransferService
     {
-        string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant);
+        string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant,string userId);
         //void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant);
         //void CreateQBatchTask(int YYyear, int tenant);
         
     }
     public interface IYearTransferService
     {
-        JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant);
+        JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant, string usrid);
     }
     public interface ICancelYearTransferService
     {

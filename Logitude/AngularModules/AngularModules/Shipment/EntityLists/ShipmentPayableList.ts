@@ -29,5 +29,8 @@ export class ShipmentPayableList {
 		VendorId: string;
 		NotExpected: boolean;
 		OpenAmountEditedByUser: boolean;
+		TariffId: string;
+		TariffNumber: string;
+		TariffVersion: number;
 	
 }

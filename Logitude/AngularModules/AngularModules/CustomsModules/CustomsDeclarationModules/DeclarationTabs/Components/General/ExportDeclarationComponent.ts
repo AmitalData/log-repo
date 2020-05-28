@@ -13,7 +13,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
 
-    moduleId: module.id,
+    
     templateUrl: './ExportDeclarationComponent.html',
     selector: 'ExportDeclarationComponent',
 

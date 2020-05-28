@@ -607,6 +607,15 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LastOpportunitySubject { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LastOpportunityStatus { get; set; }
+
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstInvoiceDate { get; set; }
 
         [DataMember]
@@ -964,5 +973,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string MainAddressId { get; set; }
         public string BillingAddressId { get; set; }
         public string GLAccountId { get; set; }
+        public string CreatedByPartner { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? StorageFreeDays { get; set; }
     }
 }

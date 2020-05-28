@@ -1,5 +1,5 @@
 import { browser, by, element } from "protractor"
-import { NewARInvoice} from "./New/NewARInvoice";
+import { NewARInvoice} from "./NewARInvoice";
 
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
@@ -21,7 +21,7 @@ describe('ARInvoice Module', function () {
 
     browser.ignoreSynchronization = true;
     
-    Helper.GoToMainMenu('General.MH.FullAccounting');
+    Helper.GoToMainMenu2('General.MH.FullAccounting');
     F.WaitByIdAndClick('FACS');
     arinvoice.CreateNewARInvoice('Test Customer GLAccount');
    // arinvoice.CreateNewARInvoice('Basel - Multi Local');

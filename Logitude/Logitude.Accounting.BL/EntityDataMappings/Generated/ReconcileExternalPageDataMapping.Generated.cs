@@ -24,7 +24,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         BankAccountId, 
 	         GLAccountId, 
 	         PageNo, 
 	         CreatedByUserId, 
@@ -36,7 +35,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         ApprovedByUserId, 
 	         StatusCode, 
-	         EntryTypeCode,
+	         EntryTypeCode, 
+	         ObjectTableId, 
+	         EntityId,
 	      }
 
 
@@ -45,7 +46,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         BankAccountId, 
 	         GLAccountId, 
 	         PageNo, 
 	         CreatedByUserId, 
@@ -61,7 +61,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StatusName, 
 	         EntryTypeCode, 
 	         EntryTypeEnglishName, 
-	         EntryTypeLocalName,
+	         EntryTypeLocalName, 
+	         ObjectTableId, 
+	         EntityId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -73,11 +75,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
-            {
-				entityPOCO.BankAccountId = entityPM.BankAccountId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
@@ -140,6 +137,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.EntryTypeCode = entityPM.EntryTypeCode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTableId))
+            {
+				entityPOCO.ObjectTableId = entityPM.ObjectTableId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
+            {
+				entityPOCO.EntityId = entityPM.EntityId;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -154,11 +161,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BankAccountId))
-            {
-					entityPM.BankAccountId = entityPOCO.BankAccountId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GLAccountId))
@@ -221,6 +223,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.EntryTypeCode = entityPOCO.EntryTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectTableId))
+            {
+					entityPM.ObjectTableId = entityPOCO.ObjectTableId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityId))
+            {
+					entityPM.EntityId = entityPOCO.EntityId;
+            }
+
 		}
 
 		public void PMToOldPM(ReconcileExternalPagePM entityPM, ReconcileExternalPagePM oldEntityPM)
@@ -230,11 +242,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
-            {
-                oldEntityPM.BankAccountId = entityPM.BankAccountId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
@@ -295,6 +302,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntryTypeCode))
             {
                 oldEntityPM.EntryTypeCode = entityPM.EntryTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTableId))
+            {
+                oldEntityPM.ObjectTableId = entityPM.ObjectTableId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
+            {
+                oldEntityPM.EntityId = entityPM.EntityId;
             }
 			
 		}

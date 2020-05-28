@@ -1,0 +1,1 @@
+update CustomsInterfaces set InActive = '1' where Code = 'AMC' 

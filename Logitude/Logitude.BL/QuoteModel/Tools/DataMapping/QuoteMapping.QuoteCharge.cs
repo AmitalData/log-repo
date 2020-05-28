@@ -22,11 +22,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 itemPoco.QuoteId = itemPM.QuoteId;
             }
 
-            if (iQuotePM.IsSaleCurrencySameAsCost)
-            {
-                itemPM.IsAllIN = false;
-            }
-
             itemPoco.ValueDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdatedByUserId = itemPM.UpdatedByUserId;
@@ -91,6 +86,10 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleUnitPrice4InSaleCurrency = itemPM.SaleUnitPrice4InSaleCurrency;
             itemPoco.SaleUnitPrice5InSaleCurrency = itemPM.SaleUnitPrice5InSaleCurrency;
             itemPoco.SaleAmountInSaleCurrency = itemPM.SaleAmountInSaleCurrency;
+            itemPoco.IsCostAllIn = itemPM.IsCostAllIn;
+            itemPoco.TariffId = itemPM.TariffId;
+            itemPoco.TariffNumber = itemPM.TariffNumber;
+            itemPoco.TariffVersion = itemPM.TariffVersion;
         }
     }
 }

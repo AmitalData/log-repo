@@ -115,7 +115,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             double? arpayments = (from a in context.ARPayments
                                   where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "VD"&&a.StatusCode!="DR"&&a.IsClosed==false&&a.StatusCode!="CL"
-                                  select a.OpenAmount).Sum();
+                                  select a.OpenAmountInLocalCurrency).Sum();
 
             return arpayments != null ? arpayments.Value : 0;
         }
@@ -166,7 +166,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
             throw new System.NotImplementedException();
         }
 
-      
-
+        public string GetARPaymentNumber(string arPaymentId,int tenant)
+        {
+            string arpaymentno = (from a in context.ARPayments
+                                  where a.Tenant == tenant && a.Id == arPaymentId
+                                  select a.PaymentNo).FirstOrDefault();
+            return arpaymentno;
+        }
     }
 }

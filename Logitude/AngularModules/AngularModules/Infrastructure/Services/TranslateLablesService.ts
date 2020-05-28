@@ -1,31 +1,26 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../Utilities/ServiceHelper';
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {GeneralDomainService, FieldsTranslations} from './GeneralDomainService';
+import { GeneralDomainService, FieldsTranslations } from './GeneralDomainService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { defer, of } from 'rxjs';
 
 @Injectable()
-
 export class TranslateLablesService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TranslateLables';
     }
 
     Post(args: TranslateLabelsAPIHelper) {
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var mappedEntity: TranslateLabelsAPIHelper = this.MapJsonToTranslateLabelsAPIHelper(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJsonResult = response;
 
                 var mappedResult: TranslateLabelsAPIHelper = this.MapJsonToTranslateLabelsAPIHelper(myJsonResult, true, args);
 
@@ -33,7 +28,7 @@ export class TranslateLablesService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

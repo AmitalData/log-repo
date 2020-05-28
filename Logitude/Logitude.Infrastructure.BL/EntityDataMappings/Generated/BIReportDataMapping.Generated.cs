@@ -35,7 +35,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Inactive, 
 	         TypeCode, 
 	         AGGridOptionsXML, 
-	         BIReportFolderId,
+	         BIReportFolderId, 
+	         FactTableName, 
+	         LastRunId,
 	      }
 
 
@@ -57,7 +59,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         AGGridOptionsXML, 
 	         BIReportFolderId, 
 	         CreatedByUserName, 
-	         UpdatedByUserName,
+	         UpdatedByUserName, 
+	         LastRunDate, 
+	         LastRunByUserName, 
+	         FactTableName, 
+	         LastRunId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -129,6 +135,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
             {
 				entityPOCO.BIReportFolderId = entityPM.BIReportFolderId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactTableName))
+            {
+				entityPOCO.FactTableName = entityPM.FactTableName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
+            {
+				entityPOCO.LastRunId = entityPM.LastRunId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -207,6 +223,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.BIReportFolderId = entityPOCO.BIReportFolderId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FactTableName))
+            {
+					entityPM.FactTableName = entityPOCO.FactTableName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunId))
+            {
+					entityPM.LastRunId = entityPOCO.LastRunId;
+            }
+
 		}
 
 		public void PMToOldPM(BIReportPM entityPM, BIReportPM oldEntityPM)
@@ -276,6 +302,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BIReportFolderId))
             {
                 oldEntityPM.BIReportFolderId = entityPM.BIReportFolderId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactTableName))
+            {
+                oldEntityPM.FactTableName = entityPM.FactTableName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunId))
+            {
+                oldEntityPM.LastRunId = entityPM.LastRunId;
             }
 			
 		}

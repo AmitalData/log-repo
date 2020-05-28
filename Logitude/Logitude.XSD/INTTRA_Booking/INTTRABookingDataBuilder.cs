@@ -18,6 +18,12 @@ namespace Logitude.XSD.INTTRA_Booking
         public INTTRA_Booking.HeaderType GetHeader()
         {
             string myDocumentIdentifier = "B-" + this.Context.ShipmentNumber + "-" + this.Context.Tenant + "-" + this.Context.XMLCreateDate + "-" + this.Context.CommunicationLogIdCounter;
+            var transactionStatus = HeaderTypeTransactionStatus.Original;
+            if (this.Context.Shipment.INTTRABookingTransStatusCode != "NST")
+            {
+                transactionStatus = HeaderTypeTransactionStatus.Change;
+            }
+
             INTTRA_Booking.HeaderType myResult = new INTTRA_Booking.HeaderType
             {
                 SenderId = "LOGITUDE",
@@ -26,8 +32,8 @@ namespace Logitude.XSD.INTTRA_Booking
                 RequestMessageVersion = HeaderTypeRequestMessageVersion.Item10,
                 TransactionType = TransactionTypeValues.Booking,
                 TransactionVersion = HeaderTypeTransactionVersion.Item20,
-                DocumentIdentifier = myDocumentIdentifier,
-                TransactionStatus = HeaderTypeTransactionStatus.Change,
+                DocumentIdentifier = this.Context.iNTTRAGeneralMethods.FormatString(myDocumentIdentifier, 35), 
+                TransactionStatus = transactionStatus,
                 TransactionSplitIndicator = false,
             };
 
@@ -44,12 +50,12 @@ namespace Logitude.XSD.INTTRA_Booking
                 ContactInformation = new ContactInformationType()
                 {
                     Type = ContactTypeValues.InformationContact,
-                    Name = this.Context.LoggedContact.EnglishName,
+                    Name = this.Context.iNTTRAGeneralMethods.GetStringList(this.Context.LoggedContact.EnglishName, 2, 35).FirstOrDefault(),
                     CommunicationDetails = new CoordinatesType()
                     {
-                        Email = new string[] { this.Context.LoggedContact.Email },
-                        Fax = new string[] { this.Context.LoggedContact.Fax },
-                        Phone = new string[] { this.Context.LoggedContact.BusinessPhone },
+                        Email = this.Context.iNTTRAGeneralMethods.GetStringList(this.Context.LoggedContact.Email, 9, 512).ToArray(),
+                        Fax = this.Context.iNTTRAGeneralMethods.GetStringList(this.Context.LoggedContact.Fax, 9, 512).ToArray(),
+                        Phone = this.Context.iNTTRAGeneralMethods.GetStringList(this.Context.LoggedContact.BusinessPhone, 9, 512).ToArray(),
                     }
                 },
                 DateTime = new INTTRA_Booking.DateTimeCodeType()
@@ -58,8 +64,9 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = new DateTime(this.Context.TodayDateTime.Year, this.Context.TodayDateTime.Month, this.Context.TodayDateTime.Day, this.Context.TodayDateTime.Hour, this.Context.TodayDateTime.Minute, this.Context.TodayDateTime.Second),
                 },
                 MovementType = this.Context.MovementType,
+                MovementTypeSpecified = true,
                 Location = this.Context.Locations.ToArray<INTTRA_Booking.LocationDateTimeType>(),
-                ReferenceInformation = this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(),
+                ReferenceInformation = this.Context.ReferenceInformations != null ? this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(): null,
                 TransportationDetails = this.Context.TransportationDetails.ToArray(),
                 Party = this.Context.MessagePropertiesParties.ToArray(),
 

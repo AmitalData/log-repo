@@ -35,19 +35,23 @@
 
                     <!-- Name -->
                     <log-column [header]="'שם'" [width]="'250'" [Alignment]="'right'" [binding]="'Name'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{ item.Name | TextCodeTranslationPipe }}</span>
                             </div>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                     <!-- Active -->
                     <log-column [header]="'פעיל'" [width]="'45'" [Alignment]="'right'">
-                        <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                        <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                             <!--{{ item.Active }}-->
                             <CheckBox (Checked)="CheckBoxChanged($event, item)" [IsChecked]="item.Active"></CheckBox>
                         </log-cell-template>
+</ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

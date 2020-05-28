@@ -190,8 +190,11 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string CustomerContactId { get; set; }
 	      
         public virtual Contact CustomerContact { get; set; }
+        [ForeignKey("Quote")]
         [Column("QuoteId")]
 	    public string QuoteId { get; set; }
+	      
+        public virtual Quote Quote { get; set; }
         [Column("QuoteNumber")]
 	    public string QuoteNumber { get; set; }
         [Column("SLAId")]
@@ -201,6 +204,13 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string EntityType { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
+        [ForeignKey("SupportMailbox")]
+        [Column("SupportMailboxId")]
+	    public string SupportMailboxId { get; set; }
+	      
+        public virtual SupportMailbox SupportMailbox { get; set; }
+        [Column("LastCorrespondence")]
+	    public string LastCorrespondence { get; set; }
     }
 }
 	 

@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -30,23 +30,28 @@ import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibra
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DenyReasonComponent.html'
 })
 
 export class DenyReasonComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: DenyReasonComponent = this;
-    ValidationErrorsList: any[];
+    ValidationErrorsList: string = null;
     AdditionalData: any;
+    public RTL: boolean = true;
+    Language: string = 'HB';
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     private CurrentSession = SessionLocator.SelectedSession;
+    DenyReasonWaterMark: string = 'Please fill out the explanation for rejecting the statement';//{ { 'Shipment.O.DenyReasonWaterMark' | TextCodeTranslationPipe } }
     constructor() {
         super();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        this.Language = SessionLocator.TenantPM.Language;
+        this.RTL = (this.Language == 'HB');
     }
     ngOnInit() {
-        
+        this.DenyReasonWaterMark = TextCodeTranslator.Translate('Shipment.O.DenyReasonWaterMark');
     }
     ngAfterViewInit() {
 
@@ -60,16 +65,16 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     }
 
     SendButtonClicked() {
-        this.ValidationErrorsList = [];
+        this.ValidationErrorsList = null;
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (AppTool.IsNullOrEmpty(this.DenyReason)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "DenyReason"));
+            this.ValidationErrorsList = msg.replace("%FieldName", "DenyReason");
         }
-        if (this.ValidationErrorsList.length == 0) {
+        if (AppTool.IsNullOrEmpty(this.ValidationErrorsList)) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.AdditionalData.IsImporterApprovalRequried = false;
             this.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.AdditionalData.VersionApproved;
-            this._ShipmentAdditionalCloudDataService.update(this.AdditionalData).subscribe(AdditionalResult => {
+            this._ShipmentAdditionalCloudDataService.update(this.AdditionalData).subscribe((AdditionalResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit("Denied");
             });

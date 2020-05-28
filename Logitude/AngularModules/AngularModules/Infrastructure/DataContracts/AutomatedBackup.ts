@@ -30,5 +30,5 @@ export class AutomatedBackup {
 
 export class AutomationSetSLAValue {
     SLAId: string;
-    ObjectFieldId: string;
+    ObjectFieldCode: string;
 }

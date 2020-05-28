@@ -104,6 +104,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetPaymentChequeByPaymentIdAndChequeNumber(string paymentId , string chequeNo)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    PaymentChequeQueryService paymentChequeQueryService = new PaymentChequeQueryService(MyContext);
+                    if (paymentId == "undefined") paymentId = null;
+                    PaymentChequePM paymentCheque = paymentChequeQueryService.GetPaymentChequeByPaymentIdAndChequeNo(chequeNo,paymentId, authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, paymentCheque);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

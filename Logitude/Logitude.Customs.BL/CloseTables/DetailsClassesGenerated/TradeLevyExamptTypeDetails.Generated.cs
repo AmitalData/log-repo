@@ -20,17 +20,31 @@ namespace Logitude.Customs.BL
    {
        public List<TradeLevyExamptTypeDetails> GetAll()
        {
-		    var all = new List<TradeLevyExamptTypeDetails>(); 
+		    var all = new List<TradeLevyExamptTypeDetails>();  
+            all.Add(new TradeLevyExamptTypeDetails()
+            {    
+                Code = "1", 
+                EnglishName = "1", 
+                SearchFields = "1,'כלל הצמצום חל על סחורה זו'", 
+                Inactive = false, 
+                LocalName = "'כלל הצמצום חל על סחורה זו'", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(TradeLevyExamptType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(TradeLevyExamptType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

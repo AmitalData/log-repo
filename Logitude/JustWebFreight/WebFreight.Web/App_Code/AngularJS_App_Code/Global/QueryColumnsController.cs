@@ -123,13 +123,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryid}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryid, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
         {
             //SecurityUtility.AuthenticationOnTenant(tenant);
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUserAngular(tenant, userid, queryid);//.ToList();
+            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(tenant, userid, queryCode);//.ToList();
             if (querycolumns.Count() > 0)
             {
                 return querycolumns.OrderBy(a => a.IndexOrder).ToList();

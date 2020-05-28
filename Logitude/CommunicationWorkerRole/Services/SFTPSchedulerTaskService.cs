@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.DataContracts;
+﻿using CommunicationWorkerRole.Tasks;
+using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.FTP;
 using Simplog.Data.Helpers;
@@ -17,7 +18,13 @@ namespace CommunicationWorkerRole.Services
 {
     public class SFTPSchedulerTaskService: FTPSchedulerTaskServiceBase
     {
-     
+        public SFTPSchedulerTaskService()
+        {
+
+        }
+        public SFTPSchedulerTaskService(TaskManagerBase task) : base(task)
+        {
+        }
 
         public void ReadSFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
@@ -191,7 +198,7 @@ namespace CommunicationWorkerRole.Services
                     Status = "W",
                     Retries = 0,
                     ConnectedToEntity = false,
-                    ConnectedToTenant = true,
+                    ConnectedToTenant = false,
                     Tenant = schedulerDetails.Tenant,
                     FileSize = fileData != null ? fileData.Length : 0,
                     FileName = fileName,

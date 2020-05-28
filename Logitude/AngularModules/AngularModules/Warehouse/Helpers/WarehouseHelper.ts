@@ -1,7 +1,3 @@
-/// <reference path="../../infrastructure/locators/servicelocator.ts" />
-/// <reference path="../../infrastructure/utilities/infragenericfilter.ts" />
-/// <reference path="../../shipment/entitypms/shipmentpm.ts" />
-
 declare var System: any;
 declare var window: any;
 import {PackageTypeListService} from '../../Common/Services/StandardLists/PackageTypeListService';
@@ -14,16 +10,17 @@ import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {ShipmentPickUpPM} from '../../Shipment/EntityPMs/ShipmentPickUpPM';
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
-import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
-import {WarehouseEntryPMService} from '../../Warehouse/Services/StandardPMs/WarehouseEntryPMService';
+import { WarehouseEntryPM } from '../../Warehouse/EntityPMs/WarehouseEntryPM';
+import { WarehouseReleasePM } from '../../Warehouse/EntityPMs/WarehouseReleasePM';
+import { WarehouseEntryPMService } from '../../Warehouse/Services/StandardPMs/WarehouseEntryPMService';
+import { WarehouseReleasePMExtendedService } from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import {EventTypeClass, EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
-    public traceEventExtendedPMService: TraceEventExtendedPMService;
+    public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       
@@ -112,7 +109,7 @@ export class WarehouseHelper {
 
         windowArgs.ShipmentPM = entityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 1010;
         logWindow.Height = 620;
         logWindow.Title = "New Cross Dock Entry";
         logWindow.WindowArgs = windowArgs;
@@ -209,6 +206,9 @@ export class WarehouseHelper {
                 });
             }
 
+
+            entityPM.WarehouseEntryPackages = entityPM.WarehouseEntryPackages.filter(d => d.Quantity > 0);
+
             if (entityPM.WarehouseEntryPackages.length == 0) {
                 viewModel.ValidationErrorsList.push("You should at least add one package");
             }
@@ -234,17 +234,9 @@ export class WarehouseHelper {
                 this.CurrentSession.StartBusyIndicatorSaving();
 
                 if (this._warehouseEntryPMService == null) this._warehouseEntryPMService = new WarehouseEntryPMService();
-                if (this.traceEventExtendedPMService == null) this.traceEventExtendedPMService = new TraceEventExtendedPMService();
-                
-                    var eventTypeCodeList: EventTypeClass[] = [];
-                    eventTypeCodeList.push(new EventTypeClass("CREN", null));
-                    if (entityPM.ExpectedEntryDate) eventTypeCodeList.push(new EventTypeClass("EXEN", entityPM.ExpectedEntryDate));
-                    if (entityPM.ActualEntryDate) eventTypeCodeList.push(new EventTypeClass("ENEN", entityPM.ActualEntryDate));
-                    if (eventTypeCodeList.filter(d => d.Code == "ENEN")[0]) entityPM.StatusCode = "ENTE";
+                if (entityPM.ActualEntryDate) entityPM.StatusCode = "ENTE";
 
-
-
-                    this._warehouseEntryPMService.insert(entityPM).subscribe(res => {
+                    this._warehouseEntryPMService.insert(entityPM).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
 
                         if (!pmResponse.HasError) {
@@ -256,8 +248,8 @@ export class WarehouseHelper {
                                 if (viewModel.IsFromShipment && !viewModel.IsNotSetWarehouseIdForWarehouseLegShipment) {
                                     this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Entry");
                                 }
-
-                                this.UpdateEventType(viewModel.ObjectTableId, entityPM.Id, eventTypeCodeList);
+                                this.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.CurrentWindow.Close("Refresh");
                             }
                             else this.CurrentSession.StopBusyIndicator();
                         } else {
@@ -276,31 +268,136 @@ export class WarehouseHelper {
    
     }
 
-    UpdateEventType(objectTableId: string, entityId: string, eventTypeClass:EventTypeClass[]) {
 
-        if (eventTypeClass && eventTypeClass.length != 0) {
 
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
 
-            traceEventArgs.EventTypeList = eventTypeClass;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = objectTableId;
-            traceEventArgs.EntityId = entityId;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
 
-            this.traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentWindow.Close("Refresh");
+    CreateWarehouseRelease(entityPM: WarehouseReleasePM, viewModel: any) {
 
-            });
+        if (entityPM != null && viewModel != null) {
+            viewModel.ValidationErrorsList = [];
+ 
+            entityPM.FromPortId = entityPM.WarehouseId;
+            entityPM.ToPortId = null;
+            entityPM.ToTypeCode = "PORT";
 
-        }
-        else {
-            this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CurrentWindow.Close("Refresh");
+            if (this.validator == null) {
+                this.validator = new ClassLevelValidator();
+            }
+
+            var errorsArray = this.validator.Validate("WarehouseRelease", entityPM);
+            if (errorsArray.length > 0) {
+                errorsArray.forEach((item) => {
+                    viewModel.ValidationErrorsList.push(item);
+                });
+            }
+
+            entityPM.WarehouseReleasePackages = entityPM.WarehouseReleasePackages.filter(d => d.Quantity > 0);
+
+
+
+            if (entityPM.WarehouseReleasePackages.length == 0) {
+
+                viewModel.ValidationErrorsList.push("You should at least choose one package");
+            }
+            else {
+                if (entityPM.ActualReleaseDate != null) {
+                    var releasePackagesLists = viewModel.WarehouseReleasePackagesLists.filter(d => d.ActualReleaseDate != null);
+                    var isValidReleasePackages: boolean = true;
+                    if (releasePackagesLists.length > 0) {
+                        releasePackagesLists.forEach((item) => {
+                            if (DateTool.IsDateBigger(item.ActualReleaseDate, entityPM.ActualReleaseDate)) {
+                                isValidReleasePackages = false;
+                                return;
+                            }
+                        });
+
+                        if (!isValidReleasePackages) {
+                            viewModel.ValidationErrorsList.push("Actual Release Date must be greater or equal to Actual Entry Date.");
+                        }
+
+                    }
+                }
+            }
+
+
+
+            // Actual Dates
+            if (!DateTool.IsActualDateValid(entityPM.ActualReleaseDate)) {
+                viewModel.ValidationErrorsList.push(DateTool.ActualDateMessage.replace("Field", "Actual Release Date"));
+            }
+
+            if (viewModel.ValidationErrorsList.length == 0) {
+                var message = "Can't set Field to future date";
+                var todayDateTime = DateTool.GetCurrentDateTimeAsUtc();
+
+                if (entityPM.ActualReleaseDate) {
+                    if (entityPM.ActualReleaseDate.valueOf() > todayDateTime.valueOf()) {
+                        viewModel.ValidationErrorsList.push(message.replace("Field", "Actual Release Date"));
+                    }
+                }
+            }
+
+
+
+            if (viewModel.ValidationErrorsList.length == 0) {
+                
+                this.CurrentSession.StartBusyIndicatorSaving();
+
+                if (this._warehouseReleasePMExtendedService == null) this._warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
+                if (entityPM.ActualReleaseDate) entityPM.StatusCode = "RELE";
+
+                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe((res:any) => {
+                    var pmResponse: ServiceResponse = res;
+
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+                    if (!pmResponse.HasError) {
+                        ServiceLocator.SendTotangoUserActivity("Cross Docs", "Create Release");
+                        entityPM = pmResponse.Result;
+                        this.CurrentSession.FireEvent("CrossDockReleases");
+                        var myResult = pmResponse.Result;
+                        if (myResult) {
+                            if (viewModel.IsFromShipment) {
+                              
+                                this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Release");
+                            }
+                            this.CurrentSession.CurrentWindow.Close("Refresh");
+                        }
+                    } else {
+                        pmResponse.ErrorsArray.forEach((item) => {
+                            viewModel.ValidationErrorsList.push(item);
+                        });
+
+
+                    }
+
+                    this.CurrentSession.StopBusyIndicator();
+
+                });
+
+
+
+            }
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     SetLabel(viewModel: any) {
         if (viewModel != null) {
@@ -327,7 +424,7 @@ export class WarehouseHelper {
             warehouseEntryPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
             warehouseEntryPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
             warehouseEntryPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
-            warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+            //warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
 
             warehouseEntryPM.EntryNumber = "123";
             //if (viewModel.IsFromShipment) {
@@ -340,6 +437,38 @@ export class WarehouseHelper {
 
 
         return warehouseEntryPM;
+
+    }
+
+
+    GetNewWarehouseRelease(viewModel: any) {
+        var warehouseReleasePM: WarehouseReleasePM = new WarehouseReleasePM();
+        if (viewModel != null) {
+
+            warehouseReleasePM.ReleaseBy = SessionLocator.LoggedUserPM.EnglishName;
+            warehouseReleasePM.Tenant = SessionLocator.TenantPM.Id;
+            warehouseReleasePM.CreatedByUserId = SessionLocator.LoggedUserId;
+            warehouseReleasePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+            warehouseReleasePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+            warehouseReleasePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+            warehouseReleasePM.StatusCode = "CREA";
+            warehouseReleasePM.Id = "1-1";
+            warehouseReleasePM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
+            warehouseReleasePM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
+            warehouseReleasePM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
+            warehouseReleasePM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+
+            warehouseReleasePM.ReleaseNumber = "123";
+            //if (viewModel.IsFromShipment) {
+            warehouseReleasePM.TotalVolume = 0;
+            warehouseReleasePM.TotalGrossWeight = 0;
+            warehouseReleasePM.TotalPieces = 0;
+
+            // }
+        }
+
+
+        return warehouseReleasePM;
 
     }
 

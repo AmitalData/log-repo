@@ -26,7 +26,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NotificationReplyTabComponent.html',
     selector: 'NotificationReplyTabComponent',
 })
@@ -205,7 +205,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Notification.O.NotificationReplySendErrors");
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
             return;
         }
 

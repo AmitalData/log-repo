@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
 				AccountRepository  accountRepository = new AccountRepository(MyContext);
-				IQueryable<Account> entityPocos = accountRepository.GetAccounts(authToken.Tenant);
+				IQueryable<Account> entityPocos = accountRepository.GetAccounts1(authToken.Tenant);
 
 				AccountQuery accountQuery = new AccountQuery(accountRepository);
 			    IQueryable<AccountList> entityLists = accountQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     ObjectTableName = "Account",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Accounts",
+                    QuerySection = "Accounts1",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -168,7 +168,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -196,7 +197,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -211,7 +213,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 AccountRepository  accountRepository = new AccountRepository(MyContext);
-                IQueryable<Account> entityPocos = accountRepository.GetAccounts(tenant);
+                IQueryable<Account> entityPocos = accountRepository.GetAccounts1(tenant);
 
                 AccountQuery accountQuery = new AccountQuery(accountRepository);
                 

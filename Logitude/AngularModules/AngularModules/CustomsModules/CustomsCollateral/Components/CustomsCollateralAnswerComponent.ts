@@ -15,27 +15,20 @@ import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/Decl
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../Common/EntityLists/CardList';
-
-
-declare var window: any;
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
-import { forEach } from '@angular/router/src/utils/collection';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
-import { Observable } from 'rxjs';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
-import { subscribeOn } from 'rxjs/operator/subscribeOn';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './CustomsCollateralAnswerComponent.html',
     providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })
+
 export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
+  public imgNgStyle: any;
 
     public ObjectTableName: string = "Customs.CustomsCollateralsAnswer";
     public DataContext: any = this;
@@ -401,7 +394,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                 else {
                     if (AppTool.IsNullOrEmpty(this.collateralPM.CustomerId)) {
                         this.cardListService.getSingle(this.collateralPM.CustomerId)
-                            .subscribe(res => {
+                            .subscribe((res:any) => {
                                 let cardList: CardList = res.Result;
                                 if (!AppTool.IsNullOrEmpty(cardList)) {
                                     customerCode = cardList.Code;
@@ -412,7 +405,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                 if (!AppTool.IsNullOrEmpty(customerCode)) {
                     var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_GUARANTEE_N", "NON", customerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsGuaranteeDefaultList = false;
                             if (!response.HasError) {// reEdit this default !!!
                                 if (response.Result != null) {
@@ -688,11 +681,11 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     currentScreenCode: string;
     OpenPaymentOrder() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
 
                             this.EditEntity("Customs.PaymentOrder", this.EntityPM.PaymentOrderId, null, "POGN");
                         });
@@ -717,7 +710,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
 
@@ -790,7 +783,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (res.HasError == true) {
                 var myMessageWindow = new MessageWindow();

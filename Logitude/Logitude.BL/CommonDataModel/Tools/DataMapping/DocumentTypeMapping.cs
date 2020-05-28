@@ -65,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.IsInlandDigitalSignRequired = documentTypePM.IsInlandDigitalSignRequired;
             documentType.IsSystemAdditionalPrintingFields = documentTypePM.IsSystemAdditionalPrintingFields;
             documentType.PrintingFieldsScreenCode = documentTypePM.PrintingFieldsScreenCode;
+            documentType.AddedManually = documentTypePM.AddedManually;
         }
     }
 }

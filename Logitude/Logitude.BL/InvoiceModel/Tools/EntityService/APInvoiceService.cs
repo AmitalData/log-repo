@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -18,6 +19,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void Create(APInvoicePM entityPM)
         {
+            entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
+
             if (entityPM.IsMultipleEntities)
             {
                 APInvoiceMultipleShipmentService service = new APInvoiceMultipleShipmentService(objectContext, entityPM);
@@ -26,13 +29,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM.Tenant);
-                service.Create(entityPM);
+                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM);
+                service.Create();
             }
         }
 
         public void Update(APInvoicePM entityPM, bool mapComposition = false)
         {
+            entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
+
             if (entityPM.IsMultipleEntities)
             {
                 APInvoiceMultipleShipmentService service = new APInvoiceMultipleShipmentService(objectContext, entityPM);
@@ -48,14 +53,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
 
-                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM.Tenant);
+                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM);
 
                 if (!mapComposition)
                 {
                     service.SetChangeSets(invoiceLinesChangeSet, invoicePaymentsChangeSet);
                 }
 
-                service.Update(entityPM, mapComposition);
+                service.Update(mapComposition);
             }
         }
 

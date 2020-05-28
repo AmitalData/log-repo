@@ -118,9 +118,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public DateTime? DocumentsClosingDate { get; set; }
         public string OBLTypeCode { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("OBLTypeCode")]
         public OBLType OBLType { get; set; }
+
+        public DateTime? CutoffDate { get; set; }
 
         #region Objects
 

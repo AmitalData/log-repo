@@ -28,7 +28,7 @@ import { DocumentTypeCustomsDataExtendPMService } from '../../../Customs/Service
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DocumentTypeCustomsDataComponent.html',
 })
 
@@ -64,7 +64,7 @@ export class DocumentTypeCustomsDataComponent
     EntityResource: boolean = false;
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
         
             this.EntityResource = true;
             if (this.EntityResource && this.Loaded) {
@@ -83,7 +83,7 @@ export class DocumentTypeCustomsDataComponent
         
         this._DocumentTypeCustomsDataPMService
             .get(this.DocumentTypeId)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.entityPM = res.Result;
                 if (this.entityPM == null) {
                     this.IsNew = true;
@@ -118,7 +118,7 @@ export class DocumentTypeCustomsDataComponent
     DeleteRow() {
         var documentTypeCustomsDataExtendPMService: DocumentTypeCustomsDataExtendPMService = new DocumentTypeCustomsDataExtendPMService();
         documentTypeCustomsDataExtendPMService.DeleteRecord(this.entityPM.DocumentTypeId)
-            .subscribe(resp => {
+            .subscribe((resp:any) => {
                 if (resp.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(resp.ErrorsArray[0]);
@@ -135,7 +135,7 @@ export class DocumentTypeCustomsDataComponent
         
         if (this.IsNew) {
             this._DocumentTypeCustomsDataPMService.insert(this.entityPM)
-                .subscribe(resp => {
+                .subscribe((resp:any) => {
                     if (resp.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(resp.ErrorsArray[0]);
@@ -146,7 +146,7 @@ export class DocumentTypeCustomsDataComponent
                 });
         } else {
             this._DocumentTypeCustomsDataPMService.update(this.entityPM)
-                .subscribe(resp => {
+                .subscribe((resp:any) => {
                     if (resp.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(resp.ErrorsArray[0]);

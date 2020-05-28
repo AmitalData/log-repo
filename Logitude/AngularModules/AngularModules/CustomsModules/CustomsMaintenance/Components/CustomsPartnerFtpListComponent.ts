@@ -1,42 +1,28 @@
-
-
-import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { Component, OnInit } from '@angular/core';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LogTab } from '../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CustomsPartnerFtpPM } from '../../../Customs/EntityPMs/CustomsPartnerFtpPM';
 import { CustomsPartnerFtpList } from '../../../Customs/EntityLists/CustomsPartnerFtpList';
-
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-
 import { CustomsPartnerFtpPMService } from '../../../Customs/Services/StandardPMs/CustomsPartnerFtpPMService';
 import { CustomsPartnerFtpListService } from '../../../Customs/Services/StandardLists/CustomsPartnerFtpListService';
-
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsPartnerFtpExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomsPartnerFtpExtendedPMService';
-import { RegionList } from '../../../Common/EntityLists/RegionList';
 import { FTPDetailPMService } from '../../../Common/Services/StandardPMs/FTPDetailPMService';
 import { FTPDetailPM } from '../../../common/EntityPMs/FTPDetailPM';
-import { retry } from 'rxjs/operators';
-import { Jsonp } from '@angular/http';
 import { KeyValuePair } from '../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 
-@Component({
-    moduleId: module.id,
+@Component({    
     templateUrl: './CustomsPartnerFtpListComponent.html',
 })
 /// itzik:  bad pattren - Due Design paper - How to copy from  CustomsDocumentsDefinitionComponent - DING DING DING SHAME SHAME!!!
-export class CustomsPartnerFtpListComponent
-    extends BaseComponent
-    implements OnInit {
+export class CustomsPartnerFtpListComponent extends BaseComponent implements OnInit {
+  public IsDisplayOnly: boolean = false;
+
     ngOnInit(): void {
        
     }
@@ -85,8 +71,8 @@ export class CustomsPartnerFtpListComponent
 
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe(res => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe((res:any) => {
                 let screenOption = res.Result;
                 this._PartnerCodeItems = screenOption.PartnerCodeItems;
                 //this._InterfaceNameItems = screenOption.InterfaceNameItems;
@@ -121,7 +107,7 @@ export class CustomsPartnerFtpListComponent
         this._InEditMode = false;
         this._IsNew = false;
         this._CustomsPartnerFtpPM = null;
-        this._CustomsPartnerFtpListService.getAll().subscribe(myResult => {
+        this._CustomsPartnerFtpListService.getAll().subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             console.log("Get All CustomsPartnerFtp Definition: ", myResult);
@@ -166,7 +152,7 @@ export class CustomsPartnerFtpListComponent
 
         if (this._IsNew == true) {
             this._CustomsPartnerFtpPMService.insert(this._CustomsPartnerFtpPM)
-                .subscribe(response => {
+                .subscribe((response:any) => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var res: ServiceResponse = response;
                     if (res.HasError) {
@@ -179,7 +165,7 @@ export class CustomsPartnerFtpListComponent
             });
         }
         else {
-            this._CustomsPartnerFtpPMService.update(this._CustomsPartnerFtpPM).subscribe(response => {
+            this._CustomsPartnerFtpPMService.update(this._CustomsPartnerFtpPM).subscribe((response:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var res: ServiceResponse = response;
                 if (res.HasError) {
@@ -200,7 +186,7 @@ export class CustomsPartnerFtpListComponent
     }
 
    
-    private AddCustomsPartnerFtpCommand() {
+    AddCustomsPartnerFtpCommand() {
         this._IsNew = true;
         this._CustomsPartnerFtpPM = new CustomsPartnerFtpPM();
         this._CustomsPartnerFtpPM.Tenant = SessionLocator.Tenant;
@@ -209,14 +195,14 @@ export class CustomsPartnerFtpListComponent
         this._InEditMode = true;
       //  this._CustomsPartnerFtpResultList.Insert(new CustomsPartnerFtpVM(new CustomsPartnerFtpPM(), true));
     }
-    private DeleteButtonClicked(item: CustomsPartnerFtpList) {
+    DeleteButtonClicked(item: CustomsPartnerFtpList) {
         this._IsNew = false;
         //this._CustomsPartnerFtpResultList.Remove(item);
         //.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
 
       
 
-        this._CustomsPartnerFtpExtendedPMService.delete(item.Id).subscribe(response => {
+        this._CustomsPartnerFtpExtendedPMService.delete(item.Id).subscribe((response:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var res: ServiceResponse = response;
             if (res.HasError) {
@@ -229,7 +215,7 @@ export class CustomsPartnerFtpListComponent
         });
         
     }
-    private EditButtonClicked(item: CustomsPartnerFtpList) {
+     EditButtonClicked(item: CustomsPartnerFtpList) {
         this._IsNew = false;
         
         this.ClearScreen();
@@ -396,7 +382,7 @@ export class CustomsPartnerFtpListComponent
     _SettingsHost: string;
     
     private LoadFTP(id: string, code: string) {
-        this.myFTPService.get(id).subscribe(myResult => {
+        this.myFTPService.get(id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

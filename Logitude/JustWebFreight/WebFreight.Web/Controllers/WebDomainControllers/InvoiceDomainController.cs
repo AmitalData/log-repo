@@ -17,6 +17,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
@@ -329,7 +330,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 DateTime? registergdate = DateHelper.GetDate(registergDateString);
                 CashBookPM cashBook = cashQuery.GetByPaymentAndCurrency(currency, methodType, tenant);
-                ARPaymentValidator.ValidateFullAccounting(tenant, billTo, currency, cashBook, code, registergdate, bankAccountId, true);
+                ARPaymentValidator.ValidateFullAccounting(null,tenant, billTo, currency, cashBook, code, registergdate, bankAccountId, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
@@ -357,7 +358,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                ARInvoiceValidator.ValidateFullAccounting(tenant, billTo, currency, accountingDate, true);
+                ARInvoicePM invoice = new ARInvoicePM() {Tenant = tenant ,BillToId = billTo,InvoiceCurrencyId = currency,InvoiceDate= accountingDate }; 
+                ARInvoiceValidator.ValidateFullAccounting(invoice, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
@@ -385,7 +387,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
+                //APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetValidateInvoiceDate(string invoiceDateString)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                if (invoiceDateString == "null")
+                {
+                    invoiceDateString = null;
+                }
+
+                DateTime? invoiceDate = DateHelper.GetDate(invoiceDateString);
+
+                string warningMessage= APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant, loggedUserEmail);
+                return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetValidateInvoiceNumber(string invoiceNumber)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+               APInvoiceValidator.CheckInvoiceNumberFormat(invoiceNumber, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
@@ -464,7 +515,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string vendorId = args.VendorId;
                 string entityId = args.EntityId;
-                string invoiceNumber = args.InvoiceNumber;
+                string invoiceNumber = MethodHelper.Trim(args.InvoiceNumber);
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -534,7 +585,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId)
+        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId, string invoiceId)
         {
             try
             {
@@ -544,9 +595,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
+                invoiceId = CheckNullValue(invoiceId);
+
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
 
-                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant);
+                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant, invoiceId);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1457,8 +1510,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return newValue;
         }
 
-
-
 		public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
 		{
 			if (ModelState.IsValid)
@@ -1519,7 +1570,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-
 		public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
 		{
 			if (ModelState.IsValid)
@@ -1564,7 +1614,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-
 		public HttpResponseMessage getConnectedARPayments(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1599,8 +1648,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
-
         public HttpResponseMessage getConnectedAPPayments(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1634,7 +1681,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
 
         public HttpResponseMessage GetListOfARInvoiceStockPM()
         {
@@ -1679,7 +1725,78 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetMarkEntityAsBlocked(string transferTypeCode, string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                switch (transferTypeCode)
+                {
+                    case "ARIN":
+                        {
+                            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+                            ARInvoice aRInvoice = aRInvoiceRepository.GetSingleARInvoice(entityId, tenant);
+                            if (aRInvoice != null)
+                            {
+                                aRInvoice.TransferStatusCode = "BL";
+                                aRInvoiceRepository.Update(aRInvoice);                                
+                            }
+                            break;
+                        }
+
+                    case "APIN":
+                        {
+                            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+                            APInvoice aPInvoice = aPInvoiceRepository.GetSingleAPInvoice(entityId, tenant);
+                            if (aPInvoice != null)
+                            {
+                                aPInvoice.TransferStatusCode = "BL";
+                                aPInvoiceRepository.Update(aPInvoice);
+                            }
+                            break;
+                        }
+
+                    case "ARPA":
+                        {
+                            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+                            ARPayment aRPayment = aRPaymentRepository.GetSingleARPayment(entityId, tenant);
+                            if (aRPayment != null)
+                            {
+                                aRPayment.TransferStatusCode = "BL";
+                                aRPaymentRepository.Update(aRPayment);
+                            }
+                            break;
+                        }
+
+                    case "APPA":
+                        {
+                            APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
+                            APPayment aPPayment = aPPaymentRepository.GetSingleAPPayment(entityId, tenant);
+                            if (aPPayment != null)
+                            {
+                                aPPayment.TransferStatusCode = "BL";
+                                aPPaymentRepository.Update(aPPayment);
+                            }
+                            break;
+                        }
+                }
+
+                invoiceContext.SaveChanges();               
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
     public class APInvoiceNumberDuplicationCheckArgs
     {

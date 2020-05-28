@@ -36,16 +36,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
         
-        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
+        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant, string userId)
         {
+            
             var accountingContext = AccountingContext.GetContext(tenant);
             CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+
+            
             var myBatchYearTransferService = new BatchYearTransferService(null);
-            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear }, tenant, $"YearTransfer({YYyear})", false);
+            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear, UserId= userId }, tenant, $"YearTransfer({YYyear})", false);
         }
 
 
-        public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant)
+        public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant,String usrid)
         {
             CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
 
@@ -70,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return null;
             }
-            var usrid = AuthenticationUtil.ResolveUserId(tenant);
+            //var usrid = AuthenticationUtil.ResolveUserId(tenant);
             DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
             var journalPM = CreateJournal(
                 _EndOfYearUserInput,
@@ -474,6 +477,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
+            if (string.IsNullOrWhiteSpace(RevenueExpenseGLAccountId))
+            {
+                RevenueExpenseGLAccountId = null;
+            }
             int tenant = journal.Tenant;
             bool useLocal = true;
             var journalLine = new JournalLinePM()
@@ -498,22 +505,34 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLine.LocalAmount = -journalLine.LocalAmount;
                 journalLine.ForeignAmount = -journalLine.ForeignAmount;
             }
+            int actionCode = 0;
             switch (journalActionTypeEnum)
             {
-                
                 case MyJournalActionTypeEnum.Credit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
+                    actionCode = (int)MyJournalActionTypeEnum.Credit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
                     journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
                 case MyJournalActionTypeEnum.Debit:
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                    actionCode = (int)MyJournalActionTypeEnum.Debit;
+                    journalLine.ActionCode = actionCode.ToString();
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
                     journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
                     break;
                 
             }
-            
+            if (string.IsNullOrWhiteSpace(journalLine.CreditAccountId))
+            {
+                journalLine.CreditAccountId = null;
+            }
+            if (string.IsNullOrWhiteSpace(journalLine.DebitAccountId))
+            {
+                journalLine.DebitAccountId = null;
+            }
+
             return journalLine;
         }
         /// <summary>
@@ -536,7 +555,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             endAccountBalanceService.CalculateBalance(
 openBalancePlease_ReCalcYearTransfer, 
-GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
+GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1,false, false, true);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new

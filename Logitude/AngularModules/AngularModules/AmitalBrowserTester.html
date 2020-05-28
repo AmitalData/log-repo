@@ -211,7 +211,7 @@
         <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
         <button onclick="MapPendingReasonCodeData()">MapPendingReasonCodeData</button>
         <button onclick="MapExceptionReasonCodeData()">MapExceptionReasonCodeData</button>
-        <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנםי מכר')">1426ShowGeneralLOVReturnSelected</button>
+        <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנאי מכר')">1426ShowGeneralLOVReturnSelected</button>
         <button onclick="ShowGeneralLOVReturnSelected('Customs.FreightPaymentMethod','PU','סוג תשלום')">1345ShowGeneralLOVReturnSelected</button>
         <button onclick="JustReturn()">JustReturn(CFIUFILE)</button>
     </div>
@@ -306,10 +306,8 @@
 
             //58cOURIER 
             data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20021308","Token":"Ofh3FM0MN8FSmvf8Kv3dZaC5B9qx/Oqxx3g=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"J8WHHw+FeeDYtMItiOjOEVEk1AEJ2TAIBRw=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-02-13T11:57:39.8332964","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
-
-            //593-1
-            data = '{ "AmitalBrowserInUse":true,"$id": "1", "UserName": "itzik.xxx@amital.co.il", "Id": "1-10", "CardId": null, "CardType": null, "CurrentTenant": 1, "IsUser": true, "Technology": "AG", "IsLocked": false, "IpRestricted": false, "InValidMailOrPassword": false, "HasError": false, "ExceptionMessage": null, "MustChangePassword": false, "CompanyLogins": null, "ContactsCount": 0, "HtmlVersion": "20032314", "Token": "KsVO8EXPJfZhgvgc5Yu9I7ELAsLD2KBk7CU=", "UserId": "1-10", "Tenant": 1, "InvalidToken": false, "InvalidMobileAccessPermission": false, "SelectedCompanyLogin": null, "InActive": false, "PrivateLablehasZeroTenant": false, "IsBrandingEnabled": false, "Unlicensed": false, "SilverlightEndDate": null, "IsTwoFactorAuthenticationRequired": false, "CodeExpirationDate": null, "UserMobileNumber": null, "TwoFactorkey": null, "KeepUserLoggedIn": false, "PasswordExpirationDateMessage": null, "IsPasswordExpirationDate": false, "DocumentDownloadToken": "DDPx1v387lR40sO/xWIAvPQYCG/1UY1Ydls=", "NumberOfRetries": 0, "SessionTimeout": 0, "WebTokenExpirationWarningInMinutes": 0, "WebTokenLifeTimeInMinutes": 0, "Param1": false, "CaptchaImage": null, "CaptchaKey": null, "InValidCaptcha": false, "LastLoginDateTime": "2020-03-23T14:49:57.4716051", "InvalidDocumentToken": null, "IsAuthenticated": true, "Name": "itzik.xxx@amital.co.il", "Roles": null } ';
-
+            //591
+            data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20052606","Token":"ig9SSJCcWrY+531uIP2lVynYTd0TKUmWLKk=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"HvVLMqSfqmpP169bB4ERH/DxSgNwd9Iwobs=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-05-25T13:35:42.2723227","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
 
             //HOWTO - LOGIN http://localhost:9996/
             // THEN DEVTOOLS >>SESSION STORAGE >> KEY >> USERDATA
@@ -330,7 +328,7 @@
         
 
         function ShowDeclarationByIdReturnCloseSave() {
-            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-235456" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבום"}';
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-235456" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבוא"}';
             
             var objParams = JSON.parse(json);
             objParams.Requset = new Array();
@@ -343,7 +341,7 @@
         }
 
         function ShowDeclarationStatusOrManifestQuery() {
-            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationStatusQuery" , "formtitle"  :  "הצהרת יבום"}';
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationStatusQuery" , "formtitle"  :  "הצהרת יבוא"}';
             
             
             var objParams = JSON.parse(json);
@@ -434,15 +432,6 @@
             RaiseUnifaceRequestEvent(objParams);
  	
         }
-
-        function MapExceptionReasonCodeData() {
-            var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.ExceptionReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapExceptionReasonCodeData" , "formtitle"  :  "חריגות רפרנט"}';
-
-            var objParams = JSON.parse(json);
-            objParams.Requset = new Array();
-            RaiseUnifaceRequestEvent(objParams);
-        }
-
         function ShowClientReturnIfExist() {
             let objParams =
             {
@@ -586,13 +575,13 @@
                 alert("Wrong Number");
         }
         }
-
         function JustReturn(toContinue) {
 
             //=·; =
                 if (_JavascriptGateway.LastRequestFromAngular &&
                     (_JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIUFILEFromDeclarationReferantData"
-                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMFUStatusScreen")
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMFUStatusScreen"
+                || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMMoveToQueueScreen")
                 ){
                     if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
                         _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
@@ -614,7 +603,6 @@
                 alert("Wrong Number");
         }
         }
-
         function GetRihbitFromTransmissionsMessage() {
             if (_JavascriptGateway.LastRequestFromAngular &&
                 _JavascriptGateway.LastRequestFromAngular.MessageID == "GetRihbitFromTransmissions") {

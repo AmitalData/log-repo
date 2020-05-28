@@ -50,15 +50,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
 namespace CommunicationWorkerRole
 {
     class ReportExecutionLogWorkerRole : WorkerEntryPoint
     {
 
-        DbQueueService queueservice;
-        int tenant = 0;
-      
+        DbQueueService queueService;
 
         public ReportExecutionLogWorkerRole()
         {
@@ -74,120 +73,55 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
 
-        public override async void AsyncRun()
-        {
 
+        public override void Run()
+        {
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
                     {
-                        queueservice = new DbQueueService("ReportExecutionLogQueue", 0);
-                        var response = queueservice.Receive(new TimeSpan(0,0,1));
-                        LastActivity = DateTime.UtcNow;
-
-                        string tenantString = null;
-                    
-
-                        if (response != null && response.MessageId != null)
-                        {
-                            ReportExecutionLog reportExecutionLog = null;
-                            ReportExecutionLogRepository reportExecutionLogRepository = null;
-          
-
-                            try
-                            {
-                                string reportExecutionLogId = response.MessageValues.Keys.Contains("ReportExecutionLogId") ? response.MessageValues["ReportExecutionLogId"].ToString() : "";
-                                if (response.MessageValues.Keys.Contains("Tenant"))
-                                {
-                                    tenantString = response.MessageValues["Tenant"].ToString();
-                                    if (!string.IsNullOrEmpty(tenantString)) tenant = int.Parse(tenantString);
-                                }
-
-                                if (string.IsNullOrEmpty(reportExecutionLogId) || string.IsNullOrEmpty(tenantString))
-                                {
-                                    queueservice.Complete();
-                                    continue;
-                                }
-
-                                reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
-                                reportExecutionLog = reportExecutionLogRepository.GetSingleReportExecutionLog(reportExecutionLogId, tenant);
-
-                                if (reportExecutionLog == null)
-                                {
-                                    queueservice.Complete();
-                                    continue;
-                                }
-
-                                if (reportExecutionLog.StatusCode!="W")
-                                {
-                                    queueservice.Complete();
-                                    continue;
-                                }
-
-
-                                ReportFliter reportFliter = null;
-                                if (!string.IsNullOrEmpty(reportExecutionLog.ReportFilterXML))
-                                {
-                                    reportFliter = LogitudeXmlSerializer.DeserializeObject<ReportFliter>(reportExecutionLog.ReportFilterXML);
-                                }
-
-                                if (reportFliter != null)
-                                {
-                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository, queueservice, response));
-                                    thread.IsBackground = true;
-                                    thread.Start();
-                          
-                                }
-                                else
-                                {
-                                    UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository,  ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
-                                    this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-                                    //queueservice.Complete();
-                                    LogDoneItemInMemory();
-                                }
-                                queueservice.Complete();
-
-                            }
-                            catch (Exception ex)
-                            {
-
-                                UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = ex, queueservice = queueservice, StatusCode = "F",response = response};
-                                HandleReportExecutionException(updateReportExecutionLogArgs);
-
-                            }
-
-
-                        }
-                        else
-                        {
-                         Thread.Sleep(new TimeSpan(0, 0, 1));
-                        }
-
+                        ExecuteQueue();
                     }
-                    catch (Exception ex)
+                    catch (Exception exception)
                     {
-
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
                         Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
-
                 }
-                else
-                {
-                    Thread.Sleep(new TimeSpan(0, 0, 1));
-                }
+                else Thread.Sleep(new TimeSpan(0, 0, 1));
             }
         }
 
+
+
+
+
+
+        private void ExecuteQueue()
+        {
+            queueService = new DbQueueService("ReportExecutionLogQueue", 0);
+            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
+            if (queueResponse != null && queueResponse.MessageId != null)
+            {
+                ThreadStart reportExecutionServiceThreadStart = (() => new ReportExecutionService(queueService, queueResponse).ExecuteReportExecutionQueue());
+                reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
+                new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
+                queueService.Complete();
+            }
+            else
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 1));
+            }
+        }
 
         private void ConnectClient()
         {
             try
             {
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("ReportExecutionLogQueue", tenant);
+                queueService = new DbQueueService();
+                queueService.InitializeQueue("ReportExecutionLogQueue", 0);
 
             }
             catch (Exception ex)
@@ -196,123 +130,8 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, DbQueueService queueservice , QueueResponse response)
-        {
-
-            try
-            {
-                ReportHelper reportHelper = new ReportHelper();
-                BuildReportDataResult buildReportDataResult = reportHelper.BuildReport(reportFliter);
-                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = buildReportDataResult.Exception, queueservice = queueservice, StatusCode = "F" , response = response ,IsInternalException = buildReportDataResult.IsInternalException };
-                
-                if (buildReportDataResult.Exception == null)
-                {
-                    handleReportExecutionLogArgs.StatusCode = "D";
-                    this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
-                    //queueservice.Complete();
-                    LogDoneItemInMemory();
-                }
-                else
-                {
-                    HandleReportExecutionException(handleReportExecutionLogArgs , true);
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = ex, queueservice = queueservice, StatusCode = "F" , response = response };
-                HandleReportExecutionException(handleReportExecutionLogArgs);
-
-            }
-        }
-
-
-        private void HandleReportExecutionException(UpdateReportExecutionLogArgs updateReportExecutionLogArgs, bool isupdateReportExecutionLog = false)
-        {
-            if (!updateReportExecutionLogArgs.IsInternalException)
-            {
-                ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
-            }
-
-            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
-            {
-                if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
-                {
-                    updateReportExecutionLogArgs.queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), updateReportExecutionLogArgs.response.MessageId);
-                }
-
-                if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
-                {
-                    queueservice.CompleteAsFailed();
-                    if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-
-                }
-            }
-            else
-            {
-                queueservice.CompleteAsFailed();
-                if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-            }
-
-         
-         
-        }
-
-
-
-        private void UpdateReportExecutionLog(UpdateReportExecutionLogArgs updateReportExecutionLogArgs)
-        {
-            if (updateReportExecutionLogArgs.ReportExecutionLog != null && updateReportExecutionLogArgs.ReportExecutionLogRepository != null)
-            {
-                if (updateReportExecutionLogArgs.StatusCode != "D" && (updateReportExecutionLogArgs.Exception != null || !string.IsNullOrEmpty(updateReportExecutionLogArgs.ExceptionMessage)))
-                {
-                    var exceptionMessage = updateReportExecutionLogArgs.ExceptionMessage;
-
-                    if (updateReportExecutionLogArgs.Exception != null)
-                    {
-                        exceptionMessage = updateReportExecutionLogArgs.Exception.Message;
-                        if (updateReportExecutionLogArgs.Exception.InnerException != null)
-                        {
-                            exceptionMessage = exceptionMessage + Environment.NewLine + updateReportExecutionLogArgs.Exception.InnerException;
-                        }
-                        if (updateReportExecutionLogArgs.Exception.StackTrace != null)
-                        {
-                            exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + updateReportExecutionLogArgs.Exception.StackTrace;
-                        }
-                    }
-
-
-                    updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage = exceptionMessage;
-                }
-
-                if (!string.IsNullOrEmpty(updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage) && updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage.Length >= 4000)
-                {
-                    updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage = updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage.Substring(0, 3999);
-
-                }
-
-                updateReportExecutionLogArgs.ReportExecutionLog.StatusCode = updateReportExecutionLogArgs.StatusCode;
-                updateReportExecutionLogArgs.ReportExecutionLog.DoneDate = DateTime.Now;
-                updateReportExecutionLogArgs.ReportExecutionLogRepository.Update(updateReportExecutionLogArgs.ReportExecutionLog);
-                updateReportExecutionLogArgs.ReportExecutionLogRepository.SubmitChanges();
-            }
-        }
 
 
     }
 
-    public class UpdateReportExecutionLogArgs
-    {
-        public Exception Exception { get; set; }
-        public ReportExecutionLog ReportExecutionLog { get; set; }
-        public ReportExecutionLogRepository ReportExecutionLogRepository { get; set; }
-        public string StatusCode { get; set; }
-        public string ExceptionMessage { get; set; }
-        public DbQueueService queueservice { get; set; }
-        public bool IsInternalException { get; set; }
-        public QueueResponse response { get; set; }
-        
-
-    }
 }

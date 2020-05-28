@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simplog.Global.Data</RootNamespace>
     <AssemblyName>Simplog.Data.Global</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,6 +102,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\AutoSignupEmail.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BluesnapTransaction.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContractType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\WebhookKeys.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="GlobalModel\Mapping\AutoSignupEmailMap.cs" />
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BluesnapTransactionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\WebhookKeysMap.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="GlobalModel\Repositories\AutoSignupEmailRepository.cs" />
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BluesnapTransactionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\WebhookKeysRepository.cs" />
@@ -349,6 +353,10 @@
     <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.Designer.cs">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs" />
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.Designer.cs">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.cs" />
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
@@ -360,6 +368,74 @@
     <Compile Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.cs" />
     <Compile Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.Designer.cs">
       <DependentUpon>201907110451108_AddMainAdditionalPackageApplied.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907311629351_AddNewTenantManagementFields.cs" />
+    <Compile Include="Migrations\201907311629351_AddNewTenantManagementFields.Designer.cs">
+      <DependentUpon>201907311629351_AddNewTenantManagementFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs" />
+    <Compile Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.Designer.cs">
+      <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs" />
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.Designer.cs">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.cs" />
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.Designer.cs">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.cs" />
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.Designer.cs">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.Designer.cs">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.cs" />
+    <Compile Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.Designer.cs">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs" />
+    <Compile Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.Designer.cs">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.cs" />
+    <Compile Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.Designer.cs">
+      <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs" />
+    <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.Designer.cs">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.cs" />
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.Designer.cs">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301335202_missingGlobal.cs" />
+    <Compile Include="Migrations\202003301335202_missingGlobal.Designer.cs">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs" />
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.Designer.cs">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs" />
+    <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.Designer.cs">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.cs" />
+    <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.Designer.cs">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs" />
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.Designer.cs">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -479,6 +555,9 @@
     <EmbeddedResource Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.resx">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.resx">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </EmbeddedResource>
@@ -487,6 +566,57 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907110451108_AddMainAdditionalPackageApplied.resx">
       <DependentUpon>201907110451108_AddMainAdditionalPackageApplied.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311629351_AddNewTenantManagementFields.resx">
+      <DependentUpon>201907311629351_AddNewTenantManagementFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.resx">
+      <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.resx">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.resx">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.resx">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.resx">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912230848314_AddSupportDomainToTenantManagement_Samar.resx">
+      <DependentUpon>201912230848314_AddSupportDomainToTenantManagement_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.resx">
+      <DependentUpon>201912240715063_ModifyLengthOfSupportDomainFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002081630280_AddFieldsToTenantManagementTable_Maheera.resx">
+      <DependentUpon>202002081630280_AddFieldsToTenantManagementTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.resx">
+      <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.resx">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003260849424_missinnnnnnnng.resx">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301335202_missingGlobal.resx">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.resx">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.resx">
+      <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041403389_AddARInvoiceRegionalTax.resx">
+      <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.resx">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

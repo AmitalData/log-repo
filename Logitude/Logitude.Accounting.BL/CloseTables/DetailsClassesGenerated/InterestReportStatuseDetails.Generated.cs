@@ -1,0 +1,89 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class InterestReportStatuseDetails : InterestReportStatuse, ICloseTable<InterestReportStatuse, InterestReportStatuseDetails>
+   {
+       public List<InterestReportStatuseDetails> GetAll()
+       {
+		    var all = new List<InterestReportStatuseDetails>();  
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                LocalName = "טיוטה", 
+                EnglishName = "Draft", 
+                Code = "1", 
+                SearchFields = "1,Draft,טיוטה", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                LocalName = "בוטל", 
+                EnglishName = "Cancelled", 
+                Code = "3", 
+                SearchFields = "3,Cancelled,בוטל", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Closed without Invoice", 
+                LocalName = "נסגר ללא חשבונית", 
+                SearchFields = "4,Closed without Invoice,נסגר ללא חשבונית", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "2", 
+                LocalName = "הופקה חשבונית", 
+                EnglishName = "Invoiced", 
+                SearchFields = "2,Invoiced,הופקה חשבונית", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                EnglishName = "Failed", 
+                Code = "6", 
+                SearchFields = "6,Failed,נכשלה", 
+                LocalName = "נכשלה", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "5", 
+                LocalName = "בתהליך", 
+                SearchFields = "5,In Progress,בתהליך", 
+                EnglishName = "In Progress", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(InterestReportStatuse newPoco)
+        {   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(InterestReportStatuse rec)
+        {   
+           return String.Concat(rec.LocalName,",",rec.EnglishName,",",rec.Code,",");
+        }
+   }
+}
+

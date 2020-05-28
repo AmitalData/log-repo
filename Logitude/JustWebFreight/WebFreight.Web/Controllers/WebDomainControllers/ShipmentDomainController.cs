@@ -5,6 +5,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -44,6 +45,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -159,6 +161,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
                     bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
+                    bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -172,7 +175,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1214,6 +1217,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       BranchName = f.BranchName,
                                                       CustomerName = f.CustomerName,
                                                       GrossWeightInKG = f.GrossWeightInKG,
+                                                      GrossWeightPerStorageDays= f.GrossWeightPerStorageDays,
                                                       ShipmentLevelCode = f.ShipmentLevelCode,
                                                       ShipmentLevelName = f.ShipmentLevelName,
                                                       VolumetricWeight = f.VolumetricWeight,
@@ -1422,7 +1426,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ");
+                List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1662,7 +1666,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    
+
                     IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
@@ -1714,7 +1718,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                
+
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
 
@@ -1738,7 +1742,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 storageservice.Write(data, fileInfo);
 
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);                
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
 
             catch (Exception ex)
@@ -1816,12 +1820,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             sheet1.Range["A2:A80"].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
             sheet1.Range["A2:A80"].DataValidation.IsSuppressDropDownArrow = false;
-            
+
             DataTable dataTable2 = this.ConvertToDataTable(types);
 
             sheet1.ImportDataTable(dataTable1, true, 1, 1);
             sheet2.ImportDataTable(dataTable2, true, 1, 1);
-            
+
             workbook.SaveAs(memory);
 
             return memory.ToArray();
@@ -1830,7 +1834,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();
-            
+
             foreach (PropertyDescriptor prop in properties)
             {
                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
@@ -1863,9 +1867,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
-                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);  
+                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
                 IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
-               
+
                 bool myResult = false;
                 if (warehouseEntries.Count() > 0)
                 {
@@ -1881,7 +1885,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         myResult = true;
                     }
-                }                
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1910,7 +1914,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
                 IWorksheet sheet = workbook.Worksheets[0];
 
-                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);                
+                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, packagesResult);
             }
@@ -1930,7 +1934,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 String[] rowData = new String[sheet.Columns.Count()];
                 ExcelPackage excelPackage = new ExcelPackage();
-                
+
                 for (int i = 0; i < sheet.Columns.Count(); i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
@@ -2106,7 +2110,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 myResult.Add(excelPackage);
             }
-            
+
             return myResult;
         }
         private bool IsNumber(string text)
@@ -2123,6 +2127,376 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             return isNumber;
+        }
+
+        public HttpResponseMessage GetIfHouseConnectedToMaster(string houseId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
+                bool myResult = false;
+
+                if (houseShipment != null)
+                {
+                    if (!string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
+                    {
+                        myResult = true;
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetBlockForTransfer(string allIdsString, string entityCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                if (!string.IsNullOrEmpty(allIdsString))
+                {
+                    List<string> ids = allIdsString.Split('.').ToList();
+                    if (ids.Count > 0)
+                    {
+                        ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                        List<Shipment> shipments = this.GetFilteredShipments(ids, entityCode, tenant, shipmentRepository);
+                        this.BlockShipmentsForTransfer(shipments, shipmentRepository);
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private List<Shipment> GetFilteredShipments(List<string> ids, string entityCode, int tenant, ShipmentRepository shipmentRepository)
+        {
+            List<Shipment> shipments = new List<Shipment>();
+            shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
+
+            if (entityCode == "Air")
+            {
+                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
+            }
+
+            else if (entityCode == "Ocean")
+            {
+                shipments = shipments.Where(d => d.TransportModeId == "O").ToList();
+            }
+
+            return shipments;
+        }
+        private void BlockShipmentsForTransfer(List<Shipment> shipments, ShipmentRepository shipmentRepository)
+        {
+            foreach (Shipment item in shipments)
+            {
+                item.LocalCustomsTransmissionsStatusCode = "BLOK";
+                shipmentRepository.Update(item);
+            }
+
+            shipmentRepository.SubmitChanges();
+        }
+
+        public HttpResponseMessage GetSetAMANACStartDate(string entityCode, string myStartDateString)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+
+                        SecurityUtility.AuthenticationOnTenant(tenant);
+
+                        CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);
+                        CustomsInterfaceSetting customsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(tenant, tenant);
+
+                        if (myStartDateString == "null")
+                        {
+                            myStartDateString = null;
+                        }
+
+                        DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
+                        this.UpdateAMANACStartDates(customsInterfaceSetting, myStartDate, entityCode, customsInterfaceSettingRepository);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, true);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+        private void UpdateAMANACStartDates(CustomsInterfaceSetting customsInterfaceSetting, DateTime? startDate, string entityCode, CustomsInterfaceSettingRepository customsInterfaceSettingRepository)
+        {
+            switch (entityCode)
+            {
+                case "Air":
+                    {
+                        customsInterfaceSetting.AMCAirStartDate = startDate;
+                        break;
+                    }
+
+                case "Ocean":
+                    {
+                        customsInterfaceSetting.AMCOceanStartDate = startDate;
+                        break;
+                    }
+            }
+
+            customsInterfaceSettingRepository.Update(customsInterfaceSetting);
+            customsInterfaceSettingRepository.SubmitChanges();
+        }
+
+        public HttpResponseMessage GetOnStartDateEntitiesIds(string entityCode, string myStartDateString)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                List<string> myResult = new List<string>();
+
+                if (myStartDateString == "null")
+                {
+                    myStartDateString = null;
+                }
+
+                DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
+
+                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
+                {
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    IQueryable<Shipment> iQueryable_Data = shipmentRepository.GetShipments(tenant);
+                    iQueryable_Data = iQueryable_Data.Where(d => !d.IsOperationalClosed && !d.IsAccountingClosed && !d.IsCancelled);
+
+                    switch (entityCode)
+                    {
+                        case "Air":
+                            {
+                                iQueryable_Data = iQueryable_Data.Where(d => d.TransportModeId == "A");
+                                break;
+                            }
+
+                        case "Ocean":
+                            {
+                                iQueryable_Data = iQueryable_Data.Where(d => d.TransportModeId == "O");
+                                break;
+                            }
+                    }
+
+                    iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), iQueryable_Data, tenant);
+                    iQueryable_Data = iQueryable_Data.Where(d => d.LocalCustomsTransmissionsStatusCode == "NSEN");
+
+                    if (myStartDate != null)
+                    {
+                        myStartDate = myStartDate.Value.Date;
+                        iQueryable_Data = iQueryable_Data.Where(d => DbFunctions.TruncateTime(d.CreateDateTime) < myStartDate);
+                    }
+
+                    myResult = iQueryable_Data.Select(s => s.Id).ToList();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSendToAMANAC(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
+                ShipmentDataView shipment = shipmentRepository.GetSingleShipmentDataView(shipmentId, authToken.Tenant);
+
+                string fileName = "";
+                if (shipment != null)
+                {
+                    string transferType = shipment.TransportModeId == "O" ? "AMOS" : "AMAS"; 
+
+                    List<ShipmentDataView> shipments = new List<ShipmentDataView>();
+                    shipments.Add(shipment);
+
+                    fileName = "Shipment-" + shipment.ShipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(authToken.Tenant));
+                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, fileName, transferType, authToken.Tenant);
+                    customsTransferService.Transfer();
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetMarkShipmentAsBlocked(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
+                if (shipment != null)
+                {
+                    shipment.LocalCustomsTransmissionsStatusCode = "BLOK";
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetUnblockedShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
+                if (shipment != null)
+                {
+                    shipment.LocalCustomsTransmissionsStatusCode = "NSEN";
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetShipmentsTransferSummary()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentTransferSummary myResult = new ShipmentTransferSummary();
+
+                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
+                {
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    IQueryable<Shipment> shipments = shipmentRepository.GetShipments(tenant);
+
+                    shipments = shipments.Where(d => !d.IsCancelled && !d.IsAccountingClosed && !d.IsOperationalClosed && d.TransportModeId != "I");
+                    shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, tenant);
+
+                    myResult.BlockedOceanShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "O").Count();
+                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRebuildTransferFile(string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+
+                CustomsTransferHeaderRepository entityRepository = new CustomsTransferHeaderRepository(myContext);
+                CustomsTransferHeader entityPoco = entityRepository.GetSingleEntity(entityId, tenant);
+
+                if (entityPoco != null)
+                {
+                    List<string> shipmentsIdsList = (from a in myContext.CustomsTransferLines
+                                                     where a.Tenant == tenant
+                                                     && a.CustomsTransferHeaderId == entityId
+                                                     select a.ShipmentId).ToList();
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(myContext);
+                    List<ShipmentDataView> shipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIdsList, tenant);                    
+                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, entityPoco.FileName, entityPoco.CustomsTransferTypeCode, tenant);
+                    customsTransferService.Transfer();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
@@ -2143,14 +2517,12 @@ public class ExcelPackage
     public bool IsRefrigerated { get; set; }
     public bool HasErrors { get; set; }
 }
-
 public class ExcelPackageFilter
 {
     public int Tenant { get; set; }
     public string FileData{ get; set; }
     public string ShipmentId{ get; set; }
 }
-
 public class ExcelPackageType
 {
     public string Code { get; set; }
@@ -2168,4 +2540,10 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
+}
+
+public class ShipmentTransferSummary
+{
+    public int BlockedOceanShipmentsCount { get; set; }
+    public int BlockedAirShipmentsCount { get; set; }
 }

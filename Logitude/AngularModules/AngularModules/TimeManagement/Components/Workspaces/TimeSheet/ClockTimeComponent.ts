@@ -11,11 +11,16 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 
 @Component({
     selector: 'ClockTimeComponent',
-    moduleId: module.id,
+    
     templateUrl: './ClockTimeComponent.html',
 })
 
 export class ClockTimeComponent extends BaseComponent {
+  public LeftCenter: any;
+  public EntryTime: any;
+  public ExitTime: any;
+  public Description: any;
+
     public DataContext = this;
     public ItemSource: ItemSourceItem[];
     public ItemSourceCollection: ObservableCollection;
@@ -28,7 +33,7 @@ export class ClockTimeComponent extends BaseComponent {
         this.ItemSourceCollection = new ObservableCollection([]);
         this.myDomainService = new TimeOfficeHourDomainService();
 
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
 
         });
     }
@@ -65,7 +70,7 @@ export class ClockTimeComponent extends BaseComponent {
 
 
     AddNewClockHour() {
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Office Hour";
             var args: any = {};

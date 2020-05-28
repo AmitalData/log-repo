@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<SuppInvoiceItemsAbachStatement> iQueryable = (from a in context.SuppInvoiceItemsAbachStatements
+            IQueryable<SuppInvoiceItemsAbachStatement> iQueryable = (from a in context.SuppInvoiceItemsAbachStatement
                                               
                    where a.Tenant == tenant select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
@@ -132,7 +132,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public SuppInvoiceItemsAbachStatementList GetSingle(string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int? sequencenumeric)
         {
-            IQueryable<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatementQuery = (from a in context.SuppInvoiceItemsAbachStatements
+            IQueryable<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatementQuery = (from a in context.SuppInvoiceItemsAbachStatement
                                                        where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.SequenceNumeric == sequencenumeric
                                                        select a);
 
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<SuppInvoiceItemsAbachStatement> iQueryable = (from a in context.SuppInvoiceItemsAbachStatements 
+            IQueryable<SuppInvoiceItemsAbachStatement> iQueryable = (from a in context.SuppInvoiceItemsAbachStatement 
                    where a.Tenant == tenant select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);

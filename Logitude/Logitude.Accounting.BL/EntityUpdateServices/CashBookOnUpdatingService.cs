@@ -60,8 +60,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.UpdateDate = todayDateTime;
 
             string myLoggedUserId = GetLogContactId(entityPM);
-
-            entityPM.UpdatedByUserId = myLoggedUserId;
+            if (entityPM.UpdatedByUserId == null)
+            {
+                entityPM.UpdatedByUserId = myLoggedUserId;
+            }
 
 
             entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;

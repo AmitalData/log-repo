@@ -142,5 +142,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //scope.Complete();
             }
         }
+
+        internal void Update_InProgressExternalReconcile(List<string> listTransactionId, int tenant, bool Value_ExternalReconcileInProgress)
+        {
+            var ledgerTransactionQueryService = new LedgerTransactionQueryService(MainContext as IAccountingContext);
+            var pmList = ledgerTransactionQueryService.GetLedgerTransactionPMsByIdList(listTransactionId, tenant);
+
+            foreach (var item in pmList)
+            {
+                if (Value_ExternalReconcileInProgress == true)//while prepare check while streaming do not check !!
+                {
+                    if (item.InProgressExternalReconcile)
+                    {
+                        throw new Exception("Already InReconcileProgress");
+                    }
+                }
+                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
+            }
+            this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), true);
+        }
     }
 }

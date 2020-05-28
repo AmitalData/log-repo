@@ -1,5 +1,4 @@
 import { LoginComp } from '../../Login/Login.po';
-import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { ShipmentView } from './ShipmentView';
 
@@ -40,15 +39,5 @@ public DeleteNewView(){
 
 
 }
-
-public  DisplayView() {
-    this.ShipmentView.DisplayView();
-    
-}
-
-
-
-
-
 
 }

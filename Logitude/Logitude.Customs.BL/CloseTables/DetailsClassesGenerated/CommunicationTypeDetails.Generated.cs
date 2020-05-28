@@ -20,17 +20,71 @@ namespace Logitude.Customs.BL
    {
        public List<CommunicationTypeDetails> GetAll()
        {
-		    var all = new List<CommunicationTypeDetails>(); 
+		    var all = new List<CommunicationTypeDetails>();  
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1", 
+                Inactive = false, 
+                LocalName = "111", 
+                EnglishName = "11", 
+			});
+			 
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "AH", 
+                SearchFields = "AH,אתר אינטרנט", 
+                Inactive = false, 
+                LocalName = "אתר אינטרנט", 
+			});
+			 
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "AL", 
+                SearchFields = "AL,נייד", 
+                Inactive = false, 
+                LocalName = "נייד", 
+			});
+			 
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "EM", 
+                SearchFields = "EM,דואר אלקטרוני", 
+                Inactive = false, 
+                LocalName = "דואר אלקטרוני", 
+			});
+			 
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "FX", 
+                SearchFields = "FX,פקס", 
+                Inactive = false, 
+                LocalName = "פקס", 
+			});
+			 
+            all.Add(new CommunicationTypeDetails()
+            {    
+                Code = "TE", 
+                SearchFields = "TE,נייח", 
+                Inactive = false, 
+                LocalName = "נייח", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CommunicationType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(CommunicationType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

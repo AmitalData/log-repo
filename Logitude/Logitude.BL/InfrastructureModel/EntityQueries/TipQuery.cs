@@ -38,7 +38,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          Tenant = a.Tenant,
                                          VisibilityDefaultValue = a.VisibilityDefaultValue,
                                          ObjectTableId = a.ObjectTableId,
-                                         ShortTextCodeCode = a.TextCode.Code,
+                                         ShortTextCodeCode = a.ShortTextCodeCode,
                                      };
 
             return tips.ToList();
@@ -55,7 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              Tenant = a.Tenant,
                              VisibilityDefaultValue = a.VisibilityDefaultValue,
                              ObjectTableId = a.ObjectTableId,
-                             ShortTextCodeCode = a.TextCode.Code,
+                             ShortTextCodeCode = a.ShortTextCodeCode,
                          }).FirstOrDefault();
 
             return tip;

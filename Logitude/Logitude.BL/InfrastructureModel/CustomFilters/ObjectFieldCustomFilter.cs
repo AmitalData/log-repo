@@ -29,15 +29,21 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                     {
                         if (item.FieldValue != null)
                         {
-                            string myAirlineId = item.FieldValue.ToString();
                             queryableData = queryableData.Where(d => d.AllowedinAutomationConditions == true || d.IsCustom == true);
                         }
                     }
-
+                    if (item.FieldName == "RecordType")
+                    {
+                        if (item.FieldValue != null)
+                        {
+                            queryableData = queryableData = queryableData.Where(d => string.IsNullOrEmpty(d.RecordType) || d.DisplayInAutomationAsEnitity || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Contains(item.FieldValue.ToString())));
+                        }
+                    }
                 }
             }
 
             return queryableData;
         }
+
     }
 }

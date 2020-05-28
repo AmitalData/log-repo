@@ -55,6 +55,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private QuoteDocumentVersionRepository quoteDocumentVersionRepository;
         private ICommonDataContext myCommonContext;
         private AddressRepository addressRepository;
+        private QuoteSetting iQuoteSetting;
         private bool isAdhoc;
         private bool isLCLQuote;
         private bool isFCLQuote;
@@ -125,15 +126,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
-            if (!entityPM.IsCopy)
-            {
-                QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
-                QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
-                if (iQuoteSetting != null)
-                {
-                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
-                }
-            }
+            this.GetQuoteSettings();
 
             this.InitializeComponent();
 
@@ -169,6 +162,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", loggedContact.Id);
         }
+
+        private void ComputeProfit()
+        {
+            if(entityPM.EstimateProfit != null && entityPM.ExchangeRate != null)
+            {
+                entityPM.EstimatedProfitInLocal = MethodHelper.Round(entityPM.EstimateProfit * entityPM.ExchangeRate, 2);
+                entityPM.EstimatedProfitInProfit = MethodHelper.Round(entityPM.EstimatedProfitInLocal / entityPM.ProfitExchangeRate, 2);
+            }
+        }
+
         public void Update(QuotePM entityPM, bool mapComposition = false)
         {
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
@@ -210,11 +213,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
                 ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
 
-                if (!entityPM.DontExportQuotationsToIntegratedSystem)
+                if (entityPM.QuoteTypeCode != "P")
                 {
-                    SentQuoteStatusMessageToUnifreight(objecttable.Id);
-                }
+                    if (!entityPM.DontExportQuotationsToIntegratedSystem)
+                    {
+                        SentQuoteStatusMessageToUnifreight(objecttable.Id);
+                    }
 
+                    SendQuoteToIntegratedSystem(objecttable.Id);
+                }
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -257,6 +264,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 followUpRepository.SubmitChanges();
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
+            }
+        }
+
+        private void GetQuoteSettings()
+        {
+            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+            this.iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+
+            if (iQuoteSetting != null)
+            {
+                if (!entityPM.IsCopy)
+                {
+                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;                    
+                }
             }
         }
 
@@ -368,6 +389,58 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
         }
 
+
+        private void SendQuoteToIntegratedSystem(string objectTableId)
+        {
+            if (IsSendQuoteToIntegratedSystem())
+            {
+                Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService quoteQueryService = new Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService(entityPM.Tenant);
+                Logitude.BL.QuoteModel.APIDataContract.ApiV1.Quote quote = quoteQueryService.GetQuoteById(entityPM.Id, entityPM.Tenant);
+                string xmlstring = "";
+                if (quote != null)
+                {
+                    xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quote);
+                }
+                CommunicationsParams tasklogParams = GetCommunicationsParams(objectTableId);
+                List<QueueTask> queue2Tasks = new List<QueueTask>();
+                queue2Tasks.Add(new QueueTask(){Action = "ExportQuotationsToIntegratedSystem",Parameters = new List<Parameter>() { new Parameter { Name = "QuoteMetaData", Order = 1, Value = xmlstring }, }});
+                tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
+                Communications.AddCommunicationLog(tasklogParams);
+            }
+        }
+
+
+        private bool IsSendQuoteToIntegratedSystem()
+        {
+            bool isSendQuote = false;
+            QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
+            QuoteStage quoteStageSend = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTST").FirstOrDefault();
+            if (quoteStageSend != null && quoteStageSend.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageSend.Id)
+            {
+                TenantQuery tenantQuery = new TenantQuery(tenant);
+                TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+                if (tenantPM.ExportQuotationsToIntegratedSystem) isSendQuote = true;
+            }
+            return isSendQuote;
+        }
+        private CommunicationsParams GetCommunicationsParams(string objectTableId)
+        {
+            return new CommunicationsParams()
+            {
+                Tenant = entityPM.Tenant,
+                CommunicationLogTypeCode = "Q",
+                QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                LoggingUserId = entityPM.UpdatedByUserId,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = entityPM.Id,
+                Subject = "Quotation Document",
+                FolderName = "ExternalTasksQueue",
+            };
+        }
+
         public void GetForeignFields(QuotePM quotepm, Quote quote)
         {
             quotepm.LastModified = quote.LastModified;
@@ -430,9 +503,19 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.QuoteNumber = TableCounter.GetNumber(tenant, "QUOT", entityPM.DirectionId, entityPM.TransportModeId);
                 }
 
+                if (entityPM.IsCreatedFromTicket)
+                {
+                    entityPM.RequestDate = entityPM.TicketCreateDate;
+                }
+                else
+                {
+                    entityPM.RequestDate = entityPM.OpenDate;
+                }
+
                 this.InitializeStage();
                 this.InitializeSaleCurrency();
                 this.InitializeSalesman();
+                this.InitializeProfitCurrency();
 
                 if (!entityPM.IsHybrid)
                 {
@@ -470,6 +553,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             InitializePickupDelivery();
             SetCustomerDateFields(entityPM, entityPoco);
             ComputeChargesSaleFieldsInSaleCurrency();
+            ComputeCountryForStatisticsId();
 
             if (!entityPM.IsHybrid)
             {
@@ -493,11 +577,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.PackageType5Id = null;
                 entityPM.PackageType5Quantity = null;
                 entityPM.TEU = null;
-                entityPM.NumberOfPackages = null;
+                entityPM.NumberOfContainers = null;
                 entityPM.GrossWeight = null;
                 entityPM.ChargeableWeight = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.Volume = null;
+                entityPM.EstimateProfit = null;
+                entityPM.EstimatedProfitInLocal = null;
+                entityPM.EstimatedProfitInProfit = null;
+                entityPM.EstimateProfitInSaleCurrency = null;
 
                 foreach (QuotePackagePM pm in entityPM.QuotePackages)
                 {
@@ -511,8 +599,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.QuotePackages.Clear();
                 entityPM.QuoteCharges.Clear();
-
-
+                
                 if (entityPM.ConvertToFCL)
                 {
                     this.isLCLQuote = false;
@@ -528,6 +615,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 this.GenerateDefaultCharges();
             }
 
+            this.ComputeExpectedProfit();
+            this.ComputeProfit();
         }
 
         private bool isEnableMultiPercentageVATTypes;
@@ -625,6 +714,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.NotifyContactId = null;
                 entityPM.NotifyAddressId = null;
                 entityPM.NotifyNote = null;
+            }
+
+            if (string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                entityPM.CustomerName = null;
+                entityPM.CustomerContactId = null;
+                entityPM.CustomerReference1 = null;
+                entityPM.CustomerReference2 = null;
+                entityPM.CustomerNote = null;
             }
 
             if (string.IsNullOrEmpty(entityPM.QuoteCustomerTypeCode))
@@ -748,27 +846,65 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.SaleCurrencyId = loggedTenant.QuoteSaleCurrencyId;
                 }
 
-                if (string.IsNullOrEmpty(entityPM.SaleCurrencyId))
+                if (!this.entityPM.IsCopyExchangeRates)
                 {
-                    entityPM.ExchangeRate = null;
-                }
-
-                else if (entityPM.SaleCurrencyId == loggedTenant.CurrencyId)
-                {
-                    entityPM.ExchangeRate = 1;
-                }
-
-                else
-                {
-                    RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                    LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.SaleCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                    if (lastRate != null)
+                    if (string.IsNullOrEmpty(entityPM.SaleCurrencyId))
                     {
-                        entityPM.ExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        entityPM.ExchangeRate = null;
+                    }
+
+                    else if (entityPM.SaleCurrencyId == loggedTenant.CurrencyId)
+                    {
+                        entityPM.ExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.SaleCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        if (lastRate != null)
+                        {
+                            entityPM.ExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        }
                     }
                 }
             }
         }
+
+        private void InitializeProfitCurrency()
+        {
+            if (isNewEntity)
+            {
+                if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                {
+                    entityPM.ProfitCurrencyId = loggedTenant.ProfitCurrencyId;
+                }
+
+                if (!this.entityPM.IsCopyExchangeRates)
+                {
+                    if (string.IsNullOrEmpty(entityPM.ProfitCurrencyId))
+                    {
+                        entityPM.ProfitExchangeRate = null;
+                    }
+
+                    else if (entityPM.ProfitCurrencyId == loggedTenant.CurrencyId)
+                    {
+                        entityPM.ProfitExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.ProfitCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        if (lastRate != null)
+                        {
+                            entityPM.ProfitExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        }
+                    }
+                }
+            }
+        }
+
         private void InitializeInlandDomestic()
         {
             if (isInlandDomestic)
@@ -1334,7 +1470,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             byte[] pdfData = new byte[] { };
             if (itemPM.VersionType == "G")
             {
-                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(itemPM.QuoteId, itemPM.QuoteTemplateId, itemPM.CreatedByUserId, itemPM.Tenant, null);
+                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(itemPM.QuoteId, itemPM.QuoteTemplateId, itemPM.CreatedByUserId, itemPM.Tenant, null, null, itemPM.VersionNumber);
             }
 
             DocumentRepository documentRep = new DocumentRepository(myCommonContext);
@@ -1354,13 +1490,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             itemPM.DocumentId = document.Id;
 
-            //string localPath = "quotetemplatesectionfiles/" + document.Id + "." + document.Extension;
-            //var blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-            //var blobfile = blobContainer.GetBlockBlobReference(localPath);
-            //using (Stream blobstream = blobfile.OpenWrite())
-            //{
-            //    blobstream.Write(pdfData, 0, (int)pdfData.Length);
-            //}
 
             Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
             {
@@ -1373,10 +1502,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
             storageservice.Write(pdfData, fileInfo);
 
-            //QuoteRepository quoteRep = new QuoteRepository(objectContext);
-            //Quote quote = quoteRep.GetSingleQuote(itemPM.QuoteId, itemPM.Tenant);
-            //quote.LastVersionNumber = itemPM.VersionNumber;
-            //quote.QuoteTemplateId = itemPM.QuoteTemplateId;
+
 
             this.entityPM.LastVersionNumber = itemPM.VersionNumber;
             this.entityPM.QuoteTemplateId = itemPM.QuoteTemplateId;
@@ -1409,8 +1535,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     newDocumentFiling.HasCopies = true;
                     newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
-
+                    newDocumentFiling.DocumentId = document.Id;
+                    newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
                     documentsFilingRepository.Add(newDocumentFiling);
+
 
                     documentout = new DocumentOut()
                     {
@@ -1486,6 +1614,19 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         };
 
                         documentOutCopyRepository.Add(docoutCopy);
+                    }
+
+
+                    DocumentsFiling documentsFiling = (from a in myCommonContext.DocumentsFilings
+                                                      where a.Id == documentout.Id && a.Tenant == tenant
+                                                      select a).FirstOrDefault();
+                    if (documentsFiling != null)
+                    {
+                        if (documentsFiling.DocumentId != document.Id)
+                        {
+                            documentsFiling.DocumentId = document.Id;
+                            documentsFilingRepository.Update(documentsFiling);
+                        }
                     }
                 }
 
@@ -1637,7 +1778,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatTypePercentage = item.VatPercentage,
                                         QuoteCurrencyAmount = item.SaleTotalAmount,
                                         LocalCurrencyAmount = item.SaleTotalAmountLocal,
-                                        ExternalVATCard = lineVatType.ExternalVATCard,
+                                        ExternalVATCard = lineVatType.ReceivablesExternalId,
                                         ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                     };
 
@@ -1660,7 +1801,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                         if (vatType != null)
                                         {
-                                            newItem.ExternalVATCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVATCard = vatType.ReceivablesExternalId;
                                             newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                         }
 
@@ -1747,6 +1888,103 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 entityPM.NumberOfFollowUps = null;
             }
+        }
+
+        private void ComputeCountryForStatisticsId()
+        {
+            string fromPortId = entityPM.FromPortId;
+            string toPortId = entityPM.ToPortId;
+
+            //Import
+            if (entityPM.DirectionId == "I")
+            {
+                PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, fromPortId, true);
+                if (port != null)
+                {
+                    entityPM.CountryForStatisticsId = port.CountryId;
+                }
+            }
+
+            //Export
+            else if (entityPM.DirectionId == "E")
+            {
+                bool assigned = false;
+                if (entityPM.IncludeDelivery)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.ToAddressCountryId))
+                    {
+                        entityPM.CountryForStatisticsId = entityPM.ToAddressCountryId;
+                        assigned = true;
+                    }
+                }
+
+                if (!assigned)
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                    if (port != null)
+                    {
+                        entityPM.CountryForStatisticsId = port.CountryId;
+                    }
+                }
+            }
+
+            //Domestic
+            else if (entityPM.DirectionId == "D")
+            {
+                if (entityPM.TransportModeId == "I")
+                {
+                    if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
+                    {
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        Address toAddress = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, entityPM.Tenant);
+                        if (toAddress != null)
+                        {
+                            entityPM.CountryForStatisticsId = toAddress.CountryId;
+                        }
+                    }
+                }
+
+                else
+                {
+                    PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                    if (port != null)
+                    {
+                        entityPM.CountryForStatisticsId = port.CountryId;
+                    }
+                }
+            }
+
+            //Drop
+            else if (entityPM.DirectionId == "R")
+            {
+                PortPM port = PortQuery.GetSinglePort(entityPM.Tenant, toPortId, true);
+                if (port != null)
+                {
+                    entityPM.CountryForStatisticsId = port.CountryId;
+                }
+            }
+        }
+
+        private void ComputeExpectedProfit()
+        {
+            //if (entityPM.EstimateProfit != null)
+            //{
+            //    double? myProfitAmount = 0;
+
+            //    double? myCostAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.CostTotalAmountLocal != null).Sum(s => s.CostTotalAmountLocal), 2);
+            //    double? mySaleAmountLocal = MethodHelper.Round(entityPM.QuoteCharges.Where(d => d.IsAllIN == false && d.SaleTotalAmountLocal != null).Sum(s => s.SaleTotalAmountLocal), 2);
+            //    double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
+
+            //    if (entityPM.ExchangeRate != null && entityPM.ExchangeRate != 0)
+            //    {
+            //        myProfitAmount = MethodHelper.Round(mySaleProfitLocal / entityPM.ExchangeRate, 2);
+            //    }
+
+            //    if (entityPM.EstimateProfit != myProfitAmount)
+            //    {
+            //        throw new Exception("Wrong Estimate Profit");
+            //    }
+            //}
         }
     }
     public class QuoteTotalsClass

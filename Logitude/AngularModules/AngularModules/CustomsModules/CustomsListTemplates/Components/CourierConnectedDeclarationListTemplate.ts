@@ -9,7 +9,7 @@ import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsReques
 import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierConnectedDeclarationListTemplate.html',
 })
 

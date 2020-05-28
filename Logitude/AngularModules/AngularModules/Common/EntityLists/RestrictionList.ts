@@ -13,5 +13,6 @@ export class RestrictionList {
 		ObjectFieldId: string;
 		Value: string;
 		ContactTenantId: string;
+		ObjectFieldCode: string;
 	
 }

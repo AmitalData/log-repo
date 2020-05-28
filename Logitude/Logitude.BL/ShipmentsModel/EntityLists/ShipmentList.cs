@@ -58,6 +58,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string AgentComputed { get; set; }
+        public string AgentComputedName { get; set; }
+
         public string CustomFieldId { get; set; }
         public string FromPortId { get; set; }
         public string FromPort { get; set; }
@@ -184,6 +186,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public double? GrossWeightInKG { get; set; }
         public double? VolumetricWeight { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
 
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
@@ -495,6 +498,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
 
+        public string INTTRABookingError { get; set; }
+        public string INTTRALastBookingResponse { get; set; }
+       
+
         public string Notify1Reference { get; set; }
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }
@@ -518,6 +525,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ImporterDepositionRequestDetails { get; set; }
         public string ForwarderPartnerId { get; set; }
         public string ARInvoices { get; set; }
+        public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public string SLAC { get; set; }
+        public bool CreatedFromDigital { get; set; }
 
     }
 }

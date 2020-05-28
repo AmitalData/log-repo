@@ -1,54 +1,55 @@
 export class GLAccountSummary {
     Id : number;
-    ActiveGLAccountCount : number;
-    InactiveGLAccountCount : number;
-    AllGLAccountCount : number;
-    OpenFilesCount : number;
-    ClosedFilesGLAccountCount : number;
-    AllFilesCount : number;
-    AllJobsCount : number;
-
+    ActiveGLAccountCount : any;
+    InactiveGLAccountCount : any;
+    AllGLAccountCount : any;
+    OpenFilesCount: any;
+    OpenMastersCount: any;
+    ClosedFilesGLAccountCount : any;
+    AllFilesCount : any;
+    AllJobsCount : any;
+    
     // Customers
-    ActiveCustomersCount : number;
-    InactiveCustomersCount : number;
-    CollectorsCount : number;
-    DebitorsCount: number;
-    AllCustomersCount: number;
+    ActiveCustomersCount : any;
+    InactiveCustomersCount : any;
+    CollectorsCount : any;
+    DebitorsCount: any;
+    AllCustomersCount: any;
 
     // Vendors
-    ActiveVendorsCount : number;
-    InactiveVendorsCount : number;
+    ActiveVendorsCount : any;
+    InactiveVendorsCount : any;
     //CollectorsCount : number;
     //DebitorsCount : number;
-    AllVendorsCount: number;
+    AllVendorsCount: any;
 }
 
 export class JournalSummary {
     Id : number;
-    AllJournalsCount : number;
-    ApprovedJournalsCount : number;
-    WaitingJournalsCount : number;
-    VoidedJournalsCount : number;
-    DraftJournalsCount : number;
+    AllJournalsCount : any;
+    ApprovedJournalsCount : any;
+    WaitingJournalsCount : any;
+    VoidedJournalsCount : any;
+    DraftJournalsCount : any;
 }
 
 export class BankAccountSummary {
     Id: number;
-    AllBankAccountsCount: number;
+    AllBankAccountsCount: any;
 }
 export class PaymentChequeSummary {
     Id: number;
-    AllPaymenChequesCount: number;
+    AllPaymentChequesCount: any;
 }
 export class BankDepositSummary {
     Id: number;
-    TodaysDepositCount: number;
+    TodaysDepositCount: any;
 
 }
 
 export class CashBookSummary {
     Id: number;
-    CashCashbookCount: number;
-    ChequeCashbookCount: number;
-    AllCashbookCount: number;
+    CashCashbookCount: any;
+    ChequeCashbookCount: any;
+    AllCashbookCount: any;
 }

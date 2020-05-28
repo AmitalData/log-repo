@@ -403,13 +403,37 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(Tenant);
+            string whereIn = "";
+            int i = 0;
+           if(!string.IsNullOrEmpty(declarations) &&  declarations.Split(',').Count()>990)
+            {
+                foreach (var item in declarations.Split(','))
+                {
+                    if(i<990)
+                    {
+                        whereIn += item + ',';
+                        i++;
+                    }
+                    else
+                    {
+                        whereIn = whereIn.TrimEnd(',');
+                        whereIn += ") OR  ID IN (" + item + ',';
+                        i = 0;
+                    }
+                }
+                whereIn = whereIn.TrimEnd(',');
+           //     whereIn += ")";
+
+
+            }
+
             if (dbms == "oracle")
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
                     string cmd = "Update DECLARATIONS set " +
                         "ISCLOSE= 0  , ISCANCELLED =0 ";
-                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+                    cmd = cmd + " where ID IN " + "(" + whereIn + ")";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
 

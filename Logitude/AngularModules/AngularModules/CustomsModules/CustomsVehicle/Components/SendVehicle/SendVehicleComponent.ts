@@ -17,8 +17,8 @@ import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { VehicleExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/VehicleExtendedPMService';
 
 @Component({
-    moduleId: module.id,
-    selector: 'SendVehicleComponent',
+    
+    selector: 'SendVehicleComponent', 
     templateUrl: "SendVehicleComponent.html",
 })
 
@@ -177,7 +177,7 @@ export class SendVehicleComponent {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
 
     OnAddEditWindowClosed(event) {

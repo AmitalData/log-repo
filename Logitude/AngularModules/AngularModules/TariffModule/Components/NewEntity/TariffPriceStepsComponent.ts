@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffPriceStepsComponent.html',
 })
 
@@ -37,13 +37,14 @@ export class TariffPriceStepsComponent extends BaseComponent {
 
     BuildItemsSource() {
         var Steps: string[] = [];
-        if (this.DefaultPriceSteps) {
+        if (this.DefaultPriceSteps != null) {
             Steps = this.DefaultPriceSteps.split(',');
         }
 
         var index: number = 0;
         Steps.forEach(item => {
             this.ItemsSource.push(new TariffSettingStep(item, index, this));
+            this.BuildDefaultPriceSteps();
             index++;
         });
 
@@ -63,7 +64,6 @@ export class TariffPriceStepsComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(iDefaultPriceSteps)) {
                 iDefaultPriceSteps = "" + item.Step;
             }
-
             else {
                 iDefaultPriceSteps += "," + item.Step;
             }
@@ -73,7 +73,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -87,13 +87,13 @@ export class TariffPriceStepsComponent extends BaseComponent {
         var isValidSort: boolean = true;
         var SortedItemStep: number = 0;
 
-        this.ItemsSource.filter(f => f.Step != null).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+        this.ItemsSource.filter(f => !AppTool.IsNullOrEmpty(f.Step)).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
             if (SortedItemStep == 0) {
                 SortedItemStep = item.Step;
             }
 
             else {
-                if (item.Step <= SortedItemStep) {
+                if (Number(item.Step) <= Number(SortedItemStep)) {
                     isValidSort = false;
                 }
 
@@ -110,7 +110,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
         this.ValidationErrorsList = this.ValidationErrorsList.concat(errors);
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindowEmit(this.DefaultPriceSteps);
         }
     }
 }
@@ -124,7 +124,7 @@ class TariffSettingStep extends BaseComponent {
         this.Index = index;
 
         if (iStep) {
-            this.step = +iStep;
+            this.Step = +iStep;
         }
     }
 

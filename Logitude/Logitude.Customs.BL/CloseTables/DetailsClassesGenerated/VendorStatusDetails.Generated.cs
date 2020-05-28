@@ -20,17 +20,53 @@ namespace Logitude.Customs.BL
    {
        public List<VendorStatusDetails> GetAll()
        {
-		    var all = new List<VendorStatusDetails>(); 
+		    var all = new List<VendorStatusDetails>();  
+            all.Add(new VendorStatusDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,פעיל", 
+                Inactive = false, 
+                LocalName = "פעיל", 
+			});
+			 
+            all.Add(new VendorStatusDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,לא פעיל", 
+                Inactive = false, 
+                LocalName = "לא פעיל", 
+			});
+			 
+            all.Add(new VendorStatusDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,מבוטל", 
+                Inactive = false, 
+                LocalName = "מבוטל", 
+			});
+			 
+            all.Add(new VendorStatusDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,הוחלף באחר", 
+                Inactive = false, 
+                LocalName = "הוחלף באחר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(VendorStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(VendorStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

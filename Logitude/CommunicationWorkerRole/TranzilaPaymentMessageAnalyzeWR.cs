@@ -67,6 +67,11 @@ namespace CommunicationWorkerRole
                             if (MsgBody.Contains("Response=000"))
                             {
                                 AnalyzeMessage(analyzeQueue);
+                                string ShipmentNumber = GetRelatedShipmentNumber(analyzeQueue);
+                                if (!string.IsNullOrEmpty(ShipmentNumber))
+                                {
+                                    UpdateShipmentAdditionalData(ShipmentNumber, analyzeQueue.Tenant);
+                                }
                                 analyzeQueue.Status = "D";
                             }
                             else
@@ -79,7 +84,7 @@ namespace CommunicationWorkerRole
 
                         else
                         {
-                            Thread.Sleep(500);
+                            Thread.Sleep(3000);
                         }
                     }
 
@@ -95,6 +100,40 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private string GetRelatedShipmentNumber(AnalyzeQueue analyzeQueue)
+        {
+            string msgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+            var MessageParameters = msgBody.Split('&');
+            var DCdisableParam = MessageParameters.Where(a => a.Contains("DCdisable")).FirstOrDefault();
+            if (DCdisableParam != null)
+            {
+                return DCdisableParam.Split('=')[1];
+                
+            }
+            return null;
+        }
+
+        private void UpdateShipmentAdditionalData(string shipmentNumber, int tenant)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(shipmentRepository.context);
+            string CurrentShipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
+            if (!string.IsNullOrEmpty(CurrentShipmentId))
+            {
+                ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(CurrentShipmentId, tenant);
+                if (shipmentAdditionalCloudData != null)
+                {
+                    shipmentAdditionalCloudData.IsPaymentRequired = false;
+                    shipmentAdditionalCloudData.PaymentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
+                    shipmentAdditionalCloudDataRepository.SubmitChanges();
+
+                }
+
+            }
+
         }
 
         private void AnalyzeMessage(AnalyzeQueue analyzeQueue)

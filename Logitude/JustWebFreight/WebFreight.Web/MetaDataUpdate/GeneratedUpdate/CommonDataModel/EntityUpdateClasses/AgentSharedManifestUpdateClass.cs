@@ -68,10 +68,15 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AgentSharedManifestUpdateClass
-   {  
+   {  		
+		public const string HashString = "d8fb36249d5f7ed003a429edf29ca9dd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -79,66 +84,132 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "AgentSharedManifest",
+			      				    IsNew =  false,
 			      				    DBTableName =  "AgentSharedManifests",
 			      				    ObjectTableSingular =  "Agent Shared Manifest",
 			      				    ObjectTablePlural =  "Agent Shared Manifests",
-			      				    DefaultText =  "Agent Shared Manifest",
-			      				    Name =  "Agent Shared Manifests",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
+			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "AgentSharedManifest,AgentSharedManifests,,Id,CreateDate",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Agent Shared Manifest",
+			      				    Code =  "CASM",
+			      				    Name =  "Agent Shared Manifests",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsEditable =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Common",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
-			      				    Code =  "ASMN",
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "AgentSharedManifest,AgentSharedManifests,,Id,CreateDate",
+			      				    HashString =  AgentSharedManifestUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "AgentSharedManifest",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AgentSharedManifest",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "SearchFields",
+					  						FullLocalDefaultText =  "SearchFields",
+					  						ListFieldLable =  "SearchFieldsListLable",
+					  						ListLableDefaultText =  "SearchFields",
+					  						ListLocalDefaultText =  "SearchFields",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Master",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Master",
-					  						MaxLength =  20,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -149,14 +220,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Master",
 					  						ListPropertyPath =  "Master",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -164,26 +233,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Master",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Master",
+					  						DefaultText =  "Master",
+					  						ListFieldLable =  "MasterListLable",
+					  						ListLableDefaultText =  "Master",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "Master",
-					  						DefaultText =  @"Master",
-					  						ListFieldLable =  "MasterListLable",
-					  						ListLableDefaultText =  @"Master",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Master",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -192,11 +268,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "AgentReference",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "AgentReference",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -207,14 +284,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AgentReference",
 					  						ListPropertyPath =  "AgentReference",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -222,26 +297,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AgentReference",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AgentReference",
+					  						DefaultText =  "Agent Ref.",
+					  						ListFieldLable =  "AgentReferenceListLable",
+					  						ListLableDefaultText =  "Agent Ref.",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "AgentReference",
-					  						DefaultText =  @"Agent Ref.",
-					  						ListFieldLable =  "AgentReferenceListLable",
-					  						ListLableDefaultText =  @"Agent Ref.",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "AgentReference",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -250,29 +332,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "DateTime",
-					  						Code =  "CreateDate",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "CreateDate",
 					  						ListPropertyPath =  "CreateDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -280,27 +362,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "CreateDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "CreateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -309,29 +397,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "UpdateDate",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "DateTime",
-					  						Code =  "UpdateDate",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "UpdateDate",
 					  						ListPropertyPath =  "UpdateDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -339,27 +427,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdateDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "UpdateDate",
+					  						DefaultText =  "Update Date",
+					  						ListFieldLable =  "UpdateDateListLable",
+					  						ListLableDefaultText =  "Update Date",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
-					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  @"Update Date",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdateDate",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -367,13 +461,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "AgentSharedManifest",
-					  						FieldsDataType =  "DateTime",
-					  						LookUpTableName =  "User",
-					  						Code =  "UpdatedByUserId",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -384,14 +478,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "UpdatedByUserId",
 					  						ListPropertyPath =  "UpdatedByUserId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -399,24 +491,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UpdatedByUserId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "UpdatedByUserId",
+					  						DefaultText =  "Updated By",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
-					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "UpdatedByUserId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -425,11 +524,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "DirectionId",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "DirectionId",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -440,14 +540,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "DirectionId",
 					  						ListPropertyPath =  "DirectionId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -455,28 +553,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "DirectionId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
+					  						ColumnHeaderTemplateName =  "DirectionHeaderTemplate",
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "DirectionId",
+					  						DefaultText =  "Direction",
+					  						ListFieldLable =  "DirectionIdListLable",
+					  						ListLableDefaultText =  "Direction",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  true,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						ColumnHeaderTemplateName =  "DirectionHeaderTemplate",
-					  						HasTemplate =  true,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HtmlListComponentName =  "DirectionCellDisplayListTemplate",
-					  						IsRequired =  false,
-					  						FullFieldLable =  "DirectionId",
-					  						DefaultText =  @"Direction",
-					  						ListFieldLable =  "DirectionIdListLable",
-					  						ListLableDefaultText =  @"Direction",
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "DirectionId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -485,11 +590,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "TransportModeId",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -500,14 +606,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TransportModeId",
 					  						ListPropertyPath =  "TransportModeId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -515,27 +619,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "TransportModeId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
+					  						ColumnHeaderTemplateName =  "TransportModeHeaderTemplate",
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "TransportModeId",
+					  						DefaultText =  "Transport Mode",
+					  						ListFieldLable =  "TransportModeIdListLable",
+					  						ListLableDefaultText =  "Transport Mode",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  true,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						ColumnHeaderTemplateName =  "TransportModeHeaderTemplate",
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "TransportModeId",
-					  						DefaultText =  @"Transport Mode",
-					  						ListFieldLable =  "TransportModeIdListLable",
-					  						ListLableDefaultText =  @"Transport Mode",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "TransportModeId",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -544,11 +655,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "PackagesQuantity",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Integer",
-					  						Code =  "PackagesQuantity",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
@@ -559,14 +671,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "PackagesQuantity",
 					  						ListPropertyPath =  "PackagesQuantity",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -574,26 +684,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "PackagesQuantity",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "PackagesQuantity",
+					  						DefaultText =  "QTY",
+					  						ListFieldLable =  "PackagesQuantityListLable",
+					  						ListLableDefaultText =  "QTY",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "PackagesQuantity",
-					  						DefaultText =  @"QTY",
-					  						ListFieldLable =  "PackagesQuantityListLable",
-					  						ListLableDefaultText =  @"QTY",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "PackagesQuantity",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -602,11 +719,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "StatusName",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "StatusName",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -617,14 +735,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "StatusName",
 					  						ListPropertyPath =  "StatusName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -632,26 +748,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "StatusName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "StatusName",
+					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusNameListLable",
+					  						ListLableDefaultText =  "Status",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  @"Status",
-					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  @"Status",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "StatusName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -660,30 +783,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ShipmentlevelCode",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						LookUpTableName =  "AgentSharedManifest",
-					  						Code =  "ShipmentlevelCode",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ShipmentlevelCode",
 					  						ListPropertyPath =  "ShipmentlevelCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -691,26 +812,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipmentlevelCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ShipmentlevelCode",
+					  						DefaultText =  "Shipment level",
+					  						ListFieldLable =  "ShipmentlevelCodeListLable",
+					  						ListLableDefaultText =  "Shipment level",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "ShipmentlevelCode",
-					  						DefaultText =  @"Shipment level",
-					  						ListFieldLable =  "ShipmentlevelCodeListLable",
-					  						ListLableDefaultText =  @"Shipment level",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ShipmentlevelCode",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -719,11 +847,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "AgentName",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "AgentName",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -734,14 +863,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AgentName",
 					  						ListPropertyPath =  "AgentName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -749,26 +876,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AgentName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AgentName",
+					  						DefaultText =  "Agent",
+					  						ListFieldLable =  "AgentNameListLable",
+					  						ListLableDefaultText =  "Agent",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "AgentName",
-					  						DefaultText =  @"Agent",
-					  						ListFieldLable =  "AgentNameListLable",
-					  						ListLableDefaultText =  @"Agent",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "AgentName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -777,12 +911,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Routing",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						LookUpTableName =  "AgentSharedManifest",
-					  						Code =  "Routing",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -793,14 +927,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Routing",
 					  						ListPropertyPath =  "Routing",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -808,26 +940,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Routing",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Routing",
+					  						DefaultText =  "Routing",
+					  						ListFieldLable =  "RoutingListLable",
+					  						ListLableDefaultText =  "Routing",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "Routing",
-					  						DefaultText =  @"Routing",
-					  						ListFieldLable =  "RoutingListLable",
-					  						ListLableDefaultText =  @"Routing",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Routing",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -836,11 +975,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "StatusCode",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "StatusCode",
-					  						MaxLength =  20,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -851,14 +991,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "StatusCode",
 					  						ListPropertyPath =  "StatusCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -866,26 +1004,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "StatusCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "StatusCode",
+					  						DefaultText =  "Status Code",
+					  						ListFieldLable =  "StatusCodeListLable",
+					  						ListLableDefaultText =  "Status Code",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  @"Status Code",
-					  						ListFieldLable =  "StatusCodeListLable",
-					  						ListLableDefaultText =  @"Status Code",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "StatusCode",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -893,12 +1038,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "GrossWeight",
 					  						ObjectTableName =  "AgentSharedManifest",
-					  						FieldsDataType =  "Decimal",
-					  						Code =  "GrossWeight",
-					  						MaxLength =  10,
-					  						IsCustom =  false,
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
@@ -909,14 +1055,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "GrossWeight",
 					  						ListPropertyPath =  "GrossWeight",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -924,26 +1068,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "GrossWeight",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "GrossWeight",
+					  						DefaultText =  "Gross Weight",
+					  						ListFieldLable =  "GrossWeightListLable",
+					  						ListLableDefaultText =  "Gross Weight",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "GrossWeight",
-					  						DefaultText =  @"Gross Weight",
-					  						ListFieldLable =  "GrossWeightListLable",
-					  						ListLableDefaultText =  @"Gross Weight",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "GrossWeight",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -952,11 +1103,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "TEU",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Double",
-					  						Code =  "TEU",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -967,14 +1119,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TEU",
 					  						ListPropertyPath =  "TEU",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -982,26 +1132,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "TEU",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "TEU",
+					  						DefaultText =  "TEU",
+					  						ListFieldLable =  "TEUListLable",
+					  						ListLableDefaultText =  "TEU",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "TEU",
-					  						DefaultText =  @"TEU",
-					  						ListFieldLable =  "TEUListLable",
-					  						ListLableDefaultText =  @"TEU",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "TEU",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1010,11 +1167,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ShipmentLevelName",
 					  						ObjectTableName =  "AgentSharedManifest",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ShipmentLevelName",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1025,14 +1183,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ShipmentLevelName",
 					  						ListPropertyPath =  "ShipmentLevelName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -1040,244 +1196,279 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "AgentSharedManifest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ShipmentLevelName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ShipmentLevelName",
+					  						DefaultText =  "Type",
+					  						ListFieldLable =  "ShipmentLevelNameListLable",
+					  						ListLableDefaultText =  "Type",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "ShipmentLevelName",
-					  						DefaultText =  @"Type",
-					  						ListFieldLable =  "ShipmentLevelNameListLable",
-					  						ListLableDefaultText =  @"Type",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ShipmentLevelName",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AgentSharedManifestQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ASMN", Name = "Agent Shared Manifests" }, queryGroupRepository);
-						QueryGroup AgentSharedManifestQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AASM", Name = "Air Agent Shared Manifests" }, queryGroupRepository);
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup AgentSharedManifestQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CASM", Name = "Agent Shared Manifests" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AgentSharedManifestQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AASM", Name = "Air Agent Shared Manifests" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AgentSharedManifestObjectTable = objectTables.ContainsKey("AgentSharedManifest") ? objectTables["AgentSharedManifest"] : null;
+            if (AgentSharedManifestObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable AgentSharedManifestObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> AgentSharedManifestObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AgentSharedManifest").ToList();   
+                AgentSharedManifestObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode AgentSharedManifestTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AgentSharedManifests", DefaultText = @"All Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentSharedManifestFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentSharedManifestQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.AgentSharedManifestS", NameTextCodeDefaultText = "All Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode AgentSharedManifestTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AgentSharedManifests", DefaultText = @"All Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentSharedManifestFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentSharedManifestQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.AgentSharedManifestS", NameTextCodeDefaultText = "All Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentSharedManifestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AgentSharedManifestTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AirAgentSharedManifests", DefaultText = @"Air Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentSharedManifestFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AirAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.AirAgentSharedManifests", NameTextCodeDefaultText = "Air Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AgentSharedManifestTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.AirAgentSharedManifests", DefaultText = @"Air Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentSharedManifestFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AirAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.AirAgentSharedManifests", NameTextCodeDefaultText = "Air Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentSharedManifestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AgentSharedManifestTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.OceanAgentSharedManifests", DefaultText = @"Ocean Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentSharedManifestFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AgentSharedManifestTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.OceanAgentSharedManifests", DefaultText = @"Ocean Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentSharedManifestFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentSharedManifestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AgentSharedManifestTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.InlandAgentSharedManifests", DefaultText = @"Inland Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentSharedManifestFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AgentSharedManifestTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.InlandAgentSharedManifests", DefaultText = @"Inland Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentSharedManifestFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentSharedManifestObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AgentSharedManifestTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.CancelledAgentSharedManifests", DefaultText = @"Cancelled Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentSharedManifestFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AgentSharedManifestTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.Q.CancelledAgentSharedManifests", DefaultText = @"Cancelled Agent Shared Manifests",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentSharedManifestFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentSharedManifestObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_0.Id, Code = "Agent Shared Manifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
-			   QueryGroupCode = "ASMN", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_0.Id, NameTextCodeCode = AgentSharedManifestTextCode_0.Code, ObjectTableName = "AgentSharedManifest", Code = "Agent Shared Manifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			   QueryGroupCode = "ASMN", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_0.Id,FeatureUniqeCode= AgentSharedManifestFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentSharedManifest.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentSharedManifest.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentSharedManifest.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AgentSharedManifest.AgentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AgentSharedManifest.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentReference" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AgentSharedManifest.AgentReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentLevelName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AgentSharedManifest.ShipmentLevelName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "GrossWeight" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AgentSharedManifest.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentlevelCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AgentSharedManifest.ShipmentlevelCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "PackagesQuantity" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AgentSharedManifest.PackagesQuantity" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 9, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AgentSharedManifest.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 10, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TEU" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AgentSharedManifest.TEU" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 11, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AgentSharedManifestsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id, IndexOrder = 12, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentSharedManifestsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentSharedManifestsQuery.Id,QueryCode = AgentSharedManifestsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
   
 	      
 
-			  Query AirAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_1.Id, Code = "AirAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
-			   QueryGroupCode = "AASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AirAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_1.Id, NameTextCodeCode = AgentSharedManifestTextCode_1.Code, ObjectTableName = "AgentSharedManifest", Code = "AirAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			   QueryGroupCode = "AASM", IndexOrder = 1, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_1.Id,FeatureUniqeCode= AgentSharedManifestFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AirAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentSharedManifest.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentSharedManifest.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentSharedManifest.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AgentSharedManifest.AgentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AgentSharedManifest.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentReference" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AgentSharedManifest.AgentReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentLevelName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AgentSharedManifest.ShipmentLevelName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "GrossWeight" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AgentSharedManifest.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentlevelCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AgentSharedManifest.ShipmentlevelCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "PackagesQuantity" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AgentSharedManifest.PackagesQuantity" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 9, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TEU" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AgentSharedManifest.TEU" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 10, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AgentSharedManifest.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AirAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id, IndexOrder = 11, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "A",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-
-             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query OceanAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_2.Id, Code = "OceanAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
-			   QueryGroupCode = "OASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_2.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
-	
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentReference" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentLevelName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "GrossWeight" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentlevelCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "PackagesQuantity" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 9, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TEU" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 10, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn OceanAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id, IndexOrder = 11, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "O",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "A",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AirAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = AirAgentSharedManifestsQuery.Id,QueryCode = AirAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query InlandAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_3.Id, Code = "InlandAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
-			   QueryGroupCode = "IASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_3.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query OceanAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_2.Id, NameTextCodeCode = AgentSharedManifestTextCode_2.Code, ObjectTableName = "AgentSharedManifest", Code = "OceanAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			   QueryGroupCode = "OASM", IndexOrder = 2, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_2.Id,FeatureUniqeCode= AgentSharedManifestFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentSharedManifest.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentSharedManifest.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentSharedManifest.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AgentSharedManifest.AgentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AgentSharedManifest.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentReference" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AgentSharedManifest.AgentReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentLevelName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AgentSharedManifest.ShipmentLevelName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "GrossWeight" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AgentSharedManifest.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentlevelCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AgentSharedManifest.ShipmentlevelCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "PackagesQuantity" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AgentSharedManifest.PackagesQuantity" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 9, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TEU" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AgentSharedManifest.TEU" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 10, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AgentSharedManifest.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InlandAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id, IndexOrder = 11, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OceanAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "I",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "O",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OceanAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = OceanAgentSharedManifestsQuery.Id,QueryCode = OceanAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query CancelledAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_4.Id, Code = "CancelledAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
-			   QueryGroupCode = "CASM", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_4.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query InlandAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_3.Id, NameTextCodeCode = AgentSharedManifestTextCode_3.Code, ObjectTableName = "AgentSharedManifest", Code = "InlandAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			   QueryGroupCode = "IASM", IndexOrder = 3, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_3.Id,FeatureUniqeCode= AgentSharedManifestFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 0, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentSharedManifest.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 1, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentSharedManifest.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 2, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentSharedManifest.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 3, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AgentSharedManifest.AgentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 4, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AgentSharedManifest.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "AgentReference" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AgentSharedManifest.AgentReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 6, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentLevelName" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AgentSharedManifest.ShipmentLevelName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 7, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "GrossWeight" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AgentSharedManifest.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "ShipmentlevelCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AgentSharedManifest.ShipmentlevelCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 8, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "PackagesQuantity" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AgentSharedManifest.PackagesQuantity" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 9, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "TEU" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AgentSharedManifest.TEU" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 10, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AgentSharedManifest.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CancelledAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id, IndexOrder = 11, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InlandAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentSharedManifestObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == AgentSharedManifestObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "CANC",PredefinedValue2 = null, QueryId = CancelledAgentSharedManifestsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.TransportModeId", PredefinedValue = "I",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+
+             AdvancedQueryFilter InlandAgentSharedManifestsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "WAIT",PredefinedValue2 = null, QueryId = InlandAgentSharedManifestsQuery.Id,QueryCode = InlandAgentSharedManifestsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query CancelledAgentSharedManifestsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentSharedManifestTextCode_4.Id, NameTextCodeCode = AgentSharedManifestTextCode_4.Code, ObjectTableName = "AgentSharedManifest", Code = "CancelledAgentSharedManifests",  EditWizardName = "./Common/Components/SharedManifest/SharedManifestComponent",
+			   QueryGroupCode = "CASM", IndexOrder = 4, Tenant = 0, ObjectTableId = AgentSharedManifestObjectTable.Id, QuerySection = "AgentSharedManifest", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentSharedManifestFeature_4.Id,FeatureUniqeCode= AgentSharedManifestFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentSharedManifest.DirectionId" , ColumnWidth = 25 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentSharedManifest.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentSharedManifest.Master" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AgentSharedManifest.AgentName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AgentSharedManifest.Routing" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AgentSharedManifest.AgentReference" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AgentSharedManifest.ShipmentLevelName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AgentSharedManifest.GrossWeight" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AgentSharedManifest.ShipmentlevelCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AgentSharedManifest.PackagesQuantity" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AgentSharedManifest.TEU" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AgentSharedManifest.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn CancelledAgentSharedManifestsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AgentSharedManifest.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter CancelledAgentSharedManifestsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AgentSharedManifest.StatusCode", PredefinedValue = "CANC",PredefinedValue2 = null, QueryId = CancelledAgentSharedManifestsQuery.Id,QueryCode = CancelledAgentSharedManifestsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AgentSharedManifestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AgentSharedManifestObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AgentSharedManifest").ToList();
+		       
+	      
+
+	         Screen AgentSharedManifestAgentSharedManifestHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AgentSharedManifest.HeaderScreen", Name = "AgentSharedManifestHeaderScreen", ObjectTableId = AgentSharedManifestObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AgentSharedManifestObjectTable.HeaderScreenId = AgentSharedManifestAgentSharedManifestHeaderScreenScreen0.Id;
+		    AgentSharedManifestObjectTable.HeaderScreenCode = AgentSharedManifestAgentSharedManifestHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -1288,16 +1479,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable AgentSharedManifestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature AgentSharedManifestFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedManifestFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedManifestFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AgentSharedManifestFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.PackageFeature", NameTextCodeDefaultText = "AgentSharedManifest Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature AgentSharedManifestFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AgentSharedManifestObjectTable);
+		   Feature AgentSharedManifestFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AgentSharedManifestObjectTable);
+		   Feature AgentSharedManifestFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AgentSharedManifestObjectTable);
+		   Feature AgentSharedManifestFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.PackageFeature", NameTextCodeDefaultText = "AgentSharedManifest Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AgentSharedManifestObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature AgentSharedManifestFeature_UPDATESHAREDAGENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESHAREDAGENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentSharedManifest.Features.UpdateSharedAgent", NameTextCodeDefaultText = @"Update Shared Agent" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AgentSharedManifestObjectTable);
+
+   
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable AgentSharedManifestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = AgentSharedManifestObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = AgentSharedManifestObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -1305,19 +1539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AgentSharedManifestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AgentSharedManifest" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AgentSharedManifestTextCode_AgentSharedManifestCHCreateDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.CH.CreateDateLabel", DefaultText = "Create Date",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode AgentSharedManifestTextCode_AgentSharedManifestCHUpdateDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest.CH.UpdateDateLabel", DefaultText = "Update Date",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode AgentSharedManifestTextCode_AgentSharedManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentSharedManifest", DefaultText = "Agent Shared Manifest",LocalDefaultText = null, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

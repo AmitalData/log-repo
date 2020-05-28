@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class APPaymentMethodUpdateClass
-   {  
+   {  		
+		public const string HashString = "3d690468d0d893eef76161d29bfbc3aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -123,11 +124,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    Code =  "PPYM",
+			      				    HashString =  APPaymentMethodUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -186,7 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "Text",
 					  						Code =  "Name",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
+					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,
@@ -246,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -254,7 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "APPaymentMethod",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						Code =  "SearchFields",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
@@ -304,7 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -315,7 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "Boolean",
 					  						Code =  "AddedManually",
 					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -363,7 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "AddedManuallyListLable",
 					  						ListLableDefaultText =  "Added Manually",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -374,7 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "Boolean",
 					  						Code =  "Inactive",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -422,65 +424,83 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup APPaymentMethodQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PPYM", Name = "AP Payment Method" }, queryGroupRepository);
+	        QueryGroup APPaymentMethodQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PPYM", Name = "AP Payment Method" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable APPaymentMethodObjectTable = objectTables.ContainsKey("APPaymentMethod") ? objectTables["APPaymentMethod"] : null;
+            if (APPaymentMethodObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable APPaymentMethodObjectTable = objectContext.ObjectTables.Where(d => d.Name == "APPaymentMethod" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> APPaymentMethodObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APPaymentMethod").ToList();   
+                APPaymentMethodObjectTable = objectContext.ObjectTables.Where(d => d.Name == "APPaymentMethod" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode APPaymentMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = @"AP Payment Methods",LocalDefaultText = null, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature APPaymentMethodFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLAPPAYMENTMETHODS", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.AllAPPaymentMethodts", NameTextCodeDefaultText = "All AP Payment Methods", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode APPaymentMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.Q.AllAPPaymentMethods", DefaultText = @"AP Payment Methods",LocalDefaultText = null, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature APPaymentMethodFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLAPPAYMENTMETHODS", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.AllAPPaymentMethodts", NameTextCodeDefaultText = "All AP Payment Methods", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,APPaymentMethodObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAPPaymentMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APPaymentMethodTextCode_0.Id, Code = "All AP Payment Methods",  QueryGroupCode = "PPYM", IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentMethodObjectTable.Id, QuerySection = "APPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentMethodFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAPPaymentMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APPaymentMethodTextCode_0.Id, NameTextCodeCode = APPaymentMethodTextCode_0.Code, ObjectTableName = "APPaymentMethod", Code = "All AP Payment Methods",  QueryGroupCode = "PPYM", IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentMethodObjectTable.Id, QuerySection = "APPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentMethodFeature_0.Id,FeatureUniqeCode= APPaymentMethodFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAPPaymentMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id, IndexOrder = 0, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPPaymentMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id,QueryCode = AllAPPaymentMethodsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APPaymentMethod.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAPPaymentMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id, IndexOrder = 1, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPPaymentMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id,QueryCode = AllAPPaymentMethodsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APPaymentMethod.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAPPaymentMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id, IndexOrder = 2, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPPaymentMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id,QueryCode = AllAPPaymentMethodsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APPaymentMethod.AddedManually" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAPPaymentMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id, IndexOrder = 3, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == APPaymentMethodObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAPPaymentMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPPaymentMethodsQuery.Id,QueryCode = AllAPPaymentMethodsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APPaymentMethod.Inactive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable APPaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APPaymentMethod" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> APPaymentMethodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APPaymentMethod").ToList();
+		   //List<ObjectField> APPaymentMethodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APPaymentMethod").ToList();
 		       
 	      
 
 	         Screen APPaymentMethodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPaymentMethod.HeaderScreen", Name = "Header Screen", ObjectTableId = APPaymentMethodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APPaymentMethodAPPaymentMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = APPaymentMethodHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APPaymentMethodAPPaymentMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentMethodHeaderScreenScreen0.Id,ScreenCode = APPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "APPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APPaymentMethodAPPaymentMethodHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = APPaymentMethodHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APPaymentMethodAPPaymentMethodHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APPaymentMethodHeaderScreenScreen0.Id,ScreenCode = APPaymentMethodHeaderScreenScreen0.Code, ObjectFieldCode = "APPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    APPaymentMethodObjectTable.HeaderScreenId = APPaymentMethodHeaderScreenScreen0.Id;
+		    APPaymentMethodObjectTable.HeaderScreenCode = APPaymentMethodHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen APPaymentMethodGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPaymentMethod.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APPaymentMethodObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = APPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPaymentMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = APPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPaymentMethod.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = APPaymentMethodObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APPaymentMethodAPPaymentMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APPaymentMethodGeneralTabScreenScreen1.Id,ScreenCode = APPaymentMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "APPaymentMethod.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -491,25 +511,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   ObjectTable APPaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APPaymentMethod" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode APPaymentMethodGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APPaymentMethodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.General", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APPaymentMethodGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.General", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentMethodObjectTable);
  
                  
 			   TextCode APPaymentMethodAccountingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APPaymentMethodAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.Accounting", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Accounting", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APPaymentMethodAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.Accounting", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Accounting", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentMethodObjectTable);
  
                  
 			   TextCode APPaymentMethodEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPaymentMethod.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APPaymentMethodEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.Events", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APPaymentMethodEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentMethod.Tab.Events", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APPaymentMethodObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = APPaymentMethodGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPGN",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = APPaymentMethodGeneralFeature_TH0.Id,FeatureUniqeCode = APPaymentMethodGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodGeneralTextCode_TH0.Id, TabNameTextCodeCode = APPaymentMethodGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = APPaymentMethodAccountingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.AccountingControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = APPaymentMethodAccountingFeature_TH1.Id,FeatureUniqeCode = APPaymentMethodAccountingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.AccountingControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodAccountingTextCode_TH1.Id, TabNameTextCodeCode = APPaymentMethodAccountingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APPaymentMethodEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APPaymentMethodEventsFeature_TH2.Id,FeatureUniqeCode = APPaymentMethodEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APPaymentMethodObjectTable.Id, TabNameTextCodeId = APPaymentMethodEventsTextCode_TH2.Id, TabNameTextCodeCode = APPaymentMethodEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -517,10 +537,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {  
 		   ObjectTable APPaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APPaymentMethod" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature APPaymentMethodFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APPaymentMethodFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APPaymentMethodFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APPaymentMethodFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.PackageFeature", NameTextCodeDefaultText = "APPaymentMethod Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature APPaymentMethodFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APPaymentMethodObjectTable);
+		   Feature APPaymentMethodFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APPaymentMethodObjectTable);
+		   Feature APPaymentMethodFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APPaymentMethodObjectTable);
+		   Feature APPaymentMethodFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = APPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentMethod.Features.PackageFeature", NameTextCodeDefaultText = "APPaymentMethod Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APPaymentMethodObjectTable);    
 	    
 		}
 

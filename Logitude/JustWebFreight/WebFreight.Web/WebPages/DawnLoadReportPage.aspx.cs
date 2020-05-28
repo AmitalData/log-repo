@@ -42,123 +42,123 @@ namespace WebFreight.Web.WebPages
         protected void Page_Load(object sender, EventArgs e)
         {
 
-          
-                
-                string fileName = Request["fileName"] ?? "";
-                string type = Request["type"] ?? "";
 
-                bool useOnePageHeaderAndFooter = ToBoolean(Request["UseOnePageHF"]);
-                bool exportDataOnly = ToBoolean(Request["exportDataOnly"]);
-                bool exportObjectFormatting = ToBoolean(Request["exportObjectForm"]);
 
-                string token = Request["tempId"] ?? "";
+            string fileName = Request["fileName"] ?? "";
+            string type = Request["type"] ?? "";
 
-                SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
-                bool isValid = securityDocumentResult.IsValid;
-                string email = securityDocumentResult.Email;
-                string exceptionMessage = securityDocumentResult.ExceptionResult;
-                tenant = securityDocumentResult.Tenant;
+            bool useOnePageHeaderAndFooter = ToBoolean(Request["UseOnePageHF"]);
+            bool exportDataOnly = ToBoolean(Request["exportDataOnly"]);
+            bool exportObjectFormatting = ToBoolean(Request["exportObjectForm"]);
 
-                if (isValid)
+            string token = Request["tempId"] ?? "";
+
+            SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
+            bool isValid = securityDocumentResult.IsValid;
+            string email = securityDocumentResult.Email;
+            string exceptionMessage = securityDocumentResult.ExceptionResult;
+            tenant = securityDocumentResult.Tenant;
+
+            if (isValid)
+            {
+                StiReport stiReport = new StiReport();
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    StiReport stiReport = new StiReport();
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "mdc",
+                    Tenant = (int)tenant,
 
-                    BlobFileInfo fileInfo = new BlobFileInfo()
+                };
+
+                byte[] result = storageservice.Read(fileInfo);
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    string[] Names = fileName.Split('@');
+                    if (Names.Count() > 1) fileName = Names[1];
+
+                }
+
+
+                if (result != null)
+                {
+                    stiReport.LoadDocument(result);
+                    MemoryStream memoryStream = new MemoryStream();
+                    string documentName = "";
+                    string ShowType = "attachment";
+                    string contentType = "";
+                    if (type == "PrintToPDF")
                     {
-                        FileName = fileName,
-                        FolderName = "others",
-                        Extension = "mdc",
-                        Tenant = (int)tenant,
 
-                    };
+                        stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+                        contentType = "application/" + "pdf";
+                        documentName = fileName + ".pdf";
+                        ShowType = "inline";
 
-                    byte[] result = storageservice.Read(fileInfo);
 
-                    if (!string.IsNullOrEmpty(fileName))
+                    }
+                    else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
                     {
-                        string[] Names = fileName.Split('@');
-                        if (Names.Count() > 1) fileName = Names[1];
+
+                        StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+                        setting.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
+                        setting.ExportDataOnly = exportDataOnly;
+                        setting.ExportObjectFormatting = exportObjectFormatting;
+                        StiExcel2007ExportService service = new StiExcel2007ExportService();
+                        service.ExportExcel(stiReport, memoryStream, setting);
+                        contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        documentName = fileName + ".xlsx";
 
                     }
 
 
-                    if (result != null)
+                    if (memoryStream != null)
                     {
-                        stiReport.LoadDocument(result);
-                        MemoryStream memoryStream = new MemoryStream();
-                        string documentName = "";
-                        string ShowType = "attachment";
-                        string contentType = "";
-                        if (type == "PrintToPDF")
+                        _DatainByte = memoryStream.ToArray();
+                        HttpContext.Current.Response.Clear();
+                        HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
+
+                        var browser = HttpContext.Current.Request.Browser;
+                        HttpContext.Current.Response.ContentType = contentType;
+
+                        if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {
 
-                            stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
-                            contentType = "application/" + "pdf";
-                            documentName = fileName + ".pdf";
-                            ShowType = "inline";
-
-
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(documentName) + "\"");
                         }
-                        else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
+                        else
                         {
-
-                            StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
-                            setting.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
-                            setting.ExportDataOnly = exportDataOnly;
-                            setting.ExportObjectFormatting = exportObjectFormatting;
-                            StiExcel2007ExportService service = new StiExcel2007ExportService();
-                            service.ExportExcel(stiReport, memoryStream, setting);
-                            contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            documentName = fileName + ".xlsx";
-
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
                         }
 
+                        HttpContext.Current.Response.BinaryWrite(_DatainByte);
 
-                        if (memoryStream != null)
+                        if (HttpContext.Current.Response.IsClientConnected)
                         {
-                            _DatainByte = memoryStream.ToArray();
-                            HttpContext.Current.Response.Clear();
-                            HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
-
-                            var browser = HttpContext.Current.Request.Browser;
-                            HttpContext.Current.Response.ContentType = contentType;
-
-                            if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
-                            {
-
-                                HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(documentName) + "\"");
-                            }
-                            else
-                            {
-                                HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
-                            }
-
-                            HttpContext.Current.Response.BinaryWrite(_DatainByte);
-
-                            if (HttpContext.Current.Response.IsClientConnected)
-                            {
-                                HttpContext.Current.Response.Flush();
-                                HttpContext.Current.Response.Close();
-                                HttpContext.Current.ApplicationInstance.CompleteRequest();
-
-                            }
+                            HttpContext.Current.Response.Flush();
+                            HttpContext.Current.Response.Close();
+                            HttpContext.Current.ApplicationInstance.CompleteRequest();
 
                         }
-
-
 
                     }
 
-                }
-                else
-                {
 
-                    var message = exceptionMessage;
-                    if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this document.";
-                    Response.Output.Write(message);
-                  //  throw new ApplicationException(message);
+
                 }
+
+            }
+            else
+            {
+
+                var message = exceptionMessage;
+                if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this document.";
+                Response.Output.Write(message);
+                //  throw new ApplicationException(message);
+            }
 
         }
 

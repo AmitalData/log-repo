@@ -20,17 +20,69 @@ namespace Logitude.Customs.BL
    {
        public List<LeadDocumentTypeDetails> GetAll()
        {
-		    var all = new List<LeadDocumentTypeDetails>(); 
+		    var all = new List<LeadDocumentTypeDetails>();  
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,הצהרת יבוא", 
+                Inactive = false, 
+                LocalName = "הצהרת יבוא", 
+			});
+			 
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,הצהרת יצוא", 
+                Inactive = false, 
+                LocalName = "הצהרת יצוא", 
+			});
+			 
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,הצהרת שטעון", 
+                Inactive = false, 
+                LocalName = "הצהרת שטעון", 
+			});
+			 
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,קרנה", 
+                Inactive = false, 
+                LocalName = "קרנה", 
+			});
+			 
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,מ.ב. 161", 
+                Inactive = false, 
+                LocalName = "מ.ב. 161", 
+			});
+			 
+            all.Add(new LeadDocumentTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,פח''ן מעריך", 
+                Inactive = false, 
+                LocalName = "פח''ן מעריך", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(LeadDocumentType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(LeadDocumentType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Threading;
 using System.Reflection.Emit;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Entity;
+
 using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
                 {
                     try
                     {
-                        (context as DbContext).Database.ExecuteSqlCommand(
+                        (context as System.Data.Entity.DbContext).Database.ExecuteSqlCommand(
   String.Format(
 @"UPDATE LedgerTransactions SET Mark='false',AmountToReconcile=0
 WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
@@ -91,12 +91,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return currencyId;
         }
-        public List<LedgerTransaction> GetByJournalId(string journalId, int tenant)
+        public IQueryable<LedgerTransaction> GetByJournalId(string journalId, int tenant)
         {
 
             return (from a in context.LedgerTransactions
                     where a.JournalId == journalId && a.Tenant == tenant
-                    select a).ToList();
+                    select a);
 
         }
         public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
@@ -415,13 +415,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
-        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, IQueryable<string> qOfAccId, DateTime @from, DateTime to,
        string currencyId,
        string searchByFilter, bool? isReconciled, string dateType)
         {
             var q = (from rec in context.LedgerTransactions
                      where rec.Tenant == tenant
-                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     where qOfAccId.Contains(rec.AccountId) //less than 1000
                      select rec
                      );
             //if (context.ToString().StartsWith("Fake"))
@@ -446,9 +446,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (isReconciled.HasValue && isReconciled.Value == true)
+            if (isReconciled.HasValue )
             {
-                q = q.Where(rec => rec.IsReconciled == true);
+                q = q.Where(rec => rec.IsReconciled == isReconciled.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(searchByFilter))
@@ -770,12 +770,18 @@ on record.JournalId equals j.Id
                                         LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
                                         LocalAmountDebit = 0 , //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
 
-                                        ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+                      ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+#if supress_OpenCreditAndDebit
+                      ForeignAmountCredit = 0,
+                      ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+#else
+                      ForeignAmountCredit = -1*((decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit != 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0),
+                      ForeignAmountDebit = (decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit == 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0,
+#endif
 
-                                        ForeignAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
-                                        ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 
-                                        CHANGE_TYPE = ""
+
+                      CHANGE_TYPE = ""
                                     });
 
 #if NotOnlyInForeign_B4_201810
@@ -1099,7 +1105,10 @@ on record.JournalId equals j.Id
         public int getRecoCount(string glAccountId)
         {
             return (from a in context.LedgerTransactions
-                    where a.AccountId == glAccountId && a.IsReconciled == false
+                    where 
+                    a.AccountId == glAccountId 
+                    && a.InReconcileProgress == false
+                    && a.IsReconciled == false
                     select a).Count();
         }
 
@@ -1111,15 +1120,15 @@ on record.JournalId equals j.Id
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-            DateTime date = DateTime.Now.AddDays(-180);
-            DateTime last180days=  new DateTime(date.Year, date.Month, 1);
+            //DateTime date = DateTime.Now.AddDays(-180);
+            //DateTime last180days=  new DateTime(date.Year, date.Month, 1);
             //taxReportMonth. = 1;
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
-                    && a.DocumentDate >= last180days
-                    && a.AccountId == setting.VATInputsGLAccountId
+                   // && a.DocumentDate >= last180days
+                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant && a.LocalAmountDebit != 0
                     select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -1131,8 +1140,22 @@ on record.JournalId equals j.Id
                         LocalAmountCredit = a.LocalAmountCredit,
                         OppositGLAccount = a.OppositeAccountId,
                         AccountingEntityId= j.AccountingEntityId,
+                        JournalLineNumber = a.JournalLineNumber,
+                        AccountId = a.AccountId,
                     }
                     
+                    ).ToList();
+
+
+        }
+        public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
+        {
+
+          
+            return (from a in context.LedgerTransactions.Include("Account")
+                    where journalIds.Contains(a.JournalId) && a.Tenant==tenant
+
+                    select a
                     ).ToList();
 
 

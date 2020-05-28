@@ -254,7 +254,8 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (this.CompareReport.GLAccountTotalByMonthsList.Any( r=>r.CHANGE_TYPE == const_qNotinLedgerTransaction))
             {
-                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction");
+                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
+                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!!");
             }
             using (var scope = TransactionFactory.GetNewSerializableTransaction())
             {

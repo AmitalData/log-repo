@@ -40,6 +40,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					                          Version = a.Version,
 					
 					                          MinPrice = a.MinPrice,
+
+                                              TransitTime = a.TransitTime,
 					
 		                    	            });
             return query;

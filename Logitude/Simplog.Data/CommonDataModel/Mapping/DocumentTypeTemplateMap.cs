@@ -90,12 +90,19 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(500)
                 .IsUnicode(true);
 
+                this.Property(t => t.BCC)
+             .HasMaxLength(500)
+             .IsUnicode(true);
+
             }
             else
             {
                 this.Property(t => t.CC)
                 .HasMaxLength(4000)
                 .IsUnicode(true);
+                this.Property(t => t.BCC)
+             .HasMaxLength(4000)
+             .IsUnicode(true);
 
             }
             //OriginalTemplateId 
@@ -139,6 +146,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.ReplyTo).HasColumnName("ReplyTo");
             this.Property(t => t.CC).HasColumnName("CC");
+            this.Property(t => t.BCC).HasColumnName("BCC");
 
 
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

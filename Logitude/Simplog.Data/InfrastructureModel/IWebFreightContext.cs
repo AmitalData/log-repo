@@ -13,7 +13,7 @@ namespace Simplog.Data.InfrastructureModel
     public interface IWebFreightContext : IContext
     {
 
-
+        IDbSet<RuleUpdateHistory> RuleUpdateHistories { get; }
         IDbSet<CounterLastNumber> CounterLastNumbers { get; }
         IDbSet<TransportMode> TransportModes { get; }
         IDbSet<Direction> Directions { get; }
@@ -26,9 +26,9 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<FieldDataType> FieldDataTypes { get; }
         IDbSet<Translation> Translations { get; }
         IDbSet<TranslationHeader> TranslationHeaders { get; }
-        IDbSet<TextCode> TextCodes { get; }
+        DbSet<TextCode> TextCodes { get; }
         IDbSet<ObjectTable> ObjectTables { get; }
-        IDbSet<ObjectField> ObjectFields { get; }
+        DbSet<ObjectField> ObjectFields { get; }
         IDbSet<Screen> Screens { get; }
         IDbSet<ScreenField> ScreenFields { get; }
         IDbSet<TextCodeType> TextCodeTypes { get; }
@@ -105,7 +105,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<SharedUserQuery> SharedUserQueries { get; }
         IDbSet<DWCategories> DWCategories { get; }
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
-        IDbSet<SchedulerLogs> SchedulerLogs { get; }
+        //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
 
         void SetAsModified(object entity);

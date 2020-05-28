@@ -56,6 +56,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("AgentSharedManifest", "READ", authToken.Tenant);
                 AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
                 AgentSharedManifestPM agentSharedManifestPM = agentSharedManifestQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -86,6 +88,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("AgentSharedManifest", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedManifest", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AgentSharedManifestService service = new AgentSharedManifestService(MyContext, entityPM.Tenant);
@@ -132,6 +136,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("AgentSharedManifest", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedManifest", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AgentSharedManifest" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AgentSharedManifestPM" + entityPM.Id + entityPM.Tenant;

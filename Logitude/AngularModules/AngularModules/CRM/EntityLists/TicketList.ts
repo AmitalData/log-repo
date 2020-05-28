@@ -125,6 +125,9 @@ export class TicketList {
 	SLAId: string;
 	EntityType: string;
 	EntityNumber: string;
+	SupportMailboxId: string;
+	LastCorrespondence: string;
+	EntityTypeName: string;
 	
 }
  

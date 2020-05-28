@@ -39,7 +39,7 @@ import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/Confirmation
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CertificateTabComponent.html',
     providers: [DeclarationExtendedListService]
 })
@@ -84,8 +84,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             )
         );
         
-        //SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-        //    SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
+        //SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        //    SessionLocator.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
 
 
         this.DeclarationPM = this.entityArgs.EntityPM;
@@ -676,7 +676,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             this.SelectedRow = CurrentRow.rowData;
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
 
                 this.declarationWebService
                     .GetSupplierInvoiceWithSpecificItemByCounterKey(this.SelectedRow.DeclarationId, this.SelectedRow.InvoiceCounterKey, this.SelectedRow.SequenceNumeric)

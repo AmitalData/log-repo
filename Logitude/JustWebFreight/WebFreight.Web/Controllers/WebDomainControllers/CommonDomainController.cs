@@ -4,6 +4,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.security;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -12,7 +13,12 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BookingLib.Data.EntityLists;
+using Logitude.CRM.BL.EntityPMs;
+using Logitude.CRM.BL.EntityQueryServices;
+using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
@@ -281,12 +287,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
-
-
-
+        
         public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
@@ -418,9 +419,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
+        
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -613,6 +612,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
 
                                     List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                                   join sm in iContext.ShipmentMasterDatas
+                                                                   on x.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                                   from m in shipmentJoin.DefaultIfEmpty()
                                                                    select new ShipmentList()
                                                                    {
                                                                        Id = x.Id,
@@ -624,6 +626,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        DirectionName = x.Direction == null ? null : x.Direction.Name,
                                                                        TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
                                                                        CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                                       Master = m.Master,
+                                                                       LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
+                                                                       House = x.House,
+                                                                       ShipmentLevelCode = x.ShipmentLevelCode,                                                                       
                                                                    }).ToList();
 
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -990,7 +996,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     };
                     Repo.Add(currentTenant);
                 }
-                var URI = LogitudeSettings.LogitudeURL.Replace("http", "https");
+                var URI = LogitudeSettings.LogitudeURL.Replace("http://", "https://");
                 if (URI.Contains("logitudepre.cloudapp.net"))
                 {
                     URI = "https://test.logitudeworld.com/Preproduction/";
@@ -1177,7 +1183,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
 
-                        myResult = (from d in context.Contacts
+                        myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
                                     where d.Tenant == tenant
                                     && d.Email != null
                                     && emailsList.Contains(d.Email.ToLower())
@@ -1559,6 +1565,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
+                MexicanCountryCities mexicanCountryCities = new MexicanCountryCities();
+                mexicanCountryCities.AddMexicanCountryCities(tenant);
+
                 bool myResult = true;
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1936,16 +1945,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
-                ServiceResponse response = new ServiceResponse();
-                FilingInboxQuery query = new FilingInboxQuery(tenant);
-                List<FilingInboxPM> result = new List<FilingInboxPM>();
-                IQueryable<FilingInboxPM> list = query.GetFilingInboxes_LastTwoMonths(userId, isShowDeleted, tenant);
-                response.Count = list.Count();
 
-                int skippedEntities = queryOperations.PageIndex;
-                list = list.Skip(skippedEntities);
-                list = list.Take(queryOperations.PageSize);
-                response.Result = list;
+                FilingInboxQuery query = new FilingInboxQuery(tenant);
+                FilingInboxQueryResult iQueryResult = query.GetFilingInboxes_LastTwoMonths(userId, isShowDeleted, queryOperations.PageIndex, queryOperations.PageSize, tenant);
+
+                ServiceResponse response = new ServiceResponse()
+                {
+                    Count = iQueryResult.Count,
+                    Result = iQueryResult.Data,
+                };
+
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return reponseMessage;
@@ -2079,6 +2088,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             IsSharedWithForwarder = item.IsSharedWithAgent,
                             SignRequestByUserEmail = loggedUserEmail,
                             DontAddToQueue = false,
+                            ReceivedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                            ReceivedByUserId = updatedByUserId,
+                            Received = true
                         };
                         if (documentInPM.FileExtension != null && documentInPM.FileExtension.ToLower() == "pdf")
                         {
@@ -2476,7 +2488,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         #endregion
 
-        public HttpResponseMessage GetAirlineAreas(string airlineId)
+        public HttpResponseMessage GetCarrierAreas(string carrierId)
         {
             try
             {
@@ -2484,8 +2496,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                AirlineAreaQuery entityQuery = new AirlineAreaQuery(tenant);
-                List<AirlineAreaList> myResult = entityQuery.GetAirlineAreasByAirlineId(airlineId, tenant);
+                CarrierAreaQuery entityQuery = new CarrierAreaQuery(tenant);
+                List<CarrierAreaList> myResult = entityQuery.GetCarrierAreasByCarrierId(carrierId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -2495,7 +2507,84 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCardOccasions(string cardId)
+        {
+            try
+            {
+                List<OccasionList> myResult = new List<OccasionList>();
 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICRMContext crmContext = CRMContext.GetContext(tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+                List<string> allContactsIds = (from d in commonContext.CardContacts where d.CardId == cardId select d.ContactId).ToList();
+                if (allContactsIds.Count > 0)
+                {
+                    IQueryable<Occasion> iIQueryable = (from d in crmContext.OccasionInvitees.Include("Occasion")
+                                                        where allContactsIds.Contains(d.ContactId)
+                                                        group d by d.Occasion into g
+                                                        select g.Key);
+
+                    OccasionListQueryService occasionQuery = new OccasionListQueryService(crmContext);
+
+                    myResult = occasionQuery.GetIqueryableList(iIQueryable).ToList();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetContactOccasions(string contactId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Occasion", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                ICRMContext context = CRMContext.GetContext(tenant);
+                OccasionQueryService occasionQuery = new OccasionQueryService(context);
+                List<OccasionPM> result = occasionQuery.GetContactOccasions(tenant, context, contactId);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetMeasurementIdByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Measurement", "READ", tenant);
+
+                MeasurementRepository myRepository = new MeasurementRepository(tenant);
+                string myId = myRepository.GetMeasurementIdbyCode(code, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myId);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

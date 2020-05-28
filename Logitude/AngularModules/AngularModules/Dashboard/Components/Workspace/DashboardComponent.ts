@@ -24,7 +24,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'DashBoard',
-    moduleId: module.id,
+    
     templateUrl: './DashBoardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -106,7 +106,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private filterControlNameSpace: string = "Workspace.Dashboard";
 
     LoadSpotlightQueries() {
-        this.dashboarddomainservice.GetDashboardSpotlightCounts(this.TenantPM.Id).subscribe(myResult => {
+        this.dashboarddomainservice.GetDashboardSpotlightCounts(this.TenantPM.Id).subscribe((myResult:any) => {
             this.dailySpotLightClass = myResult;
             if (this.dailySpotLightClass.Shipments_Today != 0)
                 this.Shipments_Today_Status = false;
@@ -151,7 +151,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public pieChartData: number[] = [];
     private CurrentTop10DebtorsChart: any;
     LoadPieQueries() {
-        this.dashboarddomainservice.GetDebrotExposure(this.TenantPM.Id, parseInt(this.SelectedCurrency)).subscribe(myResult => {
+        this.dashboarddomainservice.GetDebrotExposure(this.TenantPM.Id, parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
             this.PieData = myResult;
             this.FillPie();
         });
@@ -280,7 +280,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     LoadBarQueries() {
         if (this.SelectedTimeRangeItem2.Index == "-1") {
             if (this.MoneyFromDate != null && this.MoneyToDate != null) {
-                this.dashboarddomainservice.GetMoneyStatusForTenantCustom("CreateDate",  this.MoneyToDate, this.MoneyFromDate).subscribe(myResult => {
+                this.dashboarddomainservice.GetMoneyStatusForTenantCustom("CreateDate",  this.MoneyToDate, this.MoneyFromDate).subscribe((myResult:any) => {
                     this.BarData = myResult;
                     if (this.BarData.length != 0) {
                         var list: GroupByClass[] = [];
@@ -300,7 +300,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         }
         else {
             var days = this.ComputeDays("money");
-                this.dashboarddomainservice.GetMoneyStatusForTenant("CreateDate", 0, days, this.TenantPM.Id, +this.SelectedTimeRangeItem2.Index, 1).subscribe(myResult => {
+                this.dashboarddomainservice.GetMoneyStatusForTenant("CreateDate", 0, days, this.TenantPM.Id, +this.SelectedTimeRangeItem2.Index, 1).subscribe((myResult:any) => {
                     this.BarData = myResult;
                     var groupedData: GroupByClass[] = [];
                     var barData2 = [];
@@ -497,7 +497,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         listArgs.ObjectTableName = myTableName;
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "Dashboard";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -519,7 +519,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     LoadLineQueries() {     
             if (this.SelectedTimeRangeItem.Index == "-1") {
                 if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "",null,null).subscribe(myResult => {
+                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "",null,null).subscribe((myResult:any) => {
                         this.LineData = myResult;
                         this.FillLineQueries();
                     });
@@ -530,7 +530,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         }
         else {
                 var days = this.ComputeDays("activity");
-            this.dashboarddomainservice.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe(myResult => {
+            this.dashboarddomainservice.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe((myResult:any) => {
                 this.LineData = myResult;
                 this.FillLineQueries();
             });

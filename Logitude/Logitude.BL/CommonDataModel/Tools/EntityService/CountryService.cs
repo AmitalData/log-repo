@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
+using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -67,6 +68,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
             }
+
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Country");
         }
 
         public void Update(CountryPM entityPM)
@@ -111,6 +114,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Update(Poco);
                 entityRepository.SubmitChanges();
             }
+
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Country");
         }
 
         private bool IsEntityExists()

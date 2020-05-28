@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DecCargoSplitConsItems"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="DeclarationCargoSplitId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DecCargoSplitConsLineNo"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ItemLine"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="GrossMassMeasure"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargoDescription"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestReasonCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ParentCargoConsinmentItem"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationCargoSplitId,DecCargoSplitConsLineNo"
+    ReferencedTable="DecCargoSplitCons"
+    ReferencedColumn="DeclarationCargoSplitId,LineNumber"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RequestReasonCode"
+    ReferencedTable="SplitOrMergeReasons"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

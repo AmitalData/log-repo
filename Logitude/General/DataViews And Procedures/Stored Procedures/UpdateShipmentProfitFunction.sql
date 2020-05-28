@@ -40,6 +40,7 @@ BEGIN
 			declare @ShipmentReceivableStatusCode AS varchar(4)
 			declare @ARInvoiceIssued as bit
 			declare @CreditNoteIssued as bit
+			declare @NotInvoicedReceivablesAmount as float
 		END
 
 		-- Reset Variables
@@ -62,6 +63,7 @@ BEGIN
 			set @ShipmentReceivableStatusCode = 'NORE'
 			set @ARInvoiceIssued = 0
 			set @CreditNoteIssued = 0
+			set @NotInvoicedReceivablesAmount = 0
 		END
 
 		-- Get Payables Data
@@ -300,6 +302,13 @@ BEGIN
 			end
 		END
 
+		-- NotInvoicedReceivables
+		select @NotInvoicedReceivablesAmount = sum(isnull(TotalAmountLocal,0))
+		from ShipmentReceivables
+		where Tenant = @Tenant
+		AND ShipmentId = @ShipmentId
+		AND ShipmentReceivableLineStatusCode = 'OAMT'
+
 		-- Update Shipment
 		BEGIN
 			Update Shipments
@@ -317,7 +326,8 @@ BEGIN
 			ShipmentPayableStatusCode = @ShipmentPayableStatusCode,
 			ShipmentReceivableStatusCode = @ShipmentReceivableStatusCode,
 			ARInvoiceIssued = @ARInvoiceIssued,
-			CreditNoteIssued = @CreditNoteIssued
+			CreditNoteIssued = @CreditNoteIssued,
+			NotInvoicedReceivablesAmount = @NotInvoicedReceivablesAmount
 			Where Id = @ShipmentId AND Tenant = @Tenant
 		END
 END

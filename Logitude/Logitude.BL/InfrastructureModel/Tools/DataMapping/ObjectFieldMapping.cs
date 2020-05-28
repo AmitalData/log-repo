@@ -15,6 +15,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 objectField.Code = objectFieldPM.FieldName;
             }
+            objectField.FieldCode = objectFieldPM.FieldCode;
             objectField.AutomaticField = objectFieldPM.AutomaticField;
             objectField.CanFilter = objectFieldPM.CanFilter;
             objectField.ConverterName = objectFieldPM.ConverterName;
@@ -29,7 +30,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayInList = objectFieldPM.DisplayInList;
             objectField.DisplayInLookUpIndex = objectFieldPM.DisplayInLookUpIndex;
             objectField.DisplayInSearchWindowFilters = objectFieldPM.DisplayInSearchWindowFilters;
-            objectField.DisplayInSearchWindowFiltersIndex = objectFieldPM.DisplayInSearchWindowFiltersIndex;
+            objectField.SearchWindowFiltersIndex = objectFieldPM.DisplayInSearchWindowFiltersIndex;
             objectField.DisplayInSearchWindowList = objectFieldPM.DisplayInSearchWindowList;
             objectField.DisplayInSearchWindowListIndex = objectFieldPM.DisplayInSearchWindowListIndex;
             objectField.DisplayOnLookUp = objectFieldPM.DisplayOnLookUp;
@@ -82,11 +83,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.HtmlListComponentUrl = objectFieldPM.HtmlListComponentUrl;
             objectField.HtmlHeaderComponentName = objectFieldPM.HtmlHeaderComponentName;
             objectField.HtmlListComponentName = objectFieldPM.HtmlListComponentName;
-            objectField.AllowedInCustomerFieldsSettings = objectFieldPM.AllowedInCustomerFieldsSettings;
+            objectField.AllowedInCustFieldsSettings = objectFieldPM.AllowedInCustomerFieldsSettings;
             objectField.GeneratedComponentPath = objectFieldPM.GeneratedComponentPath;
             objectField.DisplayInDocumentReferences = objectFieldPM.DisplayInDocumentReferences;
             objectField.CopyToDW = objectField.CopyToDW;
             objectField.EnableFullscreenTextBox = objectField.EnableFullscreenTextBox;
+            objectField.DisplayInAutomationAsEnitity = objectField.DisplayInAutomationAsEnitity;
+            objectField.RecordType = objectField.RecordType;
+            objectField.FullNameTextCodeCode = objectFieldPM.FullNameTextCodeCode;
+            objectField.ShortNameTextCodeCode = objectFieldPM.ShortNameTextCodeCode;
+            objectField.HelpTextCodeCode = objectFieldPM.HelpTextCodeCode;
+            objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
 
             if (objectFieldModification != null)
             {

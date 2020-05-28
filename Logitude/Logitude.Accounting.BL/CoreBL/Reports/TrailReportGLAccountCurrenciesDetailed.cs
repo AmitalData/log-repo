@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected override void AdjustTrailReportFull()
         {
-            var testNow = true;// (new DateTime(2016, 12, 30) > DateTime.Now);
+            var testNow = false;// (new DateTime(2016, 12, 30) > DateTime.Now);
 
 
 

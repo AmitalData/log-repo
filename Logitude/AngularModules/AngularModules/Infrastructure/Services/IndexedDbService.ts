@@ -1,9 +1,7 @@
-﻿declare var window: any;
+declare var window: any;
 import {Injectable} from '@angular/core';
 import {InfraSettings} from '../../Infrastructure/Utilities/InfraSettings';
-//import Rx from 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
-
+import {Observable} from 'rxjs';
 
 @Injectable()
 
@@ -92,7 +90,7 @@ export class IndexedDbService {
                 return observer.next("Ok");
 
                 //InfraSettings.LogitudeIndexedDB = request.result;
-                //viewmodel._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res => {
+                //viewmodel._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((res:any) => {
                 //    //var buffer = viewmodel.base64ToBuffer(res);
                 //    //viewmodel.handleFile(buffer);
 

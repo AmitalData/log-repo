@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.Utils
                    IAccountingContext context = AccountingContext.GetContext(tenant);
                    if (!String.IsNullOrEmpty(id))
                     {
-
+                        bool useLocal = true;
                         RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
                         RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
@@ -105,7 +105,8 @@ namespace Logitude.Accounting.BL.Utils
                         }
                         if (String.IsNullOrEmpty(diffAccountId))
                         {
-                            string errorMessage = TranslateTextsClass.Translate("Revaluations.Q.DiffAccountNotDefined", tenant);
+//                          string errorMessage = TranslateTextsClass.Translate("Revaluations.Q.DiffAccountNotDefined", tenant);
+                            string errorMessage = TranslateTextsClassTranslate("Revaluations.Q.DiffAccountNotDefined", 0, useLocal);
                             throw new Exception(errorMessage);
                         }
                         RevaluationList revaluation = revaluationListQueryService.GetSingle(id);
@@ -166,6 +167,16 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
+
+        public static string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
+        {
+            if (OverrideITextCodeTranslator != null)
+            {
+                return OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
+            return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
+        }
 
 
         private static void RunOneAccount(GLAccountPM gLAccountPM, GLAccountQueryService gLAccountQueryService, JournalUpdateService journalUpdateService,
@@ -174,6 +185,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             AccountingLogger.LogMe("Revaluation " + revaluation.RevaluationNumber + " run one account: " + gLAccountPM.DisplayNumber, false, "REV");
             List<GLAccountCurrencyBalance> allBalances = gLAccountQueryService.GetCurrencyBalances(gLAccountPM, revaluationDate, gLAccountPM.Tenant);
+            bool useLocal = true;
 
             if (allBalances != null && allBalances.Count != 0)
             {
@@ -195,8 +207,10 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 CurrencyQuery currencyQuery = new CurrencyQuery(gLAccountPM.Tenant);
                                 CurrencyPM curr = currencyQuery.GetSinglePM(item.CurrencyId, gLAccountPM.Tenant);
-                                string revError = TranslateTextsClass.Translate("Revaluations.Q.RevaluationError", gLAccountPM.Tenant);
-                                string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
+//                              string revError = TranslateTextsClass.Translate("Revaluations.Q.RevaluationError", gLAccountPM.Tenant);
+//                              string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
+                                string revError = TranslateTextsClassTranslate("Revaluations.Q.RevaluationError", 0, useLocal);
+                                string rateNotFound = TranslateTextsClassTranslate("GLAccounts.Q.RateNotFound", 0, useLocal);
                                 AccountingLogger.LogMe(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString(), true, "REV");
                                 throw new Exception(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString());
                             }
@@ -229,8 +243,9 @@ namespace Logitude.Accounting.BL.Utils
                                     CurrencyId = item.CurrencyId, // was     ... = accountingCurrencyId,
                                     ForeignAmount = 0m, // was     ... = difference, 
                                     Reference1 = revaluation.RevaluationNumber.ToString(),
-                                    Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
-                            };
+//                                  Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                                    Notes = TranslateTextsClassTranslate("Revaluations.Q.Revaluation", 0, useLocal),
+                                };
                                 AccountingLogger.LogMe("Credit Difference = " + difference, false, "REV");
                                 lineList.Add(journalLine_credit);
                             }
@@ -257,7 +272,8 @@ namespace Logitude.Accounting.BL.Utils
                                 CurrencyId = item.CurrencyId,
                                 ForeignAmount = 0m,
                                 Reference1 = revaluation.RevaluationNumber.ToString(),
-                                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+//                              Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, useLocal),
                             };
                             AccountingLogger.LogMe("Debit Difference = " + difference, false, "REV");
                             lineList.Add(journalLine_debit);

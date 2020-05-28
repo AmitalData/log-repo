@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.Server.Tools.Counters;
+﻿ using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -14,6 +13,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         private void CreateTableCounters()
         {
+            List<ObjectTable> tenantObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
             CounterRepository = new CounterRepository(ObjectContext);
             List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
             ObjectContext = WebFreightContext.GetContext(0);
@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter shipmentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = ShipmentObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id,//ShipmentObject.Id,
                     Code = "SHIP",
                     Tenant = 0,
                     Name = "Shipment",
@@ -267,7 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter hawbCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = ShipmentObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id,//ShipmentObject.Id,
                     Code = "HAWB",
                     Tenant = 0,
                     Name = "Export HAWB/FBL/HBL",
@@ -286,7 +286,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter quoteCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = QuoteObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Quote").FirstOrDefault().Id,//QuoteObject.Id,
                     Code = "QUOT",
                     Tenant = 0,
                     Name = "Quote",
@@ -404,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter myCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = InvoiceObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Invoice").FirstOrDefault().Id,//InvoiceObject.Id,
                     Code = "CNST",
                     Tenant = 0,
                     Name = "Constituent Invoice",
@@ -428,7 +428,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter myCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = InvoiceObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Invoice").FirstOrDefault().Id,//InvoiceObject.Id,
                     Code = "INVC",
                     Tenant = 0,
                     Name = "A/R Invoice",
@@ -499,6 +499,27 @@ namespace WebFreight.Web.MetaDataUpdate
                     Prefix = "CC",
                 };
 
+
+                CounterDefinition myCounterDefinition_08 = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = myCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "IT",
+                    Prefix = "IT",
+                };
+
+                CounterDefinition myCounterDefinition_09 = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = myCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "IC",
+                    Prefix = "IC",
+                };
+
                 CounterRepository.Add(myCounter);
                 CounterDefinitionRepository.Add(myCounterDefinition_01);
                 CounterDefinitionRepository.Add(myCounterDefinition_02);
@@ -507,7 +528,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_05);
                 CounterDefinitionRepository.Add(myCounterDefinition_06);
                 CounterDefinitionRepository.Add(myCounterDefinition_07);
-            }            
+                CounterDefinitionRepository.Add(myCounterDefinition_08);
+                CounterDefinitionRepository.Add(myCounterDefinition_09);
+
+            }
             #endregion
 
             #region AP Invoice Counters
@@ -516,7 +540,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter APinvoiceCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = APInvoiceObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "APInvoice").FirstOrDefault().Id,//APInvoiceObject.Id,
                     Code = "APIC",
                     Tenant = 0,
                     Name = "A/P Invoice",
@@ -575,7 +599,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter arPaymentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = ARPaymentObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARPayment").FirstOrDefault().Id,//ARPaymentObject.Id,
                     Code = "ARPT",
                     Tenant = 0,
                     Name = "A/R Payment",
@@ -603,7 +627,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter apPaymentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = APPaymentObject.Id,
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "APPayment").FirstOrDefault().Id,//APPaymentObject.Id,
                     Code = "APPT",
                     Tenant = 0,
                     Name = "A/P Payment",

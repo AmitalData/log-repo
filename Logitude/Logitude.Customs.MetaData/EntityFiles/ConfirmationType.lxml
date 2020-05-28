@@ -1,13 +1,995 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;dd2e2679-dc4f-4fbb-a173-5f8f6591278d&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" DBTableName="&quot;Customs.ConfirmationTypes&quot;" ObjectTableSingular="&quot;Customs.ConfirmationType&quot;" ObjectTablePlural="&quot;Customs.ConfirmationTypes&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Confirmation Type&quot;" Code="&quot;64c1&quot;" Name="&quot;Customs.ConfirmationType Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;3f849c39-f16d-4c0b-a189-a83b3141bb6e&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="4" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="4" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;13fcc8ba-55e6-4a3b-94d0-3fcbc2b69bd2&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="40" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="40" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;079ccb85-4353-4b41-aa6b-03e92d1dd7f1&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;0197ced8-ac9d-4125-8895-dbb82064ef53&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search Fields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;Search Fields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;4255d428-034c-49d3-a7e1-ae406eef1b33&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;dd2e2679-dc4f-4fbb-a173-5f8f6591278d&quot;"
+  ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+  DBTableName="&quot;Customs.ConfirmationTypes&quot;"
+  ObjectTableSingular="&quot;Customs.ConfirmationType&quot;"
+  ObjectTablePlural="&quot;Customs.ConfirmationTypes&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Confirmation Type&quot;"
+  Code="&quot;CONT&quot;"
+  Name="&quot;Customs.ConfirmationType&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;3f849c39-f16d-4c0b-a189-a83b3141bb6e&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="4"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="4"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;13fcc8ba-55e6-4a3b-94d0-3fcbc2b69bd2&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;079ccb85-4353-4b41-aa6b-03e92d1dd7f1&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;0197ced8-ac9d-4125-8895-dbb82064ef53&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search Fields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;Search Fields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;4255d428-034c-49d3-a7e1-ae406eef1b33&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.ConfirmationType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1001&quot;"
+      SearchFields="&quot;1001,אישור אגף ניהול משאבי תשתיות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף ניהול משאבי תשתיות&quot;" />
+    <Record
+      Code="&quot;1002&quot;"
+      SearchFields="&quot;1002,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 10&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 10&quot;" />
+    <Record
+      Code="&quot;101&quot;"
+      SearchFields="&quot;101,אישור השירות הוטרינרי&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור השירות הוטרינרי&quot;" />
+    <Record
+      Code="&quot;102&quot;"
+      SearchFields="&quot;102,אישור הגנת הצומח&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור הגנת הצומח&quot;" />
+    <Record
+      Code="&quot;1020&quot;"
+      SearchFields="&quot;1020,אנרגיה אטומית&quot;"
+      Inactive="false"
+      LocalName="&quot;אנרגיה אטומית&quot;" />
+    <Record
+      Code="&quot;1021&quot;"
+      SearchFields="&quot;1021,הממונה על צו הפיקוח על המצרכים&quot;"
+      Inactive="false"
+      LocalName="&quot;הממונה על צו הפיקוח על המצרכים&quot;" />
+    <Record
+      Code="&quot;1022&quot;"
+      SearchFields="&quot;1022,צו הפיקוח על היצוא בתחום הכימי&quot;"
+      Inactive="false"
+      LocalName="&quot;צו הפיקוח על היצוא בתחום הכימי&quot;" />
+    <Record
+      Code="&quot;103&quot;"
+      SearchFields="&quot;103,אישור טיב מספוא&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור טיב מספוא&quot;" />
+    <Record
+      Code="&quot;104&quot;"
+      SearchFields="&quot;104,אישור מיכון וטכנולוגיה&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מיכון וטכנולוגיה&quot;" />
+    <Record
+      Code="&quot;105&quot;"
+      SearchFields="&quot;105,אישור אגף הדייג&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף הדייג&quot;" />
+    <Record
+      Code="&quot;106&quot;"
+      SearchFields="&quot;106,אישור המרכז סחר חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור המרכז סחר חוץ&quot;" />
+    <Record
+      Code="&quot;107&quot;"
+      SearchFields="&quot;107,אישור המנכ&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור המנכ&quot;ל&quot;" />
+    <Record
+      Code="&quot;108&quot;"
+      SearchFields="&quot;108,אישור אחר&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אחר&quot;" />
+    <Record
+      Code="&quot;109&quot;"
+      SearchFields="&quot;109,רישיון המרכז לסחר חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון המרכז לסחר חוץ&quot;" />
+    <Record
+      Code="&quot;110&quot;"
+      SearchFields="&quot;110,הרשות לתכנון חקלאות וכלכלה&quot;"
+      Inactive="false"
+      LocalName="&quot;הרשות לתכנון חקלאות וכלכלה&quot;" />
+    <Record
+      Code="&quot;1101&quot;"
+      SearchFields="&quot;1101,תעודת הכשר&quot;"
+      Inactive="false"
+      LocalName="&quot;תעודת הכשר&quot;" />
+    <Record
+      Code="&quot;1102&quot;"
+      SearchFields="&quot;1102,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 11&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 11&quot;" />
+    <Record
+      Code="&quot;111&quot;"
+      SearchFields="&quot;111,רשיון ע&quot;פ צי&quot;ח 2(ד) מכסות&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צי&quot;ח 2(ד) מכסות&quot;" />
+    <Record
+      Code="&quot;112&quot;"
+      SearchFields="&quot;112,רשיון אוטונומיה&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אוטונומיה&quot;" />
+    <Record
+      Code="&quot;113&quot;"
+      SearchFields="&quot;113,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939&quot;" />
+    <Record
+      Code="&quot;120&quot;"
+      SearchFields="&quot;120,רשיון המרכז לסחר חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון המרכז לסחר חוץ&quot;" />
+    <Record
+      Code="&quot;1201&quot;"
+      SearchFields="&quot;1201,אישור ביטחון פנים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור ביטחון פנים&quot;" />
+    <Record
+      Code="&quot;1202&quot;"
+      SearchFields="&quot;1202,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 12&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 12&quot;" />
+    <Record
+      Code="&quot;1203&quot;"
+      SearchFields="&quot;1203,רשיון אגף לפיקוח ורשוי כלי ירייה&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אגף לפיקוח ורשוי כלי ירייה&quot;" />
+    <Record
+      Code="&quot;121&quot;"
+      SearchFields="&quot;121,אישור שירותים וטרינריים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור שירותים וטרינריים&quot;" />
+    <Record
+      Code="&quot;122&quot;"
+      SearchFields="&quot;122,אישור שירותים להגנת הצומח&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור שירותים להגנת הצומח&quot;" />
+    <Record
+      Code="&quot;123&quot;"
+      SearchFields="&quot;123,רשיון המרכז סחר חוץ&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון המרכז סחר חוץ&quot;" />
+    <Record
+      Code="&quot;1301&quot;"
+      SearchFields="&quot;1301,אישור תקשורת&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור תקשורת&quot;" />
+    <Record
+      Code="&quot;1302&quot;"
+      SearchFields="&quot;1302,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 13&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 13&quot;" />
+    <Record
+      Code="&quot;1402&quot;"
+      SearchFields="&quot;1402,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 14&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 14&quot;" />
+    <Record
+      Code="&quot;1403&quot;"
+      SearchFields="&quot;1403,אישור מנכ&quot;ל 2&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל 2&quot;" />
+    <Record
+      Code="&quot;1501&quot;"
+      SearchFields="&quot;1501,אישור מנכ&quot;ל חינוך&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל חינוך&quot;" />
+    <Record
+      Code="&quot;1502&quot;"
+      SearchFields="&quot;1502,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 15&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 15&quot;" />
+    <Record
+      Code="&quot;1601&quot;"
+      SearchFields="&quot;1601,אישור מנכ&quot;ל המדע התרבות והספורט&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל המדע התרבות והספורט&quot;" />
+    <Record
+      Code="&quot;1602&quot;"
+      SearchFields="&quot;1602,אישור יבוא משרד התרבות והספורט&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור יבוא משרד התרבות והספורט&quot;" />
+    <Record
+      Code="&quot;1603&quot;"
+      SearchFields="&quot;1603,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 16&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 16&quot;" />
+    <Record
+      Code="&quot;1801&quot;"
+      SearchFields="&quot;1801,אישור מנכ&quot;ל בינוי ושיכון&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל בינוי ושיכון&quot;" />
+    <Record
+      Code="&quot;1802&quot;"
+      SearchFields="&quot;1802,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 17&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 17&quot;" />
+    <Record
+      Code="&quot;1901&quot;"
+      SearchFields="&quot;1901,רשיון יבוא&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון יבוא&quot;" />
+    <Record
+      Code="&quot;1902&quot;"
+      SearchFields="&quot;1902,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 18&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 18&quot;" />
+    <Record
+      Code="&quot;2001&quot;"
+      SearchFields="&quot;2001,אישור מנכ&quot;ל 3&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל 3&quot;" />
+    <Record
+      Code="&quot;201&quot;"
+      SearchFields="&quot;201,אישור אגף הרכב ושרותי תחזוקה - יבוא מסחרי&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף הרכב ושרותי תחזוקה - יבוא מסחרי&quot;" />
+    <Record
+      Code="&quot;204&quot;"
+      SearchFields="&quot;204,מעבדה לרכב&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבדה לרכב&quot;" />
+    <Record
+      Code="&quot;205&quot;"
+      SearchFields="&quot;205,מת&quot;י מכוח תקנות&quot;"
+      Inactive="false"
+      LocalName="&quot;מת&quot;י מכוח תקנות&quot;" />
+    <Record
+      Code="&quot;206&quot;"
+      SearchFields="&quot;206,טכניון מכוח תקנות&quot;"
+      Inactive="false"
+      LocalName="&quot;טכניון מכוח תקנות&quot;" />
+    <Record
+      Code="&quot;207&quot;"
+      SearchFields="&quot;207,אישור מנכ&quot;ל תחבורה&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל תחבורה&quot;" />
+    <Record
+      Code="&quot;208&quot;"
+      SearchFields="&quot;208,2ג2 - פטור מרישיון&quot;"
+      Inactive="false"
+      LocalName="&quot;2ג2 - פטור מרישיון&quot;" />
+    <Record
+      Code="&quot;209&quot;"
+      SearchFields="&quot;209,הועדה הבין משרדית להתקני תנועה&quot;"
+      Inactive="false"
+      LocalName="&quot;הועדה הבין משרדית להתקני תנועה&quot;" />
+    <Record
+      Code="&quot;210&quot;"
+      SearchFields="&quot;210,רשיון אגף הרכב ושרותי תחזוקה - יבוא מסחרי&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אגף הרכב ושרותי תחזוקה - יבוא מסחרי&quot;" />
+    <Record
+      Code="&quot;2101&quot;"
+      SearchFields="&quot;2101,אישור רשות העתיקות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור רשות העתיקות&quot;" />
+    <Record
+      Code="&quot;212&quot;"
+      SearchFields="&quot;212,רישיון לסחר במוצרי תעבורה&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון לסחר במוצרי תעבורה&quot;" />
+    <Record
+      Code="&quot;2120&quot;"
+      SearchFields="&quot;2120,אישור יצוא&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור יצוא&quot;" />
+    <Record
+      Code="&quot;213&quot;"
+      SearchFields="&quot;213,רישיון לסחר במערכות גפ&quot;מ לרכב&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון לסחר במערכות גפ&quot;מ לרכב&quot;" />
+    <Record
+      Code="&quot;214&quot;"
+      SearchFields="&quot;214,רישיון לסחר בצמיגים&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון לסחר בצמיגים&quot;" />
+    <Record
+      Code="&quot;215&quot;"
+      SearchFields="&quot;215,רשיון אוטונומיה 2&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אוטונומיה 2&quot;" />
+    <Record
+      Code="&quot;216&quot;"
+      SearchFields="&quot;216,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 2&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 2&quot;" />
+    <Record
+      Code="&quot;217&quot;"
+      SearchFields="&quot;217,רישיון אגף הרכב ושרותי תחזוקה - יבוא אישי&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון אגף הרכב ושרותי תחזוקה - יבוא אישי&quot;" />
+    <Record
+      Code="&quot;218&quot;"
+      SearchFields="&quot;218,אישור אגף הרכב ושרותי תחזוקה - יבוא אישי&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף הרכב ושרותי תחזוקה - יבוא אישי&quot;" />
+    <Record
+      Code="&quot;220&quot;"
+      SearchFields="&quot;220,רשיון יצוא (משרד התחבורה)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון יצוא (משרד התחבורה)&quot;" />
+    <Record
+      Code="&quot;221&quot;"
+      SearchFields="&quot;221,רשיון אגף הרכב ושירותי תחזוקה - צמ&quot;ה&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אגף הרכב ושירותי תחזוקה - צמ&quot;ה&quot;" />
+    <Record
+      Code="&quot;301&quot;"
+      SearchFields="&quot;301,אישור 2ג2&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור 2ג2&quot;" />
+    <Record
+      Code="&quot;302&quot;"
+      SearchFields="&quot;302,אישור מידות ומשקלות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מידות ומשקלות&quot;" />
+    <Record
+      Code="&quot;303&quot;"
+      SearchFields="&quot;303,אישור מנכ&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל&quot;" />
+    <Record
+      Code="&quot;304&quot;"
+      SearchFields="&quot;304,מ.ב 72&quot;"
+      Inactive="false"
+      LocalName="&quot;מ.ב 72&quot;" />
+    <Record
+      Code="&quot;305&quot;"
+      SearchFields="&quot;305,אישור תמ&quot;ת&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור תמ&quot;ת&quot;" />
+    <Record
+      Code="&quot;307&quot;"
+      SearchFields="&quot;307,אישור המפקח על הילומים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור המפקח על הילומים&quot;" />
+    <Record
+      Code="&quot;308&quot;"
+      SearchFields="&quot;308,רישיון צי&quot;ח מנהל מוצרי צריכה&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון צי&quot;ח מנהל מוצרי צריכה&quot;" />
+    <Record
+      Code="&quot;309&quot;"
+      SearchFields="&quot;309,רישיון צי&quot;ח מנהל היהלומים&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון צי&quot;ח מנהל היהלומים&quot;" />
+    <Record
+      Code="&quot;310&quot;"
+      SearchFields="&quot;310,רישיון צי&quot;ח מחוז המרכז בתמ&quot;ת&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון צי&quot;ח מחוז המרכז בתמ&quot;ת&quot;" />
+    <Record
+      Code="&quot;311&quot;"
+      SearchFields="&quot;311,רישיון מינהל סביבה ופיתוח בר קיימא&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון מינהל סביבה ופיתוח בר קיימא&quot;" />
+    <Record
+      Code="&quot;313&quot;"
+      SearchFields="&quot;313,2ג2 - פטור מרשיון&quot;"
+      Inactive="false"
+      LocalName="&quot;2ג2 - פטור מרשיון&quot;" />
+    <Record
+      Code="&quot;314&quot;"
+      SearchFields="&quot;314,רשיון צי&quot;ח 2 (ד) מכסות והטלי סחר&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון צי&quot;ח 2 (ד) מכסות והטלי סחר&quot;" />
+    <Record
+      Code="&quot;315&quot;"
+      SearchFields="&quot;315,רישיון ארצות אסורות - פקודת המסחר עם האויב&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון ארצות אסורות - פקודת המסחר עם האויב&quot;" />
+    <Record
+      Code="&quot;316&quot;"
+      SearchFields="&quot;316,רשיון אוטונומיה 3&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אוטונומיה 3&quot;" />
+    <Record
+      Code="&quot;317&quot;"
+      SearchFields="&quot;317,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 3&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 3&quot;" />
+    <Record
+      Code="&quot;318&quot;"
+      SearchFields="&quot;318,אישור מפקח&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מפקח&quot;" />
+    <Record
+      Code="&quot;320&quot;"
+      SearchFields="&quot;320,רשיון יצוא - מינהל סביבה ופיתוח בר קיימא&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון יצוא - מינהל סביבה ופיתוח בר קיימא&quot;" />
+    <Record
+      Code="&quot;321&quot;"
+      SearchFields="&quot;321,רשיון דו שימושי&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון דו שימושי&quot;" />
+    <Record
+      Code="&quot;322&quot;"
+      SearchFields="&quot;322,רשיון המפקח על היהלומים&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון המפקח על היהלומים&quot;" />
+    <Record
+      Code="&quot;323&quot;"
+      SearchFields="&quot;323,רשיון תמ&quot;ת MTCR&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון תמ&quot;ת MTCR&quot;" />
+    <Record
+      Code="&quot;324&quot;"
+      SearchFields="&quot;324,רשיון תמ&quot;ת אב&quot;כ&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון תמ&quot;ת אב&quot;כ&quot;" />
+    <Record
+      Code="&quot;325&quot;"
+      SearchFields="&quot;325,אישור המפקח על היהלומים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור המפקח על היהלומים&quot;" />
+    <Record
+      Code="&quot;339&quot;"
+      SearchFields="&quot;339,אישור תמ&quot;ת מיוחד&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור תמ&quot;ת מיוחד&quot;" />
+    <Record
+      Code="&quot;402&quot;"
+      SearchFields="&quot;402,אישור לשחרור&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור לשחרור&quot;" />
+    <Record
+      Code="&quot;403&quot;"
+      SearchFields="&quot;403,אישור מפמ&quot;כ&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מפמ&quot;כ&quot;" />
+    <Record
+      Code="&quot;404&quot;"
+      SearchFields="&quot;404,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 4&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 4&quot;" />
+    <Record
+      Code="&quot;420&quot;"
+      SearchFields="&quot;420,רשיון יצוא (מכון התקנים)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון יצוא (מכון התקנים)&quot;" />
+    <Record
+      Code="&quot;421&quot;"
+      SearchFields="&quot;421,רשיון הממונה על הקרינה (מכון התקנים)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון הממונה על הקרינה (מכון התקנים)&quot;" />
+    <Record
+      Code="&quot;501&quot;"
+      SearchFields="&quot;501,אישור מנהל&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנהל&quot;" />
+    <Record
+      Code="&quot;502&quot;"
+      SearchFields="&quot;502,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 5&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 5&quot;" />
+    <Record
+      Code="&quot;503&quot;"
+      SearchFields="&quot;503,רישיון יבוא לפט&quot;מ&quot;"
+      Inactive="false"
+      LocalName="&quot;רישיון יבוא לפט&quot;מ&quot;" />
+    <Record
+      Code="&quot;504&quot;"
+      SearchFields="&quot;504,בדיקה&quot;"
+      Inactive="false"
+      LocalName="&quot;בדיקה&quot;" />
+    <Record
+      Code="&quot;602&quot;"
+      SearchFields="&quot;602,אישור חומרים מסוכנים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור חומרים מסוכנים&quot;" />
+    <Record
+      Code="&quot;603&quot;"
+      SearchFields="&quot;603,אישור ממונה על הקרינה&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור ממונה על הקרינה&quot;" />
+    <Record
+      Code="&quot;604&quot;"
+      SearchFields="&quot;604,ת.רשום ע&quot;פ תקנות תכשרים להדברה&quot;"
+      Inactive="false"
+      LocalName="&quot;ת.רשום ע&quot;פ תקנות תכשרים להדברה&quot;" />
+    <Record
+      Code="&quot;605&quot;"
+      SearchFields="&quot;605,רשיון לתכשיר לפי צו תכשירים&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לתכשיר לפי צו תכשירים&quot;" />
+    <Record
+      Code="&quot;606&quot;"
+      SearchFields="&quot;606,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 6&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 6&quot;" />
+    <Record
+      Code="&quot;607&quot;"
+      SearchFields="&quot;607,אישור מנכ&quot;ל משרד להגנת הסביבה&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל משרד להגנת הסביבה&quot;" />
+    <Record
+      Code="&quot;620&quot;"
+      SearchFields="&quot;620,רשיון הממונה על הקרינה (הגנת הסביבה)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון הממונה על הקרינה (הגנת הסביבה)&quot;" />
+    <Record
+      Code="&quot;701&quot;"
+      SearchFields="&quot;701,אישור שירות המזון&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור שירות המזון&quot;" />
+    <Record
+      Code="&quot;702&quot;"
+      SearchFields="&quot;702,אישור אגף הרוקחות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף הרוקחות&quot;" />
+    <Record
+      Code="&quot;703&quot;"
+      SearchFields="&quot;703,אישור אמ&quot;ר&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אמ&quot;ר&quot;" />
+    <Record
+      Code="&quot;704&quot;"
+      SearchFields="&quot;704,רשיון אגף הרוקחות&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון אגף הרוקחות&quot;" />
+    <Record
+      Code="&quot;705&quot;"
+      SearchFields="&quot;705,אישור שחרור תחנת מעבר&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור שחרור תחנת מעבר&quot;" />
+    <Record
+      Code="&quot;706&quot;"
+      SearchFields="&quot;706,אגף הרוקחות - רשיון ע&quot;פ צו התמרוקים&quot;"
+      Inactive="false"
+      LocalName="&quot;אגף הרוקחות - רשיון ע&quot;פ צו התמרוקים&quot;" />
+    <Record
+      Code="&quot;708&quot;"
+      SearchFields="&quot;708,אישור מכשירי קרינה&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מכשירי קרינה&quot;" />
+    <Record
+      Code="&quot;709&quot;"
+      SearchFields="&quot;709,אישור מנכ&quot;ל בריאות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל בריאות&quot;" />
+    <Record
+      Code="&quot;710&quot;"
+      SearchFields="&quot;710,אישור אגף הרוקחות - סמים&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור אגף הרוקחות - סמים&quot;" />
+    <Record
+      Code="&quot;711&quot;"
+      SearchFields="&quot;711,רשיון יבוא מלשכת הבריאות בנפת רמלה&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון יבוא מלשכת הבריאות בנפת רמלה&quot;" />
+    <Record
+      Code="&quot;712&quot;"
+      SearchFields="&quot;712,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 7&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 7&quot;" />
+    <Record
+      Code="&quot;713&quot;"
+      SearchFields="&quot;713,אישור 2ג2 – אגף הרוקחות&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור 2ג2 – אגף הרוקחות&quot;" />
+    <Record
+      Code="&quot;714&quot;"
+      SearchFields="&quot;714,2ג2 – פטור מרישיון אגף הרוקחות&quot;"
+      Inactive="false"
+      LocalName="&quot;2ג2 – פטור מרישיון אגף הרוקחות&quot;" />
+    <Record
+      Code="&quot;801&quot;"
+      SearchFields="&quot;801,אישור ביטחון&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור ביטחון&quot;" />
+    <Record
+      Code="&quot;802&quot;"
+      SearchFields="&quot;802,אישור מנכ&quot;ל ביטחון&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור מנכ&quot;ל ביטחון&quot;" />
+    <Record
+      Code="&quot;803&quot;"
+      SearchFields="&quot;803,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 8&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 8&quot;" />
+    <Record
+      Code="&quot;820&quot;"
+      SearchFields="&quot;820,רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד לחימה)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד לחימה)&quot;" />
+    <Record
+      Code="&quot;821&quot;"
+      SearchFields="&quot;821,רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד MTCR)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לפי חוק הפיקוח על יצוא בטחוני (ציוד MTCR)&quot;" />
+    <Record
+      Code="&quot;822&quot;"
+      SearchFields="&quot;822,רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח)&quot;" />
+    <Record
+      Code="&quot;823&quot;"
+      SearchFields="&quot;823,רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח המועבר לשטחי האחריות האזרחית הפלשתינית)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לפי חוק הפיקוח על יצוא בטחוני (דו שימושי מפוקח המועבר לשטחי האחריות האזרחית הפלשתינית)&quot;" />
+    <Record
+      Code="&quot;824&quot;"
+      SearchFields="&quot;824,רשיון לפי צו הפיקוח על מצרכים ושירותים (עיסוק באמצעי הצפנה)&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון לפי צו הפיקוח על מצרכים ושירותים (עיסוק באמצעי הצפנה)&quot;" />
+    <Record
+      Code="&quot;901&quot;"
+      SearchFields="&quot;901,אישור וועדה לאנרגיה אטומית&quot;"
+      Inactive="false"
+      LocalName="&quot;אישור וועדה לאנרגיה אטומית&quot;" />
+    <Record
+      Code="&quot;902&quot;"
+      SearchFields="&quot;902,רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 9&quot;"
+      Inactive="false"
+      LocalName="&quot;רשיון ע&quot;פ צו מתן רשיונות יבוא 1939 9&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;ConfirmationType&quot;"
+    ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.ConfirmationType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CONT&quot;"
+    QueryGroupName="&quot;Customs.ConfirmationType&quot;"
+    LocalTextCode="&quot;סוג אישור&quot;"
+    TextCode="&quot;Confirmation Types&quot;"
+    TextCodeCode="&quot;Customs.ConfirmationType.Q.ConfirmationTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CONFIRMATIONTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.ConfirmationType.Features.ConfirmationTypes&quot;"
+    FeatureDefaultText="&quot;Confirmation Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;ConfirmationType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;ConfirmationType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;ConfirmationType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;ConfirmationType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.ConfirmationType&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

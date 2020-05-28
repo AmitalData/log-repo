@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ShipmentWcfService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.InfrastructureModel.EntityPMs" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/WebFreight.Web.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/ShipmentWcfService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityLists" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IShipmentWcfService_Upsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:Upsert" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_Upsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_Cancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:Cancel" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_Cancel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_Delete_InputMessage">
+    <wsdl:part name="parameters" element="tns:Delete" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_Delete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_CreateEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEvent" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_CreateEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEventResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_BuildEventsList_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuildEventsList" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_BuildEventsList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuildEventsListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_GetShipmentList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentList" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_GetShipmentList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_DeleteShipmentEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteShipmentEvent" />
+  </wsdl:message>
+  <wsdl:message name="IShipmentWcfService_DeleteShipmentEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteShipmentEventResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IShipmentWcfService">
+    <wsdl:operation name="Upsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/Upsert" message="tns:IShipmentWcfService_Upsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/UpsertResponse" message="tns:IShipmentWcfService_Upsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Cancel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/Cancel" message="tns:IShipmentWcfService_Cancel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/CancelResponse" message="tns:IShipmentWcfService_Cancel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/Delete" message="tns:IShipmentWcfService_Delete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/DeleteResponse" message="tns:IShipmentWcfService_Delete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateEvent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/CreateEvent" message="tns:IShipmentWcfService_CreateEvent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/CreateEventResponse" message="tns:IShipmentWcfService_CreateEvent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuildEventsList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/BuildEventsList" message="tns:IShipmentWcfService_BuildEventsList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/BuildEventsListResponse" message="tns:IShipmentWcfService_BuildEventsList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/GetShipmentList" message="tns:IShipmentWcfService_GetShipmentList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/GetShipmentListResponse" message="tns:IShipmentWcfService_GetShipmentList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteShipmentEvent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IShipmentWcfService/DeleteShipmentEvent" message="tns:IShipmentWcfService_DeleteShipmentEvent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IShipmentWcfService/DeleteShipmentEventResponse" message="tns:IShipmentWcfService_DeleteShipmentEvent_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IShipmentWcfService" type="tns:IShipmentWcfService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Upsert">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/Upsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Cancel">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/Cancel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateEvent">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/CreateEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuildEventsList">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/BuildEventsList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentList">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/GetShipmentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteShipmentEvent">
+      <soap:operation soapAction="http://tempuri.org/IShipmentWcfService/DeleteShipmentEvent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShipmentWcfService">
+    <wsdl:port name="BasicHttpBinding_IShipmentWcfService" binding="tns:BasicHttpBinding_IShipmentWcfService">
+      <soap:address location="http://localhost:9996/WcfApi/ShipmentWcfService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

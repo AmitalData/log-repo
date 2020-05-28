@@ -101,6 +101,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\LoginScreen\password_eye.png" />
+    <Content Include="Images\LoginScreen\password_eye_closed.png" />
     <Content Include="Js\ChangePasswordFunctions.js" />
     <Content Include="Login\Components\ChangePasswordComponent.css" />
     <Content Include="Login\Components\ChangePasswordComponent.html" />

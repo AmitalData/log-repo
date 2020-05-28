@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -74,21 +75,15 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant); 
 			       
 					   				   }
-				   			  
-				   if(MyEntityPM.City != null)
-				   {
-					   CityQueryService CityService1 = new CityQueryService(Tenant);
-					   					   temp.City = CityService1.GetCityById(MyEntityPM.City,Tenant); 
-			       
-					   				   }
 				   
+				   temp.City = MyEntityPM.City;
 				   temp.ZipCode = MyEntityPM.ZipCode;
 				   temp.PhoneNumber = MyEntityPM.PhoneNumber;
 				   temp.FaxNumber = MyEntityPM.FaxNumber;			  
 				   if(MyEntityPM.StateId != null)
 				   {
-					   StateQueryService StateService2 = new StateQueryService(Tenant);
-					   					   temp.State = StateService2.GetStateById(MyEntityPM.StateId,Tenant); 
+					   StateQueryService StateService1 = new StateQueryService(Tenant);
+					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant); 
 			       
 					   				   }
 				   
@@ -113,16 +108,27 @@ using Simplog.Data.CommonDataModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Address with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Address with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.Name = MyEntity.Name;
 					temp.Address1 = MyEntity.Address1;
-					temp.Address2 = MyEntity.Address2;					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
+					temp.Address2 = MyEntity.Address2;
+					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
 					if(MyEntity.Country != null)
 					{
 						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName);
@@ -133,21 +139,12 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										CityQueryService CityCityService = new CityQueryService(Tenant);
-					if(MyEntity.City != null)
-					{
-						var myCityPM = CityCityService.CityDataMappingAndValidatin(MyEntity.City,Tenant,ComputingPartnerName);
-												if(myCityPM != null)
-						{
-							temp.City = myCityPM.Id;
-						}
-						 
-					}
-			
 					
+					temp.City = MyEntity.City;
 					temp.ZipCode = MyEntity.ZipCode;
 					temp.PhoneNumber = MyEntity.PhoneNumber;
-					temp.FaxNumber = MyEntity.FaxNumber;					StateQueryService StateStateService = new StateQueryService(Tenant);
+					temp.FaxNumber = MyEntity.FaxNumber;
+					StateQueryService StateStateService = new StateQueryService(Tenant);
 					if(MyEntity.State != null)
 					{
 						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName);

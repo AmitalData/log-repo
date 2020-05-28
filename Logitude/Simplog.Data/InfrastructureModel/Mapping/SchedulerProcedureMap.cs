@@ -33,6 +33,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .IsOptional()
                .HasMaxLength(1000)
                .IsUnicode(false);
+            this.Property(t => t.IsInternallyDefined)
+             .IsOptional();
+             
+             
 
 
             // Table & Column Mappings
@@ -41,6 +45,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.IsInternallyDefined).HasColumnName("IsInternallyDefined");
 
         }
     }

@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'WarehouseBlockBalanceComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseBlockBalanceComponent.html',
 })
 

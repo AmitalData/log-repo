@@ -25,7 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         ObjectTableId, 
-	         ObjectfieldId,
+	         ObjectfieldId, 
+	         ObjectfieldCode,
 	      }
 
 
@@ -36,7 +37,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         ObjectTableId, 
 	         ObjectfieldId, 
-	         ObjectFieldName,
+	         ObjectFieldName, 
+	         ObjectfieldCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -58,6 +60,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldId))
             {
 				entityPOCO.ObjectfieldId = entityPM.ObjectfieldId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldCode))
+            {
+				entityPOCO.ObjectfieldCode = entityPM.ObjectfieldCode;
 			}
 			}
 
@@ -84,6 +91,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ObjectfieldId = entityPOCO.ObjectfieldId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectfieldCode))
+            {
+					entityPM.ObjectfieldCode = entityPOCO.ObjectfieldCode;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsRequiredFieldPM entityPM, CustomsRequiredFieldPM oldEntityPM)
@@ -103,6 +115,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldId))
             {
                 oldEntityPM.ObjectfieldId = entityPM.ObjectfieldId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectfieldCode))
+            {
+                oldEntityPM.ObjectfieldCode = entityPM.ObjectfieldCode;
             }
 			
 		}

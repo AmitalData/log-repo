@@ -64,7 +64,15 @@ namespace WebFreight.Web
                     emailDetails.Subject = helper.getSubject(subject);
 
                     emailDetails.Sender = helper.GetValue("sender");
-                    emailDetails.RecipientEmail = helper.GetValue("recipient");
+                    //emailDetails.RecipientEmail = helper.GetValue("recipient");
+
+                    string recipientEmails = helper.GetValue("recipient");
+                    if (!string.IsNullOrEmpty(recipientEmails) && recipientEmails.Contains(','))
+                    {
+                        recipientEmails = recipientEmails.Replace(',', ';');
+                    }
+                    recipientEmails = helper.TruncateCc(recipientEmails, 4000);
+                    emailDetails.RecipientEmail = recipientEmails;
 
                     string toEmails = helper.GetValue("To");
                     if (!string.IsNullOrEmpty(toEmails) && toEmails.Contains(','))
@@ -151,7 +159,7 @@ namespace WebFreight.Web
                 var reader = new StreamReader(myMemoryStream);
                 string content = reader.ReadToEnd();
                 byte[] bytearray = myMemoryStream.ToArray();
-                int tenant = helper.GetTenant(emailDetails.RecipientEmail).Id;
+                int tenant = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail).Id;
                 AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
                 AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                 {

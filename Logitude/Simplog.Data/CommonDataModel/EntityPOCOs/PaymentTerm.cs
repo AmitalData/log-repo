@@ -25,6 +25,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsManuallySet { get; set; }
         public bool CurrentMonth { get; set; }
         public string FromDateTypeCode { get; set; }
+        public string Code { get; set; }
 
         [ForeignKey("FromDateTypeCode")]
         public virtual PaymentTermDateType FromDateType { get; set; }

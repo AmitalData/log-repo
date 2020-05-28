@@ -128,12 +128,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Vendor Vendor { get; set; }
         public virtual Participant Participant { get; set; }
         public virtual CustomsShipper CustomsShipper { get; set; }
-
+        public virtual AccountingPartner AccountingPartner { get; set; }
+        
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
-  
+        public string CreatedByPartner { get; set; }
 
+        public int? StorageFreeDays { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
 
     }

@@ -19,17 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public SuppInvoiceItemsAbachStatementMap()
         { 
-		
-     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-    if (dbms == "oracle")
-    {
-	  this.ToTable("SuppInvoiceItemsAbachStatement", "Customs");
-	}
-    else
-    {
-	  this.ToTable("SuppInvoiceItemsAbachStatements", "Customs");
-	}
-
+			  this.ToTable("SuppInvoiceItemsAbachStatement", "Customs");
 		
 		    this.HasKey(t => new { t.DeclarationId, t.InvoiceCounterKey, t.InvoiceItemLineNumber, t.SequenceNumeric });
 	 
@@ -43,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.StatementType).HasColumnName("StatementType").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.StatementType).HasColumnName("StatementType").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.StatementInd).HasColumnName("StatementInd").HasMaxLength(1).IsUnicode(true);
         }

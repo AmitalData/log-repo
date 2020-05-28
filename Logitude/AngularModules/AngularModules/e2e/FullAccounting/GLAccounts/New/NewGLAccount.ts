@@ -12,36 +12,48 @@ export class NewGLAccount {
 
   }
 
-  CreateNewGLAccount(LocalName: string, DisplayNumber: string) {
-    browser.ignoreSynchronization = true;
-
-    
-    this.Helper.WaitByIdAndClick('NewGLAccount');
-   
-
-    this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
-    this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
-    this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
-   // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
-      this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
-      this.Helper.WaitBusyIndicator();
-    
-    this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
-    this.Helper.WaitBusyIndicator();
-    this.Helper.WaitWindowClosed();
-    
+  CreateNewGLAccount(LocalName: string) {
+        browser.ignoreSynchronization = true;
 
 
+        this.Helper.WaitByIdAndClick('NewGLAccount');
+        this.Helper.ItemsVisibility('GLAccount_ChartOfAccountsTypeCode');
+        this.Helper.ItemsPresent('GLAccount_ChartOfAccountsTypeCode');
+
+        this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsTypeCode', 'Revenues')
+        // this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsId', 'Rev')
+
+        //  this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+        this.Helper.WaitBusyIndicator();
+        //this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
 
 
-
-
+        this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
+        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitWindowClosed();
 
   }
 
 
 }
+    
+
+
+
+
+
+
+
+  
+
+
+
 
 
 

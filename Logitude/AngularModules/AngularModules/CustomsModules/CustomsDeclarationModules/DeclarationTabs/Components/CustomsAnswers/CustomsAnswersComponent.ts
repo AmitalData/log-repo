@@ -1,8 +1,7 @@
 declare var window: any;
 import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,22 +11,17 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
 import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
-
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
 
 // Send Request
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
-import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
@@ -35,11 +29,10 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './CustomsAnswersComponent.html',
     providers: [DeclarationExtendedListService]
-
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -95,11 +88,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
                             //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
@@ -607,7 +600,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (tableName == 'Customs.SupplierInvioceItemsCertificate') {
             tableName = 'Customs.SupplierInvioceItemCertificat';
         }
-        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
             // this.GetResourceForTableName(tables);
             if (this.errorsLength != 1) {
                 this.errorsLength--;
@@ -625,7 +618,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.EntityPM.IsDirty) {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            var event = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            var event:any = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                 if (event) {
                     event.unsubscribe();
@@ -1141,14 +1134,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsDepositionStatusCodeButton = false;
                 this.IsDepositionStatusCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsDepositionStatusCodeButton = false;
                             this.IsDepositionStatusCodeSendDigital = false;
                             //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
@@ -1157,7 +1150,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                 this.IsDepositionStatusCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe(res => {
+                                .subscribe((res:any) => {
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDepositionStatusCodeButton = true;
                                         this.IsDepositionStatusCodeSendDigital = true;

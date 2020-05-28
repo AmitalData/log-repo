@@ -111,7 +111,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         temp.Tenant = Tenant;
                         ARPaymentInvoicePMs.Add(temp);
                     }
-
+                    else
+                    {   throw new ApplicationException("ARInvoice with invoice number " + item.ARInvoiceNumber + " doesn't exist");
+                    }
                 }
                 return ARPaymentInvoicePMs;
             }

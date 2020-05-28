@@ -58,6 +58,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
             cardcontact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
 
+            CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
+            CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
+            cardcontact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
+
             return cardcontact;
         }
 
@@ -139,6 +143,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
             cardcontact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
 
+            CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
+            CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
+            cardcontact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
+            
             return cardcontact;
         }
 

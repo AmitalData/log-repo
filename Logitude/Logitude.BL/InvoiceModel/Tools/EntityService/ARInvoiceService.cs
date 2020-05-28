@@ -45,6 +45,7 @@ using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
 
+ 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARInvoiceService
@@ -54,6 +55,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isUpdateTotalVats;
         private bool isVoidingInvoice;
         private bool isApprovingInvoice;
+        private bool isAutoCreditingInvoice;
         public ARInvoice invoice { get; set; }
         private ARInvoicePM entityPM;
         private string loggedContactId;
@@ -71,6 +73,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
         private ContactRepository contactRepository;
+        private InterestReportRepository InterestReportRepository;
         private List<string> allShipmentIds;
         private List<string> allActiveShipmentIds;
         private List<Shipment> allShipments;
@@ -80,7 +83,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         SATInterfaceHelper sATInterfaceHelper;
         AccountingSetting accountingSetting;
         private Tenant TenantObject;
-        private string QBOARPaymentId;      
+        private string QBOARPaymentId;
         public ARInvoiceService(IInvoiceContext objectContext, int tenant)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -89,7 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myShipmentContext = ShipmentsContext.GetContext(tenant);
-
+ 
             this.invoiceRepository = new ARInvoiceRepository(objectContext);
             this.invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new ARInvoiceTotalVATRepository(objectContext);
@@ -97,19 +100,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
 
-
             this.vatTypeRepository = new VatTypeRepository(myCommonContext);
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
-
+ 
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
             shipmentRepository = new ShipmentRepository(myShipmentContext);
             shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);
 
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-            this.GetLoggedContact();
             this.GetAccountingSystem();
         }
         public ARInvoiceService(IInvoiceContext objectContext, int tenant, string loggedUserEmail)
@@ -170,15 +171,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.TenantObject = (from d in commonMockContext.Tenants where d.Id == tenant select d).FirstOrDefault();
 
-            this.GetLoggedContact();
             this.GetAccountingSystem();
         }
-        private ContactPM loggedContact;
 
         private void GetLoggedContact()
         {
-            loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            
+            ContactPM loggedContact = null;
+
+            if (entityPM.IsFromConsolidationBatch)
+            {
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
+                ContactQuery contactQuery = new ContactQuery(contactRepository);
+                loggedContact = contactQuery.GetSinglePM(entityPM.UpdatedByUserId, tenant);
+
+                if (loggedContact == null)
+                {
+                    loggedContact = contactQuery.GetSinglePM(entityPM.UpdatedByUserId, 0);
+                }
+            }
+
+            else
+            {
+                loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            }
+
             if (loggedContact != null)
             {
                 loggedContactId = loggedContact.Id;
@@ -191,30 +207,40 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTaxItemManaged;
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
         private void GetAccountingSystem()
         {
+        
+            if(accountingSettingRepository == null)
+                accountingSettingRepository = new AccountingSettingRepository(tenant);
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+            if (this.accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
 
-            this.isJournal = accountingSystem.IsJournalMode;
-            this.isExternal = accountingSystem.IsExternalCodesFromTable;
-            this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
-            this.isTransferToDropbox =  accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+                if (accountingSystem != null)
+                {
+                    this.isJournal = accountingSystem.IsJournalMode;
+                    this.isExternal = accountingSystem.IsExternalCodesFromTable;
+                    this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+                }
+            }
         }
 
         public void Create(ARInvoicePM theEntityPM)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
+            this.GetLoggedContact();
             this.isVoidingInvoice = this.entityPM.SetVoided;
-
-            if(entityPM.IsAutoCredit)
-            {
-                entityPM.SetApproved = false;
-            }
-
             this.isApprovingInvoice = entityPM.SetApproved;
+
+
             this.invoice = new ARInvoice();
 
             if (entityPM.IssuedByUserId == null)
@@ -234,7 +260,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.InitializeTransferComponents();
             }
 
-            else if (!entityPM.IsGeneralInvoice)
+            else if (!entityPM.IsGeneralInvoice || entityPM.ARInvoiceTypeCode == "IT")
             {
                 this.GetShipmentsData(entityPM.InvoiceLines);
                 this.UpdateInvoiceEntities();
@@ -245,10 +271,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildSearchFields();
             // Full Accounting - Tax Fields Work 
             this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
+            CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
-            ARInvoiceHelper helper = new ARInvoiceHelper();
-            helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);
-         
+            ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
+            helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -266,6 +293,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            if (entityPM.ARInvoiceTypeCode == "IT")
+            {
+                this.UpdateInterestReportFields(entityPM);
+            }
+
+
+        }
+
+
+
+        private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
+        {
+            IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency , theEntityPM.InvoiceEntities[0].EntityId);
         }
 
         private void ValidateInvoiceConnected()
@@ -339,6 +380,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPM = theEntityPM;
+            this.GetLoggedContact();
+
             this.isVoidingInvoice = entityPM.SetVoided;
 
             if (entityPM.IsAutoCredit)
@@ -367,7 +410,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     throw new ApplicationException("this invoice is Draft cancelled");
                 }
 
-                if(invoice.ApprovedDate != null)
+                if (invoice.ApprovedDate != null)
                 {
                     throw new ApplicationException("This invoice is already approved");
                 }
@@ -444,8 +487,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 this.UpdateInvoiceLines();
                 this.UpdateTotalVats();
-                
-                ARInvoiceHelper helper = new ARInvoiceHelper();
+
+                ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
                     helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
@@ -458,7 +501,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-               
+
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
@@ -488,7 +531,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 this.BuildSearchFields();
 
-               
+
             }
 
             invoiceRepository.Update(invoice);
@@ -514,7 +557,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ARInvoiceStockNumber()
         {
-            if(!this.isApprovingInvoice && !this.isVoidingInvoice)
+            if (!this.isApprovingInvoice && !this.isVoidingInvoice)
             {
                 IInvoiceContext context = InvoiceContext.GetContext(tenant);
                 ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(tenant);
@@ -525,20 +568,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (this.isNewEntity)
                 {
-                    if(entityPM.ARInvoiceStockId != null)
+                    if (entityPM.ARInvoiceStockId != null)
                     {
                         stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);
-                        if(stockLine != null)
+                        if (stockLine != null)
                         {
                             stockLine.IsUsed = true;
                             stockLine.ARInvoiceId = entityPM.Id;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
-                            aRInvoiceStockService.Update(stock,false);
+                            aRInvoiceStockService.Update(stock, false);
                             this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from " + stock.Name);
                         }
                     }
@@ -551,17 +594,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         stockLine = new ARInvoiceStockLine();
                         if (entityPM.ARInvoiceStockId == null)
                         {
-                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, tenant);
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(this.invoice.ARInvoiceStockId, tenant);
                             stockLine.IsUsed = false;
                             stockLine.ARInvoiceId = null;
                             stockLine.ShipmentNumber = null;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
                             this.CreateInvoiceStockEvent("NRTS", entityPM.Id, stockLine.Number + " returned to " + stock.Name);
-                            this.entityPM.IsInvoiceNumberFromStock = false; 
+                            this.entityPM.IsInvoiceNumberFromStock = false;
                         }
 
                         else
@@ -571,19 +614,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             stockLine.ARInvoiceId = entityPM.Id;
                             stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
-                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from "+ stock.Name);
+                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from " + stock.Name);
                         }
-                       
+
                         aRInvoiceStockService.Update(stock, false);
                     }
                 }
             }
         }
-       
+
         private void CreateInvoiceStockEvent(String code, string entityId, string note)
         {
             EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -605,7 +648,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(ARInvoice.MainEntityReference, tenant);
-           
+
             ChargesTypeRepository chargeTypeRepository = new ChargesTypeRepository(tenant);
             ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(chargeTypeRepository);
 
@@ -618,7 +661,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceTotalVATQuery arInvoiceTotalVatQuery = new ARInvoiceTotalVATQuery(aRInvoiceTotalVATRepositoryRepository);
 
             StringBuilder FlatFile = new StringBuilder();
-            FlatFile.Append("INVOICE DATE|" + String.Format("{0:dd/MM/yyyy}", ((DateTime)ARInvoice.InvoiceDate))+"|");
+            FlatFile.Append("INVOICE DATE|" + String.Format("{0:dd/MM/yyyy}", ((DateTime)ARInvoice.InvoiceDate)) + "|");
             FlatFile.Append("\r\n");
             FlatFile.Append("CODE|" + cardPM.Code + "|");
             FlatFile.Append("\r\n");
@@ -663,7 +706,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             FlatFile.Append("TYPE OF SHIPMENT|" + (shipmentPM.TransportModeId == "A" ? "Aereo" : shipmentPM.TransportModeId == "O" ? "MARITIMO" : "terrestre") + " | ");
             FlatFile.Append("\r\n");
             FlatFile.Append("MAIN CARRIAGE TRANSPORT|" + shipmentPM.MainCarriageCarrierName + "|");
-            FlatFile.Append("\r\n");        
+            FlatFile.Append("\r\n");
 
             for (int i = 0; i < ARInvoice.InvoiceLines.Count; i++)
             {
@@ -675,16 +718,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             FlatFile.Append("SUBTOTAL INVOICE|" + ARInvoice.SubTotalInInvoiceCurrency + "|");
             FlatFile.Append("\r\n");
-          List<ARInvoiceTotalVATPM> arInvoicesTotalvats=arInvoiceTotalVatQuery.GetTotalVATs(ARInvoice.Id, tenant).ToList();
-            for(int i=0;i< arInvoicesTotalvats.Count; i++)
+            List<ARInvoiceTotalVATPM> arInvoicesTotalvats = arInvoiceTotalVatQuery.GetTotalVATs(ARInvoice.Id, tenant).ToList();
+            for (int i = 0; i < arInvoicesTotalvats.Count; i++)
             {
                 if (arInvoicesTotalvats[i].VATPercent == 16) {
-                    FlatFile.Append("STD 16% INVOICE|"+ arInvoicesTotalvats [i].InvoiceCurrencyVATAmount+ "|");                   
+                    FlatFile.Append("STD 16% INVOICE|" + arInvoicesTotalvats[i].InvoiceCurrencyVATAmount + "|");
                 }
                 else
                 {
-                    if(arInvoicesTotalvats[i].VATPercent != 0)
-                    FlatFile.Append("TOTAL VAT TYPE "+ arInvoicesTotalvats[i] .VATPercent+ "% |" + arInvoicesTotalvats[i].InvoiceCurrencyVATAmount + "|");
+                    if (arInvoicesTotalvats[i].VATPercent != 0)
+                        FlatFile.Append("TOTAL VAT TYPE " + arInvoicesTotalvats[i].VATPercent + "% |" + arInvoicesTotalvats[i].InvoiceCurrencyVATAmount + "|");
                 }
                 if (arInvoicesTotalvats[i].VATPercent != 0)
                     FlatFile.Append("\r\n");
@@ -693,14 +736,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             FlatFile.Append("\r\n");
 
             FlatFile.Append("CURRENCY|" + ARInvoice.InvoiceCurrencyCode + "|");
-            FlatFile.Append("\r\n");       
+            FlatFile.Append("\r\n");
 
             FlatFile.Append("NOTES|" + ARInvoice.PrintNotes + "|");
             FlatFile.Append("\r\n");
-         //   String fileContainer = FlatFile.ToString();
-          //  string path = @"D:\Flatfile.txt";
+            //   String fileContainer = FlatFile.ToString();
+            //  string path = @"D:\Flatfile.txt";
 
-         //   File.WriteAllText(path, fileContainer);
+            //   File.WriteAllText(path, fileContainer);
 
 
         }
@@ -798,105 +841,112 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public void OnCreatingAutoCredit()
         {
             ARInvoice entityPOCO = invoiceRepository.GetSingleInvoice(this.entityPM.CreditedByARInvoiceId);
-
-            if (entityPOCO.StatusCode == "AR")
+            if (entityPOCO != null)
             {
-                throw new ApplicationException("this invoice is already auto credited");
-            }
-
-            else
-            {
-                ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
-                ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
-                
-                this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
-
-                // Update Old Invoice
-                if (oldEntityPM.IsConsolidationInvoice)
+                if (entityPOCO.StatusCode == "AR")
                 {
-                    #region
-                    this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
+                    throw new ApplicationException("This invoice is already auto credited");
+                }
 
-                    foreach (ARInvoice item in allConnectedInvoices)
-                    {
-                        item.IsClosed = false;
-                        item.StatusCode = "NT";
-                        item.ConsolidationInvoiceId = null;
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            EntityId = item.Id,
-                            ObjectTableName = "ARInvoice",
-                            Tenant = tenant,
-                            UserId = loggedContactId,
-                            EventTypeCode = "INDS",
-                        });
-                    }
-
-                    if (this.entityPM.IsConsolidationInvoice)
-                    {
-
-                    }
-
-                    //ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                    //iConsolidationService.OnCreatingAutoCredit(this.allConnectedInvoices);
-
-                    #endregion
+                else if (entityPOCO.StatusCode == "VD")
+                {
+                    throw new ApplicationException("This invoice is already voided");
                 }
 
                 else
                 {
-                    #region Disconnect Receivables
-                    List<string> iReceivablesIds = (from a in oldEntityPM.InvoiceLines group a by new { a.ReceivableId } into gr select gr.Key.ReceivableId).ToList();
-                    List<ShipmentReceivable> iReceivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(iReceivablesIds, tenant);
-                    if (iReceivables.Count > 0)
+                    this.isAutoCreditingInvoice = true;
+
+                    ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
+                    ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
+
+                    //this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
+
+                    // Update Old Invoice
+                    if (oldEntityPM.IsConsolidationInvoice)
                     {
-                        foreach (ShipmentReceivable item in iReceivables)
+                        #region
+                        this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
+
+                        foreach (ARInvoice item in allConnectedInvoices)
                         {
-                            item.ARInvoiceId = null;
-                            item.ARInvoiceLineId = null;
-                            item.ShipmentReceivableLineStatusCode = "OAMT";
-                            shipmentReceivableRepository.Update(item);
+                            item.IsClosed = false;
+                            item.StatusCode = "NT";
+                            item.ConsolidationInvoiceId = null;
+
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                EntityId = item.Id,
+                                ObjectTableName = "ARInvoice",
+                                Tenant = tenant,
+                                UserId = loggedContactId,
+                                EventTypeCode = "INDS",
+                            });
+                        }
+                        #endregion
+                    }
+
+                    else
+                    {
+                        #region Disconnect Receivables
+                        List<string> iReceivablesIds = (from a in oldEntityPM.InvoiceLines group a by new { a.ReceivableId } into gr select gr.Key.ReceivableId).ToList();
+                        List<ShipmentReceivable> iReceivables = shipmentReceivableRepository.GetShipmentReceivablesByIds(iReceivablesIds, tenant);
+                        if (iReceivables.Count > 0)
+                        {
+                            foreach (ShipmentReceivable item in iReceivables)
+                            {
+                                item.ARInvoiceId = null;
+                                item.ARInvoiceLineId = null;
+                                item.ShipmentReceivableLineStatusCode = "OAMT";
+                                shipmentReceivableRepository.Update(item);
+                            }
+
+                            shipmentReceivableRepository.SubmitChanges();
                         }
 
-                        shipmentReceivableRepository.SubmitChanges();
+                        List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
+                        foreach (ARInvoiceLine line in lines)
+                        {
+                            line.ReceivableId = null;
+                            invoiceLineRepository.Update(line);
+                        }
+                        #endregion
                     }
 
-                    List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
-                    foreach (ARInvoiceLine line in lines)
-                    {
-                        line.ReceivableId = null;
-                        invoiceLineRepository.Update(line);
-                    }
-                    #endregion
+                    entityPOCO.IsCancelled = true;
+                    entityPOCO.CancelledByARInvoiceId = this.entityPM.Id;
+                    entityPOCO.StatusCode = "AR";
+                    entityPOCO.AmountDue = 0;
+                    entityPOCO.AmountDueInLocalCurrency = 0;
+                    entityPOCO.AmountDueInProfitCurrency = 0;
+                    invoiceRepository.Update(entityPOCO);
+                    invoiceRepository.SubmitChanges();
                 }
-
-                entityPOCO.IsCancelled = true;
-                entityPOCO.CancelledByARInvoiceId = this.entityPM.Id;
-                entityPOCO.StatusCode = "AR";
-                entityPOCO.AmountDue = 0;
-                entityPOCO.AmountDueInLocalCurrency = 0;
-                entityPOCO.AmountDueInProfitCurrency = 0;
-                invoiceRepository.Update(entityPOCO);
-                invoiceRepository.SubmitChanges();
             }
         }
 
         private void CreateARInvoiceMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.invoice = invoiceRepository.GetSingleInvoice(this.entityPM.Id);
-                    List<ARInvoice> entities = new List<ARInvoice>();
-                    entities.Add(this.invoice);
-                    ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
+                        this.invoice = invoiceRepository.GetSingleInvoice(this.entityPM.Id);
+                        List<ARInvoice> entities = new List<ARInvoice>();
+                        entities.Add(this.invoice);
+
+                        ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox, isFTP);
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -905,6 +955,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void InitializeComponent()
         {
+            if (entityPM.IsInvoiceNumberManuallySet)
+            {
+                entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
+            }
+            entityPM.BillToPartnerTypeId = SetBillToPartnerId();
             // DR: Draft
             // CN: Connected
             // NT: Not Connected
@@ -914,6 +969,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // AC: Auto Credit
             // AR: Auto Credited
             // VD: Void
+
+            entityPM.IsFullAccounting = IsFullAccountingActivated(entityPM.Tenant);
 
             if (string.IsNullOrEmpty(entityPM.Id))
             {
@@ -986,14 +1043,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.ApprovedByUserId = loggedContactId;
 
-                if(string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
+                if (string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
                 {
                     if (!string.IsNullOrEmpty(this.entityPM.MainEntityId))
                     {
                         Shipment myShipment = shipmentRepository.GetSingleShipment(this.entityPM.MainEntityId, tenant);
-                        if(myShipment != null)
+                        if (myShipment != null)
                         {
-                            if(string.IsNullOrEmpty(this.entityPM.MasterNumber))
+                            if (string.IsNullOrEmpty(this.entityPM.MasterNumber))
                             {
                                 if (!string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
                                 {
@@ -1002,7 +1059,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     {
                                         if (!string.IsNullOrEmpty(myMaster.Master))
                                         {
-                                            if(!string.IsNullOrEmpty(myMaster.AirlinePrefix))
+                                            if (!string.IsNullOrEmpty(myMaster.AirlinePrefix))
                                             {
                                                 this.entityPM.MasterNumber = myMaster.AirlinePrefix + "-" + myMaster.Master;
                                             }
@@ -1010,7 +1067,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                             else
                                             {
                                                 this.entityPM.MasterNumber = myMaster.Master;
-                                            }                                            
+                                            }
                                         }
                                     }
                                 }
@@ -1022,7 +1079,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
                     }
-                }                
+                }
 
                 if (!entityPM.IsInvoiceNumberManuallySet)
                 {
@@ -1103,6 +1160,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private string SetBillToPartnerId()
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
+            if (card != null)
+            {
+                return card.PartnerTypeId;
+            }
+            else return null;
+        }
         private void InitializeDueDate()
         {
             if (entityPM.DueDate == null)
@@ -1116,7 +1183,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     PaymentTermRepository paymentTermRepository = new PaymentTermRepository(myCommonContext);
                     PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, tenant);
-               
+
                     if (myPaymentTerm != null)
                     {
                         if (myPaymentTerm.IsManuallySet)
@@ -1366,9 +1433,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
 
-            if (this.entityPM.SetApproved && this.isTransferToDropbox && this.TransferToDropboxActivated && string.IsNullOrEmpty(entityPM.TransferError))
+            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                this.entityPM.TransferStatusCode = "TR";
+                if (this.isTransferToDropbox && this.TransferToDropboxActivated)
+                {
+                    this.entityPM.TransferStatusCode = "TR";
+                }
             }
         }
         private void InitializeExternalFields()
@@ -1499,9 +1569,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 itemVAT.ExternalVATCard = this.accountingSetting.ReceivableVATCard;
                             }
 
-                            else if(myVatType != null)
+                            else if (myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ExternalVATCard;
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -1518,6 +1588,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void InitializeTransferFields()
         {
+
             bool isInitializing = true;
 
             if (entityPM.IsConstituentInvoice)
@@ -1551,9 +1622,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.TransferStatusCode = "BL";
             }
 
-            else if (entityPM.TransferStatusCode == "IP" || entityPM.TransferStatusCode=="ET")
+            else if (entityPM.TransferStatusCode == "IP" || entityPM.TransferStatusCode == "ET")
             {
-                isInitializing = false;            
+                isInitializing = false;
             }
 
             if (isInitializing)
@@ -1562,15 +1633,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 bool isReady = true;
                 string myError = null;
-                string ExternalCodeError = "External Code is missing";
+                string ExternalCodeError = "Currency External Code is missing";
                 string paymentTermError = "Payment Term External Id is missing";
                 string vatError = "External VAT Card is missing";
-                string linesError = "Credit Account is missing";
+                string linesError = " Charge Type Receivable Credit Account is missing";
 
                 if (FieldIsEmpty(entityPM.DebitAccount))
                 {
                     isReady = false;
-                    myError = "Debit Account is missing";
+                    myError = "Bill to Debit Account is missing";
                 }
 
                 if (isExternal)
@@ -1618,10 +1689,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    if (myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).Any())
+                    List<ARInvoiceLinePM> arInvoiceLines_CreditError = myLines.Where(d => d.CreditAccount == null || (d.CreditAccount != null && string.IsNullOrEmpty(d.CreditAccount.Trim()))).ToList();
+                    if (arInvoiceLines_CreditError != null && arInvoiceLines_CreditError.Count() > 0)
                     {
                         isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        foreach (ARInvoiceLinePM item in arInvoiceLines_CreditError)
+                        {
+                            ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
+                        }
                     }
 
                     var myGroup = (from a in myLines
@@ -1641,10 +1718,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
+                            VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
+                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
                             isReady = false;
-                            vatError = "External VAT Card is missing";
+                            vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
-                            break;
+                            //break;
                         }
                     }
                 }
@@ -1658,17 +1737,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 else
                 {
                     entityPM.TransferStatusCode = "NR";
-                    entityPM.TransferError = myError;
+                    if (!IsFullAccountingActivated(entityPM.Tenant))
+                    {
+                        entityPM.TransferError = myError;
+                    }
                 }
                 #endregion
             }
+
         }
+        Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
             if (entityPM.SetApproved)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
                 if (tenantPOCO.AccountingActivated)
                 {
@@ -1687,7 +1771,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     ChargeTypeAccountingRepository chargeTypeAccountingRepository = new ChargeTypeAccountingRepository(tenant);
                     IQueryable<ChargeTypeAccounting> iQueryable_ChargeTypeAccounting = chargeTypeAccountingRepository.GetChargeTypeAccountings(tenant);
 
-                  
+
 
                     foreach (ARInvoiceLinePM line in lines)
                     {
@@ -1761,19 +1845,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (newLines.Count > 0)
                 {
-                    foreach(ARInvoiceLinePM item in newLines)
+                    foreach (ARInvoiceLinePM item in newLines)
                     {
                         ShipmentReceivable myReceivable = this.allReceivables.Where(d => d.Id == item.ReceivableId).FirstOrDefault();
-                        if(myReceivable == null)
+                        if (myReceivable == null)
                         {
                             throw new ApplicationException("Some of invoice lines are missing receivables");
                         }
                     }
                 }
             }
-            
+
             Shipment shipment = allShipments.Where(d => d.Id == entityPM.MainEntityId).FirstOrDefault();
-            if(shipment != null)
+            if (shipment != null)
             {
                 shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
@@ -1793,7 +1877,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (this.isNewEntity)
                 {
                     ShipmentDataView f = shipmentRepository.GetSingleShipmentDataView(shipment.Id, tenant);
-                    
+
                     switch (shipment.DirectionId)
                     {
                         case "E": { this.entityPM.Description = "Export to " + f.MainCarriageFinalDestinationPortCode; break; }
@@ -1801,7 +1885,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         case "D": { this.entityPM.Description = "Ship to " + f.MainCarriageToCity; break; }
                     }
                 }
-            }            
+            }
         }
         #endregion
 
@@ -1940,33 +2024,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             string myResult = "DRFT";
 
-            switch (entityPM.StatusCode)
+            if (entityPM.IsConstituentInvoice)
             {
-                case "NT":
-                case "CN":
-                    {
-                        if (this.isNewEntity)
+                myResult = "OAMT";
+            }
+
+            else
+            {
+                switch (entityPM.StatusCode)
+                {
+                    case "NT":
+                    case "CN":
                         {
-                            myResult = "OAMT";
+                            if (this.isNewEntity)
+                            {
+                                //myResult = "OAMT";
+                                myResult = "ACCT";
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
+                    case "AD":
+                    case "PD":
+                    case "PP":
+                        {
+                            myResult = "ACCT";
+                            break;
+                        }
 
-                case "AD":
-                case "PD":
-                case "PP":
-                    {
-                        myResult = "ACCT";
-                        break;
-                    }
-                
-                case "VD":
-                case "LL":
-                    {
-                        myResult = "OAMT";
-                        break;
-                    }
+                    case "VD":
+                    case "LL":
+                        {
+                            myResult = "OAMT";
+                            break;
+                        }
+                }
             }
 
             return myResult;
@@ -1983,7 +2076,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.Update(myReceivable);
 
                 List<ShipmentReceivable> ChildReceivables = shipmentReceivableRepository.GetShipmentReceivablesByParentId(receivableId, tenant);
-                foreach(ShipmentReceivable myChild in ChildReceivables)
+                foreach (ShipmentReceivable myChild in ChildReceivables)
                 {
                     myChild.ARInvoiceLineId = null;
                     myChild.ARInvoiceId = null;
@@ -2046,7 +2139,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 shipmentObjectTableId = shipmentObjectTable.Id;
             }
-            
+
             foreach (string entityId in allActiveShipmentIds)
             {
                 string entityReference = null;
@@ -2073,7 +2166,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     invoiceEntityRepository.Add(invoiceEntity);
                 }
 
-                
+
             }
         }
         #endregion
@@ -2129,7 +2222,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     LocalCurrencyAmount = item.LocalCurrencyAmount,
                                     InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                     ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                    ExternalVatCard = item.ExternalVATCard,                                    
+                                    ExternalVatCard = item.ExternalVATCard,
                                     ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                 };
 
@@ -2141,8 +2234,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                     else
                                     {
-                                        newItem.ExternalVatCard = lineVatType.ExternalVATCard;
+                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
                                     }
+                                }
+
+                                if (item.IsRegionalTax)
+                                {
+                                    newItem.LocalCurrencyAmount = item.LocalCurrencyAmount + newItem.LocalCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount + item.InvoiceCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+                                    newItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * (entityPM.RegionalTaxPercentage / 100);
+
+                                    InvoiceTotalsClass newRegionalTaxItem = new InvoiceTotalsClass()
+                                    {
+                                        Id = entityPM.RegionalTaxId,
+                                        VatTypeId = entityPM.RegionalTaxId,
+                                        VatTypePercentage = entityPM.RegionalTaxPercentage,
+                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
+                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
+                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                        ExternalVatCard = newItem.ExternalVatCard,
+                                        ExternalTAXItemId = newItem.ExternalTAXItemId,
+                                        IsRegionalTax = true,
+                                    };
+
+                                    group_Source.Add(newRegionalTaxItem);
                                 }
 
                                 group_Source.Add(newItem);
@@ -2183,7 +2298,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         }
                                         else if (vatType != null)
                                         {
-                                            newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                         }
                                     }
 
@@ -2194,20 +2309,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         #endregion
                     }
 
-                     group_data
-                        = (from items in group_Source
-                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
-                           select new InvoiceTotalsClass()
-                           {
-                               Id = g.Key.VatTypeId,
-                               VatTypeId = g.Key.VatTypeId,
-                               VatTypePercentage = g.Key.VatTypePercentage,
-                               LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                               InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                               ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                               ExternalVatCard = g.Key.ExternalVatCard,
-                               ExternalTAXItemId = g.Key.ExternalTAXItemId
-                           }).ToList();
+                    group_data
+                       = (from items in group_Source
+                          group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.IsRegionalTax } into g
+                          select new InvoiceTotalsClass()
+                          {
+                              Id = g.Key.VatTypeId,
+                              VatTypeId = g.Key.VatTypeId,
+                              VatTypePercentage = g.Key.VatTypePercentage,
+                              LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                              InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                              ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                              ExternalVatCard = g.Key.ExternalVatCard,
+                              ExternalTAXItemId = g.Key.ExternalTAXItemId,
+                              IsRegionalTax = g.Key.IsRegionalTax,
+                          }).ToList();
 
                     foreach (InvoiceTotalsClass item in group_data)
                     {
@@ -2217,22 +2333,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Tenant = entityPM.Tenant,
                             ARInvoiceId = entityPM.Id,
                             VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
                             LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
                             ExternalVATCard = item.ExternalVatCard,
-                            ExternalTAXItemId = item.ExternalTAXItemId
+                            ExternalTAXItemId = item.ExternalTAXItemId,
+                            IsRegionalTax = item.IsRegionalTax,
                         };
 
                         record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
                         record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
-                      
+
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC") && record.LocalVATAmount != 0)
+                        {
+                            CreateInterestTransactionLine(null, record);
+                        }
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -2275,6 +2396,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         List<string> allInvoiceIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
                         List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
 
+                        this.ValidateConstituentInvoiceConnected(allInvoices);
+
                         foreach (ARInvoice myInvoice in allInvoices)
                         {
                             myInvoice.IsClosed = true;
@@ -2314,8 +2437,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     List<string> allInvoiceIds = invoiceConstituentsChangeSet.Select(s => s.Id).ToList();
                     List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
 
+                    this.ValidateConstituentInvoiceConnected(allInvoices);
+
                     bool isConnectedInvoicesChanged = false;
-                    
+
                     foreach (ConstituentPM item in invoiceConstituentsChangeSet)
                     {
                         switch (item.ChangeSetOp)
@@ -2408,7 +2533,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         invoiceRepository.SubmitChanges();
                         List<string> activeInvoicesIds = invoiceConstituentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
-                        
+
                         this.DeleteConsolidationInvoiceLines();
                         this.BuildConsolidationInvoiceLines(activeInvoicesIds);
 
@@ -2421,6 +2546,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myLineNumber += 1;
                         }
                     }
+                }
+            }
+        }
+
+        private void ValidateConstituentInvoiceConnected(List<ARInvoice> allInvoices)
+        {
+            if (allInvoices.Count > 0)
+            {
+                ARInvoice connectedConstituentInvoice = allInvoices.Where(d => d.StatusCode == "CN" && d.ConsolidationInvoiceId != this.entityPM.Id).FirstOrDefault();
+                if (connectedConstituentInvoice != null)
+                {
+                    throw new ApplicationException("Constituent Invoice: " + connectedConstituentInvoice.InvoiceNumber + " is connected to another Consolidation");
                 }
             }
         }
@@ -2464,32 +2601,32 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     List<ARInvoiceLine> allConnectedInvoiceLines = (from d in iQueryable_Lines where allConnectedInvoiceIds.Contains(d.ARInvoiceId) select d).ToList();
 
                     List<ARInvoiceLinePM> myNewLines = (from a in allConnectedInvoiceLines
-                                                             group a by new
-                                                             {
-                                                                 a.ChargesTypeId,
-                                                                 a.Description,
-                                                                 a.LocalDescription,
-                                                                 a.VatTypeId,
-                                                                 a.MeasurementId,
-                                                                 a.IsExpense
-                                                             } into gr
+                                                        group a by new
+                                                        {
+                                                            a.ChargesTypeId,
+                                                            a.Description,
+                                                            a.LocalDescription,
+                                                            a.VatTypeId,
+                                                            a.MeasurementId,
+                                                            a.IsExpense
+                                                        } into gr
 
-                                                             select new ARInvoiceLinePM()
-                                                             {
-                                                                 Tenant = tenant,
-                                                                 ChargesTypeId = gr.Key.ChargesTypeId,
-                                                                 Description = gr.Key.Description,
-                                                                 LocalDescription = gr.Key.LocalDescription,
-                                                                 VatTypeId = gr.Key.VatTypeId,
-                                                                 MeasurementId = gr.Key.MeasurementId,
-                                                                 ARInvoiceId = entityPM.Id,
-                                                                 IsExpense = gr.Key.IsExpense,
-                                                                 Quantity = 1,
-                                                                 IsExchangeRateFixed = false,
-                                                                 ExchangeRateDate = entityPM.ExchangeRateDate,
-                                                                 ForiegnCurrencyId = entityPM.InvoiceCurrencyId,
-                                                                 ForiegnExchangeRate = entityPM.InvoiceCurrencyExchangeRate,
-                                                             }).ToList();
+                                                        select new ARInvoiceLinePM()
+                                                        {
+                                                            Tenant = tenant,
+                                                            ChargesTypeId = gr.Key.ChargesTypeId,
+                                                            Description = gr.Key.Description,
+                                                            LocalDescription = gr.Key.LocalDescription,
+                                                            VatTypeId = gr.Key.VatTypeId,
+                                                            MeasurementId = gr.Key.MeasurementId,
+                                                            ARInvoiceId = entityPM.Id,
+                                                            IsExpense = gr.Key.IsExpense,
+                                                            Quantity = 1,
+                                                            IsExchangeRateFixed = false,
+                                                            ExchangeRateDate = entityPM.ExchangeRateDate,
+                                                            ForiegnCurrencyId = entityPM.InvoiceCurrencyId,
+                                                            ForiegnExchangeRate = entityPM.InvoiceCurrencyExchangeRate,
+                                                        }).ToList();
 
                     foreach (ARInvoiceLinePM item in myNewLines)
                     {
@@ -2506,7 +2643,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 item.VatTypeName = vatType.EnglishName;
                                 item.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                vatExternalCard = vatType.ExternalVATCard;
+                                vatExternalCard = vatType.ReceivablesExternalId;
                             }
 
                             VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(item.VatTypeId, tenant, entityPM.InvoiceDate);
@@ -2524,7 +2661,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 item.ExternalVATCard = vatExternalCard;
                             }
                         }
-                        
+
                         #endregion
 
                         #region ChargesType
@@ -2561,7 +2698,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 && a.MeasurementId == item.MeasurementId
                                                                 && a.Description == item.Description
                                                                 && a.LocalDescription == item.LocalDescription
-                                                                &&a.IsExpense == item.IsExpense
+                                                                && a.IsExpense == item.IsExpense
                                                                 select a).ToList();
 
                         item.LocalCurrencyAmount = MethodHelper.Round((double)allMatchingLines.Sum(d => d.LocalCurrencyAmount), 2);
@@ -2734,6 +2871,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateReceivable(item);
                     this.isUpdateTotalVats = true;
                     myLineNumber += 1;
+                    //if (IsFullAccountingActivated(entityPM.Tenant))
+                    //{
+                    //    CreateInterestTransactionLine(item, null);
+                    //}
                 }
             }
 
@@ -2784,6 +2925,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         default: { break; }
                     }
+
                 }
             }
         }
@@ -2801,7 +2943,72 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
+            if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode =="AC"))
+            {
+                CreateInterestTransactionLine(item, null);
+            }
         }
+        int invoiceLineNumber = 0;
+        DateTime? dateForInterest;
+        private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
+        {
+            ++invoiceLineNumber;
+             dateForInterest = entityPM.DateForInterest == null ? DateTime.Now : entityPM.DateForInterest;
+            GLAccountPM account = GetGLAccount(entityPM);
+            InterestTransactionPM interestTransaction = new InterestTransactionPM();
+            if (invoiceLine != null) {
+
+                interestTransaction= CreateInterestTransactionLineForInvoiceLine(invoiceLine, account);
+            }
+            if (invoiceTotalVat != null)
+            {
+                interestTransaction= CreateInterestTransactionLineForVatLine(invoiceTotalVat, account);
+            }
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+        }
+        private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
+        {
+            ARInvoiceLinePM invoiceLine = entityPM.InvoiceLines.Where(d => d.VatTypeId == invoiceTotalVat.VatTypeId).FirstOrDefault();
+            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate == null ? entityPM.DueDate : invoiceLine.ValueDate) : invoiceLine.DateForInterest;
+
+            InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+            {
+
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceTotalVat.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLineNumber,
+                LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
+                ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = entityPM.Tenant,
+                GLAccountId = account != null? account.Id : null,
+                CurrencyId = entityPM.InvoiceCurrencyId,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            return InterestTransactionVatLine;
+        }
+
+        private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine, GLAccountPM account)
+        {
+            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate==null? entityPM.DueDate: invoiceLine.ValueDate)  : invoiceLine.DateForInterest;
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceLine.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLine.LineNumber,
+                LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
+                GLAccountId = account != null? account.Id:null,
+                ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
+                InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
+                Tenant = invoiceLine.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CurrencyId = invoiceLine.ForiegnCurrencyId,
+               
+            };
+            return interestTransaction;
+        }
+
         private void UpdateInvoiceLine(ARInvoiceLinePM item)
         {
             ARInvoiceLine invoiceLine = invoiceLineRepository.GetSingleInvoiceLine(item.Id);
@@ -3160,8 +3367,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region Journal & Journal Lines
+        GLAccountPM glAccount;
         private void AddARInvoiceJournalAndJournalLines(ARInvoicePM theEntityPm, bool setApproved)
         {
+            
+            glAccount = GetGLAccount(theEntityPm);
             int tenant = theEntityPm.Tenant;
             if (setApproved)
             {
@@ -3176,6 +3386,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.JournalNumber = "1";
                     journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.AccountingDate = theEntityPm.InvoiceDate.Value;
+                    //journal.DocumentDate = theEntityPm.InvoiceDate.Value;
+                    //journal.DueDate = theEntityPm.InvoiceDate.Value;
                     journal.TypeCode = "0";
                     journal.StatusCode = "2";
                     journal.CreatedByUserId = theEntityPm.CreatedByUserId;
@@ -3187,105 +3399,230 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
                     journal.ChangeSetOp = ChangeSetOperation.Insert;
-
+                    JournalLinePM journalLine;
                     // Insert Journal Lines 
-                    // [Debit]
-                    GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
-                    JournalLinePM journalLine = new JournalLinePM();
-                    journalLine.Tenant = tenant;
-                    journalLine.JournalId = journal.Id;
-                    journalLine.Line = 1;
-                    journalLine.ActionCode = "2";
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                    journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
-                    journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
-                    journalLine.DueDate = theEntityPm.DueDate.Value;
-                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                    journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
-                    journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
-                    journalLine.Reference1 = theEntityPm.InvoiceNumber;
-                    journalLine.Reference2 = theEntityPm.MainEntityReference;
-                    journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                    journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
-                    journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
-                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journal.JournalLines.Add(journalLine);
-
-                    // [Credit]
-                    journalLine = new JournalLinePM();
-                    int counter = 1;
-                    List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                        group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
-                                                        select new JournalLinePM()
-                                                        {
-                                                            Tenant = tenant,
-                                                            ActionCode = "1",
-                                                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
-                                                            JournalId = journal.Id,
-                                                            CreditAccountId = g.Key.GLAccountId,
-                                                            Line = ++counter,
-                                                            DocumentDate = theEntityPm.InvoiceDate.Value,
-                                                            AccountingDate = theEntityPm.InvoiceDate.Value,
-                                                            DueDate = theEntityPm.DueDate.Value,
-                                                            LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
-                                                            CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
-                                                            ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
-                                                            Reference1 = theEntityPm.InvoiceNumber,
-                                                            Reference2 = theEntityPm.MainEntityReference,
-                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = theEntityPm.InternalNotes,
-                                                        }).ToList();
-
-                    journal.JournalLines.AddRange(journalLines);
-
-                    // [Vats]
-                    List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
-                    ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
-                    ARInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
-                    counter = journal.JournalLines.Count();
-
-                    // Accounting settings 
-                    FullAccountingSettingPM accountingSettings =  getFullAccountingSettings(theEntityPm.Tenant);
-                    foreach (ARInvoiceTotalVAT vat in ARInvoiceTotalVATs)
+                    if (theEntityPm.IsMultiCurrency)
                     {
-                        journalLine = new JournalLinePM()
-                        {
-                            Tenant = tenant,
-                            ActionCode = "1",
-                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
-                            JournalId = journal.Id,
-                            CreditAccountId = accountingSettings != null ? accountingSettings.VATOutputGLAccountId : "",
-                            Line = ++counter,
-                            DocumentDate = theEntityPm.InvoiceDate.Value,
-                            AccountingDate = theEntityPm.InvoiceDate.Value,
-                            DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = (decimal)vat.LocalVATAmount,
-                            CurrencyId = theEntityPm.InvoiceCurrencyId,
-                            ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
-                            ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
-                            Reference1 = theEntityPm.InvoiceNumber,
-                            Reference2 = theEntityPm.MainEntityReference,
-                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                        };
-
+                        journal = CreateJournalDebitLinesForMultiCurrencyInvoice(journal, theEntityPm );
+                    }
+                    else
+                    {
+                        // [Debit]
+                        GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
+                         journalLine = new JournalLinePM();
+                        journalLine.Tenant = tenant;
+                        journalLine.JournalId = journal.Id;
+                        journalLine.Line = 1;
+                        journalLine.ActionCode = "2";
+                        journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                        journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+                        journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
+                        journalLine.DueDate = theEntityPm.DueDate.Value;
+                        journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
+                        journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
+                        journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
+                        journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
+                        journalLine.Reference1 = theEntityPm.InvoiceNumber;
+                        journalLine.Reference2 = theEntityPm.MainEntityReference;
+                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+                        journalLine.Notes = theEntityPm.InternalNotes;
+                        journalLine.DebitAccountId = this.glAccount == null ? "" : this.glAccount.Id;
+                        journalLine.DebitControlAccountId = this.glAccount == null ? "" : this.glAccount.ControlAccountId;
+                        journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                         journal.JournalLines.Add(journalLine);
                     }
+                    // [Credit]
+                         journalLine = new JournalLinePM();
+                        int counter = 1;
+                        List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
+                                                            group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                            select new JournalLinePM()
+                                                            {
+                                                                Tenant = tenant,
+                                                                ActionCode = "1",
+                                                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                                                JournalId = journal.Id,
+                                                                CreditAccountId = g.Key.GLAccountId,
+                                                                Line = ++counter,
+                                                                DocumentDate = theEntityPm.InvoiceDate.Value,
+                                                                AccountingDate = theEntityPm.InvoiceDate.Value,
+                                                                DueDate = theEntityPm.DueDate.Value,
+                                                                LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
+                                                                CurrencyId = g.Key.ForiegnCurrencyId,
+                                                                ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                                ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                                Reference1 = theEntityPm.InvoiceNumber,
+                                                                Reference2 = theEntityPm.MainEntityReference,
+                                                                Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                                                                Notes = theEntityPm.InternalNotes,
+                                                                DebitAccountId = glAccount == null ? "" : glAccount.Id,
+                                                                DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
+                                                            }).ToList();
+
+                        journal.JournalLines.AddRange(journalLines);
+
+
+                        // [Vats]
+                        List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
+                        ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
+                        ARInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
+                        counter = journal.JournalLines.Count();
+
+                        // Accounting settings 
+                        FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
+                        foreach (ARInvoiceTotalVAT vat in ARInvoiceTotalVATs)
+                        {
+                            journalLine = new JournalLinePM()
+                            {
+                                Tenant = tenant,
+                                ActionCode = "1",
+                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                JournalId = journal.Id,
+                                CreditAccountId = accountingSettings != null ? accountingSettings.VATOutputGLAccountId : "",
+                                Line = ++counter,
+                                DocumentDate = theEntityPm.InvoiceDate.Value,
+                                AccountingDate = theEntityPm.InvoiceDate.Value,
+                                DueDate = theEntityPm.DueDate.Value,
+                                LocalAmount = (decimal)vat.LocalVATAmount,
+                                CurrencyId = theEntityPm.InvoiceCurrencyId,
+                                ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
+                                ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
+                                Reference1 = theEntityPm.InvoiceNumber,
+                                Reference2 = theEntityPm.MainEntityReference,
+                                Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                                DebitAccountId = glAccount == null ? "" : glAccount.Id,
+                                //     DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId,
+
+                            };
+
+                            journal.JournalLines.Add(journalLine);
+                        }
+
+                    
+
+
+
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);
                 }
             }
         }
+        
+        private JournalPM CreateJournalDebitLinesForMultiCurrencyInvoice(JournalPM journal, ARInvoicePM invoice)
+        {
+            journal = CreateJournalDebitLinesFromInvoiceLines(journal, invoice);
+            journal = CreateJournalDebitLineFromVat(journal, invoice);
 
+
+            return journal;
+        }
+        int counter = 0;
+        private JournalPM CreateJournalDebitLinesFromInvoiceLines(JournalPM journal, ARInvoicePM invoice)
+        {
+             counter = 1;
+            List<JournalLinePM> journalLines = (from d in invoice.InvoiceLines
+                                                group d by new { d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                select new JournalLinePM()
+                                                {
+                                                    Tenant = tenant,
+                                                    JournalId = journal.Id,
+                                                    Line = 1,
+                                                    ActionCode = "2",
+                                                    ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                                                    DocumentDate = invoice.InvoiceDate.Value,
+                                                    AccountingDate = invoice.InvoiceDate.Value,
+                                                    DueDate = invoice.DueDate.Value,
+                                                    LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
+                                                    CurrencyId = g.Key.ForiegnCurrencyId,
+                                                    ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                    ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                    Reference1 = invoice.InvoiceNumber,
+                                                    Reference2 = invoice.MainEntityReference,
+                                                    Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
+                                                    Notes = invoice.InternalNotes,
+                                                    DebitAccountId = glAccount == null ? "" : glAccount.Id,
+                                                    DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId,
+                                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                                }).ToList();
+
+            journal.JournalLines.AddRange(journalLines);
+            return journal;
+        }
+        private JournalPM CreateJournalDebitLineFromVat(JournalPM journal, ARInvoicePM invoice)
+        {
+            JournalLinePM invoiceCurrencyLine = journal.JournalLines.Where(d => d.CurrencyId == invoice.InvoiceCurrencyId).FirstOrDefault();
+            List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = GetARInvoiceTotalVATs(invoice);
+            counter = journal.JournalLines.Count();
+            foreach (ARInvoiceTotalVAT vat in ARInvoiceTotalVATs)
+            {
+                if (invoiceCurrencyLine != null)
+                {
+                    journal.JournalLines.Where(w => w.CurrencyId == invoice.InvoiceCurrencyId).ToList().ForEach(s => s.LocalAmount = s.ForeignAmount= s.LocalAmount + (decimal)vat.LocalVATAmount);
+                }
+                else
+                {
+                    JournalLinePM journalLine = CreateDebitJournalLineForVatLine(journal, invoice, vat);                 
+                    journal.JournalLines.Add(journalLine);
+                }
+            }
+            return journal;
+        }
+       private List<ARInvoiceTotalVAT> GetARInvoiceTotalVATs(ARInvoicePM invoice)
+        {
+
+            List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
+            ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
+            ARInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(invoice.Id, tenant).ToList();
+            return ARInvoiceTotalVATs;
+        }
+        private JournalLinePM CreateDebitJournalLineForVatLine(JournalPM journal, ARInvoicePM invoice, ARInvoiceTotalVAT vat)
+        {
+            JournalLinePM journaLine = new JournalLinePM
+            {
+                Tenant = tenant,
+                ActionCode = "2",
+                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                JournalId = journal.Id,
+                Line = ++counter,
+                DocumentDate = invoice.InvoiceDate.Value,
+                AccountingDate = invoice.InvoiceDate.Value,
+                DueDate = invoice.DueDate.Value,
+                LocalAmount = (decimal)vat.LocalVATAmount,
+                CurrencyId = invoice.InvoiceCurrencyId,
+                ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
+                ExchangeRate = (decimal)invoice.InvoiceCurrencyExchangeRate,
+                Reference1 = invoice.InvoiceNumber,
+                Reference2 = invoice.MainEntityReference,
+                Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
+                DebitAccountId = glAccount == null ? "" : glAccount.Id,
+            };
+
+            return journaLine;
+        }
         private FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
             FullAccountingSettingPM accountingSettings;
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
             accountingSettings = query.GetFullAccountingSettingByTenant( tenant);
             return accountingSettings;
+        }
+        private GLAccountPM GetGLAccount(ARInvoicePM invoice)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            if (invoice.BillToGLAccountId == null)
+            {
+                GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);                
+                GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
+                if (splittedAccount != null)
+                    return splittedAccount;
+                else
+                    return debitGLAcount;
+            }
+            else
+            {
+                return glAccountQuery.GetSingleGLAccountPM(invoice.BillToGLAccountId, invoice.Tenant);
+            }
         }
 
         private GLAccountPM getDebitGLAccount(string billToId, int tenant)
@@ -3379,6 +3716,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (isNewEntity)
             {
                 ARInvoiceEntityQuery arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
+                if(entityPM.ARInvoiceTypeCode != "IT")
                 entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityPM.Id, tenant);
             }
            
@@ -3490,13 +3828,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (this.isVoidingInvoice)
             {
-                //if (this.entityPM.IsConsolidationInvoice)
-                //{
-                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                //    iConsolidationService.OnVoid(this.allConnectedInvoices);
-                //}
-
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void OnApprovingInvoice()
@@ -3504,8 +3837,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isApprovingInvoice)
             {
                 // Journal Work
-                this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
-
+                if (tenantPOCO.AccountingActivated)
+                {
+                    this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                }
               
                 // DropBox
                 this.CreateARInvoiceMessage(this.isApprovingInvoice);
@@ -3516,13 +3851,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
                 }
 
-                //if (this.entityPM.IsConsolidationInvoice)
-                //{
-                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                //    iConsolidationService.OnApprove();
-                //}
-
                 this.UpdateShipmentRegistryDate();
+                this.UpdSatehipmentFirstApprovalDate();
             }
         }
         private void UpdateShipmentRegistryDate()
@@ -3565,9 +3895,176 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunRegistryDateProcedure(this.entityPM.MainEntityId);
             }
         }
+        private void UpdSatehipmentFirstApprovalDate()
+        {
+            if (this.entityPM.IsConsolidationInvoice)
+            {
+                #region
+                List<string> allConstituentsIds = new List<string>();
+
+                if (this.isNewEntity)
+                {
+                    allConstituentsIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
+                }
+
+                else
+                {
+                    allConstituentsIds = invoiceConstituentsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Select(s => s.Id).ToList();
+                }
+
+                if (allConstituentsIds.Count > 0)
+                {
+                    List<string> allConstituentsShipmentsIds
+                        = (from d in objectContext.ARInvoices
+                           where d.Tenant == this.tenant
+                           && d.MainEntityId != null
+                           && d.IsConstituentInvoice == true
+                           && allConstituentsIds.Contains(d.Id)
+                           select d.MainEntityId).ToList();
+
+                    foreach (string id in allConstituentsShipmentsIds)
+                    {
+                        this.RunFirstApprovalDateProcedure(id);
+                    }
+                }
+                #endregion
+            }
+
+            else if (this.entityPM.MainEntityId != null)
+            {
+                this.RunFirstApprovalDateProcedure(this.entityPM.MainEntityId);
+            }
+        }
+
         private void RunRegistryDateProcedure(string myShipmentId)
         {
             RunStoredProcedureClass.UpdateShipmentRegistryDate(myShipmentId, entityPM.Tenant);
         }
+        private void RunFirstApprovalDateProcedure(string myShipmentId)
+        {
+            RunStoredProcedureClass.UpdateShipmentFirstApprovalDate(myShipmentId, entityPM.Tenant);
+        }
+
+        private void CheckLinesVatExcempt(ARInvoicePM invoicePM, bool isApprovingInvoice)
+         {
+            if (IsFullAccountingActivated(invoicePM.Tenant) && isApprovingInvoice)
+            {
+                foreach (ARInvoiceLinePM line in invoicePM.InvoiceLines)
+                {
+                    CheckLineVatExcempt(invoicePM.Tenant, line);
+                }
+            }
+        }
+
+        private void CheckLineVatExcempt(int tenant, ARInvoiceLinePM line)
+        {
+            GLAccountPM glaccount = GetGLAccountById(tenant, line.GLAccountId);
+
+            if (glaccount.IsVATExempt == true && line.VatPercentage != 0)
+                ShowErrorMessage("ARInvoice.O.CanNotCreditExempt", tenant);
+            //else if (glaccount.IsVATExempt != true && line.VatPercentage == 0)
+            //    ShowErrorMessage("ARInvoice.O.CanNotCreditCardIsNotExempt", tenant);
+
+        }
+
+        private void ShowErrorMessage(string textCode, int tenant)
+        {
+            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            var msg = TextCodesTranslator.TranslateText(textCode, tenant, showLocals);
+
+            if (string.IsNullOrWhiteSpace(msg))
+            {
+                if (textCode == "ARInvoice.O.CanNotCreditExempt")
+                    msg = "Can not credit card exempt VAT if the amount is not exempt";
+                if (textCode == "ARInvoice.O.CanNotCreditCardIsNotExempt")
+                    msg = "Can not credit card that is not exempt VAT if the amount is exempt";
+            }
+
+            throw new ApplicationException(msg);
+        }
+
+        private ChargesTypePM GetChargeTypeById(int tenant, string id)
+        {
+            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
+            ChargesTypePM chargeTypePM = chargesTypeQuery.GetSingle(id, tenant);
+            return chargeTypePM;
+        }
+
+        private GLAccountPM GetGLAccountById(int tenant, string id)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaccount = glAccountQuery.GetSingleGLAccountPM(id, tenant);
+            return glaccount;
+        }
+
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
+
+        public void UpdateConsolidationShipments()
+        {
+            if (this.entityPM.IsConsolidationInvoice)
+            {
+                List<ConsolidationServiceArgsItem> items = new List<ConsolidationServiceArgsItem>();
+
+                if (this.isVoidingInvoice || this.isAutoCreditingInvoice)
+                {
+                    items = (from a in allConnectedInvoices
+                             select new ConsolidationServiceArgsItem()
+                             {
+                                 ShipmentId = a.MainEntityId,
+                                 ConstituentId = a.Id,
+                             }).ToList();
+                }
+
+                else if (isApprovingInvoice)
+                {
+                    items = (from a in objectContext.ARInvoices
+                             where
+                             a.Tenant == tenant
+                             && a.IsConstituentInvoice == true
+                             && a.ConsolidationInvoiceId == entityPM.Id
+                             && a.MainEntityId != null
+                             select new ConsolidationServiceArgsItem()
+                             {
+                                 ShipmentId = a.MainEntityId,
+                                 ConstituentId = a.Id,
+                             }).ToList();
+                } 
+
+                if (items.Count > 0)
+                {
+                    string ConsolidationNumber = this.entityPM.InvoiceNumber;
+
+                    if (this.entityPM.StatusCode == "DR" || this.entityPM.StatusCode == "VD" || this.isAutoCreditingInvoice)
+                    {
+                        ConsolidationNumber = null;
+                    }
+
+                    foreach (ConsolidationServiceArgsItem item in items)
+                    {
+                        UpdateShipmentProfitClass.UpdateConstituentShipment(this.entityPM.Id, item.ConstituentId, this.tenant);
+                    }
+
+                    List<string> allShipmentsIds = (from d in items group d by d.ShipmentId into g select g.Key).ToList();
+
+                    foreach (string iShipmentId in allShipmentsIds)
+                    {                       
+                        UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, this.tenant, ConsolidationNumber);
+                        UpdateShipmentProfitClass.UpdateProfit(iShipmentId, this.tenant);
+                    }
+                }
+            }
+        }
+
+
+ 
+
+         
+     
     }
 }

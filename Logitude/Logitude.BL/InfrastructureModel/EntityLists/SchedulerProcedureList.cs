@@ -16,5 +16,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public string Description { get; set; }
+        public Boolean IsInternallyDefined { get; set; }
     }
 }

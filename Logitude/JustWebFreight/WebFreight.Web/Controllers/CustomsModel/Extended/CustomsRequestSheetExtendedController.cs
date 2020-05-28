@@ -261,13 +261,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 List<CustomsRequestsSheetList> entityLists = customsRequestsSheetQuery.GetList(queryOperations, tenant);
 
+
+       
+                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "15" && x.RequestStatusCode != "21") != null)
+                {
+                    throw new Exception("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל או ניתוח נכשל");
+
+                }
+
                 CustomsRequestsSheetUpdateService customsRequestsSheetUpdate = new CustomsRequestsSheetUpdateService(MyContext);
 
 
                 customsRequestsSheetUpdate.CancelRequests(entityLists, tenant, MyContext);
 
-
                 ServiceResponse response = new ServiceResponse();
+                HttpResponseMessage reponseMessage;
+                response = new ServiceResponse();
                 if (filters.GetCount)
                 {
                     int count = customsRequestsSheetQuery.GetListCount(queryOperations, tenant);
@@ -275,7 +284,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
                 response.Result = entityLists;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                  reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return reponseMessage;
@@ -390,6 +399,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 List<CustomsRequestsSheetList> entityLists = customsRequestsSheetQuery.GetList(queryOperations, tenant);
 
+                ServiceResponse response = new ServiceResponse();
+                HttpResponseMessage reponseMessage;
+                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "21" && x.RequestStatusCode != "25") != null)
+                {
+                    throw new Exception("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה");
+
+                }
+
 
                 var messagingService = new DCAInUCB9999ReAnAnalysis_MsgMessagingService();
                 var sts = messagingService.CreateCRS(tenant, null, entityLists.Select(x=>  x.Id).ToList());
@@ -397,7 +414,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-                ServiceResponse response = new ServiceResponse();
+                  response = new ServiceResponse();
                 if (filters.GetCount)
                 {
                     int count = customsRequestsSheetQuery.GetListCount(queryOperations, tenant);
@@ -405,7 +422,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
                 response.Result = entityLists;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                  reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return reponseMessage;

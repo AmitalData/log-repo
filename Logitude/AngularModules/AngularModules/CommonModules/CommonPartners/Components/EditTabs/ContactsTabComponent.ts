@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactsTabComponent.html',
 })
 
@@ -234,6 +234,7 @@ export class ContactItemClass {
     get InActive() { return this.EntityPM.InActive; }
     get BirthdayReminder() { return this.EntityPM.BirthdayReminder; }
     get AnniversaryReminder() { return this.EntityPM.AnniversaryReminder; }
+    get DontShowLocalLabels() { return this.EntityPM.DontShowLocalLabels; }
 
     public IsPrimary: boolean = false;
     CheckPrimary() {

@@ -391,10 +391,36 @@ into groupBy_currency
                 GetFileContolAcc(_FullAccountingSetting))
                 //.Where(a => !a.Inactive)
                 ;
+            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
+            }
+            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
+            }
+
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
             {
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
                     .Where(a => a.Category1Id == _TrailReportParam.Category1);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
             }
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
             {
@@ -543,10 +569,13 @@ into groupBy_currency
     {
         public static ITrailReportBase CreateNew(TrailReportParam trailReportParam)
         {
-           
 
+           
             if (ReportLevel.GLAccount != trailReportParam.MyTrailReportLevel && ! trailReportParam.Skip)
             {
+               
+
+
                 if (trailReportParam.DetailedControlClients
                     ||
                     trailReportParam.DetailedControlFile
@@ -562,14 +591,57 @@ into groupBy_currency
                 }
                 if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
                     ||
-
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category2)
+                    ||
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category3)
+                    ||
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category4)
+                    ||
                     !string.IsNullOrWhiteSpace(trailReportParam.Category5)
 
                     )
                 {
                     throw new Exception("Only in TrailReportLevel.GLAccount Fillter by Category is allowed !!!");
                 }
-                
+
+
+            }
+
+            if (
+trailReportParam.ChartOfAccountsIdList.Count > 0
+&&
+trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
+)
+            {
+                throw new Exception("אנחנו נאפשר למשתמש להשתמש רק באחד מבין 2 הפילטרים החדשים!!!"
+                    + Environment.NewLine
+                    + " ChartOfAccountsIdList/ChartOfAccountsTypeCodeList "
+                    );
+            }
+
+            switch (trailReportParam.MyTrailReportLevel)
+            {
+                case ReportLevel.ChartofaccountType:
+                    if (trailReportParam.ChartOfAccountsIdList.Count > 0)
+                    {
+                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                    }
+                    if (trailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
+                    {
+                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
+                    }
+
+                    break;
+                case ReportLevel.Chartofaccount:
+                    if (trailReportParam.ChartOfAccountsIdList.Count > 0)
+                    {
+                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                    }
+
+                    break;
+                case ReportLevel.GLAccount:
+                default:
+                    break;
             }
 
             switch (trailReportParam.MyTrailReportLevel)

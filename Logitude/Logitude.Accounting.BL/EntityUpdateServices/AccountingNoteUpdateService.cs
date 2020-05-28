@@ -26,6 +26,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
@@ -58,6 +59,99 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        protected override void Trace(AccountingNotePM entityPM, AccountingNote entityPOCO, string changesXml)
+        {
+            CreateGLAccountEvents(entityPM, entityPOCO);
+        }
+
+        private void CreateGLAccountEvents(AccountingNotePM entityPM, AccountingNote entityPOCO)
+        {
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                EventTracerArgs newNoteEvent = GetNewEvent(entityPM);
+                EventTracer.CreateTraceEvent(newNoteEvent);
+            }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                EventTracerArgs updatedEvent = GetUpdateEvent(entityPM, entityPOCO);
+                EventTracer.CreateTraceEvent(updatedEvent);
+            }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+            {
+                EventTracerArgs deletedEvent = GetDeletedEvent(entityPM, entityPOCO);
+                EventTracer.CreateTraceEvent(deletedEvent);
+            }
+        }
+
+        private EventTracerArgs GetDeletedEvent(AccountingNotePM entityPM, AccountingNote entityPOCO)
+        {
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            GLAccountPM glaccount = GetGLAccount(entityPM.CardId, entityPM.Tenant);
+            
+            string notes = entityPOCO.Notes;
+            EventTracerArgs newNoteEvent = new EventTracerArgs()
+            {
+                EventTypeCode = "NTDL",
+                EntityId = glaccount.Id,
+                Tenant = entityPM.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+                Notes = notes
+
+            };
+            return newNoteEvent;
+        }
+
+        private EventTracerArgs GetUpdateEvent(AccountingNotePM entityPM, AccountingNote entityPOCO)
+        {
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            GLAccountPM glaccount = GetGLAccount(entityPM.CardId, entityPM.Tenant);
+
+            string OLD_VALUE = TextCodesTranslator.TranslateText("Accounting.General.O.OldValue", 0, LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant));
+            string NEW_VALUE = TextCodesTranslator.TranslateText("Accounting.General.O.NewValue", 0, LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant));
+
+            string notes = OLD_VALUE + entityPOCO.Notes + NEW_VALUE + entityPM.Notes;
+            EventTracerArgs newNoteEvent = new EventTracerArgs()
+            {
+                EventTypeCode = "NTUP",
+                EntityId = glaccount.Id,
+                Tenant = entityPM.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+                Notes = notes
+
+            };
+            return newNoteEvent;
+        }
+
+        private EventTracerArgs GetNewEvent(AccountingNotePM entityPM)
+        {
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            GLAccountPM glaccount = GetGLAccount(entityPM.CardId, entityPM.Tenant);
+
+            string notes = entityPM.Notes;
+
+            return new EventTracerArgs()
+            {
+                EventTypeCode = "NTAD",
+                EntityId = glaccount.Id,
+                Tenant = entityPM.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+                Notes = notes,
+
+            };
+        }
+
+        private GLAccountPM GetGLAccount(string cardId, int tenant)
+        {
+            GLAccountQueryService glaQuery = new GLAccountQueryService(tenant);
+            GLAccountPM glaccount = glaQuery.GetGLAccountByCardId(cardId, tenant);
+            return glaccount;
+        }
 
         // methods
         public virtual DateTime GetCurrentDateTime(int tenant)

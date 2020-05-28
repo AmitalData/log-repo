@@ -5,15 +5,9 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { forEach } from '@angular/router/src/utils/collection';
-
-
-
-
 
 @Component({
     selector: 'SendDeclarationTastCaseComponent',
-    moduleId: module.id,
     templateUrl: './SendDeclarationTastCaseComponent.html',
 })
 

@@ -584,6 +584,21 @@ export class TicketPM {
     public set EntityNumber(newValue: string) { if (this.entityNumber != newValue) { this.entityNumber = newValue; this.MarkAsDirty("EntityNumber"); } }
        
 	 
+    private supportMailboxId: string;
+    public get SupportMailboxId() { return this.supportMailboxId; }
+    public set SupportMailboxId(newValue: string) { if (this.supportMailboxId != newValue) { this.supportMailboxId = newValue; this.MarkAsDirty("SupportMailboxId"); } }
+       
+	 
+    private lastCorrespondence: string;
+    public get LastCorrespondence() { return this.lastCorrespondence; }
+    public set LastCorrespondence(newValue: string) { if (this.lastCorrespondence != newValue) { this.lastCorrespondence = newValue; this.MarkAsDirty("LastCorrespondence"); } }
+       
+	 
+    private entityTypeName: string;
+    public get EntityTypeName() { return this.entityTypeName; }
+    public set EntityTypeName(newValue: string) { if (this.entityTypeName != newValue) { this.entityTypeName = newValue; this.MarkAsDirty("EntityTypeName"); } }
+       
+	 
 
     public OldEntityPM: TicketPM;
 		

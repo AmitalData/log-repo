@@ -87,12 +87,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 else
                 {
-                    if(entityPM.PackagesDeleted)
+                    if (entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff).Any())
+                    {
+                        string eventNote = "";
+                        foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff))
+                        {
+                            if(string.IsNullOrEmpty(eventNote))
+                            {
+                                eventNote = payable.ChargesTypeName;
+                            }
+
+                            else
+                            {
+                                eventNote = eventNote + ", " + payable.ChargesTypeName;
+                            }
+
+                            payable.PayablesDisconnectedFromTariff = false;
+                        }
+
+                        this.CreateTraceEvent("PDFT", eventNote);
+                    }
+
+                    if (entityPM.PackagesDeleted)
                     {
                         this.CreateTraceEvent("PADL", entityPM.EventNote);
                     }
 
-                    if(entityPM.ShipmentDirectionConverted)
+                    if (entityPM.IsDeletingAllPayables)
+                    {
+                        this.CreateTraceEvent("DLAP", entityPM.EventNote);
+                        entityPM.IsDeletingAllPayables = false;
+                    }
+
+                    if (entityPM.ShipmentDirectionConverted)
                     {
                         this.CreateTraceEvent("SDCV", entityPM.EventNote);
                     }
@@ -279,10 +306,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
 
-            if (entityPoco.CutoffDate == null && entityPM.CutoffDate != null)
-            {
-                this.CreateTraceEvent("CUTO", entityPM.CutoffDate);                
-            }
+           
         }
         private void TraceMasterData()
         {
@@ -311,6 +335,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceMasterDataMain()
         {
+            if (entityPM.CutoffDate != null && entityMasterData.CutoffDate == null)
+            {
+                this.CreateTraceEvent("CUTO", entityPM.CutoffDate);
+            }
+
             if (entityPM.MainCarriageETD != null && entityMasterData.MainCarriageETD == null)
             {
                 this.CreateTraceEvent("ETD", entityPM.MainCarriageETD);
@@ -326,7 +355,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.MainCarriageATD);
             }
 
-            else if (entityPM.MainCarriageATD == null && entityMasterData.MainCarriageATD != null)
+            else if (entityPM.MainCarriageATD == null && entityPM.MainCarriageATD_Original != null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -349,7 +378,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.MainCarriageATA);
             }
 
-            else if (entityPM.MainCarriageATA == null && entityMasterData.MainCarriageATA != null)
+            else if (entityPM.MainCarriageATA == null && entityPM.MainCarriageATA_Original != null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }
@@ -374,7 +403,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.Transshipment1ATD);
             }
 
-            else if (entityPM.Transshipment1ATD == null && entityMasterData.Transshipment1ATD != null)
+            else if (entityPM.Transshipment1ATD == null && entityPM.Transshipment1ATD_Original != null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -397,7 +426,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment1ATA);
             }
 
-            else if (entityPM.Transshipment1ATA == null && entityMasterData.Transshipment1ATA != null)
+            else if (entityPM.Transshipment1ATA == null && entityPM.Transshipment1ATA_Original != null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }
@@ -422,7 +451,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.Transshipment2ATD);
             }
 
-            else if (entityPM.Transshipment2ATD == null && entityMasterData.Transshipment2ATD != null)
+            else if (entityPM.Transshipment2ATD == null && entityPM.Transshipment2ATD_Original != null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -445,7 +474,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment2ATA);
             }
 
-            else if (entityPM.Transshipment2ATA == null && entityMasterData.Transshipment2ATA != null)
+            else if (entityPM.Transshipment2ATA == null && entityPM.Transshipment2ATA_Original != null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }
@@ -470,7 +499,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.Transshipment3ATD);
             }
 
-            else if (entityPM.Transshipment3ATD == null && entityMasterData.Transshipment3ATD != null)
+            else if (entityPM.Transshipment3ATD == null && entityPM.Transshipment3ATD_Original != null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -493,7 +522,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment3ATA);
             }
 
-            else if (entityPM.Transshipment3ATA == null && entityMasterData.Transshipment3ATA != null)
+            else if (entityPM.Transshipment3ATA == null && entityPM.Transshipment3ATA_Original != null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }
@@ -523,7 +552,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.PreCarriageATD, "From " + entityPM.PreCarriageFromPortName);
             }
 
-            else if (entityPoco.PreCarriageATD != null && entityPM.PreCarriageATD == null)
+            else if (entityPM.PreCarriageATD_Original != null && entityPM.PreCarriageATD == null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -546,7 +575,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.PreCarriageATA, "To " + entityPM.PreCarriageToPortName);
             }
 
-            else if (entityPoco.PreCarriageATA != null && entityPM.PreCarriageATA == null)
+            else if (entityPM.PreCarriageATA_Original != null && entityPM.PreCarriageATA == null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }
@@ -571,7 +600,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(DepartedCode, entityPM.OnCarriageATD, "From " + entityPM.OnCarriageFromPortName);
             }
 
-            else if (entityPoco.OnCarriageATD != null && entityPM.OnCarriageATD == null)
+            else if (entityPM.OnCarriageATD_Original != null && entityPM.OnCarriageATD == null)
             {
                 this.DeleteTraceEvent(DepartedCode);
             }
@@ -594,7 +623,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent(ArrivedCode, entityPM.OnCarriageATA, "To " + entityPM.OnCarriageToPortName);
             }
 
-            else if (entityPoco.OnCarriageATA != null && entityPM.OnCarriageATA == null)
+            else if (entityPM.OnCarriageATA_Original != null && entityPM.OnCarriageATA == null)
             {
                 this.DeleteTraceEvent(ArrivedCode);
             }

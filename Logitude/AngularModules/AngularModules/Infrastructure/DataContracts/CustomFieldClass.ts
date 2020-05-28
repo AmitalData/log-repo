@@ -99,24 +99,35 @@ export class CustomFieldClass {
         return time;
     }
 
-    public ConvertIntToString(d: number, signed: boolean) {
-        //var fmt: string = "000000000000";
-        if (d > 0) {
-            var paddedString = this.ApplyIntPadding(d + "");
-            var dString: string = paddedString;//d + "";
-            if (signed) {
-                dString = "+" + paddedString;
+    public ConvertIntToString(myNumber: number, signed: boolean) {
+        let newNumber = myNumber;
+        if (newNumber) {
+            newNumber = Math.trunc(myNumber);
+
+
+            //var fmt: string = "000000000000";
+            if (newNumber > 0) {
+                var paddedString = this.ApplyIntPadding(newNumber + "");
+                var dString: string = paddedString;//d + "";
+                if (signed) {
+                    dString = "+" + paddedString;
+                }
             }
-        }
-        else {
-            d = (d * -1);
-            var paddedString = this.ApplyIntPadding(d  + "");
-            var dString: string = paddedString;//d + "";
-            if (signed) {
-                dString = "-" + paddedString;
+            else {
+                newNumber = (newNumber * -1);
+                var paddedString = this.ApplyIntPadding(newNumber + "");
+                var dString: string = paddedString;//d + "";
+                if (signed) {
+                    dString = "-" + paddedString;
+                }
             }
+
+
+            return dString;
         }
-        return dString;
+        else
+            return null;
+
     }
 
     public ConvertDoubleOrDecimalToString(d: number, signed: boolean) {

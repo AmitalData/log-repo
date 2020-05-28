@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceGeneralTabComponent.html',
 })
 export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnInit {
@@ -17,7 +17,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     public DataContext: ARInvoiceGeneralTabComponent = this;
     private ScreenCode: string = "ARInvoice.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
@@ -51,7 +51,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

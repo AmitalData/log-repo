@@ -213,7 +213,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ColoaderReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.MoveTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AMSBL).HasMaxLength(17).IsUnicode(true);
-            this.Property(t => t.SecurityKey).HasMaxLength(40);
+            this.Property(t => t.SecurityKey).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.AccountNumber).HasMaxLength(14).IsUnicode(false);
             this.Property(t => t.DeliveryOrder).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
@@ -305,6 +305,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UpdatedByPartner).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.INTTRASIStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRASIError).HasMaxLength(256).IsUnicode(false);
+            this.Property(t => t.INTTRABookingError).HasMaxLength(256).IsUnicode(false);
+            this.Property(t => t.INTTRALastBookingResponse).IsMaxLength().IsUnicode(true);
             this.Property(t => t.EmergencyContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.INTTRAContractNumber).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.INTTRAInstructions).HasMaxLength(500).IsUnicode(false);
@@ -331,6 +333,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -402,6 +405,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsigneeContactId).HasColumnName("ConsigneeContactId");
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
             this.Property(t => t.GrossWeightInKG).HasColumnName("GrossWeightInKG");
+            this.Property(t => t.GrossWeightPerStorageDays).HasColumnName("GrossWeightPerStorageDays");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");
@@ -494,7 +498,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CancelledDate).HasColumnName("CancelledDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
-            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency");          
+            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency").IsRequired();          
             this.Property(t => t.ProfitInLocalCurrency).HasColumnName("ProfitInLocalCurrency");
             this.Property(t => t.PreCarriageCarrierId).HasColumnName("PreCarriageCarrierId");
             this.Property(t => t.OnCarriageCarrierId).HasColumnName("OnCarriageCarrierId");
@@ -539,7 +543,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.AWBComments).HasColumnName("AWBComments");
-            this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
             this.Property(t => t.OpenPayablesInLocalCurrency).HasColumnName("OpenPayablesInLocalCurrency");           
             this.Property(t => t.OpenPayablesInProfitCurrency).HasColumnName("OpenPayablesInProfitCurrency");            
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
@@ -648,8 +651,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
             this.Property(t => t.ReleasingAgentId).HasColumnName("ReleasingAgentId");
             this.Property(t => t.ReleasingAgentAddressId).HasColumnName("ReleasingAgentAddressId");
-           
-
             this.Property(t => t.ReleasingAgentContactId).HasColumnName("ReleasingAgentContactId");
             this.Property(t => t.ReleasingAgentReference1).HasColumnName("ReleasingAgentReference1");
             this.Property(t => t.ReleasingAgentReference2).HasColumnName("ReleasingAgentReference2");
@@ -740,11 +741,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
             this.Property(t => t.OrderGrossWeightEdited).HasColumnName("OrderGrossWeightEdited");
             this.Property(t => t.OrderChargeableWeightEdited).HasColumnName("OrderChargeableWeightEdited");
+            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
+            this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.SLAC).HasColumnName("SLAC");
 
             
             if (dbms == "oracle")
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfit");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfit");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocal");
@@ -782,7 +787,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             else
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency");
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency").IsRequired();
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocalCurrency");
@@ -858,6 +863,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.Notify1Card).WithMany().HasForeignKey(d => d.Notify1Id);
             this.HasOptional(t => t.Notify2Card).WithMany().HasForeignKey(d => d.Notify2Id);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
+            this.HasOptional(t => t.AgentComputedCard).WithMany().HasForeignKey(d => d.AgentComputed);
             this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
             this.HasOptional(t => t.AgentContact).WithMany().HasForeignKey(d => d.AgentContactId);
             this.HasOptional(t => t.ShipperContact).WithMany().HasForeignKey(d => d.ShipperContactId);

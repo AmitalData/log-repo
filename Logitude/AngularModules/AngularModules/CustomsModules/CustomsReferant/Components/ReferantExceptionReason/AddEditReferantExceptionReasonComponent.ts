@@ -21,7 +21,6 @@ import { ExceptionReasonExtendedListService } from '../../../../Customs/Services
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AddEditReferantExceptionReasonComponent.html',
 })
 
@@ -83,7 +82,7 @@ export class AddEditReferantExceptionReasonComponent
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
                 this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
 
-                this._ExceptionReasonExtendedListService.GetExceptionReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
+                this._ExceptionReasonExtendedListService.GetExceptionReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe((response:any) => {
                     var exceptionReasonResult: ExceptionReasonPM[] = response.Result;
                     if (exceptionReasonResult != null && exceptionReasonResult.length > 0) {
                         this.isNewRecord = false;

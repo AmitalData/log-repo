@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ChargesExternalAccountsByProductPM}  from '../../EntityPMs/ChargesExternalAccountsByProductPM';
@@ -10,33 +11,30 @@ import {ChargesExternalAccountsByProductPMService} from '../StandardPMs/ChargesE
 
 export class ChargesTypeByProductsService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ChargesTypeByProducts';
     }
 
     GetChargesTypeExternalAccountsByProducts(myChargesTypeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetChargesTypeExternalAccountsByProducts?myChargesTypeId=' + myChargesTypeId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     Put(entityPM: ChargesTypeByProductsControllerHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -44,8 +42,8 @@ export class ChargesTypeByProductsService {
 
             var mappedEntity: ChargesTypeByProductsControllerHelper = this.MapJsonToChargesTypeByProductsControllerHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: ChargesTypeByProductsControllerHelper = this.MapJsonToChargesTypeByProductsControllerHelper(myJsonResult, true, entityPM);
 
@@ -53,7 +51,7 @@ export class ChargesTypeByProductsService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

@@ -17,6 +17,8 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -39,6 +41,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (string.IsNullOrEmpty(entityPM.Id))
                 {
                     entityPM.Id = IdCounter.GetNumber("Ticket", entityPM.Tenant);
+                    entityPM.SupportMailboxId = this.GetDefaultSupportMailBox(entityPM.Tenant);
+                    entityPM.LastCorrespondence = entityPM.TicketDescription;
                 }
 
                 if (string.IsNullOrEmpty(entityPM.TicketNumber))
@@ -127,6 +131,15 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             }
         }
 
+        private string GetDefaultSupportMailBox(int tenant)
+        {
+            string defaultMailBoxId = null;
+            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
+            SupportMailbox supportMailbox = mailboxRepository.GetDefaultMailBox(tenant);
+            defaultMailBoxId = supportMailbox != null ? supportMailbox.Id : null;
+            return defaultMailBoxId;
+        }
+
         protected override void OnUpdating(EntityPMs.TicketPM entityPM)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -164,10 +177,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
-            {
-
-            }
         }
 
         protected override void OnUpdating(EntityPMs.TicketPM entityPM, Ticket entityPOCO)
@@ -280,7 +289,46 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
 
                 this.UpdateDates(entityPM);
+                this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
+                this.UpdateLastCorrespondence(entityPM);
             }
+        }
+
+        private void UpdateLastCorrespondence(TicketPM entityPM)
+        {
+            ICRMContext context = CRMContext.GetContext(entityPM.Tenant);
+            CorrespondenceQueryService correspondenceService = new CorrespondenceQueryService(context);
+            CorrespondencePM lastCorrespondence = correspondenceService.GetLastCorrespondenceByEntityId(entityPM.Id, entityPM.Tenant);
+            if (lastCorrespondence != null)
+            {
+                entityPM.LastCorrespondence = lastCorrespondence.Description;
+            }
+        }
+
+        private void CheckQuoteRequestDateUpdate(TicketPM entityPM, Ticket entityPOCO)
+        {
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber)
+            {
+                this.UpdateQuotesRequestDate(entityPOCO.QuoteId, null, entityPOCO.Tenant);
+                this.UpdateQuotesRequestDate(entityPM.QuoteId, entityPM.CreateDate, entityPM.Tenant);
+            }
+            if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                this.UpdateQuotesRequestDate(entityPOCO.QuoteId, null, entityPOCO.Tenant);
+            }
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                this.UpdateQuotesRequestDate(entityPM.QuoteId, entityPM.CreateDate, entityPM.Tenant);
+            }
+        }
+
+        private void UpdateQuotesRequestDate(string quoteId, DateTime? requestDate, int tenant)
+        {
+            QuoteRepository quoteRepository = new QuoteRepository(tenant);
+            Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
+            quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
+            quoteRepository.Update(quote);
+            quoteRepository.SubmitChanges();
         }
 
         protected override void UpdateComposition(TicketPM entityPM)

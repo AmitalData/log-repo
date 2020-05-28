@@ -45,8 +45,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
-       
 
+        public ObjectTableRule GetSingleObjectTableRuleByCode(string code   , int tenant)
+        {
+            ObjectTableRule rule = (from record in context.ObjectTableRules.Include("ObjectTable") where record.RuleCode == code && record.Tenant == tenant select record).FirstOrDefault();
+
+            //RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(tenant);
+            //rule.RuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleIdTenant(rule.Tenant, rule.Id).ToList();
+
+
+            return rule;
+
+        }
         public static List<ObjectTableRule> GetObjectTableRulesByTenant(int tenant)
         {
             List<ObjectTableRule> zeroObjectTableRules;

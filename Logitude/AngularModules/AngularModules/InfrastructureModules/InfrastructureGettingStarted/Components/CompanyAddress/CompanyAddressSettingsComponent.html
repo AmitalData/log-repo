@@ -56,7 +56,7 @@
                                                         </td>
 
                                                         <td style="width: 350px;">
-                                                            <LogTextBox [ObjectFieldName]="'Company'" [Text]="Company" [InputType]="text" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'Company'" [Text]="Company" [InputType]="'text'" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                         </td>
                                                     </tr>
 
@@ -289,7 +289,7 @@
                                                         </td>
 
                                                         <td style="width: 350px;">
-                                                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="LocalAddressDataContext.Name" [InputType]="text" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="LocalAddressDataContext.Name" [InputType]="'text'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
                                                         </td>
                                                     </tr>
 
@@ -500,7 +500,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'CancelButton' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -508,7 +508,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'OkButton' | IdGeneratorPipe}}" class="RedButton"(click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

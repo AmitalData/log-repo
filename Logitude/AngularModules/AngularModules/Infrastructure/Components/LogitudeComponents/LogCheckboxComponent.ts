@@ -1,5 +1,5 @@
 declare var window: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -206,8 +206,8 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
                 objectFieldAvailable = false;
             }
 
-            else if (this.ObjectField.HelpTextCodeId != null) {                
-                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
+            else if (this.ObjectField.HelpTextCodeCode != null) {                
+                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                     if (this.ObjectFieldHelp.length > 1) {

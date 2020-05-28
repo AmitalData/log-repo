@@ -48,5 +48,12 @@ export class AccountingSettingList {
 		EnableNegativeOffsetARPayments: boolean;
 		EnableNegativeOffsetAPPayments: boolean;
 		EnableInvoiceStocksManagement: boolean;
+		RefreshToken: string;
+		QBOOAuth: number;
+		AllowManualARPaymentNumber: boolean;
+		AllowRegionalTaxManagement: boolean;
+		EnableAPPaymentExternalPayment: boolean;
+		TransferToFTPActivated: boolean;
+		TransferFTPDetailId: string;
 	
 }

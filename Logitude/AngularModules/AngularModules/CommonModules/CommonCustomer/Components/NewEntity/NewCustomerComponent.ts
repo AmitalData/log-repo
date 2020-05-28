@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewCustomerComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class NewCustomerComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -74,7 +74,7 @@ export class NewCustomerComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

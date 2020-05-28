@@ -26,5 +26,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string LogType { get; set; }
         public string LogFirstLine { get; set; }
 
+        public string LogDocumentId { get; set; }
+
+
+        [ForeignKey("LogDocumentId")]
+        public virtual Document LogDocument { get; set; }
     }
 }

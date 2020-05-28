@@ -52,10 +52,30 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
 
         }
 
+        public string GetGLAccountDisplayNoAndLocalName(string id, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            return query.GetGLAccountDisplayNoAndLocalName(id, tenant);
+        }
+
         public APIDataContract.ApiV1.GLAccount GLAccountDataMappingAndValidatin(GLAccountPM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             APIDataContract.ApiV1.GLAccountQueryService query = new APIDataContract.ApiV1.GLAccountQueryService(Tenant);
             return query.GLAccountDataMappingAndValidatin(MyEntity, Tenant);
         }
+
+
+        public GLAccountPM  GetSplittedByCurrencyGLAccount(string accountId, int tenant, string currency)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+
+
+            GLAccountPM gLAccount = query.GetSplittedByCurrencyGLAccount(accountId, tenant, currency);
+
+            return gLAccount;
+
+
+        }
+
     }
 }

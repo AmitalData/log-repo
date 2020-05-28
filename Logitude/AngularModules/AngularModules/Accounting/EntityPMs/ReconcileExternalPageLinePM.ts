@@ -102,6 +102,16 @@ export class ReconcileExternalPageLinePM {
     public set Amount(newValue: number) { if (this.amount != newValue) { this.amount = newValue; this.MarkAsDirty("Amount"); } }
        
 	 
+    private inProgressExternalReconcile: boolean;
+    public get InProgressExternalReconcile() { return this.inProgressExternalReconcile; }
+    public set InProgressExternalReconcile(newValue: boolean) { if (this.inProgressExternalReconcile != newValue) { this.inProgressExternalReconcile = newValue; this.MarkAsDirty("InProgressExternalReconcile"); } }
+       
+	 
+    private inReconcileProgress: boolean;
+    public get InReconcileProgress() { return this.inReconcileProgress; }
+    public set InReconcileProgress(newValue: boolean) { if (this.inReconcileProgress != newValue) { this.inReconcileProgress = newValue; this.MarkAsDirty("InReconcileProgress"); } }
+       
+	 
 
     public OldEntityPM: ReconcileExternalPageLinePM;
 	

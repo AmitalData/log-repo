@@ -283,7 +283,7 @@ namespace WebFreight.Web.Controllers.WebServices
                                     TimeOfArrivalInfo = d.TimeOfArrivalInfo,
                                     TimeOfDepartureInfo = d.TimeOfDepartureInfo,
                                     StatusName = d.INTTRAStatus == null ? null : d.INTTRAStatus.Name,
-                                    LocationCode = d.LocationPort == null ? "" : d.LocationPort.Code,
+                                    LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
                                     Location = d.Location,
                                 }).ToList();

@@ -34,7 +34,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 this.RunCode();
 
                 // status will change to Done and update the done date time.
-                this.ChangeStatus("D");
+                this.ChangeStatus("D");                
             }
             catch (Exception ex)
             {
@@ -58,6 +58,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             {
                 case "I":
                     {
+                        BatchTaskExecution.ProgressPercentage = 1;
                         BatchTaskExecution.StartDateTime = GetCurrentDateTime(BatchTaskExecution.Tenant);
                         break;
                     }

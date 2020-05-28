@@ -38,7 +38,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (from record in context.ObjectTableRuleFields where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-      
+        public IQueryable<ObjectTableRuleField> GetRuleFieldsByRuleId(string ruleId, int tenant)
+        {
+            return (from record in context.ObjectTableRuleFields where record.ObjectTableRuleId == ruleId && record.Tenant == tenant select record);
+        }
+
+
         //public static List<ObjectTableRuleField> GetObjectTableRuleFieldByObjectTableRuleId(string objectTableRuleId, int tenant)
         //{
         //    List<ObjectTableRuleField> zeroquery;

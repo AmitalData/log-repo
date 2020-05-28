@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Component, Output, EventEmitter, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {ObjectTablePM} from '../../../EntityPMs/ObjectTablePM'
@@ -15,7 +15,7 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'MenuButtonsComponent',
     templateUrl: "./MenuButtonsComponent.html",
 })
@@ -28,7 +28,7 @@ export class MenuButtonsComponent implements OnDestroy {
     public MenuButtons: MenuButtonPM[];
     public ToggleButtonTop: string = "22px";
     private MenuButtonsHandler: any;
-    private IsDisableMenuOther: boolean = false;
+    IsDisableMenuOther: boolean = false;
     Loaded: boolean = false;
     ToggleButtonWidth:number = 60;
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -100,9 +100,9 @@ export class MenuButtonsComponent implements OnDestroy {
 
     }
 
-    private LoadMenuButtons() {
-        ServiceHelper.Http.get(this.baseMetaUrlApi + "/getmenubuttongrouppms?tenant=" + SessionLocator.Tenant + "&objecttableid=" + this.ObjectTable.Id).subscribe((response) => {
-            var pm = response.json()[0];
+  private LoadMenuButtons() {
+    ServiceHelper.HttpClient.get(this.baseMetaUrlApi + "/getmenubuttongrouppms?tenant=" + SessionLocator.Tenant + "&objecttableid=" + this.ObjectTable.Id).subscribe((response) => {
+            var pm = response[0];
             this.MenuButtonGroup = this.MapJsonToEntityPM(pm, true);
             this.BuildMenuButtons();
         });
@@ -125,8 +125,8 @@ export class MenuButtonsComponent implements OnDestroy {
 
         var buttons: MenuButtonPM[] = [];
         for (var i = 0; i < btns.length; i++) {
-            if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
-                if (FeatureLocator.IsFeatureGranted(btns[i].FeatureId)) {
+            if (btns[i].FeatureUniqeCode != null && btns[i].FeatureUniqeCode != undefined) {//if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(btns[i].FeatureUniqeCode)) {
                     buttons.push(btns[i]);
                 }
             }

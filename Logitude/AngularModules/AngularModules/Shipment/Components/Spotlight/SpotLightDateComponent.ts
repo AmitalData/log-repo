@@ -21,7 +21,7 @@ import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/Shipment
 
 @Component({
     selector: 'SpotLightDate',
-    moduleId: module.id,
+    
     templateUrl: './SpotLightDateComponent.html',
     inputs: ['EntityPM', 'legname', 'PickUpPM', 'DeliveryPM', 'State'],
 })
@@ -404,7 +404,7 @@ export class SpotLightDateComponent extends BaseComponent implements OnInit, Aft
     onOKBtnClick() {
         this.ValidationErrorsList = [];
 
-        this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
+        this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.OnLostFocus();
                 this.PopupClosed.emit(this);

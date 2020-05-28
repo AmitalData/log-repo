@@ -359,41 +359,49 @@ namespace Logitude.XSD.Simulators
         {
             bool isChampSimulator = false;
 
-            if (Args.MessageIdentifier == "XML")
+            if (this.Args.IsChampSimulator)
             {
-                if (Args.XmlText.Contains("<Message"))
-                {
-                    isChampSimulator = false;
-                }
-
-                else
-                {
-                    isChampSimulator = true;
-                }
+                isChampSimulator = true;
             }
 
             else
             {
-                if (CCSTypeCode == "CHAMP")
+                if (Args.MessageIdentifier == "XML")
                 {
-                    isChampSimulator = true;
-                }
+                    if (Args.XmlText.Contains("<Message"))
+                    {
+                        isChampSimulator = false;
+                    }
 
-                else if (Args.EntityName == "Booking" || Args.EntityName == "FlightsSchedulesRequest")
-                {
-                    isChampSimulator = true;
+                    else
+                    {
+                        isChampSimulator = true;
+                    }
                 }
 
                 else
                 {
-                    switch (Args.MessageIdentifier)
+                    if (CCSTypeCode == "CHAMP")
                     {
-                        case "FFA":
-                        case "FVA":
-                            {
-                                isChampSimulator = true;
-                                break;
-                            }
+                        isChampSimulator = true;
+                    }
+
+                    else if (Args.EntityName == "Booking" || Args.EntityName == "FlightsSchedulesRequest")
+                    {
+                        isChampSimulator = true;
+                    }
+
+                    else
+                    {
+                        switch (Args.MessageIdentifier)
+                        {
+                            case "FFA":
+                            case "FVA":
+                                {
+                                    isChampSimulator = true;
+                                    break;
+                                }
+                        }
                     }
                 }
             }

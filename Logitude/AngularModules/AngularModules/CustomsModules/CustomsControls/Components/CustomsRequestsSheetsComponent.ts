@@ -25,7 +25,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'CustomsRequestsSheetsComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsRequestsSheetsComponent.html',
     providers: [CustomsRequestsSheetExtendedListService]
 })
@@ -169,10 +169,10 @@ export class CustomsRequestsSheetsComponent
     }
     InitScreen() {
         //this.CurrentSession.StartBusyIndicator("");
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe(response => {
-                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe(response => {
-                    //this._entityResourceService.getEntityResourceByTableName("CustomsRequestsSheetStatus", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                    //this._entityResourceService.getEntityResourceByTableName("CustomsRequestsSheetStatus", 0).subscribe((response:any) => {
                     if (AppTool.IsNullOrEmpty(this.Title)) {
                         this.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
                     }
@@ -248,14 +248,16 @@ export class CustomsRequestsSheetsComponent
                     messageWindow.Width = 400;
                     messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
+                    messageWindow.Show(data.ErrorsArray[0]);
+
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
                 }
 
                 else {
                  var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
-                messageWindow.ShowErrorIcon = true;
+                    messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllSuccess"));
                 }
 
@@ -269,14 +271,14 @@ export class CustomsRequestsSheetsComponent
     }
 
     ReAnalysisByFilters() {
-        if (!this.CheckValidation("ReAnalysis")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
-            return;
-        }
+        //if (!this.CheckValidation("ReAnalysis")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //    messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
         this.CurrentSession.StartBusyIndicator("");
 
         this.InitFilter();
@@ -285,19 +287,19 @@ export class CustomsRequestsSheetsComponent
                 this.CurrentSession.StopBusyIndicator();
 
                 if (data.HasError) {
-               
-                        var messageWindow = new MessageWindow();
+                         var messageWindow = new MessageWindow();
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
-                        messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(data.ErrorsArray[0]);
+                    //messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
                   
                 }
                 else {
-    var messageWindow = new MessageWindow();
+              var messageWindow = new MessageWindow();
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
-                messageWindow.ShowErrorIcon = true;
+                    messageWindow.ShowErrorIcon = true;
                     messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.SendReAnalysisInBackground"));
                 }
             
@@ -692,9 +694,7 @@ export class CustomsRequestsSheetsComponent
     GetRequestStatusString(filters: any) {
          let RequestStatusString: string = "";
         if (this.AllCRSSChecked) return;
-
-
-        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
+         this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
 
             if (requestStatus.IsChecked) {
                 if (!AppTool.IsNullOrEmpty(RequestStatusString)) {

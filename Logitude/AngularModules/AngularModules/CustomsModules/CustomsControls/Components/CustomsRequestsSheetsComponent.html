@@ -161,7 +161,7 @@
 
 
                                         <LogTextBox [ObjectFieldName]="'CorrelationId'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -199,7 +199,7 @@
 
 
                                         <LogTextBox [ObjectFieldName]="'CustomFileNo'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -282,7 +282,7 @@
                                     <td style="width: 200px; padding-right: 15px;text-align:left">
 
                                         <LogTextBox [ObjectFieldName]="'EntityReference'"
-                                                    [InputType]="text"
+                                                    [InputType]="'text'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"></LogTextBox>
@@ -450,10 +450,17 @@
                     </tr>
                     <tr *ngIf="RefreshButtonVisibility"
                         class="FormFieldRow">
+
+
+ 
+
+
+
                         <td style="width:400px;"><div></div></td>
                         <td style="width:350px;padding-right:15px;"><div></div></td>
                         <td style="width:370px;">
                             <table>
+                                 <tbody>
                                 <tr class="FormFieldRow">
                                     <td style="width: 150px"></td>
                                     <td style="width:10px"></td>

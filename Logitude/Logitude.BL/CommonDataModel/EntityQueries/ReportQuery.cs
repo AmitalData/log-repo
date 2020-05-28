@@ -52,6 +52,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                    DefaultTemplateId = report.DefaultTemplateId,
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                   FeatureUniqeCode = report.FeatureUniqeCode,
+                                   AvailableForScheduling = report.AvailableForScheduling,
+                                   DisablePreview = report.DisablePreview,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -91,6 +94,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                                                DefaultTemplateId =a.DefaultTemplateId,
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                                               FeatureUniqeCode = a.FeatureUniqeCode,
+                                               AvailableForScheduling = a.AvailableForScheduling,
+                                               DisablePreview = a.DisablePreview,
                                            };
             return reports;
         }
@@ -119,6 +125,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                              DefaultTemplateId = a.DefaultTemplateId,
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
+                             FeatureUniqeCode = a.FeatureUniqeCode,
+                             AvailableForScheduling = a.AvailableForScheduling,
+                             DisablePreview = a.DisablePreview,
                          }).FirstOrDefault();
 
             return query;
@@ -144,6 +153,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                                FeatureUniqeCode = report.FeatureUniqeCode,
+                                                AvailableForScheduling = report.AvailableForScheduling,
+                                                DisablePreview = report.DisablePreview,
                                             };
             return result;
         }
@@ -173,6 +185,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           DisablePreview = report.DisablePreview,
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -219,6 +235,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           DisablePreview = report.DisablePreview,
+
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -258,10 +278,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
+                                           FeatureUniqeCode = report.FeatureUniqeCode,
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           DisablePreview = report.DisablePreview,
+
                                        }).ToList();
 
           
             return result;
+        }
+    
+        public string GetReportCodeById(string id, int tenant)
+        {
+            return repository.GetReportCodeById(id, tenant);
         }
     }
 }

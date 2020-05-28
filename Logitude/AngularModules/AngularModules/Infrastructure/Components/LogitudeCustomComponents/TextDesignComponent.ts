@@ -12,7 +12,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var insertAtSubject : any;
 @Component({
-    moduleId: module.id,
+    
     selector: 'TextDesignComponent',
     templateUrl: './TextDesignComponent.html',
     inputs: ['QuoteTemplateTextDesignPM', 'QuoteTemplateTableDesignPM', 'QuoteTemplateSettingPM', 'SectionType']
@@ -233,9 +233,9 @@ export class TextDesignComponent implements OnInit {
         var table = window.ObjectTables.filter(d => d.Name == "Quote")[0];
         if (table) tableId = table.Id;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
 
-            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe((response:any) => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTableId = tableId;
 

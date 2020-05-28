@@ -35,11 +35,6 @@ export class ReconcileExternalPagePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private bankAccountId: string;
-    public get BankAccountId() { return this.bankAccountId; }
-    public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
-       
-	 
     private gLAccountId: string;
     public get GLAccountId() { return this.gLAccountId; }
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
@@ -152,6 +147,16 @@ export class ReconcileExternalPagePM {
     private entryTypeLocalName: string;
     public get EntryTypeLocalName() { return this.entryTypeLocalName; }
     public set EntryTypeLocalName(newValue: string) { if (this.entryTypeLocalName != newValue) { this.entryTypeLocalName = newValue; this.MarkAsDirty("EntryTypeLocalName"); } }
+       
+	 
+    private objectTableId: string;
+    public get ObjectTableId() { return this.objectTableId; }
+    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
+       
+	 
+    private entityId: string;
+    public get EntityId() { return this.entityId; }
+    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
 

@@ -279,6 +279,11 @@ export class LedgerTransactionPM {
     public set PaymentReconciledAmount(newValue: number) { if (this.paymentReconciledAmount != newValue) { this.paymentReconciledAmount = newValue; this.MarkAsDirty("PaymentReconciledAmount"); } }
        
 	 
+    private inProgressExternalReconcile: boolean;
+    public get InProgressExternalReconcile() { return this.inProgressExternalReconcile; }
+    public set InProgressExternalReconcile(newValue: boolean) { if (this.inProgressExternalReconcile != newValue) { this.inProgressExternalReconcile = newValue; this.MarkAsDirty("InProgressExternalReconcile"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

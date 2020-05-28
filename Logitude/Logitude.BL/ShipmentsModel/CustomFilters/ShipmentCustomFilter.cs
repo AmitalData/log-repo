@@ -259,6 +259,19 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         select d;
                     }
 
+                    if (item.FieldName == "EBookingInProgress")
+                    {
+                        queryableData = from d in queryableData
+                                        where 
+                                        ( d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "D")
+                                        && d.DirectionId == "E"
+                                        && d.TransportModeId == "O"
+                                        && d.INTTRABookingTransStatusCode != "NST" && d.INTTRABookingStatusCode != "SI"
+                                        && d.MainCarriageATD == null
+                                        select d;
+                    }
+
+
                     if (item.FieldName == "SentFSR")
                     {
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
@@ -618,7 +631,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
                         }
                     }
 
@@ -628,7 +641,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true);
+                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
                         }
                     }
                 }

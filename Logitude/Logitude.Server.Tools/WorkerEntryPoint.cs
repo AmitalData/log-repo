@@ -1,22 +1,11 @@
 ﻿using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure;
 using System.Globalization;
 
 namespace Logitude.Server.Tools

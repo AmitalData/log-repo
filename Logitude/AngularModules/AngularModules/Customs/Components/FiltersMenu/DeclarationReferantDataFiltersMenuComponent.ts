@@ -11,7 +11,6 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationReferantDataFiltersMenuComponent.html',
 })
 

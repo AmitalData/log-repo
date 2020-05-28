@@ -8,7 +8,7 @@ import {AppTool} from '../../Tools';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'MultilineTextBoxWindow',
     templateUrl: "./MultilineTextBoxWindow.html",

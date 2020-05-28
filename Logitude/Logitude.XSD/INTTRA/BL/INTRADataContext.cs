@@ -40,6 +40,7 @@ namespace Logitude.XSD.INTTRA.BL
         public List<string> Errors { get; set; }
         public ICommonDataContext CommonContext;
         private ComputingPartnerTranslationHelper computingPartnerHelper;
+        public INTTRAGeneralMethods iNTTRAGeneralMethods;
         public INTTRADataContext(int teannt, string shipmentId, Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact, ICommonDataContext CommonContext)
         {
             this.Tenant = teannt;
@@ -47,6 +48,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.LoggedContact = loggedContact;
             this.CommonContext = CommonContext;
             this.computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
+            this.iNTTRAGeneralMethods = new INTTRAGeneralMethods();
             this.GetObjects();
             this.GetProperties();
         }
@@ -538,6 +540,20 @@ namespace Logitude.XSD.INTTRA.BL
                         }
                     }
 
+                    if (item.Temperature != null)
+                    {
+                        item.Temperature = item.Temperature.Trim();
+                    }
+
+                    if (!string.IsNullOrEmpty(item.Temperature))
+                    {
+                        if (!this.iNTTRAGeneralMethods.IsDecimalFormat(item.Temperature))
+                        {
+                            string msg = TranslateTextsClass.Translate("ShipmentPackage.F.Temperature", this.Tenant) + " invalid format";
+                            this.Errors.Add(msg);
+                        }
+                    }
+
                     if (item.IsDangerous)
                     {
                         if (item.IMDGCode != null)
@@ -558,23 +574,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                         if (!string.IsNullOrEmpty(item.FlashPoint))
                         {
-
-                            bool isFlashPointValid = false;
-
-                            Regex isMatched = new Regex(@"[^0-9\-\.]*");
-                            if (isMatched.IsMatch(item.FlashPoint))
-                            {
-                                string myStringFlashPoint = item.FlashPoint;
-                                myStringFlashPoint = myStringFlashPoint.Replace(".", "");
-                                myStringFlashPoint = myStringFlashPoint.Replace("-", "");
-
-                                if(myStringFlashPoint.Length == 3)
-                                {
-                                    isFlashPointValid = true;
-                                }
-                            }
-
-                            if (!isFlashPointValid)
+                            if (!this.iNTTRAGeneralMethods.IsDecimalFormat(item.FlashPoint))
                             {
                                 string msg = TranslateTextsClass.Translate("ShipmentPackage.F.FlashPoint", this.Tenant) + " invalid format";
                                 this.Errors.Add(msg);
@@ -607,17 +607,38 @@ namespace Logitude.XSD.INTTRA.BL
                 // Validate the Computing Partner of Packages
                 List<string> ids = this.ShipmentPackages.Select(s => s.PackageTypeId).ToList();
                 var allPackageTypes = (from d in CommonContext.PackageTypes
-                                        where d.Tenant == this.Tenant
-                                        && ids.Contains(d.Id)
-                                        select d).ToList();
-      
+                                       where d.Tenant == this.Tenant
+                                       && ids.Contains(d.Id)
+                                       select d).ToList();
+
                 foreach (var item in allPackageTypes)
                 {
                     string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
                     if (string.IsNullOrEmpty(myTranslatedCode))
                     {
-                        this.Errors.Add( "Package Type : " + item.EnglishName +  " has no translation in the computing partner");
+                        this.Errors.Add("Package Type : " + item.EnglishName + " has no translation in the computing partner");
                     }
+                }
+
+                this.ValidateInsidePackages_ComputingPartnerTranslation();
+
+            }
+        }
+
+        private void ValidateInsidePackages_ComputingPartnerTranslation()
+        {
+            // Validate the Computing Partner of Packages
+            List<string> ids = this.InsidePackages.Select(s => s.PackageTypeId).ToList();
+            var packageTypesOfsidePackages = (from d in CommonContext.PackageTypes
+                                   where d.Tenant == this.Tenant
+                                   && ids.Contains(d.Id)
+                                   select d).ToList();
+            foreach (var item in packageTypesOfsidePackages)
+            {
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
+                if (string.IsNullOrEmpty(myTranslatedCode))
+                {
+                    this.Errors.Add("Inside Package Type : " + item.EnglishName + " has no translation in the computing partner");
                 }
             }
         }
@@ -753,8 +774,8 @@ namespace Logitude.XSD.INTTRA.BL
         {
             this.TodayDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant).Date;
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
-            this.XMLCreateDate = this.GetDateShortFormat(this.TodayDateTime);
-            this.XMLCreateDate_Long = this.GetDateLongFormat(this.TodayDateTime);
+            this.XMLCreateDate = this.iNTTRAGeneralMethods.GetDateShortFormat(this.TodayDateTime);
+            this.XMLCreateDate_Long = this.iNTTRAGeneralMethods.GetDateLongFormat(this.TodayDateTime);
 
             this.ShipmentNumber = this.Shipment.ShipmentNumber;
             this.VolumeUnitCode = this.Shipment.VolumeUnitCode.ToUpper();
@@ -788,7 +809,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.Sender = new INTTRA_Out.PartnerInformation()
             {
                 PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Sender,
-                PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
 
                 PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
                 {
@@ -964,7 +985,7 @@ namespace Logitude.XSD.INTTRA.BL
                     Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
                 },
 
-                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+                LocationName = this.iNTTRAGeneralMethods.FormatString(this.FromPort.EnglishName, 256),
 
                 LocationCountry = this.FromPortCountry.Code.ToUpper(),
 
@@ -994,7 +1015,7 @@ namespace Logitude.XSD.INTTRA.BL
                                     Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
                                 },
 
-                                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+                                LocationName = this.iNTTRAGeneralMethods.FormatString(this.FromPort.EnglishName, 256),
 
                                 //LocationCountry = this.FromPortCountry.Code.ToUpper(),
 
@@ -1023,7 +1044,7 @@ namespace Logitude.XSD.INTTRA.BL
                                     Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
                                 },
 
-                                LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+                                LocationName = this.iNTTRAGeneralMethods.FormatString(this.FinalPort.EnglishName, 256),
 
                                 //LocationCountry = this.FinalPortCountry.Code.ToUpper(),
 
@@ -1048,7 +1069,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
             {
                 ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.BookingNumber,
-                Value = this.FormatString(this.MasterData.BookingConfirmationNumber, 99),
+                Value = this.iNTTRAGeneralMethods.FormatString(this.MasterData.BookingConfirmationNumber, 99),
             });
 
             if (!string.IsNullOrEmpty(this.Shipment.ShipperReference1))
@@ -1056,7 +1077,7 @@ namespace Logitude.XSD.INTTRA.BL
                 this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
                 {
                     ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.InvoiceNumber,
-                    Value = this.FormatString(this.Shipment.ShipperReference1, 99),
+                    Value = this.iNTTRAGeneralMethods.FormatString(this.Shipment.ShipperReference1, 99),
                 });
             }
 
@@ -1065,7 +1086,7 @@ namespace Logitude.XSD.INTTRA.BL
                 this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
                 {
                     ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.InvoiceNumber,
-                    Value = this.FormatString(this.Shipment.ShipperReference2, 99),
+                    Value = this.iNTTRAGeneralMethods.FormatString(this.Shipment.ShipperReference2, 99),
                 });
             }
 
@@ -1074,7 +1095,7 @@ namespace Logitude.XSD.INTTRA.BL
                 this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
                 {
                     ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.FreightForwarderReference,
-                    Value = this.FormatString(this.Shipment.ShipmentNumber, 99),
+                    Value = this.iNTTRAGeneralMethods.FormatString(this.Shipment.ShipmentNumber, 99),
                 });
             }
 
@@ -1085,7 +1106,7 @@ namespace Logitude.XSD.INTTRA.BL
                     this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
                     {
                         ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.BillOfLadingNumber,
-                        Value = this.FormatString(this.MasterData.Master, 99),
+                        Value = this.iNTTRAGeneralMethods.FormatString(this.MasterData.Master, 99),
                     });
                 }
             }
@@ -1095,7 +1116,7 @@ namespace Logitude.XSD.INTTRA.BL
                 this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
                 {
                     ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.ContractNumber,
-                    Value = this.FormatString(this.Shipment.INTTRAContractNumber, 99),
+                    Value = this.iNTTRAGeneralMethods.FormatString(this.Shipment.INTTRAContractNumber, 99),
                 });
             }
         }
@@ -1107,7 +1128,7 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 string myString = this.Shipment.INTTRAInstructions;
 
-                List<string> list = this.GetStringList(myString, 99, 35);
+                List<string> list = this.iNTTRAGeneralMethods.GetStringList(myString, 99, 35);
 
                 foreach (string item in list)
                 {
@@ -1125,7 +1146,7 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 string myString = this.Shipment.INTTRAComments;
 
-                List<string> list = this.GetStringList(myString, 99, 35);
+                List<string> list = this.iNTTRAGeneralMethods.GetStringList(myString, 99, 35);
 
                 foreach (string item in list)
                 {
@@ -1151,7 +1172,7 @@ namespace Logitude.XSD.INTTRA.BL
                 
                 ConveyanceInformation = new INTTRA_Out.ConveyanceInformation()
                 {
-                    ConveyanceName = this.FormatString(this.MainVessel.EnglishName, 35),
+                    ConveyanceName = this.iNTTRAGeneralMethods.FormatString(this.MainVessel.EnglishName, 35),
 
                     //TransportIdentification = new TransportIdentification()
                     //{
@@ -1163,14 +1184,14 @@ namespace Logitude.XSD.INTTRA.BL
 
             if (this.MasterData.MainCarriageCarrierNumber != null)
             {
-                this.TransportationDetails.ConveyanceInformation.VoyageTripNumber = this.FormatString(this.MasterData.MainCarriageCarrierNumber, 35);
+                this.TransportationDetails.ConveyanceInformation.VoyageTripNumber = this.iNTTRAGeneralMethods.FormatString(this.MasterData.MainCarriageCarrierNumber, 35);
             }
 
             if (this.MainShippingLine != null)
             {
                 if (this.MainShippingLine.SCACCode != null)
                 {
-                    this.TransportationDetails.ConveyanceInformation.CarrierSCAC = this.FormatString(this.MainShippingLine.SCACCode, 35);
+                    this.TransportationDetails.ConveyanceInformation.CarrierSCAC = this.iNTTRAGeneralMethods.FormatString(this.MainShippingLine.SCACCode, 35);
                 }
             }
 
@@ -1187,7 +1208,7 @@ namespace Logitude.XSD.INTTRA.BL
                     Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
                 },
 
-                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+                LocationName = this.iNTTRAGeneralMethods.FormatString(this.FromPort.EnglishName, 256),
 
                 LocationCountry = this.FromPortCountry.Code.ToUpper(),
             });
@@ -1203,7 +1224,7 @@ namespace Logitude.XSD.INTTRA.BL
                     Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
                 },
 
-                LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+                LocationName = this.iNTTRAGeneralMethods.FormatString(this.FinalPort.EnglishName, 256),
 
                 LocationCountry = this.FinalPortCountry.Code.ToUpper(),
             });
@@ -1224,7 +1245,7 @@ namespace Logitude.XSD.INTTRA.BL
                         Value = PreCarriageCountry.Code.ToUpper() + PreCarriagePort.Code.ToUpper(),
                     },
 
-                    LocationName = this.FormatString(PreCarriagePort.EnglishName, 256),
+                    LocationName = this.iNTTRAGeneralMethods.FormatString(PreCarriagePort.EnglishName, 256),
 
                     LocationCountry = PreCarriageCountry.Code.ToUpper(),
                 });
@@ -1242,7 +1263,7 @@ namespace Logitude.XSD.INTTRA.BL
             //            Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
             //        },
 
-            //        LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+            //        LocationName = this.iNTTRAGeneralMethods.FormatString(this.FromPort.EnglishName, 256),
 
             //        LocationCountry = this.FromPortCountry.Code.ToUpper(),
             //    });
@@ -1265,7 +1286,7 @@ namespace Logitude.XSD.INTTRA.BL
                         Value = OnCarriageCountry.Code.ToUpper() + OnCarriagePort.Code.ToUpper(),
                     },
 
-                    LocationName = this.FormatString(OnCarriagePort.EnglishName, 256),
+                    LocationName = this.iNTTRAGeneralMethods.FormatString(OnCarriagePort.EnglishName, 256),
 
                     LocationCountry = OnCarriageCountry.Code.ToUpper(),
                 });
@@ -1283,7 +1304,7 @@ namespace Logitude.XSD.INTTRA.BL
             //            Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
             //        },
 
-            //        LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+            //        LocationName = this.iNTTRAGeneralMethods.FormatString(this.FinalPort.EnglishName, 256),
 
             //        LocationCountry = this.FinalPortCountry.Code.ToUpper(),
             //    });
@@ -1302,7 +1323,7 @@ namespace Logitude.XSD.INTTRA.BL
                 INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                 {
                     PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Requestor,
-                    PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+                    PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
 
                     PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
                     {
@@ -1383,7 +1404,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Shipper,
-                        PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                     if (this.ShipperAddress != null)
@@ -1405,7 +1426,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Consignee,
-                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                     if (this.ConsigneeAddress != null)
@@ -1427,7 +1448,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Carrier,
-                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                     if (this.MainShippingLine != null)
@@ -1458,7 +1479,7 @@ namespace Logitude.XSD.INTTRA.BL
                         INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                         {
                             PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty,
-                            PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                            PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                         };
 
                         if (this.Notify1Address != null)
@@ -1478,7 +1499,7 @@ namespace Logitude.XSD.INTTRA.BL
                         INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                         {
                             PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty1,
-                            PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                            PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                         };
 
                         if (this.Notify2Address != null)
@@ -1499,7 +1520,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty,
-                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                     if (this.ConsigneeAddress != null)
@@ -1521,7 +1542,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                    Address FreightPayerAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightPayerAddressId select d).FirstOrDefault();
@@ -1544,7 +1565,7 @@ namespace Logitude.XSD.INTTRA.BL
             //            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
             //            {
             //                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-            //                PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+            //                PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
             //            };
 
             //            if (this.ShipperAddress != null)
@@ -1566,7 +1587,7 @@ namespace Logitude.XSD.INTTRA.BL
             //                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
             //                {
             //                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-            //                    PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+            //                    PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
             //                };
 
             //                if (this.AgentAddress != null)
@@ -1588,7 +1609,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.MessageRecipient,
 
-                    PartnerName = this.GetStringList(LoggedContact.EnglishName, 2, 35).ToArray<string>(),
+                    PartnerName = this.iNTTRAGeneralMethods.GetStringList(LoggedContact.EnglishName, 2, 35).ToArray<string>(),
 
                     ContactInformation = this.GetContactInformation(this.LoggedContact, INTTRA_Out.ContactNameContactType.SINotification),
                 };
@@ -1606,7 +1627,7 @@ namespace Logitude.XSD.INTTRA.BL
                     INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
                         PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightForwarder,
-                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
                     };
 
                     if (this.FreightForwarderAddress != null)
@@ -1623,7 +1644,7 @@ namespace Logitude.XSD.INTTRA.BL
                 INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                 {
                     PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightForwarder,
-                    PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+                    PartnerName = this.iNTTRAGeneralMethods.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
                 };
 
                 if (this.TenantAddress != null)
@@ -1703,7 +1724,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                 if (!string.IsNullOrEmpty(item.Description))
                 {
-                    itemDetails.EquipmentType.EquipmentDescription = this.FormatString(item.Description, 35);
+                    itemDetails.EquipmentType.EquipmentDescription = this.iNTTRAGeneralMethods.FormatString(item.Description, 35);
                 }
 
                 if (item.Volume != null)
@@ -1772,7 +1793,7 @@ namespace Logitude.XSD.INTTRA.BL
                     itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
                     {
                         UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
-                        Value = 999,
+                        Value = "999",
                     };
 
                     if (item.TemperatureUnitCode != "CEL")
@@ -1786,7 +1807,7 @@ namespace Logitude.XSD.INTTRA.BL
                     itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
                     {
                         UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
-                        Value = (float)(decimal)item.Temperature.Value,
+                        Value = item.Temperature,
                     };
 
                     if (item.TemperatureUnitCode != "CEL")
@@ -1832,7 +1853,7 @@ namespace Logitude.XSD.INTTRA.BL
                         if (myPackageType != null)
                         {
                             itemGoodsDetails.PackageDetail.PackageTypeCode = myPackageType.Code;
-                            itemGoodsDetails.PackageDetail.PackageTypeDescription = this.FormatString(myPackageType.EnglishName, 35);
+                            itemGoodsDetails.PackageDetail.PackageTypeDescription = this.iNTTRAGeneralMethods.FormatString(myPackageType.EnglishName, 35);
 
                             string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myPackageType.Code, "G-INTTRA", "PackageType"); ;
                             if (!string.IsNullOrEmpty(myTranslatedCode))
@@ -1927,38 +1948,31 @@ namespace Logitude.XSD.INTTRA.BL
 
                             INTTRA_Out.HazardousGoods HazardousGoodsItem = new INTTRA_Out.HazardousGoods()
                             {
-                                IMOClassCode = this.FormatString(myShipmentPackage.ClassNumber, 7),                                 
+                                IMOClassCode = this.iNTTRAGeneralMethods.FormatString(myShipmentPackage.ClassNumber, 7),                                 
                             };
 
                             if (!string.IsNullOrEmpty(myShipmentPackage.IMDGCode))
                             {
-                                HazardousGoodsItem.IMDGPageNumber = this.FormatString(myShipmentPackage.IMDGCode, 7);
+                                HazardousGoodsItem.IMDGPageNumber = this.iNTTRAGeneralMethods.FormatString(myShipmentPackage.IMDGCode, 7);
                             }
 
                             if (myShipmentPackage.UnNumber != null)
                             {
-                                HazardousGoodsItem.UNDGNumber = this.FormatString(myShipmentPackage.UnNumber, 4);
+                                HazardousGoodsItem.UNDGNumber = this.iNTTRAGeneralMethods.FormatString(myShipmentPackage.UnNumber, 4);
                             }
 
                             if (myShipmentPackage.EMS != null)
                             {
-                                HazardousGoodsItem.EMSNumber = this.FormatString(myShipmentPackage.EMS, 6);
+                                HazardousGoodsItem.EMSNumber = this.iNTTRAGeneralMethods.FormatString(myShipmentPackage.EMS, 6);
                             }
 
                             if (myShipmentPackage.FlashPoint != null)
                             {
-                                float myDecimalFlashPoint = 0;
-
-                                bool isDecimal = float.TryParse(myShipmentPackage.FlashPoint, out myDecimalFlashPoint);
-
-                                if (isDecimal)
+                                HazardousGoodsItem.FlashpointTemperature = new INTTRA_Out.FlashpointTemperature()
                                 {
-                                    HazardousGoodsItem.FlashpointTemperature = new INTTRA_Out.FlashpointTemperature()
-                                    {
-                                        UOM = myShipmentPackage.FlashPointTemperatureUnitCode == "CEL" ? INTTRA_Out.FlashpointTemperatureUOM.CEL : INTTRA_Out.FlashpointTemperatureUOM.FAH,
-                                        Value = myDecimalFlashPoint
-                                    };
-                                }
+                                    UOM = myShipmentPackage.FlashPointTemperatureUnitCode == "CEL" ? INTTRA_Out.FlashpointTemperatureUOM.CEL : INTTRA_Out.FlashpointTemperatureUOM.FAH,
+                                    Value = myShipmentPackage.FlashPoint
+                                };
                             }
 
                             if (myShipmentPackage.ProperShippingName != null)
@@ -2062,7 +2076,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                     if (!string.IsNullOrEmpty(myShipmentPackage.MarksAndNumbers))
                     {
-                        List<string> list = this.GetStringList(myShipmentPackage.MarksAndNumbers, 10, 35);
+                        List<string> list = this.iNTTRAGeneralMethods.GetStringList(myShipmentPackage.MarksAndNumbers, 10, 35);
 
                         itemGoodsDetails.PackageMarks = list.ToArray<string>();
                     }
@@ -2145,85 +2159,7 @@ namespace Logitude.XSD.INTTRA.BL
 
             return myResult;
         }
-        private long GetDateShortFormat(System.DateTime? date)
-        {
-            long myResult = 0;
-
-            if (date != null)
-            {
-                string Year = date.Value.Year.ToString().Substring(2, 2);
-                string Month = date.Value.Month.ToString();
-                string Day = date.Value.Day.ToString();
-                string Hour = date.Value.Hour.ToString();
-                string Minute = date.Value.Minute.ToString();
-
-                if (Month.Length == 1)
-                {
-                    Month = "0" + Month;
-                }
-
-                if (Day.Length == 1)
-                {
-                    Day = "0" + Day;
-                }
-
-                if (Hour.Length == 1)
-                {
-                    Hour = "0" + Hour;
-                }
-
-                if (Minute.Length == 1)
-                {
-                    Minute = "0" + Minute;
-                }
-
-                string myString = Year + Month + Day + Hour + Minute;
-
-                myResult = (long)Convert.ToDouble(myString);
-            }
-
-            return myResult;
-        }
-        private long GetDateLongFormat(System.DateTime? date)
-        {
-            long myResult = 0;
-
-            if (date != null)
-            {
-                string Year = date.Value.Year.ToString();
-                string Month = date.Value.Month.ToString();
-                string Day = date.Value.Day.ToString();
-                string Hour = date.Value.Hour.ToString();
-                string Minute = date.Value.Minute.ToString();
-
-                if (Month.Length == 1)
-                {
-                    Month = "0" + Month;
-                }
-
-                if (Day.Length == 1)
-                {
-                    Day = "0" + Day;
-                }
-
-                if (Hour.Length == 1)
-                {
-                    Hour = "0" + Hour;
-                }
-
-                if (Minute.Length == 1)
-                {
-                    Minute = "0" + Minute;
-                }
-
-                string myString = Year + Month + Day + Hour + Minute;
-
-                myResult = (long)Convert.ToDouble(myString);
-            }
-
-            return myResult;
-        }
-
+      
         private INTTRA_Out.AddressInformation GetAddressInformation(Address myAddress)
         {
             INTTRA_Out.AddressInformation myResult = null;
@@ -2234,18 +2170,18 @@ namespace Logitude.XSD.INTTRA.BL
 
                 myResult = new INTTRA_Out.AddressInformation()
                 {
-                    //AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
-                    City = this.FormatString(myAddress.City, 35),                     
+                    //AddressLine = this.iNTTRAGeneralMethods.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
+                    City = this.iNTTRAGeneralMethods.FormatString(myAddress.City, 35),                     
                 };
 
                 if (!string.IsNullOrEmpty(myAddress.Address2))
                 {
-                    myResult.Street = this.GetStringList(myAddress.Address2, 2, 35).ToArray<string>();
+                    myResult.Street = this.iNTTRAGeneralMethods.GetStringList(myAddress.Address2, 2, 35).ToArray<string>();
                 }
 
                 if (!string.IsNullOrEmpty(myAddress.ZipCode))
                 {
-                    myResult.PostalCode = this.FormatString(myAddress.ZipCode, 19);
+                    myResult.PostalCode = this.iNTTRAGeneralMethods.FormatString(myAddress.ZipCode, 19);
                 }
 
                 if (myAddress.CountryId != null)
@@ -2263,7 +2199,7 @@ namespace Logitude.XSD.INTTRA.BL
                     State myState = (from d in CommonContext.States where d.Id == myAddress.StateId select d).FirstOrDefault();
                     if (myState != null)
                     {
-                        myResult.StateProvince = this.FormatString(myState.EnglishName, 9);
+                        myResult.StateProvince = this.iNTTRAGeneralMethods.FormatString(myState.EnglishName, 9);
                     }
                 }
 
@@ -2273,7 +2209,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     if (AddressLines.Count < 4)
                     {
-                        AddressLines.Add(this.FormatString(myAddress.Address1, 35));
+                        AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(myAddress.Address1, 35));
                     }
                 }
 
@@ -2281,7 +2217,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     if (AddressLines.Count < 4)
                     {
-                        AddressLines.Add(this.FormatString(myAddress.Address2, 35));
+                        AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(myAddress.Address2, 35));
                     }
                 }
 
@@ -2296,7 +2232,7 @@ namespace Logitude.XSD.INTTRA.BL
                             iField += "," + myAddress.ZipCode;
                         }
 
-                        AddressLines.Add(this.FormatString(iField, 35));
+                        AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(iField, 35));
                     }
                 }
 
@@ -2304,7 +2240,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     if (AddressLines.Count < 4)
                     {
-                        AddressLines.Add(this.FormatString(iCountryName, 35));
+                        AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(iCountryName, 35));
                     }
                 }
 
@@ -2320,7 +2256,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                 //string iAddressString = this.GetAddress_OneLine(myAddress);
 
-                //myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
+                //myResult.AddressLine = this.iNTTRAGeneralMethods.GetStringList(iAddressString, 4, 35).ToArray<string>();
             }
 
             return myResult;
@@ -2373,167 +2309,6 @@ namespace Logitude.XSD.INTTRA.BL
 
             return ContactInformationList.ToArray<INTTRA_Out.ContactInformation>();
         }
-        private List<string> GetStringList(string inputString, int maxOccurs, int length)
-        {
-            List<string> myResult = new List<string>();
-
-            if (!string.IsNullOrEmpty(inputString))
-            {
-                inputString = this.FixSpecialCharacters(inputString);
-
-                if (inputString != null)
-                {
-                    List<string> myResult_PRE = new List<string>();
-
-                    while (inputString.Length > length)
-                    {
-                        if (myResult_PRE.Count < maxOccurs)
-                        {
-                            myResult_PRE.Add(inputString.Substring(0, length));
-                        }
-
-                        inputString = inputString.Remove(0, length);
-                    }
-
-                    if (inputString.Length > 0)
-                    {
-                        if (myResult_PRE.Count < maxOccurs)
-                        {
-                            myResult_PRE.Add(inputString);
-                        }
-                    }
-
-                    foreach (string item in myResult_PRE)
-                    {
-                        myResult.Add(item);
-                    }
-                }
-            }
-
-            return myResult;
-        }
-        private string FormatString(string input)
-        {
-            return this.FormatString(input, INTTRAPattern.Text, null);
-        }
-        private string FormatString(string input, int length)
-        {
-            return this.FormatString(input, INTTRAPattern.Text, length);
-        }
-        private string FormatString(string input, INTTRAPattern pattern)
-        {
-            return this.FormatString(input, pattern, null);
-        }
-        private string FormatString(string input, INTTRAPattern pattern, int? length = null)
-        {
-            string myResult = null;
-
-            if (!string.IsNullOrEmpty(input))
-            {
-                string myFormat = null;
-
-                switch (pattern)
-                {
-                    //case INTTRAPattern.Alpha:
-                    //    {
-                    //        myFormat = @"[^A-Z]*";
-                    //        break;
-                    //    }
-
-                    //case INTTRAPattern.AlphaNumeric:
-                    //    {
-                    //        myFormat = @"[^A-Z0-9]*";
-                    //        break;
-                    //    }
-
-                    case INTTRAPattern.Text:
-                        {
-                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
-                            break;
-                        }
-
-                    default:
-                        {
-                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
-                            break;
-                        }
-                }
-
-                input = input.Trim().ToUpper();
-                myResult = Regex.Replace(input, myFormat, string.Empty, RegexOptions.Compiled);
-
-                if (length != null)
-                {
-                    myResult = (myResult.Length <= length) ? myResult : myResult.Substring(0, length.Value);
-                }
-            }
-
-            return myResult;
-        }
-        private string FixSpecialCharacters(string input)
-        {
-            string myResult = null;
-
-            if (!string.IsNullOrEmpty(input))
-            {
-                input = input.Replace("&", "&amp;");
-                input = input.Replace("<", "&lt;");
-                input = input.Replace(">", "&gt;");
-                input = input.Replace("'", "&apos;");
-                input = input.Replace("\"", "&quot;");
-                myResult = input;
-            }
-
-            return myResult;
-        }
-        private string GetAddress_OneLine(Address address)
-        {
-            string resultAddress = "";
-
-            if (address != null)
-            {
-                resultAddress = address.Address1 != null ? address.Address1 : "";
-
-                if (!string.IsNullOrEmpty(address.Address2))
-                {
-                    resultAddress = resultAddress + ", " + address.Address2;
-                }
-
-                if (!string.IsNullOrEmpty(address.City))
-                {
-                    resultAddress = resultAddress + ", " + address.City;
-                }
-
-                if (address.State != null)
-                {
-                    resultAddress = resultAddress + ", " + (address.State.Code != null ? address.State.Code : "");
-                }
-
-                if (!string.IsNullOrEmpty(address.ZipCode))
-                {
-                    resultAddress = resultAddress + ", " + address.ZipCode;
-                }
-
-                if (address.Country != null)
-                {
-                    if (address.IsLocalLanguage)
-                    {
-                        resultAddress = resultAddress + ", " + address.Country.LocalName;
-                    }
-
-                    else
-                    {
-                        resultAddress = resultAddress + ", " + address.Country.EnglishName;
-                    }
-                }
-            }
-
-            return resultAddress;
-        }
-
-        public enum INTTRAPattern
-        {
-            Text = 0,
-        }
+     
     }
 }

@@ -14,7 +14,7 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 
 @Component({
     selector: 'OpenFormatReportLogTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpenFormatReportLogTabComponent.html',
 })
 
@@ -49,7 +49,7 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
 
 
 
-        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.entityPM.Id, objectTable.Id).subscribe(myResult => {
+        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.entityPM.Id, objectTable.Id).subscribe((myResult:any) => {
             console.log("[GetLastDocumentsFilingPM]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

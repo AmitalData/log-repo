@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct PackageMeasureQualifierValues
     {   
+       public const string כמותאריזותבמחסן = "1";  
+       public const string כמותאריזותבאתראחסון = "2";  
+       public const string כמותאריזותבמעברפנימי = "3";  
     }
 }
 

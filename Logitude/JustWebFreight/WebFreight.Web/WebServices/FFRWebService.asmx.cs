@@ -726,7 +726,7 @@ namespace WebFreight.Web.WebServices
 
             if (IsDemoTenant)
             {
-                commLog.CommunicationStatusTypeCode = "E";
+                commLog.CommunicationStatusTypeCode = "D";
                 commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
                 commLog.DoneDateUTC = DateTime.UtcNow;
             }

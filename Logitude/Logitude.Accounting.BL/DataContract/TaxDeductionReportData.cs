@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.DataContract
         public string SettingDeductionFileNumber { get; set; }
         public string TenantVatNumber { get; set; }
         public string Phone {get; set;}
-      public int? TaxYear { get; set; }
+        public int? TaxYear { get; set; }
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
@@ -27,19 +27,28 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
         public decimal? TotalEndBalance  { get; set; }
         public int? VendorsCount { get; set; }
+        public List<TaxDeductionReportLine> deductionLines { get; set; }
+
 
     }
 
+    public class TotalForCompany
+    {
+        public string CompanyName { get; set; }
+        public string DeductionFileNumber { get; set; }
+        public double? TotalPayments { get; set; }
+        public decimal? TotalDeductions { get; set; }
+    }
 
     public class DBVendorsList
     {
         public DateTime? RigesterDate { get; set; }
-       public string VendorId { get; set; }
+        public string VendorId { get; set; }
         public string GlAccountId { get; set; }
-        public double? AmountInLocalCurrency { get; set; }                     
-       public decimal? TaxDeductionLocalAmount { get; set; }                   
-       public string DeductionFileTypeCode { get; set; }
-      public decimal? EndYearBalance { get; set; }
+        public double? AmountInLocalCurrency { get; set; }
+        public decimal? TaxDeductionLocalAmount { get; set; }
+        public string DeductionFileTypeCode { get; set; }
+        public decimal? EndYearBalance { get; set; }
     }
 
     public class ByMonthList
@@ -83,13 +92,16 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? EndYearBalance { get; set; }
         public string VendorLocalName { get; set; }
     }
+    
 
-    public class TotalForCompany
+    public class TaxDeductionReportLine
     {
-        public string CompanyName { get; set; }
-        public string DeductionFileNumber { get; set; }
-        public double? TotalPayments { get; set; }
-        public decimal? TotalDeductions { get; set; }
+        public string VendorId { get; set; }
+        public int MonthOfRegisterDate { get; set; }
+        public double? AmountInLocalCurrency { get; set; }
+        public decimal? TaxDeductionLocalAmount { get; set; }
+        public int? TaxDeductionPercentage { get; set; }
+        public string DeductionType { get; set; }
     }
 }
 

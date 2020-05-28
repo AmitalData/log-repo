@@ -40,6 +40,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
+using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -62,7 +63,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private bool _OnCreateUnifreightFillingMode;
         private const int FileSizeOnUnifreightConst = 20160220;
-
+        HybridPartnerPM CurrentHybridPartner;
         public DocumentsFilingService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -73,7 +74,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.documentRepository = new DocumentRepository(objectContext);
             shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
             ObjectTableRepository = new ObjectTableRepository(tenant);
+            SetHybridPartner(tenant);
         }
+
+        private void SetHybridPartner(int myTenant)
+        {
+            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(myTenant);
+            CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(myTenant);
+        }
+
         private bool CheckIfSignRequired(string EntityDirection, string DocTypeID, int myTenant)
         {
             DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(DocTypeID, myTenant);
@@ -306,7 +315,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         
 
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
 
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
@@ -556,7 +565,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
 
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
                         // shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         //shipmentComputedFieldsRepository.SubmitChanges();
                         try
@@ -760,7 +769,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
                         ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
                         //shipmentComputedFieldsRepository.Update(ShipmentCompField);
                         // shipmentComputedFieldsRepository.SubmitChanges();
                         try
@@ -1123,7 +1132,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
             }
 
-            if (LogitudeSettings.EnableHybridQueue && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);

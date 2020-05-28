@@ -114,14 +114,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (MyEntity.MainAddress != null)
                 {
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {
                         address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     }
 
-                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {                        
-                        address.City = MyEntity.MainAddress.City.Name;
+                        address.City = MyEntity.MainAddress.City;
                     }
                     
                     address.AddressTypeId = "M";
@@ -133,20 +133,30 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         address.Name = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Name);                        
                     }
 
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address1))
+                    {
+                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address1);
+                    }
+
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address2))
+                    {
+                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address2);
+                    }
+
                     temp.Addresses.Add(address);
                 }
 
                 if (MyEntity.BillingAddress != null)
                 {
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Code))
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
                     {
                         address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
                     }
 
-                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Name))
+                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
                     {
-                        address.City = MyEntity.BillingAddress.City.Name;
+                        address.City = MyEntity.BillingAddress.City;
                     }
 
                     address.AddressTypeId = "B";
@@ -158,6 +168,15 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
                     }
 
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address1))
+                    {
+                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
+                    }
+
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address2))
+                    {
+                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address2);
+                    }
 
                     temp.Addresses.Add(address);
                 }
@@ -165,6 +184,22 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 return temp;
             }
 
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public Customer CustomerCustomDataMapping(string code, int Tenant)
+        {
+            try
+            {
+
+                CustomerQueryService customerQueryService = new CustomerQueryService(Tenant);
+                var ChargeType = customerQueryService.GetCustomerById(code, Tenant);
+                return ChargeType;
+            }
             catch (Exception ex)
             {
                 throw ex;

@@ -8,7 +8,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AgedAccountsReceivableFilterComponent',
     templateUrl: './AgedAccountsReceivableFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -78,7 +78,7 @@ public selectedCurrency: string = this.LocalCurrencyCode;
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.RunReport(false);
+        //this.RunReport(false);
     }
         
     ngOnInit() {

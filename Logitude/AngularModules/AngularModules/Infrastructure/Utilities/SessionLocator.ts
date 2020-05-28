@@ -9,13 +9,11 @@ import {ExternalParams} from './ExternalParams';
 import { LocalStorageManager } from './LocalStorageManager';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {SATInterfaceSettingPM} from '../../Invoice/EntityPMs/SATInterfaceSettingPM';
-import {Http} from '@angular/http';
 import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
 import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
-import { Observable, TimeInterval, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 export class SessionLocator {
-    public static Http: Http;    
     public static RootComponent: any;
     public static SustainFocusOnCell: boolean = false;
     public static SustainLostFocusOnCell: boolean = false;
@@ -51,6 +49,7 @@ export class SessionLocator {
     public static SelectedSession: SessionComponent;
     public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
+    public static ProtractorEmails: Array<string> = [];
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {
             SessionLocator.AllSessions = new Array<SessionComponent>();

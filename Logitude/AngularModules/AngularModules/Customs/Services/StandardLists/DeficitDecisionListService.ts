@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -22,11 +23,11 @@ import {DeficitDecisionList} from '../../EntityLists/DeficitDecisionList';
 @Injectable()
 
 export class DeficitDecisionListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<DeficitDecisionList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/deficitdecisionviews';  
     }
 
@@ -35,7 +36,7 @@ export class DeficitDecisionListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl+'/getsingle/?'+'tapagid=' + tapagid+'&'+'declarationid=' + declarationid, { headers: authHeader }).map(response => {
 
                 var list = response.json();
@@ -54,7 +55,7 @@ export class DeficitDecisionListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeficitDecision", "GetSingleList", 'tapagid=' + tapagid+'&'+'declarationid=' + declarationid); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -63,7 +64,7 @@ export class DeficitDecisionListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-       return Observable.defer(() => {
+       return defer(() => {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
@@ -85,7 +86,7 @@ export class DeficitDecisionListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeficitDecision", "GetAllLists", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 	
@@ -125,7 +126,7 @@ export class DeficitDecisionListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
@@ -150,7 +151,7 @@ export class DeficitDecisionListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeficitDecision", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });        
     }
 

@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgentGeneralTabComponent.html',
 })
 
@@ -19,7 +19,7 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     public ControlColumnWidth: number = 200;
     public DataContext: AgentGeneralTabComponent = this;
     private ScreenCode: string = "Agent.AdditionalFields";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -74,7 +74,7 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -159,6 +159,13 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     set InActive(newValue: boolean) {
         if (this.EntityPM.InActive != newValue) {
             this.EntityPM.InActive = newValue;
+        }
+    }
+
+    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
+    set StorageFreeDays(newValue: number) {
+        if (this.EntityPM.StorageFreeDays != newValue) {
+            this.EntityPM.StorageFreeDays = newValue;
         }
     }
 }

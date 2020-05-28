@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.OracleDatabaseMigration</RootNamespace>
     <AssemblyName>Logitude.OracleDatabaseMigration</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -540,6 +541,42 @@
     <Compile Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.Designer.cs">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004090758246_missing09042020Main.cs" />
+    <Compile Include="Migrations\202004090758246_missing09042020Main.Designer.cs">
+      <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004121153387_missingDWStuff.cs" />
+    <Compile Include="Migrations\202004121153387_missingDWStuff.Designer.cs">
+      <DependentUpon>202004121153387_missingDWStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004121352492_missingoccasionStuff.cs" />
+    <Compile Include="Migrations\202004121352492_missingoccasionStuff.Designer.cs">
+      <DependentUpon>202004121352492_missingoccasionStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131310343_missingHarmonizeCode.cs" />
+    <Compile Include="Migrations\202004131310343_missingHarmonizeCode.Designer.cs">
+      <DependentUpon>202004131310343_missingHarmonizeCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131343093_missingINTRA.cs" />
+    <Compile Include="Migrations\202004131343093_missingINTRA.Designer.cs">
+      <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004141312023_missingAccounting.cs" />
+    <Compile Include="Migrations\202004141312023_missingAccounting.Designer.cs">
+      <DependentUpon>202004141312023_missingAccounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004141418235_missingAccounting2.cs" />
+    <Compile Include="Migrations\202004141418235_missingAccounting2.Designer.cs">
+      <DependentUpon>202004141418235_missingAccounting2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004200923486_missingmain20042020.cs" />
+    <Compile Include="Migrations\202004200923486_missingmain20042020.Designer.cs">
+      <DependentUpon>202004200923486_missingmain20042020.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004231226250_missing23042020.cs" />
+    <Compile Include="Migrations\202004231226250_missing23042020.Designer.cs">
+      <DependentUpon>202004231226250_missing23042020.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.cs" />
     <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.Designer.cs">
       <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
@@ -599,6 +636,10 @@
     <Compile Include="Migrations\202005200752046_loaddatenull.cs" />
     <Compile Include="Migrations\202005200752046_loaddatenull.Designer.cs">
       <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005251456360_AddControllerUserId.cs" />
+    <Compile Include="Migrations\202005251456360_AddControllerUserId.Designer.cs">
+      <DependentUpon>202005251456360_AddControllerUserId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1040,6 +1081,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005200752046_loaddatenull.resx">
       <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004090758246_missing09042020Main.resx">
+      <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004121153387_missingDWStuff.resx">
+      <DependentUpon>202004121153387_missingDWStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004121352492_missingoccasionStuff.resx">
+      <DependentUpon>202004121352492_missingoccasionStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131310343_missingHarmonizeCode.resx">
+      <DependentUpon>202004131310343_missingHarmonizeCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131343093_missingINTRA.resx">
+      <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004141312023_missingAccounting.resx">
+      <DependentUpon>202004141312023_missingAccounting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004141418235_missingAccounting2.resx">
+      <DependentUpon>202004141418235_missingAccounting2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004200923486_missingmain20042020.resx">
+      <DependentUpon>202004200923486_missingmain20042020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004231226250_missing23042020.resx">
+      <DependentUpon>202004231226250_missing23042020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251456360_AddControllerUserId.resx">
+      <DependentUpon>202005251456360_AddControllerUserId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

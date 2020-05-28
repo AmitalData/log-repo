@@ -14,6 +14,8 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityKeys;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -38,7 +40,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
             entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
-
             entityPM.SetAsInActive = false;
             entityPM.SetAsReActive = false;
             entityPM.TariffLinesAdded = false;
@@ -52,6 +53,24 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         public void CustomPOCOToPM(TariffPM entityPM, Tariff entityPOCO)
         {
             entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.SellerName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.SellerPartnerTypeId);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.TypeName);
+
+            Card seller = CardRepository.GetSingleCard(entityPOCO.SellerId, entityPOCO.Tenant, true);
+            if (seller != null)
+            {
+                entityPM.SellerName = seller.EnglishName;
+                entityPM.SellerPartnerTypeId = seller.PartnerTypeId;
+            }
+
+            TariffTypeRepository tariffTypeRepository = new TariffTypeRepository(entityPOCO.Tenant);
+            TariffTypeKeys tariffTypetKeys = new TariffTypeKeys() { Code = entityPOCO.TypeCode };
+            TariffType tariffType = tariffTypeRepository.GetSingle(tariffTypetKeys);
+            if (tariffType != null)
+            {
+                entityPM.TypeName = tariffType.Name;
+            }
         }
 
         private void BuildSearchFields(TariffPM entityPM, Tariff entityPOCO, bool isNewEntity)
@@ -59,7 +78,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             string mySearchFields = "";
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Notes);
 
             if (entityPM.ContractNumber != null)
             {

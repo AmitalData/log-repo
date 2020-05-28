@@ -18,7 +18,7 @@ import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImagePara
 declare var UploadLogoFile, base64ToArrayBuffer, saveByteArray, ArrayBufferToBase64: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserRolesTabComponent.html',
 })
 
@@ -173,7 +173,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
 
-        service.ImportRoleFeatures(file).subscribe(res => {
+        service.ImportRoleFeatures(file).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var wind = new MessageWindow();

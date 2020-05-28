@@ -43,13 +43,13 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeferedTaxAmount).HasColumnName("DeferedTaxAmount").HasPrecision(16, 2);
 
-            this.Property(t => t.DefinedPerUnitMeasure).HasColumnName("DefinedPerUnitMeasure");
+            this.Property(t => t.DefinedPerUnitMeasure).HasColumnName("DefinedPerUnitMeasure").HasPrecision(18, 2);
 
-            this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure");
+            this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure").HasPrecision(18, 2);
 
-            this.Property(t => t.DefinedPerUnitQuantity).HasColumnName("DefinedPerUnitQuantity");
+            this.Property(t => t.DefinedPerUnitQuantity).HasColumnName("DefinedPerUnitQuantity").HasPrecision(18, 2);
 
-            this.Property(t => t.AlternateDefinedPerUnitQuant).HasColumnName("AlternateDefinedPerUnitQuant");
+            this.Property(t => t.AlternateDefinedPerUnitQuant).HasColumnName("AlternateDefinedPerUnitQuant").HasPrecision(18, 2);
 
             this.Property(t => t.MeasurementUnitCode).HasColumnName("MeasurementUnitCode").HasMaxLength(3).IsUnicode(false);
 
@@ -57,9 +57,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.TradeLevyNumber).HasColumnName("TradeLevyNumber").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.TotalBtlCoverageNIS).HasColumnName("TotalBtlCoverageNIS");
+            this.Property(t => t.TotalBtlCoverageNIS).HasColumnName("TotalBtlCoverageNIS").HasPrecision(18, 2);
 
-            this.Property(t => t.AlternateRate).HasColumnName("AlternateRate");
+            this.Property(t => t.AlternateRate).HasColumnName("AlternateRate").HasPrecision(18, 2);
         }
     }
 }

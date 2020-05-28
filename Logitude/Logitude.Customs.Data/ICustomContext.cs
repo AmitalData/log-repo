@@ -130,6 +130,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets { get; }
 		 IDbSet<CustomsEnvoirmentType> CustomsEnvoirmentTypes { get; }
 		 IDbSet<CustomsExchangeRate> CustomsExchangeRates { get; }
+		 IDbSet<CustomsGeneral> CustomsGenerals { get; }
 		 IDbSet<CustomsHouseType> CustomsHouseTypes { get; }
 		 IDbSet<CustomsHouseTypeAdditional> CustomsHouseTypeAdditionals { get; }
 		 IDbSet<CustomsInsuranceCompany> CustomsInsuranceCompanies { get; }
@@ -287,7 +288,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
-		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements { get; }
+		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }
 		 IDbSet<SupplierInvoice> SupplierInvoices { get; }
 		 IDbSet<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmounts { get; }

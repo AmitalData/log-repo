@@ -122,8 +122,14 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:190px;">
-                                                                                    <!-- ({{glAccountSummary.OpenFilesCount}}) -->
+                                                                                <!-- ({{glAccountSummary.OpenFilesCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width:190px;">
+                                                                                <!-- ({{glAccountSummary.OpenMastersCount}}) -->
+                                                                                <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenMasters')"> {{'GLAccount.Q.OpenMasters' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -141,7 +147,8 @@
                                                                                 <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr><td><div></div></td>
+                                                                        <tr>
+                                                                            <td><div></div></td>
                                                                         </tr>
                                                                     </table>
 

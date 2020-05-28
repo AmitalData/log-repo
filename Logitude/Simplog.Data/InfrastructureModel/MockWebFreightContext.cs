@@ -2059,13 +2059,19 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<SchedulerLogs> SchedulerLogs
-        {
-            get { throw new NotImplementedException(); }
-        }
+        //public IDbSet<SchedulerLogs> SchedulerLogs
+        //{
+        //    get { throw new NotImplementedException(); }
+        //}
         public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get { throw new NotImplementedException(); }
         }
+
+        public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
+
+        DbSet<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
+
+        DbSet<TextCode> IWebFreightContext.TextCodes => throw new NotImplementedException();
     }
 }

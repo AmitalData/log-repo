@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewClientComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewClientComponent.html',
 })
 
@@ -43,8 +43,8 @@ export class NewClientComponent
         this.UIProperties.SetEnabled("PassportTypeCode", "Customs.Client", false);
         this.UIProperties.SetEnabled("PassportNumber", "Customs.Client", false);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
             });
         });
     }

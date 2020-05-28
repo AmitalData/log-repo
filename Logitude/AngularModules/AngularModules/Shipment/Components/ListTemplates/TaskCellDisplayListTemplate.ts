@@ -27,7 +27,7 @@ export class TaskCellDisplayListTemplate {
 
     setVariables(rowData: any, fieldName: string) {
         if (rowData != null) {
-            if (rowData["IsRequestedDocuments"] == true) {
+            if (rowData["IsRequestedDocuments"] == true || rowData["RequestedDocumentsCount"] > 0) {
                 this.CellValue = (this.CellValue ? (this.CellValue + " \\ Requested Document") : "Requested Document");
             }
             if (rowData["IsImporterApprovalRequried"] == true) {

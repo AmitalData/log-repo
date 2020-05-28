@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CustomerWcfService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" />
+      <xsd:import schemaLocation="http://localhost:9996/WcfApi/CustomerWcfService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/WebFreight.Web.DataContracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICustomerWcfService_Upsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:Upsert" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_Upsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerList" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerListByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerListByEmail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerListByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerListByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerListById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerListById" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerListById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerListByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerPM_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerPM" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerPM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerPMResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerAddresses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerAddresses" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerAddresses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerAddressesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerContacts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerContacts" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerContacts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerContactsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetReadyForActivationCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadyForActivationCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetReadyForActivationCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadyForActivationCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_RemoveFromCustomersQueue_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromCustomersQueue" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_RemoveFromCustomersQueue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromCustomersQueueResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICustomerWcfService">
+    <wsdl:operation name="Upsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/Upsert" message="tns:ICustomerWcfService_Upsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/UpsertResponse" message="tns:ICustomerWcfService_Upsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerList" message="tns:ICustomerWcfService_GetCustomerList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerListResponse" message="tns:ICustomerWcfService_GetCustomerList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerListByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerListByEmail" message="tns:ICustomerWcfService_GetCustomerListByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerListByEmailResponse" message="tns:ICustomerWcfService_GetCustomerListByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerListById">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerListById" message="tns:ICustomerWcfService_GetCustomerListById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerListByIdResponse" message="tns:ICustomerWcfService_GetCustomerListById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerPM">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerPM" message="tns:ICustomerWcfService_GetCustomerPM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerPMResponse" message="tns:ICustomerWcfService_GetCustomerPM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAddresses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerAddresses" message="tns:ICustomerWcfService_GetCustomerAddresses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerAddressesResponse" message="tns:ICustomerWcfService_GetCustomerAddresses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerContacts">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerContacts" message="tns:ICustomerWcfService_GetCustomerContacts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetCustomerContactsResponse" message="tns:ICustomerWcfService_GetCustomerContacts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReadyForActivationCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/GetReadyForActivationCustomer" message="tns:ICustomerWcfService_GetReadyForActivationCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/GetReadyForActivationCustomerResponse" message="tns:ICustomerWcfService_GetReadyForActivationCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromCustomersQueue">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueue" message="tns:ICustomerWcfService_RemoveFromCustomersQueue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueueResponse" message="tns:ICustomerWcfService_RemoveFromCustomersQueue_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICustomerWcfService" type="tns:ICustomerWcfService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Upsert">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/Upsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerList">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerListByEmail">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerListByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerListById">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerListById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerPM">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerPM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAddresses">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerAddresses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerContacts">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetCustomerContacts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReadyForActivationCustomer">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/GetReadyForActivationCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromCustomersQueue">
+      <soap:operation soapAction="http://tempuri.org/ICustomerWcfService/RemoveFromCustomersQueue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerWcfService">
+    <wsdl:port name="BasicHttpBinding_ICustomerWcfService" binding="tns:BasicHttpBinding_ICustomerWcfService">
+      <soap:address location="http://localhost:9996/WcfApi/CustomerWcfService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

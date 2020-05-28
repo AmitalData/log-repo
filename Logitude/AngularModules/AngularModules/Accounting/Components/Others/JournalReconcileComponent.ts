@@ -33,7 +33,7 @@ import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMServic
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './JournalReconcileComponent.html',
     
 })
@@ -328,7 +328,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
-            (res) => {
+            (res:ServiceResponse) => {
 
                 this.CurrentSession.StopBusyIndicator();
                 if (res.HasError) {

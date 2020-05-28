@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class GLAccountInterestPeriodList
+   {
+          [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string GLAccountId  { get; set; }
+       [DataMember]
+       public DateTime PeriodStartDate  { get; set; }
+       [DataMember]
+       public string StandardInterestRateBaseId  { get; set; }
+       [DataMember]
+       public decimal? StandardAddInterestPercent  { get; set; }
+       [DataMember]
+       public string ExceptionalInterestRateBaseId  { get; set; }
+       [DataMember]
+       public decimal? ExceptionalAddInterestPercent  { get; set; }
+       [DataMember]
+       public string CreditInterestRateBaseId  { get; set; }
+       [DataMember]
+       public decimal? CreditAddInterestPercent  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime UpdateDateTime  { get; set; }
+       [DataMember]
+       public string CreatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime CreateDateTime  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string ExceptionalInterestRateName  { get; set; }
+       [DataMember]
+       public string CreditInterestRateBaseName  { get; set; }
+       [DataMember]
+       public string StandardInterestRateBaseName  { get; set; }
+   }
+
+}
+	 

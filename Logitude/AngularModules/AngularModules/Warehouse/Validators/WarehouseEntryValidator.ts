@@ -19,12 +19,12 @@ export class WarehouseEntryValidator {
         }
 
         if (!WarehouseTools.IsInlandDomestic(entityPM.TransportModeId, entityPM.DirectionId)) {
-            if (AppTool.IsNullOrEmpty(entityPM.FromPortId)) {
-                error.push("Origin field is required");
-            }
-            if (AppTool.IsNullOrEmpty(entityPM.ToPortId)) {
-                error.push("Destination field is required");
-            }
+            //if (AppTool.IsNullOrEmpty(entityPM.FromPortId)) {
+            //    error.push("Origin field is required");
+            //}
+            //if (AppTool.IsNullOrEmpty(entityPM.ToPortId)) {
+            //    error.push("Destination field is required");
+            //}
         }
 
         return error;

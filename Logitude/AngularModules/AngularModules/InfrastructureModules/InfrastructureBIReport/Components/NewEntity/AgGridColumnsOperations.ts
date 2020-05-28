@@ -3,9 +3,10 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { BIReportPreviewComponent } from  '../Workspaces/BIReportPreviewComponent'
 import { InfrastructureDomainService, Column, BITabularViewSettings, BIReportXMLData} from '../../../../Infrastructure/Services/InfrastructureDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgGridColumnsOperations.html',
 })
 
@@ -48,7 +49,7 @@ export class AgGridColumnsOperations extends BaseComponent {
         result.BITabularViewSettings = this.father.BIReportXMLData.BITabularViewSettings;
         result.BIReportId = this.father.EntityId;
         result.BIReportPM = this.father.EntityPM;
-        _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
+        _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
                 this.father.BIReportXMLData = myResult.Result;
                 this.CurrentSession.CloseCurrentWindowEmit('ok');

@@ -92,5 +92,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+        public Warehouse GetFirstSingleByCode(string code, int tenant)
+        {
+            return (from record in context.Warehouses.Include("Card")
+                    where record.Card.Code == code && record.Tenant == tenant
+                    select record).FirstOrDefault();
+        }
     }
 }

@@ -54,7 +54,7 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'VatType'"
                                                 [HideMaintenanceIcon]="true"
-                                                [HideAddLink]="true">
+                                                [HideAddLink]="true"  [DependencyFilter2Value]="false">
                                         </LogLov>
                                     </td>
                                 </tr>
@@ -66,7 +66,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
                                 </tr>
 
@@ -78,7 +78,7 @@
 
                                     <td>
                                         <LogLov [ObjectFieldName]="'ForiegnCurrencyId'"
-                                                [SelectedValue]="DataContext.ForiegnCurrencyId"
+                                                [SelectedValue]="ForiegnCurrencyId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Currency'">
@@ -140,7 +140,7 @@
                                 <!-- ForiegnCurrencyAmount -->
                                 <tr class="FormFieldRow">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'ForiegnCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountForiegnLabel"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ForiegnCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DataContext.AmountForiegnLabel"></LogLabel>
                                     </td>
 
                                     <td>

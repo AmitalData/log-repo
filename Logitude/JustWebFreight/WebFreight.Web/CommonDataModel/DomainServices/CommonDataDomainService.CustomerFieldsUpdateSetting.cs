@@ -267,10 +267,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
 
         [Invoke]
-        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldId, int tenant)
+        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldCode, int tenant)
         {
             CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(tenant);
-            bool result =customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(objectFieldId, tenant);
+            bool result =customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(objectFieldCode, tenant);
             return result;
 
         }

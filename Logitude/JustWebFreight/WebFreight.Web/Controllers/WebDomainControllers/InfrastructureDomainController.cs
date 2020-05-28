@@ -282,10 +282,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
 
-
+                
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-                List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
-                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
+                List<string> allTextCodesCodes = myResult.Where(d => d.NameTextCodeCode != null).Select(s => s.NameTextCodeCode).ToList();
+                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesCodes.Contains(d.Code) select d).ToList();
                 List<Translation> allTranslations = new List<Translation>();
 
                 if (iTenant.Language != null)
@@ -296,21 +296,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         allTranslations = (from d in webFreightContext.Translations
                                            where d.TranslationHeaderCode == iTranslationHeader.Code
                                            && d.Tenant == tenant
-                                           && allTextCodesIds.Contains(d.TextCodeId)
+                                           && allTextCodesCodes.Contains(d.TextCodeCode)
                                            select d).ToList();
                     }
                 }
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
                     {
-                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
+                        TextCode iTextCode = allTextCodes.Where(d => d.Code == item.NameTextCodeCode).FirstOrDefault();
                         if (iTextCode != null)
                         {
                             item.TranslatedName = iTextCode.DefaultText;
 
-                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
+                            Translation iTranslation = allTranslations.Where(d => d.TextCodeCode == item.NameTextCodeCode).FirstOrDefault();
                             if (iTranslation != null)
                             {
                                 item.TranslatedName = iTranslation.TranslatedText;
@@ -585,6 +585,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetSendEntityToAirlineTenant(string entityId, string objectTableName, string airlineCode)
         {
             try
@@ -1463,6 +1464,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                     #endregion
+
+                    #region Warehouse Entry
+                    Counter counter_WE = counterRepository.GetCounterByCode("WAEC", entityId);
+                    if (counter_WE != null)
+                    {
+                        List<CounterStat> counterStat_WE = counterStatRep.GetCounterCounterStats(counter_WE.Id, entityId);
+                        foreach (CounterStat item in counterStat_WE)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
+
+                    #region Warehouse Release
+                    Counter counter_WR = counterRepository.GetCounterByCode("WARC", entityId);
+                    if (counter_WR != null)
+                    {
+                        List<CounterStat> counterStat_WR = counterStatRep.GetCounterCounterStats(counter_WR.Id, entityId);
+                        foreach (CounterStat item in counterStat_WR)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
                 }
 
                 else if (code == "P")
@@ -1687,6 +1712,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DWQueryData DWQueryData = new DWQueryData();
                 DWQueryData.PageIndex = 0;
                 DWQueryData.PageSize = 0;
+                DWQueryData.FactTableName = entityPM.FactTableName;
                 bool isUpdated = false; 
      
                 List<DWObjectFieldsDetails> Columns = null;
@@ -1747,11 +1773,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
                                     Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                    Name = item.Name,
+                                    Name = item.DisplayName,
                                     IsChecked = true,
-                                    Width = 150,
+                                    Width = this.GetDefultColumWidthForBIReport(item.DisplayName),
                                     DataTypeCode = item.DataTypeCode,
-                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                    Index = bITabularViewSettings.Columns.Count == 0 ? 0 : bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                    FieldCode = item.Code,
                                 });
                             }
                         }
@@ -1783,10 +1810,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             bITabularViewSettings.Columns.Add(new Column
                             {
                                 Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                Name = item.Name,
+                                Name = item.DisplayName,
                                 IsChecked = true,
-                                Width = 150,
+                                Width  = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                                 DataTypeCode = item.DataTypeCode,
+                                FieldCode = item.Code,
+
                             });
                         }
                         QueryData.BITabularViewSettings = bITabularViewSettings;
@@ -1811,10 +1840,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         bITabularViewSettings.Columns.Add(new Column
                         {
                             Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                            Name = item.Name,
+                            Name = item.DisplayName,
                             IsChecked = true,
-                            Width = 150,
+                            Width = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                             DataTypeCode = item.DataTypeCode,
+                            FieldCode = item.Code,
+
                         });
                     }
                     QueryData.BITabularViewSettings = bITabularViewSettings;
@@ -1825,6 +1856,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private int GetDefultColumWidthForBIReport(string headerName)
+        {
+            int columWidth = 0;
+            int per =8;
+            foreach(char character in headerName)
+            {
+                columWidth += per;
+            }
+            if (columWidth < 150) columWidth = 150;
+
+            return columWidth;
+
         }
 
         public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)
@@ -1862,6 +1907,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.SubQueryData = dWSubQueryPM;
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
+                        DWQueryData.FactTableName = entityPM.FactTableName;
                     }
                     var sortingList = new List<Column>();
                     foreach (Column item in bITabularViewSettings.Columns.ToList())

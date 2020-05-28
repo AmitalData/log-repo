@@ -265,6 +265,15 @@ export class QuoteValidator {
             if (isDuplicatedPackage) {
                 errors.push("Cannot add the same container type twice. You can adjust the QTY for one of them");
             }
+
+            for (var i = 1; i <= 5; i++) {
+                if (!AppTool.IsNullOrEmpty(entityPM["PackageType" + i + "Quantity"]) && AppTool.IsNullOrEmpty(entityPM["PackageType" + i + "Id"])) {
+                    errors.push("Package type is required when Quantity is filled");
+                    break;
+                }
+            }
+
+            
         }
     }
     private ValidateCharge(charge: QuoteChargePM, errors: string[]) {
@@ -278,5 +287,11 @@ export class QuoteValidator {
             }
         }
 
+    }
+
+    public CheckDuplicateInCharges(entitpPM: QuotePM, charge: QuoteChargePM, errors: string[]) {
+        if (entitpPM.QuoteCharges.filter(c => c.ChargesTypeCode === charge.ChargesTypeCode && c != charge).length > 0) {
+            errors.push(charge.ChargesTypeName + " Charge is duplicated");
+        }
     }
 }

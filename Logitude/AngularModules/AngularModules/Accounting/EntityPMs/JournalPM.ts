@@ -9,6 +9,7 @@
 
 import {JournalLinePM} from './JournalLinePM';
 import {JournalReconcilePM} from './JournalReconcilePM';
+import {JournalExternalReconcilePM} from './JournalExternalReconcilePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -242,6 +243,40 @@ export class JournalPM {
     private isLedgerCreated: boolean;
     public get IsLedgerCreated() { return this.isLedgerCreated; }
     public set IsLedgerCreated(newValue: boolean) { if (this.isLedgerCreated != newValue) { this.isLedgerCreated = newValue; this.MarkAsDirty("IsLedgerCreated"); } }
+       
+	 
+     
+	private journalExternalReconciles: JournalExternalReconcilePM[];
+    get  JournalExternalReconciles() {
+        if (this.journalExternalReconciles == null) {
+            this.journalExternalReconciles = [];
+        }
+
+        return this.journalExternalReconciles;
+    }
+    set  JournalExternalReconciles(newValue: JournalExternalReconcilePM[]) {
+        if (this.journalExternalReconciles != newValue) {
+            this.journalExternalReconciles = newValue;
+        }
+    }
+    private lineCreditAccountTypeCode: string;
+    public get LineCreditAccountTypeCode() { return this.lineCreditAccountTypeCode; }
+    public set LineCreditAccountTypeCode(newValue: string) { if (this.lineCreditAccountTypeCode != newValue) { this.lineCreditAccountTypeCode = newValue; this.MarkAsDirty("LineCreditAccountTypeCode"); } }
+       
+	 
+    private taxReportJournalLineNumber: number;
+    public get TaxReportJournalLineNumber() { return this.taxReportJournalLineNumber; }
+    public set TaxReportJournalLineNumber(newValue: number) { if (this.taxReportJournalLineNumber != newValue) { this.taxReportJournalLineNumber = newValue; this.MarkAsDirty("TaxReportJournalLineNumber"); } }
+       
+	 
+    private documentDate: Date;
+    public get DocumentDate() { return this.documentDate; }
+    public set DocumentDate(newValue: Date) { if (this.documentDate != newValue) { this.documentDate = newValue; this.MarkAsDirty("DocumentDate"); } }
+       
+	 
+    private dueDate: Date;
+    public get DueDate() { return this.dueDate; }
+    public set DueDate(newValue: Date) { if (this.dueDate != newValue) { this.dueDate = newValue; this.MarkAsDirty("DueDate"); } }
        
 	 
 

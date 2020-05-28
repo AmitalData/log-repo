@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
@@ -9,23 +10,21 @@ import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomField
 @Injectable()
 
 export class TariffDomainService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TariffDomain';
     }
 
     GetTariffsCounts() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetTariffsCounts';
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var myResult = new TariffSummery();
 
@@ -40,59 +39,78 @@ export class TariffDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
-    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number,Weightcode:string,GrossWeight:number,GrossWeightCode:string,Volume:number,VolumeCode:string, currencyId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+    GetAvailableAirlineFreightTariffs(args: TariffSearchArgs) {
 
-        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight + "&Weightcode=" + Weightcode + "&GrossWeight=" + GrossWeight + "&GrossWeightCode=" + GrossWeightCode + "&Volume=" + Volume + "&VolumeCode=" + VolumeCode + "&currencyId=" + currencyId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myJsonResult;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }    
-
-    GenerateTariffs() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetGenerateTariffs';
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
-
-                var myResponse = new ServiceResponse();
-                myResponse.Result = listJason;
-                return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
-    GenerateTariffsFromExcel(filter: TariffFilterParameter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostAvailableAirlineFreightTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+
+    GetCheckDatesValidty(FromPort: string, ToPort: string, ToDate: Date, TariffId:string) {
+
+        var url = this._apiUrl + '/GetCheckDatesValidty?FromPort=' + FromPort + "&ToPort=" + ToPort +  "&ToDate=" + ServiceHelper.GetDateString(ToDate)  + "&TariffId=" + TariffId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var myJsonResult = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }    
+
+    GenerateTariffs() {
+
+        var url = this._apiUrl + '/GetGenerateTariffs';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetTariffsLogsByTariffId( tariffId: string, version: number) {
+
+        var url = this._apiUrl + '/GetTariffsLogsByTariffId?tariffId=' + tariffId + "&version=" + version;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GenerateTariffsFromExcel(filter: TariffFilterParameter) {
+
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -100,12 +118,10 @@ export class TariffDomainService {
     
     GetTenantTariffSetting() {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantTariffSetting', { headers: authHeader }).map(response => {
-                var pm = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantTariffSetting', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
 
                 var entity: TariffSettingPM;
                 if (pm) {
@@ -117,53 +133,47 @@ export class TariffDomainService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     DownloadTariff(tariffId: string, version: number, type: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
     PostUploadExcelFile(filter: TariffFilterParameter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     ApproveVersion(tariffId: string, version: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId + "&version=" + version;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -234,44 +244,94 @@ export class TariffDomainService {
     }
 
     GetTariffVersionLines(tariffId: string, version: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetTariffVersionLines?tariffId=' + tariffId + "&version=" + version
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
+    GetAllVersionsWithLinesForTariff(tariffId: string) {
+
+        var url = this._apiUrl + '/GetAllVersionsWithLinesForTariff?tariffId=' + tariffId  
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    
     PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
+    }
+
+    GetRecentTariffs() {
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentTariffs', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                return allLists;
+            }));
+        });
+    }
+
+    GetTariffLineContainerPrices(tariffId:string, version: number, fromPortId: string, toPortId: string) {
+
+        var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    RefreshPortsFromTranslations(tariffId: string, version: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetRefreshPortsFromTranslations?tariffId=' + tariffId + "&version=" + version;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 }
 
 export class TariffSummery {
     AirFreightCount: number;
     AirSurchargeCount: number;
+    OceanSurchargeCount: number;
+    OceanLCLFreightCount: number;
+    OceanFCLFreightCount: number;
+    OceanFCLSurchargesCount: number;
 }
 
 export class TariffFilterParameter {
@@ -285,34 +345,77 @@ export class TariffFilterParameter {
 }
 
 export class TariffSearchSummary {
-    Id: string;
-    price: string;
+    TariffId: string;
+    TariffNumber: string;
+    ChargeTypeId: string;
+    Price: string;
+    SurchargesPrice: string;
+    ActualPrice: number;
     EffictiveDate: Date;
     Remarks: string;
     ImageId: string;
-    Name: string;
-    Currency: string;
+    SellerName: string;
+    CurrencyCode: string;
+    CurrencyId: string;
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
-    Surcharges: Array<SurchargeSummary>;
+    WholePriceWithoutAllIn: string;
+    SurchargesWithoutAllIn: Array<SurchargeSummary>;
+    AllInSurcharges: Array<SurchargeSummary>;
     AllIn: string;
+    AllInIds: string;
     IsShown: boolean = false;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
+    SellerId: string;
+    MinPrice: number;
+    IsMinIconVisible: boolean;
+    LineId: string;
+    ContainersPrices: Array<ContainersPrice>;
+    TransitTime: string;
+    LastUsedDate: Date;
+    UpdateDate: Date;
+    ValidityDate: string;
+    CurrencySign: string;
 }
 
+export class ContainersPrice {
+    ContainerId: string;
+    TariffId: string;
+    Price: number;
+    Quantity: number;
+}
 
 export class SurchargeSummary {
     Code: string;
     Name: string;
-    Price: number;  
+    Price: number;
+    ActualPrice: number;
+    ChargeTypeId: string;
+    TariffId: string;
+    TariffNumber: string;
+    CurrencyId: string;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
+    VersionId: string;
+    SellerId: string;
+    SellerName: string;
+    MinPrice: number;
+    IsMinIconVisible: boolean;
+    LineId: string;
+    IsAllIn: boolean;
+    ContainersPrices: Array<ContainersPrice>;
 }
 
 export class ExcelTariffLines {
     FromPortId: string;
     FromPortCode: string;
+    FromPortCombinedCode: string;
     FromPortName: string;
     ToPortId: string;
     ToPortCode: string;
+    ToPortCombinedCode: string;
     ToPortName: string;
     MinPrice: number;
     Step1Price: number;
@@ -364,6 +467,7 @@ export class ExcelTariffLines {
     Notes: string;
     StartDate: Date;
     StartDateText: string;
+    TransitTime: string;
 }
 
 export class UpdateSurchargeArgs {
@@ -373,4 +477,30 @@ export class UpdateSurchargeArgs {
     To: string[] = [];
     Surcharge: string[] = [];
     StartDate: Date;
+}
+
+export class TariffSearchArgs {
+
+    OriginPortId: string;
+    DestinationPortId: string;
+    Date: string;
+    Weight : number;
+    WeightCode: string;
+    GrossWeight :number;
+    GrossWeightCode: string;
+    Volume : number;
+    VolumeUnitCode: string;
+    CurrencyId: string;
+    TariffType: string;
+    ContainerType1Id: string;
+    ContainerType2Id: string;
+    ContainerType3Id: string;
+    ContainerType4Id: string;
+    ContainerType5Id: string;
+    Quantity1: number;
+    Quantity2: number;
+    Quantity3: number;
+    Quantity4: number;
+    Quantity5: number;
+    ProductId: string;
 }

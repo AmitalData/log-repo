@@ -28,6 +28,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? ShipmentMasterDataTenant { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightPerStorageDays { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public string OperationalClosedByUserId { get; set; }
@@ -635,6 +636,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string TrailerNumber { get; set; }
 
         public bool IsDepositionRequired { get; set; }
+        public bool CreatedFromDigital { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         
         public string DeclarationXmlData { get; set; }
@@ -715,7 +717,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string INTTRABookingStatusName { get; set; }
         public string INTTRABookingTransStatusName { get; set; }
         public string INTTRABookingTransStatusCode { get; set; }
-
+        public string INTTRABookingError { get; set; }
+        public string INTTRALastBookingResponse { get; set; }
 
         public string LastFinalDestination { get; set; }
         public DateTime? FirstPickupETD { get; set; }
@@ -733,5 +736,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ReleasingAgentName { get; set; }
 
         public string ColoaderId { get; set; }
+        public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
+
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+        public string SLAC { get; set; }
     }
 }

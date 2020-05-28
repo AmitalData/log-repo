@@ -30,7 +30,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ResultXML, 
 	         HasException, 
 	         DoneDateTimeUTC, 
-	         SearchFields,
+	         SearchFields, 
+	         ShouldFix,
 	      }
 
 
@@ -48,7 +49,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StatusName, 
 	         FromMonthInclusive, 
 	         ToMonthInclusive, 
-	         SearchFields,
+	         SearchFields, 
+	         ShouldFix,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -95,6 +97,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShouldFix))
+            {
+				entityPOCO.ShouldFix = entityPM.ShouldFix;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -148,6 +155,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShouldFix))
+            {
+					entityPM.ShouldFix = entityPOCO.ShouldFix;
+            }
+
 		}
 
 		public void PMToOldPM(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheckPM oldEntityPM)
@@ -192,6 +204,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShouldFix))
+            {
+                oldEntityPM.ShouldFix = entityPM.ShouldFix;
             }
 			
 		}

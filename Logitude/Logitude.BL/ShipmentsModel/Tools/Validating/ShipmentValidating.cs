@@ -25,6 +25,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.QuoteModel;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
@@ -51,23 +52,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 throw new ApplicationException("Ratio must be between 1-10");
             }
+            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+            {
+                ValidateFromPort(entityPM, loggedTenant);
+                ValidateToPort(entityPM, loggedTenant);
 
-            ValidateFromPort(entityPM, loggedTenant);
-            ValidateToPort(entityPM, loggedTenant);
-            ValidateCarrierPrefix(entityPM);
-            ValidateAirlineRestriction(entityPM);
-            ValidateMasterNumber(entityPM);
-            ValidateShipmentBookingFields(entityPM, isNewEntity);
-            ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
-            ValidateConvertShipmentType(entityPM);
+                ValidateCarrierPrefix(entityPM); 
+                ValidateAirlineRestriction(entityPM);
+                ValidateMasterNumber(entityPM);
+                ValidateShipmentBookingFields(entityPM, isNewEntity);
+                ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
+                ValidateConvertShipmentType(entityPM);
+            }
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
             {
+                ValidateContainerNumbers(entityPM);
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
             }
+
+            //List<IEntityValidator> validators = new List<IEntityValidator>();
+            //validators.Add(new ShipmentReceivableValidator(entityPM));
+
+            //foreach(IEntityValidator validator in validators)
+            //{
+            //    validator.Validate();
+            //}
+
+            //ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
         }
 
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)
@@ -102,16 +117,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
+            if (!entityPM.IsUpdatedByChampAnalyzer)
             {
-                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-
-                if (entityPoco.UpdatedByPartner != null)
+                if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
                 {
-                    msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
-                }
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
 
-                throw new OptimisticConcurrencyException(msg);
+                    if (entityPoco.UpdatedByPartner != null)
+                    {
+                        msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
+                    }
+
+                    throw new OptimisticConcurrencyException(msg);
+                }
             }
         }
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
@@ -191,7 +209,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
+                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageFromPortId, true);
                         if (myPort != null)
@@ -246,7 +264,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
+
+                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
                         if (myPort != null)
@@ -603,12 +622,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             int tenant = entityPM.Tenant;
             string id = tenant.ToString();
-
             CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
             if (mySettings != null)
             {
                 if (mySettings.IsCreditLimitEnabled)
                 {
+                    ValidateCreditLimitPartnersRestrictions(entityPM, entityPoco, mySettings, isNewEntity);
+
                     if (mySettings.ShipmentCreationBlock)
                     {
                         AgentRepository myAgentRepository = new AgentRepository(myCommonContext);
@@ -631,17 +651,150 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         myPartnerId_PM = entityPM.CustomerId;
                         myPartnerId_DB = entityPoco.CustomerId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.CustomerId", tenant) + ": " + entityPM.CustomerName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
 
                         myPartnerId_PM = entityPM.AgentId;
                         myPartnerId_DB = entityPoco.AgentId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.AgentId", tenant) + ": " + entityPM.AgentName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
                     }
                 }
             }
         }
-        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity)
+
+        private static void ValidateCreditLimitPartnersRestrictions(ShipmentPM entityPM, Shipment entityPoco, CreditLimitSetting mySettings, bool isNewEntity)
+        {
+            if (entityPM.CustomerId != null)
+            {
+                bool isValidating = false;
+
+                if (isNewEntity)
+                {
+                    isValidating = true;
+                }
+
+                else if (entityPM.CustomerId != entityPoco.CustomerId)
+                {
+                    isValidating = true;
+                }
+
+                if (isValidating)
+                {
+                    Card iCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
+
+                    if (iCard != null)
+                    {
+                        string errorText_Blocking = "Credit limit setting is blocking shipment for ";
+
+                        switch (iCard.PartnerTypeId)
+                        {
+                            case "CS":
+                                {
+                                    if (iCard.IsCustomer)
+                                    {
+                                        if (mySettings.CustomersShipmentsBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Customers");
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        if (mySettings.ShipperConsigneeShipmentBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "AG":
+                                {
+                                    if (mySettings.AgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "CG":
+                                {
+                                    if (mySettings.CustomsAgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SG":
+                                {
+                                    if (mySettings.ShippingAgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "AL":
+                                {
+                                    if (mySettings.AirlinesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SL":
+                                {
+                                    if (mySettings.ShippingLinesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "TR":
+                                {
+                                    if (mySettings.TruckersShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    }
+
+                                    break;
+                                }
+
+                            case "VD":
+                                {
+                                    if (mySettings.VendorsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    }
+
+                                    break;
+                                }
+
+                            case "WH":
+                                {
+                                    if (mySettings.WarehousesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                    }
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity, ShipmentPM entityPM)
         {
             if (!string.IsNullOrEmpty(myPartnerId))
             {
@@ -686,6 +839,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                                         ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
                                     }
 
+                                    if (isNewEntity && entityPM.IsBuildFromQuote)
+                                    {
+                                        if (entityPM.QuoteId != null)
+                                        {
+                                            IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+
+                                            double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
+                                                                            where d.QuoteId == entityPM.QuoteId
+                                                                            select d.SaleTotalAmountLocal).Sum();
+
+                                            if (quoteSaleLocalAmount != null)
+                                            {
+                                                ActualBalance += quoteSaleLocalAmount.Value;
+                                            }
+                                        }
+                                    }
+
+                                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
+                                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
+
                                     if (ActualBalance > LimitAmount)
                                     {
                                         string errorText_Exceeded = "";
@@ -723,7 +896,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            if (!entityPM.IsHybrid && !tenantPM.IsDocumentsArchive)
+
+            var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
+            var tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
+
+            if (!entityPM.IsHybrid && !tenantsettingPM.IsDocumentsArchive)
             {
                 string message = "Can't set Field to future date";
                 DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -1023,9 +1200,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        if (myCard.PartnerTypeId != "AG")
+                        if (tenantPM.AllowCustomersInAgentsLOV)
                         {
-                            throw new ApplicationException("Shipper partner type should be agent");
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent");
+                            }
                         }
                     }
 
@@ -1057,9 +1245,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        if (myCard.PartnerTypeId != "AG")
+                        if (tenantPM.AllowCustomersInAgentsLOV)
                         {
-                            throw new ApplicationException("Consignee partner type should be agent");
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent");
+                            }
                         }
                     }
 
@@ -1089,9 +1288,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.AgentId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "AG")
+                    if (tenantPM.AllowCustomersInAgentsLOV)
                     {
-                        throw new ApplicationException("Agent partner type should be agent");
+                        if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                        {
+                            throw new ApplicationException("Agent partner type should be agent or customer");
+                        }
+                    }
+
+                    else
+                    {
+                        if (myCard.PartnerTypeId != "AG")
+                        {
+                            throw new ApplicationException("Agent partner type should be agent");
+                        }
                     }
                 }
             }
@@ -1264,7 +1474,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
                         });
                     }
-                }                                  
+                }
             }
         }
         private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
@@ -1285,6 +1495,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
                         });
+                    }
+                }
+            }
+        }
+        private static void ValidateContainerNumbers(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")
+            {
+                if (entityPM.ShipmentPackages != null && entityPM.ShipmentPackages.Count() > 0)
+                {
+                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
+                    if (IsDuplicate)
+                    {
+                        throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");
                     }
                 }
             }

@@ -29,7 +29,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(Def.EntityPMs.ARPaymentChequePM entityPM, Server.Tools.EntityPM entityParentPM)
         {
-            entityPM.Id = IdCounter.GetNumber("ARPaymentCheque", entityPM.Tenant);
+         //   entityPM.Id = IdCounter.GetNumber("ARPaymentCheque", entityPM.Tenant);
            
         }
 
@@ -140,12 +140,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(entityPM.Tenant);
                     List<ARPaymentChequePM> aRPaymentChequePMs = queryService.GetARPaymentChequesByPaymentIds(paymentIds, entityPM.Tenant);
                     CardRepository cardRepo = new CardRepository(entityPM.Tenant);
-                    Card card = cardRepo.GetSingleCard(payment.BillToId, entityPM.Tenant);
+                    //Card card = cardRepo.GetSingleCard(payment.BillToId, entityPM.Tenant);
 
 
-                    if (card != null)
-                    {
-                        string GLAccountId = card.GLAccountId;
+                    //if (card != null)
+                    //{
+                        string GLAccountId = cardRepo.GetGLAccountIdByCardId(payment.BillToId, entityPM.Tenant);
                         GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(entityPM.Tenant);
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
@@ -165,15 +165,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 {
                                     moreDataPM.TotalOpenChequesInLocalCur += item.LocalAmount;
 
-
                                 }
                             }
                         }
                       
                         moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         updateService.Update(moreDataPM, true);
-                        SubmitChanges();
-                    }
+                     //   SubmitChanges();
+                    //}
                 }
 
             }

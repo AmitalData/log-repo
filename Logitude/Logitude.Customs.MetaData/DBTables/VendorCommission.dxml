@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="VendorCommissions"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="VendorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ModificationsTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CommisionPercentage"
+    Type="decimal"
+    Precision="7"
+    Scale="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="VendorId"
+    ReferencedTable="CustomsVendors"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomerId"
+    ReferencedTable="Customers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ModificationsTypeCode"
+    ReferencedTable="ModificationAndDiscountTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

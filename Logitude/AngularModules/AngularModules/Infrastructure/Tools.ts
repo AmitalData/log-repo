@@ -1,9 +1,7 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
-import {NumbersPipe} from './Pipes/NumbersPipe';
-import { forEach } from '@angular/router/src/utils/collection';
-import { DatePipe } from '@angular/common';
 import { SessionLocator } from './Utilities/SessionLocator';
+
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {
@@ -267,6 +265,28 @@ export class AppTool {
 
         return logitude_url;
     }
+
+
+
+    public static GetQuickbooksPageBasedOnAuth() {
+        SessionLocator.TenantManagementJS
+        var logitude_url = location.href.replace('index.html', '');
+
+        if (location.href.indexOf('localhost') > -1) {
+            logitude_url = 'http://localhost:9996/';
+        }
+
+        else {
+            var urlArr = location.href.split("/index.html");
+            var url = urlArr[0];
+            url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
+            logitude_url = url + "/";
+        }
+
+        return logitude_url;
+    }
+
+
     public static GetComponentName(myComponentPath: string) {
         var myComponentName = null;
 
@@ -819,10 +839,13 @@ export class AppTool {
 
         return result;
     }
-    public static GetChargeableWeightUnitCode(myTransportModeId: string, myShipmentTypeId: string) {
-        var myResult: string = this.TenantPM.ChargeableWeightUnitCode;
+    public static GetChargeableWeightUnitCode(myTransportModeId: string) {
+        var myResult: string;
 
-        if ((myTransportModeId == "O" && myShipmentTypeId == "LCLD") || (myTransportModeId == "I" && myShipmentTypeId == "LTL")) {
+        if (myTransportModeId == "A") {
+            myResult = this.TenantPM.ChargeableWeightUnitCode;
+        }
+        else if (myTransportModeId == "O" || myTransportModeId == "I") {
             myResult = this.TenantPM.WeightMeasurementUnitCode;
         }
 
@@ -946,6 +969,11 @@ export class AppTool {
         var myResult: string = null;
 
         switch (Code) {
+            case "General.MH.Occasions": {
+                myResult = "Occasion";
+                break;
+            }
+
             case "General.MH.Operations": {
                 myResult = "Box";
                 break;
@@ -1127,6 +1155,58 @@ export class AppTool {
         else {
             return false;
         }
+    }
+
+    public static ReplaceDecimalSeparatorWithADot(value: string,decimalSeparator:string) {
+        if (decimalSeparator != '.') {
+            value = value.split(decimalSeparator).join('.');
+        }
+        return value;
+    }
+
+    public static RemoveThousandsSeparator(value: string,thousandsSeparator:string) {
+        if ((value + "").indexOf(thousandsSeparator) > -1) {
+            value = value.split(thousandsSeparator).join('');
+        }
+        return value;
+    }
+
+    public static GetNumberFromText(numberText: string) {
+        var decimalSeparator:string;
+        var thousandsSeparator:string;
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                thousandsSeparator = ",";
+                decimalSeparator = ".";
+                break;
+            }
+
+            case "DC": {
+                thousandsSeparator = ".";
+                decimalSeparator = ",";
+                break;
+            }
+
+            case "AD": {
+                thousandsSeparator = "'";
+                decimalSeparator = ".";
+                break;
+            }
+
+            default:
+                {
+                    thousandsSeparator = ",";
+                    decimalSeparator = ".";
+                    break;
+                }
+        }
+        var numberValue = NaN;
+        if (!AppTool.IsNullOrEmpty(numberText)) {
+            numberText = this.RemoveThousandsSeparator(numberText,thousandsSeparator);
+            numberText = this.ReplaceDecimalSeparatorWithADot(numberText,decimalSeparator);
+            numberValue = Number(numberText);
+        }
+        return numberValue;
     }
 }
 export class DateTool {
@@ -2111,128 +2191,86 @@ export class FormatTool {
     }
     public static FormatNumber(myNumber: number, myFormat: string = 'N2') {
 
-            var first = ",";
-        var second = ".";
-        switch (SessionLocator.TenantPM.NumberFormatCode) {
-                        case "CD": {
-                            first = ",";
-                            second = ".";
-                            break;
-                        }
+        var myResult: string = "";
 
-                        case "DC": {
-                            first = ".";
-                            second = ",";
-                            break;
-                        }
+        var isValidNumber = FormatTool.ValidateNumber(myNumber);
 
-                        case "AD": {
-                            first = "'";
-                            second = ".";
-                            break;
-                        }
+        if (isValidNumber) {
 
-                        default:
-                            {
-                                first = ",";
-                                second = ".";
-                                break;
-                            }
-                    }
-                
-            
-            var myResult: string = "";
+            var fractionDigits = FormatTool.GetFractionDigits(myFormat);
 
-            if (!AppTool.IsNullOrEmpty(myNumber)) {
+            myNumber = AppTool.Round(myNumber, fractionDigits);
 
-                var isValid = true;
+            var myStringNumber = myNumber + "";
+            var myStringNumber1 = myStringNumber.split('.')[0];
+            var myStringNumber2 = myStringNumber.split('.')[1];
 
-                if (typeof (myNumber) == "string") {
-                    isValid = false;
+            var firstFormatChar = FormatTool.GetFirstFormatChar();
+            var secondFormatChar = FormatTool.GetSecondFormatChar();
 
-                    if (FormatTool.IsDecimal(myNumber + "")) {
-                        myNumber = +myNumber;
-                        isValid = true;
-                    }
+            myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, firstFormatChar);
+
+            if (myFormat.toString().toLowerCase() != "n0") {
+
+                if (AppTool.IsNullOrEmpty(myStringNumber2)) {
+                    myStringNumber2 = "0";
                 }
 
-                if (isValid) {
-                    var myFractionDigits = 2;
+                myResult += secondFormatChar + AppTool.PadRight(myStringNumber2, fractionDigits, '0');
+            }
+        }
+                
+        return myResult;       
+    }
 
-                    switch (myFormat.toString().toLowerCase()) {
-                        case "n0": { myFractionDigits = 0; break; }
-                        case "n1": { myFractionDigits = 1; break; }
-                        case "n2": { myFractionDigits = 2; break; }
-                        case "n3": { myFractionDigits = 3; break; }
-                        case "n4": { myFractionDigits = 4; break; }
-                        case "n5": { myFractionDigits = 5; break; }
-                        default: { myFractionDigits = 2; break; }
-                    }
+    private static ValidateNumber(myNumber: number) {
+        var isValid = false;
 
-                    myNumber = AppTool.Round(myNumber, myFractionDigits);
+        if (!AppTool.IsNullOrEmpty(myNumber)) {
+            isValid = true;
 
-                    var myStringNumber = myNumber + "";
-                    var myStringNumber1 = myStringNumber.split('.')[0];
-                    var myStringNumber2 = myStringNumber.split('.')[1];
+            if (typeof (myNumber) == "string") {
+                isValid = false;
 
-                    myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
-                    if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
-                        myResult += second + myStringNumber2;
-                    }
-
-                    if (myFormat.toString().toLowerCase() != "n0") {
-                        var side1;
-                        var side2;
-                        if (first == "." && !myResult.toString().toLowerCase().includes(",")) {
-                            var arr = myResult.split('.');
-                            var firstRound: boolean = true;
-                            var zero = /^0+$/;
-
-                            if (arr.length == 2) {
-                                if (arr[1].match(zero)) {
-                                    side1 = arr[0];
-                                }
-                                else if(arr[0].match(zero)){
-                                    side1 = "0";                                    
-                                }
-
-                            }
-                            else if (arr.length == 1) {
-                                side1 = arr[0];
-                            }
-                            if (AppTool.IsNullOrEmpty(side1)) {
-                                arr.forEach(p => {
-                                    if (firstRound)
-                                        side1 = p;
-                                    else
-                                        side1 += "." + p;
-                                    firstRound = false;
-                                });
-                            }
-                            if (arr.length > 1)
-                                if (myResult.includes(second))
-                                side2 = myResult.split(second)[myResult.split(second).length-1];
-                        }
-                        else {
-                            if (myResult.toString().toLowerCase().includes(",") && first==".") {
-                                side1 = myResult.split(',')[0];
-                                side2 = myResult.split(',')[1];
-                            }
-                            else {
-                                side1 = myResult.split('.')[0];
-                                side2 = myResult.split('.')[1];
-                            }
-                        }
-                      
-                        myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
-                    }
+                if (FormatTool.IsDecimal(myNumber + "")) {
+                    myNumber = +myNumber;
+                    isValid = true;
                 }
             }
+        }
 
-            return myResult;
-
-       
+        return isValid;
     }
+    private static GetFractionDigits(myFormat: string) {
+        var fractionDigits = 2;
+
+        switch (myFormat.toString().toLowerCase()) {
+            case "n0": { fractionDigits = 0; break; }
+            case "n1": { fractionDigits = 1; break; }
+            case "n2": { fractionDigits = 2; break; }
+            case "n3": { fractionDigits = 3; break; }
+            case "n4": { fractionDigits = 4; break; }
+            case "n5": { fractionDigits = 5; break; }
+            default: { fractionDigits = 2; break; }
+        }
+
+        return fractionDigits;
+    }
+    private static GetFirstFormatChar() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "DC": { return "."; }
+            case "AD": { return "'"; }
+            default: { return ","; }
+        }
+    }
+    private static GetSecondFormatChar() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "DC": { return ","; }
+            case "AD": { return "."; }
+            default: { return "."; }
+        }
+    }
+
     public static CustomFormatNumber(myNumber: number, myFormat: string = 'N2') {
 
         var first = ",";
@@ -2337,6 +2375,22 @@ export class FormatTool {
         if (!AppTool.IsNullOrEmpty(input)) {
             if (!AppTool.IsNullOrEmpty(input)) {
                 if (input.length <= 4) {
+                    var pattern = /^\d+$/;
+                    if (pattern.test(input)) {
+                        myResult = true;
+                    }
+                }
+            }
+        }
+
+        return myResult;
+    }
+    public static Validate_SLAC(input: string): boolean {
+        var myResult: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            if (!AppTool.IsNullOrEmpty(input)) {
+                if (input.length <= 5) {
                     var pattern = /^\d+$/;
                     if (pattern.test(input)) {
                         myResult = true;

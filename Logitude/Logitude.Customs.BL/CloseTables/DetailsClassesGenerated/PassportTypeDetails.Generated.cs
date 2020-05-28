@@ -20,17 +20,37 @@ namespace Logitude.Customs.BL
    {
        public List<PassportTypeDetails> GetAll()
        {
-		    var all = new List<PassportTypeDetails>(); 
+		    var all = new List<PassportTypeDetails>();  
+            all.Add(new PassportTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,דרכון", 
+                Inactive = false, 
+                LocalName = "דרכון", 
+			});
+			 
+            all.Add(new PassportTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,תעודת מעבר", 
+                Inactive = false, 
+                LocalName = "תעודת מעבר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PassportType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(PassportType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

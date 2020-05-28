@@ -59,6 +59,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
+            this.Property(t => t.TriggerFieldCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ObjectTableRules");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -78,6 +82,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.RuleNotificationTypeCode).HasColumnName("RuleNotificationTypeCode");
             this.Property(t => t.Internal).HasColumnName("Internal");
             this.Property(t => t.AdvancedCondition).HasColumnName("AdvancedCondition");
+            this.Property(t => t.TriggerFieldCode).HasColumnName("TriggerFieldCode");
 
             // Relationships
             //this.HasOptional(t => t.ObjectField)

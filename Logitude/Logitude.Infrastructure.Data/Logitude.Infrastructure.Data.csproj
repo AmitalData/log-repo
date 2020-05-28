@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Infrastructure.Data</RootNamespace>
     <AssemblyName>Logitude.Infrastructure.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -87,7 +87,9 @@
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
+    <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
+    <Compile Include="EntityKeys\PriceStepKeys.cs" />
     <Compile Include="EntityKeys\SharedLogisticsSettingKeys.cs" />
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
@@ -110,12 +112,16 @@
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PriceStepListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamMemberBusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ToggleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\LastRunDetailListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LBPTeamMemberListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PriceStepListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SharedLogisticsSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
@@ -129,7 +135,9 @@
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PriceStepList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SharedLogisticsSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
@@ -143,7 +151,9 @@
     <Compile Include="EntityMapping\BusinessProcessQueueMap.cs" />
     <Compile Include="EntityMapping\BusinessRoleMap.cs" />
     <Compile Include="EntityMapping\FeatureToggleMap.cs" />
+    <Compile Include="EntityMapping\LastRunDetailMap.cs" />
     <Compile Include="EntityMapping\LBPTeamMemberMap.cs" />
+    <Compile Include="EntityMapping\PriceStepMap.cs" />
     <Compile Include="EntityMapping\SharedLogisticsSettingMap.cs" />
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
@@ -157,7 +167,9 @@
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
+    <Compile Include="EntityPOCOs\LastRunDetail.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
+    <Compile Include="EntityPOCOs\PriceStep.cs" />
     <Compile Include="EntityPOCOs\SharedLogisticsSetting.cs" />
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
@@ -183,12 +195,16 @@
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PriceStepRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SharedLogisticsSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ToggleRepository.Generated.cs" />
+    <Compile Include="Repsitories\LastRunDetailRepository.cs" />
     <Compile Include="Repsitories\LBPTeamMemberRepository.cs" />
+    <Compile Include="Repsitories\PriceStepRepository.cs" />
     <Compile Include="Repsitories\SharedLogisticsSettingRepository.cs" />
     <Compile Include="Repsitories\TeamMemberBusinessRoleRepository.cs" />
     <Compile Include="Repsitories\TeamRepository.cs" />

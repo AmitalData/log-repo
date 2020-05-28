@@ -17,8 +17,7 @@ import { DateTool, AppTool } from "../../../Infrastructure/Tools";
  
 
 @Component({
-    selector: 'PhysicalCheckComponent', 
-    moduleId: module.id,
+    selector: 'PhysicalCheckComponent',     
     templateUrl: './PhysicalCheckComponent.html',
 })
 export class PhysicalCheckComponent

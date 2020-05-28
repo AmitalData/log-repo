@@ -10,7 +10,6 @@ export class ReconcileExternalPageList {
    
 	Id: string;
 	Tenant: number;
-	BankAccountId: string;
 	GLAccountId: string;
 	PageNo: number;
 	CreatedByUserId: string;
@@ -28,6 +27,8 @@ export class ReconcileExternalPageList {
 	EntryTypeCode: string;
 	EntryTypeEnglishName: string;
 	EntryTypeLocalName: string;
+	ObjectTableId: string;
+	EntityId: string;
 	
 }
  

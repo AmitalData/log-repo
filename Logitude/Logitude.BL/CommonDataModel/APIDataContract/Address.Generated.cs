@@ -12,14 +12,16 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public class Address
+    public partial class Address
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public string Name { get; set; }
@@ -30,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public Country Country { get; set; }
     
-    public City City { get; set; }
+    public string City { get; set; }
     
     public string ZipCode { get; set; }
     

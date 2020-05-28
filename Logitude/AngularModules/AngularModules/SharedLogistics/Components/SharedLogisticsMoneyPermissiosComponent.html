@@ -85,6 +85,27 @@
                                                             <td style="width: 10px;"><div></div></td>
                                                         </tr>
 
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 100%; font-size:12px;">
+                                                                <LogLabel [ObjectFieldName]="'IsShowAmountLocalCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Amount in Local Currency column (from invoice and shipment levels)'"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:10px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'IsShowAmountLocalCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsShowAmountLocalCurrency"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width: 10px;"><div></div></td>
+                                                        </tr>
+
+
                                                         <tr>
                                                             <td>
                                                                 <div></div>

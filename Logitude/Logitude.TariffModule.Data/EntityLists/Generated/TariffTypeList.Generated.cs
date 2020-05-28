@@ -20,6 +20,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string Name  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string TransportModeCode  { get; set; }
    }
 
 }

@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -74,7 +74,7 @@ export class FieldTemplateComponent extends BaseComponent {
     public MainEntityStatus: string;
     public EntityPM: ARInvoicePM;
     private LoadARInvoicePM() {
-        this.myService.get(this.Entity.Id).subscribe(myResponse => {
+        this.myService.get(this.Entity.Id).subscribe((myResponse:any) => {
             if (!myResponse.HasError) {
                 this.ShowBusyIndicator = false;
                 this.EntityPM = myResponse.Result;

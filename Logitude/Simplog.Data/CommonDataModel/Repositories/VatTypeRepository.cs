@@ -46,8 +46,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             VatType entity;
             if (getFromCache)
             {
-                if (HttpContext.Current != null)
-                {
+             
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -69,12 +68,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (VatType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                    entity = (from record in context.VatTypes where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-                }
+                
+            
             }
             else
             {

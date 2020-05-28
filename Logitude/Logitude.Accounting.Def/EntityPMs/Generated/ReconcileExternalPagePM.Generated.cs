@@ -66,29 +66,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string bankAccountId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BankAccountId  
-	   {
-	    
-	     get
-		{
-		   return bankAccountId;
-		 }
-		 set
-		 {
-		   if(bankAccountId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountId",OldValue=bankAccountId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   bankAccountId=value;
-		   }
-			
-		 }
-	   }
 	  private string gLAccountId ;
 	  	  
        
@@ -488,6 +465,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntryTypeLocalName",OldValue=entryTypeLocalName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   entryTypeLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string objectTableId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableId  
+	   {
+	    
+	     get
+		{
+		   return objectTableId;
+		 }
+		 set
+		 {
+		   if(objectTableId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=objectTableId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   objectTableId=value;
+		   }
+			
+		 }
+	   }
+	  private string entityId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityId  
+	   {
+	    
+	     get
+		{
+		   return entityId;
+		 }
+		 set
+		 {
+		   if(entityId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityId",OldValue=entityId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityId=value;
 		   }
 			
 		 }

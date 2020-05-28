@@ -102,7 +102,12 @@ export class FilingInboxPM {
         }
     }
     //public FilingInboxAttachments: Array<FilingInboxAttachmentPMPM>= [];
- 
+     private fileInfo: any;
+    public get FileInfo() { return this.fileInfo; }
+    public set FileInfo(newValue: any) { if (this.fileInfo != newValue) { this.fileInfo = newValue; this.MarkAsDirty("FileInfo"); } }
+       
+	 
+
     public OldEntityPM: FilingInboxPM;
 		
     public IsDirty: boolean;

@@ -41,17 +41,17 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public QueryColumn GetSingleQueryColumnByFieldId(string FieldId, int tenant)
+        public QueryColumn GetSingleQueryColumnByFieldCode(string FieldCode, int tenant)
         {
             return (from a in context.QueryColumns
-                    where a.ObjectFieldId == FieldId && a.Tenant == tenant
+                    where a.ObjectFieldCode == FieldCode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
      
-        public IQueryable<QueryColumn> GetQueryColumnsByQueryTenantOnly(int tenant, string queryId)
+        public IQueryable<QueryColumn> GetQueryColumnsByQueryTenantOnly(int tenant, string queryCode)
         {
             IQueryable<QueryColumn> query = from a in context.QueryColumns
-                                            where a.QueryId == queryId && a.Tenant == tenant 
+                                            where a.QueryCode == queryCode && a.Tenant == tenant 
                                             select a;
             return query;
         }
@@ -99,10 +99,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public List<QueryColumn> GetQueryColumnsByQueryIdAndUser(int tenant, string userId, string queryId)
+        public List<QueryColumn> GetQueryColumnsByQueryCodeAndUser(int tenant, string userId, string queryCode)
         {
             IQueryable<QueryColumn> columns = from a in webFreightContext.QueryColumns
-                                              where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                                              where a.Tenant == tenant && a.UserId == userId && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
                                               select a;            
 
             List<QueryColumn> Cols = new List<QueryColumn>();
@@ -118,10 +118,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public List<QueryColumn> GetQueryColumnsByQueryId(int tenant, string queryId)
+        public List<QueryColumn> GetQueryColumnsByQueryCode(int tenant, string queryCode)
         {
             IQueryable<QueryColumn> columns = from a in webFreightContext.QueryColumns
-                                              where a.Tenant == tenant  && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                                              where a.Tenant == tenant  && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
                                               select a;
 
             List<QueryColumn> Cols = new List<QueryColumn>();

@@ -1,23 +1,45 @@
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { AppTool, FontTool, FormatTool } from '../../../../Infrastructure/Tools';
-import { PortPM } from '../../../../Common/EntityPMs/PortPM';
+import { PortList } from '../../../../Common/EntityLists/PortList';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
+import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 export class AirCostTariffLineData extends BaseComponent {
+    
     public EntityPM: TariffLinePM;
     public DataContext: AirCostTariffLineData = this;
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
     public ComparedEntity: TariffLinePM;
+
     constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
+    }
+    
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";                
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
     }
 
     public MinPriceComparingPrice: number;
@@ -243,11 +265,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Min price format is invalid";
+                    errorText = "Min Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Min price format is invalid"
+                    errorText = errorText + ", Min Price format is invalid"
                 }
             }
 
@@ -255,11 +277,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 1 price format is invalid";
+                    errorText = "Step 1 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 1 price format is invalid"
+                    errorText = errorText + ", Step 1 Price format is invalid"
                 }
             }
 
@@ -267,11 +289,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 2 price format is invalid";
+                    errorText = "Step 2 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 2 price format is invalid"
+                    errorText = errorText + ", Step 2 Price format is invalid"
                 }
             }
 
@@ -279,11 +301,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 3 price format is invalid";
+                    errorText = "Step 3 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 3 price format is invalid"
+                    errorText = errorText + ", Step 3 Price format is invalid"
                 }
             }
 
@@ -291,11 +313,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 4 price format is invalid";
+                    errorText = "Step 4 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 4 price format is invalid"
+                    errorText = errorText + ", Step 4 Price format is invalid"
                 }
             }
 
@@ -303,11 +325,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 5 price format is invalid";
+                    errorText = "Step 5 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 5 price format is invalid"
+                    errorText = errorText + ", Step 5 Price format is invalid"
                 }
             }
 
@@ -315,11 +337,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 6 price format is invalid";
+                    errorText = "Step 6 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 6 price format is invalid"
+                    errorText = errorText + ", Step 6 Price format is invalid"
                 }
             }
 
@@ -327,11 +349,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 7 price format is invalid";
+                    errorText = "Step 7 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 7 price format is invalid"
+                    errorText = errorText + ", Step 7 Price format is invalid"
                 }
             }
 
@@ -339,11 +361,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 8 price format is invalid";
+                    errorText = "Step 8 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 8 price format is invalid"
+                    errorText = errorText + ", Step 8 Price format is invalid"
                 }
             }
 
@@ -378,26 +400,47 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode;
         } else {
             this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
+                return this.EntityPM.OriginPortCode;
+            }
 
-        else {
-            return this.EntityPM.OriginPortText;
+            else {
+                return this.EntityPM.OriginPortText;
+            }
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+                return this.EntityPM.OriginPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.OriginPortText;
+            }
         }
     }
 
@@ -432,26 +475,48 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode;
         } else {
             this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
         }
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
+                return this.EntityPM.DestinationPortCode;
+            }
 
-        else {
-            return this.EntityPM.DestinationPortText;
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
+        } else {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+                return this.EntityPM.DestinationPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
         }
     }
 
@@ -471,6 +536,15 @@ export class AirCostTariffLineData extends BaseComponent {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
+        }
+    }
+
+    get TransitTime() {
+        return this.EntityPM.TransitTime;
+    }
+    set TransitTime(value: string) {
+        if (this.EntityPM.TransitTime != value) {
+            this.EntityPM.TransitTime = value;
         }
     }
 
@@ -771,6 +845,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public IsEditEnabled: boolean = false;
     public ComparedEntity: TariffLinePM;
     private initialIndex: number;
+
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -778,8 +853,26 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
     }
-    
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
+    }
+
     private CheckIfLineHasError() {
         if (this.ErrorText != 'Line is a duplicate') {
             var error: boolean = false;
@@ -839,11 +932,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 1 price format is invalid";
+                    errorText = "Surcharge 1 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 1 price format is invalid"
+                    errorText = errorText + ", Surcharge 1 Price format is invalid"
                 }
             }
 
@@ -851,11 +944,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 2 price format is invalid";
+                    errorText = "Surcharge 2 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 2 price format is invalid"
+                    errorText = errorText + ", Surcharge 2 Price format is invalid"
                 }
             }
 
@@ -863,11 +956,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 3 price format is invalid";
+                    errorText = "Surcharge 3 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 3 price format is invalid"
+                    errorText = errorText + ", Surcharge 3 Price format is invalid"
                 }
             }
 
@@ -875,11 +968,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 4 price format is invalid";
+                    errorText = "Surcharge 4 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 4 price format is invalid"
+                    errorText = errorText + ", Surcharge 4 Price format is invalid"
                 }
             }
 
@@ -887,11 +980,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 5 price format is invalid";
+                    errorText = "Surcharge 5 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 5 price format is invalid"
+                    errorText = errorText + ", Surcharge 5 Price format is invalid"
                 }
             }
 
@@ -899,11 +992,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 6 price format is invalid";
+                    errorText = "Surcharge 6 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 6 price format is invalid"
+                    errorText = errorText + ", Surcharge 6 Price format is invalid"
                 }
             }
 
@@ -911,11 +1004,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 7 price format is invalid";
+                    errorText = "Surcharge 7 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 7 price format is invalid"
+                    errorText = errorText + ", Surcharge 7 Price format is invalid"
                 }
             }
 
@@ -923,11 +1016,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 8 price format is invalid";
+                    errorText = "Surcharge 8 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 8 price format is invalid"
+                    errorText = errorText + ", Surcharge 8 Price format is invalid"
                 }
             }
 
@@ -935,11 +1028,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 9 price format is invalid";
+                    errorText = "Surcharge 9 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 9 price format is invalid"
+                    errorText = errorText + ", Surcharge 9 Price format is invalid"
                 }
             }
 
@@ -947,11 +1040,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 10 price format is invalid";
+                    errorText = "Surcharge 10 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 10 price format is invalid"
+                    errorText = errorText + ", Surcharge 10 Price format is invalid"
                 }
             }
 
@@ -963,6 +1056,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     private SetUIProperties() {
         this.SetUIProperties_From();
         this.SetUIProperties_To();
+        this.SetUIProperties_MinPrices();
+        this.SetUIProperties_Currency();
     }
     private SetUIProperties_From() {
         if (this.IsFromAllOtherPorts) {
@@ -988,6 +1083,41 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.UIProperties.SetEnabled("IsToAllOtherPorts", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         }
     }
+    private SetUIProperties_Currency() {
+        var isCurrencyRequired: boolean = false;
+
+        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+            isCurrencyRequired = true;
+        }
+
+        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
+    }
+    private SetUIProperties_MinPrices() {
+        this.UIProperties.SetVisibility("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
+        this.UIProperties.SetVisibility("Surcharge2MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(2));
+        this.UIProperties.SetVisibility("Surcharge3MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(3));
+        this.UIProperties.SetVisibility("Surcharge4MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(4));
+        this.UIProperties.SetVisibility("Surcharge5MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(5));
+        this.UIProperties.SetVisibility("Surcharge6MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(6));
+        this.UIProperties.SetVisibility("Surcharge7MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(7));
+        this.UIProperties.SetVisibility("Surcharge8MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(8));
+        this.UIProperties.SetVisibility("Surcharge9MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(9));
+        this.UIProperties.SetVisibility("Surcharge10MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(10));
+    }
+    private IsMeasurmentFixed(index: number): boolean {
+        var isFixed: boolean = false;
+
+        if (this.FatherComponent.AllMeasurements) {
+            var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+            if (iMeasurement) {
+                if (iMeasurement.Code == "FIXD") {
+                    isFixed = true;
+                }
+            }
+        }
+
+        return isFixed;
+    }
 
     public Surcharge1ComparingPrice: number;
     public Surcharge1ComparingTextColor: string = null;
@@ -1009,6 +1139,27 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public Surcharge9ComparingTextColor: string = null;
     public Surcharge10ComparingPrice: number;
     public Surcharge10ComparingTextColor: string = null;
+
+    public MinPrice1ComparingPrice: number;
+    public MinPrice1ComparingTextColor: string = null;
+    public MinPrice2ComparingPrice: number;
+    public MinPrice2ComparingTextColor: string = null;
+    public MinPrice3ComparingPrice: number;
+    public MinPrice3ComparingTextColor: string = null;
+    public MinPrice4ComparingPrice: number;
+    public MinPrice4ComparingTextColor: string = null;
+    public MinPrice5ComparingPrice: number;
+    public MinPrice5ComparingTextColor: string = null;
+    public MinPrice6ComparingPrice: number;
+    public MinPrice6ComparingTextColor: string = null;
+    public MinPrice7ComparingPrice: number;
+    public MinPrice7ComparingTextColor: string = null;
+    public MinPrice8ComparingPrice: number;
+    public MinPrice8ComparingTextColor: string = null;
+    public MinPrice9ComparingPrice: number;
+    public MinPrice9ComparingTextColor: string = null;
+    public MinPrice10ComparingPrice: number;
+    public MinPrice10ComparingTextColor: string = null;
     private DefaultColor = "blue";
 
     SetCellsComparingText() {
@@ -1022,7 +1173,37 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.CompareSurcharge8Price();
         this.CompareSurcharge9Price();
         this.CompareSurcharge10Price();
+
+        this.CompareSurchargeMinPrices();
     }
+    private CompareSurchargeMinPrices() {
+        this.CompareMainPrice(1);
+        this.CompareMainPrice(2);
+        this.CompareMainPrice(3);
+        this.CompareMainPrice(4);
+        this.CompareMainPrice(5);
+        this.CompareMainPrice(6);
+        this.CompareMainPrice(7);
+        this.CompareMainPrice(8);
+        this.CompareMainPrice(9);
+        this.CompareMainPrice(10);
+    }
+
+    private CompareMainPrice(index: number) {
+        if (this.ComparedEntity != null) {
+            this['MinPrice' + index + 'ComparingPrice'] = null;
+            this['MinPrice' + index + 'ComparingTextColor'] = this.DefaultColor;
+
+            if (this.ComparedEntity['Surcharge' + index + 'MinPrice'] != null) {
+                var priceValue = this['Surcharge' + index + 'MinPrice'] - this.ComparedEntity['Surcharge' + index + 'MinPrice'];
+                if (!AppTool.IsNullOrZero(priceValue) && !AppTool.IsNullOrZero(this.ComparedEntity['Surcharge' + index + 'MinPrice'])) {
+                    this['MinPrice' + index + 'ComparingPrice'] = (priceValue / this.ComparedEntity['Surcharge' + index + 'MinPrice']) * 100;
+                    this['MinPrice' + index + 'ComparingTextColor'] = this.ComputeWarningPercentageColor(this['MinPrice' + index + 'ComparingPrice']);
+                }
+            }
+        }
+    }
+
 
     private CompareSurcharge1Price() {
         if (this.ComparedEntity != null) {
@@ -1194,6 +1375,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set OriginPortId(value: string) {
         if (this.EntityPM.OriginPortId != value) {
             this.EntityPM.OriginPortId = value;
+            if (this.IsFromAllOtherPorts) {
+                this.EntityPM.IsFromAllOtherPorts = false;
+            }
             this.SetUIProperties_From();
             this.CheckIfLineHasError();
         }
@@ -1208,26 +1392,47 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode; 
         } else {
             this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
         }
     }
 
     get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
+                return this.EntityPM.OriginPortCode;
+            }
 
-        else {
-            return this.EntityPM.OriginPortText;
+            else {
+                return this.EntityPM.OriginPortText;
+            }
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+                return this.EntityPM.OriginPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.OriginPortText;
+            }
         }
     }
 
@@ -1248,6 +1453,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.EntityPM.DestinationPortId != value) {
             this.EntityPM.DestinationPortId = value;
+            if (this.IsToAllOtherPorts) {
+                this.EntityPM.IsToAllOtherPorts = false;
+            }
             this.SetUIProperties_To();
             this.CheckIfLineHasError();
         }
@@ -1262,26 +1470,81 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode; 
         } else {
             this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
+        }
+    }
+    
+    currency: CurrencyList;
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyList) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+    
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+
+            this.SetUIProperties_Currency();
         }
     }
 
     get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
-        }
+        if (this.FatherComponent.IsAir) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
+                return this.EntityPM.DestinationPortCode;
+            }
 
-        else {
-            return this.EntityPM.DestinationPortText;
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
+        } else {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+                return this.EntityPM.DestinationPortCombinedCode;
+            }
+
+            else {
+                return this.EntityPM.DestinationPortText;
+            }
         }
     }
 
@@ -1330,6 +1593,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge1MinPrice() {
+        return this.EntityPM.Surcharge1MinPrice;
+    }
+    set Surcharge1MinPrice(value: number) {
+        if (this.EntityPM.Surcharge1MinPrice != value) {
+            this.EntityPM.Surcharge1MinPrice = value;
+            this.CompareMainPrice(1);
+        }
+    }
+
     get Surcharge1PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
             return FormatTool.FormatNumber(this.EntityPM.Surcharge1Price, "N3");
@@ -1350,6 +1623,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge1MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge1MinPrice, "N3");
+    }
+
     // Surcharge 2
     get Surcharge2Price() {
         return this.EntityPM.Surcharge2Price;
@@ -1359,6 +1636,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge2Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge2Price();
+        }
+    }
+
+    get Surcharge2MinPrice() {
+        return this.EntityPM.Surcharge2MinPrice;
+    }
+    set Surcharge2MinPrice(value: number) {
+        if (this.EntityPM.Surcharge2MinPrice != value) {
+            this.EntityPM.Surcharge2MinPrice = value;
+            this.CompareMainPrice(2);
         }
     }
 
@@ -1382,6 +1669,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge2MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge2MinPrice, "N3");
+    }
+
     // Surcharge 3
     get Surcharge3Price() {
         return this.EntityPM.Surcharge3Price;
@@ -1391,6 +1682,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge3Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge3Price();
+        }
+    }
+
+    get Surcharge3MinPrice() {
+        return this.EntityPM.Surcharge3MinPrice;
+    }
+    set Surcharge3MinPrice(value: number) {
+        if (this.EntityPM.Surcharge3MinPrice != value) {
+            this.EntityPM.Surcharge3MinPrice = value;
+            this.CompareMainPrice(3);
         }
     }
 
@@ -1414,6 +1715,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge3MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge3MinPrice, "N3");
+    }
+
     // Surcharge 4
     get Surcharge4Price() {
         return this.EntityPM.Surcharge4Price;
@@ -1423,6 +1728,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge4Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge4Price();
+        }
+    }
+
+    get Surcharge4MinPrice() {
+        return this.EntityPM.Surcharge4MinPrice;
+    }
+    set Surcharge4MinPrice(value: number) {
+        if (this.EntityPM.Surcharge4MinPrice != value) {
+            this.EntityPM.Surcharge4MinPrice = value;
+            this.CompareMainPrice(4);
         }
     }
 
@@ -1446,6 +1761,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge4MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge4MinPrice, "N3");
+    }
+
     // Surcharge 5
     get Surcharge5Price() {
         return this.EntityPM.Surcharge5Price;
@@ -1455,6 +1774,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge5Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge5Price();
+        }
+    }
+
+    get Surcharge5MinPrice() {
+        return this.EntityPM.Surcharge5MinPrice;
+    }
+    set Surcharge5MinPrice(value: number) {
+        if (this.EntityPM.Surcharge5MinPrice != value) {
+            this.EntityPM.Surcharge5MinPrice = value;
+            this.CompareMainPrice(5);
         }
     }
 
@@ -1478,6 +1807,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge5MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge5MinPrice, "N3");
+    }
+
     // Surcharge 6
     get Surcharge6Price() {
         return this.EntityPM.Surcharge6Price;
@@ -1487,6 +1820,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge6Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge6Price();
+        }
+    }
+
+    get Surcharge6MinPrice() {
+        return this.EntityPM.Surcharge6MinPrice;
+    }
+    set Surcharge6MinPrice(value: number) {
+        if (this.EntityPM.Surcharge6MinPrice != value) {
+            this.EntityPM.Surcharge6MinPrice = value;
+            this.CompareMainPrice(6);
         }
     }
 
@@ -1510,6 +1853,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge6MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge6MinPrice, "N3");
+    }
+
     // Surcharge 7
     get Surcharge7Price() {
         return this.EntityPM.Surcharge7Price;
@@ -1519,6 +1866,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge7Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge7Price();
+        }
+    }
+
+    get Surcharge7MinPrice() {
+        return this.EntityPM.Surcharge7MinPrice;
+    }
+    set Surcharge7MinPrice(value: number) {
+        if (this.EntityPM.Surcharge7MinPrice != value) {
+            this.EntityPM.Surcharge7MinPrice = value;
+            this.CompareMainPrice(7);
         }
     }
 
@@ -1542,6 +1899,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge7MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge7MinPrice, "N3");
+    }
+
     // Surcharge 8
     get Surcharge8Price() {
         return this.EntityPM.Surcharge8Price;
@@ -1551,6 +1912,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge8Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge8Price();
+        }
+    }
+
+    get Surcharge8MinPrice() {
+        return this.EntityPM.Surcharge8MinPrice;
+    }
+    set Surcharge8MinPrice(value: number) {
+        if (this.EntityPM.Surcharge8MinPrice != value) {
+            this.EntityPM.Surcharge8MinPrice = value;
+            this.CompareMainPrice(8);
         }
     }
 
@@ -1574,6 +1945,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge8MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge8MinPrice, "N3");
+    }
+
     // Surcharge 9
     get Surcharge9Price() {
         return this.EntityPM.Surcharge9Price;
@@ -1583,6 +1958,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge9Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge9Price();
+        }
+    }
+
+    get Surcharge9MinPrice() {
+        return this.EntityPM.Surcharge9MinPrice;
+    }
+    set Surcharge9MinPrice(value: number) {
+        if (this.EntityPM.Surcharge9MinPrice != value) {
+            this.EntityPM.Surcharge9MinPrice = value;
+            this.CompareMainPrice(9);
         }
     }
 
@@ -1606,6 +1991,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge9MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge9MinPrice, "N3");
+    }
+
     // Surcharge 10
     get Surcharge10Price() {
         return this.EntityPM.Surcharge10Price;
@@ -1615,6 +2004,16 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge10Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge10Price();
+        }
+    }
+
+    get Surcharge10MinPrice() {
+        return this.EntityPM.Surcharge10MinPrice;
+    }
+    set Surcharge10MinPrice(value: number) {
+        if (this.EntityPM.Surcharge10MinPrice != value) {
+            this.EntityPM.Surcharge10MinPrice = value;
+            this.CompareMainPrice(10);
         }
     }
 
@@ -1638,6 +2037,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge10MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge10MinPrice, "N3");
+    }
+
+    ////////////////////////////
     get IsFromAllOtherPorts() { return this.EntityPM.IsFromAllOtherPorts; }
     set IsFromAllOtherPorts(value: boolean) {
         if (this.EntityPM.IsFromAllOtherPorts != value) {
@@ -1690,6 +2094,589 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                     this.EntityPM.Index = this.initialIndex;
                 }
             }            
+        }
+    }
+}
+
+export class OceanFCLFreightTariffLineData extends BaseComponent {
+    public EntityPM: TariffLinePM;
+    public DataContext: OceanFCLFreightTariffLineData = this;
+    private ObjectTableName = "TariffLine";
+    public IsNewEntity: boolean = false;
+    public IsEditEnabled: boolean = false;
+    public ComparedEntity: TariffLinePM;
+    constructor(entity: TariffLinePM, public FatherComponent: OceanFCLVersionTabComponent, isNew: boolean = false) {
+        super();
+        this.EntityPM = entity;
+        this.IsNewEntity = isNew;
+        this.IsEditEnabled = FatherComponent.IsDraftVersion;
+        this.SetUIProperties();
+        this.SetCellColorsForPriceCheck();
+    }
+
+    public CellColor: string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
+            this.CellColor = "#FFFBDA";
+        }
+
+        else {
+            if (this.IsEditEnabled) {
+                this.CellColor = "transparent";
+            }
+
+            else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+            }
+        }
+    }
+
+    public Container1ComparingPrice: number;
+    public Container1ComparingTextColor: string = null;
+    public Container2ComparingPrice: number;
+    public Container2ComparingTextColor: string = null;
+    public Container3ComparingPrice: number;
+    public Container3ComparingTextColor: string = null;
+    public Container4ComparingPrice: number;
+    public Container4ComparingTextColor: string = null;
+    public Container5ComparingPrice: number;
+    public Container5ComparingTextColor: string = null;
+    private DefaultColor = "blue";
+
+    SetCellsComparingText() {
+        if (this.ComparedEntity != null) {
+            this.CompareContainer1Price();
+            this.CompareContainer2Price();
+            this.CompareContainer3Price();
+            this.CompareContainer4Price();
+            this.CompareContainer5Price();
+        }
+    }
+    private CompareContainer1Price() {
+        if (this.ComparedEntity != null) {
+            this.Container1ComparingPrice = null;
+            this.Container1ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge1Price != null) {
+                var surcharge1ComparingValue = this.Surcharge1Price - this.ComparedEntity.Surcharge1Price;
+                if (!AppTool.IsNullOrZero(surcharge1ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge1Price)) {
+                    this.Container1ComparingPrice = (surcharge1ComparingValue / this.ComparedEntity.Surcharge1Price) * 100;
+                    this.Container1ComparingTextColor = this.ComputeWarningPercentageColor(this.Container1ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer2Price() {
+        if (this.ComparedEntity != null) {
+            this.Container2ComparingPrice = null;
+            this.Container2ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge2Price != null) {
+                var surcharge2ComparingValue = this.Surcharge2Price - this.ComparedEntity.Surcharge2Price;
+                if (!AppTool.IsNullOrZero(surcharge2ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge2Price)) {
+                    this.Container2ComparingPrice = (surcharge2ComparingValue / this.ComparedEntity.Surcharge2Price) * 100;
+                    this.Container2ComparingTextColor = this.ComputeWarningPercentageColor(this.Container2ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer3Price() {
+        if (this.ComparedEntity != null) {
+            this.Container3ComparingPrice = null;
+            this.Container3ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge3Price != null) {
+                var surcharge3ComparingValue = this.Surcharge3Price - this.ComparedEntity.Surcharge3Price;
+                if (!AppTool.IsNullOrZero(surcharge3ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge3Price)) {
+                    this.Container3ComparingPrice = (surcharge3ComparingValue / this.ComparedEntity.Surcharge3Price) * 100;
+                    this.Container3ComparingTextColor = this.ComputeWarningPercentageColor(this.Container3ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer4Price() {
+        if (this.ComparedEntity != null) {
+            this.Container4ComparingPrice = null;
+            this.Container4ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge4Price != null) {
+                var surcharge4ComparingValue = this.Surcharge4Price - this.ComparedEntity.Surcharge4Price;
+                if (!AppTool.IsNullOrZero(surcharge4ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge4Price)) {
+                    this.Container4ComparingPrice = (surcharge4ComparingValue / this.ComparedEntity.Surcharge4Price) * 100;
+                    this.Container4ComparingTextColor = this.ComputeWarningPercentageColor(this.Container4ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer5Price() {
+        if (this.ComparedEntity != null) {
+            this.Container5ComparingPrice = null;
+            this.Container5ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge5Price != null) {
+                var surcharge5ComparingValue = this.Surcharge5Price - this.ComparedEntity.Surcharge5Price;
+                if (!AppTool.IsNullOrZero(surcharge5ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge5Price)) {
+                    this.Container5ComparingPrice = (surcharge5ComparingValue / this.ComparedEntity.Surcharge5Price) * 100;
+                    this.Container5ComparingTextColor = this.ComputeWarningPercentageColor(this.Container5ComparingPrice);
+                }
+            }
+        }
+    }
+
+    ComputeWarningPercentageColor(price: number) {
+        var color = "blue";
+        if (this.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+        else {
+
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
+        }
+        return color;
+    }
+
+    get HasErrors() {
+        return this.EntityPM.HasErrors;
+    }
+    set HasErrors(value: boolean) {
+        if (this.EntityPM.HasErrors != value) {
+            this.EntityPM.HasErrors = value;
+        }
+    }
+
+    get ErrorText() {
+        return this.EntityPM.ErrorText;
+    }
+    set ErrorText(value: string) {
+        if (this.EntityPM.ErrorText != value) {
+            this.EntityPM.ErrorText = value;
+        }
+    }
+
+    private CheckIfLineHasError() {
+        if (this.ErrorText != 'Line is a duplicate') {
+            var error: boolean = false;
+            var errorText: string;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                }
+            }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Origin Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Origin Port"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                }
+            }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Destination Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Destination Port"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 1 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 1 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 2 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 2 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 3 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 3 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 4 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 4 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 5 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 5 Price format is invalid"
+                }
+            }
+
+            this.HasErrors = error;
+            this.ErrorText = errorText;
+        }
+    }
+
+    private SetUIProperties() {
+        this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
+        this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+    }
+
+    // Origin Port
+    get OriginPortId() {
+        return this.EntityPM.OriginPortId;
+    }
+    set OriginPortId(value: string) {
+        if (this.EntityPM.OriginPortId != value) {
+            this.EntityPM.OriginPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get OriginPortCode() {
+        return this.EntityPM.OriginPortCode;
+    }
+    set OriginPortCode(value: string) {
+        if (this.EntityPM.OriginPortCode != value) {
+            this.EntityPM.OriginPortCode = value;
+        }
+    }
+
+    get OriginPortCombinedCode() {
+        return this.EntityPM.OriginPortCombinedCode;
+    }
+    set OriginPortCombinedCode(value: string) {
+        if (this.EntityPM.OriginPortCombinedCode != value) {
+            this.EntityPM.OriginPortCombinedCode = value;
+        }
+    }
+
+    originPort: PortList;
+    get OriginPort() { return this.originPort; }
+    set OriginPort(value: PortList) {
+        if (this.originPort != value) {
+            this.originPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginPortCode = value.Code;
+            this.OriginPortCombinedCode = value.CombinedCode;
+        } else {
+            this.OriginPortCode = null;
+            this.OriginPortCombinedCode = null;
+        }
+    }
+
+    get OriginPortValue() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCombinedCode)) {
+            return this.EntityPM.OriginPortCombinedCode;
+        }
+
+        else {
+            return this.EntityPM.OriginPortText;
+        }
+    }
+
+    get OriginPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Destination Port
+    get DestinationPortId() {
+        return this.EntityPM.DestinationPortId;
+    }
+    set DestinationPortId(value: string) {
+        if (this.EntityPM.DestinationPortId != value) {
+            this.EntityPM.DestinationPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get DestinationPortCode() {
+        return this.EntityPM.DestinationPortCode;
+    }
+    set DestinationPortCode(value: string) {
+        if (this.EntityPM.DestinationPortCode != value) {
+            this.EntityPM.DestinationPortCode = value;
+        }
+    }
+
+    get DestinationPortCombinedCode() {
+        return this.EntityPM.DestinationPortCombinedCode;
+    }
+    set DestinationPortCombinedCode(value: string) {
+        if (this.EntityPM.DestinationPortCombinedCode != value) {
+            this.EntityPM.DestinationPortCombinedCode = value;
+        }
+    }
+
+    destinationPort: PortList;
+    get DestinationPort() { return this.destinationPort; }
+    set DestinationPort(value: PortList) {
+        if (this.destinationPort != value) {
+            this.destinationPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.DestinationPortCode = value.Code;
+            this.DestinationPortCombinedCode = value.CombinedCode;
+        } else {
+            this.DestinationPortCode = null;
+            this.DestinationPortCombinedCode = null;
+        }
+    }
+
+    get DestinationPortValue() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCombinedCode)) {
+            return this.EntityPM.DestinationPortCombinedCode;
+        }
+
+        else {
+            return this.EntityPM.DestinationPortText;
+        }
+    }
+
+    get DestinationPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
+    get TransitTime() {
+        return this.EntityPM.TransitTime;
+    }
+    set TransitTime(value: string) {
+        if (this.EntityPM.TransitTime != value) {
+            this.EntityPM.TransitTime = value;
+        }
+    }
+
+    // Container 1
+    get Surcharge1Price() {
+        return this.EntityPM.Surcharge1Price;
+    }
+    set Surcharge1Price(value: number) {
+        if (this.EntityPM.Surcharge1Price != value) {
+            this.EntityPM.Surcharge1Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container1PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge1Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge1PriceText;
+        }
+    }
+
+    get Container1PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 2
+    get Surcharge2Price() {
+        return this.EntityPM.Surcharge2Price;
+    }
+    set Surcharge2Price(value: number) {
+        if (this.EntityPM.Surcharge2Price != value) {
+            this.EntityPM.Surcharge2Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container2PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge2Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge2PriceText;
+        }
+    }
+
+    get Container2PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 3
+    get Surcharge3Price() {
+        return this.EntityPM.Surcharge3Price;
+    }
+    set Surcharge3Price(value: number) {
+        if (this.EntityPM.Surcharge3Price != value) {
+            this.EntityPM.Surcharge3Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container3PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge3Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge3PriceText;
+        }
+    }
+
+    get Container3PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 4
+    get Surcharge4Price() {
+        return this.EntityPM.Surcharge4Price;
+    }
+    set Surcharge4Price(value: number) {
+        if (this.EntityPM.Surcharge4Price != value) {
+            this.EntityPM.Surcharge4Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container4PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge4Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge4PriceText;
+        }
+    }
+
+    get Container4PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 5
+    get Surcharge5Price() {
+        return this.EntityPM.Surcharge5Price;
+    }
+    set Surcharge5Price(value: number) {
+        if (this.EntityPM.Surcharge5Price != value) {
+            this.EntityPM.Surcharge5Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container5PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge5Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge5PriceText;
+        }
+    }
+
+    get Container5PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
         }
     }
 }

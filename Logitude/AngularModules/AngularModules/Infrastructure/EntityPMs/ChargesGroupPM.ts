@@ -55,6 +55,11 @@ export class ChargesGroupPM {
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
        
 	 
+    private viewOrder: number;
+    public get ViewOrder() { return this.viewOrder; }
+    public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
+       
+	 
 
     public OldEntityPM: ChargesGroupPM;
 		

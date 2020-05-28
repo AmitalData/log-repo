@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountSearchWindowComponent.html',
 
 })

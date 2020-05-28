@@ -1,0 +1,3 @@
+
+ALTER TABLE ObjectTableRuleFields
+DROP CONSTRAINT  FK_ObjectTableRuleFieldObjectField;

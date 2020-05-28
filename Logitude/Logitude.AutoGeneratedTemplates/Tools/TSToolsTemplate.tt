@@ -2,6 +2,9 @@
 <#@ output extension=".cs" #>
 
 <#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System.Security.Cryptography" #>
+<#@ import namespace="System.Security" #>
+ 
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>

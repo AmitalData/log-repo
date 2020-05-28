@@ -13,5 +13,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Notes { get; set; }
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
+        public string Code { get; set; }
     }
 }

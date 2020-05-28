@@ -12,7 +12,7 @@ import {ReportsTemplatePM} from '../../../../Common/EntityPMs/ReportsTemplatePM'
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SaveAsTemplate',
     templateUrl: './SaveAsTemplateComponent.html',
     providers: [DocumentTypeTemplatePMService, ServiceArgs]
@@ -134,7 +134,7 @@ export class SaveAsTemplateComponent implements OnInit {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
                 }
 
-                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe(myResult => {
+                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe((myResult:any) => {
 
 
 

@@ -19,7 +19,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {ModulesService} from '../../../Services/ModulesService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablePageComponent.html',
 })
 
@@ -241,8 +241,8 @@ export class PayablePageComponent {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
             var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
 
-            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
 
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
@@ -293,7 +293,7 @@ export class PayablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveVendorsCount = myResult.ActiveVendorsCount > 1000 ? "1000+" : myResult.ActiveVendorsCount.toString();
                 this.glAccountSummary.InactiveVendorsCount = myResult.InactiveVendorsCount > 1000 ? "1000+" : myResult.InactiveVendorsCount.toString();
@@ -306,7 +306,7 @@ export class PayablePageComponent {
         // APPayments
 
         var myService = new ModulesService();
-        myService.GetAccountPayablesSummary().subscribe(myResult => {
+        myService.GetAccountPayablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();

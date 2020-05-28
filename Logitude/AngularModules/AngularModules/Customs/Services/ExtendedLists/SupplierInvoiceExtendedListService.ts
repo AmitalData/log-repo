@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -9,10 +10,10 @@ import { SupplierInvoiceItemList } from '../../EntityLists/Extended/SupplierInvo
 
 
 export class SupplierInvoiceExtendedListService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvoice';
     }
 
@@ -22,12 +23,12 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoice';
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoice/?' + 'declarationId=' + declarationId + '&counterkey=' + counterkey, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoice/?' + 'declarationId=' + declarationId + '&counterkey=' + counterkey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -41,7 +42,7 @@ export class SupplierInvoiceExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -51,12 +52,12 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices';
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 
                 //var serviceResponse: ServiceResponse = new ServiceResponse();
-                var serviceResponse: ServiceResponse = response.json();
+                var serviceResponse: ServiceResponse = response;
                 var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -70,7 +71,7 @@ export class SupplierInvoiceExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -80,12 +81,12 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSelectedSupplierInvoiceItems';
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSelectedSupplierInvoiceItems/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&lineNubmers=' + lineNumbers, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSelectedSupplierInvoiceItems/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&lineNubmers=' + lineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 
                 //var serviceResponse: ServiceResponse = new ServiceResponse();
-                var serviceResponse: ServiceResponse = response.json();
+                var serviceResponse: ServiceResponse = response;
                 var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -99,7 +100,7 @@ export class SupplierInvoiceExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

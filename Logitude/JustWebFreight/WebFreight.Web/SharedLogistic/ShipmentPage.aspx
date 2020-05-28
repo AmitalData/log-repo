@@ -883,13 +883,14 @@ img {
                                         </tr>
                                     </table> 
                                 </td>
-
+     
                                 <td style="width:45px; height:45px; vertical-align:top;">
-                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;" />
+                                 <div style="visibility: #= FlagSRCVisibility #;">
+                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;visibility: inherit" />
+                                </div>
                                 </td>
 
                                 <td></td>
-
                             </tr>
                         </table>
                     </td>
@@ -995,13 +996,17 @@ img {
     </script>
     
     <script type="text/javascript">
-        function OnDownloadDocument(documentId) {
-            $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant,$.CurrentCardId);
+        function OnDownloadDocument() {
+            $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
         }
-       
+
+        function OnDownloadAllDocument() {
+            $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+        }
 
         function GetURL() {
-            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType ;
         }
     </script>
    

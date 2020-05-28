@@ -349,11 +349,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Statement' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'StatmentName'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.StatmentName}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -361,11 +363,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Content' | TextCodeTranslationPipe"
                                             [width]="'500'" [Alignment]="'right'" [binding]="'Content'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.Content}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -395,11 +399,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -407,11 +413,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'120'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{ GetFieldName(item) }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -419,11 +427,13 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'80'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -431,11 +441,13 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'80'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -443,11 +455,13 @@
                                 <log-column [header]="'Customs.General.O.MessageError' | TextCodeTranslationPipe"
                                             [width]="'300'" [Alignment]="'right'" [binding]="'MessageError'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.MessageError}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -455,11 +469,13 @@
                                 <log-column [header]="'Customs.General.O.OldValue' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'MessageError'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.OldValue}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -467,11 +483,13 @@
                                 <log-column [header]="'Customs.General.O.NewValue' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'NewValue'">
 
-                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.NewValue}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 

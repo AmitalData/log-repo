@@ -4,7 +4,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { PhysicalCheckPMService } from '../../Services/StandardPMs/PhysicalCheckPMService'
-import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
 import { DeclarationReferantDataPM } from '../../EntityPMs/DeclarationRefernatDataPM';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -21,7 +21,6 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange/SpotlightSharedDataService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ReferantSpotlightDataTemplate.html',
 })
 
@@ -49,7 +48,7 @@ export class ReferantSpotlightDataTemplate
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response:any) => {
             this._IsReady = true;
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);
@@ -143,7 +142,7 @@ export class ReferantSpotlightDataTemplate
     public get ExceptionReasonsList() { return this.EntityPM.ExceptionReasonsList; }
     public set ExceptionReasonsList(newValue: string) { this.EntityPM.ExceptionReasonsList = newValue; }
 
-    nRowEnded($event) {
+    OnRowEnded($event) {
         console.log("this.ReferantExceptionItemsSource.Length : " + this.ReferantExceptionItemsSource.Length);
         if (this.ReferantExceptionItemsSource != null && ($event) == this.ReferantExceptionItemsSource.Length) {
             this.Add();
@@ -188,7 +187,8 @@ export class ReferantSpotlightDataTemplate
             this.CheckForDuplicate()
             if (this.errors.length != 0) {
                 this.ValidationErrorsList = this.errors;
-            } if (this.errors.length == 0) {
+            }
+            if (this.errors.length == 0) {
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
@@ -212,7 +212,6 @@ export class ReferantSpotlightDataTemplate
                     }
                 }); 
             }
-            
             this.spotlightSharedDataService.IsDirty = false;
             this.ShowBusyIndicator = false;
 

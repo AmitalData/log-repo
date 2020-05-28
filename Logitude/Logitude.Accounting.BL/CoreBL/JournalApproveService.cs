@@ -27,6 +27,10 @@ using Simplog.Data.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
+using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -208,7 +212,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
-                    myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+                    myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
                     if (myCreateAutoReconcileWhileStreamingService.ReconciliationList != null &&
                         myCreateAutoReconcileWhileStreamingService.ReconciliationList.Count > 0)
                     {
@@ -225,6 +229,31 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     }
                     //}
+
+                    bool featureTested = true;
+
+                    if (featureTested)
+                    {
+                        var myCreateAutoExternalReconcileWhileStreamingService = new CreateAutoExternalReconcileWhileStreamingService();
+                        var providor = new ExternalReconcileDataProvider(_AccountingContext);
+                        myCreateAutoExternalReconcileWhileStreamingService.MustInit(providor, _JournalPM, myLedgerTransactionsWithCounters);
+                        myCreateAutoExternalReconcileWhileStreamingService.CreateAutoExternalReconcileWhileStreaming();
+                        if (myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList != null &&
+                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count> 0)
+                        {
+                            var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
+
+                            var toUpdateInReconcileProgressToFalse = true;// next sprint
+                            if (toUpdateInReconcileProgressToFalse)
+                            {
+                                UpdateInExternalReconcileProgressToFalse();
+                            }
+                            UpdateJournalWithExternalReconcileNumber(myCreateAutoExternalReconcileWhileStreamingService);
+                        }
+                    }
+
 #if false
                     else
                     {
@@ -262,6 +291,25 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private void UpdateInExternalReconcileProgressToFalse()
+        {
+            var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+
+            var listTransactionId = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+            if (listTransactionId.Count > 0)
+            {
+                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, false);
+            }
+
+            var listReconcileExternalPageLineId = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+            if (listReconcileExternalPageLineId.Count > 0)
+            {
+                var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _JournalPM.Tenant);
+                reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, _JournalPM.Tenant, false);
+            }
+
+        }
+
         private void UpdateInReconcileProgressToFalse()
         {
             var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
@@ -273,6 +321,40 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
+        private void UpdateJournalWithExternalReconcileNumber(CreateAutoExternalReconcileWhileStreamingService myCreateAutoExternalReconcileWhileStreamingService)
+        {
+            if (
+                                        this._JournalPM.AccountingEntityCode == "12"// - Reconciliation
+                                        ///OnCreate There is A fill ?!?!?  --- && String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityId)
+                                        &&
+                                        String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityReference)
+                                        &&
+                                        this._JournalPM.JournalExternalReconciles.Count > 0
+                                        &&
+                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count == 1
+
+                                        )
+            {
+                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.First();
+
+                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), this._JournalPM.Tenant);
+
+                //var myJournalRepository = //new JournalRepository(this._AccountingContext);
+                myJournalUpdateService.
+            //.GetJournalRepositoryPriv();
+            //myJournalRepository.
+            UpdateWhileStreaming(this._JournalPM.Tenant, this._JournalPM.Id,
+                (poco) =>
+                {
+                    this._JournalPM.AccountingEntityId = myExternalReconciliation.Id;
+                    this._JournalPM.AccountingEntityReference = myExternalReconciliation.ReconciliationNumber.ToString();
+
+                    poco.AccountingEntityReference = myExternalReconciliation.ReconciliationNumber.ToString();
+                    poco.AccountingEntityId = myExternalReconciliation.Id;
+                });
+
+            }
+        }
         private void UpdateJournalWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
         {
             if (
@@ -865,7 +947,10 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
-
+            static JournalApproveWorker()
+            {
+                _NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
+            }
             public Action LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
@@ -917,6 +1002,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                     {
+                        if (DateTime.Now < new DateTime(2020, 06, 01))
+                        {
+                            CreateBatchAccountingIntegrityCheck();
+                        }
                         _NextDueDoneAt = DateTime.UtcNow.Date;
                         var myDueLocalBalanceService = new DueLocalBalanceService();
                         myDueLocalBalanceService.RunAllTenants();
@@ -928,6 +1017,65 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw;
                 }
 
+            }
+
+            public void CreateBatchAccountingIntegrityCheck()
+            {
+                try
+                {
+
+                    int year = DateTime.Now.Year;
+                    var repo = new GLAccountTotalByMonthRepository(0);
+                    var activeTenants =repo.GetActiveTenantPerYear(year);
+                    foreach (var tenant in activeTenants)
+                    {
+
+                        using (var scope = TransactionFactory.GetNewTransaction())
+                        {
+                            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                            AccountingIntegrityCheckUpdateService service = new AccountingIntegrityCheckUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+                            var paramsObj = new AccountingIntegrityInParam()
+                            {
+                                Tenant = tenant,
+                                FromMonthInclusive = new DateTime(year, 1, 1),
+                                ToMonthInclusive = DateTime.Now,
+                            };
+
+                            // serialize
+                            string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
+
+
+                            service.Update(new AccountingIntegrityCheckPM()
+                            {
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                Tenant = tenant,
+                                CreateDateTimeUTC = DateTime.UtcNow,
+                                FromMonthInclusive = new DateTime(year, 1, 1),
+                                ToMonthInclusive = DateTime.Now,
+                                StatusCode = "1",
+                                SendEmailWhileError = true,
+                                ParametersXML = xmlString,
+
+                            }
+                            , true);
+                            scope.Complete();
+                        }
+
+                    }
+
+
+
+
+
+
+                }
+                catch (Exception ee)
+                {
+
+                    ExceptionHandler.HandleException(ee, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                    //throw;
+                }
             }
         }
     }

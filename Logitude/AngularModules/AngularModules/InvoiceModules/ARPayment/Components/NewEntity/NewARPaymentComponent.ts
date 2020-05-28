@@ -1,6 +1,6 @@
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { TenantPM } from './../../../../Common/EntityPMs/TenantPM';
-import {Component, AfterViewInit, OnInit} from '@angular/core';
+import {Component, AfterViewInit, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
@@ -30,9 +30,9 @@ import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/S
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
-
+declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARPaymentComponent.html',
 })
 
@@ -56,9 +56,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public accountingActivated: boolean;
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
+        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
 
+        });
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.TodayDate = DateTool.GetCurrentDateAsUtc();
@@ -77,10 +80,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
-            if (featureToggle) {
+            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
+            //if (featureToggle) {
                 this.DisplayFechaPago = true;
-            }
+            //}
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -90,6 +93,74 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         this.Initialize();
+        this.BuildAdditionalFields();
+    }
+
+    // Additional Fields
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+    private additionalFieldsScreenCode = "NewARPayment";
+    public ShowAdditionalFieldsScreen: boolean = false;
+    BuildAdditionalFields() {
+
+       var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
+        var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == this.additionalFieldsScreenCode.toLowerCase())[0];
+
+        if (myScreen != null) {
+
+            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+            if (myScreenFields.length == 0) {
+                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+            }
+
+            if (myScreenFields.length != 0) {
+                this.ShowAdditionalFieldsScreen = true;
+                this.RunComponent();
+            }
+        }
+      
+    }
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+
+                this.GeneratedComponent = cmpRef.instance;
+
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+
+                var screenCode = this.additionalFieldsScreenCode;
+                cmpRef.instance.LabelWidth = 110;
+                cmpRef.instance.Run(this.newARPaymentPM, this.ObjectTableName, screenCode);
+            });
+    }
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    SetUIProperties_GeneratedComponent() {
+        if (this.GeneratedComponent) {
+           this.GeneratedComponent.SetEnabled(true);
+        }
     }
 
     SetWindowArgs(args: any) {
@@ -103,7 +174,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            if (!this.accountingActivated) {
+                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+            }
         }
     }
 
@@ -152,9 +225,22 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 }
             }
         }
+       else if (SessionLocator.TenantPM.AccountingActivated) {
+            if (this.PaymentCurrencyId) {
+                if (this.PaymentCurrencyId != this.TenantPM.CurrencyId) {
 
-        this.RateIsEnabled = isRateEnabled;
-        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isRateEnabled);
+                    this.RateIsEnabled = true;
+                }
+                else {
+                    this.RateIsEnabled = false;
+
+                }
+                }
+            }
+
+        
+     
+        this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, this.RateIsEnabled);
         this.SetUIProperties_Payment();
     }
 
@@ -412,6 +498,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }
+
+        this.EntityPM = this.newARPaymentPM;
     }
 
     get RegisterDate() { return this.newARPaymentPM.RegisterDate; }
@@ -421,7 +509,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.LoadData();
         }
     }
-
+    get PrintNotes() { return this.newARPaymentPM.PrintNotes; }
+    set PrintNotes(newValue: string) {
+        if (this.newARPaymentPM.PrintNotes != newValue) {
+            this.newARPaymentPM.PrintNotes = newValue;
+        }
+    }
     public TodayDate: Date = new Date();
 
     get SelectableDateStart() { return this.TodayDate.setFullYear(this.TodayDate.getFullYear() - 100); }
@@ -645,6 +738,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.SetUIProperties();
                 this.SetCurrencyCode();
                 this.SetCurrencyRateData();
+                this.ComputeTotals();
             }
         }
     }
@@ -654,6 +748,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.IsCreatedFromInvoiceSide == false) {
             if (this.newARPaymentPM.PaymentCurrencyExchangeRate != newValue) {
                 this.newARPaymentPM.PaymentCurrencyExchangeRate = AppTool.Round(newValue, 5);
+                this.ComputeTotals();
             }
         }
     }
@@ -676,6 +771,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var currency = response.Result;
                         if (currency != null) {
                             this.newARPaymentPM.PaymentCurrencyCode = currency.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = currency.Sign;
                         }
                     }
                 }
@@ -689,6 +785,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                         var list = response.Result;
                         if (list != null && list.length > 0) {
                             this.newARPaymentPM.PaymentCurrencyCode = list.Code;
+                            this.newARPaymentPM.PaymentCurrencySign = list.Sign;
                         }
                     }
                 }
@@ -736,8 +833,17 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     set OpenAmount(newValue: number) {
         if (this.newARPaymentPM.OpenAmount != newValue) {
             this.newARPaymentPM.OpenAmount = AppTool.Round(newValue, 2);
+
         }
     }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
 
     get BankAccountLiteId() { return this.newARPaymentPM.BankAccountLiteId; }
     set BankAccountLiteId(newValue: string) {
@@ -746,8 +852,16 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get BranchId() { return this.newARPaymentPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.newARPaymentPM.BranchId != value) {
+            this.newARPaymentPM.BranchId = value;
+        }
+    }
+
     ComputeTotals() {
         this.OpenAmount = this.AmountInPaymentCurrency;
+        this.OpenAmountInLocalCurrency = this.PaymentCurrencyExchangeRate == null ? 0 : this.OpenAmount * this.PaymentCurrencyExchangeRate;
         this.AmountInLocalCurrency = this.PaymentCurrencyExchangeRate == null ? 0 : this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
@@ -875,6 +989,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             }
         }
 
+        if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BranchId")));
+        }
+
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -930,6 +1048,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     .then((res:any) => {
                         this.newARPaymentPM.GLAccountId = res.Id;
                         this.newARPaymentPM.GLAccountRecoMethodCode = res.ReconcileMethodCode;
+                        this.newARPaymentPM.GLAccountCurrencyCode = res.CurrencyCode;
                         this.RunEditWindow();
                     }, err => {
                         this.ValidationErrorsList = ['Somthing wrong! no gl account found for this bill to account'];
@@ -1021,7 +1140,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             var _glaId = this.billtoCard.GLAccountId;
             this.CurrentSession.StartBusyIndicatorLoading();
             this._glaService.getSingle(_glaId)
-                .subscribe(response => {
+                .subscribe((response:any) => {
 
                     var res: ServiceResponse = response;
                     if (!res.HasError) {

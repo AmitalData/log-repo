@@ -96,7 +96,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     awbDp.AWBComments = shipmentPM.AWBPrintingComments;
                 }
-                
+
+                awbDp.AccountManagerName = shipmentPM.AccountManagerUserName;
                 awbDp.MAWBShort = shipmentPM.Master == null ? "" : shipmentPM.Master;
                 awbDp.HAWB = shipmentPM.House == null ? "" : shipmentPM.House;
                 awbDp.LeadingCurrency = shipmentPM.AWBCurrencyCode == null ? "" : shipmentPM.AWBCurrencyCode;
@@ -122,7 +123,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
-
+                awbDp.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
                 if (shipmentPM.BranchId != null)
                 {
                     Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
@@ -153,6 +154,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
                 this.GetConsolidatorData(awbDp, shipmentPM);
+                this.GetOpenedByUser(awbDp, shipmentPM.CreatedByUserId);
 
                 #region PlaceOfDelivery
 
@@ -196,6 +198,21 @@ namespace WebFreight.Web.ReportsWebServices
             return awbDp;
         }
 
+        private void GetOpenedByUser(AWBDataProvider awbDp, string createdByUserId)
+        {
+
+            this.myCommonContext = CommonDataContext.GetContext(myTenant);
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
+            if (!string.IsNullOrEmpty(createdByUserId))
+            {
+                Contact createdByContact = contactRepository.GetSingleContact(createdByUserId, myTenant);
+                if (createdByContact != null)
+                {
+                    awbDp.OpenedBy = createdByContact.EnglishName;
+                }
+            }
+        }
+
         private void GetLoggedTenantData(AWBDataProvider awbDp)
         {
             TenantRepository tenantRepository = new TenantRepository(myTenant);
@@ -230,10 +247,12 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBDataProvider awbDp, int tenant)
         {
-            if (User != null)
+           string contactEmail =  AuthenticationUtil.GetLoggedUserEmail(tenant);
+
+            if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contactPM = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                ContactPM contactPM = contactQuery.GetContactByEmailOnly(contactEmail, tenant);
 
                 if (contactPM != null)
                 {
@@ -2260,6 +2279,12 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine;
+
+                        if(!string.IsNullOrEmpty(shipmentPM.SLAC))
+                        {
+                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + "SLAC: " + shipmentPM.SLAC + Environment.NewLine;
+                        }
+
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + dimentions;
 
                         if(!string.IsNullOrEmpty(grossWeightUnitCode))
@@ -2385,6 +2410,16 @@ namespace WebFreight.Web.ReportsWebServices
 
                     string myDescriptionOfGoods = shipmentPM.DescriptionOfGoods == null ? "" : shipmentPM.DescriptionOfGoods;
                     awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
+
+                    if (!string.IsNullOrEmpty(shipmentPM.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(myDescriptionOfGoods))
+                        {
+                            myDescriptionOfGoods += Environment.NewLine;
+                        }
+
+                        myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
+                    }
 
                     if (!string.IsNullOrEmpty(dimentions))
                     {
@@ -2884,6 +2919,12 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(agentId))
             {
+                Card agentCard = (from a in myCommonContext.Cards
+                                  where a.Id == agentId
+                                  select a).FirstOrDefault();
+
+                awbDp.AgentNameAddress = agentCard != null ? agentCard.EnglishName : "";
+
                 if (!string.IsNullOrEmpty(agentAddressId))
                 {
                     Address agentAddress = addressRepository.GetSingleAddress(agentAddressId, tenant);
@@ -2891,6 +2932,20 @@ namespace WebFreight.Web.ReportsWebServices
                     if (agentAddress != null)
                     {
                         awbDp.AgentATTN = agentAddress.ATTN;
+
+                        if (agentAddress.IsLocalLanguage)
+                        {
+                            if (agentCard != null && !string.IsNullOrEmpty(agentCard.LocalName))
+                            {
+                                awbDp.AgentNameAddress = agentCard.LocalName;
+                            }
+                        }
+
+                        awbDp.AgentNameAddress = awbDp.AgentNameAddress + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
+                        if (agentAddress.PhoneNumber != null || agentAddress.FaxNumber != null)
+                        {
+                            awbDp.AgentNameAddress = awbDp.AgentNameAddress + Environment.NewLine + (agentAddress.PhoneNumber != null ? "Tel: " + agentAddress.PhoneNumber + " " : "") + (agentAddress.FaxNumber != null ? "Fax: " + agentAddress.FaxNumber + " " : "");
+                        }
                     }
                 }
             }

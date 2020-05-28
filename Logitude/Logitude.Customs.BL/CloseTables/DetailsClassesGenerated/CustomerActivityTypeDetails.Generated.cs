@@ -20,17 +20,189 @@ namespace Logitude.Customs.BL
    {
        public List<CustomerActivityTypeDetails> GetAll()
        {
-		    var all = new List<CustomerActivityTypeDetails>(); 
+		    var all = new List<CustomerActivityTypeDetails>();  
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "0", 
+                SearchFields = "0,יבואן/יצואן", 
+                Inactive = false, 
+                LocalName = "יבואן/יצואן", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,מוביל יבשתי", 
+                Inactive = false, 
+                LocalName = "מוביל יבשתי", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,רואה חשבון", 
+                Inactive = false, 
+                LocalName = "רואה חשבון", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,עורך דין", 
+                Inactive = false, 
+                LocalName = "עורך דין", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,נהג", 
+                Inactive = false, 
+                LocalName = "נהג", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,מסווג", 
+                Inactive = false, 
+                LocalName = "מסווג", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,חברת דלק לדיפלומטים", 
+                Inactive = false, 
+                LocalName = "חברת דלק לדיפלומטים", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,סוכן מכס", 
+                Inactive = false, 
+                LocalName = "סוכן מכס", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "31", 
+                SearchFields = "31,לשכת שירות", 
+                Inactive = false, 
+                LocalName = "לשכת שירות", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "32", 
+                SearchFields = "32,לשכת מסחר", 
+                Inactive = false, 
+                LocalName = "לשכת מסחר", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "33", 
+                SearchFields = "33,יועץ מס", 
+                Inactive = false, 
+                LocalName = "יועץ מס", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "34", 
+                SearchFields = "34,משלח בי''ל אווירי", 
+                Inactive = false, 
+                LocalName = "משלח בי''ל אווירי", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "35", 
+                SearchFields = "35,בעל איזוטנקרים", 
+                Inactive = false, 
+                LocalName = "בעל איזוטנקרים", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "37", 
+                SearchFields = "37,מתג", 
+                Inactive = false, 
+                LocalName = "מתג", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "38", 
+                SearchFields = "38,שמאי סב''ן", 
+                Inactive = false, 
+                LocalName = "שמאי סב''ן", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,פקיד רישוי", 
+                Inactive = false, 
+                LocalName = "פקיד רישוי", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,משלח בי''ל", 
+                Inactive = false, 
+                LocalName = "משלח בי''ל", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,סוכן אוניה", 
+                Inactive = false, 
+                LocalName = "סוכן אוניה", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,בלדר", 
+                Inactive = false, 
+                LocalName = "בלדר", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,חברת ספנות", 
+                Inactive = false, 
+                LocalName = "חברת ספנות", 
+			});
+			 
+            all.Add(new CustomerActivityTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,חברת תעופה", 
+                Inactive = false, 
+                LocalName = "חברת תעופה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CustomerActivityType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CustomerActivityType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

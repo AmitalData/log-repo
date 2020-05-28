@@ -3513,7 +3513,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public bool IsEntityHasDocs(string entityId, int tenant)
         {
             var extDocPm = (from a in repository.context.DocumentsFilings
-                            where a.EntityId == entityId && a.Tenant == tenant && a.IsDeleted == false
+                            where a.EntityId == entityId && a.Tenant == tenant && a.IsDeleted == false && a.DocumentId != null
                             select a);
             return (extDocPm.Count() > 0);
         }
@@ -3612,6 +3612,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    };
             return result.ToList();
         }
+
+        
+        public DocumentsFilingPM GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(string entityId, string objectTableId, string documentTypeId,int tenant)
+        {
+            DocumentsFilingPM documentsFilingPM = (from a in repository.context.DocumentsFilings.Include("Document")
+                                                    where a.Tenant == tenant && a.EntityId == entityId && a.ObjectTableId == objectTableId && a.DocumentTypeId == documentTypeId
+                                                   select new DocumentsFilingPM()
+                                                    {
+                                                        Id = a.Id,
+                                                        DocumentId = a.DocumentId,
+                                                        Tenant = a.Tenant,
+                                                        FileExtension = a.Document != null ? a.Document.Extension : null,
+                                                        HasFile = a.Document != null ? a.Document.HasFile : false,
+                                                        FileName = a.Document != null ? !string.IsNullOrEmpty(a.Document.CalculatedFileName)? a.Document.CalculatedFileName : a.Document.FileName : null,
+                                                        FileSize = a.Document != null ? a.Document.FileSize : null,
+                                                        Folder = a.Document != null ? a.Document.Folder : null,
+                                                       EntityId = a.EntityId,
+                                                       ObjectTableId = a.ObjectTableId,
+                                                       OwnerId = a.OwnerId,
+                                                       UpdatedByUserId = a.UpdatedByUserId,
+                                                       UpdateDate = a.UpdateDate,
+                                                       CreateDate =a.CreateDate,
+                                                       CreatedByUserId = a.CreatedByUserId,
+                                                       SecurityId = a.SecurityId,
+
+                                                   }).FirstOrDefault();
+
+            return documentsFilingPM;
+        }
+
     }
 
 

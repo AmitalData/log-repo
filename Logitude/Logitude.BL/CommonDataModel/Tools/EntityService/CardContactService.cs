@@ -28,18 +28,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardContactRepository entityRepository;
         private CardContactProductRepository productRepository;
+        private CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository;
         public CardContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.ObjectContext = objectContext;
             this.entityRepository = new CardContactRepository(objectContext);
             this.productRepository = new CardContactProductRepository(objectContext);
+            this.cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
         }
 
         private List<CardContactProductPM> productsChangeSet;
-        public void SetChangeSet(List<CardContactProductPM> productsChangeSet)
+        private List<CardContactAdditionalServicePM> additionalServicesChangeSet;
+        public void SetChangeSet(List<CardContactProductPM> productsChangeSet, List<CardContactAdditionalServicePM> additionalServicesChangeSet = null)
         {
             this.productsChangeSet = productsChangeSet;
+            this.additionalServicesChangeSet = additionalServicesChangeSet;
         }
 
         public void Create(CardContactPM entityPM)
@@ -55,11 +59,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.CreateProduct(item);
             }
 
+            foreach (CardContactAdditionalServicePM item in entityPM.CardContactAdditionalServices)
+            {
+                this.CreateAdditionalService(item);
+            }
+
             CardContactValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
             {
                 CardContactTracing.Trace(entityPM, Poco, isNewEntity);
             }
+
             CardContactMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -72,6 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleCardContact(entityPM.Id , entityPm.Tenant);
 
             this.UpdateProductsCollection();
+            this.UpdateAdditionalServicesCollection();
 
             CardContactValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
@@ -115,6 +126,38 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateAdditionalServicesCollection()
+        {
+            if (additionalServicesChangeSet != null)
+            {
+                foreach (CardContactAdditionalServicePM itemPM in additionalServicesChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateAdditionalService(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateAdditionalService(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteAdditionalService(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
         private void CreateProduct(CardContactProductPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardContactProduct", tenant).ToString();
@@ -147,6 +190,41 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (itemPoco != null)
             {
                 productRepository.Remove(itemPoco);
+            }
+        }
+
+        private void CreateAdditionalService(CardContactAdditionalServicePM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardContactAdditionalService", tenant).ToString();
+            itemPM.CardContactId = this.entityPm.Id;
+            itemPM.Tenant = tenant;
+
+            CardContactAdditionalService itemPoco = new CardContactAdditionalService()
+            {
+                Id = itemPM.Id,
+                CardContactId = itemPM.CardContactId,
+                AdditionalServiceId = itemPM.AdditionalServiceId,
+                Tenant = tenant
+            };
+
+            CardContactAdditionalServiceMapping.MapEntity(itemPM, itemPoco, true);
+            cardContactAdditionalServiceRepository.Add(itemPoco);
+        }
+        private void UpdateAdditionalService(CardContactAdditionalServicePM itemPM)
+        {
+            CardContactAdditionalService itemPoco = cardContactAdditionalServiceRepository.GetSingleCardContactAdditionalService(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                CardContactAdditionalServiceMapping.MapEntity(itemPM, itemPoco, false);
+                cardContactAdditionalServiceRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteAdditionalService(CardContactAdditionalServicePM itemPM)
+        {
+            CardContactAdditionalService itemPoco = cardContactAdditionalServiceRepository.GetSingleCardContactAdditionalService(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                cardContactAdditionalServiceRepository.Remove(itemPoco);
             }
         }
     }

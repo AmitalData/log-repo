@@ -1,9 +1,9 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 
-import {Observable} from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
@@ -14,10 +14,10 @@ import {ChangePasswordParameter} from '../../../Infrastructure/DataContracts/Cha
 @Injectable()
 export class PasswordChangeService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PasswordChange';
     }
 
@@ -27,19 +27,16 @@ export class PasswordChangeService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + '/PostCheckUserPassword', JSON.stringify(changePasswordParameter), {
-                headers: authHeader,
-
-            }).map(response => {
-                var result = response.json();
+        return defer(() => {
+            return this._http.post(this._apiUrl + '/PostCheckUserPassword', JSON.stringify(changePasswordParameter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result :any = response;
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -53,19 +50,16 @@ export class PasswordChangeService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + '/PostChangeUserPassword', JSON.stringify(changePasswordParameter), {
-                headers: authHeader,
-
-            }).map(response => {
-                var result = response.json();
+        return defer(() => {
+            return this._http.post(this._apiUrl + '/PostChangeUserPassword', JSON.stringify(changePasswordParameter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result :any = response;
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -76,14 +70,14 @@ export class PasswordChangeService {
     ResetUserPassword(userId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetResetUserPassword' + '?userId=' + userId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetResetUserPassword' + '?userId=' + userId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = response.json();
+                pmresponse.Result = response;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -91,14 +85,14 @@ export class PasswordChangeService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/GetCheckIfUserIsExists' + '?email=' + email + '&tenant=' + tenant + '&hasPassword=' + hasPassword + '&hasContact=' + hasContact, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetCheckIfUserIsExists' + '?email=' + email + '&tenant=' + tenant + '&hasPassword=' + hasPassword + '&hasContact=' + hasContact,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = response.json();
+                pmresponse.Result = response;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -106,16 +100,16 @@ export class PasswordChangeService {
     GetSetUserLastLogin(password: string, contactId: string, tenant: number, computerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetSetUserLastLogin' + '?password=' + password + '&contactId=' + contactId + '&tenant=' + tenant + '&computerId=' + computerId, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetSetUserLastLogin' + '?password=' + password + '&contactId=' + contactId + '&tenant=' + tenant + '&computerId=' + computerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = response.json();
+                pmresponse.Result = response;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     }
 
 

@@ -142,7 +142,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
                                   && a.OurCode == logitudeCode
                                   select a.PartnerCode).FirstOrDefault();
-            if (partnerCode == null)
+            if (string.IsNullOrEmpty(partnerCode) || string.IsNullOrWhiteSpace(partnerCode))
             {
                 partnerCode = (from a in repository.Context.ComputingPartnerTranslations
                                where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0

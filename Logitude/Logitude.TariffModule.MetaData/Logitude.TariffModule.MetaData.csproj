@@ -78,10 +78,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DBTables\Tariff.dxml" />
+    <None Include="DBTables\TariffLine.dxml" />
+    <None Include="DBTables\TariffLinesContainersPrice.dxml" />
+    <None Include="DBTables\TariffProduct.dxml" />
+    <None Include="DBTables\TariffSetting.dxml" />
+    <None Include="DBTables\TariffSurchargesUpdate.dxml" />
+    <None Include="DBTables\TariffSurchargesUpdateMethod.dxml" />
+    <None Include="DBTables\TariffType.dxml" />
+    <None Include="DBTables\TariffVersion.dxml" />
+    <None Include="DBTables\TariffVersionAllInCharge.dxml" />
     <None Include="EntityFiles\TariffLine.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\TariffLinesContainersPrice.lxml" />
+    <None Include="EntityFiles\TariffProduct.lxml" />
     <None Include="EntityFiles\TariffSetting.lxml" />
+    <None Include="EntityFiles\TariffSurchargesUpdate.lxml" />
+    <None Include="EntityFiles\TariffSurchargesUpdateMethod.lxml" />
     <None Include="EntityFiles\TariffVersion.lxml">
       <SubType>Designer</SubType>
     </None>

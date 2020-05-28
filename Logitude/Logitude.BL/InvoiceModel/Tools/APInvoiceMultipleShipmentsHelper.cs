@@ -122,6 +122,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                         string CurrencyError = "";
                         string paymentTermError = "Payment Term: " + entityPM.PaymentTermName + ". External ID is missing"; // 
                         string vatError = "";
+                        string InvoiceLengthError = "Due to QBO limitation, invoices with a number that exceeds 21 characters can't be transmitted";
+
 
                         CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(tenant);
                         IQueryable<CardExternalCodeByCurrency> iQueryable_CardExternals = cardExternalCodeByCurrencyRepository.GetCardExternalCodeByCurrenciesByTenant(tenant);
@@ -194,8 +196,15 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                             }
                         }
-                        
-                            APInvoiceLineRepository APRepo = new APInvoiceLineRepository(this.objectContext);
+
+                        if (entityPM.InvoiceNumber.Length > 21)
+                        {
+                            isReady = false;
+                            myError = string.IsNullOrEmpty(myError) ? InvoiceLengthError : myError + ";" + InvoiceLengthError;
+
+                        }
+
+                        APInvoiceLineRepository APRepo = new APInvoiceLineRepository(this.objectContext);
                             APInvoiceLineQuery APQuery = new APInvoiceLineQuery(APRepo);
                         lines  = APQuery.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant);
                         if (!isNewEntity)
@@ -220,9 +229,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                                 }
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);
-                                ExternalVatTypesCode.Add(myVatType.ExternalVATCard);
 
-                                if (line.VatPercentage != 0)
+                                ExternalVatTypesCode.Add(myVatType.ReceivablesExternalId);
+
+
+                            if (line.VatPercentage != 0)
                                 {
                                     if (AccountingSystemCode == "QBO")
                                     {
@@ -234,9 +245,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                                     }
 
 
-                                    if (FieldIsEmpty(myVatType.ExternalVATCard))
-                                    {
-                                        vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
+
+                                    if (FieldIsEmpty(myVatType.ReceivablesExternalId))
+                                {
+                                    vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
                                         isReady = false;
                                         if (myError != null ? !myError.Contains(vatError) : true)
                                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + ";" + vatError;

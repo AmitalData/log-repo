@@ -1,6 +1,3 @@
-﻿/// <reference path="codenameclass.ts" />
-
-
 declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -17,7 +14,7 @@ import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'InvoicesByPartnerFilterComponent',
     templateUrl: './InvoicesByPartnerFilterComponent.html',
     inputs: ['ReportsPreview']

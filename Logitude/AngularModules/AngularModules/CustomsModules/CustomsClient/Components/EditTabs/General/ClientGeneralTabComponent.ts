@@ -6,7 +6,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientGeneralTabComponent.html',
 })
 

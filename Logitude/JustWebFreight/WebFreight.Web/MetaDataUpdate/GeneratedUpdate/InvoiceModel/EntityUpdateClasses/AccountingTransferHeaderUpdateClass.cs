@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class AccountingTransferHeaderUpdateClass
-   {  
+   {  		
+		public const string HashString = "6af750972678e8e398de01c606ce61a4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -83,51 +84,57 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             {
 			
 	             				    ObjectTableName =  "AccountingTransferHeader",
+			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingTransferHeaders",
 			      				    ObjectTableSingular =  "Accounting Transfer",
 			      				    ObjectTablePlural =  "Accounting Transfers",
-			      				    DefaultText =  "Accounting Transfer",
-			      				    Name =  "Accounting Transfer Headers",
-			      				    IsNewWizard =  true,
-			      				    NewWizardControlName =  "Simplog.InvoiceLib.NewAccountingTransferCommand",
 			      				    HasCustomFilter =  true,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  true,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  true,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "AccountingTransferHeader,AccountingTransferHeaders,Simplog.InvoiceLib.NewAccountingTransferCommand,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "BR",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "BR",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Simplog.InvoiceLib.NewAccountingTransferCommand",
+			      				    DefaultText =  "Accounting Transfer",
+			      				    Code =  "ACTH",
+			      				    Name =  "Accounting Transfer Headers",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Invoice",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
-			      				    HasHelper =  true,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    NoViewsController =  false,
-			      				    ClientModuleName =  "Invoice",
-			      				    Code =  "ACTH",
+			      				    IsTabsHidden =  false,
+			      				    SearchFields =  "AccountingTransferHeader,AccountingTransferHeaders,Simplog.InvoiceLib.NewAccountingTransferCommand,Id,",
+			      				    HashString =  AccountingTransferHeaderUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -136,11 +143,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "TransferNumber",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -151,42 +159,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TransferNumber",
 					  						ListPropertyPath =  "TransferNumber",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "TransferNumber",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "TransferNumber",
 					  						DefaultText =  "Transfer Number",
 					  						ListFieldLable =  "TransferNumberListLable",
 					  						ListLableDefaultText =  "Transfer No",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferNumber",
-					  						Code =  "TransferNumber",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -195,58 +206,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "TransferDate",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "DateTime",
-					  						DataTypeCode =  "DateTime",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						DataTemplateName =  "TransferDateDataTemplate",
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "TransferDate",
 					  						ListPropertyPath =  "TransferDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "TransferDate",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						DataTemplateName =  "TransferDateDataTemplate",
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "TransferDate",
 					  						DefaultText =  "Transfer Date",
 					  						ListFieldLable =  "TransferDateListLable",
 					  						ListLableDefaultText =  "Transfer Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferDate",
-					  						Code =  "TransferDate",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -255,11 +270,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "FileName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -270,42 +286,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "FileName",
 					  						ListPropertyPath =  "FileName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "FileName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "FileName",
 					  						DefaultText =  "File",
 					  						ListFieldLable =  "FileNameListLable",
 					  						ListLableDefaultText =  "File Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "FileName",
-					  						Code =  "FileName",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -314,11 +333,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "UserId",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "LookUp",
-					  						DataTypeCode =  "LookUp",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -329,40 +349,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "UserId",
 					  						ListPropertyPath =  "UserId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UserId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "UserId",
+					  						DefaultText =  "User",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "UserId",
-					  						DefaultText =  "User",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "UserId",
-					  						Code =  "UserId",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -371,11 +394,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "AccountingTransferTypeCode",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "LookUp",
-					  						DataTypeCode =  "LookUp",
-					  						MaxLength =  4,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -386,40 +410,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AccountingTransferTypeCode",
 					  						ListPropertyPath =  "AccountingTransferTypeCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AccountingTransferTypeCode",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AccountingTransferTypeCode",
+					  						DefaultText =  "Transfer Type",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "AccountingTransferTypeCode",
-					  						DefaultText =  "Transfer Type",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingTransferTypeCode",
-					  						Code =  "AccountingTransferTypeCode",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -427,12 +454,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "AccountingTransferHeader",
-					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -443,40 +471,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "SearchFields",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search..",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "SearchFields",
-					  						Code =  "SearchFields",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -485,11 +516,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "UserName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -500,42 +532,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "UserName",
 					  						ListPropertyPath =  "UserName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "UserName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
-					  						HasTemplate =  false,
 					  						FullFieldLable =  "UserName",
 					  						DefaultText =  "User",
 					  						ListFieldLable =  "UserNameListLable",
 					  						ListLableDefaultText =  "User",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						HelpTextCode =  "UserName",
-					  						Code =  "UserName",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -544,11 +579,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "AccountingTransferTypeName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
-					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -559,40 +595,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "AccountingTransferTypeName",
 					  						ListPropertyPath =  "AccountingTransferTypeName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "AccountingTransferTypeName",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "AccountingTransferTypeName",
+					  						DefaultText =  "Transfer Type",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "AccountingTransferTypeName",
-					  						DefaultText =  "Transfer Type",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingTransferTypeName",
-					  						Code =  "AccountingTransferTypeName",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -601,11 +640,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "ARInvoiceTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -616,40 +656,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ARInvoiceTransferHistory",
 					  						ListPropertyPath =  "ARInvoiceTransferHistory",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ARInvoiceTransferHistory",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ARInvoiceTransferHistory",
+					  						DefaultText =  "A/R Invoice Transfer History",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "ARInvoiceTransferHistory",
-					  						DefaultText =  "A/R Invoice Transfer History",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ARInvoiceTransferHistory",
-					  						Code =  "ARInvoiceTransferHistory",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -658,11 +701,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "APInvoiceTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
-					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -673,40 +717,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "APInvoiceTransferHistory",
 					  						ListPropertyPath =  "APInvoiceTransferHistory",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "APInvoiceTransferHistory",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "APInvoiceTransferHistory",
+					  						DefaultText =  "A/P Invoice Transfer History",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "APInvoiceTransferHistory",
-					  						DefaultText =  "A/P Invoice Transfer History",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "APInvoiceTransferHistory",
-					  						Code =  "APInvoiceTransferHistory",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -715,11 +762,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "Notes",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
-					  						MaxLength =  250,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  250,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -730,43 +778,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Notes",
 					  						ListPropertyPath =  "Notes",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "AccountingTransferHeader",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AccountingTransferHeader",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "Notes",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Notes",
+					  						DefaultText =  "Notes",
+					  						ListFieldLable =  "NotesListLable",
+					  						ListLableDefaultText =  "Notes",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInAirlineMessaging =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
-					  						ListFieldLable =  "NotesLabel",
-					  						ListLableDefaultText =  "Notes",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
-					  						Code =  "Notes",
-					  						DependencyFilter3IsList =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						IsRequired =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -775,11 +826,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "APPaymentTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "APPaymentTransferHistory",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -790,38 +842,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "APPaymentTransferHistory",
 					  						ListPropertyPath =  "APPaymentTransferHistory",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "APPaymentTransferHistory",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "APPaymentTransferHistory",
+					  						DefaultText =  "A/P Payment Transfer History",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "APPaymentTransferHistory",
-					  						DefaultText =  "A/P Payment Transfer History",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "APPaymentTransferHistory",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -830,11 +887,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "ARPaymentTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "ARPaymentTransferHistory",
-					  						MaxLength =  1,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -845,144 +903,168 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ARPaymentTransferHistory",
 					  						ListPropertyPath =  "ARPaymentTransferHistory",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						Code =  "ARPaymentTransferHistory",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "ARPaymentTransferHistory",
+					  						DefaultText =  "A/R Payment Transfer History",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "ARPaymentTransferHistory",
-					  						DefaultText =  "A/R Payment Transfer History",
+					  						IsCustom =  false,
 					  						HelpTextCode =  "ARPaymentTransferHistory",
+					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingTransferHeaderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACTH", Name = "Accounting Transfer Headers" }, queryGroupRepository);
+	        QueryGroup AccountingTransferHeaderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACTH", Name = "Accounting Transfer Headers" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingTransferHeaderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fb08", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AccountingTransferHeaderObjectTable = objectTables.ContainsKey("AccountingTransferHeader") ? objectTables["AccountingTransferHeader"] : null;
+            if (AccountingTransferHeaderObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable AccountingTransferHeaderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingTransferHeader" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> AccountingTransferHeaderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingTransferHeader").ToList();   
+                AccountingTransferHeaderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingTransferHeader" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode AccountingTransferHeaderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARInvoiceTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.ARInvoiceTransferHistory", NameTextCodeDefaultText = "A/R Invoice Transfer History", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode AccountingTransferHeaderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARInvoiceTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingTransferHeaderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.ARInvoiceTransferHistory", NameTextCodeDefaultText = "A/R Invoice Transfer History", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AccountingTransferHeaderTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APInvoiceTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.APInvoiceTransferHistory", NameTextCodeDefaultText = "A/P Invoice Transfer History", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingTransferHeaderTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APInvoiceTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingTransferHeaderFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.APInvoiceTransferHistory", NameTextCodeDefaultText = "A/P Invoice Transfer History", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AccountingTransferHeaderTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARPaymentTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.ARPaymentTransferHistory", NameTextCodeDefaultText = "A/R Payment Transfer History", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingTransferHeaderTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.ARPaymentTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingTransferHeaderFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.ARPaymentTransferHistory", NameTextCodeDefaultText = "A/R Payment Transfer History", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode AccountingTransferHeaderTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APPaymentTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.APPaymentTransferHistory", NameTextCodeDefaultText = "A/P Payment Transfer History", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingTransferHeaderTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.Q.APPaymentTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingTransferHeaderFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentTransferHistory", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.APPaymentTransferHistory", NameTextCodeDefaultText = "A/P Payment Transfer History", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ARInvoiceTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_0.Id, Code = "ARInvoiceTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_0.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ARInvoiceTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_0.Id, NameTextCodeCode = AccountingTransferHeaderTextCode_0.Code, ObjectTableName = "AccountingTransferHeader", Code = "ARInvoiceTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_0.Id,FeatureUniqeCode= AccountingTransferHeaderFeature_0.FeatureUniqeCode, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ARInvoiceTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARInvoiceTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingTransferHeader.TransferNumber" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ARInvoiceTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARInvoiceTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingTransferHeader.TransferDate" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn ARInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ARInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "ARInvoiceTransferHistory" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARInvoiceTransferHistoryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ARInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARInvoiceTransferHistoryQuery.Id,QueryCode = ARInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query APInvoiceTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_1.Id, Code = "APInvoiceTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 1, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_1.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query APInvoiceTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_1.Id, NameTextCodeCode = AccountingTransferHeaderTextCode_1.Code, ObjectTableName = "AccountingTransferHeader", Code = "APInvoiceTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 1, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_1.Id,FeatureUniqeCode= AccountingTransferHeaderFeature_1.FeatureUniqeCode, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn APInvoiceTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APInvoiceTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingTransferHeader.TransferNumber" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn APInvoiceTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APInvoiceTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingTransferHeader.TransferDate" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn APInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APInvoiceTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter APInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "APInvoiceTransferHistory" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = APInvoiceTransferHistoryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter APInvoiceTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APInvoiceTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = APInvoiceTransferHistoryQuery.Id,QueryCode = APInvoiceTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ARPaymentTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_2.Id, Code = "ARPaymentTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 2, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_2.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ARPaymentTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_2.Id, NameTextCodeCode = AccountingTransferHeaderTextCode_2.Code, ObjectTableName = "AccountingTransferHeader", Code = "ARPaymentTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 2, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_2.Id,FeatureUniqeCode= AccountingTransferHeaderFeature_2.FeatureUniqeCode, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ARPaymentTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARPaymentTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingTransferHeader.TransferNumber" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ARPaymentTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARPaymentTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingTransferHeader.TransferDate" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn ARPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ARPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ARPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "ARPaymentTransferHistory" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARPaymentTransferHistoryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ARPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.ARPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ARPaymentTransferHistoryQuery.Id,QueryCode = ARPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query APPaymentTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_3.Id, Code = "APPaymentTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 3, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_3.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query APPaymentTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingTransferHeaderTextCode_3.Id, NameTextCodeCode = AccountingTransferHeaderTextCode_3.Code, ObjectTableName = "AccountingTransferHeader", Code = "APPaymentTransferHistory",  QueryGroupCode = "ACTH", IndexOrder = 3, Tenant = 0, ObjectTableId = AccountingTransferHeaderObjectTable.Id, QuerySection = "AccountingTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingTransferHeaderFeature_3.Id,FeatureUniqeCode= AccountingTransferHeaderFeature_3.FeatureUniqeCode, DefaultSortName = "TransferDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn APPaymentTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APPaymentTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingTransferHeader.TransferNumber" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn APPaymentTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APPaymentTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingTransferHeader.TransferDate" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn APPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn APPaymentTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingTransferHeader.FileName" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter APPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "APPaymentTransferHistory" && d.ObjectTableId == AccountingTransferHeaderObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = APPaymentTransferHistoryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter APPaymentTransferHistoryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AccountingTransferHeader.APPaymentTransferHistory", PredefinedValue = "true",PredefinedValue2 = null, QueryId = APPaymentTransferHistoryQuery.Id,QueryCode = APPaymentTransferHistoryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AccountingTransferHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingTransferHeader" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AccountingTransferHeaderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingTransferHeader").ToList();
+		   //List<ObjectField> AccountingTransferHeaderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingTransferHeader").ToList();
 		       
 	      
 
 	         Screen AccountingTransferHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingTransfer.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingTransferHeaderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber").FirstOrDefault().Id, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate").FirstOrDefault().Id, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.TransferDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "FileName").FirstOrDefault().Id, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.FileName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "UserName").FirstOrDefault().Id, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AccountingTransferHeaderObjectFields.Where(d => d.FieldName == "AccountingTransferTypeName").FirstOrDefault().Id, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingTransferHeaderAccountingTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id,ScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingTransferHeader.AccountingTransferTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingTransferHeaderObjectTable.HeaderScreenId = AccountingTransferHeaderHeaderScreenScreen0.Id;
+		    AccountingTransferHeaderObjectTable.HeaderScreenCode = AccountingTransferHeaderHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -993,19 +1075,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   ObjectTable AccountingTransferHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingTransferHeader" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingTransferHeaderDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.TH.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingTransferHeaderDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable);
  
                  
 			   TextCode AccountingTransferHeaderEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingTransferHeader.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingTransferHeaderEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingTransferHeaderEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingTransferHeaderObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ATDT",HtmlComponentName = "",HtmlComponentUrl = "./Invoice/Components/EditTabs/TransferHeader/TransferHeaderDetailsTabComponent", FeatureId = AccountingTransferHeaderDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.AccountingTransferTabs.AccountingTransferDetailsTab", ObjectTableId = AccountingTransferHeaderObjectTable.Id, TabNameTextCodeId = AccountingTransferHeaderDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ATDT",HtmlComponentName = "",HtmlComponentUrl = "./Invoice/Components/EditTabs/TransferHeader/TransferHeaderDetailsTabComponent", FeatureId = AccountingTransferHeaderDetailsFeature_TH0.Id,FeatureUniqeCode = AccountingTransferHeaderDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.AccountingTransferTabs.AccountingTransferDetailsTab", ObjectTableId = AccountingTransferHeaderObjectTable.Id, TabNameTextCodeId = AccountingTransferHeaderDetailsTextCode_TH0.Id, TabNameTextCodeCode = AccountingTransferHeaderDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ATET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingTransferHeaderEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingTransferHeaderObjectTable.Id, TabNameTextCodeId = AccountingTransferHeaderEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ATET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingTransferHeaderEventsFeature_TH1.Id,FeatureUniqeCode = AccountingTransferHeaderEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingTransferHeaderObjectTable.Id, TabNameTextCodeId = AccountingTransferHeaderEventsTextCode_TH1.Id, TabNameTextCodeCode = AccountingTransferHeaderEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1013,14 +1095,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {  
 		   ObjectTable AccountingTransferHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingTransferHeader" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingTransferHeaderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingTransferHeaderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingTransferHeaderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingTransferHeaderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.PackageFeature", NameTextCodeDefaultText = "AccountingTransferHeader Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature AccountingTransferHeaderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
+		   Feature AccountingTransferHeaderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
+		   Feature AccountingTransferHeaderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
+		   Feature AccountingTransferHeaderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.PackageFeature", NameTextCodeDefaultText = "AccountingTransferHeader Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AccountingTransferHeaderFeature_REBUILD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBUILD", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Rebuild", NameTextCodeDefaultText = @"Rebuild" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AccountingTransferHeaderFeature_REBUILD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBUILD", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Rebuild", NameTextCodeDefaultText = @"Rebuild" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
+
+		   Feature AccountingTransferHeaderFeature_QuickbooksConnectAuth1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuickbooksConnectAuth1", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.QuickbooksConnectAuth1", NameTextCodeDefaultText = @"Quickbooks Connect Auth1" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
+
+		   Feature AccountingTransferHeaderFeature_DisableFTPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DisableFTPSettings", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.DisableFTPSettings", NameTextCodeDefaultText = @"Enable FTP Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingTransferHeaderObjectTable);
 
    
 	    
@@ -1032,10 +1118,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CAAH",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

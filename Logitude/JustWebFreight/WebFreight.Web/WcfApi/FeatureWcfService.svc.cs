@@ -59,11 +59,11 @@ namespace WebFreight.Web.WcfApi
                     }
                 }
             }
-            else
-            {
+            //else
+            //{
                 AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken.Email is " + myEmail + " AuthOnTenant is Running", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 SecurityUtility.AuthenticationOnTenant(tenant);
-            }
+            //}
 
             try
             {
@@ -73,12 +73,12 @@ namespace WebFreight.Web.WcfApi
 
                     AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Done with No Problems. for Email => " + myEmail, "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                     AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Results => ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
-                    foreach (var item in featuresList)
-                    {
-                        AzureLog.SaveLogsInStorage("( " + item.FeatureCode + " " + item.ObjectTableName + " HasAccess => " + item.HasAccess + " ) ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
-                        item.HasAccess = true; 
+                    //foreach (var item in featuresList)
+                    //{
+                    //    AzureLog.SaveLogsInStorage("( " + item.FeatureCode + " " + item.ObjectTableName + " HasAccess => " + item.HasAccess + " ) ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                    //    item.HasAccess = true; 
 
-                    }
+                    //}
                     //SecurityUtility.CheckCustomContactTableFeatures(featuresList, HttpContext.Current.User.Identity.Name, tenant);//
 
                 }

@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SystemInfo',
     templateUrl: './SystemInfoComponent.html',   
     providers: [ExportDocumentService],
@@ -61,7 +61,7 @@ export class SystemInfoComponent {
     }
 
     GetUsedSpaceFromServer() {
-        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe(res => {
+        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

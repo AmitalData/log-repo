@@ -15,6 +15,7 @@ export class PrintDocsOutTabComponent {
     }
 
     QuickSearchDocOut(docsOutId: string, docOutRow: string) {
+        this.Helper.WaitWindowClosed();
          this.UseDocsOutSearchBox('SearchFieldsId_0_0','HAWB Lable ', docsOutId, docOutRow);
        }
 

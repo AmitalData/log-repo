@@ -38,7 +38,7 @@ import { AccountingNoteListService } from '../../../Services/StandardLists/Accou
 declare var makeAmBarChart;
 
 @Component({
-    moduleId: module.id,
+
     templateUrl: './GLAccountOverviewComponent.html',
 })
 
@@ -71,10 +71,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
-        //Resources
-        this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
-        this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
-        this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
+        //Resources // Use Less
+        //this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
+        //this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
+        //this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
         // Set Entity
         if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
@@ -153,7 +153,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         // Get GLAccountMoreData
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
+        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
 
@@ -168,7 +168,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get GLAccount Open Transactions Count
-        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe(myResult => {
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe((myResult:any) => {
             console.log("GetAccountOpenTransactionsCount", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -180,7 +180,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get connect card
-        this._CardListService.getSingle(this.AccountPM.CardId).subscribe(myResult => {
+        this._CardListService.getSingle(this.AccountPM.CardId).subscribe((myResult:any) => {
             console.log("_CardListService.getSingle", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -234,7 +234,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             editWindow.Width = 1500;
             editWindow.IsHideHeader  = true;
             editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
-            editWindow.WindowClosed.subscribe(res => {
+            editWindow.WindowClosed.subscribe((res:any) => {
                 this.LoadAllData();
             });
         }
@@ -256,8 +256,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
-                var result = serviceResponse.Result;
-                var transaction = result.Result; // get the data
+                var transaction = serviceResponse.Result;
                 var openAmountCurrency = transaction.OpenAmountCurrencySign;
 
                 // original amount currency
@@ -290,8 +289,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     GetNonReconciledTransactionsCount() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
-
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe((myResult:any) => {
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
@@ -388,8 +386,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this._AccountingNotePMService.get(_noteList.Id)
-            .subscribe(myResult => {
-
+            .subscribe((myResult:any) => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var _notePM = mm.Result;
@@ -407,8 +404,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ItemDeleteButton(item: AccountingNoteList){
         this._AccountingNoteExtendedListService.DeleteNote(item.Id)
-            .subscribe(myResult => {
-
+            .subscribe((myResult:any) => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var res = mm.Result;
@@ -463,12 +459,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetLastTransactions() {
-        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
+        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)
             {
-                this.lastTransactionsList = mm.Result.Result;
+                this.lastTransactionsList = mm.Result;
             }
             else
             {
@@ -484,74 +480,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         // Type:    SourceTypeCode
         // Id:      SourceId
         // Display: SourceNumber
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(transaction.SourceTypeCode);
 
-        var tableName = "Journal";
-
-        switch (transaction.SourceTypeCode) {
-
-            // 1-Journal
-            case '1': {
-                tableName = "Journal";
-                break;
-            }
-
-            // 2-ARInvoice
-            case '2': {
-                tableName = "ARInvoice";
-                break;
-            }
-
-            // 3-ARPayment
-            case '3': {
-                tableName = "ARPayment";
-
-                break;
-            }
-
-            // 4-APInvoice
-            case '4': {
-                tableName = "APInvoice";
-
-                break;
-            }
-
-            // 5-APPayment
-            case '5': {
-                tableName = "APPayment";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case '6': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case '7': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case '8': {
-                tableName = "Revaluation";
-
-                break;
-            }
-
-
-            // 9-PaymentCheque
-            case '9': {
-                tableName = "PaymentCheque";
-
-                break;
-            }
-
-        }
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -627,8 +557,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             percentage =
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
-            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+            + (this.accountCardlist.OpenShipments?this.accountCardlist.OpenShipments:0 );
 
             this.accountTotal = percentage;
 
@@ -661,8 +591,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         var total =
         (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
     +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
-    //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+        + (this.accountCardlist.OpenShipments ? this.accountCardlist.OpenShipments : 0);
 
 
         return (total > this.accountCardlist.CreditLimitAmount);

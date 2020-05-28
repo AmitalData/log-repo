@@ -30,7 +30,7 @@ import {ObjectsLocator} from '../../../../../../Infrastructure/Locators/ObjectsL
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditSupplierInvoiceItem.html',
 })
 export class EditSupplierInvoiceItem extends BaseComponent{
@@ -163,7 +163,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: any) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoiceItem', true);
             });
         });

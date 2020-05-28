@@ -33,6 +33,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<EscalationActionTimeIndicator> EscalationActionTimeIndicators { get; }
 		 IDbSet<EscalationPreDefinition> EscalationPreDefinitions { get; }
 		 IDbSet<Occasion> Occasions { get; }
+		 IDbSet<OccasionInvitee> OccasionInvitees { get; }
 		 IDbSet<OccasionStatus> OccasionStatuses { get; }
 		 IDbSet<OccasionType> OccasionTypes { get; }
 		 IDbSet<Opportunity> Opportunities { get; }
@@ -54,6 +55,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<SLAHeader> SLAHeaders { get; }
 		 IDbSet<SLALine> SLALines { get; }
 		 IDbSet<Stage> Stages { get; }
+		 IDbSet<SupportMailbox> SupportMailboxes { get; }
 		 IDbSet<Ticket> Tickets { get; }
 		 IDbSet<TicketClassification> TicketClassifications { get; }
 		 IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; }

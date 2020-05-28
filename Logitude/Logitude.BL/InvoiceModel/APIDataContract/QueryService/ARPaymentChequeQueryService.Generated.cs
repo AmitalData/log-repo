@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -82,12 +83,22 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ARPaymentChequeReplica with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    if(!string.IsNullOrEmpty(item.Id))
+					    {
+					        throw new ApplicationException("ARPaymentChequeReplica with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = item.Id;
+
+						//}
 					}
 					temp.Tenant = item.Tenant;
 					temp.LineNumber = item.LineNumber;

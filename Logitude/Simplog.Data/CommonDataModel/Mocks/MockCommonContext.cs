@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Mocks
 {
-    public class MockCommonContext:ICommonDataContext
+    public class MockCommonContext : ICommonDataContext
     {
         List<Country> countries;
         MockObjectSet<Country> countryObjectSet;
@@ -1136,7 +1136,9 @@ namespace Simplog.Data.CommonDataModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-        
+
+       
+
         List<TermsofUse> termOfUses;
         MockObjectSet<TermsofUse> termOfUsesObjectSet;
         public IDbSet<TermsofUse> TermsofUses
@@ -2523,8 +2525,23 @@ namespace Simplog.Data.CommonDataModel.Mocks
         }
 
 
+        public IDbSet<DWHBuildStatus> DWHBuildStatus
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
-        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+
+  
+        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners
         {
             get
             {
@@ -2603,7 +2620,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineArea> AirlineAreas
+        public IDbSet<CarrierArea> CarrierAreas
         {
             get
             {
@@ -2616,7 +2633,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        public IDbSet<CarrierAreasPort> CarrierAreasPorts
         {
             get
             {
@@ -2642,7 +2659,105 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+
+
+
+        public IDbSet<AccountingPartner> AccountingPartners
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CardContactAdditionalService> CardContactAdditionalServices
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<UserLastSettings> UserLastSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations => throw new NotImplementedException();
+
+        //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }

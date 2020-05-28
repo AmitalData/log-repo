@@ -24,7 +24,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'OtherChargesTabComponent',
     templateUrl: './OtherChargesTabComponent.html',
 })

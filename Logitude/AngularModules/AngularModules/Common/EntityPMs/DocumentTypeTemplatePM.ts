@@ -215,6 +215,11 @@ export class DocumentTypeTemplatePM {
     public set CC(newValue: string) { if (this.cC != newValue) { this.cC = newValue; this.MarkAsDirty("CC"); } }
        
 	 
+    private bCC: string;
+    public get BCC() { return this.bCC; }
+    public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
+       
+	 
 
     public OldEntityPM: DocumentTypeTemplatePM;
 		

@@ -1,62 +1,37 @@
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
 import { ShipmentViewScenario } from './ShipmentViewScenario';
 import { ShipmentView } from './ShipmentView';
-import { LoginComp } from '../../Login/Login.po';
-import { FieldsHelper } from '../../Helpers/FieldsHelper';
-
 
 
 describe('ShipmentView', () => {
 
-    let ShipmentScenario: ShipmentViewScenario = new ShipmentViewScenario();
-    let CreatView: ShipmentView = new ShipmentView();
+  let ShipmentScenario: ShipmentViewScenario = new ShipmentViewScenario();
+  let CreatView: ShipmentView = new ShipmentView();
 
 
-    beforeEach(() => {
+  beforeEach(() => {
 
-    });
-    browser.ignoreSynchronization = true;
-
-
-    it('OpenShipmentView', function () {
-
-      //  CreatView.OpenShipmentView();
-
-        ShipmentScenario.OpenShipmentView();
-
-   });
+  });
+  browser.ignoreSynchronization = true;
 
 
+  it('OpenShipmentView', function () {
+    ShipmentScenario.OpenShipmentView();
 
-   it('CreatShipmentView', function () {
+  });
 
-     // CreatView.CreatNewView();
-      ShipmentScenario.CreatNewView();
+  it('CreatShipmentView', function () {
+    ShipmentScenario.CreatNewView();
+  });
 
-   });
 
- 
-it('EditNewView', function () {
-
-  //  CreatView.EditNewView();
+  it('EditNewView', function () {
     ShipmentScenario.EditNewView();
-});
+  });
 
- 
- 
- 
- it('DeleteNewView', function () {
+  it('DeleteNewView', function () {
 
- //   CreatView.DeleteNewView();
     ShipmentScenario.DeleteNewView();
-});
-
-
-
- /* it('DisplayView', function () {
-
-    CreatView.DisplayView();
-});*/
-
+  });
 
 });

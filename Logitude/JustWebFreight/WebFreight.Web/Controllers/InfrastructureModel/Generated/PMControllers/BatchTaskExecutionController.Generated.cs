@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("BatchTaskExecution", "READ", authToken.Tenant);
-	                
+                
                 IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
                 BatchTaskExecutionQueryService batchTaskExecutionQuery = new BatchTaskExecutionQueryService(MyContext);
 				batchTaskExecutionQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("BatchTaskExecution", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("BatchTaskExecution", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BatchTaskExecutionUpdateService service = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("BatchTaskExecution", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("BatchTaskExecution", entityPM.Tenant, authToken.Tenant);
-	
+
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BatchTaskExecutionUpdateService service = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

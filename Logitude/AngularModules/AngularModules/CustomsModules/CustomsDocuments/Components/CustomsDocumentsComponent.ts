@@ -1,24 +1,19 @@
 declare var window: any;
-import { Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output, OnDestroy } from '@angular/core';
+import { Component, Input,  OnDestroy } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
 import {CustomsDocumentPM} from '../../../Customs/EntityPMs/CustomsDocumentPM';
 import {CustomsDocumentsTicketPM} from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import {CustomsDocumentPointerPM} from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
 import {CustomsDocumentTicketViewModel} from './CustomsDocumentTicketViewModel';
 import {RelatedDocumentViewModel} from './RelatedDocumentViewModel';
 import {CustDocsTicketWebService} from '../../../Customs/Services/WebServices/CustDocsTicketWebService';
 import {CustDocMetaDataValuesWebService} from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
-import {Observable}     from 'rxjs/Rx';
 import {CustomsDocumentMetaDataValuePM} from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
 import {CustomsDocumentsDataProvider} from './CustomsDocumentsDataProvider';
 import {ICustomsDocumentsController} from './ICustomsDocumentsController';
@@ -32,13 +27,11 @@ import { CommunicationLogStepListService } from '../../../Common/Services/Extend
 import { CustomsRequestMenuService } from '../../../Customs/Services/Others/CustomsRequestMenuService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-///import { setTimeout } from 'timers';
-
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsDocumentsComponent.html',
 })
 
@@ -110,10 +103,10 @@ export class CustomsDocumentsComponent
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
         this.ParentEntityCode = this.ObjectTableName.split('.')[1];
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response:any) => {
                         this.InsureCustomsDocumentsController();
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
                         //    this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
@@ -415,7 +408,7 @@ export class CustomsDocumentsComponent
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName = documentFiling.DocumentId;
@@ -709,7 +702,7 @@ export class CustomsDocumentsComponent
 
         myCommunicationLogStepListService
             .GetRequestComminicationIdByEntityId2(SessionLocator.Tenant, "2715", "30", objecttable.Id, customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId)
-            .subscribe((rsp) => {
+            .subscribe((rsp:any) => {
                 var myCustomsRequestsSheet = rsp.Result;
                  this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {
@@ -759,14 +752,14 @@ export class CustomsDocumentsComponent
     private GetDocumentRequestDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsDocumentRequestCodeButton = false;
                 this.IsDocumentRequestCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsDocumentRequestCodeButton = false;
                             this.IsDocumentRequestCodeSendDigital = false;
                             this.DocumentRequestCodeIcon = "LOGBOX";
@@ -774,7 +767,7 @@ export class CustomsDocumentsComponent
                                 this.IsDocumentRequestCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe(res => {
+                                .subscribe((res:any) => {
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDocumentRequestCodeButton = true;
                                         this.IsDocumentRequestCodeSendDigital = true;

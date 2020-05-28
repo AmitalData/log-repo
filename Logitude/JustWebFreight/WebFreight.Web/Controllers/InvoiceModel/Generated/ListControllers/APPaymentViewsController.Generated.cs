@@ -37,6 +37,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -81,6 +82,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	customFieldResolver.SetCustomFieldsValues("APPayment",  authToken.Tenant, new List<APPaymentList> { entityList }.Cast<object>().ToList());
  	
 					entityList = APPaymentAPiHelper.ApplyFilters(entityList, authToken.Tenant);
 				}
@@ -116,6 +119,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.PaymentNo);
 				List<APPaymentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("APPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -181,7 +186,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -209,7 +215,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -328,6 +335,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				}
 			   List<APPaymentList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               customFieldResolver.SetCustomFieldsValues("APPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

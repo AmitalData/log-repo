@@ -5,6 +5,13 @@ namespace WebFreight.Web.DataProviders
 {
     public class DeliveryNoteDataProvider
     {
+        public DeliveryNoteDataProvider()
+        {
+            this.PackagesLines = new List<PackageLine>();
+            this.AttachmentList = new List<PackageLine>();
+            this.InsidePackagesLines = new List<InsidePackageLine>();
+        }
+
         public string To { get; set; }
         public string Address { get; set; }
         public string Attention { get; set; }
@@ -127,8 +134,11 @@ namespace WebFreight.Web.DataProviders
         public string LongMaster { get; set; }
 
         public string LastMainCarriageVesselNameAndNumber { get; set; }
+        public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
+        public string LoadingPortCode { get; set; }
         public string DischargePortName { get; set; }
+        public string DischargePortCode { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
         public DateTime? MainCarriageETA_DateTime { get; set; }
         public DateTime? MainCarriageATA_DateTime { get; set; }
@@ -143,7 +153,7 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnRef { get; set; }
 
         public DateTime? CutOffDateAsDate { get; set; }
-        public TimeSpan? CutOffTime { get; set; }
+        public string CutOffTime { get; set; }
 
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }
@@ -168,7 +178,18 @@ namespace WebFreight.Web.DataProviders
         public string DriverName { get; set; }
 
         public string ProjectNumber { get; set; }
-
         public string ITNumber { get; set; }
+        public string AMSBL { get; set; }
+        public string SalesmanEmail { get; set; }
+        public string ToPartnerAddressName { get; set; }
+
+        public string IncotermName { get; set; }
+        public string ShipperVATNumber { get; set; }
+        public string ConsigneeVATNumber { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrency { get; set; }
+        public string TruckerName { get; set; }
+        public string CustomsClearancePointName { get; set; }
+        public string DeclarationNumber { get; set; }
     }
 }

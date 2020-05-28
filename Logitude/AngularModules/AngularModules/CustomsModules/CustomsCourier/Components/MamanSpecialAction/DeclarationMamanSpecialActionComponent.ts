@@ -14,7 +14,6 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { DeclarationMamanSpecialActionList } from '../../../../Customs/EntityLists/DeclarationMamanSpecialActionList';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationMamanSpecialActionComponent.html',
 })
 

@@ -9,6 +9,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
+        public string QueryCode { get; set; }
         public int Tenant { get; set; }
         public string QueryId { get; set; }
         public string ObjectFieldId { get; set; }
@@ -18,6 +19,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Operator { get; set; }
         public int IndexOrder { get; set; }
         public string UserId { get; set; }
+        public string ObjectFieldCode { get; set; }
+        
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

@@ -100,7 +100,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CreditQuery"), "CreditQuery", './CustomsModules/CustomsGeneralRequests/Components/CreditLimitQueryComponent', 650, 610, "8289"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 850, 610, "8289Z"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequest"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequestHeader"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SendClaim"), "SendClaim", '', 850, 500, "")); // Task 29851
         //}
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא להצהרה יצוא", "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportDeclarationDataComponent', 700, 680, "9070"));
@@ -237,7 +237,7 @@ export class CustomsRequestMenuService {
                     'AnalyzeMessage': JSON.parse(resJson),
                     'CustomResponse': JSON.parse(reqJson),
                 };
-                logitudeWindow.Show('./CustomsModules/CustomControls/Components/ObjectViewerComponent');
+                logitudeWindow.Show('./CustomsModules/CustomsControls/Components/ObjectViewerComponent');
 
 
             });
@@ -295,7 +295,7 @@ export class CustomsRequestMenuService {
         }
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = item.WindowWidth; //850;
-        logitudeWindow.Height = item.WindowHeight + 10;//500;
+        logitudeWindow.Height = item.WindowHeight + 30;//500;
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Title = item.TranslatedName//"Declaration restore query";
 

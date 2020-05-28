@@ -162,7 +162,7 @@
 
         <!-- Response -->
         <div class="class-response-content" style="width: 800px;height: 510px;">
-            <div class="ScrollViewer">
+            <div>
                 <div class="ScrollContent">
                     <table style="width: 800px;height: 510px;padding-top: 10px;">
 
@@ -181,98 +181,114 @@
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
                                                     [binding]="'PeriodDeclarationID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PeriodDeclarationID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- VendorID -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.VendorID' | TextCodeTranslationPipe"
                                                     [binding]="'VendorID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.VendorID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Vendor -->
                                         <log-column [width]="'130'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.VendorName' | TextCodeTranslationPipe"
                                                     [binding]="'VendorName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.VendorName }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Create Date -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.CreateDate' | TextCodeTranslationPipe"
                                                     [binding]="'CreateDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CreateDate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Validity From -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.ValidityFrom' | TextCodeTranslationPipe"
                                                     [binding]="'ValidityFrom'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.ValidityFrom }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Expiration Date -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.ExpirationDate' | TextCodeTranslationPipe"
                                                     [binding]="'ExpirationDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.ExpirationDate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StatusName -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.StatusName' | TextCodeTranslationPipe"
                                                     [binding]="'StatusName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.StatusName }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- DocumentID -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
                                                     [binding]="'DocumentID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.DocumentID }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -295,59 +311,69 @@
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.DeclarationID' | TextCodeTranslationPipe"
                                                     [binding]="'DeclarationID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.DeclarationID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Loi Declaration ID -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
                                                     [binding]="'LoiDeclarationID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.LoiDeclarationID}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Vendor -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.VendorName' | TextCodeTranslationPipe"
                                                     [binding]="'VendorName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.VendorName }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Create Date -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.CreateDate' | TextCodeTranslationPipe"
                                                     [binding]="'CreateDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CreateDate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- DocumentID -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
                                                     [binding]="'DocumentID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.DocumentID }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -370,72 +396,84 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.SecurityDeclarationName' | TextCodeTranslationPipe"
                                                     [binding]="'SecurityDeclarationName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.SecurityDeclarationName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Security Importer Declaration Id -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
                                                     [binding]="'SecurityImporterDeclarationId'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.SecurityImporterDeclarationId}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Declaration Date -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.DeclarationDate' | TextCodeTranslationPipe"
                                                     [binding]="'DeclarationDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.DeclarationDate }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- Expiration Date -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.ExpirationDate' | TextCodeTranslationPipe"
                                                     [binding]="'ExpirationDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.ExpirationDate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StatusName -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.StatusName' | TextCodeTranslationPipe"
                                                     [binding]="'StatusName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.StatusName }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- DocumentID -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
                                                     [binding]="'DocumentID'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.DocumentID }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

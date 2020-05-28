@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 @Component({
     selector: 'SystemDefaultsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SystemDefaultsComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             this.LoadTenantPMMethod();
         });
     }
@@ -492,6 +492,13 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
+    get AllowCustomersInAgentsLOV() { return this.TenantPm.AllowCustomersInAgentsLOV; }
+    set AllowCustomersInAgentsLOV(value: boolean) {
+        if (this.TenantPm.AllowCustomersInAgentsLOV != value) {
+            this.TenantPm.AllowCustomersInAgentsLOV = value;
+        }
+    }
+
     get IsCorrespondenceRightToLeftEnabled() { return this.TenantPm.IsCorrespondenceRightToLeftEnabled; }
     set IsCorrespondenceRightToLeftEnabled(value: boolean)
     {
@@ -525,6 +532,14 @@ export class SystemDefaultsComponent extends BaseComponent{
     get AllowAgentInCustomersLOVVisible() {
         var result = false;
         if (FeatureLocator.HasFeaturePermession("General", "AllowAgentInCustomersLOV")) {
+            result = true;
+        }
+        return result;
+    }
+
+    get AllowCustomersInAgentsLOVVisible() {
+        var result = false;
+        if (FeatureLocator.HasFeaturePermession("General", "AllowCustomersInAgentsLOV")) {
             result = true;
         }
         return result;

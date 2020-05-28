@@ -11,7 +11,7 @@ import {CCSWebService, CCSResult, AWBResultClass, FHLShipmentValidator} from '..
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SendWindowComponent.html',
 })
 
@@ -770,6 +770,11 @@ export class SendWindowComponent {
                     if (myResult.HasStockError) {
                         this.SendingResultForeground = this.redForeground;
                         this.SendingResultMessage = "Error sending: No remaining stock";
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+
+                    if (myResult.IsFNAValidationLong) {
+                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("Shipment.M.AWB.ValidateFNA"));
                         this.CurrentSession.StopBusyIndicator();
                     }
 

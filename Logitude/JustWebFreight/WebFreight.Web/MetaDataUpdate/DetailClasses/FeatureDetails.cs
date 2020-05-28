@@ -14,5 +14,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsMemoryAdded { get; set; }
         public bool IsOld { get;  set; }
         public bool IsCoreFeature { get;  set; }
+        public string FeatureUniqeCode { get; set; }
+        public string ObjectTableName { get; set; }
+
     }
 }

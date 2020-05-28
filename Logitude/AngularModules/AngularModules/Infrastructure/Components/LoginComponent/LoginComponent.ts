@@ -1,6 +1,6 @@
 declare var window: any;
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers } from '@angular/http';
+
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { InfraSettings } from '../../Utilities/InfraSettings';
@@ -42,9 +42,10 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
+import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LoginComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })
@@ -72,6 +73,7 @@ export class LoginComponent implements OnInit {
     public dataLoaded: boolean = false;
     public ShowTwoFactorAuthenScreen: boolean = false;
     public InvalidVerificationCode: boolean = false;
+    private generalTableResourcesIsLoaded: boolean = false;
     public DefultText: string;
     //public LogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     //public SampleLogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
@@ -81,6 +83,7 @@ export class LoginComponent implements OnInit {
     //public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     private UserExtendedPMService: UserExtendedPMService;
+    private generalDomainService: GeneralDomainService;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -132,10 +135,12 @@ export class LoginComponent implements OnInit {
         window.Tips = [];
         window.TipsVisibilities = [];
         window.DWObjectFields = [];
+        window.ObjectFieldModifications = [];
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
         this.UserExtendedPMService = new UserExtendedPMService();
+        this.generalDomainService = new GeneralDomainService();
         //FileLoader.LoadFroalaResources();
     }
 
@@ -168,8 +173,8 @@ export class LoginComponent implements OnInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq") {
-                        if (menuName == "preq") {
+                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq" || menuName == "uid") {
+                        if (menuName == "preq" || menuName == "uid") {
                             this.LoginCompleted.emit("IgnoreTerms");
                             return;
                         }
@@ -229,7 +234,7 @@ export class LoginComponent implements OnInit {
             SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
-
+            this.FillProtractorEmails();
 
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
@@ -249,7 +254,7 @@ export class LoginComponent implements OnInit {
                 this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
-                this.loginService.GetLoggedUser().subscribe(myResult => {
+                this.loginService.GetLoggedUser().subscribe((myResult: any) => {
 
                     var iGlobalDomainService = new GlobalDomainService();
 
@@ -272,8 +277,24 @@ export class LoginComponent implements OnInit {
         }
         window.sessionStorage.setItem("userdata", "");
     }
+
+    FillProtractorEmails() {
+        SessionLocator.ProtractorEmails.push("razantest@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@logbox.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("ahmadb@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("raghad@protractor.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sgautomation@pro.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@cloud.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sumaya@automation.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("sg1209@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("lana3@test.com".toLowerCase());
+        SessionLocator.ProtractorEmails.push("protractor2@test.com".toLowerCase());
+
+    }
+
     OneUsePasswordMethod() {
-        this.loginService.GetOneUsePassword().subscribe(userData => {
+        this.loginService.GetOneUsePassword().subscribe((userData: any) => {
 
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
@@ -315,7 +336,7 @@ export class LoginComponent implements OnInit {
 
     ShowTenantList: boolean = false;
     PostUserValidation(loginParameters) {
-        this.loginService.PostUserValidation(loginParameters).subscribe(userData => {
+        this.loginService.PostUserValidation(loginParameters).subscribe((userData: any) => {
 
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed = true;
@@ -404,7 +425,7 @@ export class LoginComponent implements OnInit {
     public UserMobileNumber: string;
     public LoggedUserData: any = null;
     PostLoginData() {
-        this.loginService.PostLoginData(this.LoginParams).subscribe(userData => {
+        this.loginService.PostLoginData(this.LoginParams).subscribe((userData: any) => {
             if (userData.TwoFactorkey) {
                 window.localStorage.setItem('TwoFactorkey', userData.TwoFactorkey);
             }
@@ -424,7 +445,7 @@ export class LoginComponent implements OnInit {
     VerifyClicked() {
         if (!AppTool.IsNullOrEmpty(this.VerficationCode)) {
             this.HidePendingLoading = false;
-            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe(res => {
+            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res:any) => {
                 this.HidePendingLoading = true;
                 if (res == true) {
                     this.ShowTwoFactorAuthenScreen = false;
@@ -439,7 +460,7 @@ export class LoginComponent implements OnInit {
     }
     ResendVerificationCodeClicked() {
         this.HidePendingLoading = false;
-        this.loginService.PostResendAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.LoggedUserData.Id, Number(this.LoggedUserData.CurrentTenant + "")).subscribe(res => {
+        this.loginService.PostResendAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.LoggedUserData.Id, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
             this.HidePendingLoading = true;
             if (res) {
             }
@@ -455,7 +476,7 @@ export class LoginComponent implements OnInit {
     }
     LoadClosedTablesToWindow(CurrentTenant: number) {
 
-        this.IndexedDbService.InitializeIndexedDB().subscribe(response => {
+        this.IndexedDbService.InitializeIndexedDB().subscribe((response:any) => {
 
             InfraSettings.IndexedDbService = IndexedDbService;
 
@@ -465,7 +486,7 @@ export class LoginComponent implements OnInit {
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
             // UserPM
-            this.loginService.GetLoggedUser().subscribe(myResult => {
+            this.loginService.GetLoggedUser().subscribe((myResult:any) => {
                 var myUserPMService = new UserPMService();
                 SessionInfo.LoggedUserPM = myUserPMService.MapJsonToEntityPM(myResult);
 
@@ -478,22 +499,36 @@ export class LoginComponent implements OnInit {
                 //1
 
                 // TenantPM
-                this.loginService.GetLoggedTenant().subscribe(myResult => {
+                this.loginService.GetLoggedTenant().subscribe((myResult:any) => {
                     var myTenantPMService = new TenantPMService();
                     InfraSettings.TenantPM = myTenantPMService.MapJsonToEntityPM(myResult);
                     this.IncreaseProgressBar();
                     //2
                 });
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
-                        this.IncreaseProgressBar("General Resources");
-                        //26
+                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
+                        this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe((response: any) => {
+                            this.generalTableResourcesIsLoaded = true
+                            this.IncreaseProgressBar("General Resources");
+                            //26
+                        });
                     });
+                   
+                });
+
+                this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
+
+                    if (!response.HasError) {
+                        window.ObjectFieldModifications = response.Result;
+                    }
+                    this.IncreaseProgressBar("ObjectField Modifications");
+                        //26
+                     
                 });
 
                 // LastFilters
-                this.loginService.GetLastFilters().subscribe(myResult => {
+                this.loginService.GetLastFilters().subscribe((myResult:any) => {
                     LastFilterClass.MapJSON(myResult);
                     this.IncreaseProgressBar();
                     //3
@@ -506,7 +541,7 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                     //4
 
-                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe(Result => {
+                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe((Result:any) => {
                         ObjectsLocator.UpdatePrivateLableSettings(Result);
                         SessionLocator.PrivateLableSettings = Result;
                         this.IncreaseProgressBar();
@@ -515,7 +550,7 @@ export class LoginComponent implements OnInit {
                     });
                 });
 
-                //this.loginService.GetTenantManagement().subscribe(myResult => {
+                //this.loginService.GetTenantManagement().subscribe((myResult:any) => {
 
                 //});
 
@@ -539,73 +574,73 @@ export class LoginComponent implements OnInit {
                     }
                 });
 
-                this.loginService.GetQueries().subscribe(myResult => {
+                this.loginService.GetQueries().subscribe((myResult:any) => {
                     window.Queries = myResult;
                     this.IncreaseProgressBar();
                     //7
                 });
 
-                this.loginService.GetStatuses().subscribe(myResult => {
+                this.loginService.GetStatuses().subscribe((myResult:any) => {
                     window.Statuses = myResult;
                     this.IncreaseProgressBar();
                     //8
                 });
 
-                this.loginService.GetPreDefinedFilters().subscribe(myResult => {
+                this.loginService.GetPreDefinedFilters().subscribe((myResult:any) => {
                     window.PreDefinedFilters = myResult;
                     this.IncreaseProgressBar();
                     //9
                 });
 
-                this.loginService.GetTenantTranslations().subscribe(myResult => {
+                this.loginService.GetTenantTranslations().subscribe((myResult:any) => {
                     window.TenantTranslations = myResult;
                     this.IncreaseProgressBar();
                     //10
                 });
 
-                this.loginService.GetTransportModes().subscribe(myResult => {
+                this.loginService.GetTransportModes().subscribe((myResult:any) => {
                     window.TransportModes = myResult;
                     this.IncreaseProgressBar();
                     //11
                 });
 
-                this.loginService.GetDirections().subscribe(myResult => {
+                this.loginService.GetDirections().subscribe((myResult:any) => {
                     window.Directions = myResult;
                     this.IncreaseProgressBar();
                     //12
                 });
 
-                this.loginService.GetMenusTables().subscribe(myResult => {
+                this.loginService.GetMenusTables().subscribe((myResult:any) => {
                     window.MenusTables = myResult;
                     this.IncreaseProgressBar();
                     //13
                 });
 
-                this.loginService.GetObjectTables().subscribe(myResult => {
+                this.loginService.GetObjectTables().subscribe((myResult:any) => {
                     window.ObjectTables = myResult;
                     this.IncreaseProgressBar();
                     //14
                 });
 
-                this.loginService.GetScreens().subscribe(myResult => {
+                this.loginService.GetScreens().subscribe((myResult:any) => {
                     window.Screens = myResult;
                     this.IncreaseProgressBar();
                     //15
                 });
 
-                this.loginService.GetScreenFields().subscribe(myResult => {
+                this.loginService.GetScreenFields().subscribe((myResult:any) => {
                     window.ScreenFields = myResult;
                     this.IncreaseProgressBar();
                     //16
                 });
 
-                this.loginService.GetObjectTableTabs().subscribe(myResult => {
+                this.loginService.GetObjectTableTabs().subscribe((myResult:any) => {
                     window.ObjectTableTabs = myResult;
                     this.IncreaseProgressBar();
                     //17
                 });
 
-                this.loginService.GetAccountingSetting().subscribe(myResult => {
+                this.loginService.GetAccountingSetting().subscribe((myResult:any) => {
                     var myAccountingSettingPM: any = null;
 
                     if (myResult) {
@@ -639,7 +674,7 @@ export class LoginComponent implements OnInit {
                     });
                 });
 
-                this.loginService.GetCustomsInterfaceSetting().subscribe(myResult => {
+                this.loginService.GetCustomsInterfaceSetting().subscribe((myResult:any) => {
                     if (myResult) {
                         var myCustomsInterfaceSettingPMService = new CustomsInterfaceSettingPMService();
                         ObjectsUpdater.UpdateCustomsInterfaceSettingPM(myCustomsInterfaceSettingPMService.MapJsonToEntityPM(myResult));
@@ -648,7 +683,7 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetSharedLogisticsSetting().subscribe(myResult => {
+                this.loginService.GetSharedLogisticsSetting().subscribe((myResult:any) => {
                     if (myResult) {
                         var mySharedLogisticsSettingPMService = new SharedLogisticsSettingPMService();
                         ObjectsUpdater.UpdateSharedLogisticsSettingPM(mySharedLogisticsSettingPMService.MapJsonToEntityPM(myResult));
@@ -657,11 +692,14 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetGlobalSetting().subscribe(myResult => {
+                this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
 
                     // Accounting - Abdullah
                     if (InfraSettings.TenantPM) {
-                        myResult.LayoutDirection = InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection;
+
+
+                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+
                     }
 
                     //
@@ -672,19 +710,19 @@ export class LoginComponent implements OnInit {
                     //20
                 });
 
-                this.loginService.GetTenantSetting().subscribe(myResult => {
+                this.loginService.GetTenantSetting().subscribe((myResult: any) => {
                     SessionLocator.TenantSettings = myResult;
                     this.IncreaseProgressBar();
                     //21
                 });
 
-                this.loginService.GetTips().subscribe(myResult => {
+                this.loginService.GetTips().subscribe((myResult:any) => {
                     window.Tips = myResult;
                     this.IncreaseProgressBar();
                     //22
                 });
 
-                this.loginService.GetTipsVisibilities().subscribe(myResult => {
+                this.loginService.GetTipsVisibilities().subscribe((myResult:any) => {
                     window.TipsVisibilities = myResult;
                     this.IncreaseProgressBar();
                     //23
@@ -692,7 +730,7 @@ export class LoginComponent implements OnInit {
 
                 if (!SessionLocator.UseCachedData) {
 
-                    this.loginService.GetObjectFields().subscribe(myResult => {
+                    this.loginService.GetObjectFields().subscribe((myResult:any) => {
 
                         if (!SessionLocator.UseCachedData) {
                             window.ObjectFields = myResult;
@@ -701,7 +739,7 @@ export class LoginComponent implements OnInit {
                         this.IncreaseProgressBar();
                     });
 
-                    this.loginService.GetTextCodesTranslations().subscribe(myResult => {
+                    this.loginService.GetTextCodesTranslations().subscribe((myResult:any) => {
 
                         if (!SessionLocator.UseCachedData) {
                             window.TextCodesTranslations = myResult;
@@ -713,7 +751,7 @@ export class LoginComponent implements OnInit {
                 }
 
                 else {
-                    this.loginService.GetTenantTextCode().subscribe(myResult => {
+                    this.loginService.GetTenantTextCode().subscribe((myResult:any) => {
                         if (myResult) {
                             window.TextCodes = window.TextCodes.concat(myResult);
                             this.IncreaseProgressBar();
@@ -722,8 +760,8 @@ export class LoginComponent implements OnInit {
                     });
                 }
 
-                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
+                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                 //        this.IncreaseProgressBar();
                 //        //26
                 //    });
@@ -732,7 +770,7 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe(response => {
+        this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe((response:any) => {
             if (response) {
                 window.ObjectTableRules = response.Result;
             }
@@ -741,7 +779,7 @@ export class LoginComponent implements OnInit {
             //27
         });
 
-        this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(response => {
+        this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((response:any) => {
             if (response) {
                 window.ObjectTableRuleFields = response.Result;
             }
@@ -750,7 +788,7 @@ export class LoginComponent implements OnInit {
             //28
         });
 
-        this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe(response => {
+        this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {
 
                 var lastloginPM: UserLastLoginPM = response.Result;
@@ -762,7 +800,7 @@ export class LoginComponent implements OnInit {
                 }
 
                 lastloginPM.ComputerId = computerId;
-                this._userLastLoginPMService.update(lastloginPM).subscribe(response => {
+                this._userLastLoginPMService.update(lastloginPM).subscribe((response:any) => {
                     this.IncreaseProgressBar();
                     //29
                 });
@@ -774,7 +812,7 @@ export class LoginComponent implements OnInit {
             }
         });
 
-        this.loginService.GeLoggedTenantObjectFields().subscribe(response => {
+        this.loginService.GeLoggedTenantObjectFields().subscribe((response:any) => {
             if (response) {
                 window.ObjectFields = window.ObjectFields.concat(response);
             }
@@ -784,13 +822,13 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this.loginService.GetTenantLanguageTranslations().subscribe(myResult => {
+        this.loginService.GetTenantLanguageTranslations().subscribe((myResult:any) => {
             window.TenantLanguageTranslations = myResult;
             this.IncreaseProgressBar();
             //31
         });
 
-        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe(myResult => {
+        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe((myResult:any) => {
             SessionLocator.SATInterfaceSettings = myResult.Result;
             this.IncreaseProgressBar();
             //32
@@ -812,7 +850,7 @@ export class LoginComponent implements OnInit {
             }
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe(Result => {
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe((Result: ServiceResponse) => {
             //var ObsList = [];
             if (!Result.HasError) {
                 window.DWObjectFields = Result.Result;
@@ -826,7 +864,14 @@ export class LoginComponent implements OnInit {
                 //});
             }
         });
-                //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
+
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe((Result: ServiceResponse) => {
+            if (!Result.HasError) {
+                window.DWObjectFields.concat(Result.Result);
+                this.IncreaseProgressBar();
+            }
+        });
+                //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((myResult:any) => {
                 //    window.ObjectTableRulePMs = myResult;
                 //    this.IncreaseProgressBar();
                 //    //11
@@ -888,7 +933,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 36;
+            this.TotalNumberOfLoads = 38;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
@@ -924,7 +969,7 @@ export class LoginComponent implements OnInit {
                 }
             }
 
-            if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+          if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
                 console.log("===============>Changing Page<==================");
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);

@@ -114,8 +114,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
                                                      BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
                                                      BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
-                                                     BluesnapInttraStockContractQTY=a.BluesnapInttraStockContractQTY,
-                                                     BluesnapInttraStockContractId=a.BluesnapInttraStockContractId,
+                                                     BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
+                                                     BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                                                      //BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                                                      AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                                                      PIMA = a.PIMA,
@@ -168,6 +168,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                      MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                                                     TotalPrice = a.TotalPrice,
+                                                     SupportDomain = a.SupportDomain,
+                                                     TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                                     TotalFreeUsers = a.TotalFreeUsers,
+                                                     AveragePrice = a.AveragePrice,
+                                                     TotalPaymentamount = a.TotalPaymentamount,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -178,12 +184,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         TenantRepository tenantRep = new TenantRepository(tenant.Id);
                         Tenant ten = tenantRep.GetSingleTenant(tenant.Id);
-                        if (ten != null)
+                        LogBoxTenantSettingRepository tenantsettingRep = new LogBoxTenantSettingRepository(tenant.Id);
+                        LogBoxTenantSetting tens = tenantsettingRep.GetSingleLBTenant(tenant.Id);
+                        if (ten != null && tens != null)
                         {
                             //tenant.CountryName = ten.Address != null ? (ten.Address.Country != null ? ten.Address.Country.EnglishName : null) : null;
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
-                            tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
-                            tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                            tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
+                            tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                             tenant.IsTestTenant = ten.IsTestTenant;
                         }
 
@@ -278,11 +286,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                                                   BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
                                                   BluesnapOneTimeContract = a.BluesnapOneTimeContract,
-                                                  BluesnapContractQTY=a.BluesnapContractQTY,
-                                                  BluesnapCRMContractQTY=a.BluesnapCRMContractQTY,
-                                                  BluesnapEAWBContractQTY=a.BluesnapEAWBContractQTY,
-                                                  BluesnapEAWBSContractQTY=a.BluesnapEAWBSContractQTY,
-                                                  BluesnapOneTimeContractQTY=a.BluesnapOneTimeContractQTY,
+                                                  BluesnapContractQTY = a.BluesnapContractQTY,
+                                                  BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
+                                                  BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
+                                                  BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
+                                                  BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
                                                   BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
                                                   BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                                                   //     BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
@@ -337,6 +345,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                   MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                                                  TotalPrice = a.TotalPrice,
+                                                  SupportDomain = a.SupportDomain,
+                                                  TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                                  TotalFreeUsers = a.TotalFreeUsers,
+                                                  AveragePrice = a.AveragePrice,
+                                                  TotalPaymentamount = a.TotalPaymentamount,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -348,12 +362,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                     TenantRepository tenantRep = new TenantRepository(tenant1.Id);
                     Tenant ten = tenantRep.GetSingleTenant(tenant1.Id);
+
+                    LogBoxTenantSettingRepository tenantsettingRep = new LogBoxTenantSettingRepository(tenant1.Id);
+                    LogBoxTenantSetting tens = tenantsettingRep.GetSingleLBTenant(tenant1.Id);
                     if (ten != null)
                     {
                         //tenant1.CountryName = ten.Address.Country.EnglishName;
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
-                        tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
-                        tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                        tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
+                        tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                         tenant1.IsTestTenant = ten.IsTestTenant;
                     }
 
@@ -505,6 +522,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                         MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                        TotalPrice = a.TotalPrice,
+                        SupportDomain = a.SupportDomain,
+                        TotalNumberOfUsers = a.TotalNumberOfUsers,
+                        TotalFreeUsers = a.TotalFreeUsers,
+                        AveragePrice = a.AveragePrice,
+                        TotalPaymentamount = a.TotalPaymentamount,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -631,6 +654,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     PackageCodeSearchField = entity.PackageCodeSearchField,
                     IsINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo,
                     MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
+                    TotalPrice = entity.TotalPrice,
                 };
             }
 
@@ -756,6 +780,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        PackageCodeSearchField = a.PackageCodeSearchField,
                        IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                       TotalPrice = a.TotalPrice,
                    };
         }
 
@@ -961,22 +986,28 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              PackageCodeSearchField = a.PackageCodeSearchField,
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                              MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                                             TotalPrice = a.TotalPrice,
+                                             SupportDomain = a.SupportDomain,
+                                             TotalNumberOfUsers = a.TotalNumberOfUsers,
+                                             TotalFreeUsers = a.TotalFreeUsers,
+                                             AveragePrice = a.AveragePrice,
+                                             TotalPaymentamount = a.TotalPaymentamount,
                                          }).FirstOrDefault();
 
             return tenant;
         }
 
         public List<TenantManagementDW> GetTenantManagementDWs(int tenant, int skip, int take)
-        {            
+        {
             List<TenantManagementDW> result = (from a in repository.context.TenantManagements.Include("PaymentChannel").Include("PaymentCurrency").Include("RecurringPeriod")
                                                select new TenantManagementDW()
                                                {
                                                    TenantNumber = a.Id,
-                                                   FreeUsers = a.FreeUsers,
+                                                   FreeUsers = a.TotalFreeUsers,
                                                    IsRecurring = a.IsRecurring,
-                                                   LicensePrice = a.LicensePrice,
+                                                   LicensePrice = a.AveragePrice,
                                                    Notes = a.Notes,
-                                                   NumberOfUsers = a.NumberOfUsers,
+                                                   NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
                                                    PaidUntilDate = a.PaidUntilDate,
                                                    PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
                                                    PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
@@ -985,11 +1016,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                    IsMultiPackage = a.IsMultiPackage,
                                                    PackageCode = a.PackageCode,
                                                    MainPackage = a.PackageName,
-                                                   CRMYN =a.PackageCode == "LOGI" ? "Y": "N",
+                                                   CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
                                                    EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-                                                   MainPackageNumberOfUsers =!a.IsMultiPackage ? a.NumberOfUsers:0,
+                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? a.NumberOfUsers : (!a.IsMultiPackage ? a.NumberOfUsers : 0),
                                                    CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? a.NumberOfUsers : 0,
-                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" ||  a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
+                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
                                                }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
 
             List<int> tenantManagementIds = new List<int>();
@@ -1064,21 +1095,21 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 }
             }
 
-            
+
             return result;
         }
 
-        private bool CheckIfMultiPackageHasThisCode(List<TenantManagementLicensePM>  multiPackage , string packageCode, string packageCode2=null)
+        private bool CheckIfMultiPackageHasThisCode(List<TenantManagementLicensePM> multiPackage, string packageCode, string packageCode2 = null)
         {
             TenantManagementLicensePM tenantManagementLicensePM = null;
-            if(multiPackage!=null)
-            tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode).FirstOrDefault();
-            if(tenantManagementLicensePM == null && !string.IsNullOrEmpty(packageCode2))
+            if (multiPackage != null)
+                tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode).FirstOrDefault();
+            if (tenantManagementLicensePM == null && !string.IsNullOrEmpty(packageCode2))
             {
-                 tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode2).FirstOrDefault();
+                tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode2).FirstOrDefault();
             }
-           
-            return tenantManagementLicensePM !=null ?true:false;
+
+            return tenantManagementLicensePM != null ? true : false;
         }
     }
 }

@@ -24,7 +24,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 
 @Component({
     selector: 'FaultQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './FaultQueryComponent.html',
 })
 

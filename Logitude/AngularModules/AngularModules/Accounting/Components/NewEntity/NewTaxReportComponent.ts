@@ -19,7 +19,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 
 @Component({
     selector: 'NewTaxReportComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewTaxReportComponent.html',
 })
@@ -140,7 +140,7 @@ export class NewTaxReportComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("");
-            this.TaxReportPMService.insert(this.entityPM).subscribe(myResult => {
+            this.TaxReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -148,12 +148,12 @@ export class NewTaxReportComponent extends BaseComponent {
                     //this.CurrentSession.StartBusyIndicator("");
                 //    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe(myResult => {
+                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult:any) => {
                         var mm: ServiceResponse = myResult;
                         var entity = mm.Result;
                         this.btePM = entity;
 
-                        //this.ChangeStatus("inprogress");
+                      //  this.ChangeStatus("inprogress");
 
                         this.timer = setInterval(() => {
                             this.GetBTE();
@@ -187,7 +187,7 @@ export class NewTaxReportComponent extends BaseComponent {
 
 
     GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe(myResult => {
+        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult:any) => {
             console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

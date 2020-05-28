@@ -179,7 +179,7 @@ export class CustomerLineViewModel {
         }
 
 
-        this.contactPMService.get(this.entityPM.ContactId).subscribe(res=> {
+        this.contactPMService.get(this.entityPM.ContactId).subscribe((res:any)=> {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

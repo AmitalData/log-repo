@@ -39,6 +39,7 @@ namespace Logitude.BL.DataContracts
         public int ExpectedDeparturesNotTransmittedCount { get; set; }
         public int ShippingInstructionsLast7DaysCount { get; set; }
         public int ContainerStatusLast7DaysCount { get; set; }
+        public int EBookingInProgressCount { get; set; }
     }
 
     public class FlightSummary
@@ -57,6 +58,7 @@ namespace Logitude.BL.DataContracts
         public DateTime? MainCarriageATA { get; set; }
         public string DateFilterField { get; set; }
         public string ComputedStatusId { get; set; }
-        
+        public string ActualDateCode { get; set; }
+        public string ExpectedDateCode { get; set; }
     }
 }

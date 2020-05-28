@@ -11,6 +11,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Resolvers;
+using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.Def.BLExt;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -38,9 +43,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ledgerIds.Add(line.LedgerTransactionId);
             }
 
-
             base.OnCreating(entityPM, entityParentPM);
         }
+        
+
         protected override void OnUpdating(ExternalReconciliationPM entityPM)
         {
 
@@ -69,22 +75,39 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
-
-                        aRPaymentCheque.StatusCode = "6";
-                        aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
-                        ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                         aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                        if (aRPaymentCheque != null)
+                        {
+                            UpdateARPaymentCheque(aRPaymentCheque, "6");
+                        }
                         
+                    }
+                    if (transactionPM.SourceTypeCode == "3") // 3- ARPayment
+                    {
+                        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+                        ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference2).FirstOrDefault();
+                        if (aRPaymentCheque != null)
+                        {
+                           
+                            UpdateARPaymentCheque(aRPaymentCheque, "6");
+                        }
+
                     }
                     else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
                         PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
-
-                        chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
-                        chequePM.ChangeSetOp = ChangeSetOperation.Update;
-                        PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                        paymentChequeUpdateService.Update(chequePM, true);
-
+                       
+                    }
+                    else if(transactionPM.SourceTypeCode == "5") {
+                        List<PaymentChequePM> paymentCheques = paymentChequeQuery.GetPaymentChequesByPaymentId(transactionPM.SourceId, transactionPM.Tenant);
+                        //IM+ OHAD - IN CASE NOT manual Cheques (NOT INSERTED AS  PaymentCheque) 
+                        // NOT NEED TO CHANGE STATUS 2 Redeemed
+                        //ITZIK :I THINK manual/PRINTED Cheque - also have to create dummy  paymentCheque !!!
+                        if (paymentCheques.Count > 0)
+                            
+                        {
+                            UpdatePaymentChequeStatus(paymentCheques[0]);
+                        }
+                        
                     }
                     transactionService.Update(transactionPM, false);
                 }
@@ -100,6 +123,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM);
+        }
+        private void UpdateARPaymentCheque(ARPaymentChequePM aRPaymentCheque, string status)
+        {
+            aRPaymentCheque.StatusCode =status;
+            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, aRPaymentCheque.Tenant);
+            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+            
+        }
+        private void UpdatePaymentChequeStatus(PaymentChequePM chequePM)
+        {
+            if (chequePM != null)
+            {
+                chequePM.PaymentChequeStatusCode = "3"; // 3- Redeemed
+                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, chequePM.Tenant);
+                paymentChequeUpdateService.Update(chequePM, true);
+            }
+
         }
         protected override void OnUpdating(ExternalReconciliationPM entityPM, ExternalReconciliation entityPOCO)
         {
@@ -127,7 +169,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
-                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, true, false);
                         chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
                         chequePM.ChangeSetOp = ChangeSetOperation.Update;
                         PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
@@ -202,12 +244,58 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-        protected override void Validate(ExternalReconciliationPM entityPM)
+        protected override void Validate(ExternalReconciliationPM externalRecoPM)
         {
 
-            CheckDifferenc(entityPM);
+            CheckDifferenc(externalRecoPM);
+            CheckTransferTransactions(externalRecoPM);
 
-            base.Validate(entityPM);
+            base.Validate(externalRecoPM);
+        }
+
+        private static void CheckTransferTransactions(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountPM bankAccount = GetBankAccountForExternalReconciliation(externalRecoPM);
+
+            if (bankAccount != null)
+            {
+                bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
+                int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);
+
+                if (haveExternalPageLines && transferTransactionsCount > 1)
+                {
+                    var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTwoTransfer", 0,
+                        LoggedContactResolver.GetLoggedContactShowLocal(externalRecoPM.Tenant));
+                    throw new ApplicationException(msg);
+                }
+            }
+
+        }
+
+        private static BankAccountPM GetBankAccountForExternalReconciliation(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountPM bankAccount;
+            if (externalRecoPM.BankAccountId != null)
+                bankAccount = GetBankAccount(externalRecoPM);
+            else
+            {
+                bankAccount = GetBankAccountByTransferGLaccount(externalRecoPM.GLAccountId, externalRecoPM.Tenant);
+            }
+
+            return bankAccount;
+        }
+
+        private static BankAccountPM GetBankAccount(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(externalRecoPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetSingle(externalRecoPM.BankAccountId, false, false);
+            return bankAccount;
+        }
+        private static BankAccountPM GetBankAccountByTransferGLaccount(string transferGLAccountId, int tenant)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetBankAccountByTransferGLAcccountId(transferGLAccountId, tenant);
+            return bankAccount;
         }
 
         void CheckDifferenc(ExternalReconciliationPM entityPM)
@@ -215,7 +303,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             decimal ledgerLinesTotal = GetLedgerTransactionsTotal(entityPM);
             decimal bankLinesTotal = GetBankPageLinesTotal(entityPM);
 
-            decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
+            //decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
+            decimal totalDifference = Math.Abs(bankLinesTotal + ledgerLinesTotal);
 
             if (totalDifference != 0)
             {

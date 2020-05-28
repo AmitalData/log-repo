@@ -14,7 +14,6 @@ import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
     selector: 'GetStorageSiteCodeComponent',
     templateUrl: './GetStorageSiteCodeComponent.html',
 })
@@ -106,7 +105,7 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
         currRequestParams.StorageSiteCode = this.StorageSiteCode;
 
         this._CourierMasterService.PostSendALLChangeStorageSiteCode(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);

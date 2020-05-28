@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<DangerousGoodsPackingReqDetails> GetAll()
        {
-		    var all = new List<DangerousGoodsPackingReqDetails>(); 
+		    var all = new List<DangerousGoodsPackingReqDetails>();  
+            all.Add(new DangerousGoodsPackingReqDetails()
+            {    
+                Code = "47", 
+                SearchFields = "47,רמה I", 
+                Inactive = false, 
+                LocalName = "רמה I", 
+			});
+			 
+            all.Add(new DangerousGoodsPackingReqDetails()
+            {    
+                Code = "48", 
+                SearchFields = "48,רמה II", 
+                Inactive = false, 
+                LocalName = "רמה II", 
+			});
+			 
+            all.Add(new DangerousGoodsPackingReqDetails()
+            {    
+                Code = "49", 
+                SearchFields = "49,רמה III", 
+                Inactive = false, 
+                LocalName = "רמה III", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(DangerousGoodsPackingReq newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(DangerousGoodsPackingReq rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

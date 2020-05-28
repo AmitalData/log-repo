@@ -96,11 +96,15 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "ShippingLine"
                     && documentType.ObjectTableName != "Trucker"
                     && documentType.ObjectTableName != "Vendor"
+                    && documentType.ObjectTableName != "AccountingPartner"
                     && documentType.ObjectTableName != "Warehouse"
-                    && documentType.ObjectTableName != "OpenFormatReport")
+                    && documentType.ObjectTableName != "OpenFormatReport"
+                    && documentType.ObjectTableName != "Occasion"
+                    && documentType.ObjectTableName != "InterestReport")
+
                 {
 
-                return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
+                    return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
                }
              }
 

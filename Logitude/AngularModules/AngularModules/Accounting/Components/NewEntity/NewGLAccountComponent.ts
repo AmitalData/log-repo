@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewGLAccountComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewGLAccountComponent.html',
 })
@@ -61,7 +61,11 @@ export class NewGLAccountComponent extends BaseComponent {
         if (!this.IsFromArgs) {
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
             //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
-        } else {
+        }
+        else if (this.IsFromArgs &&this.partnerType == "AC") {
+            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
+}
+        else {
             this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
             // customer
             this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
@@ -75,35 +79,39 @@ export class NewGLAccountComponent extends BaseComponent {
         //this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
         //#endregion
     }
-
+    partnerType: string;
     SetWindowArgs(args: NewGLAccountArgs) {
         if (args != null) {
             this.IsFromArgs = true;
+            this.partnerType = args.PartnerType;
             if (args.AccountType == "2") { // customer
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
-                this.DisplayNumber = args.DisplayNo;
-                this.LocalName = args.LocalName;
-                this.EnglishName = args.EnglishName;
-                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+               
+                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                }
                 this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.AccountTypeCode = args.AccountType;
-                this.EntityPM.NewGLAccountCardId = args.CardId;
-                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
-                this.InitLOVFilters();
+                
             }
             else if (args.AccountType == "3") { // vendor
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
+              
+                this.AccountTypeCode = args.AccountType;
+                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                }
+                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
+                
+            }
+               
+        }
                 this.DisplayNumber = args.DisplayNo;
                 this.LocalName = args.LocalName;
                 this.EnglishName = args.EnglishName;
-                this.AccountTypeCode = args.AccountType;
-                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.EntityPM.NewGLAccountCardId = args.CardId;
                 this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
                 this.InitLOVFilters();
-            }
-        }
         this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
     }
 
@@ -131,7 +139,12 @@ export class NewGLAccountComponent extends BaseComponent {
             this.CD.detectChanges();
         }
     }
-
+    get NameForPrintingCheques() { return this.EntityPM.NameForPrintingCheques; }
+    set NameForPrintingCheques(value: string) {
+        if (this.EntityPM.NameForPrintingCheques != value) {
+            this.EntityPM.NameForPrintingCheques = value;
+        }
+    }
 
     get IsVATExempt() { return this.EntityPM.IsVATExempt }
     set IsVATExempt(value: boolean) {
@@ -151,7 +164,15 @@ export class NewGLAccountComponent extends BaseComponent {
         }
     }
 
+    get Smallcashbook() { return this.EntityPM.Smallcashbook }
+    set Smallcashbook(value: boolean) {
+        if (this.EntityPM.Smallcashbook != value) {
+            this.EntityPM.Smallcashbook = value;
 
+        }
+    }
+
+    IsVendor: boolean = false;
     IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
@@ -174,8 +195,8 @@ export class NewGLAccountComponent extends BaseComponent {
             // }
 
             //
-
-            if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+            if (value == "4") { this.IsVendor = true;}
+           else if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
 
                 // disable fields
                 this.IsMultiCurrency = true;
@@ -337,6 +358,8 @@ export class NewGLAccountComponent extends BaseComponent {
             }
         }
 
+     
+
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
 
@@ -357,9 +380,27 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicatorSaving();
         this.EntityPM.AccountTypeCode = AppTool.IsNullOrEmpty(this.AccountTypeCode) ? "1" : this.AccountTypeCode;
-        this.EntityPM.Inactive = false;
+        if (this.EntityPM.AccountTypeCode == '1') {
+            switch (this.EntityPM.ChartOfAccountsTypeCode) {
+                case "3": {
+                    this.EntityPM.AccountTypeCode = "2";
+                    break;
+                }
+                case "4": {
+                    this.EntityPM.AccountTypeCode = "3";
+                    break;
+                }
+                default: {
+                    this.EntityPM.AccountTypeCode = "1";
+                }
+            }
+        }
+        if (AppTool.IsNullOrEmpty(this.EntityPM.AccountTypeCode)) {
+            this.EntityPM.AccountTypeCode = "1"
+        }
+         this.EntityPM.Inactive = false;
         this.EntityPM.IsControlAccount = false;
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;

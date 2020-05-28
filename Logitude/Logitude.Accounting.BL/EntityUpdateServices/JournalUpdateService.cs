@@ -33,6 +33,9 @@ using Logitude.Server.Tools.QueueService;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.Accounting.BL.CoreBL.InterestTrans;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -105,7 +108,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant,true);
                 }
             }
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                var journalReconcileUpdateService = new JournalExternalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM, true);
 
+
+                var listTransactionId = entityPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                if (listTransactionId.Count > 0)
+                {
+                    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                    ledgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, Tenant, true);
+                }
+                var listReconcileExternalPageLineId = entityPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+                if (listReconcileExternalPageLineId.Count > 0)
+                {
+                    var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                    reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, Tenant, true);
+                }
+
+            }
         }
 
 
@@ -345,17 +367,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
                 {
 
-//                    if (LogitudeSettings.QueueServiceMode != "db")
-//                    {
-//                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
-//Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
-//");
-//                    }
+                    //                    if (LogitudeSettings.QueueServiceMode != "db")
+                    //                    {
+                    //                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
+                    //Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
+                    //");
+                    //                    }
 
                     ReCheckFromDBThrowIfNotValid(entityPM);
 
-                    JournalApproveService.EnqueueDB(entityPM);        
-            
+                    CreateInterestTransactionTo_RegularJournal(entityPM);
+                    JournalApproveService.EnqueueDB(entityPM);
+
 
                 }
             }
@@ -381,6 +404,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
 
+        }
+
+        public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
+        {
+            var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
+            myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
         }
 
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
@@ -447,7 +476,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new Exception("Journal id couldn't find in db" + JournalId);
                 }
                 if (_JornalPmSource.Tenant != requestTenant)
-                {
+                { 
                     throw new Exception("(Journal.Tenant!= requestTenant)");
                 }
                 if (String.IsNullOrWhiteSpace( _JornalPmSource.QueueId ))
@@ -498,7 +527,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
     public interface IJournalUpdateService 
     {
-        void Update(JournalPM entityPM, bool commit);
+        void Update(JournalPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
     }
     
 }

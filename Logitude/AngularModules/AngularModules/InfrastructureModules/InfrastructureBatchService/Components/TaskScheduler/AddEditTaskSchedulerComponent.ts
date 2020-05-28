@@ -16,7 +16,7 @@ import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContaine
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 
@@ -30,7 +30,7 @@ export class AddEditTaskSchedulerComponent  {
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
 
-    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     private CurrentSession = SessionLocator.SelectedSession;
     private GeneralTemplateComponent: any = null;
@@ -84,7 +84,7 @@ export class AddEditTaskSchedulerComponent  {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -96,7 +96,7 @@ export class AddEditTaskSchedulerComponent  {
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
-                //this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
             else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
@@ -114,15 +114,15 @@ export class AddEditTaskSchedulerComponent  {
 
         this.CurrentSession.StartBusyIndicator("Loading...");
 
-        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
-
                 this.SetSchedulerDetailsData(myResponse.Result);
             }
 
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
+                this.Clone();
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -133,6 +133,9 @@ export class AddEditTaskSchedulerComponent  {
 
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.DataContext.SetSchedulerDetailsData(schedulerDetailsData);
+        this.Clone();
+
+
     }
 
     StartTimeTabTitle: string = "One Time";
@@ -314,9 +317,9 @@ export class AddEditTaskSchedulerComponent  {
                     }
                 case "M":
                     {
-                        if (this.DataContext.MonthlyDay == 0) {
-                            errors.push(msg.replace("%FieldName", "Day of a month"));
-                        }
+                        //if (this.DataContext.MonthlyDay == 0) {
+                        //    errors.push(msg.replace("%FieldName", "Day of a month"));
+                        //}
                         break;
                     }
             }
@@ -338,13 +341,15 @@ export class AddEditTaskSchedulerComponent  {
 
             if (this.DataContext.IsNew) {
 
-                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
+                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         this.CurrentSession.CloseCurrentWindow();
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
-                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                        if (this.DataContext.fatherComponent) {
+                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                        }
                     }
 
                     else {
@@ -359,13 +364,15 @@ export class AddEditTaskSchedulerComponent  {
                 if (this.EntityPM.IsDirty) {
                     this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
 
-                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
+                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             this.EntityPM = myResponse.Result;
                             this.EntityPM.IsDirty = false;
                             this.CurrentSession.CloseCurrentWindow();
-                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                            if (this.DataContext.fatherComponent) {
+                                this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                            }
                         }
 
                         else {

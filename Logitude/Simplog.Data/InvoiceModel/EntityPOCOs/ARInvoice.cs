@@ -73,7 +73,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? ApprovedDate { get; set; }
         public string CreditedByARInvoiceId { get; set; }
         public DateTime? OperationalDate { get; set; }
-        public DateTime? DateForVATInterest { get; set; }
+        public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
@@ -198,8 +198,18 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public string ARInvoiceStockId { get; set; }
         public bool IsInvoiceNumberFromStock { get; set; }
-
+        public string DocumentFilingId { get; set; }
 
         public string ConcurrencyGUID { get; set; }
+
+        public string CreatedByPartner { get; set; }
+        public string BillToGLAccountId{ get; set; }
+
+        public string RegionalTaxId { get; set; }
+        [ForeignKey("RegionalTaxId")]
+        public virtual VatType RegionalTax { get; set; }
+
+        public double? RegionalTaxPercentage { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

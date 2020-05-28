@@ -15,7 +15,7 @@ import {ObjectFieldPMService} from '../../../../Infrastructure/Services/Standard
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './StandardFieldsComponent.html',
 })
 
@@ -120,7 +120,7 @@ export class TabItem {
     private loadedFields: ObjectFieldPM[];
     public LoadStandardFields() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
+        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -133,7 +133,7 @@ export class TabItem {
     }
 
     private LoadTranslationsForMultiEntity() {
-        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe(myResult => {
+        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityTranslations = myResponse.Result;
@@ -167,13 +167,20 @@ export class TabItem {
         logitudeWindow.Title = "Edit Standard Field";
         logitudeWindow.WindowArgs = editedItem;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/EditStandardFieldComponent');
+
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "Ok") {
+                this.LoadStandardFields();
+            }
+
+        });
     }
 }
 
 export class StandardFieldItem {
     private ObjectField: ObjectFieldPM;
     public ObjectFieldId: string;
-
+    public ObjectFieldCode: string;
     public fullLabelObject: FieldsTranslations = new FieldsTranslations();
     public shortLabelObject: FieldsTranslations = new FieldsTranslations();
     public listLabelObject: FieldsTranslations = new FieldsTranslations();
@@ -182,11 +189,12 @@ export class StandardFieldItem {
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;
+        this.ObjectFieldCode = field.FieldCode;
 
-        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.FullNameTextCodeId)[0];
-        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ShortNameTextCodeId)[0];
-        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ListTextCodeId)[0];
-        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.HelpTextCodeId)[0];
+        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.FullNameTextCodeCode)[0];
+        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ShortNameTextCodeCode)[0];
+        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ListTextCodeCode)[0];
+        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.HelpTextCodeCode)[0];
     }
 
     get DefaultText() { return this.ObjectField.FullNameTextCodeDefaultText; }
@@ -217,28 +225,28 @@ export class StandardFieldItem {
     //private LoadObjects() {
     //    var generalService: GeneralDomainService = new GeneralDomainService();
 
-    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe(myResult => {
+    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.fullLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.shortLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.listLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.helpLabelObject = myResponse.Result;

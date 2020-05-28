@@ -1,6 +1,5 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 
 import {AutomationCondition} from '../../../../Infrastructure/DataContracts/AutomationCondition';
@@ -12,7 +11,7 @@ import {AutomationHistoryPM} from '../../../../Common/EntityPMs/AutomationHistor
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    moduleId: module.id,
+    
     selector: 'ViewAutomationHistoryComponent',
     templateUrl: './ViewAutomationHistoryComponent.html',
     providers: [AutomationHistoryExtendedPMService],
@@ -62,7 +61,7 @@ export class ViewAutomationHistoryComponent extends BaseComponent implements OnI
     LoadAutomatedDataBackup() {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this._automationHistoryExtendedPMService.getAutomationBackupDataByAutomationId(this.CurrentEntityPM.AutomationsId, this.CurrentEntityPM.Version, SessionLocator.Tenant).subscribe(res => {
+        this._automationHistoryExtendedPMService.getAutomationBackupDataByAutomationId(this.CurrentEntityPM.AutomationsId, this.CurrentEntityPM.Version, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {

@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             get ;//{ return MappingTypeEnum.none; }
         }
 
-        public JournalLineMappingBase(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider)
+        public JournalLineMappingBase(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
         {
             _GLAccountPMProvider =myGLAccountPMProvider;
             this._JournalLine = journalLine;
@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         protected void MapExternalOpenAmount()
         {
-            if (_JournalLine.ExternalOpenAmount.HasValue)
+            if (_JournalLine.ExternalReconcileNumber != null && _JournalLine.ExternalOpenAmount.HasValue)
             {
                 //if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
                 //{
@@ -266,7 +266,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 //}
                 MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-
+                if (_JournalLine.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                {
+                    MyLedgerTransaction.OpenAmount = -1 * _JournalLine.ExternalOpenAmount.GetValueOrDefault();
+                }
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
         }

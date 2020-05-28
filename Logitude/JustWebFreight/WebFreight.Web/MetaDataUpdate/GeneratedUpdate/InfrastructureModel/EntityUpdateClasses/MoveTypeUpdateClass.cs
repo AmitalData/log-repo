@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class MoveTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "7bc749d52c58ea807ab0acadbc55e699";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "MoveType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "MoveTypes",
-			      				    OldDBTableName =  "MoveTypes",
 			      				    ObjectTableSingular =  "Move Type",
 			      				    ObjectTablePlural =  "Move Types",
+			      				    DescriptionDefaultText =  "Define the move types for shipments by Air, Ocean or Land transportation.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -128,31 +129,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureOthers/Components/MoveType/NewMoveTypeComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "MoveType,MoveTypes,Simplog.Infrastructure.NewMoveTypeCommand,Id,",
+			      				    HashString =  MoveTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MoveTypeEnglishName",
-					  						OldFieldName =  "MoveTypeEnglishName",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -198,25 +199,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MoveTypeEnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MoveTypeLocalName",
-					  						OldFieldName =  "MoveTypeLocalName",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -262,19 +263,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "MoveTypeLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -326,19 +327,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AddedManually",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -390,26 +391,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -451,31 +452,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransportModeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -521,21 +522,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "MoveType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -584,18 +585,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsAir",
-					  						OldFieldName =  "IsAir",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -645,19 +646,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsAir",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsInland",
-					  						OldFieldName =  "IsInland",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -707,19 +708,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsInland",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsOcean",
-					  						OldFieldName =  "IsOcean",
 					  						ObjectTableName =  "MoveType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -769,67 +770,86 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsOcean",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup MoveTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MTQG", Name = "Move Types" }, queryGroupRepository);
-						QueryGroup MoveTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9202", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup MoveTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MTQG", Name = "Move Types" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup MoveTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9202", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable MoveTypeObjectTable = objectTables.ContainsKey("MoveType") ? objectTables["MoveType"] : null;
+            if (MoveTypeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable MoveTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> MoveTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MoveType").ToList();   
+                MoveTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode MoveTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.Q.AllMoveTypes", DefaultText = @"All Move Types",LocalDefaultText = null, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MoveTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLMOVETYPES", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.AllMoveTypes", NameTextCodeDefaultText = "All Move Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode MoveTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.Q.AllMoveTypes", DefaultText = @"All Move Types",LocalDefaultText = null, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature MoveTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLMOVETYPES", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.AllMoveTypes", NameTextCodeDefaultText = "All Move Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MoveTypeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, NameTextCodeCode = MoveTypeTextCode_0.Code, ObjectTableName = "MoveType", Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id,FeatureUniqeCode= MoveTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllMoveTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMoveTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MoveType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllMoveTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 1, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMoveTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MoveType.TransportModeId" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllMoveTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 2, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "MoveTypeEnglishName" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMoveTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MoveType.MoveTypeEnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllMoveTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 3, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "MoveTypeLocalName" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMoveTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MoveType.MoveTypeLocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllMoveTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 4, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMoveTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "MoveType.AddedManually" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllMoveTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 5, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllMoveTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id,QueryCode = AllMoveTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "MoveType.InActive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable MoveTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> MoveTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MoveType").ToList();
+		   //List<ObjectField> MoveTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MoveType").ToList();
 		       
 	      
 
 	         Screen MoveTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MoveType.HeaderScreen", Name = "Header Screen", ObjectTableId = MoveTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = MoveTypeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MoveTypeMoveTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "MoveTypeEnglishName").FirstOrDefault().Id, ScreenId = MoveTypeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MoveTypeMoveTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.MoveTypeEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MoveTypeMoveTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "TransportModeId").FirstOrDefault().Id, ScreenId = MoveTypeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MoveTypeMoveTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = MoveTypeHeaderScreenScreen0.Id,ScreenCode = MoveTypeHeaderScreenScreen0.Code, ObjectFieldCode = "MoveType.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MoveTypeObjectTable.HeaderScreenId = MoveTypeHeaderScreenScreen0.Id;
+		    MoveTypeObjectTable.HeaderScreenCode = MoveTypeHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -840,19 +860,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   ObjectTable MoveTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode MoveTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MoveTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MoveTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MoveTypeObjectTable);
  
                  
 			   TextCode MoveTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MoveTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MoveTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MoveTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGT",HtmlComponentName = "MoveTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/MoveType/MoveTypeGeneralTabComponent", FeatureId = MoveTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.MoveTypes.MoveTypeGeneralControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGT",HtmlComponentName = "MoveTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/MoveType/MoveTypeGeneralTabComponent", FeatureId = MoveTypeGeneralFeature_TH0.Id,FeatureUniqeCode = MoveTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.MoveTypes.MoveTypeGeneralControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = MoveTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MoveTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MoveTypeEventsFeature_TH1.Id,FeatureUniqeCode = MoveTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = MoveTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -860,10 +880,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {  
 		   ObjectTable MoveTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature MoveTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MoveTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MoveTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MoveTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.PackageFeature", NameTextCodeDefaultText = "MoveType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature MoveTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MoveTypeObjectTable);
+		   Feature MoveTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MoveTypeObjectTable);
+		   Feature MoveTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MoveTypeObjectTable);
+		   Feature MoveTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.PackageFeature", NameTextCodeDefaultText = "MoveType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MoveTypeObjectTable);    
 	    
 		}
 

@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,24 @@ namespace Logitude.Accounting.Data.CustomFilters
                             queryableData = queryableData.Where(c => c.EnglishName.StartsWith(tString) || c.LocalName.StartsWith(tString));
                         }
                     }
+                    queryableData = FilterByReceivableCredit(queryableData, item);
+
+                    queryableData = FilterByPayableDebit(queryableData, item);
+
+                    queryableData = FilterByGLAccountCurrency(queryableData, item);
+
+                    if (item.FieldName == "BalanceInLocalCurrencyNotNull")
+                    {
+                        string tString = item.FieldValue as string;
+                        GLAccountMoreDataRepository MoreDataRepository = new GLAccountMoreDataRepository(tenant);
+                        List<string> MoreDataIds = (from a in MoreDataRepository.GetAll(tenant)
+                                                    where a.BalanceInLocalCurrency != null && a.BalanceInLocalCurrency != 0
+                                                    select a.AccountId).ToList();
+                        if (!string.IsNullOrEmpty(tString))
+                        {
+                            queryableData = queryableData.Where(c => MoreDataIds.Contains(c.Id) && c.AccountTypeCode == tString);
+                        }
+                    }
 
                     if (item.FieldName == "DisplayNumberOrName")
                     {
@@ -79,6 +98,41 @@ namespace Logitude.Accounting.Data.CustomFilters
             }
 
             return queryableData;
+        }
+
+        private IQueryable<GLAccount> FilterByReceivableCredit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "ReceivableCreditFilter")
+            {
+
+                queryableData = queryableData.Where(c => (c.RevenueExpenseType == "3" && c.ChartOfAccountsTypeCode == "7") || c.RevenueExpenseType == "1");
+
+            }
+            return queryableData;
+
+        }
+        private IQueryable<GLAccount> FilterByGLAccountCurrency(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "GLAccountCurrencyFilter")
+            {
+                GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
+                List<String> GLAccountCurrencyIds = gLAccountCurrencyRepository.GetAll(tenant).Select(s=>s.GLAccountId).ToList();
+                queryableData = queryableData.Where(c => GLAccountCurrencyIds.Contains(c.Id) == false  && c.IsMultiCurrency ==false && c.CurrencyId !=(string)queryFilterItem.FieldValue);
+
+            }
+            return queryableData;
+
+        }
+        private IQueryable<GLAccount> FilterByPayableDebit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "PayableDebitFilter")
+            {
+
+                queryableData = queryableData.Where(c => (c.RevenueExpenseType == "3" && c.ChartOfAccountsTypeCode == "7") || c.RevenueExpenseType == "2");
+
+            }
+            return queryableData;
+
         }
     }
 }

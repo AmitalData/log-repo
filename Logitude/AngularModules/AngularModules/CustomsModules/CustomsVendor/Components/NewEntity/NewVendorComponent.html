@@ -1,458 +1,495 @@
-﻿<style>
-    .subTitle{
-        color: #1b90cb;
-        font-size: 15px;
-    }
-    .FlipImgHoriz {
-        transform: rotate(180deg);
-    }
-    .Warning {
-        max-width: 400px;
-        color: #696969;
-        text-align: left;
-        background: #fff5ce;
-        border: 1px solid #ffd598;
-        border-radius: 5px;
-        padding: 2px 10px;
-        margin: 5px;
-        margin: auto;
-        white-space: normal;
-    }
-    .Warning:hover{
-        transition: 0.3s all;
-        background: #fcf2c8;
-        color: black;
-        cursor: default;
 
-    }
-    .sm{
-        float: right;
-        display: inline-block;
-        height: 19px;
-        width: auto;
-        margin: 2px;
-        font-size: 11px;
+<style>
+  .subTitle {
+    color: #1b90cb;
+    font-size: 15px;
+  }
+
+  .FlipImgHoriz {
+    transform: rotate(180deg);
+  }
+
+  .Warning {
+    max-width: 400px;
+    color: #696969;
+    text-align: left;
+    background: #fff5ce;
+    border: 1px solid #ffd598;
+    border-radius: 5px;
+    padding: 2px 10px;
+    margin: 5px;
+    margin: auto;
+    white-space: normal;
+  }
+
+    .Warning:hover {
+      transition: 0.3s all;
+      background: #fcf2c8;
+      color: black;
+      cursor: default;
     }
 
-    /** Send button design  **/
+  .sm {
+    float: right;
+    display: inline-block;
+    height: 19px;
+    width: auto;
+    margin: 2px;
+    font-size: 11px;
+  }
 
-    /* Abdullah: the use of 'deep' is removing angular encabsulation of css selectors */
-    * /deep/ .x-button::shadow  {
-        box-shadow: 2px 2px 0 rgba(171, 174, 175, 0.52) !important;
-        color: #676767 !important;
+  /** Send button design  **/
 
-        /* 1 - Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eafff8+0,6abfa3+100 */
+  /* Abdullah: the use of 'deep' is removing angular encabsulation of css selectors */
+  * /deep/ .x-button::shadow {
+    box-shadow: 2px 2px 0 rgba(171, 174, 175, 0.52) !important;
+    color: #676767 !important;
+    /* 1 - Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eafff8+0,6abfa3+100 */
+    /* 3- */
+    color: #fff !important;
+    border: 1px solid #529267;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,199e7a+100 */
+    background: #7ad6ba !important; /* Old browsers */
+    background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ) !important; /* IE6-9 */
+  }
 
-        /* 3- */
-        color: #fff !important;
-        border: 1px solid #529267;
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,199e7a+100 */
-        background: #7ad6ba !important; /* Old browsers */
-        background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%) !important; /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%) !important; /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ) !important; /* IE6-9 */
+  * /deep/ .x-button:hover::shadow {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,45d3b2+55,1cb28a+100 */
+    background: #7ad6ba !important; /* Old browsers */
+    background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #45d3b2 55%, #1cb28a 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#1cb28a',GradientType=0 ) !important; /* IE6-9 */
+  }
 
-    }
-    * /deep/ .x-button:hover::shadow  {
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,45d3b2+55,1cb28a+100 */
-        background: #7ad6ba !important; /* Old browsers */
-        background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #45d3b2 55%, #1cb28a 100%) !important; /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%) !important; /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#1cb28a',GradientType=0 ) !important; /* IE6-9 */
-    }
-    * /deep/ .x-button:active::shadow  {
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,74bf9c+7,7ad6ba+9,1aa580+81,189b69+100 */
-        background: #7ad6ba !important; /* Old browsers */
-        background: -moz-linear-gradient(top, #7ad6ba 0%, #74bf9c 7%, #7ad6ba 9%, #1aa580 81%, #189b69 100%) !important; /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%) !important; /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#189b69',GradientType=0 ) !important; /* IE6-9 */
-    }
+  * /deep/ .x-button:active::shadow {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,74bf9c+7,7ad6ba+9,1aa580+81,189b69+100 */
+    background: #7ad6ba !important; /* Old browsers */
+    background: -moz-linear-gradient(top, #7ad6ba 0%, #74bf9c 7%, #7ad6ba 9%, #1aa580 81%, #189b69 100%) !important; /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%) !important; /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#189b69',GradientType=0 ) !important; /* IE6-9 */
+  }
 
-    /* end: send button design */
+  /* end: send button design */
 </style>
 <table>
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="3">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-        </td>
-    </tr>
+  <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <td colspan="3">
+      <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+    </td>
+  </tr>
 
-    <!-- header -->
-    <tr style="height: 28px;">
-        <td colspan="2" class="subTitle">
-            {{'Customs.Vendor.O.SearchBy' | TextCodeTranslationPipe}}
-        </td>
-    </tr>
+  <!-- header -->
+  <tr style="height: 28px;">
+    <td colspan="2" class="subTitle">
+      {{'Customs.Vendor.O.SearchBy' | TextCodeTranslationPipe}}
+    </td>
+  </tr>
 
-    <!-- Filters Fields-->
-    <tr>
-        <td style="padding-right: 10px; width: 540px; height: 100px;">
-            
-            <table style="table-layout: fixed;" *ngIf="EntityPM">
-                <tr class="FormFieldRow">
-                    <!-- VendorNumber -->
-                    <td style="width: 150px;">
-                        <LogTextBox [ObjectFieldName]="'VendorNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+  <!-- Filters Fields-->
+  <tr>
+    <td style="padding-right: 10px; width: 540px; height: 100px;">
 
-                    <td style="width: 50px;"><div></div></td>
+      <table style="table-layout: fixed;" *ngIf="EntityPM">
+        <tr class="FormFieldRow">
+          <!-- VendorNumber -->
+          <td style="width: 150px;">
+            <LogTextBox [ObjectFieldName]="'VendorNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                    <!-- VendorName -->
-                    <td width="8px;">
-                        <LogLabel [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="' '"></LogLabel>
-                    </td>
-                    <td style="width: 150px;" tabindex="2">
-                        <LogTextBox [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+          <td style="width: 50px;">
+            <div></div>
+          </td>
 
-                    <td style="width: 50px;"><div></div></td>
+          <!-- VendorName -->
+          <td width="8px;">
+            <LogLabel [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="' '"></LogLabel>
+          </td>
+          <td style="width: 150px;" tabindex="2">
+            <LogTextBox [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                    <!-- CountryCode -->
-                    <td width="8px;">
-                        <LogLabel [ObjectFieldName]="'CountryCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="' '"></LogLabel>
-                    </td>
-                    <td style="width: 150px;">
-                        <LogLov [ObjectFieldName]="'CountryCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [PlaceHolder]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe"
-                                [LookUpTableName]="'Customs.CustomsCountry'"
-                                [HideColumns]="true">
-                        </LogLov>
-                    </td>
+          <td style="width: 50px;">
+            <div></div>
+          </td>
 
-                    <td></td>
-                </tr>
-                <tr class="FormFieldRow">
-                    <!-- Customs.SubCountry -->
-                    <td>
-                        <LogLov [ObjectFieldName]="'SubCountryCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [SelectedValue]="SubCountryCode"
-                                [DependencyFilter1Value]="CountryCode"
-                                [LookUpTableName]="'Customs.SubCountry'"
-                                [PlaceHolder]="'Customs.CustomsVendor.F.SubCountryCode' | TextCodeTranslationPipe"
-                                [HideColumns]="true">
-                        </LogLov>
-                    </td>
+          <!-- CountryCode -->
+          <td width="8px;">
+            <LogLabel [ObjectFieldName]="'CountryCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="' '"></LogLabel>
+          </td>
+          <td style="width: 150px;">
+            <LogLov [ObjectFieldName]="'CountryCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [PlaceHolder]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe"
+                    [LookUpTableName]="'Customs.CustomsCountry'"
+                    [HideColumns]="true">
+            </LogLov>
+          </td>
 
-                    <td></td>
+          <td></td>
+        </tr>
+        <tr class="FormFieldRow">
+          <!-- Customs.SubCountry -->
+          <td>
+            <LogLov [ObjectFieldName]="'SubCountryCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [SelectedValue]="SubCountryCode"
+                    [DependencyFilter1Value]="CountryCode"
+                    [LookUpTableName]="'Customs.SubCountry'"
+                    [PlaceHolder]="'Customs.CustomsVendor.F.SubCountryCode' | TextCodeTranslationPipe"
+                    [HideColumns]="true">
+            </LogLov>
+          </td>
 
-                    <td width="8px;">
-                    </td>
-                    <!-- CityName -->
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.CityName' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+          <td></td>
 
-                    <td style="width: 95px;"><div></div></td>
+          <td width="8px;"></td>
+          <!-- CityName -->
+          <td>
+            <LogTextBox [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.CityName' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                    <!-- MainAddressLine -->
+          <td style="width: 95px;">
+            <div></div>
+          </td>
 
-                    <td width="8px;">
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.MainAddressLine' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+          <!-- MainAddressLine -->
 
-                    <td></td>
+          <td width="8px;"></td>
+          <td>
+            <LogTextBox [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.MainAddressLine' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                </tr>
-                <tr class="FormFieldRow">
-                    <!-- PostalCode -->
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.PostalCode' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+          <td></td>
 
-                    <td><div></div></td>
+        </tr>
+        <tr class="FormFieldRow">
+          <!-- PostalCode -->
+          <td>
+            <LogTextBox [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.PostalCode' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                    <td width="8px;"></td>
+          <td>
+            <div></div>
+          </td>
 
-                    <!-- DunsNumber -->
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'DunsNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.DunsNumber' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
-                    </td>
+          <td width="8px;"></td>
 
-                    <td></td>
+          <!-- DunsNumber -->
+          <td>
+            <LogTextBox [ObjectFieldName]="'DunsNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.DunsNumber' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          </td>
 
-                    <!-- VATNumber -->
-                    <td width="8px;"></td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VATNumber' | TextCodeTranslationPipe"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+          <td></td>
 
-                    </td>
+          <!-- VATNumber -->
+          <td width="8px;"></td>
+          <td>
+            <LogTextBox [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName" [Placeholder]="'Customs.CustomsVendor.F.VATNumber' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
 
-                    <td></td>
+          </td>
 
-                </tr>
-            </table>
+          <td></td>
 
-        </td>
-        <td><div></div></td>
-        <td><div></div></td>
-    </tr>
+        </tr>
+      </table>
 
-    <!-- Toolbar-->
-    <tr>
-        <td colspan="3" style="height: 40px; padding-right: 10px;">
-            <custom-send-options style="float: right; padding-left: 10px;"
-                                 #MyCustomSendOptionsComponent
-                                 (SendButtonClicked)="SendButtonClicked($event)">
-            </custom-send-options>
-            <button style="width: 90px; float: right;" class="Button" (click)="CreateSupplierButtonClicked()"> {{'Customs.Vendor.O.New' | TextCodeTranslationPipe}}</button>
-            <div *ngIf="IsWarningBoxVisible" class="Warning" style="float: left;">
-                {{WarningMsg}}
-            </div>
-        </td>
-    </tr>
+    </td>
+    <td>
+      <div></div>
+    </td>
+    <td>
+      <div></div>
+    </td>
+  </tr>
 
-    <!-- Grid -->
-    <tr>
-        <td colspan="3" style="height: 100%;">
+  <!-- Toolbar-->
+  <tr>
+    <td colspan="3" style="height: 40px; padding-right: 10px;">
+      <custom-send-options style="float: right; padding-left: 10px;"
+                           #MyCustomSendOptionsComponent
+                           (SendButtonClicked)="SendButtonClicked($event)">
+      </custom-send-options>
+      <button style="width: 90px; float: right;" class="Button" (click)="CreateSupplierButtonClicked()"> {{'Customs.Vendor.O.New' | TextCodeTranslationPipe}}</button>
+      <div *ngIf="IsWarningBoxVisible" class="Warning" style="float: left;">
+        {{WarningMsg}}
+      </div>
+    </td>
+  </tr>
 
-            <div style="height: 100%;">
+  <!-- Grid -->
+  <tr>
+    <td colspan="3" style="height: 100%;">
 
-                <table style="height: 100%;">
-                    <tr>
-                        <td>
+      <div style="height: 100%;">
 
-                            <!-- Grid -->
-                            <table>
+        <table style="height: 100%;">
+          <tr>
+            <td>
 
-                                <tr>
-                                    <td colspan="2" style="height: 100%;">
+              <!-- Grid -->
+              <table>
 
-                                        <div class="CellContent" style="top: 10px;">
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                                 [ItemSource]="VendorsList" 
-                                                                (RowDataLoaded)="OnRowLoaded($event)"
-                                                                (SelectedItemChanged)="OnRowSelected($event)"
-                                                                [SelectedRow]="SelectedRow">
+                <tr>
+                  <td colspan="2" style="height: 100%;">
 
-                                                <!-- Details -->
-                                                <log-row-details>
-                                                    <row-template template="let item">
-                                                        <div style="min-height: 180px; width: 100%; background: #e3f2fb; position: relative;">
-                                                            <div style="position: absolute; top: 5px; right: 5px; bottom: 5px; left: 5px; background: white;">
-                                                                <table>
-                                                                    <tr style="height: 32px;">
-                                                                        <!-- CityName -->
-                                                                        <td style="width: 110px;">
-                                                                            <LogLabel [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td style="width: 150px;">
-                                                                            {{item.CityName}}
-                                                                        </td>
+                    <div class="CellContent" style="top: 10px;">
+                      <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                          [ItemSource]="VendorsList"
+                                          (RowDataLoaded)="OnRowLoaded($event)"
+                                          (SelectedItemChanged)="OnRowSelected($event)"
+                                          [SelectedRow]="SelectedRow">
 
-                                                                        <!-- SubCountryName -->
-                                                                        <td style="width: 100px;">
-                                                                            <LogLabel [ObjectFieldName]="'SubCountryName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td style="width: 150px;">
-                                                                            {{item.SubCountryName}}
-                                                                        </td>
+                        <!-- Details -->
+                        <log-row-details>
+                          <row-template>
+                            <ng-template let-item>
+                              <div style="min-height: 180px; width: 100%; background: #e3f2fb; position: relative;">
+                                <div style="position: absolute; top: 5px; right: 5px; bottom: 5px; left: 5px; background: white;">
+                                  <table>
+                                    <tr style="height: 32px;">
+                                      <!-- CityName -->
+                                      <td style="width: 110px;">
+                                        <LogLabel [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                      </td>
+                                      <td style="width: 150px;">
+                                        {{item.CityName}}
+                                      </td>
 
-                                                                        <!-- PostalCode -->
-                                                                        <td style="width: 100px;">
-                                                                            <LogLabel [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td>
-                                                                            {{item.PostalCode}}
-                                                                        </td>
-                                                                    </tr>
+                                      <!-- SubCountryName -->
+                                      <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'SubCountryName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                      </td>
+                                      <td style="width: 150px;">
+                                        {{item.SubCountryName}}
+                                      </td>
 
-                                                                    <tr style="height: 32px;">
-                                                                        <!-- MainAddressLine -->
-                                                                        <td style="width: 110px;">
-                                                                            <LogLabel [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td colspan="5" style="width: 150px;">
-                                                                            {{item.MainAddressLine}}
-                                                                        </td>
-                                                                    </tr>
+                                      <!-- PostalCode -->
+                                      <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                      </td>
+                                      <td>
+                                        {{item.PostalCode}}
+                                      </td>
+                                    </tr>
+
+                                    <tr style="height: 32px;">
+                                      <!-- MainAddressLine -->
+                                      <td style="width: 110px;">
+                                        <LogLabel [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                      </td>
+                                      <td colspan="5" style="width: 150px;">
+                                        {{item.MainAddressLine}}
+                                      </td>
+                                    </tr>
 
 
-                                                                    <tr style="height: 35px;">
-                                                                        <td class="subTitle">
-                                                                            {{'Customs.Vendor.O.Communications' | TextCodeTranslationPipe}}
-                                                                        </td>
-                                                                    </tr>
+                                    <tr style="height: 35px;">
+                                      <td class="subTitle">
+                                        {{'Customs.Vendor.O.Communications' | TextCodeTranslationPipe}}
+                                      </td>
+                                    </tr>
 
-                                                                    <tr>
-                                                                        <td colspan="6" style="padding-left: 20px;padding-right: 5px;">
-                                                                            <div class="SimpleGridView">
-                                                                                <div class="SimpleGridViewHeader">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width: 123px; min-width: 123px; max-width: 123px; color : #1b90cb;padding-right: 3px;">{{'Customs.ClientsAddressCommType.F.CommunicationTypeCode' | TextCodeTranslationPipe}}</td>
-                                                                                            <td style="width: 145px; min-width: 145px; max-width: 145px; color : #1b90cb;padding-right: 3px;">{{'Customs.ClientsAddressCommType.F.CommunicationAddress' | TextCodeTranslationPipe}}</td>
-                                                                                            <td class="LastChild">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
+                                    <tr>
+                                      <td colspan="6" style="padding-left: 20px;padding-right: 5px;">
+                                        <div class="SimpleGridView">
+                                          <div class="SimpleGridViewHeader">
+                                            <table>
+                                              <tr>
+                                                <td style="width: 123px; min-width: 123px; max-width: 123px; color : #1b90cb;padding-right: 3px;">{{'Customs.ClientsAddressCommType.F.CommunicationTypeCode' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 145px; min-width: 145px; max-width: 145px; color : #1b90cb;padding-right: 3px;">{{'Customs.ClientsAddressCommType.F.CommunicationAddress' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild">
+                                                  <div></div>
+                                                </td>
+                                              </tr>
 
-                                                                                    </table>
-                                                                                </div>
+                                            </table>
+                                          </div>
 
-                                                                                <div class="SimpleGridViewBody">
-                                                                                    <table>
-                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of item.VendorCommunications">
-                                                                                            <td style="width: 123px; min-width: 123px; max-width: 123px;">
-                                                                                                {{item.CommunicationTypeName}}
-                                                                                            </td>
-                                                                                            <td style="width: 145px; min-width: 145px; max-width: 145px;">
-                                                                                                {{item.CommunicationAddress}}
-                                                                                            </td>
-                                                                                            <td><div></div></td>
-                                                                                        </tr>
+                                          <div class="SimpleGridViewBody">
+                                            <table>
+                                              <tr class="SimpleGridViewRow" *ngFor="let item of item.VendorCommunications">
+                                                <td style="width: 123px; min-width: 123px; max-width: 123px;">
+                                                  {{item.CommunicationTypeName}}
+                                                </td>
+                                                <td style="width: 145px; min-width: 145px; max-width: 145px;">
+                                                  {{item.CommunicationAddress}}
+                                                </td>
+                                                <td>
+                                                  <div></div>
+                                                </td>
+                                              </tr>
 
-                                                                                        <tr>
-                                                                                            <td colspan="2">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </row-template>
-                                                </log-row-details>
-
-                                                <!-- VendorNumber -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'" [binding]="'VendorNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.VendorNumber}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- VendorName -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe" [width]="'177'" [Alignment]="'right'" [binding]="'VendorName'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.VendorName}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- CountryCode -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'CountryCode'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.CountryName}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- SubCountryCode -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.SubCountryCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'SubCountryCode'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.SubCountryName}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- VATNumber -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.VATNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'VATNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.VATNumber}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- DunsNumber -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.DunsNumber' | TextCodeTranslationPipe" [width]="'43'" [Alignment]="'right'" [binding]="'DunsNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.DunsNumber}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- StatusName -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.StatusCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'StatusName'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span>{{item.StatusName}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- InActive -->
-                                                <log-column [header]="'Customs.CustomsVendor.F.InActive' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'InActive'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <!--<span>{{item.InActive}}</span>-->
-                                                            <img *ngIf="item.InActive" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- IsFromDeclarationMode -->
-                                                <log-column *ngIf="IsFromDeclarationMode" [header]="'Customs.General.O.Deposition' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
-                                                        <div style="text-align: right;" class="TextTrimming">
-                                                            <span *ngIf="!IsImporterDespositionValide" style="color:red">{{item.ImporterDesposition}}</span>
-                                                            <span *ngIf="IsImporterDespositionValide" style="color:green">{{item.ImporterDesposition}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                                <!-- Buttons -->
-                                                <log-column [width]="'83'" [Alignment]="'right'" [header]="'Customs.CustomsVendor.O.Exist' | TextCodeTranslationPipe">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" [TabIndex]="-1">
-                                                        <button *ngIf="!item.Exists" [disabled]="item.StatusCode=='3'" class="Button sm" (click)="AddButtonClicked(item)">{{'Customs.General.B.Add' | TextCodeTranslationPipe}}</button>
-                                                        <button *ngIf="item.Exists" class="Button sm" (click)="UpdateButtonClicked(item)">{{'Customs.CustomsClosedTable.B.Update' | TextCodeTranslationPipe}}</button>
-
-                                                    </log-cell-template>
-                                                </log-column>
-
-                                            </logitude-edit-grid>
+                                              <tr>
+                                                <td colspan="2">
+                                                  <div></div>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </div>
                                         </div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </row-template>
+                        </log-row-details>
 
-                                    </td>
-                                </tr>
+                        <!-- VendorNumber -->
+                        <log-column [header]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'" [binding]="'VendorNumber'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.VendorNumber}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
 
-                            </table>
+                        <!-- VendorName -->
+                        <log-column [header]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe" [width]="'177'" [Alignment]="'right'" [binding]="'VendorName'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.VendorName}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
 
-                        </td>
-                    </tr>
-                </table>
+                        <!-- CountryCode -->
+                        <log-column [header]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'CountryCode'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.CountryName}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
 
-            </div>
-        </td>
-    </tr>
+                        <!-- SubCountryCode -->
+                        <log-column [header]="'Customs.CustomsVendor.F.SubCountryCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'SubCountryCode'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.SubCountryName}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
 
-    <tr style="height: 40px;">
-        <td>
-            <div></div>
-        </td>
-        <td>
-            <div></div>
-        </td>
-        <td style="width: 57px;vertical-align: bottom;">
-            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe}}</button>
-        </td>
-    </tr>
+                        <!-- VATNumber -->
+                        <log-column [header]="'Customs.CustomsVendor.F.VATNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'VATNumber'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.VATNumber}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                        <!-- DunsNumber -->
+                        <log-column [header]="'Customs.CustomsVendor.F.DunsNumber' | TextCodeTranslationPipe" [width]="'43'" [Alignment]="'right'" [binding]="'DunsNumber'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.DunsNumber}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                        <!-- StatusName -->
+                        <log-column [header]="'Customs.CustomsVendor.F.StatusCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'StatusName'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span>{{item.StatusName}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                        <!-- InActive -->
+                        <log-column [header]="'Customs.CustomsVendor.F.InActive' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'InActive'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <!--<span>{{item.InActive}}</span>-->
+                                <img *ngIf="item.InActive" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                        <!-- IsFromDeclarationMode -->
+                        <log-column *ngIf="IsFromDeclarationMode" [header]="'Customs.General.O.Deposition' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                              <div style="text-align: right;" class="TextTrimming">
+                                <span *ngIf="!IsImporterDespositionValide" style="color:red">{{item.ImporterDesposition}}</span>
+                                <span *ngIf="IsImporterDespositionValide" style="color:green">{{item.ImporterDesposition}}</span>
+                              </div>
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                        <!-- Buttons -->
+                        <log-column [width]="'83'" [Alignment]="'right'" [header]="'Customs.CustomsVendor.O.Exist' | TextCodeTranslationPipe">
+                          <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" [TabIndex]="-1">
+                              <button *ngIf="!item.Exists" [disabled]="item.StatusCode=='3'" class="Button sm" (click)="AddButtonClicked(item)">{{'Customs.General.B.Add' | TextCodeTranslationPipe}}</button>
+                              <button *ngIf="item.Exists" class="Button sm" (click)="UpdateButtonClicked(item)">{{'Customs.CustomsClosedTable.B.Update' | TextCodeTranslationPipe}}</button>
+
+                            </log-cell-template>
+                          </ng-template>
+                        </log-column>
+
+                      </logitude-edit-grid>
+                    </div>
+
+                  </td>
+                </tr>
+
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </td>
+  </tr>
+
+  <tr style="height: 40px;">
+    <td>
+      <div></div>
+    </td>
+    <td>
+      <div></div>
+    </td>
+    <td style="width: 57px;vertical-align: bottom;">
+      <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe}}</button>
+    </td>
+  </tr>
 
 </table>

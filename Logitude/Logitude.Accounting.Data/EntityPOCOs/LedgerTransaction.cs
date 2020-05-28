@@ -98,6 +98,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool InReconcileProgress { get; set; }
         [Column("ReconcileRemarks")]
 	    public string ReconcileRemarks { get; set; }
+        [Column("InProgressExternalReconcile")]
+	    public bool InProgressExternalReconcile { get; set; }
     }
 }
 	 

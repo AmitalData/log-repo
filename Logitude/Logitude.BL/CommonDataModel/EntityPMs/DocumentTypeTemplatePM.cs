@@ -57,6 +57,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string ObjectTableId { get; set; }
         public string CC { get; set; }
+        public string BCC { get; set; }
+        
 
 
         //         this.Property(t => t.CountryCode).IsFixedLength().IsUnicode(false).HasMaxLength(2);

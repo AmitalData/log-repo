@@ -13,8 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
-import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
+
 
 import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 
@@ -25,18 +24,19 @@ import {WarehouseHelper} from '../Helpers/WarehouseHelper';
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseEntryComponent',
     templateUrl: './NewWarehouseEntryComponent.html',
  
 })
 
 export class NewWarehouseEntryComponent extends BaseComponent implements OnInit {
+  public ExpectedEntryDate: any;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
 
-    EventTypeCodeList: EventTypeClass[];
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
     ShipmentPM: ShipmentPM;
@@ -54,8 +54,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.warehouseEntryPM = this.warehouseHelper.GetNewWarehouseEntry(this);
 
         this.validator = new ClassLevelValidator();
-        this.EventTypeCodeList = [];
- 
 
         var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntry")[0];
         if (table) this.ObjectTableId = table.Id;
@@ -66,7 +64,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
 
             this.Start(args);
         });
@@ -105,7 +103,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         if (this.warehouseEntryPM) {
         
             if (this.ShipmentPM) {
-                if (this.ShipmentPM.ShipmentLevelCode == "D") this.warehouseEntryPM.CustomerId = this.ShipmentPM.CustomerId;
                 this.warehouseEntryPM.ShipmentId = this.ShipmentPM.Id;
                 this.warehouseEntryPM.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
                 this.warehouseEntryPM.HouseNumber = this.ShipmentPM.House;
@@ -113,7 +110,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ShipmentLevelCode = this.ShipmentPM.ShipmentLevelCode;
                 this.warehouseEntryPM.TransportModeId = this.ShipmentPM.TransportModeId;
                 this.warehouseEntryPM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
-
+                this.warehouseEntryPM.ConnectedTo = args.ConnectedTo;
 
                 this.warehouseEntryPM.DirectionId = this.ShipmentPM.DirectionId;
 
@@ -133,33 +130,30 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                     this.warehouseEntryPM.ToAddressId = this.ShipmentPM.MainCarriageToAddressId;
                     this.warehouseEntryPM.FromPartnerId = this.ShipmentPM.MainCarriageFromPartnerId;
                     this.warehouseEntryPM.ToPartnerId = this.ShipmentPM.MainCarriageToPartnerId;
+                    this.warehouseEntryPM.FromTypeCode = "PART";
+                    this.warehouseEntryPM.ToTypeCode = "PART";
 
                 }
                 else {
                     this.warehouseEntryPM.FromPortId = this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId;
                     this.warehouseEntryPM.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
+                    this.warehouseEntryPM.FromTypeCode = "PORT";
+                    this.warehouseEntryPM.ToTypeCode = "PORT";
                 }
 
 
             }
 
+
+            this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+
+            
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             this.IsNotSetWarehouseIdForWarehouseLegShipment = args.IsNotSetWarehouseIdForWarehouseLegShipment;
-            var myCommonDomain = new CommonDomainService();
-            myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var warehouseId = myResponse.Result;
-                    if (!AppTool.IsNullOrEmpty(warehouseId) && AppTool.IsNullOrEmpty(args.WarehouseId) ) {
-                        this.warehouseEntryPM.WarehouseId = warehouseId;
-                    }
-                    else {
-                        this.warehouseEntryPM.WarehouseId = args.WarehouseId;
-                    }
-                }
-                else {
-                    this.warehouseEntryPM.WarehouseId = args.WarehouseId;
-                }
-            });
+
+
+            this.SetDefultWarehouseValue(args);
+            this.SetDefultCustomerValue(args);
 
             this.warehouseEntryPM.ExpectedEntryDate = args.ExpectedEntryDate;
             this.warehouseEntryPM.ActualEntryDate = args.ActualEntryDate;
@@ -169,6 +163,26 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         }
     }
 
+
+    SetDefultWarehouseValue(args: any) {
+        if (!AppTool.IsNullOrEmpty(args.WarehouseId)) this.warehouseEntryPM.WarehouseId = args.WarehouseId;
+        else if (this.ShipmentPM && this.ShipmentPM.WarehouseLegWarehouseId) this.warehouseEntryPM.WarehouseId = this.ShipmentPM.WarehouseLegWarehouseId;
+        else {
+            var myCommonDomain = new CommonDomainService();
+            myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.warehouseEntryPM.WarehouseId = myResponse.Result;
+                }
+            });
+        }
+
+    }
+
+
+    SetDefultCustomerValue(args: any) {
+        if (!AppTool.IsNullOrEmpty(args.CustomerId)) this.warehouseEntryPM.CustomerId = args.CustomerId;
+        else if (this.ShipmentPM && this.ShipmentPM.CustomerId) this.warehouseEntryPM.CustomerId = this.ShipmentPM.CustomerId;
+    }
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private timerToken: any;
@@ -200,7 +214,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -267,7 +281,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 

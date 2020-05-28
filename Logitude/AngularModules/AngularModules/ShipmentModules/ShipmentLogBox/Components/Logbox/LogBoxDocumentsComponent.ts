@@ -1,7 +1,7 @@
 declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {Http, Response} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,10 +28,12 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'LogBoxDocuments',
-    moduleId: module.id,
+    
     templateUrl: './LogBoxDocumentsComponent.html',
     //providers: [ EntityListService, DocumentsFilingExtendedPMService],
     inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText'],
@@ -55,6 +57,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     ShowCancelled: boolean = false;
     RequestedCount: number = 0;
     SignRequiredCount: number = 0;
+    StopLoading: boolean = false;
     @Output() ArchiveDone = new EventEmitter();
     DataContext: LogBoxDocumentsComponent = this;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
@@ -71,7 +74,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     private messageWindow: MessageWindow = new MessageWindow();
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public http: Http, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
+    constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
         this.SelectedTabCode = "CAT";
@@ -105,17 +108,18 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
             //this.CurrentSession.StartBusyIndicator("Loading ...");//
-            if (res == null)
-            {
-                this.externalDocs = [];
-                this.SignReqDocs = [];
-                this.externalRequestedDocs = [];
-                this.AllHeader = "By Category (0)";
-                this.RequestedCount = 0;
-                this.SignRequiredCount = 0;
-                return;
-            }
-             
+          this.StopLoading = false;
+          if (res == null) {
+            this.StopLoading = true;
+            this.externalDocs = [];
+            this.SignReqDocs = [];
+            this.externalRequestedDocs = [];
+            this.AllHeader = "By Category (0)";
+            this.RequestedCount = 0;
+            this.SignRequiredCount = 0;
+            return;
+          }
+          
             //this.DisableAddDocumentButton = true;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
@@ -125,36 +129,41 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             //    clearTimeout(this.RefreshTimer);
             //}
             //this.RefreshTimer = setInterval(() => this.ReloadDocuments(false), 5000);//setTimeout(() => this.CheckIfSignDone(EntityPm.Id), 2000);
-            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myResult => {
-                if (!myResult.HasError) {
-                    this.ShipmentPM = myResult.Result;
-                    this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
-                    this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
-                    this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
-                        if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
-                            this.DisableAddDocumentButton = true;
-                        }
-                        else {
-                            this.DisableAddDocumentButton = false;
-                        }
-                        this.ReloadDocuments(true);
-                    });
-                    this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
-                        if (!theResult.HasError) {
-                            this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
-                        }
-                    });
-                    //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
-                    //    if (!theResult.HasError) {
-                    //        this.ForwardingPartner = theResult.Result;
-                    //    }
-                    //});
+            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult: any) => {
+              if (!myResult.HasError) {
+                if (this.StopLoading) {
+                  this.StopBusyIndicator();
                 }
                 else {
+                  this.ShipmentPM = myResult.Result;
+                  this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
+                  this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
+                  this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
+                    if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
+                      this.DisableAddDocumentButton = true;
+                    }
+                    else {
+                      this.DisableAddDocumentButton = false;
+                    }
                     this.ReloadDocuments(true);
+                  });
+                  this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult: any) => {
+                    if (!theResult.HasError) {
+                      this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
+                    }
+                  });
+                  //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
+                  //    if (!theResult.HasError) {
+                  //        this.ForwardingPartner = theResult.Result;
+                  //    }
+                  //});
                 }
+              }
+              else {
+                this.ReloadDocuments(true);
+              }
             });
-            
+          
 
             //this.ReloadDocuments(true);
 
@@ -280,8 +289,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                             var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                             EntityPm.SignDueDate.setMinutes(CurrMin);
                             EntityPm.CancellSignRequest = false;
-                            //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
-                            this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
+                            //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
+                            this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -323,8 +332,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                     EntityPm.SignDueDate.setMinutes(CurrMin);
                     EntityPm.CancellSignRequest = false;
-                    //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
-                    this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
+                    //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
+                    this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
                         if (Result.Result != null && Result.Result.HasError) {
                             this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -365,7 +374,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     CheckIfSignDone(DocId: string) {
-        this._documentsFilingPMService.get(DocId).subscribe(res => {
+        this._documentsFilingPMService.get(DocId).subscribe((res:any) => {
             var pmResponse: any = res;
             if (pmResponse != null && !pmResponse.HasError) {
                 var currentdocument = pmResponse.Result;
@@ -413,7 +422,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
             Document.DontAddToQueue = false;
             Document.ForwarderDocumentId = null;
-            this._documentsFilingPMService.update(Document).subscribe(myResult => {
+            this._documentsFilingPMService.update(Document).subscribe((myResult:any) => {
 
             });
         }
@@ -423,8 +432,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         EntityPM.DontAddToQueue = true;
         EntityPM.SignRequestByUserEmail = null;
         EntityPM.CancellSignRequest = true;
-        //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
-        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe(Result => {
+        //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
+        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe((Result:any) => {
             this.RunSignBusyIndicator(false, EntityPM.Id);
         });
     }
@@ -476,7 +485,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     AddDocumentClick() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response1 => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response1:any) => {
             var windowArgs: any = {};
             windowArgs.SelectedShipment = this.SelectedShipment;
             windowArgs.IsNewDocument = true;
@@ -486,7 +495,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             logitudeWindow.Width = 960;
             logitudeWindow.Height = 620;
             logitudeWindow.Title = "";
-            logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+          logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
                 this.ReloadDocuments();
             });
@@ -499,7 +508,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.IsDeleteClicked = false;
         }
         else {
-            this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response1 => {
+            this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response1:any) => {
                 var windowArgs: any = {};
                 windowArgs.SelectedShipment = this.SelectedShipment;
                 windowArgs.IsNewDocument = false;
@@ -509,7 +518,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 logitudeWindow.Width = 960;
                 logitudeWindow.Height = 620;
                 logitudeWindow.Title = "";
-                logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+              logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
                     this.ReloadDocuments();
                 });
@@ -539,7 +548,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 item.FileExtension = null;
                 item.FileName = null;
                 item.DocumentId = null;
-                this._documentsFilingPMService.update(item).subscribe(myResult => {
+                this._documentsFilingPMService.update(item).subscribe((myResult:any) => {
                     this.ReloadDocuments();
                     //this.StopBusyIndicator();
                 });
@@ -580,7 +589,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //item.FileExtension = null;
                     //item.FileName = null;
                     //item.DocumentId = null;
-                    this._documentsFilingPMService.update(item).subscribe(myResult => {
+                    this._documentsFilingPMService.update(item).subscribe((myResult:any) => {
                         this.ReloadDocuments();
                         //this.StopBusyIndicator();
                     });
@@ -621,7 +630,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     DownloadDocumentFile(item) {
         this.IsDeleteClicked = true;
         ServiceLocator.SendTotangoUserActivity("LogBox", "Document Viewed");
-        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
+        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.SelectedShipment != null) {
                 if (this.SelectedShipment.ForwarderShipmentNumber == null) {
@@ -682,7 +691,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //GraySharedWithAgentVisibility = Visibility.Visible;
 
                 }
-                this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
+                this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
                     //this.CurrentSession.StopBusyIndicator();//
                     this.StopBusyIndicator();
                     //this.IssharedWithAgentButtonEnabled = false;
@@ -710,7 +719,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     ArchiveClicked() {
         //this.CurrentSession.StartBusyIndicator("Saving ...");
         this.StartBusyIndicator("Saving ...");
-        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 myResult.Result.IsImporterShipment = true;
                 if (this.ArchiveButtonText == "Archive") {
@@ -726,7 +735,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 myResult.Result.DimensionsUnitCode = "Cm";
                 myResult.Result.ChargeableWeightUnitCode = "KG";
                 myResult.Result.VolumeUnitCode = "CBF";
-                this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
+                this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Shipment Archived");
                         if (myResult.Result.IsOperationalClosed == true) {
@@ -796,7 +805,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SelectedTabCode = 'CAT';
             }
         }
-        this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+        this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
             var Result = [];
             var ResultSignReq = [];
             this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
@@ -899,7 +908,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             //this.CurrentSession.StopBusyIndicator();
             this.StopBusyIndicator();
         });
-        this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+        this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
             var Count = 0;
             var Result = [];
             //this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
@@ -943,7 +952,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 570;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = "Exporting All Documents To ZIP File";
-        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
+      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
 
     }
     DisableAddDocumentButton: boolean = true;
@@ -965,12 +974,12 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this.SharedDocs.forEach((docin) => {
                         SharedDocsIds.push(docin.Id);
                     });
-                    this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe(myResult => {
+                    this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult:any) => {
                         if (!myResult.HasError) {
                             this.DocsSentToAgent = true;
-                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                                 if (Status.Result) {
-                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myShipmentResult => {
+                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myShipmentResult:any) => {
                                         if (!myShipmentResult.HasError) {
                                             this.ShipmentPM = myShipmentResult.Result;
                                             this.ShipmentPM.StatusId = Status.Result.Id;
@@ -978,7 +987,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                                             this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
                                             this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
                                             this.ShipmentPM.DontAddToForwarderQueue = true;
-                                            this._ShipmentPMService.update(this.ShipmentPM).subscribe(myResult => {
+                                            this._ShipmentPMService.update(this.ShipmentPM).subscribe((myResult:any) => {
                                                 if (!myResult.HasError) {
                                                     this.DisableAddDocumentButton = true;
                                                     this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
@@ -1061,7 +1070,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 Ids.push(docin.Id);
             }
         });
-        this._LogBoxSignatureClientService.GetMultiSignRequestReceived(Ids).subscribe(Result => {
+        this._LogBoxSignatureClientService.GetMultiSignRequestReceived(Ids).subscribe((Result:any) => {
             //ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
             if (Result.Result != null && Result.Result.HasError) {
                 //this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -1104,6 +1113,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 690;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = Title;
-        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
+      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
     }
 }

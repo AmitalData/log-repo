@@ -103,9 +103,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				ShipmentPayableStatusQuery shipmentPayableStatusQuery = new ShipmentPayableStatusQuery(shipmentPayableStatusRepository);
 			    IQueryable<ShipmentPayableStatusList> entityLists = shipmentPayableStatusQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Name);
+				List<ShipmentPayableStatusList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-								
-				return Request.CreateResponse(HttpStatusCode.OK, entityLists);
+										
+				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
             catch (Exception ex)
             {
@@ -123,8 +124,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = tenant;
 				
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -169,7 +168,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -197,7 +197,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -205,7 +206,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                         }
                     }
                 }
-
 
 
                 GenericFilter genericFilter = new GenericFilter();
@@ -311,8 +311,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
+			   List<ShipmentPayableStatusList> listResult = entityLists.ToList();
 
-               response.Result = entityLists;
+               response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                

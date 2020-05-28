@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.AnswerEntityTypeCode).HasColumnName("AnswerEntityTypeCode").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.AllocatedAmount).HasColumnName("AllocatedAmount");
+            this.Property(t => t.AllocatedAmount).HasColumnName("AllocatedAmount").HasPrecision(18, 2);
 
             this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(512).IsUnicode(true);
 

@@ -409,7 +409,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
 
 
-            return declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(_DeclarationPMOrg.Tenant)+1.ToString();
+            return (declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(_DeclarationPMOrg.Tenant)+1).ToString();
 
 
          }
@@ -418,7 +418,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
           List< ResponseAdditionalInformation>  responseAdditionalInformation = new List<ResponseAdditionalInformation>();
 
-            if (_DeclarationPM.AmendmentRemarks!="")
+            if (!string.IsNullOrEmpty(_DeclarationPM.AmendmentRemarks))
             {
                 
                 responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "29"  } , Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.AmendmentRemarks }  });
@@ -429,7 +429,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "25" }, Content = new AdditionalInformationContentTextType { Value = "1" } } );
             }
 
-            if (_DeclarationPM.AmendDeficitInitiatedReasTo != "")
+            if (!string.IsNullOrEmpty(_DeclarationPM.AmendDeficitInitiatedReasTo))
             {
                 responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "26" }, Content = new AdditionalInformationContentTextType { Value = _DeclarationPM.AmendDeficitInitiatedReasTo  } });
             }

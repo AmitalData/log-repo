@@ -56,6 +56,7 @@ export class ShipmentList {
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
 		AgentComputed: string;
+		AgentComputedName: string;
 		CustomFieldId: string;
 		FromPortId: string;
 		FromPort: string;
@@ -166,6 +167,7 @@ export class ShipmentList {
 		MoveTypeName: string;
 		GrossWeightInKG: number;
 		VolumetricWeight: number;
+		GrossWeightPerStorageDays: number;
 		ChargeableWeight: number;
 		GrossWeight: number;
 		MasterShipmentNumber: string;
@@ -412,6 +414,8 @@ export class ShipmentList {
 		FirstPickupETD: Date;
 		FirstPickupETA: Date;
 		INTTRALastStatusDate: Date;
+		INTTRABookingError: string;
+		INTTRALastBookingResponse: string;
 		Notify1Reference: string;
 		Notify2Reference: string;
 		ShipperNotExporterReference: string;
@@ -433,5 +437,9 @@ export class ShipmentList {
 		ImporterDepositionRequestDetails: string;
 		ForwarderPartnerId: string;
 		ARInvoices: string;
+		NotInvoicedReceivablesAmount: number;
+		CreatedByPartner: string;
+		FirstARInvoiceApprovalDate: Date;
+		SLAC: string;
 	
 }

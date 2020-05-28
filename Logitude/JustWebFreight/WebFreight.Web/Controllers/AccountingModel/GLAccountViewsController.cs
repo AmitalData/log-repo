@@ -52,6 +52,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.BL.CoreBL.BuildTenant;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -97,6 +98,51 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetInsertControlAccount(string ControlAccountId,string ChartOfAccountsId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                Logitude.BL.Security.LoggedContactUtil loggedUtil = new Logitude.BL.Security.LoggedContactUtil();
+                ContactPM contact = loggedUtil.GetLoggedContact(tenant);
+                //ContactQuery contactQuery = new ContactQuery(tenant);
+                //ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+
+                //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                var chartOfAccountProvider = new ChartOfAccountProvider();
+                var displayNumberProvider = new DisplayNumberProvider();
+
+                var myFullAccountingProvider = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
+                var accId = myFullAccountingProvider.Insert(tenant, MyContext, new BuildAccountingTenantParam()
+                {
+                    CheckAndInsertPoco = false,
+                    //CreateCustomerControlAccountId = true,
+                     ControlAccountId=ControlAccountId,
+                      ChartOfAccountsId= ChartOfAccountsId,
+                    ControlAccounts = true,
+                    
+                }
+                    );
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { AccountId= accId });
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        //http://localhost:9996/api/GLAccountViews/GetCheckBalanceByAccountDisplayNumber?tenant=62&accountDisplayNumber=70270&totalDateType=1&theDate=2020-02-04T09:15:03.1085624
         public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
         {
             try
@@ -111,15 +157,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
-                var qs = new GLAccountQueryService(1);
+                var qs = new GLAccountQueryService(tenant);
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
-                ac.ReSetAccountList(false, false);
+                ac.ReSetAccountList(false, true);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
                 ac.CalculateBalance(
                     openBalancePlease_ReCalcYearTransfer,
-                    totalDateType, theDate, true, false);
+                    totalDateType, theDate,false, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -133,6 +179,56 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetLedgerTransactionByAccountDisplayNumber(int tenant, string accountDisplayNumber,string dateType, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+                var qs = new GLAccountQueryService(tenant);
+                var list = qs.GetByDisplayNumber(accountDisplayNumber, tenant);
+                var pm = list.First();
+                var myLedgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter()
+                {
+                    Tenant = tenant,
+                    From = fromDate,
+                    To = toDate,
+                    //CurrencyId = currencyId,
+                    DateTypeCode = dateType,
+                    GLAccountId = pm.Id,
+
+                    SearchFields = "",
+                    PageStartAtRecordIndex = 0,
+                    PageSize = 500,
+                    //CallBack = new LedgerTransactionBalanceFilterCallBack()
+                    //{
+
+                    //}
+
+                };
+
+                var accountingContext = AccountingContext.GetContext(tenant);
+                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, myLedgerTransactionBalanceFilter);
+                ledgerTransactionBalanceService.Run();
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, ledgerTransactionBalanceService.Response.MyLedgerTransactionList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetCheckBalance(int tenant, string accountId, string totalDateType, DateTime theDate)
         {
             try
@@ -151,7 +247,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
-                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer,totalDateType, theDate, true, false);
+                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -599,9 +695,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
+
                 LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(MyContext);
 
-                int count = query.GetAccountOpenTransactionsCount(accountId, tenant);
+                int count = query.getRecoCount(accountId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, count);
             }
@@ -619,10 +716,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public decimal Total { get; set; }
         public string PeriodName { get; set; }
     }
-
-    
-
-
-
 }
 	 

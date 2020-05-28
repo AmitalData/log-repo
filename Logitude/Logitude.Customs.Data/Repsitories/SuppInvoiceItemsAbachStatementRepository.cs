@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SuppInvoiceItemsAbachStatement> GetSuppInvoiceItemsAbachStatementsForDeclarationId(string declarationId, int invoiceCounterKey, List<int> itemsLineNumbers, int tenant)
         {
-            return (from a in context.SuppInvoiceItemsAbachStatements
+            return (from a in context.SuppInvoiceItemsAbachStatement
                     where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCounterKey == invoiceCounterKey && itemsLineNumbers.Contains(a.InvoiceItemLineNumber)
                     select a).ToList();
         }

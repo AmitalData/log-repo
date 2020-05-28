@@ -75,9 +75,9 @@ export class MAWBStackPM {
     public set AirlineName(newValue: string) { if (this.airlineName != newValue) { this.airlineName = newValue; this.MarkAsDirty("AirlineName"); } }
        
 	 
-    private airline: string;
+    private airline: any;
     public get Airline() { return this.airline; }
-    public set Airline(newValue: string) { if (this.airline != newValue) { this.airline = newValue; this.MarkAsDirty("Airline"); } }
+    public set Airline(newValue: any) { if (this.airline != newValue) { this.airline = newValue; this.MarkAsDirty("Airline"); } }
        
 	 
 

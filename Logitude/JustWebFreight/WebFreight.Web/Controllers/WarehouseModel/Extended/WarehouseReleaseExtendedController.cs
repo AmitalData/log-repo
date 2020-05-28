@@ -30,12 +30,104 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Warehouse;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 {
     public class WarehouseReleaseExtendedController : ApiController
     {
+        public HttpResponseMessage GetNumberofConnectedWarehouseReleasesByEntryId(string entryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", tenant);
+
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                int numberofConnectedWarehouseReleasePackages = warehouseReleaseQueryService.GetNumberofConnectedWarehouseReleasesByEntryId(entryId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, numberofConnectedWarehouseReleasePackages);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetWarehouseConnectedReleaseByEntityId(string entityId)
+        {
+            try  //GetQuoteConnectedEntities
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", tenant);
+
+                //List<WarehouseConnectedEntity> myResult = new List<WarehouseConnectedEntity>();
+
+                //IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
+                //ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentContext);
+                //ShipmentDataView myShipment = shipmentRepository.GetSingleShipmentDataView(entityId, tenant);
+
+                //myResult.Add(new WarehouseConnectedEntity()
+                //{
+                //    EntityId = myShipment.Id,
+                //    EntityNumber = myShipment.ShipmentNumber,
+                //    ObjectTable = "Shipment",
+                //    EntityStatus = myShipment.StatusName,
+                //    ShipmentType = myShipment.ShipmentTypeName + " " + myShipment.ShipmentLevelName,
+                //    OpenDate = myShipment.CreateDateTime,
+                //    House = myShipment.House,
+                //    Master = myShipment.Master,
+                //    Customer = myShipment.CustomerName,
+                //    From = myShipment.MainCarriageFromPortCode,
+                //    To = myShipment.MainCarriageFinalDestinationPortCode,
+                //    GrossWeight = myShipment.GrossWeight,
+                //    VolumeInKG = myShipment.Volume,
+                //    Direction = myShipment.DirectionId,
+                //    TransportMode = myShipment.TransportModeId,
+
+                //});
+
+                List<WarehouseReleaseList> myResult = new List<WarehouseReleaseList>();
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                myResult = warehouseReleaseQueryService.GetWarehouseReleasesByEntryId(entityId,tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetWarehouseReleaseByCustomerIdAndwarehouseId(string customerId, string warehouseId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);
+                var myResult = warehouseReleaseQueryService.GetWarehouseReleaseListsByCustomerIdAndWarehouseId(customerId, warehouseId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage PostWarehouseReleasePM(WarehouseReleasePM entityPM)
         {
             if (ModelState.IsValid)
@@ -367,9 +459,28 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         }
 
 
+        public HttpResponseMessage GetEnableWarehouseRelaseForUse(string releaseNumber, string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", tenant);
+                WarehouseRelaseService warehouseRelaseService = new WarehouseRelaseService();
+                warehouseRelaseService.EnableWarehouseRelaseForUse(releaseNumber, shipmentId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
 
-
+      
     }
 
     public class CrossDockWorkspaceSummaryClass

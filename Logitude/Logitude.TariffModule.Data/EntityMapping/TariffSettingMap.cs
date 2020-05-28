@@ -30,6 +30,12 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.DefaultWarningPercentage).HasColumnName("DefaultWarningPercentage");
+
+            this.Property(t => t.AirDefaultStepsId).HasColumnName("AirDefaultStepsId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LCLDefaultStepsId).HasColumnName("LCLDefaultStepsId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ContainerDefaults).HasColumnName("ContainerDefaults").HasMaxLength(50).IsUnicode(false);
         }
     }
 }

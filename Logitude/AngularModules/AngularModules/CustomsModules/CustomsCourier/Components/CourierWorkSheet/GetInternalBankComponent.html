@@ -15,7 +15,8 @@
     }
 </style>
 <log-column [header]="'Customs.DeclarationPaymentMethod.F.BankCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'BankCode'">
-    <log-cell-template template="let item" #logcelltemplate>
+    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
             <span>{{item.InternalBankName}}</span>
         </div>
@@ -23,6 +24,7 @@
             
         </div>
     </log-cell-template>
+</ng-template>
 </log-column>
 
 <table>

@@ -60,6 +60,12 @@ exports.config = {
       browser.params.Login.Email = "angular@fnarsoft.com";
       browser.params.Login.Password = "1";
     }
+    else if (browser.params.Env == "Pre") {
+      browser.params.Link = "https://pre.logitudeworld.com";
+      browser.params.Login.Email = "razantest@protractor.com";
+      browser.params.Login.Password = "!R123j456";
+    }
+
 
       else if (browser.params.Env == "test_951") {
         browser.params.Link = "https://test.logitudeworld.com/test";

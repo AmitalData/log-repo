@@ -27,6 +27,8 @@ using Logitude.BL.Helpers;
 using System.Text.RegularExpressions;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using WebFreight.Web.WebServices;
+
 namespace WebFreight.Web.ReportsWebServices
 {
     /// <summary>
@@ -39,8 +41,19 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class PreAlertWebService : System.Web.Services.WebService
     {
+        int tenant;
+        string shipmentid;
+        IShipmentsContext shipmentsContext;
+        PreAlertDataProvider prealertDataProvider;
+        TenantPM tenantpm;
+        ICommonDataContext commonContext;
+        WebServiceHelper serviceHelper;
+        CountryRepository countryRepository;
+        AddressRepository addressRepository;
+        PortRepository portRepository;
+
         [WebMethod]
-        public byte[] GetPreAlertData(string shipmentid, int tenant,string documentTypeId)
+        public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
         {
             PreAlertDataProvider prealertDataProvider = GetPreAlertDataProvider(shipmentid, tenant, documentTypeId);
 
@@ -82,16 +95,19 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PreAlertDataProvider GetPreAlertDataProvider(string shipmentid, int tenant, string documentTypeId)
         {
-            PreAlertDataProvider prealertDataProvider = new PreAlertDataProvider();
-
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            this.tenant = tenant;
+            this.shipmentid = shipmentid;
+            prealertDataProvider = new PreAlertDataProvider();
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
+            countryRepository = new CountryRepository(commonContext);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ShipmentPM shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantpm = tenantQuery.GetSinglePM(tenant);
+            tenantpm = tenantQuery.GetSinglePM(tenant);
+            serviceHelper = new WebServiceHelper(tenant);
 
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
 
@@ -99,8 +115,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 CardQuery cardQuery = new CardQuery(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
-                AddressRepository addressRepository = new AddressRepository(tenant);
-                PortRepository portRepository = new PortRepository(tenant);
+                addressRepository = new AddressRepository(tenant);
+                portRepository = new PortRepository(tenant);
                 CardPM customer = cardQuery.GetSinglePM(shipmentpm.CustomerId, tenant);
 
                 #region Customer + Customer's Contact
@@ -193,29 +209,31 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 #region Tenant Details
+                string tenantAgent = null;
+
                 if (tenantpm != null)
                 {
                     prealertDataProvider.FMCNumber = tenantpm.FMCNumber;
-                    prealertDataProvider.OriginAgent = tenantpm.Company;
+                    tenantAgent = tenantpm.Company;
                     Address tenantAddress = addressRepository.GetSingleAddress(tenantpm.AddressId, tenant);
 
                     if (tenantAddress != null)
                     {
                         if (!string.IsNullOrEmpty(tenantAddress.City))
                         {
-                            prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + Environment.NewLine + tenantAddress.City;
+                            tenantAgent = tenantAgent + Environment.NewLine + tenantAddress.City;
                         }
 
                         if (tenantAddress.Country != null)
                         {
                             if (tenantAddress.IsLocalLanguage)
                             {
-                                prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.LocalName;
+                                tenantAgent = tenantAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.LocalName;
                             }
 
                             else
                             {
-                                prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.EnglishName;
+                                tenantAgent = tenantAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.EnglishName;
                             }
                         }
                     }
@@ -223,12 +241,13 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Agent
+                string shipmentAgent = null;
                 if (!string.IsNullOrEmpty(shipmentpm.AgentId))
                 {
                     CardPM agent = cardQuery.GetSinglePM(shipmentpm.AgentId, tenant);
                     if (agent != null)
                     {
-                        prealertDataProvider.DestinationAgent = agent.EnglishName;
+                        shipmentAgent = agent.EnglishName;
 
                         Address agentAddress = addressRepository.GetSingleAddress(shipmentpm.AgentAddressId, tenant);
 
@@ -236,14 +255,26 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
                             {
-                                prealertDataProvider.DestinationAgent = agent.LocalName;
+                                shipmentAgent = agent.LocalName;
                             }
 
-                            prealertDataProvider.DestinationAgent = prealertDataProvider.DestinationAgent + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
+                            shipmentAgent = shipmentAgent + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
                         }
                     }
                 }
                 #endregion
+
+                if(shipmentpm.DirectionId == "E")
+                {
+                    prealertDataProvider.OriginAgent = tenantAgent;
+                    prealertDataProvider.DestinationAgent = shipmentAgent;
+                }
+
+                else if (shipmentpm.DirectionId == "I")
+                {
+                    prealertDataProvider.OriginAgent = shipmentAgent;
+                    prealertDataProvider.DestinationAgent = tenantAgent;
+                }
 
                 #region CustomAgent
                 if (shipmentpm.DirectionId == "E" || shipmentpm.DirectionId == "D")
@@ -371,7 +402,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (shipmentpm.CutoffDate != null)
                     {
                         prealertDataProvider.CuttOffDateTime = String.Format("{0:dd MMM yyyy}", shipmentpm.CutoffDate);
-                        prealertDataProvider.CuttOffTime = String.Format("{0:t}", shipmentpm.CutoffDate);                        
+                        prealertDataProvider.CuttOffTime = String.Format("{0:t}", shipmentpm.CutoffDate);
                     }
 
                     if (shipmentpickupdeliverypm2.TransportModeCode != null)
@@ -402,12 +433,20 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.FinalPort = shipmentpm.ToPortName != null ? shipmentpm.ToPortName : "";
                 prealertDataProvider.MainCarriageCarrierNumber = shipmentpm.MainCarriageCarrierNumber;
                 prealertDataProvider.MainCarriageETA = shipmentpm.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.MainCarriageETA) : "";
+                prealertDataProvider.MainCarriageETA_DateTime = shipmentpm.MainCarriageETA != null ? shipmentpm.MainCarriageETA : null;
                 prealertDataProvider.MainCarriageETD = shipmentpm.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.MainCarriageETD) : "";
-                prealertDataProvider.MainCarriageETD_DateTime = shipmentpm.MainCarriageETD;
+                prealertDataProvider.MainCarriageETD_DateTime = shipmentpm.MainCarriageETD != null ? shipmentpm.MainCarriageETD : null;
                 prealertDataProvider.mainCarriageToPortCode = !string.IsNullOrEmpty(shipmentpm.MainCarriageToPortCode) ? shipmentpm.MainCarriageToPortCode : "";
                 prealertDataProvider.mainCarriageToPortName = !string.IsNullOrEmpty(shipmentpm.MainCarriageToPortName) ? shipmentpm.MainCarriageToPortName : "";
                 prealertDataProvider.GeneralDescriptionOfGoods = shipmentpm.DescriptionOfGoods != null ? shipmentpm.DescriptionOfGoods : "";
                 prealertDataProvider.House = shipmentpm.House != null ? shipmentpm.House : "";
+
+                if (shipmentpm.SpecialServicesTypeId != null)
+                {
+                    SpecialServicesTypeRepository specialServicesTypeRepository = new SpecialServicesTypeRepository(tenant);
+                    SpecialServicesType specialServicesType = specialServicesTypeRepository.GetSingleSpecialServicesType(shipmentpm.SpecialServicesTypeId, tenant);
+                    prealertDataProvider.SpecialServicesType = specialServicesType != null ? specialServicesType.EnglishName : "";
+                }
 
                 if (MethodHelper.IsLCLEntity(shipmentpm.TransportModeId, shipmentpm.ShipmentTypeId))
                 {
@@ -503,6 +542,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment1
                 prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? shipmentpm.Transshipment1CarrierNumber : "";
+                prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName != null ? shipmentpm.Transshipment1CarrierName : "";
 
                 VesselPM trans1Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment1VesselId, tenant);
                 if (trans1Vesselpm != null)
@@ -512,8 +552,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment1ETA = shipmentpm.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETA) : "";
+                prealertDataProvider.Transshipment1ETA_DateTime = shipmentpm.Transshipment1ETA != null ? shipmentpm.Transshipment1ETA : null;
                 prealertDataProvider.Transshipment1ETD = shipmentpm.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETD) : "";
-                prealertDataProvider.Transshipment1ETD_DateTime = shipmentpm.Transshipment1ETD;
+                prealertDataProvider.Transshipment1ETD_DateTime = shipmentpm.Transshipment1ETD != null ? shipmentpm.Transshipment1ETD : null;
                 prealertDataProvider.Transshipment1ToPortCode = shipmentpm.Transshipment1ToPortCode != null ? shipmentpm.Transshipment1ToPortCode : "";
                 prealertDataProvider.Transshipment1ToPortName = shipmentpm.Transshipment1ToPortName != null ? shipmentpm.Transshipment1ToPortName : "";
 
@@ -528,8 +569,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment2ETA = shipmentpm.Transshipment2ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETA) : "";
+                prealertDataProvider.Transshipment2ETA_DateTime = shipmentpm.Transshipment2ETA != null ? shipmentpm.Transshipment2ETA : null;
                 prealertDataProvider.Transshipment2ETD = shipmentpm.Transshipment2ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETD) : "";
-                prealertDataProvider.Transshipment2ETD_DateTime = shipmentpm.Transshipment2ETD;
+                prealertDataProvider.Transshipment2ETD_DateTime = shipmentpm.Transshipment2ETD != null ? shipmentpm.Transshipment2ETD : null;
                 prealertDataProvider.Transshipment2ToPortCode = shipmentpm.Transshipment2ToPortCode != null ? shipmentpm.Transshipment2ToPortCode : "";
                 prealertDataProvider.Transshipment2ToPortName = shipmentpm.Transshipment2ToPortName != null ? shipmentpm.Transshipment2ToPortName : "";
 
@@ -544,7 +586,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment3ETA = shipmentpm.Transshipment3ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETA) : "";
+                prealertDataProvider.Transshipment3ETA_DateTime = shipmentpm.Transshipment3ETA != null ? shipmentpm.Transshipment3ETA : null;
                 prealertDataProvider.Transshipment3ETD = shipmentpm.Transshipment3ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETD) : "";
+                prealertDataProvider.Transshipment3ETD_DateTime = shipmentpm.Transshipment3ETD != null ? shipmentpm.Transshipment3ETD : null;
                 prealertDataProvider.Transshipment3ToPortCode = shipmentpm.Transshipment3ToPortCode != null ? shipmentpm.Transshipment3ToPortCode : "";
                 prealertDataProvider.Transshipment3ToPortName = shipmentpm.Transshipment3ToPortName != null ? shipmentpm.Transshipment3ToPortName : "";
 
@@ -615,10 +659,12 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Others
-                if (User != null)
+
+                string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+                if (!string.IsNullOrEmpty(loggedUserEmail))
                 {
                     ContactQuery contactQuery = new ContactQuery(contactRepository);
-                    ContactPM contactpm = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                    ContactPM contactpm = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
 
                     if (contactpm != null)
                     {
@@ -656,6 +702,8 @@ namespace WebFreight.Web.ReportsWebServices
                     masterpackage.Reference3 = package.Reference3;
                     masterpackage.CommodityNumber = package.CommodityNumber;
                     masterpackage.DescriptionOfGoods = package.Description;
+                    masterpackage.NumberOfInsidePackages = package.NumberOfInsidePackages;
+                    masterpackage.ContainerNumber = package.ContainerNumber;
 
                     if (package.IsDangerous)
                     {
@@ -1133,6 +1181,11 @@ namespace WebFreight.Web.ReportsWebServices
                                     if (myPartnerAddress != null)
                                     {
                                         prealertDataProvider.PickUpAddress = myPartnerAddress.City;
+                                        Country country = countryRepository.GetSingleCountry(myPartnerAddress.CountryId, tenant);
+                                        if (country != null)
+                                        {
+                                            prealertDataProvider.PlaceOfReceiptCountryName = country.EnglishName;
+                                        }
                                     }
                                 }
 
@@ -1147,6 +1200,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     if (myPort != null)
                                     {
                                         prealertDataProvider.PickUpAddress = myPort.EnglishName;
+                                        prealertDataProvider.PlaceOfReceiptCountryName = myPort.CountryName;
+
                                     }
                                 }
 
@@ -1159,6 +1214,11 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (!string.IsNullOrEmpty(myCity))
                                 {
                                     prealertDataProvider.PickUpAddress = myCity;
+                                    Country country = countryRepository.GetSingleCountry(firstPickup.FromAddressCountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        prealertDataProvider.PlaceOfReceiptCountryName = country.EnglishName;
+                                    }
                                 }
 
                                 break;
@@ -1169,15 +1229,24 @@ namespace WebFreight.Web.ReportsWebServices
                 else if (preCarriageFromPort != null)
                 {
                     prealertDataProvider.PickUpAddress = preCarriageFromPort.EnglishName;
+                    PortPM myPort = portQuery.GetSinglePM(shipmentpm.PreCarriageFromPortId, tenant);
+                    if (myPort != null)
+                    {
+                        prealertDataProvider.PlaceOfReceiptCountryName = myPort.CountryName;
+                    }
                 }
 
                 else if (mainFromPort != null)
                 {
                     prealertDataProvider.PickUpAddress = mainFromPort.EnglishName;
+                    Address myPartnerAddress = addressRepository.GetSingleAddress(shipmentpm.ShipperAddressId, tenant);
+                    if (myPartnerAddress != null)
+                    {
+                        prealertDataProvider.PlaceOfReceiptCountryName = myPartnerAddress.Country == null ? null : myPartnerAddress.Country.EnglishName;
+                    }
                 }
-
                 #endregion
-
+                
                 #region Assemblies
                 if (shipmentpm.ShipmentAssemblies.Count > 0)
                 {
@@ -1194,6 +1263,14 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
+                #region Payables List
+                GetShipmentPayaples();
+                #endregion
+
+                #region PickUpsAndDeliveries
+                GetShipmentPickUpAndDeliveries();
+                #endregion
+
                 ////////////////////////////////////////////////////////////////////
 
                 //prealertDataProvider.FullRoutings
@@ -1205,6 +1282,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
                 prealertDataProvider.Transshipment1CarrierCode = shipmentpm.Transshipment1CarrierCode;
                 prealertDataProvider.Transshipment1CarrierNumber_New = shipmentpm.Transshipment1CarrierNumber;
+                prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName;
                 prealertDataProvider.Transhipment2ATD = shipmentpm.Transshipment2ATD;
                 prealertDataProvider.Transshipment2CarrierCode = shipmentpm.Transshipment2CarrierCode;
                 prealertDataProvider.Transshipment2CarrierNumber_New = shipmentpm.Transshipment2CarrierNumber;
@@ -1214,6 +1292,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.FullMaster = shipmentpm.LongMaster;
                 prealertDataProvider.ShipmentNotes = shipmentpm.Notes;
                 prealertDataProvider.TotalQuantity = shipmentpm.NumberOfPackages;
+                prealertDataProvider.Salesman = shipmentpm.SalesmanUserName;
 
                 string routing = "";
 
@@ -1348,6 +1427,7 @@ namespace WebFreight.Web.ReportsWebServices
                     prealertDataProvider.InvoicesNumbers = str;
                 }
 
+
                 ShipmentPickUpDelivery myFirstPickup =
                     (from d in shipmentsContext.ShipmentPickUpDeliveries
                      where d.ShipmentId == shipmentpm.Id && d.PickUpDeliveryTypeCode == "PICK"
@@ -1357,7 +1437,25 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     prealertDataProvider.PickupETD = myFirstPickup.ETD;
                     prealertDataProvider.PickupATD = myFirstPickup.ATD;
+
+                    PlaceOfReceiptData placeOfReceiptData = serviceHelper.GetPlaceOfReceiptData(myFirstPickup);
                 }
+
+                if (myFirstPickup != null)
+                {
+                    prealertDataProvider.OriginCountryName = this.GetPickUpDeliveryFromCityOrPortName(myFirstPickup);
+                }
+
+                else if (shipmentpm.PreCarriageFromPortId != null)
+                {
+                    prealertDataProvider.OriginCountryName = shipmentpm.PreCarriageFromPortCountryName;
+                }
+
+                else
+                {
+                    prealertDataProvider.OriginCountryName = shipmentpm.MainCarriageFromPortCountryName;
+                }
+
 
                 if (customer != null)
                 {
@@ -1367,8 +1465,10 @@ namespace WebFreight.Web.ReportsWebServices
                         if (contact != null)
                         {
                             prealertDataProvider.CustomerPrimaryContactName = contact.EnglishName;
+
                         }
                     }
+                    prealertDataProvider.CustomerName = customer.EnglishName;
                 }
 
                 if (!string.IsNullOrEmpty(shipmentpm.AgentId))
@@ -1478,6 +1578,211 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
         }
 
+        public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity)
+        {
+            string myResult = "";
+            if (entity != null)
+            {
+                switch (entity.PickUpDeliveryFromTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(entity.FromPartnerCardId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(entity.FromPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    myResult = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(entity.FromPortId))
+                            {
+
+                                Port myPort = portRepository.GetSinglePort(tenant, entity.FromPortId);
+                                if (myPort != null)
+                                {
+                                    myResult = myPort.EnglishName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            var countryName = "";
+                            if (!string.IsNullOrEmpty(entity.FromAddressCountryId))
+                            {
+                                Country fromAddressCountry = CountryRepository.GetSingleCountry(entity.FromAddressCountryId, tenant, false);
+                                if (fromAddressCountry != null)
+                                {
+                                    countryName = fromAddressCountry.EnglishName;
+                                }
+                            }
+                            myResult = countryName;
+                            break;
+                        }
+                }
+            }
+
+            if (myResult == null)
+            {
+                myResult = "";
+            }
+
+            return myResult;
+        }
+
+        private void GetShipmentPayaples()
+        {
+            List<ShipmentPayable> payables = GetShipmentPayaplesList();
+            prealertDataProvider.PayablesList = new List<PayableLine>();
+
+            foreach (ShipmentPayable payableItem in payables)
+            {
+                PayableLine payableLine = new PayableLine()
+                {
+                    Id = payableItem.ChargesType == null ? null : payableItem.ChargesType.Code,
+                    Name = payableItem.ChargesType == null ? null : payableItem.ChargesType.EnglishName,
+                    LocalName = payableItem.ChargesType == null ? null : payableItem.ChargesType.LocalName,
+                    CurrencyCode = payableItem.Currency == null ? null : payableItem.Currency.Code,
+                    LocalCurrencyCode = GetCurrencyCode(tenantpm.CurrencyId),
+                    ProfitCurrencyCode = GetCurrencyCode(tenantpm.ProfitCurrencyId),
+                    OpenAmount = payableItem.OpenAmount,
+                    OpenAmountInLocal = payableItem.OpenAmountInLocalCurrency,
+                    OpenAmountInProfit = payableItem.OpenAmountInProfitCurrency,
+                    ExpectedAmount = payableItem.ExpectedAmount,
+                    ExpectedAmountInLocal = payableItem.ExpectedAmountLocal,
+                    ExpectedAmountInProfit = payableItem.ExpectedAmountInProfitCurrency,
+                    AccountedAmount = payableItem.AccountedAmount,
+                    AccountedAmountInLocal = payableItem.AccountedAmountInLocalCurrency,
+                    AccountedAmountInProfit = payableItem.AccountedAmountInProfitCurrency,
+                    UnitPrice = payableItem.UnitPrice,
+                    UOM = payableItem.Measurement == null ? null : payableItem.Measurement.Name,
+                    Quantity = payableItem.Quantity,
+                    VendorName = GetPayableVendor(payableItem.VendorId),
+                };
+
+                if (payableItem.Measurement != null)
+                {
+                    if (payableItem.Measurement.Code == "")
+                    {
+                        payableLine.UOMPercentage = "%";
+                    }
+                }
+
+                prealertDataProvider.PayablesList.Add(payableLine);
+            }
+
+        }
+        private List<ShipmentPayable> GetShipmentPayaplesList()
+        {
+            ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
+            return payableRepository.GetShipemntPayablesByShipmentId(shipmentid, tenant);
+        }
+
+        private string GetCurrencyCode(string currencyId)
+        {
+            Currency currency = CurrencyRepository.GetSingleCurrency(currencyId, tenant, true);
+            return currency.Code;
+        }
+        private string GetPayableVendor(string vendorId)
+        {
+            if (!string.IsNullOrEmpty(vendorId))
+            {
+                Card vendorCard = CardRepository.GetSingleCard(vendorId, tenant, true);
+                if (vendorCard != null)
+                {
+                    return vendorCard.EnglishName;
+                }
+            }
+            return "";
+        }
+        private void GetShipmentPickUpAndDeliveries()
+        {
+            List<ShipmentPickUpDelivery> shipmentDeliveriesAndPickUps = GetShipmentPickUpAndDeliveriesList();
+            prealertDataProvider.PickUpsList = new List<PickUpDeliveryLine>();
+            prealertDataProvider.DeliveriesList = new List<PickUpDeliveryLine>();
+            foreach (ShipmentPickUpDelivery item in shipmentDeliveriesAndPickUps)
+            {
+                PickUpDeliveryLine pickUpDeliveryLine = BuildPickUpDeliveryLine(item);
+                InsertItemToPickUpsAndDeliveriesList(pickUpDeliveryLine, item.PickUpDeliveryTypeCode);
+            }
+        }
+        private List<ShipmentPickUpDelivery> GetShipmentPickUpAndDeliveriesList()
+        {
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+            return shipmentPickUpDeliveryRepository.GetShipmentPickUpDeliveryForShipment(shipmentid, tenant);
+        }
+        private PickUpDeliveryLine BuildPickUpDeliveryLine(ShipmentPickUpDelivery pickUpDeliveryItem)
+        {
+            WebServiceHelper serviceHelper = new WebServiceHelper(tenant);
+            PickUpDeliveryLine item = new PickUpDeliveryLine();
+            item.ETD = pickUpDeliveryItem.ETD;
+            item.ETA = pickUpDeliveryItem.ETA;
+            item.ATD = pickUpDeliveryItem.ATD;
+            item.ATA = pickUpDeliveryItem.ATA;
+            item.FromAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, true));
+            item.ToAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, false));
+            item.CarrierName = GetPickUpsAndDeliveriesCarrierName(pickUpDeliveryItem.CarrierId);
+            return item;
+        }
+        private string GetPickUpsAndDeliveriesCarrierName(string carrierId)
+        {
+            Card carrierCard = CardRepository.GetSingleCard(carrierId, tenant, true);
+            string carrierName = "";
+            if (carrierCard != null)
+            {
+                carrierName = carrierCard.EnglishName != null ? carrierCard.EnglishName : "";
+            }
+            return carrierName;
+        }
+        private void InsertItemToPickUpsAndDeliveriesList(PickUpDeliveryLine pickUpDeliveryLine, string pickUpDeliveryTypeCode)
+        {
+            if (pickUpDeliveryTypeCode == "DELV")
+            {
+                prealertDataProvider.DeliveriesList.Add(pickUpDeliveryLine);
+            }
+            else if (pickUpDeliveryTypeCode == "PICK")
+            {
+                prealertDataProvider.PickUpsList.Add(pickUpDeliveryLine);
+            }
+        }
+        private PickUpAndDeliveriesArguments BuildPickUpAndDeliveriesArguments(ShipmentPickUpDelivery pickUpDeliveryItem, bool isFromAddress)
+        {
+            if (isFromAddress)
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickUpDeliveryItem.PickUpDeliveryFromTypeCode,
+                    PartnerCardId = pickUpDeliveryItem.FromPartnerCardId,
+                    AddressId = pickUpDeliveryItem.FromAddressId,
+                    PortId = pickUpDeliveryItem.FromPortId,
+                    AddressCountryId = pickUpDeliveryItem.FromAddressCountryId,
+                    AddressCity = pickUpDeliveryItem.FromAddressCity,
+                    AddressZipCode = pickUpDeliveryItem.FromAddressZipCode
+                };
+            }
+            else
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickUpDeliveryItem.PickUpDeliveryToTypeCode,
+                    PartnerCardId = pickUpDeliveryItem.ToPartnerCardId,
+                    AddressId = pickUpDeliveryItem.ToAddressId,
+                    PortId = pickUpDeliveryItem.ToPortId,
+                    AddressCountryId = pickUpDeliveryItem.ToAddressCountryId,
+                    AddressCity = pickUpDeliveryItem.ToAddressCity,
+                    AddressZipCode = pickUpDeliveryItem.ToAddressZipCode
+                };
+            }
+        }
         private void GetOtherCharges(string shipmentId, int tenant, ref double totalPrepaidString, ref double totalCollectString)
         {
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);

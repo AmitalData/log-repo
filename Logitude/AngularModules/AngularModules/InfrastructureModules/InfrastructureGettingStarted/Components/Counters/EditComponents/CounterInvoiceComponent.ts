@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CounterInvoiceComponent.html',
 })
 
@@ -29,12 +29,14 @@ export class CounterInvoiceComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SameRadioButtonLabel: string;
     public DiffRadioButtonLabel: string;
+    public HasInterestFeature: boolean=false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
+        this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
 
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest and Consolidation.";
@@ -134,9 +136,12 @@ export class CounterInvoiceComponent extends BaseComponent {
         itemsParams.push({ Code: 'MN', Name: "Manifest" });
         itemsParams.push({ Code: 'CI', Name: "Customs Invoice" });
         itemsParams.push({ Code: 'CC', Name: "Customs Credit" });
-
         if (this.HasConsolidationFeature) {
             itemsParams.push({ Code: 'CON', Name: "Consolidation" });
+        }
+        if (this.HasInterestFeature) {
+            itemsParams.push({ Code: 'IT', Name: "Interest Invoice" });
+            itemsParams.push({ Code: 'IC', Name: "Interest Credit" });
         }
 
         itemsParams.forEach(item => {
@@ -285,11 +290,11 @@ export class CounterInvoiceComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
-                if (this.CounterSize > 20) {
-                    errors.push("Maximum size allowed for counter is 20");
-                }
                 if (this.UniquePerPrefix == true) {
                     this.APIHelper.CounterDefinitions.forEach(item => {
+                        if (item.CounterSize > 20) {
+                            errors.push("Maximum size allowed for counter is 20");
+                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
                         if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
@@ -306,6 +311,9 @@ export class CounterInvoiceComponent extends BaseComponent {
                     }
 
                     this.APIHelper.CounterDefinitions.forEach(item => {
+                        if (item.CounterSize > 20) {
+                            errors.push("Maximum size allowed for counter is 20");
+                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
                     });
                 }

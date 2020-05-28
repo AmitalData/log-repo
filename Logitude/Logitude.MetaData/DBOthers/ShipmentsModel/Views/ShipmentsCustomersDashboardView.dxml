@@ -1,0 +1,20 @@
+<View DBType="Main" Name="ShipmentsCustomersDashboardView" Schema="dbo" Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+      CREATE VIEW [dbo].[ShipmentsCustomersDashboardView]
+      AS SELECT
+      dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.BranchId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
+      dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId, dbo.Shipments.IsCancelled, dbo.Shipments.OpenReceivablesInLocalCurrency,
+      dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.CustomerId, dbo.Shipments.ProfitInProfitCurrency,
+      dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.ShipmentLevelCode,
+      dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Cards.EnglishName AS CustomerName
+      FROM
+      dbo.Shipments
+      INNER JOIN
+      dbo.Cards
+      ON dbo.Shipments.CustomerId = dbo.Cards.Id    
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

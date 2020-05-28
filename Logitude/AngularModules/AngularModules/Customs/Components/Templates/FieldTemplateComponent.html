@@ -302,8 +302,8 @@
                 </div>
 
 
-                <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick($event)">
-                    <div (click)="ButtonClick($event)">
+                <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
+                    <div (click)="ButtonClick()">
                         <courier-filter-button #MyDropdownMenuFilterComponent
                                                [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
                             <div class="class-filter-content">

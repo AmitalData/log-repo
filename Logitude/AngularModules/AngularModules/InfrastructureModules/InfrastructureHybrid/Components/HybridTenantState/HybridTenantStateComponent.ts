@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -7,7 +6,7 @@ import {HybridTenantStateListExtendedService} from '../../../../Common/Services/
 import {HybridTenantStateList} from '../../../../Common/EntityLists/HybridTenantStateList';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HybridTenantStateComponent',
     templateUrl: './HybridTenantStateComponent.html',
 })

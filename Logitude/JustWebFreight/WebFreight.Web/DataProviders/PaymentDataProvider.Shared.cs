@@ -40,7 +40,9 @@ namespace WebFreight.Web.DataProviders
 
         public double? OutstandingBalance  { get; set; }
         public double? TotalAmount { get; set; }
-
+        public string TotalAmountInWordsEnglish { get; set; }
+        public string TotalAmountInWordsSpanish { get; set; }
+        public string ReceivedFromInLocal { get; set; }
         public string CopyName { get; set; }
         public string ChequeOrPaymentRef { get; set; }
         public double Amount { get; set; }
@@ -64,13 +66,27 @@ namespace WebFreight.Web.DataProviders
         public string AccountNumber { get; set; }
         public string BankAccountLocalName { get; set; }
         public string BankAccountEnglishName { get; set; }
-
+  
         public string IRSPlace { get; set; }
         public string IRSNumber { get; set; }
         public string BranchAddress { get; set; }
 		public string BillToCountryCode { get; set; }
+        public string ForeignRFC { get; set; }
 
-		public List<InvoicePayments> PaidInvoicesList { get; set; }     
+        public double? AmountInLocalCurrency { get; set; }
+
+        public List<InvoicePayments> PaidInvoicesList { get; set; }
+
+        public string ARPaymentField1 { get; set; }
+        public string ARPaymentField2 { get; set; }
+        public string ARPaymentField3 { get; set; }
+        public string ARPaymentField4 { get; set; }
+        public string ARPaymentField5 { get; set; }
+        public string ARPaymentField6 { get; set; }
+        public string ARPaymentField7 { get; set; }
+        public string ARPaymentField8 { get; set; }
+        public string ARPaymentField9 { get; set; }
+        public string ARPaymentField10 { get; set; }
 
         public class InvoicePayments
         {

@@ -10,13 +10,15 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
     inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],
+
 })
 
 export class EmailSearchTextBox implements OnInit, AfterViewInit {
+    public ContainerId: string = null;
     public ComponentId: string = null;
     public SeparatorId: string = null;
     public InputId: string = null;
@@ -25,7 +27,12 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     public Watermark: string = null;
     private emailText: string = null;
     public get EmailsText() { return this.emailText; }
-    public set EmailsText(value: string) { if (this.emailText != value) this.emailText = value; }
+    public set EmailsText(value: string) {
+        if (this.emailText != value) {
+            this.emailText = value;
+            this.FillEmailSearch();
+        }
+    }
     public IsUsersList: boolean = false;
     public DropDownHeight: number = 200;
     public DropDownWidth: number = 300;
@@ -56,68 +63,74 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
         this.contactService = new ContactListService();
         this.userService = new UserListService();
     }
-
+    IsLoad: boolean = false;
     IsShowRedUserInActiveNote: boolean = false;
     ngOnInit() {
+        this.IsLoad = true;
+        this.FillEmailSearch();        
+    }
 
-        this.Placeholder = this.Watermark;
-        if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
-            var myDomainService = new CommonDomainService();
+    FillEmailSearch() {
+        if (this.IsLoad) {
+            this.Placeholder = this.Watermark;
+            if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
+                var myDomainService = new CommonDomainService();
 
-            if (this.SelectedValuePath == "Id") {
+                if (this.SelectedValuePath == "Id") {
 
-                myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.SelectedItems = myResponse.Result;
-                        this.SelectedItems.forEach(item => {
-                            if (item.InActive) {
-                                this.IsShowRedUserInActiveNote = true;
-                            }
-                        });
-                        
-
-                    }
-
-                    setTimeout(() => this.SetInputPosition(), 5);
-                });
-
-            }
-            else {
-                if (this.IsUsersList) {
-                    myDomainService.GetUsersByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                    myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             this.SelectedItems = myResponse.Result;
-                        }
-
-                        setTimeout(() => this.SetInputPosition(), 5);
-                    });
-                }
-
-                else {
-                    myDomainService.GetContactsByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            this.SelectedItems = myResponse.Result;
-                        }
-
-                        var allEmails: string[] = this.EmailsText.split(';');
-                        if (allEmails.length > this.SelectedItems.length) {
-                            allEmails.forEach((email: string) => {
-                                if (!AppTool.IsNullOrEmpty(email)) {
-                                    if (this.SelectedItems.filter(f => f.Email != null && f.Email.toLowerCase() == email.toLowerCase()).length == 0) {
-                                        var newItem = new ContactList();
-                                        newItem.Email = email;
-                                        newItem.EnglishName = email;
-                                        this.SelectedItems.push(newItem);
-                                    }
+                            this.SelectedItems.forEach(item => {
+                                if (item.InActive) {
+                                    this.IsShowRedUserInActiveNote = true;
                                 }
                             });
+
+
                         }
 
                         setTimeout(() => this.SetInputPosition(), 5);
                     });
+
+                }
+                else {
+                    if (this.IsUsersList) {
+                        myDomainService.GetUsersByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.SelectedItems = myResponse.Result;
+                            }
+
+                            setTimeout(() => this.SetInputPosition(), 5);
+                        });
+                    }
+
+                    else {
+                        myDomainService.GetContactsByEmails(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.SelectedItems = myResponse.Result;
+                            }
+
+                            var allEmails: string[] = this.EmailsText.split(';');
+                            if (allEmails.length > this.SelectedItems.length) {
+                                allEmails.forEach((email: string) => {
+                                    if (!AppTool.IsNullOrEmpty(email)) {
+                                        if (this.SelectedItems.filter(f => f.Email != null && f.Email.toLowerCase() == email.toLowerCase()).length == 0) {
+                                            var newItem = new ContactList();
+                                            newItem.Email = email;
+                                            newItem.EnglishName = email;
+                                            if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email != "null")
+                                                this.SelectedItems.push(newItem);
+                                        }
+                                    }
+                                });
+                            }
+
+                            setTimeout(() => this.SetInputPosition(), 5);
+                        });
+                    }
                 }
             }
-
         }
     }
     ngAfterViewInit() {

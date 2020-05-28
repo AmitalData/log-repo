@@ -14,11 +14,13 @@ import {UserExtendedPMService} from '../../../Common/Services/ExtendedPMs/UserEx
 import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/TenantManagementLicensePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LicensesManagementComponent.html',
 })
 
 export class LicensesManagementComponent implements OnDestroy {
+  public Items: any[] = [];
+
     @Output() SearchFieldChangeEvent = new EventEmitter();
     public Columns: any[] = [];
     private dirtyItem: UserLicensePM;
@@ -28,13 +30,17 @@ export class LicensesManagementComponent implements OnDestroy {
         this.Listen();
     }
 
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    private Refresh: boolean = false;
     private ListenEvent: any = null;
     Listen() {
         this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "Add") {
                 this.Add(res.User, res.PackageCode);
             }
+
             if (res.Name == "Remove") {
+                this.Refresh = res.Refresh;
                 this.Remove(res.User, res.PackageCode);
             }
         });        
@@ -47,14 +53,12 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public AllUserLicenses: UserLicensePM[];
     public AllPackages: PackageList[];
+    private ActiveNotAdditionalUsersCount: number = 0;
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
+        this.ActiveNotAdditionalUsersCount = args.ActiveNotAdditionalUsersCount;
         this.dirtyItem = null;
-
-        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-            this.HeaderColumnWidth = 240;
-        }
-
+        
         this.InitColumns();
         this.LoadUserLicenses();
     }
@@ -90,7 +94,8 @@ export class LicensesManagementComponent implements OnDestroy {
             return tempo;
         },
     };
-    
+
+    private filterAgrs: ApiQueryFilters;
     private GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -102,20 +107,24 @@ export class LicensesManagementComponent implements OnDestroy {
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.Tenant = SessionLocator.Tenant;
+        filters.GetCount = getCount;
 
         if (!AppTool.IsNullOrEmpty(this.SearchFields)) {
             filters.Filter1Name = "SearchFields";
             filters.Filter1Value = this.SearchFields;
             filters.Filter1Operator = "Contains";
         }
-        
+
+        this.filterAgrs = filters;
         var service: UserExtendedListService = new UserExtendedListService();
         return new Promise((resolve, reject) => { resolve(service.GetCustomDataByFilters(filters)) });
     }
-
+    
     private LoadUserLicenses() {
+        this.DataLoaded = false;
+
         var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
-        userExtendedPMService.GetUserLicenses().subscribe(myResult => {
+        userExtendedPMService.GetUserLicenses().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.LicensesManagmentsList = [];
             }
@@ -136,22 +145,32 @@ export class LicensesManagementComponent implements OnDestroy {
     public LicensesManagmentsList: LicensesManagementDataItem[];
     private BuildHeaders() {
         this.LicensesManagmentsList = [];
-        
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            var numberOfUsers: number = SessionLocator.TenantManagementJS.NumberOfFreeUsers + SessionLocator.TenantManagementJS.NumberOfUsers;
+
+            var foreground = FontTool.Black;
+            if (this.ActiveNotAdditionalUsersCount > numberOfUsers) {
+                foreground = FontTool.Red;
+            }
+
+            var mainItem: LicensesManagementDataItem = new LicensesManagementDataItem();
+            mainItem.Header = this.ActiveNotAdditionalUsersCount + "/" + numberOfUsers;
+            mainItem.Color = foreground;
+            mainItem.UsersCount = this.ActiveNotAdditionalUsersCount;
+            mainItem.NumberOfUsers = numberOfUsers;
+            this.LicensesManagmentsList.push(mainItem);
+        }
+
         var index: number = 0;
-        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+
+        var loop_licenses: TenantManagementLicensePM[] = SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode.toLowerCase() === b.PackageCode.toLowerCase()) ? 0 : (a.PackageCode.toLowerCase() < b.PackageCode.toLowerCase()) ? -1 : 1 });
+        loop_licenses.forEach(item => {
             index++;
 
             if (index <= 10) {
-                var myPackageName: string = "";
-                var myPackageCode: string = null;
-                var list: PackageList = this.AllPackages.filter(d => d.Code == item.PackageCode)[0];
-                if (list != null) {
-                    myPackageName = list.Name;
-                    myPackageCode = list.Code;
-                }
-                
                 var usersCount: number = this.AllUserLicenses.filter(d => d.PackageCode == item.PackageCode).length;
-                var numberOfUsers: number = AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers;
+                var numberOfUsers: number = (AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers) + (AppTool.IsNullOrZero(item.FreeUsers) ? 0 : item.FreeUsers);;
 
                 var foreground = FontTool.Black;
                 if (usersCount > numberOfUsers) {
@@ -169,8 +188,6 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     private BuildAdditionalColumns() {
-        this.DataLoaded = false;
-
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
             this.Columns.push({
                 FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
@@ -185,7 +202,9 @@ export class LicensesManagementComponent implements OnDestroy {
         }
 
         var index: number = 0;
-        SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
+
+        var loop_licenses: TenantManagementLicensePM[] = SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode.toLowerCase() === b.PackageCode.toLowerCase()) ? 0 : (a.PackageCode.toLowerCase() < b.PackageCode.toLowerCase()) ? -1 : 1 });
+        loop_licenses.forEach(item => {
             index++;
 
             if (index <= 10) {
@@ -254,19 +273,21 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public ValidationErrorsList: string[] = [];
     private Save(myPackageCode: string) {
+        this.BuildHeaders();
+
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
         var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
 
         var usersCount: number = userLicenses.length;
-        var numberOfUsers: number = tenantLicenses.NumberOfUsers;
+        var numberOfUsers: number = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);;
 
         if (usersCount > numberOfUsers) {
             errors.push("Some Packages have exceeded the allowed number of users");
         }
 
-        this.BuildHeaders();
+        //this.BuildHeaders();
         
         this.ValidationErrorsList = errors;
 
@@ -277,6 +298,12 @@ export class LicensesManagementComponent implements OnDestroy {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.RunSave();
+                }
+
+                else {
+                    this.InitColumns();
+                    this.LoadUserLicenses();
+                    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                 }
             });
         }
@@ -311,9 +338,12 @@ export class LicensesManagementComponent implements OnDestroy {
                         }
                     }  
 
+                    if (this.Refresh) {
+                        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });                        
+                        this.Refresh = false;
+                    }
                    
-                    this.dirtyItem = null;
-                    //this.LoadUserLicenses();
+                    this.dirtyItem = null;                    
                     this.BuildHeaders();
                     this.CurrentSession.StopBusyIndicator();
                 }

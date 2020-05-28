@@ -27,9 +27,10 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ModulesService } from '../../../Services/ModulesService';
+ 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReceivablePageComponent.html',
 })
 
@@ -56,11 +57,12 @@ export class ReceivablePageComponent {
     public ARPaymentsOpenedCount: string;
     public ARGeneralInvoiceDraftCount: string;
     //#endregion
-
+    IsNewCreditNoteVisibile: boolean = false;
     RecentGLAccountsCount: number = 0;
 
     public isRTL: boolean = false;
     isReady: boolean = false;
+    IsNewARInvoiceEnabled: boolean = false;
 
     chartId: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
@@ -69,6 +71,8 @@ export class ReceivablePageComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.LoadResources();
+
+        this.IsNewARInvoiceEnabled = FeatureLocator.HasFeaturePermession("ARInvoice", "NEW");
 
 
         //this.LoadAllScreenData();
@@ -84,7 +88,11 @@ export class ReceivablePageComponent {
                 this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
                     this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
                         this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
-                            this.isReady = true;
+                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {
+                                    this.isReady = true;
+                                });
+                            });
                         });
                     });
                 });
@@ -225,8 +233,8 @@ export class ReceivablePageComponent {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
             var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
 
-            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
+            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
 
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
@@ -308,6 +316,7 @@ export class ReceivablePageComponent {
         this.activeCustomersGLAVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "activeCustomersGLA") ? true : false;
         this.inactiveCustomersGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "inactiveCustomersGla") ? true : false;
         this.CLIENTGLACCOUNTSGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLIENTGLACCOUNTS") ? true : false;
+        this.IsNewCreditNoteVisibile = FeatureLocator.HasFeaturePermession("ARInvoice", "NEWCREDITNOTE") ? true : false;
     }
 
     public RecentGLAccountsList: GLAccountList[];
@@ -328,7 +337,7 @@ export class ReceivablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveCustomersCount = myResult.ActiveCustomersCount > 1000 ? "1000+" : myResult.ActiveCustomersCount.toString();
                 this.glAccountSummary.InactiveCustomersCount = myResult.InactiveCustomersCount > 1000 ? "1000+" : myResult.InactiveCustomersCount.toString();
@@ -341,7 +350,7 @@ export class ReceivablePageComponent {
         // ARPayments
 
         var myService = new ModulesService();
-        myService.GetAccountingReceivablesSummary().subscribe(myResult => {
+        myService.GetAccountingReceivablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
                 this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();

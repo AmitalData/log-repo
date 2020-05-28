@@ -9,11 +9,9 @@ import { SupplierInvoiceItemList } from '../../../../../Customs/EntityLists/Exte
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { DeclarationPaymentComponent } from './DeclarationPaymentComponent';
 import { DeclarationPaymentProtestPM } from '../../../../../Customs/EntityPMs/DeclarationPaymentProtestPM';
-import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
-import { forEach } from '@angular/router/src/utils/collection';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 
-@Component({
-    moduleId: module.id,
+@Component({    
     templateUrl: './SupplierInvoiceSelectionComponent.html',
 })
 

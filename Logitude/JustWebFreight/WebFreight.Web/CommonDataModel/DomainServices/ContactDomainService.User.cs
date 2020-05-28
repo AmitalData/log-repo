@@ -623,7 +623,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public int ActiveUsersCount { get; set; }
         public int InactiveUsersCount { get; set; }
         public int ActiveLicensedCount { get; set; }
-        public int ActiveNotLicensedCount { get; set; }        
+        public int ActiveNotLicensedCount { get; set; }
+        public int ActiveNotAdditionalUsersCount { get; set; }
     }
 
     public class UsersWorkspaceRecentItem
@@ -636,5 +637,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public string IP { get; set; }
         public string Countryname { get; set; }
         public bool BlockEditUser { get; set; }
+        public bool IsCustomerCareUser { get; set; }
     }
 }

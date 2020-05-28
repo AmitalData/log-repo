@@ -11,17 +11,17 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
     providers: [CourierMasterService]
 })
 
 
 export class CMConnectedDeclarationTabComponent extends BaseComponent {
-  
+  public SelectedRow2: any;
+
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;
@@ -50,9 +50,9 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.entityPM = entityArgs.EntityPM;
         this.connectedListIds = new ObservableCollection([]);
         this.notConnectedListIds = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
 
                     this.IsVisibile = true;
                     this.OnAllBtnClicked(true);

@@ -73,7 +73,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             //APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
             //{

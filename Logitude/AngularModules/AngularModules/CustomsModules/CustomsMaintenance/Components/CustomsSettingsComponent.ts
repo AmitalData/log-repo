@@ -28,7 +28,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsSettingsComponent.html',
 })
 
@@ -72,7 +72,7 @@ export class CustomsSettingsComponent
         this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
         this._SelectedCompanyType= this.CompanyTypeList[0];
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
             var filters = new ApiQueryFilters(true);
             filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "string");
@@ -243,7 +243,7 @@ export class CustomsSettingsComponent
         //List < ValidationResult > errors = new List<ValidationResult>();
         //Validator.TryValidateObject(entityPM, new ValidationContext(entityPM, null, null), errors);
         this._CustomsSettingPMService.update(this.entityPM)
-            .subscribe(resp => {
+            .subscribe((resp:any) => {
                 if (resp.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(resp.ErrorsArray[0]);

@@ -1,6 +1,7 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -13,10 +14,10 @@ import { NotificationPMService } from '../StandardPMs/NotificationPMService';
 @Injectable()
 
 export class NotificationWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationWebService';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationWebService';
 
@@ -24,22 +25,16 @@ export class NotificationWebService {
 
     //NotificationReply
     GetNotificationsByDefinitionCode(objectTableId: string, entityId: string, tenant: number) {
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        return defer(() => {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             var notificationPMService: NotificationPMService = new NotificationPMService();
 
             return this._http.get(this._apiUrl + "/GetNotificationsByDefinitionCode/?objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var allLists = response.json();
+                    var allLists = response;
                     var _mappedListsArray: Array<NotificationPM> = [];
                     if (allLists) {
                         for (var key in allLists) {
@@ -53,31 +48,27 @@ export class NotificationWebService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     PostSendNotificationReplyRequest(entity: MessageToAgentRequestParams) {
 
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
                 this._apiUrl + '/PostSendNotificationReplyRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -85,10 +76,8 @@ export class NotificationWebService {
 
     SetNotificationsStatus(Ids: string[], status: string) {
 
-   
-
         // Send request
-        return Observable.defer(() => {
+        return defer(() => {
 
             // Prepare parameters
             var IdsParameterString = "";
@@ -102,23 +91,19 @@ export class NotificationWebService {
                 return;
             }
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetSetNotificationsStatus/?" + IdsParameterString + "status=" + status
-                , { headers: authHeader }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    //var res = response.json();
+                    //var res = response;
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     
                     //serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

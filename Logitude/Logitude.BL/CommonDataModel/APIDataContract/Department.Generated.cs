@@ -12,11 +12,12 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public class Department
+    public partial class Department
     {
 
 	    
@@ -29,6 +30,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string EnglishName { get; set; }
     
     public string LocalName { get; set; }
+    
+	[XmlAttribute]
+    public string PartnerCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

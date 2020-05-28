@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ThrowCloseMonth(_JournalPM.Tenant);
             }
-            if (!JournalValidator.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate))
+            if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
             {
                 ThrowCloseMonth(_JournalPM.Tenant);
             }
@@ -102,6 +102,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
             Storno.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
             Storno.AccountingDate = _JournalPM.AccountingDate;
+            if (stornoOverrideM.AccountingDate.HasValue)
+            {
+                Storno.AccountingDate = stornoOverrideM.AccountingDate.Value;
+            }
+
             Storno.AccountingEntityCode = _JournalPM.AccountingEntityCode;
             if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode))
             {
@@ -126,12 +131,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
             Storno.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved; //Storno.StatusCode = "2";
             Storno.VoidedByJournalId = null;
-            Storno.CreatedByUserId = _JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
-            Storno.UpdatedByUserId = _JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+            string updatedByUserId = _JournalPM.UpdatedByUserId;
+            if (!AuthenticationUtil.IsResolveUserIdentityNameEqualSystem(_JournalPM.Tenant))
+            {
+                updatedByUserId= AuthenticationUtil.ResolveUserId(_JournalPM.Tenant);
+            }
+            Storno.CreatedByUserId = //_JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+                updatedByUserId;
+            Storno.UpdatedByUserId = //_JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+                updatedByUserId;
             Storno.Tenant = _JournalPM.Tenant;
             Storno.TypeCode = _JournalPM.TypeCode;
             Storno.UpdateDate = DateTime.Now;
-            Storno.UpdatedByUserId = _JournalPM.UpdatedByUserId;
+            Storno.UpdatedByUserId = //_JournalPM.UpdatedByUserId;
+                updatedByUserId;
             Storno.OriginalJournalId = _JournalPM.Id;
             var maybeTrue = true;
             if (maybeTrue)
@@ -144,6 +157,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalLinePM newStornoJournalLine = new JournalLinePM();
                 newStornoJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 newStornoJournalLine.AccountingDate = item.AccountingDate;
+                if (stornoOverrideM.AccountingDate.HasValue)
+                {
+                    newStornoJournalLine.AccountingDate = stornoOverrideM.AccountingDate.Value;
+                }
+
+
                 newStornoJournalLine.ActionCode = item.ActionCode;
                 newStornoJournalLine.ActionTypeCode = item.ActionTypeCode;
                 newStornoJournalLine.ActionName = item.ActionName;
@@ -171,6 +190,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 newStornoJournalLine.LocalAmount = -item.LocalAmount;
                 newStornoJournalLine.Notes = item.Notes;
+                if (!String.IsNullOrWhiteSpace(stornoOverrideM.LineNotes))
+                {
+                    newStornoJournalLine.Notes = stornoOverrideM.LineNotes;
+                }
                 newStornoJournalLine.Reference1 = item.Reference1;
                 newStornoJournalLine.Reference2 = item.Reference2;
                 newStornoJournalLine.Reference3 = item.Reference3;

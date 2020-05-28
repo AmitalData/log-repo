@@ -5,7 +5,7 @@ import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDir
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'MainReportsWorkspace',
     templateUrl: './MainReportsWorkspace.html',
     providers: [EntityResourceService],
@@ -22,9 +22,9 @@ export class MainReportsWorkspace implements OnInit {
     }
     ngOnInit() {
 
-        this._entityResourceService.getEntityResourceByTableName("BIReportFolder", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
-                this._entityResourceService.getEntityResourceByTableName("Report", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("BIReportFolder", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName("Report", 0).subscribe((response:any) => {
                     this.IsResourcesReady = true;
 
                     if (FeatureLocator.HasFeaturePermession("BIReport", "BIReport.Menu")) {
@@ -71,7 +71,7 @@ export class MainReportsWorkspace implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -109,7 +109,7 @@ export class MainReportsWorkspace implements OnInit {
 
                         case "Report": {
                             if (this.Page_Report == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./Report/Components/Workspaces/ReportComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_Report = cmpRef.instance;

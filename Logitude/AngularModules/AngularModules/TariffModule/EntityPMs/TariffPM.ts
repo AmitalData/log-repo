@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
+import {TariffLineExpirationDatePM} from './TariffLineExpirationDatePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -70,9 +71,9 @@ export class TariffPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private description: string;
-    public get Description() { return this.description; }
-    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
     private sellerId: string;
@@ -128,6 +129,11 @@ export class TariffPM {
     private contractNumber: string;
     public get ContractNumber() { return this.contractNumber; }
     public set ContractNumber(newValue: string) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
+       
+	 
+    private sellerName: string;
+    public get SellerName() { return this.sellerName; }
+    public set SellerName(newValue: string) { if (this.sellerName != newValue) { this.sellerName = newValue; this.MarkAsDirty("SellerName"); } }
        
 	 
     private setAsInActive: boolean;
@@ -334,7 +340,7 @@ export class TariffPM {
        
 	 
      
-	private deletedLinesExpirationDates: string[];
+	private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     get  DeletedLinesExpirationDates() {
         if (this.deletedLinesExpirationDates == null) {
             this.deletedLinesExpirationDates = [];
@@ -342,11 +348,81 @@ export class TariffPM {
 
         return this.deletedLinesExpirationDates;
     }
-    set  DeletedLinesExpirationDates(newValue: string[]) {
+    set  DeletedLinesExpirationDates(newValue: TariffLineExpirationDatePM[]) {
         if (this.deletedLinesExpirationDates != newValue) {
             this.deletedLinesExpirationDates = newValue;
         }
     }
+    private isFromUpdateScreen: boolean;
+    public get IsFromUpdateScreen() { return this.isFromUpdateScreen; }
+    public set IsFromUpdateScreen(newValue: boolean) { if (this.isFromUpdateScreen != newValue) { this.isFromUpdateScreen = newValue; this.MarkAsDirty("IsFromUpdateScreen"); } }
+       
+	 
+    private isFromCopy: boolean;
+    public get IsFromCopy() { return this.isFromCopy; }
+    public set IsFromCopy(newValue: boolean) { if (this.isFromCopy != newValue) { this.isFromCopy = newValue; this.MarkAsDirty("IsFromCopy"); } }
+       
+	 
+    private isUpdatingMissingPorts: boolean;
+    public get IsUpdatingMissingPorts() { return this.isUpdatingMissingPorts; }
+    public set IsUpdatingMissingPorts(newValue: boolean) { if (this.isUpdatingMissingPorts != newValue) { this.isUpdatingMissingPorts = newValue; this.MarkAsDirty("IsUpdatingMissingPorts"); } }
+       
+	 
+    private containerType1Id: string;
+    public get ContainerType1Id() { return this.containerType1Id; }
+    public set ContainerType1Id(newValue: string) { if (this.containerType1Id != newValue) { this.containerType1Id = newValue; this.MarkAsDirty("ContainerType1Id"); } }
+       
+	 
+    private containerType2Id: string;
+    public get ContainerType2Id() { return this.containerType2Id; }
+    public set ContainerType2Id(newValue: string) { if (this.containerType2Id != newValue) { this.containerType2Id = newValue; this.MarkAsDirty("ContainerType2Id"); } }
+       
+	 
+    private containerType3Id: string;
+    public get ContainerType3Id() { return this.containerType3Id; }
+    public set ContainerType3Id(newValue: string) { if (this.containerType3Id != newValue) { this.containerType3Id = newValue; this.MarkAsDirty("ContainerType3Id"); } }
+       
+	 
+    private containerType4Id: string;
+    public get ContainerType4Id() { return this.containerType4Id; }
+    public set ContainerType4Id(newValue: string) { if (this.containerType4Id != newValue) { this.containerType4Id = newValue; this.MarkAsDirty("ContainerType4Id"); } }
+       
+	 
+    private containerType5Id: string;
+    public get ContainerType5Id() { return this.containerType5Id; }
+    public set ContainerType5Id(newValue: string) { if (this.containerType5Id != newValue) { this.containerType5Id = newValue; this.MarkAsDirty("ContainerType5Id"); } }
+       
+	 
+    private transportModeCode: string;
+    public get TransportModeCode() { return this.transportModeCode; }
+    public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
+       
+	 
+    private transportModeName: string;
+    public get TransportModeName() { return this.transportModeName; }
+    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
+       
+	 
+    private tariffProductId: string;
+    public get TariffProductId() { return this.tariffProductId; }
+    public set TariffProductId(newValue: string) { if (this.tariffProductId != newValue) { this.tariffProductId = newValue; this.MarkAsDirty("TariffProductId"); } }
+       
+	 
+    private sellerPartnerTypeId: string;
+    public get SellerPartnerTypeId() { return this.sellerPartnerTypeId; }
+    public set SellerPartnerTypeId(newValue: string) { if (this.sellerPartnerTypeId != newValue) { this.sellerPartnerTypeId = newValue; this.MarkAsDirty("SellerPartnerTypeId"); } }
+       
+	 
+    private isRefreshTranslations: boolean;
+    public get IsRefreshTranslations() { return this.isRefreshTranslations; }
+    public set IsRefreshTranslations(newValue: boolean) { if (this.isRefreshTranslations != newValue) { this.isRefreshTranslations = newValue; this.MarkAsDirty("IsRefreshTranslations"); } }
+       
+	 
+    private lastUsedDate: Date;
+    public get LastUsedDate() { return this.lastUsedDate; }
+    public set LastUsedDate(newValue: Date) { if (this.lastUsedDate != newValue) { this.lastUsedDate = newValue; this.MarkAsDirty("LastUsedDate"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

@@ -9,7 +9,7 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class PortRepository:IRepository<Port>
+    public class PortRepository : IRepository<Port>
     {
         ICommonDataContext commonDataContext;
 
@@ -38,7 +38,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Port data = (from r in context.Ports.Include("Country")
                          where r.Code == "---"
                          && r.Country.Code == "--"
-                         && r.Tenant == tenant 
+                         && r.Tenant == tenant
                          select r).FirstOrDefault();
             return data;
         }
@@ -51,22 +51,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Port GetSinglePort(string id, int tenant)
         {
             Port entity = (from a in context.Ports.Include("Country").Include("State")
-                          where  a.Id == id
-                          select a).FirstOrDefault();
-
-            return entity;
-        }
-
-        public Port GetSinglePort( int tenant,string id)
-        {
-            Port entity = (from a in context.Ports.Include("Country").Include("State")
-                           where  a.Id == id
+                           where a.Id == id
                            select a).FirstOrDefault();
 
             return entity;
         }
 
-        public Port GetSinglePortByCodeCountryCode(int tenant, string code,string countryCode, bool getFromCache)
+        public Port GetSinglePort(int tenant, string id)
+        {
+            Port entity = (from a in context.Ports.Include("Country").Include("State")
+                           where a.Id == id
+                           select a).FirstOrDefault();
+
+            return entity;
+        }
+
+        public Port GetSinglePortByCodeCountryCode(int tenant, string code, string countryCode, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(code))
             {
@@ -85,10 +85,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                                {
-                                    CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                                }
-                            
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+
                         }
                         else
                         {
@@ -170,7 +170,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (from a in context.Ports.Include("Country")
                                       where a.Tenant == tenant && a.Code == code
                                       select a).FirstOrDefault();
-                            
+
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
                             {
                                 CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -242,7 +242,53 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
-       
+
+        public Port GetOceanPortByCode(int myTenant, string myCode, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(myCode))
+            {
+                string entityName = "OceanPort" + myCode + myTenant;
+                Port entity;
+
+                if (getFromCache)
+                {
+                    if (CacheManager.CacheWrapper != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            entity = (from a in context.Ports.Include("Country")
+                                      where a.Tenant == myTenant && a.Code == myCode && a.IsOcean
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+
+                        else
+                        {
+                            entity = (Port)CacheManager.CacheWrapper.Get(entityName);
+                        }
+                    }
+
+                    else
+                    {
+                        entity = (from a in context.Ports.Include("Country") where a.Code == myCode && a.Tenant == myTenant && a.IsOcean select a).FirstOrDefault();
+                    }
+                }
+
+                else
+                {
+                    entity = (from a in context.Ports.Include("Country") where a.Code == myCode && a.Tenant == myTenant && a.IsOcean select a).FirstOrDefault();
+                }
+
+                return entity;
+            }
+
+            return null;
+        }
+        
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
             if (byCode)
@@ -299,11 +345,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
                 return query;
         }
-        
+
         public Port GetFirstPort(int tenant)
         {
             return (from a in context.Ports.Include("Country")
-                    where a.Tenant==tenant
+                    where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -410,6 +456,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
 
             return iResult;
+        }
+
+        public Port GetSinglePortIdByCombinedCode(string code, int tenant)
+        {
+            var entity = (from a in context.Ports.Include("Country").Include("State")
+                          where a.CombinedCode == code && a.Tenant == tenant
+                          select a).FirstOrDefault();
+            return entity;
+        }
+
+        public Port GetOceanPortByCombinedCode(string code, int tenant)
+        {
+            var entity = (from a in context.Ports.Include("Country").Include("State")
+                          where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
+                          select a).FirstOrDefault();
+            return entity;
         }
     }
 }

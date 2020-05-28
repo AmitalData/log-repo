@@ -22,7 +22,7 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     selector: 'PaymentChequeGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PaymentChequeGeneralTabComponent.html',
 })
 
@@ -41,8 +41,14 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     EntityResourceService: EntityResourceService = new EntityResourceService();
     BankAccountPMService: BankAccountPMService = new BankAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs) {
+    PayToGLAccountIdOldValue: string;
+    public isRTL: boolean = false;
+    constructor(private entityArgs: EntityArgs)
+    {
         super();
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         this.entityPM = entityArgs.EntityPM;
         this.SetFilters();
         this.LayoutDirection=ObjectsLocator.GlobalSetting.LayoutDirection
@@ -55,16 +61,16 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
                 });
             });
         });
-       
+
                 if (this.entityPM.BankLocalName) {
                     this.BankName = "LocalName";
                 }
                 else {
                     this.BankName = "EnglishName";
                 }
-          
 
-       
+
+
 
         this.BuildPaymentChequeLinesList();
         if (this.entityPM.PaymentChequeStatusCode == "2" || this.entityPM.IsCancelled) {
@@ -96,6 +102,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     get PayToGLAccountId() { return this.entityPM.PayToGLAccountId; }
     set PayToGLAccountId(value: string) {
         if (this.entityPM.PayToGLAccountId != value) {
+            this.PayToGLAccountIdOldValue = this.entityPM.PayToGLAccountId;
             this.entityPM.PayToGLAccountId = value;
         }
     }
@@ -160,8 +167,8 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             this.bankName = value;
         }
     }
-    
- 
+
+
     private bankAccount: BankAccountPM;
     get BankAccount() { return this.bankAccount; }
     set BankAccount(value: BankAccountPM) {
@@ -177,29 +184,31 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             }
         }
     }
-   
+
     private account: GLAccountPM;
     get Account() { return this.account; }
     set Account(value: GLAccountPM) {
+        if ((!AppTool.IsNullOrEmpty(this.PayToGLAccountIdOldValue)) && this.PayToGLAccountIdOldValue != value.Id) {
         if (this.account != value) {
             this.account = value;
             if (value != null) {
-             
+
                 if (value.AccountTypeCode == "3" && this.entityPM.APPaymentId == null) {
-                  
+
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.VendorsGLAccount"));
                 }
                 else {
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, true, null);
 
-                 
-                    this.PayToName = value.LocalName;
+
+                        this.PayToName = value.LocalName;
+
                 }
-                
+            }
             }
         }
     }
-   
+
     Add() {
         if (this.AddLineEnabled) {
             var line: number = 0;
@@ -289,7 +298,7 @@ export class PaymentChequeLine extends BaseComponent {
     DeleteButtonClicked() {
         var sequence = 1;
         this.parent.Lines.Remove(this);
-        this.parent.entityPM.RemovePaymentChequeLine(this.entity); 
+        this.parent.entityPM.RemovePaymentChequeLine(this.entity);
         this.parent.Lines.Collection.forEach((item: PaymentChequeLine) => {
             item.SequenceNumeric = sequence;
             sequence++;

@@ -1,14 +1,713 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;23785dbc-9eed-4f8e-a9f7-1ffe85220ee2&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" DBTableName="&quot;Customs.MeasurmentUnits&quot;" ObjectTableSingular="&quot;Customs.MeasurmentUnit&quot;" ObjectTablePlural="&quot;Customs.MeasurmentUnits&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Measurment Unit&quot;" Code="&quot;52d9&quot;" Name="&quot;Customs.MeasurmentUnit Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;9cd3a96a-7058-4046-a3d8-c7af0d54deef&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="3" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="3" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;28b2c5c4-b905-4994-938b-889e3ccd7776&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="40" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="40" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;65e96c53-2343-4a4c-9e77-ac3567b6892d&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;15634b6a-4071-497b-96d4-9b318bf664b1&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search Fields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;Search Fields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;bd50588e-8e81-4b12-a96a-a6b66263f882&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;07cf9e5b-1201-4c4c-acb7-ff212d1ad2da&quot;" FieldName="&quot;MalamId&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" FieldsDataType="&quot;Integer&quot;" MinLength="0" MaxLength="15" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="15" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;MalamId&quot;" ListPropertyPath="&quot;MalamId&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;MalamId&quot;" DefaultText="&quot;Malam&quot;" FullLocalDefaultText="&quot;Malam&quot;" ListFieldLable="&quot;MalamIdListLable&quot;" ListLableDefaultText="&quot;Malam&quot;" ListLocalDefaultText="&quot;Malam&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;23785dbc-9eed-4f8e-a9f7-1ffe85220ee2&quot;"
+  ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+  DBTableName="&quot;Customs.MeasurmentUnits&quot;"
+  ObjectTableSingular="&quot;Customs.MeasurmentUnit&quot;"
+  ObjectTablePlural="&quot;Customs.MeasurmentUnits&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Measurment Unit&quot;"
+  Code="&quot;MESU&quot;"
+  Name="&quot;Customs.MeasurmentUnit&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;9cd3a96a-7058-4046-a3d8-c7af0d54deef&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="3"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="3"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;28b2c5c4-b905-4994-938b-889e3ccd7776&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;65e96c53-2343-4a4c-9e77-ac3567b6892d&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;15634b6a-4071-497b-96d4-9b318bf664b1&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search Fields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;Search Fields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;bd50588e-8e81-4b12-a96a-a6b66263f882&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;07cf9e5b-1201-4c4c-acb7-ff212d1ad2da&quot;"
+    FieldName="&quot;MalamId&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    FieldsDataType="&quot;Integer&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="15"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;MalamId&quot;"
+    ListPropertyPath="&quot;MalamId&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.MeasurmentUnit&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;MalamId&quot;"
+    DefaultText="&quot;Malam&quot;"
+    FullLocalDefaultText="&quot;Malam&quot;"
+    ListFieldLable="&quot;MalamIdListLable&quot;"
+    ListLableDefaultText="&quot;Malam&quot;"
+    ListLocalDefaultText="&quot;Malam&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;2I&quot;"
+      SearchFields="&quot;2I,BTU לשעה&quot;"
+      Inactive="false"
+      LocalName="&quot;BTU לשעה&quot;" />
+    <Record
+      Code="&quot;ANN&quot;"
+      SearchFields="&quot;ANN,שנה&quot;"
+      Inactive="false"
+      LocalName="&quot;שנה&quot;" />
+    <Record
+      Code="&quot;C26&quot;"
+      SearchFields="&quot;C26,מילי-שניות&quot;"
+      Inactive="false"
+      LocalName="&quot;מילי-שניות&quot;" />
+    <Record
+      Code="&quot;C47&quot;"
+      SearchFields="&quot;C47,ננו-שניות&quot;"
+      Inactive="false"
+      LocalName="&quot;ננו-שניות&quot;" />
+    <Record
+      Code="&quot;CEL&quot;"
+      SearchFields="&quot;CEL,מעלות צלזיוס&quot;"
+      Inactive="false"
+      LocalName="&quot;מעלות צלזיוס&quot;" />
+    <Record
+      Code="&quot;CLT&quot;"
+      SearchFields="&quot;CLT,סנטיליטר&quot;"
+      Inactive="false"
+      LocalName="&quot;סנטיליטר&quot;" />
+    <Record
+      Code="&quot;CMK&quot;"
+      SearchFields="&quot;CMK,סנטימטר רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;סנטימטר רבוע&quot;" />
+    <Record
+      Code="&quot;CMQ&quot;"
+      SearchFields="&quot;CMQ,ס&quot;מ מעוקב&quot;"
+      Inactive="false"
+      LocalName="&quot;ס&quot;מ מעוקב&quot;" />
+    <Record
+      Code="&quot;CMT&quot;"
+      SearchFields="&quot;CMT,סנטימטר&quot;"
+      Inactive="false"
+      LocalName="&quot;סנטימטר&quot;" />
+    <Record
+      Code="&quot;CTM&quot;"
+      SearchFields="&quot;CTM,קרט&quot;"
+      Inactive="false"
+      LocalName="&quot;קרט&quot;" />
+    <Record
+      Code="&quot;DAY&quot;"
+      SearchFields="&quot;DAY,יממה&quot;"
+      Inactive="false"
+      LocalName="&quot;יממה&quot;" />
+    <Record
+      Code="&quot;DMK&quot;"
+      SearchFields="&quot;DMK,דצימטר רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;דצימטר רבוע&quot;" />
+    <Record
+      Code="&quot;DMT&quot;"
+      SearchFields="&quot;DMT,דצימטר&quot;"
+      Inactive="false"
+      LocalName="&quot;דצימטר&quot;" />
+    <Record
+      Code="&quot;DZN&quot;"
+      SearchFields="&quot;DZN,תריסר&quot;"
+      Inactive="false"
+      LocalName="&quot;תריסר&quot;" />
+    <Record
+      Code="&quot;EA&quot;"
+      SearchFields="&quot;EA,כל אחד&quot;"
+      Inactive="false"
+      LocalName="&quot;כל אחד&quot;" />
+    <Record
+      Code="&quot;FOT&quot;"
+      SearchFields="&quot;FOT,רגל&quot;"
+      Inactive="false"
+      LocalName="&quot;רגל&quot;" />
+    <Record
+      Code="&quot;FTK&quot;"
+      SearchFields="&quot;FTK,רגל רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;רגל רבוע&quot;" />
+    <Record
+      Code="&quot;GLL&quot;"
+      SearchFields="&quot;GLL,גאלון&quot;"
+      Inactive="false"
+      LocalName="&quot;גאלון&quot;" />
+    <Record
+      Code="&quot;GRM&quot;"
+      SearchFields="&quot;GRM,גרם&quot;"
+      Inactive="false"
+      LocalName="&quot;גרם&quot;" />
+    <Record
+      Code="&quot;GRO&quot;"
+      SearchFields="&quot;GRO,גרוס&quot;"
+      Inactive="false"
+      LocalName="&quot;גרוס&quot;" />
+    <Record
+      Code="&quot;HUR&quot;"
+      SearchFields="&quot;HUR,שעה&quot;"
+      Inactive="false"
+      LocalName="&quot;שעה&quot;" />
+    <Record
+      Code="&quot;ILA&quot;"
+      SearchFields="&quot;ILA,ליטר אלכוהול&quot;"
+      Inactive="false"
+      LocalName="&quot;ליטר אלכוהול&quot;" />
+    <Record
+      Code="&quot;INH&quot;"
+      SearchFields="&quot;INH,אינצ'&quot;"
+      Inactive="false"
+      LocalName="&quot;אינצ'&quot;" />
+    <Record
+      Code="&quot;INK&quot;"
+      SearchFields="&quot;INK,אינצ' רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;אינצ' רבוע&quot;" />
+    <Record
+      Code="&quot;INQ&quot;"
+      SearchFields="&quot;INQ,אינצ' מעוקב&quot;"
+      Inactive="false"
+      LocalName="&quot;אינצ' מעוקב&quot;" />
+    <Record
+      Code="&quot;KGM&quot;"
+      SearchFields="&quot;KGM,קילוגרם&quot;"
+      Inactive="false"
+      LocalName="&quot;קילוגרם&quot;" />
+    <Record
+      Code="&quot;KMK&quot;"
+      SearchFields="&quot;KMK,ק&quot;מ רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;ק&quot;מ רבוע&quot;" />
+    <Record
+      Code="&quot;KMT&quot;"
+      SearchFields="&quot;KMT,קילומטר&quot;"
+      Inactive="false"
+      LocalName="&quot;קילומטר&quot;" />
+    <Record
+      Code="&quot;LBR&quot;"
+      SearchFields="&quot;LBR,ליברה (פאונד)&quot;"
+      Inactive="false"
+      LocalName="&quot;ליברה (פאונד)&quot;" />
+    <Record
+      Code="&quot;LTR&quot;"
+      SearchFields="&quot;LTR,ליטר&quot;"
+      Inactive="false"
+      LocalName="&quot;ליטר&quot;" />
+    <Record
+      Code="&quot;M5&quot;"
+      SearchFields="&quot;M5,מיקרו קירי&quot;"
+      Inactive="false"
+      LocalName="&quot;מיקרו קירי&quot;" />
+    <Record
+      Code="&quot;MIK&quot;"
+      SearchFields="&quot;MIK,מייל רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;מייל רבוע&quot;" />
+    <Record
+      Code="&quot;MIN&quot;"
+      SearchFields="&quot;MIN,דקה&quot;"
+      Inactive="false"
+      LocalName="&quot;דקה&quot;" />
+    <Record
+      Code="&quot;MMK&quot;"
+      SearchFields="&quot;MMK,מילימטר רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;מילימטר רבוע&quot;" />
+    <Record
+      Code="&quot;MMT&quot;"
+      SearchFields="&quot;MMT,מילימטר&quot;"
+      Inactive="false"
+      LocalName="&quot;מילימטר&quot;" />
+    <Record
+      Code="&quot;MON&quot;"
+      SearchFields="&quot;MON,חודש&quot;"
+      Inactive="false"
+      LocalName="&quot;חודש&quot;" />
+    <Record
+      Code="&quot;MTK&quot;"
+      SearchFields="&quot;MTK,מטר רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;מטר רבוע&quot;" />
+    <Record
+      Code="&quot;MTQ&quot;"
+      SearchFields="&quot;MTQ,מ&quot;ק&quot;"
+      Inactive="false"
+      LocalName="&quot;מ&quot;ק&quot;" />
+    <Record
+      Code="&quot;MTR&quot;"
+      SearchFields="&quot;MTR,מטר&quot;"
+      Inactive="false"
+      LocalName="&quot;מטר&quot;" />
+    <Record
+      Code="&quot;ONZ&quot;"
+      SearchFields="&quot;ONZ,מסה )משקל(&quot;"
+      Inactive="false"
+      LocalName="&quot;מסה )משקל(&quot;" />
+    <Record
+      Code="&quot;PK&quot;"
+      SearchFields="&quot;PK,חבילה&quot;"
+      Inactive="false"
+      LocalName="&quot;חבילה&quot;" />
+    <Record
+      Code="&quot;PR&quot;"
+      SearchFields="&quot;PR,זוג&quot;"
+      Inactive="false"
+      LocalName="&quot;זוג&quot;" />
+    <Record
+      Code="&quot;PT&quot;"
+      SearchFields="&quot;PT,פינט&quot;"
+      Inactive="false"
+      LocalName="&quot;פינט&quot;" />
+    <Record
+      Code="&quot;SEC&quot;"
+      SearchFields="&quot;SEC,שניה&quot;"
+      Inactive="false"
+      LocalName="&quot;שניה&quot;" />
+    <Record
+      Code="&quot;SMI&quot;"
+      SearchFields="&quot;SMI,מייל&quot;"
+      Inactive="false"
+      LocalName="&quot;מייל&quot;" />
+    <Record
+      Code="&quot;T3&quot;"
+      SearchFields="&quot;T3,אלף יחידות&quot;"
+      Inactive="false"
+      LocalName="&quot;אלף יחידות&quot;" />
+    <Record
+      Code="&quot;T3C&quot;"
+      SearchFields="&quot;T3C,אלף סיגריות&quot;"
+      Inactive="false"
+      LocalName="&quot;אלף סיגריות&quot;" />
+    <Record
+      Code="&quot;TNE&quot;"
+      SearchFields="&quot;TNE,טון&quot;"
+      Inactive="false"
+      LocalName="&quot;טון&quot;" />
+    <Record
+      Code="&quot;VLT&quot;"
+      SearchFields="&quot;VLT,מתח חשמלי&quot;"
+      Inactive="false"
+      LocalName="&quot;מתח חשמלי&quot;" />
+    <Record
+      Code="&quot;WEE&quot;"
+      SearchFields="&quot;WEE,שבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;שבוע&quot;" />
+    <Record
+      Code="&quot;YDK&quot;"
+      SearchFields="&quot;YDK,יארד רבוע&quot;"
+      Inactive="false"
+      LocalName="&quot;יארד רבוע&quot;" />
+    <Record
+      Code="&quot;YDQ&quot;"
+      SearchFields="&quot;YDQ,יארד מעוקב&quot;"
+      Inactive="false"
+      LocalName="&quot;יארד מעוקב&quot;" />
+    <Record
+      Code="&quot;YRD&quot;"
+      SearchFields="&quot;YRD,יארד&quot;"
+      Inactive="false"
+      LocalName="&quot;יארד&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;MeasurmentUnit&quot;"
+    ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.MeasurmentUnit&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;MESU&quot;"
+    QueryGroupName="&quot;Customs.MeasurmentUnit&quot;"
+    LocalTextCode="&quot;יחידת מידה&quot;"
+    TextCode="&quot;Measurement Units&quot;"
+    TextCodeCode="&quot;Customs.MeasurmentUnit.Q.MeasurmentUnitQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;MEASURMENTUNIT&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.MeasurmentUnit.Features.MeasurmentUnits&quot;"
+    FeatureDefaultText="&quot;Measurment Units&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;MeasurmentUnit&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;MeasurmentUnit&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;MeasurmentUnit&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;MeasurmentUnit&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;MalamId&quot;"
+        QueryCode="&quot;MeasurmentUnit&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.MeasurmentUnit&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

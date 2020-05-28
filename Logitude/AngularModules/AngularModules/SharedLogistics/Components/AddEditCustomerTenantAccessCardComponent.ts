@@ -28,7 +28,7 @@ import {CustomerTenantAccessPMService} from '../../Common/Services/StandardPMs/C
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RelatedCustomerComponent',
     templateUrl: './AddEditCustomerTenantAccessCardComponent.html',
 })
@@ -93,7 +93,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
             this.viewModel.isNew = false;
             var service: CustomerPMService = new CustomerPMService();
-            service.get(this.viewModel.CustomerId).subscribe(res => {
+            service.get(this.viewModel.CustomerId).subscribe((res:any) => {
                 if (!res.HasError) {
                     var Customer = res.Result;
                     if (Customer != null) {

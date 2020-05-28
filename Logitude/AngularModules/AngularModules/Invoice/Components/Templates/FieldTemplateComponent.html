@@ -79,12 +79,12 @@
                                 <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
-                                            </td>
-                                            <td>
-                                                <div></div>
                                             </td>
 
                                         </tr>
@@ -182,7 +182,11 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
                                 <!-- DueDate -->
                                 <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
                                     <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
@@ -243,12 +247,12 @@
                                 <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
-                                            </td>
-                                            <td>
-                                                <div></div>
                                             </td>
                                         </tr>
                                     </table>
@@ -334,6 +338,26 @@
                                     </table>
                                 </div>
 
+                                <!-- OpenAmountInLocalCurrency -->
+                                <div *ngIf="FieldName == 'OpenAmountInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransmissionError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
 
@@ -398,6 +422,14 @@
                                         </tr>
                                     </table>
                                 </div>
+
+                                <!-- Journal - in case full accounting only -->
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </td>
                     </tr>

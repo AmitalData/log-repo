@@ -49,189 +49,86 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
+using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
+using WebFreight.Web.Helpers.AutomationModel;
+using Microsoft.VisualStudio.Services.Common;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
     public class TenantsUpdateClass
     {
-        public static void UpdateDataForTenant(int tenant, string message)
+        private static bool runOldUpdateCode = false;
+        private static PerformanceTimerLogger performanceTimerLogger = new PerformanceTimerLogger();
+        public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
         {
-            
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
-            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
 
-            #region Repositories definitions
-
-            TranslationHeaderRepository translationHeadersRepository = new TranslationHeaderRepository(context);
-            MeasurementRepository measurementsRepository = new MeasurementRepository(commonContext);
-            EntityStatusRepository entityStatusRepository = new EntityStatusRepository(context);
-            EventTypeRepository eventTypeRepository = new EventTypeRepository(context);
-            RankRepository rankRepository = new RankRepository(commonContext);
-            TenantRepository tenantRepository = new TenantRepository(commonContext);
-            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
-            DocumentTypeCopyRepository documentTypeCopyRepository = new DocumentTypeCopyRepository(commonContext);
-            DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(commonContext);
-            DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(commonContext);
-            CreditCardTypeRepository creditCardTypeRepositoryRepository = new CreditCardTypeRepository(invoiceContext);
-            MoveTypeRepository moveTypeRepository = new MoveTypeRepository(context);
-            EmailAlertSettingRepository emailAlertSettingRepository = new EmailAlertSettingRepository(context);
-            FullAccountingSettingRepository fullAccSettingRepository = new FullAccountingSettingRepository(accountingContext);
-            JournalActionTypeRepository journalActionTypeRepository = new JournalActionTypeRepository(accountingContext);
-            ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
-            TaxWithholdingAssessOfficeRepository taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(accountingContext);
-            AccountingCompanyTypeRepository accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(accountingContext);
-            WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(accountingContext);
-
-            #endregion
-
-            #region Dictionaries and lists
-
-            Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
-            Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
-            Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EventType> tenantZeroEventTypes = null;
-            if (true)
-            {
-
-                tenantZeroEventTypes = new Dictionary<string, EventType>();
-                foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
-                {
-                    tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
-                }
-            }
-            else
-            {
-                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            }
-            Dictionary<string, EventType> currentTenantEventTypes = eventTypeRepository.GetEventTypesByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, Rank> tenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, Rank> currentTenantRanks = rankRepository.GetRanks(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
-            Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, MoveType> tenantZeroMoveTypes = moveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, EmailAlertSetting> currentEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, JournalActionType> tenantZeroJournalActionTypes = journalActionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, JournalActionType> currentJournalActionTypes = journalActionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, TaxWithholdingAssessOffice> currentTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, AccountingCompanyType> tenantZeroAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, AccountingCompanyType> currentAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, WithholdingTaxDeductionType> tenantZeroWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, WithholdingTaxDeductionType> currentWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
-
-            Dictionary<string, ChargesGroup> tenantZeroChargesGroups = chargesGroupRepository.GetChargesGroups(0).ToDictionary(d => d.Code, a => a);
-            Dictionary<string, ChargesGroup> currentTenantChargesGroups = chargesGroupRepository.GetChargesGroups(tenant).ToDictionary(d => d.Code, a => a);
-
-
-            #endregion
+            runOldUpdateCode = runOldCode;
 
             if (tenant == 0)
             {
+                IWebFreightContext context = WebFreightContext.GetContext(tenant);
                 #region
 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
+             
                 switch (message.ToLower())
                 {
                       
                       case "updatetenantzeronew":
                         {
+                            performanceTimerLogger = new PerformanceTimerLogger();
+                            performanceTimerLogger.Start(); 
+                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            UpdateAllOldModules(updateClass, context);
 
-                            if (LogitudeSettings.WorkEnvironment == "customs")
+
+                            UpdateAccountingModule(context, false);
+                            UpdateTariffModule(context, false);
+                            UpdateTimeManagementModule(context, false);
+                            UpdateWarehouseModule(context, false);
+                            UpdateSocialModule(context, false);
+                            UpdateBookingModule(context, false);
+                            UpdateCRMModule(context, false);
+
+                            updateClass.LoadMenustables();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMenustables");
+
+                            updateClass.LoadDefaultReports();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadDefaultReports");
+
+                            //updateClass.LoadHelpResources();
+                            //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadHelpResources");
+
+                            updateClass.CreateMasterCounter(0);
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.CreateMasterCounter");
+
+                            updateClass.LoadEmailAlertSettings();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEmailAlertSettings");
+
+                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
-                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                updateClass.LoadObjectTablesToTenantZero(context);
-                                updateClass.UpgradeClosedTablesForTenantZero();
-
-                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
-
-                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                                inframodelUpdateClass.LoadObjectsTenantZero(context);
-
-                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
-
-                                updateClass.LoadUpdateTenantZero(context, false);
-                                updateClass.LoadOtherFields(context);
-
-                                updateClass.LoadTranslationHeaders();
-                                updateClass.LoadMeasurements();
-                                updateClass.LoadCreditCardTypes();
-                                updateClass.LoadMoveTypes();
-                                updateClass.LoadRolesAndFeatures(0);
-                                updateClass.LoadObjectTableHelperControls();
-                                updateClass.LoadEntityStatus();
-                                updateClass.LoadEventTypes();
-                                updateClass.LoadRanks();
-                                updateClass.LoadMenustables();
-                                updateClass.LoadDefaultReports();
-                                updateClass.LoadHelpResources();
-                                updateClass.LoadEmailAlertSettings();
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
                             }
-                            else
-                            {
 
-                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                updateClass.UpgradeClosedTablesForTenantZero();
+                          
 
-                                ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-                                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                            updateClass.LoadObjectTableRulesANDFieldsValidations();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
 
-                                QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                            MetadataUpdateUtility.RunPostDeleteProcedure();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetadataUpdateUtility.RunPostDeleteProcedure");
 
-                                InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-                                invoicemodelUpdateClass.LoadObjectsTenantZero(context);
 
-                                CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-                                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                            performanceTimerLogger.WriteLogToCSVFile();
 
-                                InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                                inframodelUpdateClass.LoadObjectsTenantZero(context);
-
-                                GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-                                globalmodelUpdateClass.LoadObjectsTenantZero(context);
-
-							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-							modelUpdateClass.LoadObjectsTenantZero(context);
-
-                                updateClass.LoadUpdateTenantZero(context, false);
-
-                                updateClass.LoadOtherFields(context);
-                                updateClass.LoadTranslationHeaders();
-                                updateClass.LoadMeasurements();
-                                updateClass.LoadCreditCardTypes();
-                                updateClass.LoadMoveTypes();
-                                //updateClass.loadQueries();
-                                //updateClass.loadScreens();
-                                //updateClass.LoadObjectTableTabs();
-                                updateClass.LoadRolesAndFeatures(0);
-                                updateClass.LoadObjectTableHelperControls();
-                                updateClass.LoadEntityStatus();
-                                updateClass.LoadEventTypes();
-                                updateClass.LoadRanks();
-                                updateClass.LoadMenustables();
-                                updateClass.LoadDefaultReports();
-                                updateClass.LoadHelpResources();
-                                updateClass.CreateMasterCounter(0);
-                                updateClass.LoadEmailAlertSettings();
-                                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-                                {
-                                    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
-                                }
-                            }
+                            break;
+                        }
+                    case "LoadOtherFields":
+                        {
+                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            updateClass.LoadOtherFields(context);
                             break;
                         }
                     case "updatetenantzero":
@@ -242,9 +139,9 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadUpdateTenantZero(context);
                                 updateClass.LoadOtherFields(context);
                                 updateClass.LoadTranslationHeaders();
-                                updateClass.loadQueries();
+                                //updateClass.loadQueries();
                                 updateClass.loadScreens();
-                                updateClass.LoadObjectTableTabs();
+                                //updateClass.LoadObjectTableTabs();
                                 updateClass.LoadObjectTableHelperControls();
                                 updateClass.LoadEntityStatus();
                                 updateClass.LoadEventTypes();
@@ -255,22 +152,22 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.UpgradeClosedTablesForTenantZero();
 
                                 //ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-                                //shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                                //shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
 
                                 //QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-                                //quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                                //quotemodelUpdateClass.LoadObjectTablesMetadata(context);
 
                                 //InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-                                //invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+                                //invoicemodelUpdateClass.LoadObjectTablesMetadata(context);
 
                                 //CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-                                //commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                                //commonmodelUpdateClass.LoadObjectTablesMetadata(context);
 
                                 //InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                                //inframodelUpdateClass.LoadObjectsTenantZero(context);
+                                //inframodelUpdateClass.LoadObjectTablesMetadata(context);
 
                                 //GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-                                //globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                                //globalmodelUpdateClass.LoadObjectTablesMetadata(context);
 
 
                                 updateClass.LoadUpdateTenantZero(context, true);
@@ -280,16 +177,16 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadMeasurements();
                                 updateClass.LoadCreditCardTypes();
                                 updateClass.LoadMoveTypes();
-                                updateClass.loadQueries();
+                                //updateClass.loadQueries();
                                 updateClass.loadScreens();
-                                updateClass.LoadObjectTableTabs();
+                               // updateClass.LoadObjectTableTabs();
                                 updateClass.LoadObjectTableHelperControls();
                                 updateClass.LoadEntityStatus();
                                 updateClass.LoadEventTypes();
                                 updateClass.LoadRanks();
                                 updateClass.LoadMenustables();
                                 updateClass.LoadDefaultReports();
-                                updateClass.LoadHelpResources();
+                                //updateClass.LoadHelpResources();
                                 updateClass.CreateMasterCounter(0);
                                 updateClass.LoadEmailAlertSettings();
                             }
@@ -298,216 +195,92 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
-                            CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            customUpdate.LoadObjectsTenantZero(context);//generated
 
-
-                            ForCourier();
-
-
-                            CustomUpdate updateClass = new CustomUpdate();
-
-                            updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            updateClass.loadQueries();
-                            updateClass.loadScreens();
-                            updateClass.LoadObjectTableTabs();
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadEventTypes();
-                            updateClass.FillTransportModeTable();
-                            updateClass.FillTapagTypeTable();
-
-
-                            updateClass.FillCustomsRequestsSheetStatusTable();
-                            updateClass.FillCustomsNotificationDefinitions();
-
-                            updateClass.FillCustomsInterfaceSendOptions();
-                            updateClass.FillSchedulerProcedure();
-                            updateClass.FillCustomsInterfaceManagements();
-
-
-                            updateClass.FillAssigneeNotificationTypeTable();
-                            updateClass.FillLastReleaseFromWarehouseTable();
-                            updateClass.FillVehicleStatusTable();
-                            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
-                            updateClass.FillCustomerIdentifyType();
-                            updateClass.FillCustomsVerificationStatusTypes();
-                            updateClass.FillSignatureTypeTable();
-                            updateClass.FillCertificateStatus();
-                            updateClass.FillAccumalationStateTable();
-                            updateClass.FillStorageStatus();
-                            updateClass.FillMAWBTypeTable();
-                            updateClass.FillCourierCustomStatus();
-                            updateClass.FillManifestCargoStatusTable();
-                            updateClass.FillAcceptanceStatus();
-                            updateClass.FillMamanStatus();
-                            updateClass.FillPendingErrorPlaceTable();
-                            //updateClass.FillCourierDeclarationStatus();
-                            //updateClass.FillCourierManifestStatus();
-                            //updateClass.FillCourierPaymentStatus();
-                            updateClass.FillMamanSpecialActionTable();
-                            updateClass.FillMamanSpecialActionStatusTable();
-                            updateClass.FillCourierPendingReasonTable();
-
+                            UpdateCustomsRelatedModels(context);
 
                             break;
                         }
 
                     case "crm":
                         {
-                            CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
-                            cRMUpdateClass.LoadObjectsTenantZero(context);
-
-                            CRMUpdate updateClass = new CRMUpdate();
-                            //updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                            //updateClass.LoadEventTypes();
-                            updateClass.LoadOpportunityClosingReasons();
-                            updateClass.LoadOpportunityTypes();
+                            UpdateCRMModule(context, true);
                             break;
                         }
 
                     case "booking":
                         {
-                            BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
-                            bookingLibUpdateClass.LoadObjectsTenantZero(context);
-
-                            BookingUpdate updateClass = new BookingUpdate();
-                            //updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                            //updateClass.LoadEventTypes();
+                            UpdateBookingModule(context, true);
                             break;
                         }
 
                     case "social":
                         {
-                            SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
-                            socialUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateSocialModule(context, true);
 
                             break;
                         }
 
                     case "warehouse":
                         {
-                            WarehouseLibUpdateClass warehouseLibUpdateClass = new WarehouseLibUpdateClass();
-                            warehouseLibUpdateClass.LoadObjectsTenantZero(context);
-                            WarehouseUpdate updateClass = new WarehouseUpdate();
-                            updateClass.LoadRolesAndFeatures(0);
-                            updateClass.CreateTableCounters();
-                            updateClass.LoadOtherFields(context);
+                            UpdateWarehouseModule(context, true);
                             break;
                         }
                     case "timemanagement":
                         {
-                            TimeManagementUpdateClass timeManagementUpdateClass = new TimeManagementUpdateClass();
-                            timeManagementUpdateClass.LoadObjectsTenantZero(context);
-
-                            TimeManagementUpdate updateClass = new TimeManagementUpdate();
-                            //updateClass.loadScreens();
+                            UpdateTimeManagementModule(context, true);
                             break;
                         }
 
 
                     case "tariffmodule":
                         {
-                            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
-                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
-
-                            TariffModuleUpdate updateClass = new TariffModuleUpdate();
-                            //updateClass.loadScreens();
+                            UpdateTariffModule(context, true);
                             break;
                         }
 
 
                     case "accounting":
                         {
-                            AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
-                            accountingUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateAccountingModule(context, true);
 
-                            AccountingUpdate updateClass = new AccountingUpdate();
-                            //updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs(); 
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                            updateClass.LoadEventTypes();
-                            updateClass.FillTaxWithholdingAssessOffice();
-                            //updateClass.FillAccountingCompanyType();
-                            //updateClass.FillTaxWithholdingAssessOffice();
-                            updateClass.FillWithholdingTaxDeductionTypes();
-                            
                             break;
                         }
                     case "shipment":
                         {
-                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-                            shipmentModelUpdateClass.LoadObjectsTenantZero(context);
-
-                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-                            {
-                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
-                            }
+                            UpdateShipmentAndMasterModules(context, true);
 
                             break;
                         }
                     case "quote":
                         {
-                            QuoteModelUpdateClass modelUpdateClass = new QuoteModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateQuoteModule(context, true);
                             break;
                         }
                     case "invoice":
                         {
-                            InvoiceModelUpdateClass modelUpdateClass = new InvoiceModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateInvoiceModule(context, true);
                             break;
                         }
                     case "common":
                         {
-                            CommonDataModelUpdateClass modelUpdateClass = new CommonDataModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateCommonModule(context, true);
                             break;
                         }
                     case "infrastructure":
                         {
-                            InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
-                            if (LogitudeSettings.IsCostomsDeploy)
-                            {
-                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                updateClass.UpgradeClosedTablesForTenantZero();
-                            }
+                            UpdateInfrasturtureAndLogModules(context, true);
                             break;
                         }
 
                     case "infrastructurem":
                         {
-                            InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            UpdateBusinessInfrastrutureModule(context, true);
                             break;
                         }
                     case "global":
                         {
                             GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            modelUpdateClass.LoadObjectTablesMetadata(context, true);
                             break;
                         }
 
@@ -561,6 +334,22 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "updateautomationmetadata":
+                        {
+                            AutomationMetaDataUpdateService automationMetaDataUpdateService = new AutomationMetaDataUpdateService();
+                            automationMetaDataUpdateService.UpdateAutomationMetaData();
+
+                            break;
+                        }
+
+                    case "nonegeneratedcode":
+                        {
+                            RunNoneGeneratedUpdateCode(context);
+
+                            break;
+                        }
+
+
                     case "all":
                         {
                             //Tenant 0
@@ -573,16 +362,16 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadMeasurements();
                             updateClass.LoadCreditCardTypes();
                             updateClass.LoadMoveTypes();
-                            updateClass.loadQueries();
+                            //updateClass.loadQueries();
                             updateClass.loadScreens();
-                            updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs();
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadEntityStatus();
                             updateClass.LoadEventTypes();
                             updateClass.LoadRanks();
                             updateClass.LoadMenustables();
                             updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
+                            //updateClass.LoadHelpResources();
                             updateClass.CreateMasterCounter(0);
                             updateClass.LoadEmailAlertSettings();
 
@@ -593,17 +382,18 @@ namespace WebFreight.Web.MetaDataUpdate
                             CustomUpdate customUpdateClass = new CustomUpdate();
                             customUpdateClass.UpgradeClosedTablesForTenantZero();
                             customUpdateClass.LoadUpdateTenantZero(context);
-                            customUpdateClass.LoadOtherFields(context);
-                            customUpdateClass.loadQueries();
-                            customUpdateClass.loadScreens();
-                            customUpdateClass.LoadObjectTableTabs();
+                            //customUpdateClass.LoadOtherFields(context);
+                            //customUpdateClass.loadQueries();
+                            //customUpdateClass.loadScreens();
+                            //customUpdateClass.LoadObjectTableTabs();
                             customUpdateClass.LoadObjectTableHelperControls();
                             customUpdateClass.LoadMenustables();
-                            customUpdateClass.LoadEventTypes();
+                            //customUpdateClass.LoadEventTypes();
 
                             //CRM
+                            
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
-                            cRMUpdateClass.LoadObjectsTenantZero(context);
+                            cRMUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             CRMUpdate cRMUpdate = new CRMUpdate();
                             cRMUpdate.UpgradeClosedTablesForTenantZero();
@@ -620,21 +410,21 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             // social
                             SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
-                            socialUpdateClass.LoadObjectsTenantZero(context);
+                            socialUpdateClass.LoadObjectTablesMetadata(context,false);
 
 
                            //warehouse
                             WarehouseLibUpdateClass warehouseLibUpdateClass = new WarehouseLibUpdateClass();
-                            warehouseLibUpdateClass.LoadObjectsTenantZero(context);
+                            warehouseLibUpdateClass.LoadObjectTablesMetadata(context,false);
                             WarehouseUpdate warehouseUpdate = new WarehouseUpdate();
-                            warehouseUpdate.LoadRolesAndFeatures(0);
+                            //warehouseUpdate.LoadRolesAndFeatures(0);
                             warehouseUpdate.CreateTableCounters();
-                            warehouseUpdate.LoadOtherFields(context);
+                           // warehouseUpdate.LoadOtherFields(context);
 
 
                             //accounting
                             AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
-                            accountingUpdateClass.LoadObjectsTenantZero(context);
+                            accountingUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             AccountingUpdate accountingUpdate = new AccountingUpdate();
                             accountingUpdate.UpgradeClosedTablesForTenantZero();
@@ -649,7 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             accountingUpdate.CreateCounters(tenant);
                             //Booking
                             BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
-                            bookingLibUpdateClass.LoadObjectsTenantZero(context);
+                            bookingLibUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             BookingUpdate bookingUpdateClass = new BookingUpdate();
                             bookingUpdateClass.UpgradeClosedTablesForTenantZero();
@@ -665,7 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //Time Management
 
                             TimeManagementUpdateClass timeManagementUpdateClass = new TimeManagementUpdateClass();
-                            timeManagementUpdateClass.LoadObjectsTenantZero(context);
+                            timeManagementUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             TimeManagementUpdate timeManagementUpdate = new TimeManagementUpdate();
                             timeManagementUpdate.loadScreens();
@@ -675,14 +465,16 @@ namespace WebFreight.Web.MetaDataUpdate
                             //Tariff Module
 
                             TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
-                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
+                            tariffModuleUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
                             tariffModuleUpdate.loadScreens();
 
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            modelUpdateClass.LoadObjectTablesMetadata(context,false);
+
+                            MetadataUpdateUtility.RunPostDeleteProcedure();
 
                             break;
                         }
@@ -721,82 +513,654 @@ namespace WebFreight.Web.MetaDataUpdate
 
             else
             {
-                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(2, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 5, 0)))
-                {
-                    #region Update methods
-
-                    Stopwatch stopWatch = new Stopwatch();
-                    stopWatch.Start();
-
-                    //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
-                    UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
-
-                    //===========================
-
-                    TenantRepository tenantRep = new TenantRepository(commonContext);
-                    Tenant currentTenant = tenantRep.GetSingleTenant(tenant);
-                    bool isHybridTenant = false;
-                    if (currentTenant != null)
-                    {
-                        isHybridTenant = currentTenant.IsHybrid;
-                    }
-
-                    //====================================
-
-                    UpdateEntityStatus(tenant, tenantZeroEntityStatus, currentTenantEntityStatus, entityStatusRepository, isHybridTenant);
-                    UpdateEventTypes(tenant, tenantZeroEventTypes, currentTenantEventTypes, eventTypeRepository, tenantZeroEntityStatus, currentTenantEntityStatus, isHybridTenant);
-                  
-                    //UpdateRanks(tenant, tenantZeroRanks, currentTenantRanks, rankRepository);
-                    UpdateDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, currentTenantDocumentTypes, documentTypeCustomFieldRepository, tenantZeroCustomFields, documentTypeTemplateRepository);
-                    //UpdateCreditCardTypes(tenant, tenantZeroCreditCardTypes, currentTenantCreditCardTypes, creditCardTypeRepositoryRepository);
-                    //UpdateMoveTypes(tenant, tenantZeroMoveTypes, currentTenantMoveTypes, moveTypeRepository);
-                    UpdateEmailAlertSettings(tenant, tenantZeroEmailAlertSettings, currentEmailAlertSettings, emailAlertSettingRepository);
-                    ReportHelper reportHelper = new ReportHelper();
-                    reportHelper.UpdateReports(tenant);
-
-                    AutomationHelper automationHelper = new AutomationHelper();
-                    automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes.Values.ToList());
-
-                    if (!LogitudeSettings.IsCostomsDeploy)
-                    // what do u think ?? ok i suppose
-                    // but ihab yesterday said : if we can ..we shold do it ?!?!?
-                    // well lets ,ok lets ??? 
-                    ///wde/what ask ihab again ?
-                    //no we will tell ihab that we did so :)
-                    //!!!! goood !!!!!!
-                    // lets do it next branch >> mean next next (unknown time :) :) )
-                    // deal :)
-                    // i will leave this remarks !!!
-                    {
-                        UpdateFullAccSettings(tenant, fullAccSettingRepository);
-                        UpdateJournalActionTypes(tenant, tenantZeroJournalActionTypes, currentJournalActionTypes, journalActionTypeRepository);
-
-                        UpdateTaxWithholdingAssessingOffices(tenant, tenantZeroTaxWithholdingAssessOffices, currentTaxWithholdingAssessOffices, taxWithholdingAssessOfficeRepository);
-                        UpdateAccountingCompanyTypes(tenant, tenantZeroAccountingCompanyTypes, currentAccountingCompanyTypes, accountingCompanyTypeRepository);
-                        UpdateWithholdingTaxDeductionTypes(tenant, tenantZeroWithholdingTaxDeductionTypes, currentWithholdingTaxDeductionTypes, withholdingTaxDeductionTypeRepository);
-                    }
-                    
-                    AddSystemUserForTenant(tenant);
-                    GeneralDomainService generalDomain = new GeneralDomainService();
-                    UpdateTenantVersion(tenant, tenantRepository);
-
-                    //UpdateScreenFields(tenant, context);
-
-                    
-
-
-
-                    scop.Complete();
-
-                    stopWatch.Stop();
-                    TimeSpan ts = stopWatch.Elapsed;
-                    AzureLog.SaveLogsInStorage("Update Tenant " + tenant + "Elapsed Time :" + ts.ToString(), "P", DateTime.Now, "", "", tenant, null, null, null);
-
-                    #endregion
-                }
+                UpdateTenantData(tenant);
             }
         }
 
+        private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        {
+            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+            InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+            CustomsUpdateClass customUpdate = new CustomsUpdateClass();
+            MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
+            if (runOldUpdateCode)
+            {
+
+                inframodelUpdateClass.LoadObjectsTenantZero(context);
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                businessInfraUpdateClass.LoadObjectsTenantZero(context);
+                customUpdate.LoadObjectsTenantZero(context);
+            }
+            else
+            {
+                inframodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+                metaDataUpdateClass.LoadUpdateTenantZero(context, false);
+                customUpdate.LoadObjectTablesMetadata(context, true);
+                performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
+
+            }
+
+            ForCourier();
+
+
+            CustomUpdate updateClass = new CustomUpdate();
+
+            updateClass.UpgradeClosedTablesForTenantZero();
+            updateClass.LoadUpdateTenantZero(context);
+            //updateClass.LoadOtherFields(context);
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            updateClass.LoadObjectTableHelperControls();
+            updateClass.LoadMenustables();
+            // updateClass.LoadEventTypes();
+            updateClass.FillTransportModeTable();
+            updateClass.FillTapagTypeTable();
+
+
+            updateClass.FillCustomsRequestsSheetStatusTable();
+            updateClass.FillCustomsNotificationDefinitions();
+
+            updateClass.FillCustomsInterfaceSendOptions();
+            updateClass.FillSchedulerProcedure();
+            updateClass.FillCustomsInterfaceManagements();
+
+
+            updateClass.FillAssigneeNotificationTypeTable();
+            updateClass.FillLastReleaseFromWarehouseTable();
+            updateClass.FillVehicleStatusTable();
+            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
+            updateClass.FillCustomerIdentifyType();
+            updateClass.FillCustomsVerificationStatusTypes();
+            updateClass.FillSignatureTypeTable();
+            updateClass.FillCertificateStatus();
+            updateClass.FillAccumalationStateTable();
+            updateClass.FillStorageStatus();
+            updateClass.FillMAWBTypeTable();
+            updateClass.FillCourierCustomStatus();
+            updateClass.FillManifestCargoStatusTable();
+            updateClass.FillAcceptanceStatus();
+            updateClass.FillMamanStatus();
+            updateClass.FillPendingErrorPlaceTable();
+            //updateClass.FillCourierDeclarationStatus();
+            //updateClass.FillCourierManifestStatus();
+            //updateClass.FillCourierPaymentStatus();
+            updateClass.FillMamanSpecialActionTable();
+            updateClass.FillMamanSpecialActionStatusTable();
+            updateClass.FillCourierPendingReasonTable();
+        }
+
+        private static void UpdateTenantData(int tenant)
+        {
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+
+            #region Repositories definitions
+
+            TranslationHeaderRepository translationHeadersRepository = new TranslationHeaderRepository(context);
+            MeasurementRepository measurementsRepository = new MeasurementRepository(commonContext);
+            EntityStatusRepository entityStatusRepository = new EntityStatusRepository(context);
+            EventTypeRepository eventTypeRepository = new EventTypeRepository(context);
+            RankRepository rankRepository = new RankRepository(commonContext);
+            TenantRepository tenantRepository = new TenantRepository(commonContext);
+            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
+            DocumentTypeCopyRepository documentTypeCopyRepository = new DocumentTypeCopyRepository(commonContext);
+            DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(commonContext);
+            DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(commonContext);
+            CreditCardTypeRepository creditCardTypeRepositoryRepository = new CreditCardTypeRepository(invoiceContext);
+            MoveTypeRepository moveTypeRepository = new MoveTypeRepository(context);
+            EmailAlertSettingRepository emailAlertSettingRepository = new EmailAlertSettingRepository(context);
+            FullAccountingSettingRepository fullAccSettingRepository = new FullAccountingSettingRepository(accountingContext);
+            JournalActionTypeRepository journalActionTypeRepository = new JournalActionTypeRepository(accountingContext);
+            ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
+            TaxWithholdingAssessOfficeRepository taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(accountingContext);
+            AccountingCompanyTypeRepository accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(accountingContext);
+            WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(accountingContext);
+
+            #endregion
+
+            #region Dictionaries and lists
+
+            // Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
+            //Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
+            Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EventType> tenantZeroEventTypes = null;
+            if (true)
+            {
+
+                tenantZeroEventTypes = new Dictionary<string, EventType>();
+                foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
+                {
+                    tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
+                }
+            }
+            else
+            {
+                tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            }
+            Dictionary<string, EventType> currentTenantEventTypes = eventTypeRepository.GetEventTypesByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            Dictionary<string, Rank> tenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Rank> currentTenantRanks = rankRepository.GetRanks(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+            List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
+            Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, MoveType> tenantZeroMoveTypes = moveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EmailAlertSetting> currentEmailAlertSettings = emailAlertSettingRepository.GetEmailAlertSettings(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, JournalActionType> tenantZeroJournalActionTypes = journalActionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, JournalActionType> currentJournalActionTypes = journalActionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, TaxWithholdingAssessOffice> currentTaxWithholdingAssessOffices = taxWithholdingAssessOfficeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, AccountingCompanyType> tenantZeroAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, AccountingCompanyType> currentAccountingCompanyTypes = accountingCompanyTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, WithholdingTaxDeductionType> tenantZeroWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, WithholdingTaxDeductionType> currentWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(tenant).ToDictionary(d => d.Code, a => a);
+
+            Dictionary<string, ChargesGroup> tenantZeroChargesGroups = chargesGroupRepository.GetChargesGroups(0).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, ChargesGroup> currentTenantChargesGroups = chargesGroupRepository.GetChargesGroups(tenant).ToDictionary(d => d.Code, a => a);
+
+
+            #endregion
+
+
+            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(2, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 5, 0)))
+            {
+                #region Update methods
+
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
+                UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
+
+                //===========================
+
+                TenantRepository tenantRep = new TenantRepository(commonContext);
+                Tenant currentTenant = tenantRep.GetSingleTenant(tenant);
+                bool isHybridTenant = false;
+                if (currentTenant != null)
+                {
+                    isHybridTenant = currentTenant.IsHybrid;
+                }
+
+                //====================================
+
+                UpdateEntityStatus(tenant, tenantZeroEntityStatus, currentTenantEntityStatus, entityStatusRepository, isHybridTenant);
+                UpdateEventTypes(tenant, tenantZeroEventTypes, currentTenantEventTypes, eventTypeRepository, tenantZeroEntityStatus, currentTenantEntityStatus, isHybridTenant);
+
+                //UpdateRanks(tenant, tenantZeroRanks, currentTenantRanks, rankRepository);
+                UpdateDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, currentTenantDocumentTypes, documentTypeCustomFieldRepository, tenantZeroCustomFields, documentTypeTemplateRepository);
+                //UpdateCreditCardTypes(tenant, tenantZeroCreditCardTypes, currentTenantCreditCardTypes, creditCardTypeRepositoryRepository);
+                //UpdateMoveTypes(tenant, tenantZeroMoveTypes, currentTenantMoveTypes, moveTypeRepository);
+                UpdateEmailAlertSettings(tenant, tenantZeroEmailAlertSettings, currentEmailAlertSettings, emailAlertSettingRepository);
+                ReportHelper reportHelper = new ReportHelper();
+                reportHelper.UpdateReports(tenant);
+
+                AutomationHelper automationHelper = new AutomationHelper();
+                automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes.Values.ToList());
+
+                if (!LogitudeSettings.IsCostomsDeploy)
+                // what do u think ?? ok i suppose
+                // but ihab yesterday said : if we can ..we shold do it ?!?!?
+                // well lets ,ok lets ??? 
+                ///wde/what ask ihab again ?
+                //no we will tell ihab that we did so :)
+                //!!!! goood !!!!!!
+                // lets do it next branch >> mean next next (unknown time :) :) )
+                // deal :)
+                // i will leave this remarks !!!
+                {
+                    UpdateFullAccSettings(tenant, fullAccSettingRepository);
+                    UpdateJournalActionTypes(tenant, tenantZeroJournalActionTypes, currentJournalActionTypes, journalActionTypeRepository);
+
+                    UpdateTaxWithholdingAssessingOffices(tenant, tenantZeroTaxWithholdingAssessOffices, currentTaxWithholdingAssessOffices, taxWithholdingAssessOfficeRepository);
+                    UpdateAccountingCompanyTypes(tenant, tenantZeroAccountingCompanyTypes, currentAccountingCompanyTypes, accountingCompanyTypeRepository);
+                    UpdateWithholdingTaxDeductionTypes(tenant, tenantZeroWithholdingTaxDeductionTypes, currentWithholdingTaxDeductionTypes, withholdingTaxDeductionTypeRepository);
+                }
+
+                AddSystemUserForTenant(tenant);
+                GeneralDomainService generalDomain = new GeneralDomainService();
+                UpdateTenantVersion(tenant, tenantRepository);
+
+                //UpdateScreenFields(tenant, context);
+
+
+
+
+
+                scop.Complete();
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                AzureLog.SaveLogsInStorage("Update Tenant " + tenant + "Elapsed Time :" + ts.ToString(), "P", DateTime.Now, "", "", tenant, null, null, null);
+
+                #endregion
+            }
+        }
+
+        private static void UpdateBusinessInfrastrutureModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+        }
+
+        private static void UpdateInfrasturtureAndLogModules(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+            UpdateSystemLogsModule(context, runPostDeleteProcedure);
+        }
+
+        private static void UpdateSystemLogsModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+            if (runOldUpdateCode)
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",SystemLogsModelUpdateClass");
+        }
+
+        private static void UpdateCommonModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            CommonDataModelUpdateClass modelUpdateClass = new CommonDataModelUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+        }
+
+        private static void UpdateInvoiceModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            InvoiceModelUpdateClass modelUpdateClass = new InvoiceModelUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
+        }
+
+        private static void UpdateQuoteModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            QuoteModelUpdateClass modelUpdateClass = new QuoteModelUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
+        }
+
+        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTablesToTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
+            //updateClass.LoadObjectTablesMetadata(context);
+
+            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+            if (runOldUpdateCode)
+                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
+
+
+
+
+            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+            if (runOldUpdateCode)
+                masterModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                masterModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            {
+                //MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+
+                performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
+            }
+
+            updateClass.LoadRolesAndFeatures(0);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
+
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
+        }
+
+        private static void UpdateAccountingModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
+            if (runOldUpdateCode)
+                accountingUpdateClass.LoadObjectsTenantZero(context);
+            else
+                accountingUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",AccountingUpdateClass");
+            AccountingUpdate updateClass = new AccountingUpdate();
+            //updateClass.UpgradeClosedTablesForTenantZero();
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadUpdateTenantZero");
+
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs(); 
+            updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTableHelperControls");
+
+            updateClass.LoadMenustables();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadMenustables");
+
+            updateClass.LoadEventTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadEventTypes");
+
+            updateClass.FillTaxWithholdingAssessOffice();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillTaxWithholdingAssessOffice");
+
+            updateClass.FillAccountingCompanyType();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillAccountingCompanyType");
+
+            //updateClass.FillTaxWithholdingAssessOffice();
+            updateClass.FillWithholdingTaxDeductionTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillWithholdingTaxDeductionTypes");
+        }
+
+        private static void UpdateTariffModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            TariffModuleUpdateClass modelUpdateClass = new TariffModuleUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",TariffModuleUpdateClass");
+
+            //TariffModuleUpdate updateClass = new TariffModuleUpdate();
+            //updateClass.loadScreens();
+        }
+
+        private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            TimeManagementUpdateClass modelUpdateClass = new TimeManagementUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",TimeManagementUpdateClass");
+
+            //TimeManagementUpdate updateClass = new TimeManagementUpdate();
+            //updateClass.loadScreens();
+        }
+
+        private static void UpdateWarehouseModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            WarehouseLibUpdateClass modelUpdateClass = new WarehouseLibUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",WarehouseLibUpdateClass");
+
+            WarehouseUpdate updateClass = new WarehouseUpdate();
+            //updateClass.LoadRolesAndFeatures(0);
+            //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadRolesAndFeatures");
+
+            updateClass.CreateTableCounters();
+            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.CreateTableCounters");
+
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
+        }
+
+        private static void UpdateSocialModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
+            socialUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",SocialUpdateClass");
+        }
+
+        private static void UpdateBookingModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            BookingLibUpdateClass modelUpdateClass = new BookingLibUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",BookingLibUpdateClass");
+
+            BookingUpdate updateClass = new BookingUpdate();
+            //updateClass.UpgradeClosedTablesForTenantZero();
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadUpdateTenantZero");
+
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadOtherFields");
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadObjectTableHelperControls");
+
+            //updateClass.LoadMenustables();
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadMenustables");
+            //updateClass.LoadEventTypes();
+        }
+
+        private static void UpdateCRMModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            CRMUpdateClass modelUpdateClass = new CRMUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",CRMUpdateClass");
+
+            CRMUpdate updateClass = new CRMUpdate();
+            //updateClass.UpgradeClosedTablesForTenantZero();
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
+
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadObjectTableHelperControls");
+
+            updateClass.LoadMenustables();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadMenustables");
+
+            //updateClass.LoadEventTypes();
+            updateClass.LoadOpportunityClosingReasons();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOpportunityClosingReasons");
+
+            updateClass.LoadOpportunityTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOpportunityTypes");
+        }
+
+        private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context)
+        {
+             
+            updateClass.LoadObjectTablesToTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
+            //updateClass.UpgradeClosedTablesForTenantZero();
+
+            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+            MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
+            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+            InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+            InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+            if (runOldUpdateCode)
+            {
+               
+                inframodelUpdateClass.LoadObjectsTenantZero(context);
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                masterModelUpdateClass.LoadObjectsTenantZero(context);
+                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                businessInfraUpdateClass.LoadObjectsTenantZero(context);
+
+            }
+            else
+            {
+                inframodelUpdateClass.LoadObjectTablesMetadata(context,false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context,false);
+                performanceTimerLogger.LogMessage("Generated" + ",SystemLogsModelUpdateClass");
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
+                masterModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+                quotemodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
+                invoicemodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+            }
+
+            //
+            updateClass.LoadUpdateTenantZero(context, false);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadUpdateTenantZero");
+
+            //updateClass.LoadOtherFields(context);
+            updateClass.LoadTranslationHeaders();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadTranslationHeaders");
+
+            updateClass.LoadMeasurements();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMeasurements");
+
+            updateClass.LoadCreditCardTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadCreditCardTypes");
+
+            updateClass.LoadMoveTypes();
+            context.SaveChanges();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMoveTypes");
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+           
+            //performanceTimerLogger.LogMessage("Manual" + ",context.SaveChanges()");
+
+            //updateClass.LoadRolesAndFeatures(0);
+            //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
+
+            updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");
+
+            updateClass.LoadEntityStatus();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEntityStatus");
+
+            updateClass.LoadEventTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEventTypes");
+
+            updateClass.LoadRanks();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRanks");
+            //updateClass.LoadMenustables();
+            //updateClass.LoadDefaultReports();
+            //updateClass.LoadHelpResources();
+            //updateClass.CreateMasterCounter(0);
+            //updateClass.LoadEmailAlertSettings();
+            //if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            //{
+            //    updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+            //}
+            //updateClass.LoadObjectTableRulesANDFieldsValidations();
+        }
+        private static void RunNoneGeneratedUpdateCode(IWebFreightContext context)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTablesToTenantZero(context);
+            updateClass.UpgradeClosedTablesForTenantZero();
+            updateClass.LoadUpdateTenantZero(context, false);
+
+            //updateClass.LoadOtherFields(context);
+            updateClass.LoadTranslationHeaders();
+            updateClass.LoadMeasurements();
+            updateClass.LoadCreditCardTypes();
+            updateClass.LoadMoveTypes();
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            context.SaveChanges();
+
+            updateClass.LoadRolesAndFeatures(0);
+            updateClass.LoadObjectTableHelperControls();
+            updateClass.LoadEntityStatus();
+            updateClass.LoadEventTypes();
+            updateClass.LoadRanks();
+            updateClass.LoadMenustables();
+            updateClass.LoadDefaultReports();
+            //updateClass.LoadHelpResources();
+            updateClass.CreateMasterCounter(0);
+            updateClass.LoadEmailAlertSettings();
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            {
+                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+            }
+
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+        }
         private static void ForCourier()
         {
             GlobalDBRepository globalDbRep = new GlobalDBRepository();
@@ -825,7 +1189,8 @@ namespace WebFreight.Web.MetaDataUpdate
                             Name = chargesGroup.Name,
                             LocalName = chargesGroup.LocalName,
                             SearchFields = chargesGroup.SearchFields,
-                          
+                            ViewOrder = chargesGroup.ViewOrder,
+
                         };
 
                         chargesGroupRepository.Add(newchargesGroup);
@@ -842,14 +1207,50 @@ namespace WebFreight.Web.MetaDataUpdate
 
         #region DataBackUp
 
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false,bool includeCustoms=false)
+        private bool HashStringChanged(ObjectTable table)
+        {
+            string updateClassHashString = ShipmentsModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? ShipmentsModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if(string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = CommonDataModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CommonDataModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = InfrastructureModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? InfrastructureModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = InfrastructureUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? InfrastructureUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = InvoiceModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? InvoiceModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = QuoteModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? QuoteModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = GlobalModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? GlobalModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = SystemLogsModelUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? SystemLogsModelUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = CRMUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CRMUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = AccountingUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? AccountingUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = BookingLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? BookingLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = SocialUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? SocialUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = TariffModuleUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? TariffModuleUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = TimeManagementUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? TimeManagementUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = WarehouseLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? WarehouseLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            //if (string.IsNullOrEmpty(updateClassHashString))
+            //updateClassHashString = CustomsUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CustomsUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+
+            return table.HashString != updateClassHashString;
+        }
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
         {
 
-                ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
-                ObjectTableQuery objectTabelQuery = new ObjectTableQuery(0);
-                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
-                TextCodeQuery textCodeQuery = new TextCodeQuery(0);
-                List<ObjectTable> ObjectTableList = null;
+            ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
+            ObjectTableQuery objectTabelQuery = new ObjectTableQuery(0);
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
+            TextCodeQuery textCodeQuery = new TextCodeQuery(0);
+            List<ObjectTable> ObjectTableList = null;
             if (includeCustoms)
             {
                 ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.Name.Contains("Customs.")).ToList();
@@ -858,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 if (LogitudeSettings.WorkEnvironment == "customs")
                 {
-                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
                 }
                 else
                 {
@@ -866,17 +1267,19 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
 
             }
-                List<TextCodePM> textCodePMLists = textCodeQuery.GetTextCodePMsByTenant(0).ToList();
-                List<ObjectFieldPM> objectFieldLists = objectFieldsQuery.GetObjectFieldPMsByTenant(0, 0).ToList();
+            ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
+            IQueryable<TextCodePM> textCodePMLists = textCodeQuery.GetTenantZeroTextCodePMs();//.ToList();
+            IQueryable<ObjectFieldPM> objectFieldLists = objectFieldsQuery.GetTenantZeroObjectFieldPMs();//.ToList();
 
-                Dictionary<string, byte[]> cachedObjectFieldsJosnByte = new Dictionary<string, byte[]>();
-                Dictionary<string, byte[]> cachedTextCodesJosnByte = new Dictionary<string, byte[]>();
-                Dictionary<string, byte[]> cachedCloseTableJosnByte = new Dictionary<string, byte[]>();
+            Dictionary<string, byte[]> cachedObjectFieldsJosnByte = new Dictionary<string, byte[]>();
+            Dictionary<string, byte[]> cachedTextCodesJosnByte = new Dictionary<string, byte[]>();
+            Dictionary<string, byte[]> cachedCloseTableJosnByte = new Dictionary<string, byte[]>();
 
 
             foreach (ObjectTable objectTable in ObjectTableList)
             {
 
+                // if(objectTable.HashString == )
                 List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
                 if (fieldsList != null)
                 {
@@ -928,75 +1331,75 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
 
-                foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 
+            foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 
+            {
+                List<string> tableNames = new List<string>();
+                Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
+                //Object Field
+                byte[] bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, objectTable.Name);
+                if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ObjectFields", CompressionFileData(objectTable.Name + "_" + "Fields", bytejosn));
+
+                //Text Code
+                bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, objectTable.Name);
+                if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "TextCodes", CompressionFileData(objectTable.Name + "_" + "Codes", bytejosn));
+
+                tableNames.Add(objectTable.Name);
+                List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id && (d.DataTypeCode == "LookUp" || d.IsMulti)).ToList();
+
+                foreach (ObjectFieldPM field in fieldsList)
                 {
-                    List<string> tableNames = new List<string>();
-                    Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
-                    //Object Field
-                    byte[] bytejosn = GetByteDateByKey(cachedObjectFieldsJosnByte, objectTable.Name);
-                    if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ObjectFields", CompressionFileData(objectTable.Name + "_" + "Fields", bytejosn));
-
-                    //Text Code
-                    bytejosn = GetByteDateByKey(cachedTextCodesJosnByte, objectTable.Name);
-                    if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "TextCodes", CompressionFileData(objectTable.Name + "_" + "Codes", bytejosn));
-
-                    tableNames.Add(objectTable.Name);
-                    List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id && (d.DataTypeCode == "LookUp" || d.IsMulti)).ToList();
-
-                    foreach (ObjectFieldPM field in fieldsList)
+                    string tablename = field.IsMulti ? field.ObjectTable_MultiTableName : field.ObjectTable_LookUpTableName;
+                    if (!tableNames.Contains(tablename))
                     {
-                        string tablename = field.IsMulti ? field.ObjectTable_MultiTableName : field.ObjectTable_LookUpTableName;
-                        if (!tableNames.Contains(tablename))
+                        //Object Field
+                        bytejosn = GetByteDataByKey(cachedObjectFieldsJosnByte, tablename);
+                        if (bytejosn != null) dataList.Add(tablename + "_" + "ObjectFields", CompressionFileData(tablename + "_" + "Fields", bytejosn));
+
+                        //Text Code
+                        bytejosn = GetByteDataByKey(cachedTextCodesJosnByte, tablename);
+                        if (bytejosn != null) dataList.Add(tablename + "_" + "TextCodes", CompressionFileData(tablename + "_" + "Codes", bytejosn));
+
+                        //CloseTable
+                        if (field.DataTypeCode == "LookUp")
                         {
-                            //Object Field
-                            bytejosn = GetByteDateByKey(cachedObjectFieldsJosnByte, tablename);
-                            if (bytejosn != null) dataList.Add(tablename + "_" + "ObjectFields", CompressionFileData(tablename + "_" + "Fields", bytejosn));
-
-                            //Text Code
-                            bytejosn = GetByteDateByKey(cachedTextCodesJosnByte, tablename);
-                            if (bytejosn != null) dataList.Add(tablename + "_" + "TextCodes", CompressionFileData(tablename + "_" + "Codes", bytejosn));
-
-                            //CloseTable
-                            if (field.DataTypeCode == "LookUp")
+                            ObjectTable table = ObjectTableList.Where(d => d.Id == field.LookUpTableId).FirstOrDefault();
+                            if (table != null && table.IsClosed)
                             {
-                                ObjectTable table = ObjectTableList.Where(d => d.Id == field.LookUpTableId).FirstOrDefault();
-                                if (table != null && table.IsClosed)
-                                {
-                                    bytejosn = GetByteDateByKey(cachedCloseTableJosnByte, table.Name);
+                                bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, table.Name);
                                 if (bytejosn != null) dataList.Add(table.Name + "_" + "ClosedData", CompressionFileData(table.Name + "_" + "Closed", bytejosn));//+ "_" + "Closed"
-                                }
                             }
-                            tableNames.Add(tablename);
                         }
+                        tableNames.Add(tablename);
                     }
-
-
-                    if (objectTable.IsClosed)
-                    {
-                        bytejosn = GetByteDateByKey(cachedCloseTableJosnByte, objectTable.Name);
-                        //if (bytejosn == null)
-                        //{
-                        //    var data = TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
-                        //    if (data != null)
-                        //    {
-                        //        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
-                        //        bytejosn = System.Text.Encoding.UTF8.GetBytes(josn);
-                        //        cachedCloseTableJosnByte.Add(objectTable.Name, bytejosn);
-                        //    }
-                        //}
-
-
-                        if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ClosedData", CompressionFileData(objectTable.Name + "_" + "Closed", bytejosn));
-                    }
-
-
-                    objectTable.EntityResource = CompressionData(objectTable.Name, dataList,savetodisk);
-                    objectTable.EntityResourceLastUpdate = DateTime.UtcNow;
-                    objectTabelRepository.Update(objectTable);
                 }
 
-                objectTabelRepository.SubmitChanges();
-                TableLastUpdateClass.UpdateSystemMetaDataHistory();
+
+                if (objectTable.IsClosed)
+                {
+                    bytejosn = GetByteDataByKey(cachedCloseTableJosnByte, objectTable.Name);
+                    //if (bytejosn == null)
+                    //{
+                    //    var data = TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                    //    if (data != null)
+                    //    {
+                    //        var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(data);
+                    //        bytejosn = System.Text.Encoding.UTF8.GetBytes(josn);
+                    //        cachedCloseTableJosnByte.Add(objectTable.Name, bytejosn);
+                    //    }
+                    //}
+
+
+                    if (bytejosn != null) dataList.Add(objectTable.Name + "_" + "ClosedData", CompressionFileData(objectTable.Name + "_" + "Closed", bytejosn));
+                }
+
+
+                objectTable.EntityResource = CompressionData(objectTable.Name, dataList, savetodisk);
+                objectTable.EntityResourceLastUpdate = DateTime.UtcNow;
+                objectTabelRepository.Update(objectTable);
+            }
+
+            objectTabelRepository.SubmitChanges();
+            TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
 
         }
@@ -1087,7 +1490,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         }
 
-        private static byte[] GetByteDateByKey(Dictionary<string, byte[]> list, string key)
+        private static byte[] GetByteDataByKey(Dictionary<string, byte[]> list, string key)
         {
             byte[] bytetable = null; 
             if (list != null)
@@ -1241,8 +1644,8 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ScreenField> screenFields = screenFieldsRepository.GetScreenFieldsByTenant(tenant).ToList();
             foreach (Screen screen in tenantZeroScreens)
             {
-                ScreenModification screenMod = screenModifications.Where(s => s.ScreenId == screen.Id).FirstOrDefault();
-                List<ScreenField> fields = screenFields.Where(f => f.ScreenId == screen.Id).ToList();
+                ScreenModification screenMod = screenModifications.Where(s => s.ScreenCode == screen.Code).FirstOrDefault();
+                List<ScreenField> fields = screenFields.Where(f => f.ScreenCode == screen.Code).ToList();
                 if (fields.Count > 0)
                 {
                     int columnsNumber = screenMod != null ? screenMod.NumberOfColumns : screen.NumberOfColumns;
@@ -1275,6 +1678,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             {
                                 Id = IdCounter.GetNumber("ScreenModification", tenant),
                                 ScreenId = screen.Id,
+                                ScreenCode = screen.Code,
                                 Tenant = tenant,
                                 NumberOfColumns = screen.NumberOfColumns,
                                 NumberOfRows = newRowsNumber,
@@ -1663,23 +2067,23 @@ namespace WebFreight.Web.MetaDataUpdate
             //TenantRepository.SubmitChanges();
         }
 
-        private static void UpdateTranslationHeaders(int tenant, Dictionary<string, TranslationHeader> tenantZeroTranslationHeader, Dictionary<string, TranslationHeader> currentTenantTranslationHeaders, TranslationHeaderRepository translationHeadersRepository)
-        {
-            foreach (TranslationHeader header in tenantZeroTranslationHeader.Values)
-            {
-                if (!currentTenantTranslationHeaders.Keys.Contains(header.Description))
-                {
-                    TranslationHeader newTranslationHeader = new TranslationHeader()
-                    {
-                        Description = header.Description,
-                        Code = header.Code,//IdCounter.GetNumber("TranslationHeader").ToString(),
+        //private static void UpdateTranslationHeaders(int tenant, Dictionary<string, TranslationHeader> tenantZeroTranslationHeader, Dictionary<string, TranslationHeader> currentTenantTranslationHeaders, TranslationHeaderRepository translationHeadersRepository)
+        //{
+        //    foreach (TranslationHeader header in tenantZeroTranslationHeader.Values)
+        //    {
+        //        if (!currentTenantTranslationHeaders.Keys.Contains(header.Description))
+        //        {
+        //            TranslationHeader newTranslationHeader = new TranslationHeader()
+        //            {
+        //                Description = header.Description,
+        //                Code = header.Code,//IdCounter.GetNumber("TranslationHeader").ToString(),
 
-                    };
-                    translationHeadersRepository.Add(newTranslationHeader);
-                }
-            }
-            translationHeadersRepository.SubmitChanges();
-        }
+        //            };
+        //            translationHeadersRepository.Add(newTranslationHeader);
+        //        }
+        //    }
+        //    translationHeadersRepository.SubmitChanges();
+        //}
 
         private static void UpdateMeasurements(int tenant, Dictionary<string, Measurement> tenantZeroMeasurements, Dictionary<string, Measurement> currentTenantMeasurements, MeasurementRepository measurementRepository)
         {

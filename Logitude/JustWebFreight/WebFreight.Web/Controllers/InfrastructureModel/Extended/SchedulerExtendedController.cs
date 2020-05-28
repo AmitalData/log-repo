@@ -60,11 +60,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
-                var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
-             
+                //SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
+                //var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
 
-                return Request.CreateResponse(HttpStatusCode.OK, HistoryLogs);
+
+                return Request.CreateResponse(HttpStatusCode.OK);// HistoryLogs);
             }
 
             catch (Exception ex)
@@ -97,11 +97,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                                 entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                             }
 
+                            entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
+
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
-                            System.Type[] types = new System.Type[2];
+                            System.Type type3 = typeof(ReportSchedulerDetails);
+                            System.Type type4 = typeof(ReportSchedulerRecepients);
+                            System.Type[] types = new System.Type[4];
                             types[0] = type1;
                             types[1] = type2;
+                            types[2] = type3;
+                            types[3] = type4;
 
                             entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
@@ -150,11 +156,18 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         {
                             entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                         }
+
+                        entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
+
                         System.Type type1 = typeof(FTPSchedulerDetails);
                         System.Type type2 = "string".GetType();
-                        System.Type[] types = new System.Type[2];
+                        System.Type type3 = typeof(ReportSchedulerDetails);
+                        System.Type type4 = typeof(ReportSchedulerRecepients);
+                        System.Type[] types = new System.Type[4];
                         types[0] = type1;
                         types[1] = type2;
+                        types[2] = type3;
+                        types[3] = type4;
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 

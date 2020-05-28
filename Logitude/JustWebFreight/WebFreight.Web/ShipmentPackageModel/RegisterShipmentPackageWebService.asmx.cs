@@ -138,7 +138,7 @@ namespace WebFreight.Web.ShipmentPackageModel
             shipments = shipments.Where(d => d.IsCancelled == false);
 
             foreach (ShipmentJoinPackageList shipment in shipments)
-            {
+            {                
                 ShipmentPickUpDelivery myLastDelivery = (from d in shipmentCotnext.ShipmentPickUpDeliveries
                                                          where d.ShipmentId == shipment.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
                                                          select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -198,6 +198,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
                 provider.Volume = shipment.Volume;
                 provider.ContainerVolume = shipment.PackageVolume;
+                provider.TotalNumberOfContainers = shipment.NumberOfContainers;
 
                 if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
                 {
@@ -392,6 +393,28 @@ namespace WebFreight.Web.ShipmentPackageModel
                     }
                 }
 
+                else if (shipment.ContainerNumber != null)
+                {
+                    List<ShipmentPickUpDelivery> allDeliveries = (from d in shipmentCotnext.ShipmentPickUpDeliveries
+                                                                  where d.ShipmentId == shipment.ShipmentId
+                                                                  && d.PickUpDeliveryTypeCode == "DELV"
+                                                                  select d).ToList();
+
+                    foreach (ShipmentPickUpDelivery myDelivery in allDeliveries)
+                    {
+                        bool hasContainer = (from d in shipmentCotnext.ShipmentPickUpDeliveryPackages
+                                             where d.ShipmentPickUpDeliveryId == myDelivery.Id
+                                             && d.ContainerNumber == shipment.ContainerNumber
+                                             select d).Any();
+
+                        if (hasContainer)
+                        {
+                            provider.ATADoor = myDelivery.ATA;
+                            break;
+                        }
+                    }
+                }
+
                 if (myRailDelivery != null)
                 {
                     provider.RailATA = myRailDelivery.ATA;
@@ -444,6 +467,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     provider.DeliveryATD = myLastDelivery.ATD;
                     provider.DeliveryATA = myLastDelivery.ATA;
+                    provider.DeliveryETA = myLastDelivery.ETA;
 
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
                     {

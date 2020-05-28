@@ -109,11 +109,13 @@
                                 <log-column [header]="'קוד מטבע'"
                                             [binding]="'CurrencyTypeId'"
                                             [width]="'100'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CurrencyTypeId}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- CurrencyTypeName -->
@@ -121,11 +123,13 @@
                                             [header]="'Customs.ExchangeRate.O.CurrencyTypeName' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'Right'"
                                             [binding]="'Content'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CurrencyTypeName}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- CustomsCurrencyRate -->
@@ -134,11 +138,13 @@
                                             [header]="'שער'"
                                             [binding]="'CustomsCurrencyRate'"
                                             [width]="'100'" [Alignment]="'Right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CustomsCurrencyRate}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- StartDate -->
@@ -146,12 +152,14 @@
                                 <log-column 
                                             [header]="'תאריך שער'"
                                             [width]="'150'" [Alignment]="'Right'" [binding]="'StartDate'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.StartDate  | DateTimeToDatePipe  }}</span>
                                             
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

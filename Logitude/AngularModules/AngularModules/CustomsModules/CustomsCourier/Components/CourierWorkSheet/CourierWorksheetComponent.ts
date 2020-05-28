@@ -1,10 +1,9 @@
 declare var window: any;
-import { BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
@@ -20,31 +19,29 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
 import { DropdownMenuFilterComponent } from './DropdownMenuFilterComponent'
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
-import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })
 
 
-export class CourierWorksheetComponent extends BaseComponent
-    implements OnDestroy {
+export class CourierWorksheetComponent extends BaseComponent implements OnDestroy {
+  public _SelectedItems: any;
+
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;
@@ -117,9 +114,9 @@ export class CourierWorksheetComponent extends BaseComponent
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-
+    private currentSession=SessionLocator.SelectedSession;
     //constructor(public entityArgs: EntityArgs) {
-    constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
@@ -353,7 +350,7 @@ export class CourierWorksheetComponent extends BaseComponent
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -375,8 +372,8 @@ export class CourierWorksheetComponent extends BaseComponent
             return;
         }
 
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe(response => {
+        this.currentSession.StartBusyIndicatorLoading();
+        this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response:any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -399,9 +396,9 @@ export class CourierWorksheetComponent extends BaseComponent
                         currRequestParams.HAWB = this.entityPM.HAWB;
                         currRequestParams.InternalBankId = InternalBankId;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
-                            .subscribe(res => {
-                                SessionLocator.SelectedSession.StopBusyIndicator();
+                        this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
+                            .subscribe((res:any) => {
+                                this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -411,8 +408,8 @@ export class CourierWorksheetComponent extends BaseComponent
                     }
                     else {
                         this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
-                            .subscribe(res => {
-                                SessionLocator.SelectedSession.StopBusyIndicator();
+                            .subscribe((res:any) => {
+                                this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -474,8 +471,8 @@ export class CourierWorksheetComponent extends BaseComponent
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -578,7 +575,7 @@ export class CourierWorksheetComponent extends BaseComponent
         if (this._ValidationErrors2.length > 0) {
         this._ValidationErrors2 = []
             this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
-                data => {
+                (data:any) => {
                     //if (data.Result != "")
                     //    this._ValidationErrors2.push();
                     switch (data.Result) {
@@ -670,8 +667,8 @@ export class CourierWorksheetComponent extends BaseComponent
     RefreshStatistic() {
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
 
                 list = res.Result;
@@ -1458,7 +1455,7 @@ export class CourierWorksheetComponent extends BaseComponent
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
-            .subscribe(resu => {
+            .subscribe((resu:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
                 var itemPname = null;
@@ -1729,7 +1726,7 @@ export class CourierWorksheetComponent extends BaseComponent
                             }
                             if (currentScreenCode = "DCCF") {
                                 cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-                                    .subscribe(myResult => {
+                                    .subscribe((myResult: any) => {
                                         var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
                                         myDeclarationEditComponentController.ShowDeclarationClassificationComponentTAB = true;
                                         console.log("myDeclarationEditComponentController.DeclarationClassificationComponent = true;");
@@ -1792,8 +1789,8 @@ export class CourierWorksheetComponent extends BaseComponent
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 //this.RefreshButtonClicked();
@@ -1804,8 +1801,8 @@ export class CourierWorksheetComponent extends BaseComponent
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendFTPMamanRequest(this.entityPM.Id)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             });
@@ -1854,7 +1851,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -1867,7 +1864,7 @@ export class CourierWorksheetComponent extends BaseComponent
     private GetMamanPUR() {//ILMMN;ILOVL 
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsMamanEnabled = false;
                 if (!response.HasError) {// reEdit this default !!!
                     if (response.Result != null && response.Result.DefaultValue != null) {
@@ -2005,7 +2002,7 @@ export class CourierWorksheetComponent extends BaseComponent
         if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -2043,7 +2040,7 @@ export class CourierWorksheetComponent extends BaseComponent
     CancelFlight() {
         this._ValidationErrors2=[]
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
-            data => {
+            (data:any) => {
                 //if (data.Result != "")
                 //    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
                 switch (data.Result) {

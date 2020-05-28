@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ComputingPartnerRepository  computingPartnerRepository = new ComputingPartnerRepository(MyContext);
 				ComputingPartnerList entityList = null;
-				ComputingPartner entityPoco = computingPartnerRepository.GetSingleComputingPartner(id ,authToken.Tenant);
+				ComputingPartner entityPoco = computingPartnerRepository.GetSingleComputingPartner(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(computingPartnerRepository);
 			    IQueryable<ComputingPartnerList> entityLists = computingPartnerQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Code);
 				List<ComputingPartnerList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -126,8 +126,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = tenant;
 				                
 				SecurityUtility.CheckContactFeature("ComputingPartner", "READ", authToken.Tenant);
 	
@@ -174,7 +172,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -202,7 +201,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
                         }
                         else
                         {
@@ -290,7 +290,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -299,7 +299,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }
 		    else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Code);
             }
 
 			ServiceResponse response = new ServiceResponse();

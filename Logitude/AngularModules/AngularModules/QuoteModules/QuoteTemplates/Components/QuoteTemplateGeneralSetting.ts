@@ -1,4 +1,3 @@
-/// <reference path="../../../infrastructure/utilities/featurelocator.ts" />
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
@@ -16,11 +15,13 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'QuoteTemplateGeneralSetting',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateGeneralSetting.html',
 })
 
 export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit {
+  public IsNewEntityCall: boolean = false;
+
     quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
     public DataContext: QuoteTemplateGeneralSetting = this;
     QuoteTemplatePM: QuoteTemplatePM;
@@ -34,14 +35,15 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
     QuoteTemplatePDFMarginRight: number;
     IsShowIsCopiedAtSignup: boolean = false;
     IsShowEnableForCustomer: boolean = false;
-
+    QuoteTemplatePDFMarginTop: number;
+    QuoteTemplatePDFMarginBottom: number;
     IsCopiedAtSignup: boolean;
     IsEnabledForCustomers: boolean;
 
 
     public ValidationErrorsList: string[];
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -68,6 +70,10 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
         if (this.QuoteTemplateSettingPM) {
             this.QuoteTemplatePDFMarginRight = this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginRight;
             this.QuoteTemplatePDFMarginLeft = this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft;
+            this.QuoteTemplatePDFMarginBottom = this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginBottom;
+            this.QuoteTemplatePDFMarginTop = this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginTop;
+            
+
         }
 
 
@@ -98,15 +104,26 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Please Select QuoteTemplate");
         }
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginRight > 200) {
+        if (this.QuoteTemplatePDFMarginRight > 200) {
             this.ValidationErrorsList.push("Right margin must be less than 200");
         }
 
 
-        if (this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft > 200) {
+        if (this.QuoteTemplatePDFMarginLeft > 200) {
             this.ValidationErrorsList.push("Left margin must be less than 200");
         }
-        
+
+
+        if (this.QuoteTemplatePDFMarginBottom > 200) {
+            this.ValidationErrorsList.push("Bottom margin must be less than 200");
+        }
+
+
+        if (this.QuoteTemplatePDFMarginTop > 200) {
+            this.ValidationErrorsList.push("Top margin must be less than 200");
+        }
+
+       
         if (this.ValidationErrorsList.length == 0) {
 
             this.QuoteTemplatePM.Name = this.Name;
@@ -121,9 +138,13 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
             this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginRight = this.QuoteTemplatePDFMarginRight;
             this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft = this.QuoteTemplatePDFMarginLeft;
 
+            this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginTop = this.QuoteTemplatePDFMarginTop;
+            this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginBottom = this.QuoteTemplatePDFMarginBottom;
+
+
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.CurrentSession.StopBusyIndicator();
                     

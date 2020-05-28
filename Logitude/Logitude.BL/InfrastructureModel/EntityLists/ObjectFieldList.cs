@@ -72,6 +72,12 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool CopyToDW { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
-
+        public bool DisplayInAutomationAsEnitity { get; set; }
+        public string RecordType { get; set; }
+        public string ObjectTable_LookUpTableName { get; set; }
+        public string FieldCode { get;  set; }
+        public string FullNameTextCodeCode { get; set; }
+        public string ShortNameTextCodeCode { get; set; }
+        public string HelpTextCodeCode { get; set; }
     }
 }

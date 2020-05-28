@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationQueryComponent.html',
 })
 

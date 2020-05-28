@@ -28,7 +28,7 @@ namespace Logitude.SystemLogs.OracleMigratrion.Migrations
                 //OracleConnectionInfo.CreateConnection("User Id=devart;  Password=devart; Server=srv64bit;");
                 OracleConnectionInfo.CreateConnection(
                 //"User Id=aminet_logs;  Password=aminet_logs;Direct=True;Data Source=Univ56;port=1521;sid=amital"
-                "User Id=AMINET_logs;  Password=AMINET_logs;Direct=true;Data Source=localhost;port=1521;sid=xe"
+                "User Id=AMINETCST_LOGS;  Password=AMINETCST_LOGS;Direct=true;Data Source=localhost;port=1521;sid=amital"
                 );
 
 

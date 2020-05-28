@@ -24,7 +24,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 
 @Component({
     selector: 'ImporterDeclarationComponent',
-    moduleId: module.id,
+    
     templateUrl: './ImporterDeclarationComponent.html',
 })
 

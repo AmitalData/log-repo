@@ -8,26 +8,33 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
-    moduleId: module.id,
+    
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand','IsFirstTime']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand', 'IsFirstTime', 'IsStaticFilter', 'IsStaticDateFilter', 'SelectedDynamicFiltersDataSource', 'SelectedFixedFiltersDataSource', 'ShowFixedFilters']
 })
 
-export class DWAskUserFiltersComponent implements OnInit {
+export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
 
-    SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
+    selectedFiltersDataSource: DWObjectFieldsDetails[] = [];
+    SelectedDynamicFiltersDataSource: DWObjectFieldsDetails[] = [];
+    SelectedFixedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
     public BooleanValues = ["Yes", "No", "No Value"];
-    DataContext: any;
+    DataContext: any = this;
+    //@Output() myShowFixedFilters = new EventEmitter();
     ShowRunButton: boolean = false;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public RunReportCommand: EventEmitter<any>;
+    public ShowFixedFilters: EventEmitter<any>; 
     @Output() RunReportComplete = new EventEmitter();
     @Output() ComputeFiltersComplete = new EventEmitter();
     public _DWQueryBuilderService: DWQueryBuilderService;
@@ -36,10 +43,31 @@ export class DWAskUserFiltersComponent implements OnInit {
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
     IsDateFilter: boolean = false;
+    IsStaticDateFilter: boolean = false;
+    IsStaticFilter: boolean = false;
     IsFirstTime: boolean = false;
+    //ShowStaticFilter: boolean = true;
+
+    get SelectedFiltersDataSource() {
+        return this.selectedFiltersDataSource;
+    }
+    set SelectedFiltersDataSource(value: DWObjectFieldsDetails[]) {
+          
+        this.selectedFiltersDataSource = value;
+        this.SelectedDynamicFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+        this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
+        //if (this.ShowStaticFilters == true) {
+        //    this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
+        //}
+        //else {
+        //    this.SelectedFixedFiltersDataSource = [];
+        //}
+    }
+
     public ComputeFiltersCommand: EventEmitter<any>;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
+        super();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
@@ -49,7 +77,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
-
+        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == 'Ask User');
         if (this.RunReportCommand) {
             this.RunReportCommand.subscribe((QueryId) => {
                 //this.SelectedFiltersDataSource = selectedFilters;
@@ -59,6 +87,12 @@ export class DWAskUserFiltersComponent implements OnInit {
         if (this.ComputeFiltersCommand) {
             this.ComputeFiltersCommand.subscribe((QueryId) => {
                 this.ComputeFilters();
+            });
+        }
+        if (this.ShowFixedFilters) {
+            this.ShowFixedFilters.subscribe((ShowFixed) => {
+                this.ShowStaticFilters = ShowFixed;
+                //this.CD.detectChanges();
             });
         }
     }
@@ -119,7 +153,16 @@ export class DWAskUserFiltersComponent implements OnInit {
             QueryData.PageIndex = this.PageIndex;
             QueryData.PageSize = this.PageSize;
             QueryData.ColumnsSort = this.DWQueryData.ColumnsSort;
+            QueryData.FactTableName = this.DWQueryData.FactTableName;
+            var myAndOr = "And";
+            if (this.DWQueryData.Filters) {
+                myAndOr = this.DWQueryData.Filters.AndOr;
+            }
             this.DWQueryData.Filters = this.SelectedFiltersDataSource[0];
+            if (this.DWQueryData.Filters) {
+                this.DWQueryData.Filters.AndOr = myAndOr;
+            }
+           
             this.GetRowData(QueryData);
         }
         else {
@@ -128,7 +171,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
     }
     GetRowData(QueryData: DWQueryData) {
-        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
                 this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
                 this.PageIndex = this.PageIndex + 1000;
@@ -144,7 +187,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                     this.CurrentSession.StartBusyIndicator("Loading " + this.count);
                     if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
-                        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe((myResult: ServiceResponse) => {
                             if (!myResult.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count, IsParentTenant: this.isParentTenant});// more than 10000
@@ -164,10 +207,35 @@ export class DWAskUserFiltersComponent implements OnInit {
 
             }
             else {
+
+                if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
+                    this.ShowMessageWindow(myResult.ErrorsArray[0]);
+                }
+
                 this.CurrentSession.StopBusyIndicator();
             }
         });
     }
+
+
+
+    public ShowMessageWindow(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+        if (title) {
+            messageWindow.Title = title;
+        }
+    }
+
+
+
+
+
+
+
+
 
     AddFilterToGroup(item) {
         var DWObjectField = new DWObjectFieldsDetails(null, item.MyParentClass);
@@ -274,6 +342,12 @@ export class DWAskUserFiltersComponent implements OnInit {
     public get Operators() { return this.GetFieldOperators(); }
     public set Operators(newValue: ObjectFieldOperator[]) {
         this.operators = newValue;
+    }
+
+    private showStaticFilters: boolean = false;
+    public get ShowStaticFilters() { return this.showStaticFilters; }
+    public set ShowStaticFilters(newValue: boolean) {
+        this.showStaticFilters = newValue;
     }
 
     OperationValueChanged(event, Item) {

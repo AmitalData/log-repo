@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -10,13 +10,15 @@ import {ObservableCollection} from '../../../Infrastructure/Utilities/Observable
 import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
+import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditFCLChargeComponent.html',
 })
 
-export class AddEditFCLChargeComponent {
+export class AddEditFCLChargeComponent implements OnDestroy {
     public QuotePM: QuotePM;
     public EntityPM: QuoteChargePM;
     public DataContext: FCLQuoteChargeItem;
@@ -29,9 +31,34 @@ export class AddEditFCLChargeComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public CheckChargeTypeDuplicationFlag: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public HideFCLAllIn: boolean = false;
+    private IsHyprid: boolean;
+    private ChargesTypeCode: string;
+    private PropertyChangedEvent: any = null;
+
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
+        this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
+        this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
+    }
+    private propertiesChanges = [];
+    private ListenPropertyChanged() {
+
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                this.propertiesChanges.push(s.PropertyName);
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
@@ -43,10 +70,12 @@ export class AddEditFCLChargeComponent {
         this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
+        this.ChargesTypeCode = this.EntityPM.ChargesTypeCode;
         this.DataContext.SetUIProperties();
         this.BuildItemsSource();
         this.BuildQueryFilters();
         this.Clone();
+        this.ListenPropertyChanged();
     }
  
     BuildItemsSource() {
@@ -85,11 +114,28 @@ export class AddEditFCLChargeComponent {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    CheckChargeTypeDuplication() {
+        if (!this.DataContext.IsNew && (this.ChargesTypeCode != this.EntityPM.ChargesTypeCode)) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+        if (this.DataContext.IsNew) {
+            this.CheckChargeTypeDuplicationFlag = true;
+        }
+    }
+
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        this.CheckChargeTypeDuplication();
+
+        if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
+            var quoteValidator: QuoteValidator = new QuoteValidator();
+            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
+        }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
@@ -111,6 +157,32 @@ export class AddEditFCLChargeComponent {
                         var field = TextCodeTranslator.Translate("QuoteCharge.F.VatPercentage");
                         errors.push(msg.replace("%FieldName", field));
                     }
+                }
+            }
+        }
+
+        var freightLineCostCurrencyId: string = "";
+        var freightLineSaleCurrencyId: string = "";
+        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+            if (quoteCharge) {
+                freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
+                freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
+            if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
+                if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
+                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+                }
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
+            if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
+                if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
+                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
                 }
             }
         }
@@ -161,10 +233,27 @@ export class AddEditFCLChargeComponent {
         this.myCloner.AddField('CostMaxAmount');
         this.myCloner.AddField('SaleMinAmount');
         this.myCloner.AddField('SaleMaxAmount');
+        this.myCloner.AddField('TariffId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();
+    }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.TariffNumber = null;
+                //this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
     }
 }

@@ -3,6 +3,7 @@ import {SimulatorComponent} from './Components/Wizard/SimulatorComponent';
 import {INTTRASettingsComponent} from './Components/Maintenance/INTTRASettingsComponent';
 import {INTTRACommunicationSettingsComponent} from './Components/Maintenance/INTTRACommunicationSettingsComponent';
 import { SimulatorBookingComponent } from './Components/Wizard/SimulatorBookingComponent';
+import { SimulatorBookingLoadComponent } from './Components/Wizard/SimulatorBookingLoadComponent';
 
 export const Components =
     [
@@ -10,7 +11,8 @@ export const Components =
         SimulatorComponent,
         INTTRASettingsComponent,
         INTTRACommunicationSettingsComponent,
-        SimulatorBookingComponent
+        SimulatorBookingComponent,
+        SimulatorBookingLoadComponent
     ];
 
 export class ModuleDeclarations {
@@ -24,8 +26,8 @@ export class ModuleDeclarations {
             case "INTTRASettingsComponent": { myResult = INTTRASettingsComponent; break; }
             case "INTTRACommunicationSettingsComponent": { myResult = INTTRACommunicationSettingsComponent; break; }
             case "SimulatorBookingComponent": { myResult = SimulatorBookingComponent; break; }
+            case "SimulatorBookingLoadComponent": { myResult = SimulatorBookingLoadComponent; break; }
         }
-
         return myResult;
     }
 }

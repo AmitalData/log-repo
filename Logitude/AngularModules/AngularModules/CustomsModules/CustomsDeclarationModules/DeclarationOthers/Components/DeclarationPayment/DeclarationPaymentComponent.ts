@@ -63,12 +63,14 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService'; 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationPaymentComponent.html',
     providers : [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
+  public PayerActivityTypeCode: any;
+
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public paymentPM: DeclarationPaymentPM;
@@ -113,7 +115,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.SelectedInvoices = new ObservableCollection([]);
         this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
         this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
-            .subscribe(response => {
+            .subscribe((response: ServiceResponse) => {
+
                 this._2LogBankList = response.Result.IsLogInOn;
 
                 this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_AVA_AUTOPAY", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
@@ -239,7 +242,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.DeclarationPayment', true);
             });
         });
@@ -1668,7 +1671,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 });
             });
 
-            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
             ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
 
             return;
@@ -2413,7 +2416,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         logWindow.WindowArgs = windowArgs;
         //logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     _IsCloseScreen: boolean = false;
     AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(responseData: CustomFileCreditResponseData) {
@@ -2605,7 +2608,7 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.Exception += JSON.stringify({ 'DeclarationId': this.methodPM.DeclarationId, 'Line': this.methodPM.Line, 'SequenceNumeric': this.methodPM.SequenceNumeric });
 
         this.parent._ErrorLogPMFileLoggerService.insert(errorLogPM)
-            .subscribe(r => { });
+            .subscribe((response: ServiceResponse) => { });
 
     }
     agentBanks: CustomBankList[] = [];

@@ -25,7 +25,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'RecallClientsForCutoms',
-    moduleId: module.id,
+    
     templateUrl: './RecallClientsForCutoms.html',
 })
 

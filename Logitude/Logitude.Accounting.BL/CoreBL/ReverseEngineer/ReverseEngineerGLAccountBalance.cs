@@ -19,6 +19,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private readonly string const_ThereIsntAnyGLAccounts= "There Isn't Any GLAccounts";
         private readonly string const_DifftotBalanceInLocalCurrencyMinusaccBalanceInLocalCurrency= "Diff = tot.BalanceInLocalCurrency-acc.BalanceInLocalCurrency";
         private readonly string const_ThereIsntAnyGLAccountTotalByMonths= "There Isn't Any GLAccountTotalByMonths";
+        private readonly string const_TotalOpenAmountInTransactionDiffBalanceInLocalCurrency = 
+            "  שקל -בדיקה שסך סכום פתוח של תנועות בכרטיס שווה ליתרה חשבונאית של כרטיס";
+        private readonly string const_TotalOpenAmountInTransactionDiffBalanceInForeign = " - מטח בדיקה שסך סכום פתוח של תנועות בכרטיס שווה ליתרה חשבונאית של כרטיס";
 
         public ReverseEngineerGLAccountBalance(int currTenant)
         {
@@ -39,6 +42,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 var myGLAccountMoreDataRepo = new GLAccountMoreDataRepository(_AccountingContext);
 
                 var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
+                var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+
                 var quaryAllGLAccount =
                     (from acc in myGLAccountRepo.GetAll(_Tenant)
                      join md in myGLAccountMoreDataRepo.GetAll(_Tenant) on acc.Id equals md.AccountId
@@ -100,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         AccountId = tot.AccountId,
                         BalanceInLocalCurrency = tot.BalanceInLocalCurrency,
-                        CHANGE_TYPE = const_ThereIsntAnyGLAccounts 
+                        CHANGE_TYPE = const_ThereIsntAnyGLAccounts
 
                     }
                     );
@@ -109,7 +114,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     from tot in quaryablMonthTotals
                     join acc in quaryAllGLAccount
                     on tot.AccountId equals acc.AccountId
-                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m  || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m )
+                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m)
                     select new GLAccountBalanceDTO
                     {
                         AccountId = tot.AccountId,
@@ -119,13 +124,40 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     );
 
-                var q = qNotInTot.Union(qNotInGLAcc).Union(qDiff);
+
+
+                var quaryablMonthTotalsForeignAmount =
+                 (
+                from tot in
+                    myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                where tot.Tenant == _Tenant
+                group tot by tot.AccountId into g
+                select new GLAccountBalanceDTO
+                {
+                    AccountId = g.Key,
+                    BalanceInLocalCurrency = g.Sum(r => r.ForeignAmountDebit - r.ForeignAmountCredit),
+                    CHANGE_TYPE = ""
+
+                }
+                 );
+                //1   Foreign Currency
+                IQueryable<GLAccountBalanceDTO> qTotalOpenAmountInTransactionDiffBalanceInForeign =
+                GetTotalOpenAmountInTransactionDiffBalanceInForeign(myGLAccountRepo, myLedgerTransactionRepository, quaryablMonthTotalsForeignAmount);
+
+                //0	Local Currency
+                IQueryable<GLAccountBalanceDTO> qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency = 
+                    GetTotalOpenAmountInTransactionDiffBalanceInLocalCurrency(myGLAccountRepo, myLedgerTransactionRepository, quaryablMonthTotals);
+
+                var qThe = qNotInTot.Union(qNotInGLAcc).Union(qDiff)
+                    .Union(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency); ;
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
-                    q = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff);
+                    qThe = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff)
+                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency)
+                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); ;
                 }
-                    var l = q.ToList();
+                var l = qThe.ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerGLAccountBalance",
@@ -134,6 +166,80 @@ namespace Logitude.Accounting.BL.CoreBL
                     Took = sw.Elapsed
                 };
             }
+        }
+
+        private IQueryable<GLAccountBalanceDTO> GetTotalOpenAmountInTransactionDiffBalanceInForeign(
+            GLAccountRepository myGLAccountRepo, 
+            LedgerTransactionRepository myLedgerTransactionRepository, 
+            IQueryable<GLAccountBalanceDTO> quaryablMonthTotalsForeignAmount)
+        {
+            var qTotOpenAmountInTrans = (
+                               from tran in myLedgerTransactionRepository.GetAll(_Tenant)
+                               join acc in myGLAccountRepo.GetAll(_Tenant).Where(r => r.ReconcileMethodCode == "1")
+                               on tran.AccountId equals acc.Id
+
+                               group tran by tran.AccountId into gTransByAcc
+
+                               select new GLAccountBalanceDTO
+                               {
+                                   AccountId = gTransByAcc.Key,
+
+                                   BalanceInLocalCurrency = gTransByAcc.Sum(r => r.OpenAmount),
+                                   CHANGE_TYPE = ""
+                               }
+
+                               );
+            var qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency = (
+            from myTotalsForeignAmount in quaryablMonthTotalsForeignAmount
+            join totOpenAmountInTrans in qTotOpenAmountInTrans
+            on myTotalsForeignAmount.AccountId equals totOpenAmountInTrans.AccountId
+            where (
+            myTotalsForeignAmount.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency >= 0.001m || 
+            myTotalsForeignAmount.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency <= -0.001m)
+            select new GLAccountBalanceDTO
+            {
+                AccountId = myTotalsForeignAmount.AccountId,
+
+                BalanceInLocalCurrency = myTotalsForeignAmount.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency,
+                CHANGE_TYPE = const_TotalOpenAmountInTransactionDiffBalanceInForeign
+            }
+
+            );
+            return qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency;
+        }
+        private IQueryable<GLAccountBalanceDTO> GetTotalOpenAmountInTransactionDiffBalanceInLocalCurrency(GLAccountRepository myGLAccountRepo, LedgerTransactionRepository myLedgerTransactionRepository, IQueryable<GLAccountBalanceDTO> quaryablMonthTotals)
+        {
+            var qTotOpenAmountInTrans = (
+                               from tran in myLedgerTransactionRepository.GetAll(_Tenant)
+                               join acc in myGLAccountRepo.GetAll(_Tenant).Where(r => r.ReconcileMethodCode == "0")
+                               on tran.AccountId equals acc.Id
+
+                               group tran by tran.AccountId into gTransByAcc
+
+                               select new GLAccountBalanceDTO
+                               {
+                                   AccountId = gTransByAcc.Key,
+
+                                   BalanceInLocalCurrency = gTransByAcc.Sum(r => r.OpenAmount),
+                                   CHANGE_TYPE = ""
+                               }
+
+                               );
+            var qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency = (
+            from tot in quaryablMonthTotals
+            join totOpenAmountInTrans in qTotOpenAmountInTrans
+            on tot.AccountId equals totOpenAmountInTrans.AccountId
+            where (tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency >= 0.001m || tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency <= -0.001m)
+            select new GLAccountBalanceDTO
+            {
+                AccountId = tot.AccountId,
+
+                BalanceInLocalCurrency = tot.BalanceInLocalCurrency - totOpenAmountInTrans.BalanceInLocalCurrency,
+                CHANGE_TYPE = const_TotalOpenAmountInTransactionDiffBalanceInLocalCurrency
+            }
+
+            );
+            return qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency;
         }
 
         public CompareReportM CompareReport { get; set; }

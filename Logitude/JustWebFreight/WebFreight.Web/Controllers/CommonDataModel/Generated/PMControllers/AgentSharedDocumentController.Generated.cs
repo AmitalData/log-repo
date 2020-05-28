@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AgentSharedDocument", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedDocument", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AgentSharedDocumentService service = new AgentSharedDocumentService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AgentSharedDocument", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedDocument", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AgentSharedDocument" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AgentSharedDocumentPM" + entityPM.Id + entityPM.Tenant;

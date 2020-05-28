@@ -8,7 +8,7 @@ import {BankCodePM} from '../../../EntityPMs/BankCodePM';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BankCodeGeneralTabComponent.html',
 })
 

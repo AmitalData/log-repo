@@ -336,7 +336,19 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <button style="width:100%;text-align:center" class="Button" (click)="OnPrint()" [disabled]="!IsPrintButtonEnabled">{{'Quote.Quotation.B.Print' | TextCodeTranslationPipe}} </button>
+
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td [style.width]="IsShowDownloadTemplateButton ? '49%' : '100%'" style="width:48%;"><button style="text-align:center" class="Button" (click)="OnPrint()" [disabled]="!IsPrintButtonEnabled  ">{{'Quote.Quotation.B.Print' | TextCodeTranslationPipe}} </button></td>
+                                      <td *ngIf="IsShowDownloadTemplateButton" style="width:2%"></td>
+                                      <td  *ngIf="IsShowDownloadTemplateButton" style="width:49%;"><button style="text-align:center;" class="Button" (click)="OnDownLoadTemplateButtonClick()" [disabled]="!IsPrintButtonEnabled && (!QuotePM || (QuotePM && !QuotePM.QuoteHTMLDocumentId))">DownLoad Template</button></td>
+                                    
+                                      </tr>
+                                </table>
+                            </div>
+                            
+                           
                         </td>
                     </tr>
                     <tr style="height:5px">

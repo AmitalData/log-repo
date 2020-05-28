@@ -15,7 +15,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastruc
 import {ObjectsLocator} from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityTabComponent.html',
 })
 export class ClaimRelatedEntityTabComponent extends BaseComponent {
@@ -58,14 +58,14 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
             this.WindowTitle = args.WindowTitle;
 
         }
-        this.entityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsReasonsExp").subscribe(response => {
-                        this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesReason").subscribe(response => {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsExpDeclar").subscribe(response => {
-                                this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesSeizure").subscribe(response => {
-                                    this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesRefund").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe((response:any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsReasonsExp").subscribe((response:any) => {
+                        this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesReason").subscribe((response:any) => {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsExpDeclar").subscribe((response:any) => {
+                                this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesSeizure").subscribe((response:any) => {
+                                    this.entityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesRefund").subscribe((response:any) => {
                                         this.BuildTabs();
                                         this.RunComponent();
                                     });
@@ -113,7 +113,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -236,7 +236,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
     private SaveChanges() {
         this.CurrentSession.StartBusyIndicatorSaving();
         //if (this.IsNewEntity) {
-        //    this.ClaimPMService.insert(this.ClaimPM).subscribe(myResult => {
+        //    this.ClaimPMService.insert(this.ClaimPM).subscribe((myResult:any) => {
         //        var res: ServiceResponse = myResult;
         //        if (!res.HasError) {
         //            var entity = res.Result;
@@ -258,7 +258,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
 
 
         //this.ClaimPMService.update(this.ClaimPM)
-        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult:any) => {
             var res: ServiceResponse = myResult;
             if (!res.HasError) {
                 var entity = res.Result;

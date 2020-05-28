@@ -22,7 +22,7 @@ import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import {ShipmentTool} from '../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PartnersTabComponent.html',
 })
 
@@ -492,6 +492,10 @@ export class PartnerItem extends BaseComponent {
 
                     if (this.EntityPM.ShipmentLevelCode == "C") {
                         myResult = "AG";
+
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                            myResult = "CS,AG";
+                        }                        
                     }
 
                     else {
@@ -504,11 +508,21 @@ export class PartnerItem extends BaseComponent {
                 }
 
             case "AGENT":
+                {
+                    myResult = "AG";
+
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = "CS,AG";
+                    }
+
+                    break;
+                }
+
             case "ISSAG":
             case "FRTFR":
             case "COLOD":
                 {
-                    myResult = "AG";
+                    myResult = "AG";                    
                     break;
                 }
 
@@ -561,13 +575,28 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "CSTMR":
                 {
-                    if (this.EntityPM.ShipmentLevelCode != "C") {
-                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
                             myResult = true;
                         }
                     }
 
+                    else {
+                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                            myResult = true;
+                        }
+                    }
+                    
                     break
+                }
+
+            case "AGENT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = true;
+                    }
+
+                    break;
                 }
 
             case "REAGT":
@@ -2389,14 +2418,31 @@ export class PartnerItem extends BaseComponent {
                         var myPartnerId = cmp.CurrentPartnerId;
                         var myAddressId = cmp.CurrentAddressId;
 
-                        if (this.IssuingCarrierAgentId != myPartnerId) {
-                            this.IssuingCarrierAgentId = myPartnerId;
+                        if (isNewPartner) {
+                            if (this.IssuingCarrierAgentId != myPartnerId) {
+                                this.IssuingCarrierAgentId = myPartnerId;
+                            }
+
+                            else {
+                                this.EntityPM.IssuingCarrierAddressId = myAddressId;
+                                this.GetPartnerCard();
+                            } 
                         }
 
                         else {
-                            this.EntityPM.IssuingCarrierAddressId = myAddressId;
-                            this.GetPartnerCard();
-                        } 
+
+                            if (this.Name != cmp.CardEnglishName) {
+                                this.Name = cmp.CardEnglishName;
+                            }
+                                
+                            if (this.IssuingCarrierAddressId != myAddressId) {
+                                this.IssuingCarrierAddressId = myAddressId;
+                            }
+
+                            else {
+                                this.GetPartnerAddress();
+                            }
+                        }
                     }
                 });
             });

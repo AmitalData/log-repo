@@ -20,17 +20,221 @@ namespace Logitude.Customs.BL
    {
        public List<DeclarationStatusTypeDetails> GetAll()
        {
-		    var all = new List<DeclarationStatusTypeDetails>(); 
+		    var all = new List<DeclarationStatusTypeDetails>();  
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "0", 
+                SearchFields = "0,סטטוס לא ידוע", 
+                Inactive = false, 
+                LocalName = "סטטוס לא ידוע", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,בוטל", 
+                Inactive = false, 
+                LocalName = "בוטל", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "10", 
+                SearchFields = "10,טיוטה הוגשה לתאריך עתידי", 
+                Inactive = false, 
+                LocalName = "טיוטה הוגשה לתאריך עתידי", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "11", 
+                SearchFields = "11,טיוטה ממתינה לאישור אילוץ הגשה", 
+                Inactive = false, 
+                LocalName = "טיוטה ממתינה לאישור אילוץ הגשה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "12", 
+                SearchFields = "12,טיוטה שגויה", 
+                Inactive = false, 
+                LocalName = "טיוטה שגויה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "13", 
+                SearchFields = "13,טיוטה תקינה, ממתין להגשה בכפוף לחובת חתימה", 
+                Inactive = false, 
+                LocalName = "טיוטה תקינה, ממתין להגשה בכפוף לחובת חתימה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "14", 
+                SearchFields = "14,יש להגיש את ההצהרה מחדש", 
+                Inactive = false, 
+                LocalName = "יש להגיש את ההצהרה מחדש", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "15", 
+                SearchFields = "15,ממתין לאישור פיצול", 
+                Inactive = false, 
+                LocalName = "ממתין לאישור פיצול", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "16", 
+                SearchFields = "16,פוצל", 
+                Inactive = false, 
+                LocalName = "פוצל", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "17", 
+                SearchFields = "17,אסור ביבוא", 
+                Inactive = false, 
+                LocalName = "אסור ביבוא", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "18", 
+                SearchFields = "18,הסחורה נתפסה", 
+                Inactive = false, 
+                LocalName = "הסחורה נתפסה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "19", 
+                SearchFields = "19,הותר - הצהרה שגויה", 
+                Inactive = false, 
+                LocalName = "הותר - הצהרה שגויה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,הוגש, הצהרה שגויה", 
+                Inactive = false, 
+                LocalName = "הוגש, הצהרה שגויה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "20", 
+                SearchFields = "20,הותר ויצא מאתר בפיקוח מכס - הצהרה שגויה", 
+                Inactive = false, 
+                LocalName = "הותר ויצא מאתר בפיקוח מכס - הצהרה שגויה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "21", 
+                SearchFields = "21,ממתין לאישור בקשת אחסנה", 
+                Inactive = false, 
+                LocalName = "ממתין לאישור בקשת אחסנה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "22", 
+                SearchFields = "22,הוגש - הצהרה שגויה", 
+                Inactive = false, 
+                LocalName = "הוגש - הצהרה שגויה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "23", 
+                SearchFields = "23,הוגש, ממתין לתיקון הצהרה", 
+                Inactive = false, 
+                LocalName = "הוגש, ממתין לתיקון הצהרה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "24", 
+                SearchFields = "24,הוגש - ממתין לדיווח קליטה במסוף", 
+                Inactive = false, 
+                LocalName = "הוגש - ממתין לדיווח קליטה במסוף", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,הוגש, מאושר להתרה", 
+                Inactive = false, 
+                LocalName = "הוגש, מאושר להתרה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,הוגש, ממתין לאישור אילוץ התרה", 
+                Inactive = false, 
+                LocalName = "הוגש, ממתין לאישור אילוץ התרה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,הוגש, ממתין להחלטת המכס", 
+                Inactive = false, 
+                LocalName = "הוגש, ממתין להחלטת המכס", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,הוגש, ממתין להתרה", 
+                Inactive = false, 
+                LocalName = "הוגש, ממתין להתרה", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,הותר", 
+                Inactive = false, 
+                LocalName = "הותר", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "8", 
+                SearchFields = "8,הותר ויצא מאתר בפיקוח המכס", 
+                Inactive = false, 
+                LocalName = "הותר ויצא מאתר בפיקוח המכס", 
+			});
+			 
+            all.Add(new DeclarationStatusTypeDetails()
+            {    
+                Code = "9", 
+                SearchFields = "9,טיוטה בוטלה", 
+                Inactive = false, 
+                LocalName = "טיוטה בוטלה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(DeclarationStatusType newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(DeclarationStatusType rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

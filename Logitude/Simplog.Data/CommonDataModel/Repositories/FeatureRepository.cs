@@ -43,6 +43,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public Feature GetSingleFeatureByUniqeCode(string featureUniqeCode)
+        {
+            return (from a in context.Features
+                    where a.FeatureUniqeCode == featureUniqeCode
+                    select a).FirstOrDefault();
+        }
+
         public IQueryable<Feature> GetFeaturesByTenant(int tenant)
         {
             return (from a in context.Features.Include("NameTextCode")

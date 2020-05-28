@@ -98,11 +98,14 @@ namespace MetaDataGenerator
 
 
 			allFields = fieldsRep.GetObjectFieldsByTenant(0).Where(f => f.ObjectTableId == table.Id).Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable").ToList();
-			allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            if (table.Name != "Master")
+                allTextCodes = textCodesRep.GetTextCodesByTenantAndObjectTable(0, table.Name).ToList();
+            else
+                allTextCodes = textCodesRep.GetTextCodesByTenant(0).ToList();
 
 
 
-			allQueries = queryRep.GetQueriesByTenant(0).ToList();
+            allQueries = queryRep.GetQueriesByTenant(0).ToList();
 			allQueryColumns = queryColumnRep.GetQueryColumnsByTenant(0).ToList();
 			allQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenant(0).ToList();
 
@@ -121,10 +124,28 @@ namespace MetaDataGenerator
 
 
 
+        public bool FormatExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        {
+           using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					 
+
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+					 
+
+				}
+			}
+            return true;
+        }
 
 
-
-		public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
+        public bool AppendExistingModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath)
         {
             directoryPath = directoryPath + @"\";
             foreach (ObjectTable table in modelTables)
@@ -138,7 +159,7 @@ namespace MetaDataGenerator
                 //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
                 //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
                 //string solutionDirectory = solutionDir.FullName;
-                string filePath = directoryPath + table.Name + ".lxml";
+                string filePath = directoryPath + table.Name.Replace("Customs.","") + ".lxml";
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filePath);
@@ -150,12 +171,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -216,14 +232,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -299,19 +308,19 @@ namespace MetaDataGenerator
                             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
                             break;
                         }
-					case "features":
-						{
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
-							break;
-						}
-					case "features and textCodes":
-						{
-							GenerateAdditionalTextCodes(doc, entityElement, table, fields);
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                    case "features":
+                        {
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                            break;
+                        }
+                    case "features and textCodes":
+                        {
+                            GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
 
-							break;
-						}
-					case "entity":
+                            break;
+                        }
+                    case "entity":
                         {
                             this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
                             break;
@@ -327,14 +336,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -342,6 +344,88 @@ namespace MetaDataGenerator
             return true;
         }
 
+        private static void WriteXMLToFile(string directoryPath, ObjectTable table, XmlDocument doc)
+        {
+            string tableName = table.Name;
+            if (table.Name.Contains("."))
+            {
+                tableName = table.Name.Split('.')[1];
+            }
+
+            string dxmlFilePath = directoryPath + tableName + ".lxml";
+            //XmlDocument newdoc = new XmlDocument();
+             
+
+
+            FileStream fileStream;
+            if (File.Exists(dxmlFilePath))
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+            }
+            else
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+            }
+
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
+            fileStream.Close();
+        }
+
+        public bool UpdateTextCodesAndFeaturesForCustomsGeneralLXML()
+        {
+
+            string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+            string solutionDirectory = solutionDir.FullName;
+
+            string filePath = solutionDirectory + @"\Logitude.Customs.MetaData\EntityFiles\CustomsGeneral.lxml";
+
+
+
+
+            ObjectFieldRepository rep = new ObjectFieldRepository(0);
+
+            ObjectTable table = (from a in rep.context.ObjectTables
+                                 where a.Name == "General"
+                                 select a).First();
+
+
+            List<ObjectField> fields = (from a in this.allFields
+                                        where a.ObjectTableId == table.Id
+                                        select a).ToList();
+
+            List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
+
+
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+
+
+            XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+            GenerateAdditionalTextCodes(doc, entityElement, table, fields,"customs.");
+            GenerateAdditionalFeatures(doc, entityElement, table, fields, "customs");
+
+
+
+            #region Write Xml To file
+
+
+
+
+            XmlDocument newdoc = new XmlDocument();
+            doc.Save(filePath);
+
+            #endregion
+
+
+            return true;
+        }
         #region GenerateEntityElement
 
 
@@ -508,18 +592,31 @@ namespace MetaDataGenerator
             {
                 tableName = table.Name.Split('.')[1];
             }
-            doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+            //doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+
+            WriteGeneratedXmlToFile(doc, "../../GeneratedFiles/New/" + tableName + ".lxml");
 
             #endregion
 
             return true;
         }
+        private void WriteGeneratedXmlToFile(XmlDocument doc,string filePath)
+        {
+            //string dirPath = "../../GeneratedFiles/New/" + tableName + ".lxml";
+            FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
+        }
 
         private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
 			string tableName = table.Name;
-			if (table.Name.ToLower() == "master")
-				tableName = "Shipment";
+			//if (table.Name.ToLower() == "master")
+			//	tableName = "Shipment";
 
 			string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + tableName);
@@ -572,10 +669,10 @@ namespace MetaDataGenerator
             System.Type tableListClass = System.Type.GetType(qListName);
 
 
-            if (tableClass == null && tableName != "General")// && tablePMClass == null)
-            {
-                return false;
-            }
+            //if (tableClass == null && tableName != "General" && tableName != "Master")// && tablePMClass == null)
+            //{
+            //    return false;
+            //}
 
             PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
@@ -645,7 +742,7 @@ namespace MetaDataGenerator
             GenerateAdditionalFeatures(doc, entityElement, table, fields);
         }
 
-        private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields, string startsWith = "")
         {
             //            select* from textcodes where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
             //and textcodetypecode<> 'f' and TextCodeTypeCode<> 'TH'
@@ -667,25 +764,30 @@ namespace MetaDataGenerator
 
 
             RemoveOldNodes(doc, additionalTextCodesListXElement, "TextCode");
-           // XmlElement 
+            // XmlElement 
 
             List<TextCode> additionalTextCodes = (from a in allTextCodes
                                                   where a.ObjectTableId == table.Id && a.Tenant == 0
-                                                  && a.Id != table.DescriptionTextCodeId
+                                                  && (a.Id != table.DescriptionTextCodeId || a.TextCodeTypeCode.ToLower() == "o")
                                                   && a.Id != table.NewButtonTextCodeId
-                                                  && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
-                                                  && a.TextCodeTypeCode.ToLower() != "h"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "f" //&& a.TextCodeTypeCode.ToLower() != "th"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "h"
                                                   && a.TextCodeTypeCode.ToLower() != "t"
-                                                  && a.TextCodeTypeCode.ToLower() != "ch"
-                                                  && a.TextCodeTypeCode.ToLower() != "q"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "ch"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "q"
+                                                  && a.TextCodeTypeCode.ToLower() != "tip"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allQueries.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allMenuButtons.Any(f => f.LabelTextCodeId == a.Id)
-                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
+                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id || f.ShortNameTextCodeId == a.Id)
+                                                  && !allTabs.Any(t => t.TabNameTextCodeId == a.Id)
                                                   select a).ToList();
-
+            if (!string.IsNullOrEmpty(startsWith))
+            {
+                additionalTextCodes = additionalTextCodes.Where(t => t.Code.ToLower().StartsWith(startsWith.ToLower())).ToList();
+            }
             foreach (TextCode tcode in additionalTextCodes)
             {
                 XmlElement codeXElement = GetElementNodeByTagAndAttributeName(doc, additionalTextCodesListXElement, "TextCode", "Code", tcode.Code, true);//doc.CreateElement("TextCode");
@@ -700,7 +802,7 @@ namespace MetaDataGenerator
             }
         }
 
-        private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields, string startsWith = "")
         {
 			//            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
 			//and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
@@ -733,7 +835,10 @@ namespace MetaDataGenerator
                                                 && !allMenuButtons.Any(f => f.FeatureId == a.Id)
 
                                                 select a).ToList();
-
+            if (!string.IsNullOrEmpty(startsWith))
+            {
+                additionalFeatures = additionalFeatures.Where(t => t.Code.ToLower().StartsWith(startsWith.ToLower())).ToList();
+            }
             foreach (Feature feature in additionalFeatures)
             {
 
@@ -881,21 +986,23 @@ namespace MetaDataGenerator
                 }
             }
             else
-                throw new Exception("Couldn't find the POCO class for " + table.Name);
+            {
+                //throw new Exception("Couldn't find the POCO class for " + table.Name); 
+            }
 
             return entityPropertiesInfo;
         }
 
         private static void GetModelClassTypes(ObjectTable table, string modelName, out string qName, out Type tableClass, out string qPMName, out Type tablePMClass, out string qListName, out Type tableListClass)
         {
-            qName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityPOCOs." + table.Name);
+            qName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityPOCOs." + table.Name.Replace("Customs.", ""));
             tableClass = System.Type.GetType(qName);
 
-            qPMName = Assembly.CreateQualifiedName(modelName + ".BL", modelName + ".BL" + ".EntityPMs." + table.Name + "PM");
+            qPMName = Assembly.CreateQualifiedName(modelName + ".BL", modelName + ".BL" + ".EntityPMs." + table.Name.Replace("Customs.", "") + "PM");
             tablePMClass = System.Type.GetType(qPMName);
 
             //Logitude.Accounting.Data.EntityLists
-            qListName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityLists." + table.Name + "List");
+            qListName = Assembly.CreateQualifiedName(modelName + ".Data", modelName + ".Data" + ".EntityLists." + table.Name.Replace("Customs.","") + "List");
             tableListClass = System.Type.GetType(qListName);
         }
 
@@ -1325,6 +1432,8 @@ namespace MetaDataGenerator
                             SetAttribute("FeatureDefaultText", GetStringValue(featureTextCode.DefaultText), mBXElement);
                         }
                     }
+                    if (!string.IsNullOrEmpty(mb.HtmlComponentPath))
+                        SetAttribute("HtmlComponentPath", GetStringValue(mb.HtmlComponentPath), mBXElement);
 
                     List<MenuButton> menuButtonItems = this.allMenuButtons.Where(m => m.MenuButtonGroupId == group.Id && m.ParentMenuButtonId == mb.Id).OrderBy(q => q.Index).ToList();
                     int itemIndex = 0;
@@ -1353,6 +1462,8 @@ namespace MetaDataGenerator
                                 SetAttribute("FeatureDefaultText", GetStringValue(featureTextCode.DefaultText), MenuItemElement);
                             }
                         }
+                        if (!string.IsNullOrEmpty(item.HtmlComponentPath))
+                            SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), mBXElement);
 
                         itemIndex++;
                     }

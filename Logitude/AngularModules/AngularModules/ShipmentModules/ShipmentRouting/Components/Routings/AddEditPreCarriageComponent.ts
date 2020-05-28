@@ -17,7 +17,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPreCarriageComponent.html',
 })
 

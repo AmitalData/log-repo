@@ -15,7 +15,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentHelperComponent.html',
 })
 
@@ -231,7 +231,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     setImportAWBWizardButton() {
         this.IsImportAWBWizardButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTAWBWIZARD")) {
-            if (this.EntityPM.DirectionId == "I") {
+            if (this.EntityPM.DirectionId == "I" && this.EntityPM.TransportModeId == "A") {
                 this.IsImportAWBWizardButtonVisible = true;
             }
         }
@@ -342,7 +342,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         }
     }
     SendToCustom() {
-        this._entityResourceService.getEntityResourceByTableName("ShipmentCustomsTransmission", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("ShipmentCustomsTransmission", 0).subscribe((response:any) => {
             var check = this.CheckSettingsWindowVisibility();
 
             if (check) {
@@ -541,7 +541,9 @@ export class ShipmentHelperComponent implements OnDestroy {
     ShowINTTRABookingWizard() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "INTTRA e-booking Wizard";
-        logWindow.WindowArgs = this.EntityPM;
+        logWindow.WindowArgs = { Shipment: this.EntityPM };
+        logWindow.Width = 1020;
+        logWindow.Height = 570;
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
     }
 

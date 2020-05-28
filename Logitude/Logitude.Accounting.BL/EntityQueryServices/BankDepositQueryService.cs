@@ -23,7 +23,6 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -31,20 +30,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         public override void GetComposition(EntityKeyFields entityKeys, BankDepositPM entityPM)
         {
-            IAccountingContext context = MainContext as AccountingContext;
-            BankDepositKeys bankDepositKeys = entityKeys as BankDepositKeys;
+            entityPM.BankDepositLines = GetLines(entityPM);
 
-            BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
+            //IAccountingContext context = MainContext as AccountingContext;
+            //BankDepositKeys bankDepositKeys = entityKeys as BankDepositKeys;
+            //BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
+            //entityPM.BankDepositLines = bankDepositLineQueryService.GetMulti(bankDepositKeys, true);
 
+        }
 
-
-            //******getting all compositionTables for response service purposes only *****///
-
-            entityPM.BankDepositLines = bankDepositLineQueryService.GetMulti(bankDepositKeys, true);
-
-            // entityPM.DeclarationErrorViews = this.GetDeclarationErrors(declarationKeys.Id, entityPM.Tenant, null);
-            //****************************************************************************//
-
+        public List<BankDepositLinePM> GetLines(BankDepositPM depositPM)
+        {
+            BankDepositLineQueryService bankDepositLineQuery = new BankDepositLineQueryService(context);
+            return bankDepositLineQuery.GetLinesJoinedWithCheques(new List<string>() { depositPM.Id }, depositPM.Tenant);
         }
 
         public void ReturnCheque(string bankDepositId, string arpChequeId, string returnType, string notes, int tenant)
@@ -309,17 +307,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 journalLineCredit.CreditAccountId = depositPM.DeferredGLAccountId;
             }
+
+
             GLAccountQueryService glaQuery = new GLAccountQueryService(accountingContext);
             GLAccountPM glaccountPM = glaQuery.GetSingle(journalLineCredit.CreditAccountId, false, false);
             journalLineCredit.CreditControlAccountId = glaccountPM.ControlAccountId;
 
-
-            // opposit account
-            CardQuery cardService = new CardQuery(chequePM.Tenant);
-            CardPM paymentCard = cardService.GetSinglePM(paymentPM.BillToId, paymentPM.Tenant);
-            journalLineCredit.DebitAccountId = paymentCard.GLAccountId;
-
-            journalPM.JournalLines.Add(journalLineCredit);
+          
 
 
             // create debit journal line
@@ -373,10 +367,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM2 = glaQuery.GetSingle(cashbookPM.AccountId, false, false);
             journalLineDebit.DebitControlAccountId = glaccountPM2.ControlAccountId;
 
-
             // opposit account
-            journalLineCredit.CreditAccountId = cashbookPM.AccountId;
-
+            journalLineDebit.CreditAccountId = journalLineCredit.CreditAccountId;
+            journalLineCredit.DebitAccountId = journalLineDebit.DebitAccountId;
+            journalPM.JournalLines.Add(journalLineCredit);
             journalPM.JournalLines.Add(journalLineDebit);
 
 
@@ -589,9 +583,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM3 = glaQuery.GetSingle(cardPM.GLAccountId, false, false);
             journalLineDebitCustomer.DebitControlAccountId = glaccountPM3.ControlAccountId;
 
-            // opposit account
-            journalLineDebitCustomer.CreditAccountId = cashbookPM.AccountId;
-
             journalPM.JournalLines.Add(journalLineDebitCustomer);
             //
             // --------------------------------------------------------------
@@ -619,12 +610,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalLineCreditCashbook.CreditAccountId = cashbookPM.AccountId;
             GLAccountPM glaccountPM5 = glaQuery.GetSingle(cashbookPM.AccountId, false, false);
             journalLineCreditCashbook.CreditControlAccountId = glaccountPM5.ControlAccountId;
-
-            // opposit account
-            CardQuery cardService = new CardQuery(chequePM.Tenant);
-            CardPM paymentCard = cardService.GetSinglePM(paymentPM.BillToId, paymentPM.Tenant);
-            journalLineCreditCashbook.DebitAccountId = paymentCard.GLAccountId;
-
             journalPM.JournalLines.Add(journalLineCreditCashbook);
 
             // --------------------------------------------------------------
@@ -685,6 +670,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                       }).ToList();
             return paymentCheques;
         }
+
 
 
         private ContactPM GetLoggedContact(int tenant)

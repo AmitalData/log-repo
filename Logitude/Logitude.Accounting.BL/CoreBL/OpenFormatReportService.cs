@@ -508,6 +508,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 DetailedControlVendors = true,
                 DetailedControlClients = true,
                 Category1 = null,
+                Category2 = null,
+                Category3 = null,
+                Category4 = null,
                 Category5 = null,
                 Suppress_DoNotShowCardWithoutActivity = false,
                 IsRevenueExpenseReport = false,
@@ -520,31 +523,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             List<TrailReportM> res1 = typeservice.Execute();
             typeservice.Dispose();
-          
-            var exceptedList = res1.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
-            List<string> exceptedGLAccounts = new List<string>();
-            if(exceptedList != null)
-            {
-                exceptedGLAccounts = exceptedList.Select(d => d.GLAccountId).ToList();
-            }
-     
-            res1 = res1.Where(d => !(d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0)).ToList();
-            List<string> includedGLAccounts = new List<string>();
-            if (includedGLAccounts != null)
-            {
-                includedGLAccounts = res1.Select(d => d.GLAccountId).ToList();
-            }
-            List<string> accountsWithoutTransactions = new List<string>();
-
-            includedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(includedGLAccounts, tenant);
-            //exceptedGLAccounts.AddRange(accountsWithoutTransactions);
-            //includedGLAccounts = includedGLAccounts.Where(d => !accountsWithoutTransactions.Contains(d)).ToList();
+            List<string> includedGLAccounts = GetIncludedGLAccounts(res1, openFormatReportPM, tenant);          
 
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
 
           
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
-            b110Data = b110Data.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId) && includedGLAccounts.Contains(d.GLAccountId)).ToList();
+            b110Data = b110Data.Where(d => includedGLAccounts.Contains(d.GLAccountId)).ToList();
+
 
             foreach (B110Data item in b110Data)
             {
@@ -2993,22 +2979,28 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         myStringBuilder.Append(a);
-
-                        if (item.ARPaymentMethod == "Cash")
+                        if (item.ARPaymentMethod != null)
                         {
-                            myStringBuilder.Append("1");
-                        }
-                        else if (item.ARPaymentMethod == "Cheque")
-                        {
-                            myStringBuilder.Append("2");
-                        }
-                        else if (item.ARPaymentMethod == "Credit Card")
-                        {
-                            myStringBuilder.Append("3");
-                        }
-                        else if (item.ARPaymentMethod == "Bank Transfer")
-                        {
-                            myStringBuilder.Append("4");
+                            if (item.ARPaymentMethod == "Cash")
+                            {
+                                myStringBuilder.Append("1");
+                            }
+                            else if (item.ARPaymentMethod == "Cheque")
+                            {
+                                myStringBuilder.Append("2");
+                            }
+                            else if (item.ARPaymentMethod.ToLower() == "credit card")
+                            {
+                                myStringBuilder.Append("3");
+                            }
+                            else if (item.ARPaymentMethod.ToLower() == "bank transfer")
+                            {
+                                myStringBuilder.Append("4");
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("0");
+                            }
                         }
                         else
                         {
@@ -3231,19 +3223,26 @@ namespace Logitude.Accounting.BL.CoreBL
                     
 
                     myStringBuilder.Append(a);
+                    if (item.ARPaymentMethod != null)
+                    {
+                        if (item.ARPaymentMethod.ToLower() == "cash")
+                        {
+                            myStringBuilder.Append("1");
+                        }
 
-                    if (item.ARPaymentMethod == "Cash")
-                    {
-                        myStringBuilder.Append("1");
-                    }
-                  
-                    else if (item.ARPaymentMethod == "Credit Card")
-                    {
-                        myStringBuilder.Append("3");
-                    }
-                    else if (item.ARPaymentMethod == "Bank Transfer")
-                    {
-                        myStringBuilder.Append("4");
+                        else if (item.ARPaymentMethod.ToLower() == "credit card")
+                        {
+                            myStringBuilder.Append("3");
+                        }
+                        else if (item.ARPaymentMethod.ToLower() == "bank transfer")
+                        {
+                            myStringBuilder.Append("4");
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("0");
+                        }
+
                     }
                     else
                     {
@@ -4050,7 +4049,28 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
+        private List<string> GetIncludedGLAccounts(List<TrailReportM> result,OpenFormatReportPM openFormatReport, int tenant)
+        {
+            var zeroVlauesList = result.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
+            List<string> zeroVlauesGLAccounts = new List<string>();
+            if (zeroVlauesList != null)
+            {
+                zeroVlauesGLAccounts = zeroVlauesList.Select(d => d.GLAccountId).ToList();
+            }
 
+            List<string> exceptedGLAccounts = new List<string>();
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            exceptedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(zeroVlauesGLAccounts,openFormatReport, tenant);
+
+            result = result.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
+            List<string> includedGLAccounts = new List<string>();
+            if (includedGLAccounts != null)
+            {
+                includedGLAccounts = result.Select(d => d.GLAccountId).ToList();
+            }
+
+            return includedGLAccounts;
+        }
         public   BatchTaskExecutionPM CreateBKMVDATAFileInBatch(string taxReportId, int tenant)
         {
             BatchTaskExecutionPM taskExe;
@@ -4173,7 +4193,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);//Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
+            //byte[] fromBytes = (Encoding.UTF8).GetBytes(file);
+            //string finalString = (Encoding.GetEncoding(1255)).GetString(fromBytes);
+            //byte[] bytearray = (Encoding.GetEncoding(1255)).GetBytes(finalString);
+            //Encoding.
+
             document.FileData = bytearray;
 
 

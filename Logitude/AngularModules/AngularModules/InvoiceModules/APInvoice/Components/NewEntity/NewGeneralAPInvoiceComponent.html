@@ -95,7 +95,7 @@
                         <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td  [style.text-align]="isRTL ? 'right' : 'left'"  colspan="2">
+                    <td [style.text-align]="isRTL ? 'right' : 'left'" colspan="2">
                         <table class="FixedTable">
                             <tr>
                                 <td style="width: 194px">
@@ -197,6 +197,55 @@
 
                     <td>
                         <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!--InternalNotes-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr style="height:5px"></tr>
+                            <tr>
+                                <td style="vertical-align:top;">
+                                    <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr style="height:10px"></tr>
+                            <tr>
+                                <td style="width:50px">
+                                    <LogTextBox [ObjectFieldName]="'InternalNotes'" [IsMultiline]="true" [InputType]="'ntext'" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- BranchId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'BranchId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="BranchId"
+                                [LookUpTableName]="'Branch'">
+                        </LogLov>
                     </td>
 
                     <td>

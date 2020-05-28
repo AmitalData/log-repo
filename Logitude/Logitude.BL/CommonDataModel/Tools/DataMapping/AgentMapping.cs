@@ -51,6 +51,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.StorageFreeDays = entityPM.StorageFreeDays;
 
             entityPOCO.CASSCode = entityPM.CASSCode;
             entityPOCO.IATACode = entityPM.IATACode;

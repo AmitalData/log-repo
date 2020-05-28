@@ -226,7 +226,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         [XmlArray("InvoiceLines")]
         [XmlArrayItem("InvoiceLine")]
         public List<ARInvoiceLineElement> InvoiceLines { get; set; }
+
+        [XmlArray("TaxTotalsInInvoiceCurrency")]
+        [XmlArrayItem("TaxTotalInInvoiceCurrency")]
+        public List<InvoiceTaxElement> TaxTotalsInInvoiceCurrency { get; set; }
     }
+
     public class ARInvoiceLineElement
     {
         public int LineNumber { get; set; }
@@ -239,14 +244,23 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal AmountInLocalCurrency { get; set; }
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
+        public string VATExternalId { get; set; }
+
         public string CreditAccount { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
 
+        public bool IsMultiTAX { get; set; }
+        public bool AppliesRegionalTax { get; set; }
+
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
+
+        [XmlArray("TaxDetails")]
+        [XmlArrayItem("TaxDetail")]
+        public List<LineTaxDetailsElement> TaxDetails { get; set; }
     }
     public class ARShipmentDetailsElement
     {
@@ -636,7 +650,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ARInvoiceField10Value { get; set; }
         #endregion
     }
-
+    
     [XmlRoot("Logitude")]
     public class APInvoiceRoot
     {
@@ -664,6 +678,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public CardElement Card { get; set; }
 
         public string VATNumber { get; set; }
+
         public string PaymentTermExternalId { get; set; }
 
         [XmlElement(DataType = "date")]
@@ -691,6 +706,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         [XmlArray("InvoiceLines")]
         [XmlArrayItem("InvoiceLine")]
         public List<APInvoiceLineElement> InvoiceLines { get; set; }
+
+        [XmlArray("TaxTotalsInInvoiceCurrency")]
+        [XmlArrayItem("TaxTotalInInvoiceCurrency")]
+        public List<InvoiceTaxElement> TaxTotalsInInvoiceCurrency { get; set; }
     }
     public class APInvoiceLineElement
     {
@@ -704,13 +723,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal AmountInLocalCurrency { get; set; }
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
+        public string VATExternalId { get; set; }
+
         public string DebitAccount { get; set; }
         public decimal? Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
 
+        public bool IsMultiTAX { get; set; }
+
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
+
+        [XmlArray("TaxDetails")]
+        [XmlArrayItem("TaxDetail")]
+        public List<LineTaxDetailsElement> TaxDetails { get; set; }
     }
     public class APShipmentDetailsElement
     {
@@ -1125,5 +1152,17 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string GLAccount { get; set; }
         public string CostCenter { get; set; }
     }
-
+    public class InvoiceTaxElement
+    {
+        public string TaxCode { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public decimal TaxAmount { get; set; }
+        public bool IsRegionalTax { get; set; }
+    }
+    public class LineTaxDetailsElement
+    {
+        public string TaxCode { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public string VATExternalId { get; set; }
+    }
 }

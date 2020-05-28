@@ -50,6 +50,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.AccountingModel.Reports.Interest;
 
 namespace WebFreight.Web.Helpers
 {
@@ -61,17 +62,57 @@ namespace WebFreight.Web.Helpers
         public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId=null)
         {
             string result = string.Empty;
-            if (IsCallBuildDocumentReportWebService(tenant))
-            {
-                result = ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-            }
-            else
+
+            try
             {
                 result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
             }
+            catch (Exception ex)
+            {
+                if (string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+                {
+                    string authenticateduser = "";
+
+                    try
+                    {
+                        authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
+                    }
+
+                    catch
+                    {
+                        authenticateduser = "UnKnown";
+                    }
+
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
+                }
+                throw new Exception(ex.Message);
+            }
+
+   
 
             return result;
         }
+
+
+        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs , string documentTypeCopyId)
+        {
+            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId);
+            return result;
+        }
+
+
+
+
 
         private string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
@@ -119,8 +160,7 @@ namespace WebFreight.Web.Helpers
 
         public string ExportDocument2PdfNormalWay(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null )
         {
-            try
-            {
+           
                 var currentthreaduser = Thread.CurrentPrincipal;
                 long theT1 = new long();
                 long theT2 = new long();
@@ -192,33 +232,8 @@ namespace WebFreight.Web.Helpers
                 else
                     return null;
 
-            }
-            catch (Exception ex)
-            {
-                string authenticateduser = "";
-
-                try
-                {
-                    authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
-                }
-
-                catch
-                {
-                    authenticateduser = "UnKnown";
-                }
-                string ip = "";
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (string.IsNullOrEmpty(currentIP))
-                    {
-                        currentIP = HttpContext.Current.Request.UserHostAddress;
-                    }
-                    ip = currentIP;
-                }
-                ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
-                throw new Exception(ex.Message);
-            }
+        
+         
 
         }
        
@@ -496,6 +511,16 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
+                case "ITDT":
+                    {
+                        InterestPrintService service = new InterestPrintService();
+                        InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = InterestReportDP };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+
+                    }
+                    break;
                 case "JRPR":
                     {
                         JournalPrintService service = new JournalPrintService();
@@ -558,6 +583,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     }
 
                     break;
+
                 case "MBOL":
                 case "SBOL":
                 case "716":
@@ -639,10 +665,13 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "CRCCB":
                 case "DESCH":
                 case "WESL":
+                case "SHCO":
+                case "ABOCO":
+                case "SHCMR":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
-                        byte[] byteArray = shippingDeclarationWebService.GetShippingDeclarationData(entityId, tenant, documentTypeCode);
+                        byte[] byteArray = shippingDeclarationWebService.GetShippingDeclarationData(entityId, tenant, documentTypeCode, documentTypeCopyId);
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
                         ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer.Deserialize(memorystream);
@@ -685,6 +714,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     }
                     break;
 
+                case "BDE":
                 case "784":// Delivery note
                     {
                         theT1 = System.DateTime.Now.Ticks;
@@ -925,6 +955,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                 case "OMBC":
                 case "785O":
+                case "INMA":
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         ManifestWebService cmrwebService = new ManifestWebService();
@@ -1145,7 +1176,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
-                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant);
+                        byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant, userId);
 
                         MemoryStream memorystream = new MemoryStream(byteArray);
                         XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
@@ -1174,6 +1205,23 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         break;
                     }
 
+                case "CRR":
+                    {
+
+                        theT1 = System.DateTime.Now.Ticks;
+                        CrossDockReleaseDataProviderHelper crossDockReleaseDataProviderHelper = new CrossDockReleaseDataProviderHelper();
+                        byte[] byteArray = crossDockReleaseDataProviderHelper.LoadCrossDockReleaseDataProvider_GroupByEntry(entityId, tenant);
+
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
+                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                        break;
+                    }
+
                 case "INVS":
                     {
 
@@ -1191,9 +1239,46 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         break;
                     }
 
+                case "SBOLP":
+                    {
+                        OceanExportWebService oceanWebService = new OceanExportWebService();
+                        byte[] byteArray = oceanWebService.GetFBLDataForPickUp(entityId, childEntityId, tenant);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
+                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        fbLdataprovider.InServerSide = true;
+                        theT2 = System.DateTime.Now.Ticks;
+                       
+                        StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
+                        packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantity", typeof(string));
+                        packagesLinesColumns.Add("PackageType", typeof(string));
+                        packagesLinesColumns.Add("PackageDescriptionOfGoods", typeof(string));
+                        packagesLinesColumns.Add("PackageGrossWeight", typeof(string));
+                        packagesLinesColumns.Add("PackageVolume", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantityAndType", typeof(string));
 
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FBL", Name = "FBLDataProvider", BusinessObjectValue = fbLdataprovider };
+                        StiBusinessObject packageLinesBusinessObject = new StiBusinessObject() { Name = "PackagesLines", Alias = "PackagesLines", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns };
+                        
+                        report.Dictionary.BusinessObjects.Clear();
+                        currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
 
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                        break;
+                    }
 
+                case "WELB":
+                    {
+                        CrossDockEntryLabelDataProviderHelper crossDockEntryLabelDataProviderHelper = new CrossDockEntryLabelDataProviderHelper();
+                        byte[] byteArray = crossDockEntryLabelDataProviderHelper.LoadCrossDockEntryLabelDataProvider(entityId, tenant);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(List<CrossDockEntryDataProvider>));
+                        List<CrossDockEntryDataProvider> crossDockEntryDataProviderLists = (List<CrossDockEntryDataProvider>)serializer.Deserialize(memorystream);
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Cross Docks Entry Labels", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProviderLists };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                    }
+                    break;
             }
 
             return report;
@@ -2046,11 +2131,60 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
         }
 
+        public DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
+        {
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(exportDocumentArgs.Tenant);
+            DocumentsExecutionLog documentsExecutionLog = new DocumentsExecutionLog()
+            {
+                Id = IdCounter.GetNumber("DocumentsExecutionLog", exportDocumentArgs.Tenant).ToString(),
+                Tenant = exportDocumentArgs.Tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = exportDocumentArgs.LoggedContactId,
+                RequestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocumentArgs),
+                StatusCode = "W",
+                DocumentTypeId = exportDocumentArgs.DocumentTypeId,
+                DocumentTypeTemplateId = exportDocumentArgs.DocumentTypeTemplateId,
+                Subject = exportDocumentArgs.DocumentTypeName,
+            };
+            documentsExecutionLogRepository.Add(documentsExecutionLog);
+            documentsExecutionLogRepository.SubmitChanges();
 
-    }
+            return documentsExecutionLog;
+        }
 
 
-    public class BuildDocumentParameter
+
+
+        public bool IsRunStimulDocumentViaWorkerRole()
+        {
+            bool result = false;
+            string currentIP = AuthenticationUtil.GetIP4Address();
+            if (!string.IsNullOrEmpty(currentIP))
+            {
+                int LastIpPart = 0;
+                var IpParts = currentIP.Split('.');
+                if (IpParts.Length == 4)
+                {
+                    int.TryParse(IpParts[3], out LastIpPart);
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    var settingRepository = new SettingRepository(objectContext);
+                    var settingQuery = new SettingQuery(settingRepository);
+                    var settings = settingQuery.GetSinglePM();
+                    if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0) result = true;
+                }
+            }
+            return result;
+        }
+    
+
+
+
+
+
+}
+
+
+public class BuildDocumentParameter
     {
         public string DocumentTypeCode { get; set; }
         public string DocumentTypeId { get; set; }
@@ -2066,5 +2200,6 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public long TheT2 { get; set; }
         public string DocumentOutId { get; set; }
     }
+
 
 }

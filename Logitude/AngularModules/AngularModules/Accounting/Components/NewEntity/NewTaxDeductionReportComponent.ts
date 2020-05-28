@@ -15,7 +15,7 @@ import { UIProperties } from '../../../Infrastructure/Components/LogitudeCompone
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewTaxDeductionReportComponent.html',
 })
@@ -88,7 +88,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("");
-            this.TaxDeductionReportPMService.insert(this.entityPM).subscribe(myResult => {
+            this.TaxDeductionReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

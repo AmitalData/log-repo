@@ -9,7 +9,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { DashBoardFilters } from '../../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'VehiclesFilterComponent',
     templateUrl: './VehiclesFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -104,7 +104,7 @@ export class VehiclesFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
 

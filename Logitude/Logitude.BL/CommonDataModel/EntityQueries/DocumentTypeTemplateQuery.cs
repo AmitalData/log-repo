@@ -80,6 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             TemplateHeaderHeight = a.TemplateHeaderHeight,
                                                                             TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                             CC = a.CC,
+                                                                            BCC = a.BCC,
                                                                         });
 
             return documentTypeTemplates;
@@ -120,6 +121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         TemplateHeaderHeight = a.TemplateHeaderHeight,
                                                                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                         CC = a.CC,
+                                                                        BCC = a.BCC,
 
                                                                     }).ToList();
             return documentTypeTemplates;
@@ -150,6 +152,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               TemplateHeaderHeight = entity.TemplateHeaderHeight,
                                                               TemplateTechnologyCode = entity.TemplateTechnologyCode,
                                                               CC = entity.CC,
+                                                              BCC = entity.BCC,
 
                                                           };
             return result;
@@ -195,6 +198,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        DocumentTypeCode = a.DocumentType!=null ? a.DocumentType.Code :"",
                        DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : "",
                        CC = a.CC,
+                       BCC = a.BCC,
                    };
         }
 
@@ -236,6 +240,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemplateHeaderHeight = a.TemplateHeaderHeight,
                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                         CC = a.CC,
+                        BCC = a.BCC,
                     }).FirstOrDefault();
         }
 
@@ -283,6 +288,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
                                                                       TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                       CC = a.CC,
+                                                                      BCC = a.BCC,
                                                                   }).ToList();
             return documentTypeTemplates;
 
@@ -340,6 +346,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         TemplateHeaderHeight = a.TemplateHeaderHeight,
                         TemplateTechnologyCode = a.TemplateTechnologyCode,
                         CC = a.CC,
+                        BCC = a.BCC,
 
                     }).FirstOrDefault();
         }
@@ -475,6 +482,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                TemplateHeaderHeight = a.TemplateHeaderHeight,
                                                                TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                CC = a.CC,
+                                                               BCC = a.BCC,
 
                                                            });
 
@@ -558,6 +566,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
                                                                                       TemplateTechnologyCode = a.TemplateTechnologyCode,
                                                                                       CC = a.CC,
+                                                                                      BCC = a.BCC,
 
                                                                                   });
                 if (withFilter)

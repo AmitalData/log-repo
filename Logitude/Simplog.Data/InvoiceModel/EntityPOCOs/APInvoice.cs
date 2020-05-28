@@ -61,6 +61,17 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? AccountingDate { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
+        public string Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Field6 { get; set; }
+        public string Field7 { get; set; }
+        public string Field8 { get; set; }
+        public string Field9 { get; set; }
+        public string Field10 { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ExternalAccountingEntityId { get; set; }
         [ForeignKey("TransferStatusCode")]
         public virtual APInvoiceTransferStatus TransferStatus { get; set; }
@@ -99,5 +110,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public DateTime? FirstApproveDate { get; set; }
 
+        public string CreatedByPartner { get; set; }
     }
 }

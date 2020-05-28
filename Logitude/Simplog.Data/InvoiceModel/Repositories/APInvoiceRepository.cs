@@ -27,7 +27,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public APInvoice GetSingleAPInvoice(string id, int tenant)
         {
-            return (from a in context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("ProfitCurrency").Include("VendorCard").Include("PaymentTerm").Include("TransferStatus").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+            return (from a in context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("ProfitCurrency").Include("VendorCard").Include("PaymentTerm").Include("TransferStatus").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact").Include("Branch")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

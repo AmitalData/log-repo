@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<ConstraintApprovalDecisionDetails> GetAll()
        {
-		    var all = new List<ConstraintApprovalDecisionDetails>(); 
+		    var all = new List<ConstraintApprovalDecisionDetails>();  
+            all.Add(new ConstraintApprovalDecisionDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,נדחה,,", 
+                Inactive = false, 
+                LocalName = "נדחה", 
+			});
+			 
+            all.Add(new ConstraintApprovalDecisionDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,מאושר,,", 
+                Inactive = false, 
+                LocalName = "מאושר", 
+			});
+			 
+            all.Add(new ConstraintApprovalDecisionDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,מאושר בתנאי,,", 
+                Inactive = false, 
+                LocalName = "מאושר בתנאי", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(ConstraintApprovalDecision newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(ConstraintApprovalDecision rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

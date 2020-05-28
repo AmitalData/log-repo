@@ -31,7 +31,7 @@ import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BanksPageComponent.html',
 })
 
@@ -116,25 +116,25 @@ export class BanksPageComponent {
     }
 
     LoadQueriesCounts() {
-        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe(myResult => {
+        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:BankAccountSummary) => {
             if (myResult != null) {
                 this._BankAccountSummary.AllBankAccountsCount = myResult.AllBankAccountsCount > 1000 ? "1000+" : myResult.AllBankAccountsCount.toString();
             }
         });
 
-        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe(myResult => {
+        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe((myResult:PaymentChequeSummary) => {
             if (myResult != null) {
-                this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
+                this.paymentChequeSummary.AllPaymentChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
             }
         });
 
-        this.myBankDepositService.GetBankDepositsSummary().subscribe(myResult => {
+        this.myBankDepositService.GetBankDepositsSummary().subscribe((myResult:BankDepositSummary) => {
             if (myResult != null) {
                 this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
             }
         });
 
-        this.myCashBookExtendedListService.GetCashBookSummary().subscribe(myResult => {
+        this.myCashBookExtendedListService.GetCashBookSummary().subscribe((myResult:CashBookSummary) => {
             if (myResult != null) {
                 this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
                 this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();
@@ -269,12 +269,10 @@ export class BanksPageComponent {
     RunNewCashBookWizard() {
         var windowTitle = "New Cashbook";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewCashbook");
-
         var logWindow = new LogitudeWindow();
         logWindow.Width = 530;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
-        //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewCashBookComponent');
     }
@@ -364,7 +362,7 @@ export class BanksPageComponent {
     LoadBankPagesFromFile() {
         var logWindow = new LogitudeWindow();
         logWindow.IsShowCloseButton = true;
-        logWindow.Width = 500;
+        logWindow.Width = 900;
         logWindow.Height = 400;
         logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
         logWindow.WindowArgs = {};

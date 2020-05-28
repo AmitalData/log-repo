@@ -9,7 +9,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { DashBoardFilters } from '../../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'ShipmentsEventsListFilterComponent',
     templateUrl: './ShipmentsEventsListFilterComponent.html',
     inputs: ['ReportsPreview']

@@ -137,6 +137,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastCallDate = a.LastCallDate,
                                   LastMeetingDate = a.LastMeetingDate,
                                   LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
                                   FirstInvoiceDate = a.FirstInvoiceDate,
                                   FirstShipmentDate = a.FirstShipmentDate,
                                   LastShipmentDate = a.LastShipmentDate,
@@ -171,7 +173,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ActivatedByUserId = a.ActivatedByUserId,
                                   SetAsInactiveByUserId = a.SetAsInactiveByUserId,
                                   ActivationRequestedByUserId = a.ActivationRequestedByUserId,
-
+                                  GLAccountId = a.Card.GLAccountId,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
+                                  StorageFreeDays = a.Card.StorageFreeDays,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -183,6 +187,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      GLAccountId = a.Card.GLAccountId,
                                   },
 
                               }).FirstOrDefault();
@@ -287,6 +292,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LastCallDate = a.LastCallDate,
                               LastMeetingDate = a.LastMeetingDate,
                               LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
                               FirstInvoiceDate = a.FirstInvoiceDate,
                               FirstShipmentDate = a.FirstShipmentDate,
                               LastShipmentDate = a.LastShipmentDate,
@@ -321,6 +328,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ActivatedByUserId = a.ActivatedByUserId,
                               SetAsInactiveByUserId = a.SetAsInactiveByUserId,
                               ActivationRequestedByUserId = a.ActivationRequestedByUserId,
+                              GLAccountId = a.Card.GLAccountId,
+                              CreatedByPartner = a.Card.CreatedByPartner,
+                              StorageFreeDays = a.Card.StorageFreeDays,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -329,6 +339,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  GLAccountId = a.Card.GLAccountId,
                               },
 
                           }).FirstOrDefault();
@@ -639,6 +650,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastCallDate = a.LastCallDate,
                                   LastMeetingDate = a.LastMeetingDate,
                                   LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
                                   FirstInvoiceDate = a.FirstInvoiceDate,
                                   FirstShipmentDate = a.FirstShipmentDate,
                                   LastShipmentDate = a.LastShipmentDate,
@@ -663,6 +676,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -766,6 +780,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LastCallDate = a.LastCallDate,
                               LastMeetingDate = a.LastMeetingDate,
                               LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
                               FirstInvoiceDate = a.FirstInvoiceDate,
                               FirstShipmentDate = a.FirstShipmentDate,
                               LastShipmentDate = a.LastShipmentDate,
@@ -790,6 +806,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
+                              CreatedByPartner = a.Card.CreatedByPartner,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1110,6 +1127,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LastCallDate = a.LastCallDate,
                                       LastMeetingDate = a.LastMeetingDate,
                                       LastOpportunityDate = a.LastOpportunityDate,
+                                      LastOpportunityStatus = a.LastOpportunityStatus,
+                                      LastOpportunitySubject = a.LastOpportunitySubject,
                                       FirstInvoiceDate = a.FirstInvoiceDate,
                                       FirstShipmentDate = a.FirstShipmentDate,
                                       LastShipmentDate = a.LastShipmentDate,
@@ -1138,6 +1157,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.Card.MetodoPagoCode,
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
+                                      CreatedByPartner = a.Card.CreatedByPartner,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1238,6 +1258,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastCallDate = a.LastCallDate,
                                   LastMeetingDate = a.LastMeetingDate,
                                   LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
                                   FirstInvoiceDate = a.FirstInvoiceDate,
                                   FirstShipmentDate = a.FirstShipmentDate,
                                   LastShipmentDate = a.LastShipmentDate,
@@ -1266,6 +1288,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1358,6 +1381,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LastCallDate = a.LastCallDate,
                               LastMeetingDate = a.LastMeetingDate,
                               LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
                               FirstInvoiceDate = a.FirstInvoiceDate,
                               FirstShipmentDate = a.FirstShipmentDate,
                               LastShipmentDate = a.LastShipmentDate,
@@ -1381,6 +1406,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               SATForeignRFC = a.Card.SATForeignRFC,
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
+                              CreatedByPartner = a.Card.CreatedByPartner,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1555,6 +1581,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LastCallDate = a.LastCallDate,
                                       LastMeetingDate = a.LastMeetingDate,
                                       LastOpportunityDate = a.LastOpportunityDate,
+                                      LastOpportunityStatus = a.LastOpportunityStatus,
+                                      LastOpportunitySubject = a.LastOpportunitySubject,
                                       FirstInvoiceDate = a.FirstInvoiceDate,
                                       FirstShipmentDate = a.FirstShipmentDate,
                                       LastShipmentDate = a.LastShipmentDate,
@@ -1583,6 +1611,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.Card.MetodoPagoCode,
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
+                                      CreatedByPartner = a.Card.CreatedByPartner,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1683,6 +1712,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastCallDate = a.LastCallDate,
                                   LastMeetingDate = a.LastMeetingDate,
                                   LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
                                   FirstInvoiceDate = a.FirstInvoiceDate,
                                   FirstShipmentDate = a.FirstShipmentDate,
                                   LastShipmentDate = a.LastShipmentDate,
@@ -1711,6 +1742,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1803,6 +1835,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LastCallDate = a.LastCallDate,
                               LastMeetingDate = a.LastMeetingDate,
                               LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
                               FirstInvoiceDate = a.FirstInvoiceDate,
                               FirstShipmentDate = a.FirstShipmentDate,
                               LastShipmentDate = a.LastShipmentDate,
@@ -1831,6 +1865,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
+                              CreatedByPartner = a.Card.CreatedByPartner,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -2007,6 +2042,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    LastCallDate = a.LastCallDate,
                                                    LastMeetingDate = a.LastMeetingDate,
                                                    LastOpportunityDate = a.LastOpportunityDate,
+                                                   LastOpportunityStatus = a.LastOpportunityStatus,
+                                                   LastOpportunitySubject = a.LastOpportunitySubject,
                                                    FirstInvoiceDate = a.FirstInvoiceDate,
                                                    FirstShipmentDate = a.FirstShipmentDate,
                                                    LastShipmentDate = a.LastShipmentDate,
@@ -2034,6 +2071,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    SATForeignRFC = a.Card.SATForeignRFC,
                                                    MetodoPagoCode = a.Card.MetodoPagoCode,
                                                    UsoCFDICode = a.Card.UsoCFDICode,
+                                                   CreatedByPartner = a.Card.CreatedByPartner,
                                                    Card = new CardPM()
                                                    {
                                                        Id = a.Id,
@@ -2129,6 +2167,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             LastCallDate = a.LastCallDate,
                             LastMeetingDate = a.LastMeetingDate,
                             LastOpportunityDate = a.LastOpportunityDate,
+                            LastOpportunityStatus = a.LastOpportunityStatus,
+                            LastOpportunitySubject = a.LastOpportunitySubject,
                             FirstInvoiceDate = a.FirstInvoiceDate,
                             FirstShipmentDate = a.FirstShipmentDate,
                             LastShipmentDate = a.LastShipmentDate,
@@ -2157,6 +2197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             SATForeignRFC = a.Card.SATForeignRFC,
                             MetodoPagoCode = a.Card.MetodoPagoCode,
                             UsoCFDICode = a.Card.UsoCFDICode,
+                            CreatedByPartner = a.Card.CreatedByPartner,
                             Card = new CardPM()
                             {
                                 Id = a.Id,
@@ -2315,6 +2356,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   LastCallDate = customer.LastCallDate,
                                                   LastMeetingDate = customer.LastMeetingDate,
                                                   LastOpportunityDate = customer.LastOpportunityDate,
+                                                  LastOpportunityStatus = customer.LastOpportunityStatus,
+                                                  LastOpportunitySubject = customer.LastOpportunitySubject,
                                                   FirstInvoiceDate = customer.FirstInvoiceDate,
                                                   FirstShipmentDate = customer.FirstShipmentDate,
                                                   LastQuoteDate = customer.LastQuoteDate,
@@ -2361,6 +2404,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   ActivatedByUserName = customer.ActivatedByUserName,
                                                   SetAsInactiveByName = customer.SetAsInactiveByName,
                                                   ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
+                                                  CreatedByPartner = customer.CreatedByPartner,
+                                                  StateName = customer.StateName,
                                               };
 
             return result;
@@ -2446,6 +2491,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              LastCallDate = customer.LastCallDate,
                                              LastMeetingDate = customer.LastMeetingDate,
                                              LastOpportunityDate = customer.LastOpportunityDate,
+                                             LastOpportunityStatus = customer.LastOpportunityStatus,
+                                             LastOpportunitySubject = customer.LastOpportunitySubject,
                                              FirstInvoiceDate = customer.FirstInvoiceDate,
                                              FirstShipmentDate = customer.FirstShipmentDate,
                                              LastShipmentDate = customer.LastShipmentDate,
@@ -2494,6 +2541,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              ActivatedByUserName = customer.ActivatedByUser == null ? null : (customer.ActivatedByUser.Contact == null ? null : customer.ActivatedByUser.Contact.EnglishName),
                                              SetAsInactiveByName = customer.SetAsInactiveByUser == null ? null : (customer.SetAsInactiveByUser.Contact == null ? null : customer.SetAsInactiveByUser.Contact.EnglishName),
                                              ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
+                                             CreatedByPartner = customer.Card.CreatedByPartner,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2625,6 +2673,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              LastCallDate = customer.LastCallDate,
                                              LastMeetingDate = customer.LastMeetingDate,
                                              LastOpportunityDate = customer.LastOpportunityDate,
+                                             LastOpportunityStatus = customer.LastOpportunityStatus,
+                                             LastOpportunitySubject = customer.LastOpportunitySubject,
                                              FirstInvoiceDate = customer.FirstInvoiceDate,
                                              FirstShipmentDate = customer.FirstShipmentDate,
                                              LastShipmentDate = customer.LastShipmentDate,
@@ -2661,6 +2711,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATForeignRFC = customer.Card.SATForeignRFC,
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
+                                             CreatedByPartner = customer.Card.CreatedByPartner,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2744,6 +2795,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              LastCallDate = customer.LastCallDate,
                                              LastMeetingDate = customer.LastMeetingDate,
                                              LastOpportunityDate = customer.LastOpportunityDate,
+                                             LastOpportunityStatus = customer.LastOpportunityStatus,
+                                             LastOpportunitySubject = customer.LastOpportunitySubject,
                                              FirstInvoiceDate = customer.FirstInvoiceDate,
                                              FirstShipmentDate = customer.FirstShipmentDate,
                                              LastShipmentDate = customer.LastShipmentDate,
@@ -2780,6 +2833,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SATForeignRFC = customer.Card.SATForeignRFC,
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
+                                             CreatedByPartner = customer.Card.CreatedByPartner,
 
                                          }).FirstOrDefault();
 
@@ -2879,6 +2933,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LastCallDate = a.LastCallDate,
                         LastMeetingDate = a.LastMeetingDate,
                         LastOpportunityDate = a.LastOpportunityDate,
+                        LastOpportunityStatus = a.LastOpportunityStatus,
+                        LastOpportunitySubject = a.LastOpportunitySubject,
                         FirstInvoiceDate = a.FirstInvoiceDate,
                         FirstShipmentDate = a.FirstShipmentDate,
                         LastShipmentDate = a.LastShipmentDate,
@@ -2913,7 +2969,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         SATForeignRFC = a.Card.SATForeignRFC,
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
-
+                        CreatedByPartner = a.Card.CreatedByPartner,
                     };
 
                     entityList.Add(list);
@@ -3570,6 +3626,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastCallDate = a.LastCallDate,
                                   LastMeetingDate = a.LastMeetingDate,
                                   LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
                                   FirstInvoiceDate = a.FirstInvoiceDate,
                                   FirstShipmentDate = a.FirstShipmentDate,
                                   LastShipmentDate = a.LastShipmentDate,
@@ -3597,6 +3655,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATForeignRFC = a.Card.SATForeignRFC,
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -3712,6 +3771,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LastCallDate = a.LastCallDate,
                               LastMeetingDate = a.LastMeetingDate,
                               LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
                               FirstInvoiceDate = a.FirstInvoiceDate,
                               FirstShipmentDate = a.FirstShipmentDate,
                               LastShipmentDate = a.LastShipmentDate,
@@ -3739,6 +3800,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               SATForeignRFC = a.Card.SATForeignRFC,
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
+                              CreatedByPartner = a.Card.CreatedByPartner,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4048,6 +4110,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      LastCallDate = a.LastCallDate,
                                      LastMeetingDate = a.LastMeetingDate,
                                      LastOpportunityDate = a.LastOpportunityDate,
+                                     LastOpportunityStatus = a.LastOpportunityStatus,
+                                     LastOpportunitySubject = a.LastOpportunitySubject,
                                      FirstInvoiceDate = a.FirstInvoiceDate,
                                      FirstShipmentDate = a.FirstShipmentDate,
                                      LastShipmentDate = a.LastShipmentDate,
@@ -4071,6 +4135,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      SATForeignRFC = a.Card.SATForeignRFC,
                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                      UsoCFDICode = a.Card.UsoCFDICode,
+                                     CreatedByPartner = a.Card.CreatedByPartner,
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,
@@ -4164,5 +4229,303 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return entity;
         }
+
+        public CustomerPM GetBasicSinglePM(string id, int tenant,bool getFromCache)
+        {
+            
+            string entityName = "BasicCustomerPM" + id + tenant;
+            CustomerPM entity;
+
+            if (HttpContext.Current != null && getFromCache)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                              where a.Tenant == tenant && a.Id == id
+                              select new CustomerPM()
+                              {
+                                  BillToId = a.BillToId,
+                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  Id = a.Id,
+                                  RankId = a.RankId,
+                                  AccountManagerUserId = a.AccountManagerUserId,
+                                  SalesmanUserId = a.SalesmanUserId,
+                                  SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
+                                  SalesmanBusinessUnitId = a.SalesmanUser == null ? null : a.SalesmanUser.BusinessUnitId,
+                                  Tenant = a.Tenant,
+                                  Website = a.Card.Website,
+                                  Code = a.Card.Code,
+                                  LocalName = a.Card.LocalName,
+                                  EnglishName = a.Card.EnglishName,
+                                  CardPMId = a.Id,
+                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  CreateDate = a.Card.CreateDate,
+                                  UpdateDate = a.Card.UpdateDate,
+                                  CreatedByUserId = a.Card.CreatedByUserId,
+                                  UpdatedByUserId = a.Card.UpdatedByUserId,
+                                  InActive = a.Card.InActive,
+                                  Notes = a.Card.Notes,
+                                  SupportNotes = a.Card.SupportNotes,
+                                  PartnerTypeId = a.Card.PartnerTypeId,
+                                  PaymentTermId = a.Card.PaymentTermId,
+                                  VatNumber = a.Card.VatNumber,
+                                  InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                  ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                                  AccountManagerUserEnglishName = a.AccountManagerUser != null ? a.AccountManagerUser.Contact.EnglishName : null,
+                                  CityName = a.Card.CityName,
+                                  RankCode = a.Rank != null ? a.Rank.Code : null,
+                                  RankName = a.Rank != null ? a.Rank.Name : null,
+                                  VatTypeId = a.Card.VatTypeId,
+                                  ImageDetailId = a.Card.ImageDetailId,
+                                  BankName = a.Card.BankName,
+                                  BankAddress = a.Card.BankAddress,
+                                  IBANNumber = a.Card.IBANNumber,
+                                  Swift = a.Card.Swift,
+                                  AccountNumber = a.Card.AccountNumber,
+                                  SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                                  IsActiveForMobile = a.Card.IsActiveForMobile,
+                                  LastLoginDate = a.Card.LastLoginDate,
+                                  InvitationDate = a.Card.InvitationDate,
+                                  LeadSourceId = a.LeadSourceId,
+                                  IndustryId = a.IndustryId,
+                                  ClassifierId = a.ClassifierId,
+                                  CollectorId = a.CollectorId,
+                                  LeadSourceName = a.LeadSource != null ? a.LeadSource.Name : null,
+                                  IndustryName = a.Industry != null ? a.Industry.Name : null,
+                                  ClassifierName = a.Classifier != null ? a.Classifier.Contact.EnglishName : null,
+                                  CollectorName = a.Collector != null ? a.Collector.Contact.EnglishName : null,
+                                  CreditLimit = a.CreditLimit,
+                                  LeadDescription = a.LeadDescription,
+                                  IsCustomer = a.IsCustomer,
+                                  FreelancerId = a.FreelancerId,
+                                  FreelancerName = a.Freelancer != null ? a.Freelancer.Contact.EnglishName : null,
+                                  CustomerStatusCode = a.CustomerStatusCode,
+                                  ForwarderId = a.ForwarderId,
+                                  ForwarderName = a.Forwarder != null ? a.Forwarder.EnglishName : null,
+                                  CustomsAgentId = a.CustomsAgentId,
+                                  CustomsAgentName = a.CustomsAgent != null ? a.CustomsAgent.EnglishName : null,
+                                  MediatorId = a.MediatorId,
+                                  MediatorName = a.Mediator != null ? a.Mediator.EnglishName : null,
+                                  BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
+                                  CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
+                                  PrimaryContactName = a.PrimaryContactName,
+                                  PrimaryContactEmail = a.PrimaryContactEmail,
+                                  PrimaryContactPhone = a.PrimaryContactPhone,
+                                  CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
+                                  PrimaryContactId = a.Card.PrimaryContactId,
+                                  ReadyForActivationDate = a.ReadyForActivationDate,
+                                  RegionId = a.RegionId,
+                                  RegionName = a.Region != null ? a.Region.Name : null,
+                                  CustomerSizeId = a.CustomerSizeId,
+                                  LastCallDate = a.LastCallDate,
+                                  LastMeetingDate = a.LastMeetingDate,
+                                  LastOpportunityDate = a.LastOpportunityDate,
+                                  LastOpportunityStatus = a.LastOpportunityStatus,
+                                  LastOpportunitySubject = a.LastOpportunitySubject,
+                                  FirstInvoiceDate = a.FirstInvoiceDate,
+                                  FirstShipmentDate = a.FirstShipmentDate,
+                                  LastShipmentDate = a.LastShipmentDate,
+                                  StartWorkingDate = a.StartWorkingDate,
+                                  StartWorkingManuallySet = a.StartWorkingManuallySet,
+                                  LastQuoteDate = a.LastQuoteDate,
+                                  LastInteractionDate = a.LastInteractionDate,
+                                  EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                  ActivityWatch = a.ActivityWatch,
+                                  KnownConsignor = a.KnownConsignor,
+                                  KCExpirationDate = a.KCExpirationDate,
+                                  LogBoxActivated = a.LogBoxActivated,
+                                  IRSNumber = a.Card.IRSNumber,
+                                  IRSPlace = a.Card.IRSPlace,
+                                  IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
+                                  IsCreditLimitEnabled = a.IsCreditLimitEnabled,
+                                  CreditLimitAmount = a.CreditLimitAmount,
+                                  CreditLimitOpenBalance = a.CreditLimitOpenBalance,
+                                  CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
+                                  ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                  PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                  BlockNewInvoiceCreation = a.BlockNewInvoiceCreation,
+                                  BlockNewShipmentCreation = a.BlockNewShipmentCreation,
+                                  ExternalId2 = a.Card.ExternalId2,
+                                  SATForeignRFC = a.Card.SATForeignRFC,
+                                  MetodoPagoCode = a.Card.MetodoPagoCode,
+                                  UsoCFDICode = a.Card.UsoCFDICode,
+                                  CompetitorFields = a.CompetitorFields,
+                                  ActivationDate = a.ActivationDate,
+                                  InactiveDate = a.InactiveDate,
+                                  ActivationRequestDate = a.ActivationRequestDate,
+                                  ActivatedByUserId = a.ActivatedByUserId,
+                                  SetAsInactiveByUserId = a.SetAsInactiveByUserId,
+                                  ActivationRequestedByUserId = a.ActivationRequestedByUserId,
+                                  GLAccountId = a.Card.GLAccountId,
+                                  CreatedByPartner = a.Card.CreatedByPartner,
+                                  StorageFreeDays = a.Card.StorageFreeDays,
+                                  Card = new CardPM()
+                                  {
+                                      Id = a.Id,
+                                      Tenant = a.Tenant,
+                                      EnglishName = a.Card.EnglishName,
+                                      CityName = a.Card.CityName,
+                                      CountryId = a.Card.CountryId,
+                                      CountryName = a.Card.CountryName,
+                                      PrimaryContactId = a.Card.PrimaryContactId,
+                                      ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                      PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      GLAccountId = a.Card.GLAccountId,
+                                  },
+
+                              }).FirstOrDefault();
+
+                    
+                }
+
+                else
+                {
+                    entity = (CustomerPM)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+
+            else
+            {
+                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                          where a.Id == id && a.Tenant == tenant
+                          select new CustomerPM()
+                          {
+                              BillToId = a.BillToId,
+                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              Id = a.Id,
+                              RankId = a.RankId,
+                              AccountManagerUserId = a.AccountManagerUserId,
+                              SalesmanUserId = a.SalesmanUserId,
+                              SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
+                              SalesmanBusinessUnitId = a.SalesmanUser == null ? null : a.SalesmanUser.BusinessUnitId,
+                              Tenant = a.Tenant,
+                              Website = a.Card.Website,
+                              Code = a.Card.Code,
+                              LocalName = a.Card.LocalName,
+                              EnglishName = a.Card.EnglishName,
+                              CardPMId = a.Id,
+                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              CreateDate = a.Card.CreateDate,
+                              UpdateDate = a.Card.UpdateDate,
+                              CreatedByUserId = a.Card.CreatedByUserId,
+                              UpdatedByUserId = a.Card.UpdatedByUserId,
+                              InActive = a.Card.InActive,
+                              Notes = a.Card.Notes,
+                              SupportNotes = a.Card.SupportNotes,
+                              PartnerTypeId = a.Card.PartnerTypeId,
+                              PaymentTermId = a.Card.PaymentTermId,
+                              VatNumber = a.Card.VatNumber,
+                              InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                              ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                              AccountManagerUserEnglishName = a.AccountManagerUser != null ? a.AccountManagerUser.Contact.EnglishName : null,
+                              CityName = a.Card.CityName,
+                              RankCode = a.Rank != null ? a.Rank.Code : null,
+                              RankName = a.Rank != null ? a.Rank.Name : null,
+                              ImageDetailId = a.Card.ImageDetailId,
+                              VatTypeId = a.Card.VatTypeId,
+                              BankName = a.Card.BankName,
+                              BankAddress = a.Card.BankAddress,
+                              IBANNumber = a.Card.IBANNumber,
+                              Swift = a.Card.Swift,
+                              AccountNumber = a.Card.AccountNumber,
+                              SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                              IsActiveForMobile = a.Card.IsActiveForMobile,
+                              LastLoginDate = a.Card.LastLoginDate,
+                              InvitationDate = a.Card.InvitationDate,
+                              LeadSourceId = a.LeadSourceId,
+                              IndustryId = a.IndustryId,
+                              ClassifierId = a.ClassifierId,
+                              CollectorId = a.CollectorId,
+                              LeadSourceName = a.LeadSource != null ? a.LeadSource.Name : null,
+                              IndustryName = a.Industry != null ? a.Industry.Name : null,
+                              ClassifierName = a.Classifier != null ? a.Classifier.Contact.EnglishName : null,
+                              CollectorName = a.Collector != null ? a.Collector.Contact.EnglishName : null,
+                              CreditLimit = a.CreditLimit,
+                              LeadDescription = a.LeadDescription,
+                              IsCustomer = a.IsCustomer,
+                              FreelancerId = a.FreelancerId,
+                              FreelancerName = a.Freelancer != null ? a.Freelancer.Contact.EnglishName : null,
+                              CustomerStatusCode = a.CustomerStatusCode,
+                              ForwarderId = a.ForwarderId,
+                              ForwarderName = a.Forwarder != null ? a.Forwarder.EnglishName : null,
+                              CustomsAgentId = a.CustomsAgentId,
+                              CustomsAgentName = a.CustomsAgent != null ? a.CustomsAgent.EnglishName : null,
+                              MediatorId = a.MediatorId,
+                              MediatorName = a.Mediator != null ? a.Mediator.EnglishName : null,
+                              BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
+                              CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
+                              PrimaryContactName = a.PrimaryContactName,
+                              PrimaryContactEmail = a.PrimaryContactEmail,
+                              PrimaryContactPhone = a.PrimaryContactPhone,
+                              CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
+                              PrimaryContactId = a.Card.PrimaryContactId,
+                              ReadyForActivationDate = a.ReadyForActivationDate,
+                              RegionId = a.RegionId,
+                              RegionName = a.Region != null ? a.Region.Name : null,
+                              CustomerSizeId = a.CustomerSizeId,
+                              LastCallDate = a.LastCallDate,
+                              LastMeetingDate = a.LastMeetingDate,
+                              LastOpportunityDate = a.LastOpportunityDate,
+                              LastOpportunityStatus = a.LastOpportunityStatus,
+                              LastOpportunitySubject = a.LastOpportunitySubject,
+                              FirstInvoiceDate = a.FirstInvoiceDate,
+                              FirstShipmentDate = a.FirstShipmentDate,
+                              LastShipmentDate = a.LastShipmentDate,
+                              StartWorkingDate = a.StartWorkingDate,
+                              StartWorkingManuallySet = a.StartWorkingManuallySet,
+                              LastQuoteDate = a.LastQuoteDate,
+                              LastInteractionDate = a.LastInteractionDate,
+                              EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                              ActivityWatch = a.ActivityWatch,
+                              KnownConsignor = a.KnownConsignor,
+                              KCExpirationDate = a.KCExpirationDate,
+                              LogBoxActivated = a.LogBoxActivated,
+                              IRSNumber = a.Card.IRSNumber,
+                              IRSPlace = a.Card.IRSPlace,
+                              IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
+                              IsCreditLimitEnabled = a.IsCreditLimitEnabled,
+                              CreditLimitAmount = a.CreditLimitAmount,
+                              CreditLimitOpenBalance = a.CreditLimitOpenBalance,
+                              CreditLimitWarningPercentage = a.CreditLimitWarningPercentage,
+                              ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                              PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                              BlockNewInvoiceCreation = a.BlockNewInvoiceCreation,
+                              BlockNewShipmentCreation = a.BlockNewShipmentCreation,
+                              ExternalId2 = a.Card.ExternalId2,
+                              SATForeignRFC = a.Card.SATForeignRFC,
+                              MetodoPagoCode = a.Card.MetodoPagoCode,
+                              UsoCFDICode = a.Card.UsoCFDICode,
+                              CompetitorFields = a.CompetitorFields,
+                              ActivationDate = a.ActivationDate,
+                              InactiveDate = a.InactiveDate,
+                              ActivationRequestDate = a.ActivationRequestDate,
+                              ActivatedByUserId = a.ActivatedByUserId,
+                              SetAsInactiveByUserId = a.SetAsInactiveByUserId,
+                              ActivationRequestedByUserId = a.ActivationRequestedByUserId,
+                              GLAccountId = a.Card.GLAccountId,
+                              CreatedByPartner = a.Card.CreatedByPartner,
+                              StorageFreeDays = a.Card.StorageFreeDays,
+                              Card = new CardPM
+                              {
+                                  Id = a.Id,
+                                  Tenant = a.Tenant,
+                                  EnglishName = a.Card.EnglishName,
+                                  PrimaryContactId = a.Card.PrimaryContactId,
+                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  GLAccountId = a.Card.GLAccountId,
+                              },
+
+                          }).FirstOrDefault();
+
+               
+            }
+
+            return entity;
+           
+        }
+
     }
 }

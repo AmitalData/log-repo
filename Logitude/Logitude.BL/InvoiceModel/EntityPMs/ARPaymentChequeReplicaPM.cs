@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BankAccount { get; set; }
 
         public string StatusCode { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
 
         public decimal? ExchangeRate { get; set; }
     }

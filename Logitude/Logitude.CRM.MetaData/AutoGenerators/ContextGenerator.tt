@@ -98,7 +98,13 @@ private void GenerateIDbSet(string xmlFilePath)
 {
 	 
     var entity = FromEntityFile(xmlFilePath);
-   
+    if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
 	if(tableName.Contains("."))
@@ -463,6 +469,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -607,7 +614,13 @@ private void GenerateIDbSetForContext(string xmlFilePath)
 {
 	 
     var entity = FromEntityFile(xmlFilePath);
-   
+    if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
 	if(tableName.Contains("."))
@@ -636,6 +649,13 @@ private void GenerateEntityMapForContext(string xmlFilePath)
 {
 	 
     var entity = FromEntityFile(xmlFilePath);
+         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');

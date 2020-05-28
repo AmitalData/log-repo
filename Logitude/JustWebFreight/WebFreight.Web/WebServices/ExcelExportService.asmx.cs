@@ -571,11 +571,15 @@ namespace WebFreight.Web.WebServices
 
             foreach (RoleFeature rolefeature in rolefeatures)
             {
-                Feature feature = featurrep.GetSingleFeature(rolefeature.FeatureId);
-                ObjectTable table = objecttablerep.GetSingleObjectTable(feature.ObjectTableId, 0, true);
-                Role role = roles.Where(d => d.Id == rolefeature.RoleId).FirstOrDefault();
-                string line = role.Code + "," + table.Name + "," + feature.Code + "," + rolefeature.FeatureAccessLevelCode;
-                sb.AppendLine(line);
+                Feature feature = featurrep.GetSingleFeatureByUniqeCode(rolefeature.FeatureUniqeCode);
+                if (feature != null)
+                {
+                    ObjectTable table = objecttablerep.GetSingleObjectTable(feature.ObjectTableId, 0, true);
+                    Role role = roles.Where(d => d.Id == rolefeature.RoleId).FirstOrDefault();
+                    string line = role.Code + "," + table.Name + "," + feature.Code + "," + rolefeature.FeatureAccessLevelCode;
+                    sb.AppendLine(line);
+                }
+             
             }
 
 

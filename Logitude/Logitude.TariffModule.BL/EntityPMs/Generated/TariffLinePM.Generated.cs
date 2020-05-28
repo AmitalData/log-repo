@@ -1446,6 +1446,639 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private decimal? surcharge1MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge1MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge1MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge1MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge1MinPrice",OldValue=surcharge1MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge1MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge2MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge2MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge2MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge2MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge2MinPrice",OldValue=surcharge2MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge2MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge3MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge3MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge3MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge3MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge3MinPrice",OldValue=surcharge3MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge3MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge4MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge4MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge4MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge4MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge4MinPrice",OldValue=surcharge4MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge4MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge5MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge5MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge5MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge5MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge5MinPrice",OldValue=surcharge5MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge5MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge6MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge6MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge6MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge6MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge6MinPrice",OldValue=surcharge6MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge6MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge7MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge7MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge7MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge7MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge7MinPrice",OldValue=surcharge7MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge7MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge8MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge8MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge8MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge8MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge8MinPrice",OldValue=surcharge8MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge8MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge9MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge9MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge9MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge9MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge9MinPrice",OldValue=surcharge9MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge9MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge10MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge10MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge10MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge10MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge10MinPrice",OldValue=surcharge10MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge10MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return currencyId;
+		 }
+		 set
+		 {
+		   if(currencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyId",OldValue=currencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyCode  
+	   {
+	    
+	     get
+		{
+		   return currencyCode;
+		 }
+		 set
+		 {
+		   if(currencyCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=currencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyCode=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<TariffLinesContainersPricePM> containersPrices;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("TariffLineTariffLinesContainersPrice", "Id","TariffLineId")]
+	   [DataMember]
+	   public virtual List<TariffLinesContainersPricePM> ContainersPrices  
+	   {
+	        get
+             {
+                 if (containersPrices == null)
+                 {
+                     containersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return containersPrices;
+              }
+             set { containersPrices = value; }
+	    }
+		   
+	   private List<TariffLinesContainersPricePM>  deletedContainersPrices;
+	   public virtual List<TariffLinesContainersPricePM> DeletedContainersPrices  
+	   {
+	        get
+             {
+                 if ( deletedContainersPrices == null)
+                 {
+                      deletedContainersPrices = new List<TariffLinesContainersPricePM>();
+                 }
+                 return  deletedContainersPrices;
+              }
+             set {  deletedContainersPrices = value; }
+	    }
+	  	  private string originPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return originPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(originPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortCombinedCode",OldValue=originPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(destinationPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCombinedCode",OldValue=destinationPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transitTime ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransitTime  
+	   {
+	    
+	     get
+		{
+		   return transitTime;
+		 }
+		 set
+		 {
+		   if(transitTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransitTime",OldValue=transitTime,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transitTime=value;
+		   }
+			
+		 }
+	   }
+	  private bool originPortHasWrongTransMode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OriginPortHasWrongTransMode  
+	   {
+	    
+	     get
+		{
+		   return originPortHasWrongTransMode;
+		 }
+		 set
+		 {
+		   if(originPortHasWrongTransMode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortHasWrongTransMode",OldValue=originPortHasWrongTransMode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   originPortHasWrongTransMode=value;
+		   }
+			
+		 }
+	   }
+	  private bool destinationPortHasWrongTransMode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DestinationPortHasWrongTransMode  
+	   {
+	    
+	     get
+		{
+		   return destinationPortHasWrongTransMode;
+		 }
+		 set
+		 {
+		   if(destinationPortHasWrongTransMode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortHasWrongTransMode",OldValue=destinationPortHasWrongTransMode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   destinationPortHasWrongTransMode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMinPriceMinus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMinPriceMinus  
+	   {
+	    
+	     get
+		{
+		   return isMinPriceMinus;
+		 }
+		 set
+		 {
+		   if(isMinPriceMinus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMinPriceMinus",OldValue=isMinPriceMinus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMinPriceMinus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice1Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice1Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice1Minus;
+		 }
+		 set
+		 {
+		   if(isPrice1Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice1Minus",OldValue=isPrice1Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice1Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice2Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice2Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice2Minus;
+		 }
+		 set
+		 {
+		   if(isPrice2Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice2Minus",OldValue=isPrice2Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice2Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice3Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice3Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice3Minus;
+		 }
+		 set
+		 {
+		   if(isPrice3Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice3Minus",OldValue=isPrice3Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice3Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice4Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice4Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice4Minus;
+		 }
+		 set
+		 {
+		   if(isPrice4Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice4Minus",OldValue=isPrice4Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice4Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice5Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice5Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice5Minus;
+		 }
+		 set
+		 {
+		   if(isPrice5Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice5Minus",OldValue=isPrice5Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice5Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice6Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice6Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice6Minus;
+		 }
+		 set
+		 {
+		   if(isPrice6Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice6Minus",OldValue=isPrice6Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice6Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice7Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice7Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice7Minus;
+		 }
+		 set
+		 {
+		   if(isPrice7Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice7Minus",OldValue=isPrice7Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice7Minus=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPrice8Minus ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPrice8Minus  
+	   {
+	    
+	     get
+		{
+		   return isPrice8Minus;
+		 }
+		 set
+		 {
+		   if(isPrice8Minus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrice8Minus",OldValue=isPrice8Minus,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPrice8Minus=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

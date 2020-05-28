@@ -1,8 +1,6 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
-import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../../Infrastructure/Tools';
@@ -14,7 +12,6 @@ import {ShipmentList} from '../../../../../Shipment/EntityLists/ShipmentList';
 import {ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {UserList} from '../../../../../Common/EntityLists/UserList';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
-import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
 import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
 import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
@@ -26,16 +23,21 @@ import {ContactListService} from '../../../../../Common/Services/StandardLists/C
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { NewQuoteComponentArgs } from '../../../../../Quote/Args';
+
 declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketDetailsTabComponent.html',
 })
 
 export class TicketDetailsTabComponent extends BaseComponent implements AfterViewInit {
+  public Filters: any;
+  public QuickSearchItems: any;
+
     public EntityPM: TicketPM;
     public LabelColumnWidth: number = 153;
     public ControlColumnWidth: number = 180;
@@ -43,7 +45,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     public ObjectTableName: string = "Ticket";
     public IsFromOutSide = false;
     public IsShowConnectContact = false; 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
@@ -182,7 +184,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -457,7 +459,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set SeverityId(newValue: string) {
         if (this.EntityPM.SeverityId != newValue) {
             this.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.EntityPM.SeverityName = severity.Name;
@@ -639,7 +641,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
     }
     ChooseEntity() {
-        if (this.IsTicketEditEnabled) {
+        if (this.IsTicketEditEnabled && this.EntityType != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;
@@ -683,11 +685,15 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;
             logWindow.Title = windowTitle;
+            var args = new NewQuoteComponentArgs();
+            args.IsCreatedFromTicket = true;
+            args.TicketCreateDate = this.EntityPM.CreateDate;
+            logWindow.WindowArgs = args;
             logWindow.Show(path);
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {

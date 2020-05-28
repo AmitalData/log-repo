@@ -290,12 +290,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID(string declarationNumber, string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
-            if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
-            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(declarationNumber, functionalReferenceID);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
@@ -521,7 +520,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             {
                                 errorview.EntityName = "Declaration";
                             }
-                            errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                            if (errorview.EntityName== "SupplierInvioceItemsCertificate")
+                            {
+                                errorview.EntityName = "SupplierInvioceItemCertificat";
+                            }
+                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
                             errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                             declarationErrors.Add(errorview);
                         }
@@ -801,7 +804,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                        if (errorview.EntityName == "SupplierInvioceItemsCertificate")
+                        {
+                            errorview.EntityName = "SupplierInvioceItemCertificat";
+                            if (errorview.Field== "ClassificationCode")
+                            {
+                                errorview.EntityName = "SupplierInvoiceItem";
+
+                            }
+                         }
+
+                        errorview.FieldNameTextCode = errorview.Field!=null? "Customs." + errorview.EntityName + ".F." + errorview.Field: "Customs." + errorview.EntityName;
                         errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }

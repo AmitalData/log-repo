@@ -28,7 +28,7 @@ import {UserListService} from '../../Common/Services/StandardLists/UserListServi
 import {UserList} from '../../Common/EntityLists/UserList';
 declare var window;
 @Component({
-    moduleId: module.id,
+    
     selector: 'RelatedCustomerComponent',
     templateUrl: './RelatedCustomerComponent.html',
 })
@@ -91,7 +91,7 @@ export class RelatedCustomerComponent extends BaseComponent{
         this.TenantAccessCard = item.EntityPM;
         var service: CommonDomainService = new CommonDomainService();
         this.CurrentSession.StartBusyIndicatorLoading();
-        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe(res => {
+        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe((res:any) => {
             if (!res.HasError) {
                 this.RealCustomerTenantAccessPM = res.Result;
                 var entityService: EntityResourceService = new EntityResourceService();
@@ -138,11 +138,12 @@ export class RelatedCustomerComponent extends BaseComponent{
             value = LastThirtyDaysDate;
         }
         filters.addAdditionalFilter("CreateDate", value, null, null, "GreaterThanOrEqual", false, true, false, "datetime");
+        filters.addAdditionalFilter("CustomerId", this.SelectedItem.EntityPM.CustomerId, null, null, "Equal", false, true, false, "string");
         filters.PageSize = 100;
         filters.PageIndex = 0;
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
-        service.getByFilters(filters).subscribe(result => {
+        service.getByFilters(filters).subscribe((result:any) => {
             this.APILogsObsList = result.Result.sort((a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) > DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
 
         });
@@ -174,14 +175,14 @@ export class RelatedCustomerComponent extends BaseComponent{
 
 
 
-        service.getByFilters(filters).subscribe(result => {
+        service.getByFilters(filters).subscribe((result:any) => {
             this.QueryObsList = result.Result;
         });
     }
 
     AddRelatedCustomer() {
         var service: CommonDomainService = new CommonDomainService();
-        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe(res => {
+        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe((res:any) => {
             if (!res.HasError) {
                 this.RealCustomerTenantAccessPM = res.Result;
                 var customerTenantAccessCardPM: CustomerTenantAccessCardPM = new CustomerTenantAccessCardPM(this.EntityPM);
@@ -210,14 +211,14 @@ export class RelatedCustomerComponent extends BaseComponent{
     constructor(public entityArgs: EntityArgs,private _entityResourceService: EntityResourceService) {
         super();
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response:any) => {
             this.EntityPM = entityArgs.EntityPM;
             this.ObjectTableName = "CustomerTenantAccess";
             if (this.EntityPM.CustomerTenantAccessCards.length == 0) {
                 this.IsShowTipArea = true;
                 var table = window.ObjectTables.filter(d => d.Name == "CustomerTenantAccessCard" && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0))[0];
                 if (table) {
-                    this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccessCard", 0).subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccessCard", 0).subscribe((response:any) => {
                         var Tip = window.Tips.filter(d => d.Code == "NCDT" && d.ObjectTableId == table.Id)[0];
                         var TipsVisibility = window.TipsVisibilities.filter(d => d.TipCode == Tip.Code && d.UserId == SessionInfo.LoggedUserId)[0];
                         if (TipsVisibility!=null)
@@ -314,7 +315,7 @@ export class RelatedCustomerComponent extends BaseComponent{
         this.BatchVisibility = true;
         var service: CommonDomainService = new CommonDomainService();
         this.BatchObsList = [];
-        service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(this.SelectedItem.EntityPM.CustomerId, this.SelectedItem.EntityPM.CustomerTenantAccessId).subscribe(res => {
+        service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(this.SelectedItem.EntityPM.CustomerId, this.SelectedItem.EntityPM.CustomerTenantAccessId).subscribe((res:any) => {
             if (!res.HasError) {
                 var CustomerTenantAccessCardsBatchpms: Array<CustomerTenantAccessCardsBatchPM> = res.Result;
                 CustomerTenantAccessCardsBatchpms.forEach(item => {
@@ -329,7 +330,7 @@ export class RelatedCustomerComponent extends BaseComponent{
     BuildData() {
         this.IsEnabled = false;
         var service: CommonDomainService = new CommonDomainService();
-        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe(res => {
+        service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe((res:any) => {
             this.ObsList = [];
             if (!res.HasError) {
                 var list: Array<CustomerTenantAccessCardPM> = res.Result.CustomerTenantAccessCards;
@@ -393,7 +394,7 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
 
     public setCreatedByName() {
         var service: UserListService = new UserListService();
-        service.getSingleFromCache(this.EntityPM.CreateByUserId).subscribe(resp => {
+        service.getSingleFromCache(this.EntityPM.CreateByUserId).subscribe((resp:any) => {
             if (!resp.HasError) {
                 var result: ServiceResponse = resp;
                 var list: UserList = result.Result;
@@ -406,7 +407,7 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
     LoadCardList() {
         var service: PartnersDomainService = new PartnersDomainService();
         this.CardObsList = [];
-        service.GetCustomerCardListByTenantVatNumber(this.customertenantAccessPM.CompanyVat).subscribe(res => {
+        service.GetCustomerCardListByTenantVatNumber(this.customertenantAccessPM.CompanyVat).subscribe((res:any) => {
             if (!res.HasError) {
                 var tempList: Array<CardListDataViewModel> = [];
                 var list: Array<CardList> = res.Result;
@@ -483,7 +484,7 @@ export class CardListDataViewModel {
         this.Parent = Parent;
         this.AccessCardsPms = AccessCard;
         var service: CommonDomainService = new CommonDomainService();
-        service.GetCustomerTenantAccessCard(this.entityList.Id).subscribe(res => {
+        service.GetCustomerTenantAccessCard(this.entityList.Id).subscribe((res:any) => {
             if (!res.HasError) {
                 var AccessCards = res.Result;
                 if (AccessCards != null) {

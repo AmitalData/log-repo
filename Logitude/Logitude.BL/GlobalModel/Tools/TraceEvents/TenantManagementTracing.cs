@@ -68,7 +68,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                             {
                                 notes = entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name;
                             }
-
                             else
                             {
                                 notes = notes + Environment.NewLine + (entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name);
@@ -260,23 +259,29 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         Notes = notes,
                     });
 
-                    if (entityPM.PackageCode != poco.PackageCode)
+                    if (entityPM.PackageCode != poco.PackageCode || entityPM.TenantManagementLicenses != null)
                     {
-                        PackageRepository packageRep = new PackageRepository(0);
-                        Package package_Poco = packageRep.GetSinglePackage(poco.PackageCode);
-                        Package package_Pm = packageRep.GetSinglePackage(entityPM.PackageCode);
-
-                        string note = "Package changed from " + package_Poco.Name + " to " + package_Pm.Name;
- 
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        string note = "";
+                        if (entityPM.PackageCode != poco.PackageCode)
                         {
-                            Tenant = 0,
-                            EventTypeCode = "PCMG",
-                            UserId = loggedContact.Id,
-                            EntityId = poco.Id.ToString(),
-                            ObjectTableName = "TenantManagement",
-                            Notes = note,
-                        });
+                            note = BuildPackagesNotes(poco, entityPM);
+                        }
+                        if (entityPM.TenantManagementLicenses != null)
+                        {
+                            note = note + BuildTenantManagementLicensesNotes(entityPM);
+                        }
+                        if (!string.IsNullOrEmpty(note))
+                        {
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                Tenant = 0,
+                                EventTypeCode = "PCMG",
+                                UserId = loggedContact.Id,
+                                EntityId = poco.Id.ToString(),
+                                ObjectTableName = "TenantManagement",
+                                Notes = note,
+                            });
+                        }
                     }
 
                     if (!entityPM.IsActive && poco.GlobalTenant.IsActive)
@@ -406,6 +411,76 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                 scope.Complete();
             }
+        }
+
+        private static string BuildPackagesNotes(TenantManagement poco, TenantManagementPM entityPM)
+        {
+            var notesTemp = "";
+            PackageRepository repo = new PackageRepository(0);
+            Package entity_Pm = repo.GetSinglePackage(entityPM.PackageCode);
+            Package package_Poco = repo.GetSinglePackage(poco.PackageCode);
+
+            var numberOfFreeUsers_poco = "";
+            var numberOfFreeUsers_pm = "";
+            if (poco.FreeUsers != null)
+            {
+                numberOfFreeUsers_poco = "+" + poco.FreeUsers;
+            }
+            if (entityPM.FreeUsers != null)
+            {
+                numberOfFreeUsers_pm = "+" + entityPM.FreeUsers;
+            }
+            notesTemp = entity_Pm == null ? "Package changed" : "Package changed from " + package_Poco.Name + " (" + poco.NumberOfUsers + numberOfFreeUsers_poco + ") " + " to "
+                                                                                    + entity_Pm.Name + " (" + entityPM.NumberOfUsers + numberOfFreeUsers_pm + ") " + "\n";
+            return notesTemp;
+        }
+
+        private static string BuildTenantManagementLicensesNotes(TenantManagementPM entityPM)
+        {
+            var notesTemp = "";
+            var additionalPackagesAdded = entityPM.TenantManagementLicenses.Where(a => a.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert).ToList();
+            var additionalPackagesRemoved = entityPM.TenantManagementLicenses.Where(a => a.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            if (additionalPackagesAdded != null && additionalPackagesAdded.Count() > 0)
+            {
+                notesTemp = notesTemp + "Additional Packages Added : " + BuildAdditionalPackageNotes(additionalPackagesAdded);
+            }
+            if (additionalPackagesRemoved != null && additionalPackagesRemoved.Count() > 0)
+            {
+                notesTemp = notesTemp + "Additional Packages Removed : " + BuildAdditionalPackageNotes(additionalPackagesRemoved);
+            }
+
+            if (!string.IsNullOrEmpty(notesTemp))
+            {
+                notesTemp = notesTemp.TrimEnd(',') + "\n";
+            }
+
+            return notesTemp;
+        }
+
+        private static string BuildAdditionalPackageNotes(List<TenantManagementLicensePM> additionalPackages)
+        {
+            var notes = "";
+            PackageRepository repo = new PackageRepository(0);
+            Package package;
+
+            foreach (var item in additionalPackages)
+            {
+                var numberOfFreeUsers = "";
+                if (item.FreeUsers != null)
+                {
+                    numberOfFreeUsers = "+" + item.FreeUsers;
+                }
+
+                package = repo.GetSinglePackage(item.PackageCode);
+                notes = notes + package.Name + " (" + item.NumberOfUsers + numberOfFreeUsers + ")" + ", ";
+            }
+
+            if (!string.IsNullOrEmpty(notes))
+            {
+                notes = notes.TrimEnd(' ').TrimEnd(',') + "\n";
+            }
+            return notes; 
         }
     }
 }

@@ -103,6 +103,8 @@ namespace Logitude.CRM.Data
 	
             modelBuilder.Configurations.Add(new OccasionMap());
 	
+            modelBuilder.Configurations.Add(new OccasionInviteeMap());
+	
             modelBuilder.Configurations.Add(new OccasionStatusMap());
 	
             modelBuilder.Configurations.Add(new OccasionTypeMap());
@@ -144,6 +146,8 @@ namespace Logitude.CRM.Data
             modelBuilder.Configurations.Add(new SLALineMap());
 	
             modelBuilder.Configurations.Add(new StageMap());
+	
+            modelBuilder.Configurations.Add(new SupportMailboxMap());
 	
             modelBuilder.Configurations.Add(new TicketMap());
 	
@@ -391,6 +395,7 @@ namespace Logitude.CRM.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -563,6 +568,12 @@ namespace Logitude.CRM.Data
 	 
 	 }
 	
+	 public IDbSet<OccasionInvitee> OccasionInvitees 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<OccasionStatus> OccasionStatuses 
 	 {
 	      get; set;
@@ -684,6 +695,12 @@ namespace Logitude.CRM.Data
 	 }
 	
 	 public IDbSet<Stage> Stages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupportMailbox> SupportMailboxes 
 	 {
 	      get; set;
 	 

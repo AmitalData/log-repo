@@ -125,8 +125,10 @@ namespace CommunicationWorkerRole
                         break;
                 }
             }
-
-            return filename;
+            Encoding unicode = Encoding.ASCII;
+            var UnicodeFileName = unicode.GetString(Encoding.UTF8.GetBytes(filename));
+            UnicodeFileName = UnicodeFileName.Replace("?", "");
+            return UnicodeFileName;
         }
     }
 }

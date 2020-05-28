@@ -1,6 +1,6 @@
 declare var window: any;
 declare var System: any;
-import { Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from './BaseComponent';
 import { EntityListService } from '../../Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
@@ -19,14 +19,7 @@ import { FieldValidator } from '../../Validators/FieldValidator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
 import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
-//import {PartnerTypeListService} from '../../../Common/Services/StandardLists/PartnerTypeListService';
-//import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
-
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { InfraSettings } from '../../Utilities/InfraSettings';
@@ -40,10 +33,12 @@ import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'LogLov',
-    moduleId: module.id,
+    
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',
@@ -98,7 +93,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IgnoreCustomFieldCheck: boolean = false;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
-    private uiProperty: UIProperty;
+    uiProperty: UIProperty;
     private show: boolean;
     private LookUp1: string;
     private LookUp2: string;
@@ -164,7 +159,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     ClosedByBlur: boolean;
     DisplayValue: string;
     MouseInArea: boolean;
-    private headerColumns: any[];
+    headerColumns: any[];
     private dataColumns: any[];
     DivLogLovId: string;
     ToolTipId: string;
@@ -224,7 +219,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     FocusOnSelect: boolean = true;
     @Input() DisplayFieldsFromList: string;
     public isRTL: boolean = false;
-    private LovPartnerTypes: Array<PartnerTypeList> = [];
+    LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService) {
@@ -233,6 +228,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "TariffStepsRefresh") {
+                this.OnEditCompleted();
+            }
+        });
     }
 
     DropPopUpStyle: any;
@@ -283,6 +283,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     @Output() LostFocus: EventEmitter<any> = new EventEmitter();
     public LovMessage: string;
+    public AllDataLovMessage: string;
     @Input() HideEdit: boolean = false;
     @Input() HideAdd: boolean = false;
     @Input() QueryFilterItems: ApiQueryFilters;
@@ -325,7 +326,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             clearTimeout(this.timerTokenComponent);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerTokenComponent = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -344,8 +345,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
-                Observable.fromEvent(input, 'keydown')
-                    .debounceTime(400)
+                fromEvent(input, 'keydown').pipe(
+                    debounceTime(400))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;
@@ -356,7 +357,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         var HOME = 36;
                         var CTRL = 17;
                         var BACKSPACE = 8;
-                     
+
                         var which = logLoveReturnWhich(keyboardEvent);
 
                         if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
@@ -364,7 +365,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             return;
                         }
 
-                       
+
 
 
                         if (this.SearchTextNgModel != undefined) {
@@ -401,7 +402,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
                 this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-                    res.subscribe(resp => {
+                    res.subscribe((resp:any) => {
 
                     });
 
@@ -415,11 +416,41 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
                 var loadPr = this.entityListService.getByFilters(this.LookUpTableName, filters);
                 loadPr.then((res: any) => {
-                    res.subscribe(resp => {
+                    res.subscribe((resp:any) => {
                         console.log(resp);
                     });
                 });
             }
+        });
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        this.uiProperty.UIPropertyChanged.subscribe(value => {
+
+            if (value instanceof UIPropertyArgs) {
+                var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                    if (uiPropertyArgs.property == "IsEnabled") {
+                        var isEnabled = uiPropertyArgs.newValue;
+                        this.IsDisabled = !isEnabled;
+                        this.uiProperty.IsEnabled = isEnabled;
+                    }
+                    else if (uiPropertyArgs.property == "IsRequired") {
+                        if (this.searchTextChanged) {
+
+                            this.ValidateField(false);
+                        }
+                    }
+                    else if (uiPropertyArgs.property == "IsVisible") {
+                        if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
+                            this.InitializeAfterViewInit();
+                        }
+                    }
+                    else if (uiPropertyArgs.property == "IsValid") {
+                        this.ValidateField(false);
+                    }
+                }
+            }
+
         });
         this.InitializeControl();
 
@@ -536,7 +567,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
             this.IsAllDataVisible = true;
-            this.DropDownHeight = 276;
+            this.DropDownHeight = 280;
             this.MyDropDownHeight = { 'height': '105px' }
             this.DisplayHeader = false;
             if (this.LookUpTableName == 'Port') {
@@ -638,8 +669,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 }
                                 else {
                                     objectFieldAvailable = true;
-                                    if (this.ObjectField.HelpTextCodeId != null) {
-                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
+                                    if (this.ObjectField.HelpTextCodeCode != null) {
+                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
 
                                         if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                                             if (this.ObjectFieldHelp.length > 1) {
@@ -648,45 +679,52 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                             }
                                         }
                                     }
-                                    if (this.ObjectField.DependencyFilter1Value) {
-                                        if (this.ObjectField.DependencyFilter1Type == "Constant") {
-                                            this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
-                                            this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
-                                        }
-                                        else {
 
-                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                                    if (this.DependencyFilter1Value == null || this.DependencyFilter1Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter1Value) {
+                                            if (this.ObjectField.DependencyFilter1Type == "Constant") {
+                                                this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
+                                                this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
+                                            }
+                                            else {
+
+                                                this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                                            }
+                                        }
+                                        else if (this.ObjectField.ControlField1) {
+                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
                                         }
                                     }
-                                    else if (this.ObjectField.ControlField1) {
-                                        this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+                                   
+                                    if (this.DependencyFilter2Value == null || this.DependencyFilter2Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter2Value) {
+                                            if (this.ObjectField.DependencyFilter2Type == "Constant") {
+                                                this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
+                                                this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
+                                            }
+                                            else {
+                                                this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
+                                            }
+                                        }
+                                        else if (this.ObjectField.ControlField2) {
+                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+                                        }
                                     }
 
-                                    if (this.ObjectField.DependencyFilter2Value) {
-                                        if (this.ObjectField.DependencyFilter2Type == "Constant") {
-                                            this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
-                                            this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
-                                        }
-                                        else {
-                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
-                                        }
-                                    }
-                                    else if (this.ObjectField.ControlField2) {
-                                        this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-                                    }
+                                    if (this.DependencyFilter3Value == null || this.DependencyFilter3Value === undefined) {
+                                        if (this.ObjectField.DependencyFilter3Value) {
+                                            if (this.ObjectField.DependencyFilter3Type == "Constant") {
+                                                this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
+                                                this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                                            }
+                                            else {
 
-                                    if (this.ObjectField.DependencyFilter3Value) {
-                                        if (this.ObjectField.DependencyFilter3Type == "Constant") {
-                                            this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
-                                            this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                                                this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                                            }
                                         }
-                                        else {
-
-                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                                        else if (this.ObjectField.ControlField3) {
+                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
                                         }
-                                    }
-                                    else if (this.ObjectField.ControlField3) {
-                                        this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
                                     }
 
                                     if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {
@@ -732,35 +770,35 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
 
 
-                            this.uiProperty.UIPropertyChanged.subscribe(value => {
+                            // this.uiProperty.UIPropertyChanged.subscribe(value => {
 
-                                if (value instanceof UIPropertyArgs) {
-                                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-                                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                                        if (uiPropertyArgs.property == "IsEnabled") {
-                                            var isEnabled = uiPropertyArgs.newValue;
-                                            this.IsDisabled = !isEnabled;
-                                            this.uiProperty.IsEnabled = isEnabled;
-                                        }
-                                        else if (uiPropertyArgs.property == "IsRequired") {
-                                            if (this.searchTextChanged) {
+                            //     if (value instanceof UIPropertyArgs) {
+                            //         var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                            //         var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                            //         if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                            //             if (uiPropertyArgs.property == "IsEnabled") {
+                            //                 var isEnabled = uiPropertyArgs.newValue;
+                            //                 this.IsDisabled = !isEnabled;
+                            //                 this.uiProperty.IsEnabled = isEnabled;
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsRequired") {
+                            //                 if (this.searchTextChanged) {
 
-                                                this.ValidateField(false);
-                                            }
-                                        }
-                                        else if (uiPropertyArgs.property == "IsVisible") {
-                                            if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
-                                                this.InitializeAfterViewInit();
-                                            }
-                                        }
-                                        else if (uiPropertyArgs.property == "IsValid") {
-                                            this.ValidateField(false);
-                                        }
-                                    }
-                                }
+                            //                     this.ValidateField(false);
+                            //                 }
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsVisible") {
+                            //                 if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
+                            //                     this.InitializeAfterViewInit();
+                            //                 }
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsValid") {
+                            //                 this.ValidateField(false);
+                            //             }
+                            //         }
+                            //     }
 
-                            });
+                            // });
                         });
                     });
                 });
@@ -771,7 +809,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this.LookUpTable.EnableAddFromLOV) {
             this.isAddDisabled = false;
 
-            if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
+            if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                 this.ShowAddLink = false
 
             }
@@ -1173,29 +1211,57 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
                 }
+                else if (this.IsAllDataVisible) {
+                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        var input = document.getElementById(this.AllDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        lis[0].classList.add("highlighted");
+                    }
+                }
 
             }
             else {
                 if (active[0].nextElementSibling) {
                     active[0].nextElementSibling.classList.add("highlighted");
                     active[0].classList.remove("highlighted");
-
-
                     active[0].scrollIntoView(false);
+                }
+                else if (this.IsAllDataVisible) {
+                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        var input = document.getElementById(this.AllDataListId);
+                        active[0].classList.remove("highlighted");
+                        var lis = input.getElementsByTagName("li");
+                        lis[0].classList.add("highlighted");
+                    }
                 }
             }
         }
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                if (this.ItemsSource && this.ItemsSource.length > 0) {
-                    if (active[0].previousElementSibling) {
-                        active[0].previousElementSibling.classList.add("highlighted");
-                        active = document.getElementsByClassName("highlighted");
-                        active[1].classList.remove("highlighted");
-                        active[0].scrollIntoView(false);
+                // if (this.ItemsSource && this.ItemsSource.length > 0) {
+                if (active[0].previousElementSibling) {
+                    active[0].previousElementSibling.classList.add("highlighted");
+                    active = document.getElementsByClassName("highlighted");
+                    active[1].classList.remove("highlighted");
+                    active[0].scrollIntoView(false);
+                }
+                else if (this.IsAllDataVisible) {
+                    if (this.ItemsSource && this.ItemsSource.length > 0) {
+                        var input = document.getElementById(this.MyDataListId);
+                        active[0].classList.remove("highlighted");
+                        var lis = input.getElementsByTagName("li");
+                        lis[lis.length - 1].classList.add("highlighted");
                     }
                 }
+                // }
+                // else if(this.IsAllDataVisible){
+                //     if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                //         var input = document.getElementById(this.AllDataListId);
+                //         var lis = input.getElementsByTagName("li");
+                //         lis[0].classList.add("highlighted");
+                //     }
+                // }
             }
         }
     }
@@ -1221,72 +1287,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.tabkeyDown = true;
 
             if (this.IsOpen) {
-                var active = document.getElementsByClassName("highlighted");
-                if (active[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
-
-                        if (lis[i].className.search("highlighted") > -1) {
-                            this.FocusOnSelect = false;
-                            lis[i].classList.remove("highlighted");
-                            lis[i].click();
-                        }
-                    }
-
-                }
-                else {
-                    var selected = document.getElementsByClassName("liItemSelected");
-                    if (selected[0]) {
-                        var input = document.getElementById(this.MyDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        for (var i = 0; i < lis.length; i++) {
-
-                            if (lis[i].className.search("liItemSelected") > -1) {
-                                this.FocusOnSelect = false;
-                                lis[i].classList.remove("liItemSelected");
-                                lis[i].click();
-                            }
-                        }
-                    }
-                }
-
-            }
-            if (this.IsOpen) {
+                this.FocusOnSelect = false;
+                this.SelectHighlightedItem();
                 this.ToggleOpenDropDown();
             }
-            //this.OnBlurEvent.emit("");
         }
 
         if ($event.keyCode == ENTERKEY) {
             if (this.IsOpen) {
-                var active = document.getElementsByClassName("highlighted");
-                if (active[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
-
-                        if (lis[i].className.search("highlighted") > -1) {
-                            lis[i].classList.remove("highlighted");
-                            lis[i].click();
-                        }
-                    }
-
-                }
-                else {
-                    var selected = document.getElementsByClassName("liItemSelected");
-                    if (selected[0]) {
-                        var input = document.getElementById(this.MyDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        for (var i = 0; i < lis.length; i++) {
-
-                            if (lis[i].className.search("liItemSelected") > -1) {
-                                lis[i].classList.remove("liItemSelected");
-                                lis[i].click();
-                            }
-                        }
-                    }
-                }
+                this.SelectHighlightedItem();
             }
             else {
                 this.KeyDownEvent.emit(13)
@@ -1304,14 +1313,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             else {
                 var selected = document.getElementsByClassName("liItemSelected");
                 if (selected[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
+                    if (this.ItemsSource && this.ItemsSource.length > 0) {
+                        this.RemoveSelectedAddHighlighted(this.MyDataListId);
+                    }
+                    else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        this.RemoveSelectedAddHighlighted(this.AllDataListId);
 
-                        if (lis[i].className.search("liItemSelected") > -1) {
-                            lis[i].classList.remove("liItemSelected");
-                            lis[i].classList.add("highlighted");
-                        }
                     }
                 }
                 this.NavigateListItems(true);
@@ -1345,6 +1352,69 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //}
     }
 
+    RemoveSelectedAddHighlighted(dropDownId: string) {
+        var myDataDropDown = document.getElementById(dropDownId);
+        var lis = myDataDropDown.getElementsByTagName("li");
+        for (var i = 0; i < lis.length; i++) {
+
+            if (lis[i].className.search("liItemSelected") > -1) {
+                lis[i].classList.remove("liItemSelected");
+                lis[i].classList.add("highlighted");
+            }
+        }
+    }
+
+    ClickOnHighlightedItemReturnStatus(dropDownListId: string) {
+        var input = document.getElementById(dropDownListId);
+        var lis = input.getElementsByTagName("li");
+        var selectedItemFound: boolean = false;
+        for (var i = 0; i < lis.length; i++) {
+
+            if (lis[i].className.search("highlighted") > -1) {
+                selectedItemFound = true;
+                lis[i].classList.remove("highlighted");
+                lis[i].click();
+            }
+        }
+        return selectedItemFound;
+    }
+
+    ClickOnSelectedItemReturnStatus(dropDownListId: string) {
+        var input = document.getElementById(dropDownListId);
+        var lis = input.getElementsByTagName("li");
+        var selectedItemFound: boolean = false;
+        for (var i = 0; i < lis.length; i++) {
+
+            if (lis[i].className.search("liItemSelected") > -1) {
+                selectedItemFound = true;
+                lis[i].classList.remove("liItemSelected");
+                lis[i].click();
+            }
+        }
+        return selectedItemFound;
+    }
+
+    SelectHighlightedItem() {
+        var selectedItemFound: boolean = false;
+        var active = document.getElementsByClassName("highlighted");
+        if (active[0]) {
+            selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.MyDataListId);
+            if (!selectedItemFound) {
+                selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.AllDataListId);
+            }
+
+        }
+        else {
+            var selected = document.getElementsByClassName("liItemSelected");
+            if (selected[0]) {
+                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.MyDataListId);
+            }
+            if (!selectedItemFound) {
+                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.AllDataListId);
+            }
+        }
+    }
+
     OnLiMouseOver($event) {
         var active = document.getElementsByClassName("highlighted");
         if (active[0]) {
@@ -1362,39 +1432,72 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         $event.target.classList.remove("highlighted");
     }
     SelectedItemKey: any;
+    SelectedZeroItemKey: any;
     KeyPropertyPath: any;
-    HighlightSelectedValue(items: any[]) {
+    HighlightSelectedValue() {
         this.SelectedItemKey = null;
+        //this.SelectedZeroItemKey=null;
         if (this.SearchTextNgModel != null && this.SearchTextNgModel != undefined && this.SearchTextNgModel != "") {
 
-            var oldItems = items;
+            if (this.ItemsSource && this.ItemsSource.length > 0) {
+                var oldItems = this.ItemsSource;
 
-            var item = items.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-            if (!item && this.LookUp2) {
-                var item = items.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-            }
-            if (!item) {
-                var item = items.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-            }
-            if (item) {
-                this.ItemsSource = [];
-                this.ItemsSource.push(item);
-                var index = oldItems.indexOf(item);
-                oldItems.splice(index, 1);
-                oldItems.forEach((itm) => {
-                    this.ItemsSource.push(itm);
-                });
+                var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                if (!item && this.LookUp2) {
+                    var item = this.ItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                }
+                if (!item) {
+                    var item = this.ItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                }
+                if (item) {
+                    this.ItemsSource = [];
+                    this.ItemsSource.push(item);
+                    var index = oldItems.indexOf(item);
+                    oldItems.splice(index, 1);
+                    oldItems.forEach((itm) => {
+                        this.ItemsSource.push(itm);
+                    });
 
-
- 
-                //var index = items.indexOf(item);
-                //var temp = items[0];
-                //items[0] = item;
-                //items[index] = temp;
-                this.SelectedItemKey = item[this.KeyPropertyPath];
+                    //var index = items.indexOf(item);
+                    //var temp = items[0];
+                    //items[0] = item;
+                    //items[index] = temp;
+                    this.SelectedItemKey = item[this.KeyPropertyPath];
+                }
+                else if (this.ItemsSource.length > 0) {
+                    this.SelectedItemKey = this.ItemsSource[0][this.KeyPropertyPath];
+                }
             }
-            else if (items.length > 0) {
-                this.SelectedItemKey = items[0][this.KeyPropertyPath];
+            else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                if (this.ZeroItemsSource.length > 0) {
+                    var oldItems = this.ZeroItemsSource;
+
+                    var item = this.ZeroItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    if (!item && this.LookUp2) {
+                        var item = this.ZeroItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    }
+                    if (!item) {
+                        var item = this.ZeroItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+                    }
+                    if (item) {
+                        this.ZeroItemsSource = [];
+                        this.ZeroItemsSource.push(item);
+                        var index = oldItems.indexOf(item);
+                        oldItems.splice(index, 1);
+                        oldItems.forEach((itm) => {
+                            this.ZeroItemsSource.push(itm);
+                        });
+
+                        //var index = items.indexOf(item);
+                        //var temp = items[0];
+                        //items[0] = item;
+                        //items[index] = temp;
+                        this.SelectedItemKey = item[this.KeyPropertyPath];
+                    }
+                    else if (this.ZeroItemsSource.length > 0) {
+                        this.SelectedItemKey = this.ZeroItemsSource[0][this.KeyPropertyPath];
+                    }
+                }
             }
         }
     }
@@ -1536,13 +1639,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
             loadPromise.then((res: any) => {
-                res.subscribe(resp => {
+                res.subscribe((resp:any) => {
                     //turn loading flag off
                     this.isLoadingZero = false;
                     if (resp.Result) {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
+                        
                     }
                     else {
                         this.CalculateWidths(resp);
@@ -1550,10 +1654,23 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ZeroItemsSource = resp;
 
                     }
+                    this.ShowOrHideAllDataNoresultMessage();
+                    this.HighlightSelectedValue();
                 })
             });
         }
 
+    }
+    
+    ShowOrHideAllDataNoresultMessage(){
+        if (this.IsAllDataVisible) {
+            if (this.ZeroItemsSourceCount == 0) {
+                this.AllDataLovMessage=TextCodeTranslator.Translate("General.O.NoMoreResult");
+            }
+            else {
+                this.AllDataLovMessage=null;
+            }
+        }
     }
 
     OnSearchInputBlur() {
@@ -2468,7 +2585,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.isDeleteDisabled = false;
 
             if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
-                if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User") {
+                if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
                     this.isEditDisabled = true;
                 }
             }
@@ -2478,7 +2595,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if ((this.LookUpTable.EnableAddFromLOV) && !this.HideAdd) {
                 this.isAddDisabled = false;
 
-                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
+                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                     this.ShowAddLink = false;
 
                 }
@@ -2488,7 +2605,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
 
                 if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
-                    if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User") {
+                    if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
                         this.isAddDisabled = true;
                         this.ShowAddLink = false;
 
@@ -2549,7 +2666,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 //this.show = true;
                 this.showPopup = false;
 
-                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
+                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                     this.ShowMaintenanceBtn = false;
                 }
 
@@ -2698,7 +2815,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //turn loading flag on
         this.isLoading = true;
         this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -2802,8 +2919,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
+                    
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue(this.ItemsSource);
+                    this.HighlightSelectedValue();
                     this.isLoading = false;
                 }
             });
@@ -2866,7 +2984,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
  
         loadPromise.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -2921,8 +3039,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
+                    
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue(this.ItemsSource);
+                    this.HighlightSelectedValue();
 
                     //turn loading flag off
                     this.isLoading = false;
@@ -2960,8 +3079,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
                     this.LovMessage = null;
                 }
+               
                 this.ItemsSourceStatic = this.ItemsSource;
-                this.HighlightSelectedValue(this.ItemsSource);
+                this.HighlightSelectedValue();
                 this.isLoading = false;
             });
         });

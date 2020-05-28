@@ -11,7 +11,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'OnCarriageDate',
-    moduleId: module.id,
+    
     templateUrl: './OnCarriageDateComponent.html',
     inputs: ['EntityPM', 'State'],
 })

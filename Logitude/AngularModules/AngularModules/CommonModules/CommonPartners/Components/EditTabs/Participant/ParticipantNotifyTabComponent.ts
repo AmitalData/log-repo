@@ -6,11 +6,13 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    selector: 'NewCurrencyComponent',
-    moduleId: module.id,
+    selector: 'ParticipantNotifyTabComponent',
+    
     templateUrl: './ParticipantNotifyTabComponent.html',
+
 })
 
 export class ParticipantNotifyTabComponent extends BaseComponent {
@@ -44,8 +46,8 @@ export class ParticipantNotifyTabComponent extends BaseComponent {
                 logWindow.WindowClosed.subscribe(s => {
                     if (!AppTool.IsNullOrEmpty(s) && s !="cancel") {
                         var service: ContactPMService = new ContactPMService();
-                        service.get(s).subscribe(p => {
-                            var email = p.Result.Email;
+                        service.get(s).subscribe((response: ServiceResponse) => {
+                            var email = response.Result.EnglishName;
                             if (code == "FWB")
                                 this.FWBNotifyContacts = this.FWBNotifyContacts + ";" + email;
                             else if (code == "FHL")

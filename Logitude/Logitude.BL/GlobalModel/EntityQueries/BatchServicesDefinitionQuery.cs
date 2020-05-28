@@ -58,7 +58,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                                   //NumberOfThreads = entity.NumberOfThreads,
                                                                   ClassName = entity.ClassName,
                                                                   Parameter1 = entity.Parameter1,
-                                                                  Parameter2 = entity.Parameter2
+                                                                  Parameter2 = entity.Parameter2,
+                                                                  QueueDefinitionCode = entity.QueueDefinitionCode
                                                               };
             return result;
         }
@@ -76,7 +77,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               InActive = a.BatchServicesDefinitionMods.InActive,
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
-                              Parameter2 = a.Parameter2
+                              Parameter2 = a.Parameter2,
+                              QueueDefinitionCode = a.QueueDefinitionCode
                           }
                           );
 
@@ -116,7 +118,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               InActive = a.BatchServicesDefinitionMods.InActive,
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
-                              Parameter2 = a.Parameter2
+                              Parameter2 = a.Parameter2,
+                              QueueDefinitionCode = a.QueueDefinitionCode
                           }
                           );
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())

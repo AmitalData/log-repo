@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure.DataContracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
@@ -30,6 +31,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool ReadyForTransfer { get; set; }
         public string AccountingPaymentMethodId { get; set; }
 
+        public string VendorBankAddress { get; set; }
+        public string VendorBankName { get; set; }
+        public string VendorBankAccountNumber { get; set; }
+        public string VendorSwift { get; set; }
+        public string VendorIBANNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VendorId { get; set; }
@@ -75,10 +81,15 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string CreatedByUserName { get; set; }
         public string VendorName { get; set; }
+        public string VendorLocalName { get; set; }
         public string StatusName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string PaymentMethodName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string CreditCardTypeId { get; set; }
@@ -124,9 +135,67 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? ApprovedDateTime { get; set; }
 
         public string BankAccountId { get; set; }
-        public string BranchName { get; set; }
         public bool AutomaticPaymentCheque { get; set; }
-      
+        public string PaymentChequeCreationPayToName { get; set; }
+        public string PaymentChequeCreationNotes { get; set; }
+        public bool ExcludeFromDeductionReport { get; set; }
+        public string VendorGLAccountId { get; set; }
+        public string JournalId { get; set; }
+        public string JournalNumber { get; set; }
+        public DateTime? AccountingCancelationDate { get; set; }
+        public bool DontIncludeInDeductionReport { get; set; }
+        public string CancelationNotes { get; set; }
+        public string VoidedByJournalNumber { get; set; }
+
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field1 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field2 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field3 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field4 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field5 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field6 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field7 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field8 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field9 { get; set; }
+
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field10 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? ExternalPaymentAmount { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ExternalPaymentDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ExternalPaymentNotes { get; set; }
 
     }
 }

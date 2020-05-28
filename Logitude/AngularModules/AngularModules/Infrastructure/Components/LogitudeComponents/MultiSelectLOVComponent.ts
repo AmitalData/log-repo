@@ -1,15 +1,13 @@
-///x = delet item close ddm
-import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ViewChild, ViewContainerRef, AfterContentInit, ContentChild } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef, ContentChild } from '@angular/core';
 import { AppTool } from '../../Tools';
 import { LogLovV2Component } from './LogLovV2Component';
-import { forEach } from '@angular/router/src/utils/collection';
-import { retry } from 'rxjs/operator/retry';
-import { setInterval } from 'timers';
+
+
+
 import { UserList } from '../../../Common/EntityLists/UserList';
 
 @Component({
     selector: 'MultiSelectLOV',
-    moduleId: module.id,
     host: { '(document:click)': 'handleClick($event)', },
     templateUrl: 'MultiSelectLOVComponent.html',
 })

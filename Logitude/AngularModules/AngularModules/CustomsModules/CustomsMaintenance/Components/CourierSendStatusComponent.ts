@@ -1,5 +1,4 @@
 import { Component, OnInit} from'@angular/core'
-import { from } from "rxjs/observable/from";
 import { KeyCode } from '../../../Infrastructure/DataContracts/KeyCode';
 import { KeyValuePair } from '../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -9,7 +8,6 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
  
 @Component({
-    moduleId: module.id,
     templateUrl: './CourierSendStatusComponent.html',
 
 })
@@ -73,7 +71,7 @@ export class CourierSendStatusComponent extends BaseComponent {
         //http://192.116.221.103:584/Courier58/api/CourierMaster/GetSendALLDeclarationsStatusRequest?CourierMasterId=1-490
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this._CourierMasterId, this.SelectedSendOption.Key)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);

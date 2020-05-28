@@ -48,7 +48,7 @@
                                         <div></div>
                                     </td>
                                     <td  style="width: 40px">
-                                        <div *ngIf="HasException">
+                                        <div *ngIf="ShouldFix">
                                             <button style="display: inline-block;width:100px;" class="Button" [disabled]="Fixing" (click)="RunService()"> {{'Accounting.General.O.Fix'  | TextCodeTranslationPipe}}</button>
                                         </div>
                                     </td>

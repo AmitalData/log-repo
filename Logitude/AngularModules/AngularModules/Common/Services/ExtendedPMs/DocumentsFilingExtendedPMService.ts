@@ -1,7 +1,7 @@
 import {Injectable, } from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -14,10 +14,10 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 @Injectable()
 export class DocumentsFilingExtendedPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentsFilingExtended';
     }
 
@@ -25,10 +25,10 @@ export class DocumentsFilingExtendedPMService {
     getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, tenant: number, withDocuments: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-            var result = response.json();
+            var result:any = response;
 
             var entity: DocumentsFilingPM;
             var DocumentsFilingPMLists: DocumentsFilingPM[];
@@ -45,7 +45,7 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = DocumentsFilingPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
@@ -53,10 +53,10 @@ export class DocumentsFilingExtendedPMService {
     getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, tenant: number, withDocuments: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-            var result = response.json();
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             var DocumentsFilingPMLists: DocumentsFilingPM[];
@@ -73,9 +73,23 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = DocumentsFilingPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
+    }
+
+
+    GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode(entityId: string, objectTableId:string, documentTypeCode:string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetQuoationDocumentsFilingByQuoteIdAndObjectTableIdAndDocumentTypeCode/?' + 'entityId=' + entityId + '&objectTableId=' + objectTableId + '&documentTypeCode=' + documentTypeCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = result;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -84,10 +98,10 @@ export class DocumentsFilingExtendedPMService {
     getDocumentsFilingsByEntityIdAndObjectTable(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, tenant: number, withDocuments: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&withDocuments=' + withDocuments,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-            var result = response.json();
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             var DocumentsFilingPMLists: DocumentsFilingPM[];
@@ -104,20 +118,67 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = DocumentsFilingPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+
+    getDocumentsFilingsById(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsById" + '?Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+            var result :any = response;
+
+            var entity: DocumentsFilingPM;
+
+
+          
+            entity = this.MapJsonToEntityPM(result);
+               
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = entity;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+
+    getDocumentsFilingsByCode(Code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByCode" + '?Code=' + Code,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+            var result :any = response;
+
+            var entity: DocumentsFilingPM;
+
+
+
+            entity = this.MapJsonToEntityPM(result);
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = entity;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
 
 
-
     getAllDocumentsFilingsByEntityIdAndObjectTable(entityId: string, objectTableId: string, directionCode: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetAllDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetAllDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-            var result = response.json();
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             var DocumentsFilingPMLists: DocumentsFilingPM[];
@@ -133,7 +194,7 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = DocumentsFilingPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
@@ -141,10 +202,10 @@ export class DocumentsFilingExtendedPMService {
     getRequestedDocumentsFilingsByEntityIdAndObjectTable(entityId: string, objectTableId: string, directionCode: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetRequestedDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetRequestedDocumentsFilingsByEntityIdAndObjectTable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-            var result = response.json();
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             var DocumentsFilingPMLists: DocumentsFilingPM[];
@@ -160,7 +221,7 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = DocumentsFilingPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
@@ -169,14 +230,14 @@ export class DocumentsFilingExtendedPMService {
     GetFileSizeAndUnit(fileBytes: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '?fileBytes=' + fileBytes, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '?fileBytes=' + fileBytes,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var pmresponse: ServiceResponse;
 
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
@@ -185,8 +246,8 @@ export class DocumentsFilingExtendedPMService {
     CreateDocumentsFiling(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, directionCode: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCreateDocumentsFiling" + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + "/GetCreateDocumentsFiling" + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             entity = this.MapJsonToEntityPM(result);
@@ -195,15 +256,15 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = entity;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
     CreateDocumentShipmentEvent(entityId: string, notes: string, eventCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCreateDocumentShipmentEvent" + '?entityId=' + entityId + '&notes=' + notes + '&eventCode=' + eventCode, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + "/GetCreateDocumentShipmentEvent" + '?entityId=' + entityId + '&notes=' + notes + '&eventCode=' + eventCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             entity = this.MapJsonToEntityPM(result);
@@ -212,20 +273,20 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = entity;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     
     GetDocumentById(documentId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '?documentId=' + documentId + "&tenant=" + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '?documentId=' + documentId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
     }
@@ -233,32 +294,32 @@ export class DocumentsFilingExtendedPMService {
     GetDocumentsFilingByDocumentType(documentTypeId: string, objectTableId: string, entityId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentsFilingByDocumentType" +'?documentTypeId=' + documentTypeId + "&objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingByDocumentType" +'?documentTypeId=' + documentTypeId + "&objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     IsEntityHasSharedDocs(entityId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '?entityId=' + entityId + "&tenant=" + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '?entityId=' + entityId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     GetSingleDocumentsFilingByChild(documentTypeId: string, paymentNumber: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetSingleDocumentsFilingByChild" + '?documentTypeId=' + documentTypeId + '&paymentNumber=' + paymentNumber + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + "/GetSingleDocumentsFilingByChild" + '?documentTypeId=' + documentTypeId + '&paymentNumber=' + paymentNumber + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
 
             var entity: DocumentsFilingPM;
             if (result != null) {
@@ -269,7 +330,7 @@ export class DocumentsFilingExtendedPMService {
             pmresponse = new ServiceResponse();
             pmresponse.Result = entity;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     ShareDocumentsWithAgent(Ids: string[]) {
@@ -277,7 +338,7 @@ export class DocumentsFilingExtendedPMService {
 
 
         // Send request
-        return Observable.defer(() => {
+        return defer(() => {
 
             // Prepare parameters
             var IdsParameterString = "";
@@ -299,15 +360,15 @@ export class DocumentsFilingExtendedPMService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetShareDocumentsWithAgent/?" + IdsParameterString
-                , { headers: authHeader }).map(response => {
+                ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    //var res = response.json();
+                    //var res = response;
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
 
                     //serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 
@@ -441,7 +502,7 @@ export class DocumentsFilingExtendedPMService {
 
     insert(entityPM: DocumentsFilingPM, DontUseComposition: boolean = false) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -466,9 +527,8 @@ export class DocumentsFilingExtendedPMService {
                 }
 
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: DocumentsFilingPM;
                             mappedResult = this.AddEditMapJsonToEntityPM(pm, true, entityPM);
@@ -479,14 +539,14 @@ export class DocumentsFilingExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }
@@ -497,7 +557,7 @@ export class DocumentsFilingExtendedPMService {
     update(entityPM: DocumentsFilingPM, DontUseComposition: boolean = false) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -521,9 +581,8 @@ export class DocumentsFilingExtendedPMService {
                     mappedEntity = this.AddEditMapJsonToEntityPM(entityPM, false);
                 }
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: DocumentsFilingPM;
                             mappedResult = this.AddEditMapJsonToEntityPM(pm, true, entityPM);
@@ -533,14 +592,14 @@ export class DocumentsFilingExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }
@@ -691,13 +750,13 @@ export class DocumentsFilingExtendedPMService {
           GetLogBoxConnectedDocs(SourceEntityId: string, DestEntityId: string, ObjectTableId: string, tenant: number) {
               var authHeader = new Headers();
               authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-              return this._http.get(this._apiUrl + '?SourceEntityId=' + SourceEntityId + "&DestEntityId=" + DestEntityId + "&ObjectTableId=" + ObjectTableId + "&tenant=" + tenant, { headers: authHeader }).map(response => {
-                  var result = response.json();
+              return this._http.get(this._apiUrl + '?SourceEntityId=' + SourceEntityId + "&DestEntityId=" + DestEntityId + "&ObjectTableId=" + ObjectTableId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                  var result :any = response;
                   var pmresponse: ServiceResponse;
                   pmresponse = new ServiceResponse();
                   pmresponse.Result = result;
                   return pmresponse;
-              }).catch(ServiceHelper.HandleServiceError);
+              }),catchError(ServiceHelper.HandleServiceError));
 
 
           }

@@ -441,4 +441,4 @@
     </div>
 </div>
 
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+<BusyIndicator [IdPrefix]="'EditComponent'" [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" *ngIf="ShowBusyIndicator"></BusyIndicator>

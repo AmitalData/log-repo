@@ -18,5 +18,8 @@ export class BatchServicesDefinitionList {
 		DoneItemsInOneHour: number;
 		DoneItemsInOneMinute: number;
 		DoneItemsInFiveMinutes: number;
+		WaitingItems: number;
+		FailedItems: number;
+		QueueDefinitionCode: string;
 	
 }

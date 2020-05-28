@@ -84,6 +84,11 @@ export class AccountingIntegrityCheckPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private shouldFix: boolean;
+    public get ShouldFix() { return this.shouldFix; }
+    public set ShouldFix(newValue: boolean) { if (this.shouldFix != newValue) { this.shouldFix = newValue; this.MarkAsDirty("ShouldFix"); } }
+       
+	 
 
     public OldEntityPM: AccountingIntegrityCheckPM;
 		

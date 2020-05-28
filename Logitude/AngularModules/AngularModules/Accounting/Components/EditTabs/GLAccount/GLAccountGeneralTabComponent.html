@@ -63,7 +63,7 @@
                                             </tr>
 
                                             <!-- DisplayNumber -->
-                                             <tr class="FormFieldRow">
+                                            <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
@@ -74,7 +74,7 @@
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
-                                            </tr> 
+                                            </tr>
 
                                             <!-- LocalName -->
                                             <tr class="FormFieldRow">
@@ -85,6 +85,19 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+                                            <!-- NameForPrintingCheques -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendorChartOfAccount">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'NameForPrintingCheques'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'NameForPrintingCheques'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
@@ -195,6 +208,7 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+
                                             <!-- IsVATExempt -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -208,6 +222,24 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+
+                                            <!-- AllowEditChequePayToName -->
+                                            <tr *ngIf="IsVendor" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AllowEditChequePayToName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'AllowEditChequePayToName'" [Checked]="AllowEditChequePayToName"
+                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
                                             <tr><td><div></div></td></tr>
                                         </table>
 
@@ -373,6 +405,18 @@
                                                 </td>
                                                 <td>
                                                     <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Smallcashbook -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendorChartOfAccount">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>

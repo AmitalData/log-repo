@@ -84,14 +84,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 {
                     AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {
                         address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     }
 
-                    else if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    else if (!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {
-                        address.City = MyEntity.MainAddress.City.Name;
+                        address.City = MyEntity.MainAddress.City;
                     }
 
                     address.AddressTypeId = "M";
@@ -114,5 +114,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+     
     }
 }

@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,10 +58,25 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GovernmentProcedureTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "3ed5b27a65bb94d38235ff9f974e4837";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,8 +116,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Government Procedure Type",
-			      				    Code =  "cb49",
-			      				    Name =  "Customs.GovernmentProcedureType Query Group",
+			      				    Code =  "GOPT",
+			      				    Name =  "Customs.GovernmentProcedureType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -110,11 +125,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
+			      				    HashString =  GovernmentProcedureTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -167,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -220,7 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -273,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -326,7 +342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -377,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -429,7 +445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -479,75 +495,176 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup GovernmentProcedureTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GOPT", Name = "Customs.GovernmentProcedureType" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable GovernmentProcedureTypeObjectTable = objectTables.ContainsKey("Customs.GovernmentProcedureType") ? objectTables["Customs.GovernmentProcedureType"] : null;
+            if (GovernmentProcedureTypeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                GovernmentProcedureTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcedureType" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode GovernmentProcedureTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GovernmentProcedureType.Q.GovernmentProcedureTypeQuery", DefaultText = @"Government Procedure Types",LocalDefaultText = "תהליכים להצהרה", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GovernmentProcedureTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GOVERNMENTPROCEDURETYPE", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GovernmentProcedureType.Features.GovernmentProcedureTypes", NameTextCodeDefaultText = "Government Procedure Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GovernmentProcedureTypeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query GovernmentProcedureTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GovernmentProcedureTypeTextCode_0.Id, NameTextCodeCode = GovernmentProcedureTypeTextCode_0.Code, ObjectTableName = "Customs.GovernmentProcedureType", Code = "GovernmentProcedureType",  QueryGroupCode = "GOPT", IndexOrder = 0, Tenant = 0, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, QuerySection = "Customs.GovernmentProcedureType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GovernmentProcedureTypeFeature_0.Id,FeatureUniqeCode= GovernmentProcedureTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn GovernmentProcedureTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.GovernmentProcedureType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn GovernmentProcedureTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.GovernmentProcedureType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn GovernmentProcedureTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn GovernmentProcedureTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn GovernmentProcedureTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GovernmentProcedureTypeQuery.Id,QueryCode = GovernmentProcedureTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.GovernmentProcedureType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable GovernmentProcedureTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcedureType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> GovernmentProcedureTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GovernmentProcedureType").ToList();
+		   //List<ObjectField> GovernmentProcedureTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GovernmentProcedureType").ToList();
 		       
 	      
 
 	         Screen GovernmentProcedureTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GovernmentProcedureType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField GovernmentProcedureTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = GovernmentProcedureTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GovernmentProcedureTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = GovernmentProcedureTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GovernmentProcedureTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = GovernmentProcedureTypeObjectFields.Where(d => d.FieldName == "IsImport").FirstOrDefault().Id, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GovernmentProcedureTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = GovernmentProcedureTypeObjectFields.Where(d => d.FieldName == "IndexOrder").FirstOrDefault().Id, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsGovernmentProcedureTypeGovernmentProcedureTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen0.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IndexOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
+	      
+
+	         Screen GovernmentProcedureTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.GovernmentProcedureType.HeaderScreen", Name = "Header Screen", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GovernmentProcedureTypeHeaderScreenScreen1.Id,ScreenCode = GovernmentProcedureTypeHeaderScreenScreen1.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GovernmentProcedureTypeHeaderScreenScreen1.Id,ScreenCode = GovernmentProcedureTypeHeaderScreenScreen1.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    GovernmentProcedureTypeObjectTable.HeaderScreenId = GovernmentProcedureTypeHeaderScreenScreen1.Id;
+		    GovernmentProcedureTypeObjectTable.HeaderScreenCode = GovernmentProcedureTypeHeaderScreenScreen1.Code;
+
+	   		  
+	      
+
+	         Screen GovernmentProcedureTypeGeneralTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.GovernmentProcedureType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen2.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen2.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen2.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen2.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen2.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen2.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen2.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen2.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IsImport", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsGovernmentProcedureTypeCustomsGovernmentProcedureTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = GovernmentProcedureTypeGeneralTabScreenScreen2.Id,ScreenCode = GovernmentProcedureTypeGeneralTabScreenScreen2.Code, ObjectFieldCode = "Customs.GovernmentProcedureType.IndexOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable GovernmentProcedureTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcedureType" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode GovernmentProcedureTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GovernmentProcedureType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GovernmentProcedureTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GovernmentProcedureType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GovernmentProcedureTypeObjectTable);
+ 
+                 
+			   TextCode GovernmentProcedureTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GovernmentProcedureType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GovernmentProcedureTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GovernmentProcedureType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GovernmentProcedureTypeObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GPGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GovernmentProcedureTypeGeneralFeature_TH0.Id,FeatureUniqeCode = GovernmentProcedureTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, TabNameTextCodeId = GovernmentProcedureTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = GovernmentProcedureTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GovernmentProcedureTypeEventsFeature_TH1.Id,FeatureUniqeCode = GovernmentProcedureTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, TabNameTextCodeId = GovernmentProcedureTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = GovernmentProcedureTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable GovernmentProcedureTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcedureType" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature GovernmentProcedureTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature GovernmentProcedureTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature GovernmentProcedureTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature GovernmentProcedureTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.PackageFeature", NameTextCodeDefaultText = "GovernmentProcedureType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature GovernmentProcedureTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcedureTypeObjectTable);
+		   Feature GovernmentProcedureTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcedureTypeObjectTable);
+		   Feature GovernmentProcedureTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcedureTypeObjectTable);
+		   Feature GovernmentProcedureTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = GovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GovernmentProcedureType.Features.PackageFeature", NameTextCodeDefaultText = "GovernmentProcedureType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GovernmentProcedureTypeObjectTable);    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable GovernmentProcedureTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GovernmentProcedureType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                ShortView =  true,
+                IsManualEntry =  false,
+                LocalName =  "Created",
+                EnglishName =  "Created",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = GovernmentProcedureTypeObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Updated",
+                EnglishName =  "Updated",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = GovernmentProcedureTypeObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -555,7 +672,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

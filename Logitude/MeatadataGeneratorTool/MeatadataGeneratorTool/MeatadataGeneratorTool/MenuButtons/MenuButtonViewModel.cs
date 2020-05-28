@@ -46,8 +46,37 @@ namespace MeatadataGeneratorTool.MenuButtons
                 }
                
             }
-        } 
-        
+        }
+
+        private int width;
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+                FirePropertyChanged("Width");
+            }
+        }
+
+
+        private string htmlComponentPath;
+        public string HtmlComponentPath
+        {
+            get
+            {
+                return htmlComponentPath;
+            }
+            set
+            {
+                htmlComponentPath = value;
+                FirePropertyChanged("HtmlComponentPath");
+            }
+        }
+
         private string eventCode;
         public string EventCode
         {
@@ -221,6 +250,9 @@ namespace MeatadataGeneratorTool.MenuButtons
                     {
                         viewModel.SelectedMenuButton.MenuButtonItems = new ObservableCollection<MenuButtonViewModel>();
                     }
+
+                    if (viewModel.SelectedMenuButton.MenuButtonItems.Count > 0)
+                        this.IndexOrder = viewModel.SelectedMenuButton.MenuButtonItems.OrderByDescending(f => f.IndexOrder).FirstOrDefault().IndexOrder + 1;
                     viewModel.SelectedMenuButton.MenuButtonItems.Add(this); 
                 }
                 else

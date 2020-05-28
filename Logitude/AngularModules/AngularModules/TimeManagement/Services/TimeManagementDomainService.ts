@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {TMOfficeHourPM} from '../EntityPMs/TMOfficeHourPM';
@@ -12,20 +11,19 @@ import {TMEmployeeTimePM} from '../EntityPMs/TMEmployeeTimePM';
 @Injectable()
 
 export class TimeManagementDomainService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TimeManagementDomain';
     }
 
     GetWeeklyTimeSheetList(employeeUserId: string, locationCode: string, periodStartDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetWeeklyTimeSheetList?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
 
                 var args = new TimeManagementAPIHelper();
                 var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, args);
@@ -34,32 +32,30 @@ export class TimeManagementDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetPeriodTimeSheetList(employeeUserId: string, locationCode: string, startDate: Date, endDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetDataEntryTimeSheetList?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&startDate=" + ServiceHelper.GetDateString(startDate) + "&endDate=" + ServiceHelper.GetDateString(endDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 //var args = new TimeManagementAPIHelper();
                 //var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, args);
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetTMProjects(employeeUserId: string, locationCode: string, periodStartDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTMProjects?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
 
                 var args = new TimeManagementAPIHelper();
                 var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, args);
@@ -68,51 +64,46 @@ export class TimeManagementDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetTMProjectsByBatchTask(employeeUserId: string, fromDate: Date, toDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTMProjectsByBatchTask?employeeUserId=' + employeeUserId + "&fromDate=" + ServiceHelper.GetDateString(fromDate) + "&toDate=" + ServiceHelper.GetDateString(toDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    /////////////////////////////////////////////////////////////////////////////////////
+
     GetTMProjectsByBatchProject(employeeUserId: string , fromProject: string, toProject: string, fromDate: Date, toDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTMProjectsByBatchProject?employeeUserId=' + employeeUserId + "&fromProject=" + fromProject + "&toProject=" + toProject +"&fromDate=" + ServiceHelper.GetDateString(fromDate) +"&toDate=" + ServiceHelper.GetDateString(toDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
-
-    ///////////////////////////////////////////////////////////////////////////////////
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetNewTMProjectConnect?MainId=' + MainId + "&id=" + ConnectedId;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();               
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;               
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -134,15 +125,12 @@ export class TimeManagementDomainService {
         return entityPM;
     }
     UpdateTimeSheetList(helper: TimeManagementAPIHelper) {
-        return Observable.defer(() => 
-           { var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => 
+        {
             var mappedEntity: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(helper, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, helper);
 
@@ -150,48 +138,43 @@ export class TimeManagementDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetProjectsCounts(loggedUserId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetProjectsCounts?loggedUserId=' + loggedUserId , {
-                headers: authHeader
-            }).map(response => {
-                var allLists = response.json();
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetProjectsCounts?loggedUserId=' + loggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 return allLists;
-            });
+            }));
         });
     }
 
     DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetUpdatedTimeSheetList?Id=' + Id + "&employeeUserId=" + employeeUserId + " &locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate) + "&exitDate=" + ServiceHelper.GetDateString(exitDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, new TimeManagementAPIHelper());
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetCalculationCompleteWork() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetCalculationCompleteWork?';
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -212,60 +195,53 @@ export class TimeManagementDomainService {
 
 
     Prorate(EmployeeUserId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, { headers: authHeader }).map(response => {
-                var iResponse = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var iResponse = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = iResponse;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetVacationsSummary(Year: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetVacationsSummary?Year=' + Year;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetVacationsDetails(Year: number, Type:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetVacationsDetails?Year=' + Year + '&Type=' + Type;
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     DownloadEmployeesTimesToExcel(employeeUserId: string, locationCode: string, startDate: Date, endDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetDownloadEmployeesTimesToExcel?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&startDate=" + ServiceHelper.GetDateString(startDate) + "&endDate=" + ServiceHelper.GetDateString(endDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

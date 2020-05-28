@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewPartnerTamplate.html',    
 })
 
@@ -43,7 +43,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     public IsWarehouseTypeCodeVisible: boolean = false;
     public IsWarehouseFirmCodeVisible: boolean = false;
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();
@@ -144,13 +144,13 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 
     LoadChildComponent() {
-        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response2 => {
                 this.BuildAdditionalFields();
                 this.SimilaryCardsHeader = "Similar " + this.CardTableName + " in the system";
@@ -387,7 +387,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             if (code.length <= 4) {
 
                 if (this.PartnerTypeId == "TR") {
-                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe(myResult => {
+                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
                         if (myResult != null) {
                             this.CodeMessage = "This trucker already exists";
                             this.IsCodeAlreadyExists = true;
@@ -405,7 +405,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 }
 
                 else if (this.PartnerTypeId == "WH") {
-                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe(myResult => {
+                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
                         if (myResult != null) {
                             this.CodeMessage = "This Warehouse already exists";
                             this.IsCodeAlreadyExists = true;
@@ -776,7 +776,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
 
         else {
-            this.DomainService.GetContactsByEmail(email).subscribe(myResult => {
+            this.DomainService.GetContactsByEmail(email).subscribe((myResult:any) => {
                 if (myResult != null) {
                     this.loadedContact = myResult[0];
                     this.SetUIProperties_Contact();

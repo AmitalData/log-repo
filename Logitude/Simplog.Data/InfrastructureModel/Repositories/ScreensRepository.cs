@@ -41,10 +41,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public ScreenModification GetScreenModificationByScreen(string screenid, int tenant)
+        public ScreenModification GetScreenModificationByScreen(string screenCode, int tenant)
         {
             return (from a in context.ScreenModifications
-                    where a.ScreenId == screenid && a.Tenant == tenant
+                    where a.ScreenCode == screenCode && a.Tenant == tenant
                     select a).FirstOrDefault();
 
         }

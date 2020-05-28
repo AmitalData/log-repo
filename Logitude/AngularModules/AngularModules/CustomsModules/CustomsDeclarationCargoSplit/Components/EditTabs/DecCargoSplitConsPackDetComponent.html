@@ -56,7 +56,8 @@
 
 
                                 <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.PackageTypeCode' | TextCodeTranslationPipe" [binding]="'PackageTypeCode'"  [width]="'130'" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.PackageTypeName}}</span>
                                         </div>
@@ -72,12 +73,14 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
 
 
                                 <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.PackageQuantity' | TextCodeTranslationPipe" [binding]="'PackageQuantity'" [width]="'110'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.PackageQuantity}}</span>
                                         </div>
@@ -87,10 +90,12 @@
                                                         (LostFocus)="item.OnPackageQuantityLostFocus(logcelltemplate,PackageQuantityTextBox)" [DebounceTime]="1" (KeyUp)="item.PackageQuantityKeyUp($event,logcelltemplate,PackageQuantityTextBox)"></LogTextBox>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.GrossMassMeasure' | TextCodeTranslationPipe" [binding]="'GrossMassMeasure'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
                                         </div>
@@ -102,10 +107,12 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.MarksNumbers' | TextCodeTranslationPipe" [binding]="'MarksNumbers'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.MarksNumbers}}</span>
                                         </div>
@@ -115,10 +122,12 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.ManifestNumber' | TextCodeTranslationPipe" [binding]="'ManifestNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ManifestNumber}}</span>
                                         </div>
@@ -128,14 +137,17 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
-                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                                         <div style="width: 30px; float: right; height:20px;padding-top:3px">
                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

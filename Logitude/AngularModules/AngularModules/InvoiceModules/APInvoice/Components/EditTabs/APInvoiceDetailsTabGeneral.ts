@@ -36,7 +36,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APInvoiceDetailsTabGeneral.html',
 })
 
@@ -51,9 +51,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    InvoiceLineHeader: string;
+    accountingActivated: boolean= false;
+  
     constructor(private entityArgs: EntityArgs) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -62,10 +66,16 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen();
-
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.F.Description");
+            this.accountingActivated = true;
+        }
+        else {
+            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.O.Name");
+         }
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
-        }   
+        }
     }
 
     private SaveCompletedEvent: any = null;
@@ -151,7 +161,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
-                
+
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
 
@@ -205,8 +215,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             isEnabled = true;
                         }
                     }
-                }                
-            }            
+                }
+            }
         }
 
         this.RateIsEnabled = isEnabled;
@@ -250,7 +260,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     // LoadVatsPercentages
-    // Load Date 
+    // Load Date
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
@@ -526,6 +536,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     BuildTotalVATs() {
         this.EntityPM.TotalVATs = [];
+        var pipe = new NumbersPipe();
 
         var myDataLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(f => f.VatTypeId != null);
         if (myDataLines.length > 0) {
@@ -561,6 +572,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
                         myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                       // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
                         group_Source.push(myQroupItem);
                     }
 
@@ -574,11 +586,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
                             myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                             myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+
                             myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
 
                             var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
                             if (vatType) {
                                 myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                              //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
                                 myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
                             }
 
@@ -608,6 +622,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     record.LocalCurrencyAmount = item.LocalCurrencyAmount;
                     record.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                     record.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+
                     group_data.push(record);
                 }
             });
@@ -624,14 +639,15 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 itemTotalVAT.VatTypeName = itemVatType.EnglishName;
                 itemTotalVAT.ExternalVATCard = item.ExternalVatCard;
                 itemTotalVAT.ExternalTAXItemId = item.ExternalTAXItemId;
-                itemTotalVAT.VatPercent = AppTool.Round(item.VatTypePercentage, 2);
+                itemTotalVAT.VatPercent = AppTool.Round(item.VatTypePercentage, 3);
                 itemTotalVAT.LocalVatableAmount = AppTool.Round(item.LocalCurrencyAmount, 2);
                 itemTotalVAT.InvoiceCurrencyVatableAmount = AppTool.Round(item.InvoiceCurrencyAmount, 2);
                 itemTotalVAT.ProfitVatableAmount = AppTool.Round(item.ProfitCurrencyAmount, 2);
                 itemTotalVAT.LocalVATAmount = AppTool.Round((itemTotalVAT.LocalVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
+                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + pipe.transform(itemTotalVAT.VatPercent, "N3") + "%)";
+                itemTotalVAT.VatRecognizedPercentage = itemVatType.RecognizedPercentage/100;
                 this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
             });
         }
@@ -654,7 +670,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.SummaryItems.push(myOperatorItem);
 
                 var mySummaryItem = new SummaryItem();
-                mySummaryItem.Label = item.VatTypeCell;
+                //mySummaryItem.Label = item.VatTypeCell;
+                mySummaryItem.Label = item.VatTypeName + " (" + pipe.transform(item.VatPercent, "N3") + "%)";
                 mySummaryItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(item.LocalVATAmount, "N2") : pipe.transform(item.InvoiceCurrencyVATAmount, "N2");
                 this.SummaryItems.push(mySummaryItem);
             });
@@ -775,7 +792,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     // Properties
-    public VendorDependencyProperty1: string = InvoiceTool.GetVendorPartnerTypes();
+    public VendorDependencyProperty1: string = InvoiceTool.GetGeneralAPInvoiceVendorPartnerTypes();
 
     public glaccount: GLAccountPM = null;
     get VendorId() {
@@ -818,11 +835,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
                     this.glaccount = null;
                     this.EntityPM.VendorGLAccountId = null;
+                    this.EntityPM.VendorName = null;
+                    this.EntityPM.VendorLocalName = null;
                 }
 
                 else {
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.EnglishName;
+                    this.EntityPM.VendorLocalName = list.LocalName || list.EnglishName;
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
@@ -832,7 +852,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
-                   
+
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
@@ -929,7 +949,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    // Currency 
+    // Currency
     get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
@@ -1040,7 +1060,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     item.VatTypeId = vatType;
                 });
             }
-                        
+
             this.ComputeTotals();
         }
     }
@@ -1068,7 +1088,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
 
         var myService: CardListService = new CardListService();
-        myService.getSingle(this.VendorId).subscribe(myResult => {
+        myService.getSingle(this.VendorId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;
@@ -1235,7 +1255,7 @@ export class APInvoiceLineItem extends BaseComponent {
                 }
             }
         }
-        
+
         this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
@@ -1466,7 +1486,7 @@ export class APInvoiceLineItem extends BaseComponent {
 
     }
 
-    // ChargeType 
+    // ChargeType
     public chargesTypeList: ChargesTypeList = null;
     public Glaccount: GLAccountPM = null;
     get ChargesTypeId() {
@@ -1501,8 +1521,12 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.ChargesTypeName = this.chargesTypeList.EnglishName;
                         this.VatTypeId = this.chargesTypeList.VatTypeId;
                         this.Description = this.chargesTypeList.EnglishName;
+                        if (SessionLocator.TenantPM.AccountingActivated) {
+                            this.Description = this.chargesTypeList.Description != null ? this.chargesTypeList.Description : this.chargesTypeList.EnglishName;
+                        }
+                       
                         this.LocalDescription = this.chargesTypeList.LocalName;
-
+                        
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
                                 if (!myResponse.HasError) {
@@ -1570,7 +1594,7 @@ export class APInvoiceLineItem extends BaseComponent {
         }
 
         else {
-            this.fatherComponent.myVatTypeListService.getSingleFromCache(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
+            this.fatherComponent.myVatTypeListService.getSingle(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var list: VatTypeList = myResponse.Result;
                     if (list != null) {
@@ -1578,6 +1602,10 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.VatIsMultiPercentage = list.IsMultiPercentage;
                         //this.invoiceLinePM.ExternalVATCard = list.ExternalVATCard;
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
+                        if (list.RecognizedPercentage != null) {
+                            this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage / 100;
+                        } else { this.invoiceLinePM.VatRecognizedPercentage =  null;}
+
 
                         if (list.IsMultiPercentage) {
                             this.VatPercentage = null;
@@ -1608,7 +1636,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.invoiceLinePM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.invoiceLinePM.VatPercentage != newValue) {
-            this.invoiceLinePM.VatPercentage = AppTool.Round(newValue, 2);
+            this.invoiceLinePM.VatPercentage = AppTool.Round(newValue, 3);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
             this.SetUIProperties_VAT();
@@ -1635,6 +1663,7 @@ export class APInvoiceLineItem extends BaseComponent {
         var isMultiIconVisible = false;
         this.VatTypesGroups = [];
 
+        var pipe: NumbersPipe = new NumbersPipe();
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
 
             if (this.VatIsMultiPercentage) {
@@ -1645,7 +1674,7 @@ export class APInvoiceLineItem extends BaseComponent {
             }
 
             else if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
+                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
                 myColor = FontTool.Black;
             }
 

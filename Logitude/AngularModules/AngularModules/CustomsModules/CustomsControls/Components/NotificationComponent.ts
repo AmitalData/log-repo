@@ -29,12 +29,15 @@ import { DeclarationEditComponentController } from '../../../Customs/Controller/
 import { EntityPMService } from '../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    selector: 'NotificationComponent',
-    moduleId: module.id,
+    selector: 'NotificationComponent',    
     templateUrl: './NotificationComponent.html',
 })
 
 export class NotificationComponent extends BaseComponent implements OnInit {
+  public LayoutDirection: any;
+  public IsDisplayOnly: any;
+  public SelectedRow: any;
+
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() CustomBackFromEditevent = new EventEmitter();
     @Output() ShowHLineOverRow = new EventEmitter();
@@ -59,7 +62,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
     public DeclarationPM: DeclarationPM;
     IsDeclarationTab: boolean;
     public ExcludedItems: ObservableCollection;
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor(entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -117,7 +120,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
     ngOnInit() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response:any) => {
 
             this.IsVisible = true;
             this.BuildColumns();
@@ -1229,9 +1232,9 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101E":
                                 case "5101F":
                                     {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                                                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
                                                     this.customsCollateralPMService.get(selected.EntityId).subscribe((response: any) => {
 
                                                         var result = response.Result;
@@ -1466,7 +1469,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         //editWindow.ZIndex = 5;
         this.cd.detach();
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
             this.cd.reattach();
             this.RefreshEntity();
 
@@ -1570,7 +1573,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
@@ -1594,7 +1597,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
             var Notifications: NotificationPM[] = [];
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 Notifications = response.Result;
                
                 response.Result.forEach((value, key) => {
@@ -1660,8 +1663,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.currentSession.StartBusyIndicatorLoading();
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 
                 this.LoadNotifications();
                 this.IsSelected = false;
@@ -1684,7 +1687,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 response.Result.forEach((value, key) => {
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];
                     //var IsChecked = temp.IsChecked;
@@ -1743,7 +1746,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             }
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
@@ -1766,7 +1769,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 response.Result.forEach((value, key) => {
                 
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];
@@ -1829,7 +1832,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
@@ -1853,8 +1856,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
+            this.currentSession.StartBusyIndicatorLoading();
+            this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 response.Result.forEach((value, key) => {
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];
                     //var IsChecked = temp.IsChecked;

@@ -22,7 +22,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.LocalName = entityPM.LocalName;
             entityPOCO.Name = entityPM.Name;
             entityPOCO.Code = entityPM.Code;
-      
+            entityPOCO.ViewOrder = entityPM.ViewOrder;
         }
 
 

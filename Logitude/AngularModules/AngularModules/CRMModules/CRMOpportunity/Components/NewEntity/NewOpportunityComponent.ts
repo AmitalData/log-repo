@@ -24,7 +24,7 @@ import {OpportunityArgs} from '../../../../CRM/Args';
 
 @Component({
     selector: 'NewOpportunityComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewOpportunityComponent.html',
 })
 
@@ -37,7 +37,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     public ValidationErrorsList: Array<String> = [];
     public ScreenCode: string = "Opportunity.AdditionalFields";
     private addCustomerVisibility: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public get AddCustomerVisibility() { return this.addCustomerVisibility; }
     public set AddCustomerVisibility(value: boolean) { this.addCustomerVisibility = value; }
     public IsNew: boolean = true;
@@ -60,7 +60,7 @@ export class NewOpportunityComponent extends BaseComponent   {
                 this.EntityPM.BusinessUnitId = null;
             else {
                 var listService: UserListService = new UserListService();
-                listService.getAllFromCache().subscribe(result => {
+                listService.getAllFromCache().subscribe((result:any) => {
                     var list: UserList = result.Result.filter(p => p.Id == value)[0];
                     if (list != null)
                         this.EntityPM.BusinessUnitId = list.BusinessUnitId;
@@ -79,7 +79,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -104,7 +104,7 @@ export class NewOpportunityComponent extends BaseComponent   {
         logWindow.Width = 960;
         logWindow.Height = 580;
         logWindow.Title = windowTitle;
-        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
             logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewPotentialCustomerComponent');
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {
@@ -162,7 +162,7 @@ export class NewOpportunityComponent extends BaseComponent   {
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
 
             var cardService: CardListService = new CardListService();
-            cardService.getAll().subscribe(result => {
+            cardService.getAll().subscribe((result:any) => {
                 var list: CardList = result.Result.filter(p => p.Id == this.CustomerId)[0];
                 if (list != null) {
                     myContactId = list.PrimaryContactId;                          
@@ -206,7 +206,7 @@ export class NewOpportunityComponent extends BaseComponent   {
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;
@@ -290,7 +290,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     SetSubject() {
 
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var type: OpportunityTypeList = result.Result.filter(d => d.Id == this.OpportunityTypeId)[0];
             if (type != null) {
@@ -304,7 +304,7 @@ export class NewOpportunityComponent extends BaseComponent   {
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
@@ -388,7 +388,7 @@ export class NewOpportunityComponent extends BaseComponent   {
 
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response:any) => {
 
         });
         this.RunComponentTimer();         
@@ -404,7 +404,7 @@ export class NewOpportunityComponent extends BaseComponent   {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

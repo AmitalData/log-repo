@@ -7,8 +7,7 @@ namespace WebFreight.Web.DataContracts
 {
     public class ExportDocumentArgs
     {
-
-
+    
         public string  DocumentTypeTemplateId { get; set; }
         public int  Tenant{ get; set; }
         public string CurrentDocumentOutId { get; set; }
@@ -26,11 +25,10 @@ namespace WebFreight.Web.DataContracts
         public string ChildObjectTableId { get; set; }
         public string LoggedContactName { get; set; }
         public string AccountingCurrencyId { get; set; }
-
-
-
-
-
+        public List<string> DocumentTypeCopyIdsList { get; set; }
+        public string DocumentTypeId { get; set; }
+        public string DocumentTypeName { get; set; }
+        
 
 
     }

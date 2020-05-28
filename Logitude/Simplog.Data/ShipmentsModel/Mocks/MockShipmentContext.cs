@@ -865,5 +865,43 @@ namespace Simplog.Data.ShipmentsModel.Mocks
             }
         }
 
+        public IDbSet<CustomsTransferType> CustomsTransferTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CustomsTransferLine> CustomsTransferLines
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CustomsTransferHeader> CustomsTransferHeaders
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

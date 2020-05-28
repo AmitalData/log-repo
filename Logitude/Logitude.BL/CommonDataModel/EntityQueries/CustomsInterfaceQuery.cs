@@ -30,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         
         public IQueryable<CustomsInterfaceList> GetIQueryableEntityList(IQueryable<CustomsInterface> iQueryable)
         {
-            var result = from entity in iQueryable
+            var result = from entity in iQueryable where !entity.InActive
                          select new CustomsInterfaceList()
                          {
                              Code = entity.Code,

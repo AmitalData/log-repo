@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     //service.Update(entityPM, true);
 
                     IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.ProccessJournal(accountingContext, parameterArgs.YYyear, parameterArgs.Tenant);
+                    journal = yearTransferService.ProccessJournal(accountingContext, parameterArgs.YYyear, parameterArgs.Tenant, parameterArgs.UserId);
                     bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
                     var parser = new JournalApproveParser(journal, false,
                     AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
@@ -72,6 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         
         public int Tenant { get; set; }
         public int YYyear { get; set; }
+        public string UserId { get; set; }
     }
 
 }

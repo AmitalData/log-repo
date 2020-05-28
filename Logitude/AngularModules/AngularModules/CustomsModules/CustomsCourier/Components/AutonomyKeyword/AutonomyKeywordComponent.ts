@@ -24,7 +24,6 @@ import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/Controls
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AutonomyKeywordComponent.html',
 })
 

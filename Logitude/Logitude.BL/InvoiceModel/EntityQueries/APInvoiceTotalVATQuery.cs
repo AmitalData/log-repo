@@ -98,6 +98,31 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).ToList();
         }
 
+        public List<APInvoiceTotalVATPM> GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(string invoiceId, int tenant)
+        {
+           List<APInvoiceTotalVAT> totalVats= repository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(invoiceId, tenant);
+
+            return (from a in totalVats
+                    select new APInvoiceTotalVATPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        APInvoiceId = a.APInvoiceId,
+                        ExternalVATCard = a.ExternalVATCard,
+                        ExternalTAXItemId = a.ExternalTAXItemId,
+                        InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
+                        InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
+                        LocalVatableAmount = a.LocalVatableAmount,
+                        LocalVATAmount = a.LocalVATAmount,
+                        ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
+                        ProfitVatableAmount = a.ProfitVatableAmount,
+                        VatTypeId = a.VatTypeId,
+                        VatRecognizedPercentage = a.VatType == null ? null : a.VatType.RecognizedPercentage,
+                        VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                        VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                    }).ToList();
+        }
+
 
     }
 }

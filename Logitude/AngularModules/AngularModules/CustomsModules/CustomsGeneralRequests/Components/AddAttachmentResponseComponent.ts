@@ -24,7 +24,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 @Component({
     selector: 'AddAttachmentResponseComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddAttachmentResponseComponent.html',
 })
 

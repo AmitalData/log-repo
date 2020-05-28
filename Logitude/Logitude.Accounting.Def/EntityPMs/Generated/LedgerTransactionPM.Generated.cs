@@ -1193,6 +1193,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool inProgressExternalReconcile ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InProgressExternalReconcile  
+	   {
+	    
+	     get
+		{
+		   return inProgressExternalReconcile;
+		 }
+		 set
+		 {
+		   if(inProgressExternalReconcile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InProgressExternalReconcile",OldValue=inProgressExternalReconcile,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inProgressExternalReconcile=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

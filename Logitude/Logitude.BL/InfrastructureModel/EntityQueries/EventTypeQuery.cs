@@ -68,6 +68,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsCustomerView = a.IsCustomerView,
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
+                                                  CustomField = a.CustomField,
+
+                                                  
                                               });
 
                         foreach (var s in entitystatuses)
@@ -119,6 +122,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsCustomerView = a.IsCustomerView,
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
+                                  CustomField = a.CustomField,
+
                               }).FirstOrDefault();
                 }
 
@@ -157,6 +162,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsCustomerView = a.IsCustomerView,
                                                      IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                      AllowedInAutomation = a.AllowedInAutomation,
+                                                     CustomField = a.CustomField,
+
                                                  };
             return eventTypes;
         }
@@ -202,6 +209,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsCustomerView = a.IsCustomerView,
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
+                                                  CustomField = a.CustomField,
+
                                               });
 
                         foreach (var s in entitystatuses)
@@ -251,6 +260,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsCustomerView = a.IsCustomerView,
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
+                                  CustomField = a.CustomField,
+
                               }).FirstOrDefault();
                 }
 
@@ -299,6 +310,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsCustomerView = a.IsCustomerView,
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
+                                                  CustomField = a.CustomField,
+
                                               });
 
                         foreach (var s in entitystatuses)
@@ -348,6 +361,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsCustomerView = a.IsCustomerView,
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
+                                  CustomField = a.CustomField,
+
                               }).FirstOrDefault();
                 }
                 return entity;
@@ -399,6 +414,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsCustomerView = eventType.IsCustomerView,
                                                    IsSharedLogisticsEnabled = eventType.IsSharedLogisticsEnabled,
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
+                                                   CustomField = eventType.CustomField,
+
                                                };
             return result;
         }
@@ -434,6 +451,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      EntityStatusName = a.EntityStatus != null ? a.EntityStatus.Name : null,
                                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                      AllowedInAutomation = a.AllowedInAutomation,
+                                                     CustomField = a.CustomField,
+
                                                  };
             return eventTypes;
         }

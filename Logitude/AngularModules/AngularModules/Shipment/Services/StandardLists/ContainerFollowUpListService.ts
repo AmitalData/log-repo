@@ -1,48 +1,49 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ContainerFollowUpList} from '../../EntityLists/ContainerFollowUpList';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ContainerFollowUpList } from '../../EntityLists/ContainerFollowUpList';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
 export class ContainerFollowUpListService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<ContainerFollowUpList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ContainerFollowUpViews';
     }
 
     getSingle(id: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
 
-                var list = response.json();
+                        var list = response.body;
 
-                var entity: ContainerFollowUpList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
+                        var entity: ContainerFollowUpList;
+                        if (list) {
+                            entity = this.MapJsonToEntityList(list);
+                        }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSingleList", 'id=' + id);
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetSingleList", 'id=' + id);
 
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+                        return serviceResponse;
+                    }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -76,36 +77,34 @@ export class ContainerFollowUpListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
+
+        var callUrl = this._apiUrl.concat(urlparameters);
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(
+                map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-                var _mappedListsArray: Array<ContainerFollowUpList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = response.body;
+                    var _mappedListsArray: Array<ContainerFollowUpList> = [];
+                    if (serviceResponse.Result) {
+                        for (var key in serviceResponse.Result) {
 
-                        var entity: ContainerFollowUpList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
+                            var entity: ContainerFollowUpList;
+                            entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                            _mappedListsArray.push(entity);
 
+                        }
                     }
-                }
 
-                serviceResponse.Result = _mappedListsArray;
+                    serviceResponse.Result = _mappedListsArray;
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ContainerFollowUp", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
 
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,11 +12,11 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerBillingTabComponent.html',
 })
 
-export class CustomerBillingTabComponent extends BaseComponent implements OnInit {
+export class CustomerBillingTabComponent extends BaseComponent implements OnInit,AfterViewInit {
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     public DataContext = this;
@@ -25,7 +25,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
 
-    @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
@@ -49,11 +49,18 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.Listen();
     }
 
-    ngOnInit() {
+    ngAfterViewInit(): void {
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
         this.RunComponent();
         this.LoadCreditLimitData();
+    }
+
+    ngOnInit() {
+        // this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        // this.SetUIProperties();
+        // this.RunComponent();
+        // this.LoadCreditLimitData();
     }
 
     RunComponent() {
@@ -76,7 +83,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

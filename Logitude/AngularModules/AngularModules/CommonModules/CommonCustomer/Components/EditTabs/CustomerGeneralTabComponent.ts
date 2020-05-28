@@ -44,7 +44,7 @@ import {CustomerFieldsUpdateSettingList} from '../../../../Common/EntityLists/Cu
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerGeneralTabComponent.html',
     providers: [ImageLibraryService, EntityPMService]
 })
@@ -69,8 +69,9 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     LogoInput: string = Guid.NewRandomString();
     IsShowMessageComplate: boolean = false;
     IsShowProgressLoading: boolean = false;
+    IsCustomer: boolean = false;
     public ScreenCode: string = "Customer.AdditionalFields";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
@@ -80,6 +81,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.IndustryId = this.EntityPM.IndustryId;
         this.EntityName = "Customer";
         this.EntityId = this.EntityPM.Id;
+        this.IsCustomer = this.EntityPM.IsCustomer;
         this.LeadSourceId = this.EntityPM.LeadSourceId;
 
         this.Listen();
@@ -91,7 +93,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             }
         });
 
-        this.customerFieldsUpdateSettingListService.getAll().subscribe(response => {
+        this.customerFieldsUpdateSettingListService.getAll().subscribe((response:any) => {
             if (!response.HasError) {
                 this.customerFieldsUpdateSettingList = response.Result;
             }
@@ -105,7 +107,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.AllCompetitors = new Array<CompetitorList>();
 
         this.rankListService = new RankListService();
-        this.rankListService.getAllFromCache().subscribe(result => {
+        this.rankListService.getAllFromCache().subscribe((result:any) => {
             this.RankListArr = result.Result;
         });
     }   
@@ -153,7 +155,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -211,7 +213,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public Services: Array<ServiceViewModelData> = [];
     GetAdditionalSerivceList() {
         var AddtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-        AddtionalService.getAllFromCache().subscribe(result => {
+        AddtionalService.getAllFromCache().subscribe((result:any) => {
             this.ToggleButtonListService = [];
             this.ToggleButtonListService = result.Result.filter(s => !s.InActive);
             this.ToggleButtonListService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
@@ -248,7 +250,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public AllCompetitors: Array<CompetitorList> = [];
     GetCompetitorList() {
         var competitorListService: CompetitorListService = new CompetitorListService();
-        competitorListService.getAll().subscribe(result => {
+        competitorListService.getAll().subscribe((result:any) => {
             this.AllCompetitors = result.Result;
 
             this.BuildCompetitorToggleButtonList();
@@ -653,7 +655,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         editWindow.Height = 350;
         editWindow.WindowArgs = item;
         this.Clone(item);
-        editWindow.WindowClosed.subscribe(result => {
+        editWindow.WindowClosed.subscribe((result:any) => {
             if (result == "Cancel") {
                 this.RejectChanges();
             }
@@ -1097,6 +1099,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public set MediatorId(value: string) {
         if (this.EntityPM.MediatorId != value) {
             this.EntityPM.MediatorId = value;
+        }
+    }
+
+    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
+    set StorageFreeDays(newValue: number) {
+        if (this.EntityPM.StorageFreeDays != newValue) {
+            this.EntityPM.StorageFreeDays = newValue;
         }
     }
 
@@ -1602,7 +1611,7 @@ class ServiceItemClass {
                 var type: string = null;
 
                 var addtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-                addtionalService.getSingleFromCache(this.Id).subscribe(result => {
+                addtionalService.getSingleFromCache(this.Id).subscribe((result:any) => {
                     var typeList = result.Result;
                     if (typeList != null) {
                         type = typeList.Name;

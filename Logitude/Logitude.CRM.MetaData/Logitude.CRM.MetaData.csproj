@@ -120,6 +120,56 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CRMClassesGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBTables\Activity.dxml" />
+    <None Include="DBTables\ActivityEmailRecipient.dxml" />
+    <None Include="DBTables\ActivityInvitee.dxml" />
+    <None Include="DBTables\ActivityNote.dxml" />
+    <None Include="DBTables\ActivityOwnerHistory.dxml" />
+    <None Include="DBTables\ActivityPriority.dxml" />
+    <None Include="DBTables\ActivityStatus.dxml" />
+    <None Include="DBTables\ActivityTimeType.dxml" />
+    <None Include="DBTables\ActivityType.dxml" />
+    <None Include="DBTables\CallType.dxml" />
+    <None Include="DBTables\Correspondence.dxml" />
+    <None Include="DBTables\CorrespondencesAttachment.dxml" />
+    <None Include="DBTables\CRMFilterSetting.dxml" />
+    <None Include="DBTables\EmployeeGroup.dxml" />
+    <None Include="DBTables\EmployeeGroupLine.dxml" />
+    <None Include="DBTables\EscalationActionTimeIndicator.dxml" />
+    <None Include="DBTables\EscalationPreDefinition.dxml" />
+    <None Include="DBTables\Occasion.dxml" />
+    <None Include="DBTables\OccasionInvitee.dxml" />
+    <None Include="DBTables\OccasionStatus.dxml" />
+    <None Include="DBTables\OccasionType.dxml" />
+    <None Include="DBTables\Opportunity.dxml" />
+    <None Include="DBTables\OpportunityAdditionalService.dxml" />
+    <None Include="DBTables\OpportunityClosingReason.dxml" />
+    <None Include="DBTables\OpportunityCompetitor.dxml" />
+    <None Include="DBTables\OpportunityCompetitorProduct.dxml" />
+    <None Include="DBTables\OpportunityProduct.dxml" />
+    <None Include="DBTables\OpportunityProductLocation.dxml" />
+    <None Include="DBTables\OpportunityStage.dxml" />
+    <None Include="DBTables\OpportunityType.dxml" />
+    <None Include="DBTables\Questionnaire.dxml" />
+    <None Include="DBTables\QuestionnaireAnswer.dxml" />
+    <None Include="DBTables\QuestionnaireAnswerLine.dxml" />
+    <None Include="DBTables\QuestionnaireQuestion.dxml" />
+    <None Include="DBTables\Rating.dxml" />
+    <None Include="DBTables\SLAEscalation.dxml" />
+    <None Include="DBTables\SLAEscalationRecepient.dxml" />
+    <None Include="DBTables\SLAHeader.dxml" />
+    <None Include="DBTables\SLALine.dxml" />
+    <None Include="DBTables\Stage.dxml" />
+    <None Include="DBTables\SupportMailbox.dxml" />
+    <None Include="DBTables\Ticket.dxml" />
+    <None Include="DBTables\TicketClassification.dxml" />
+    <None Include="DBTables\TicketCreatedByType.dxml" />
+    <None Include="DBTables\TicketEscalation.dxml" />
+    <None Include="DBTables\TicketSeverity.dxml" />
+    <None Include="DBTables\TicketSource.dxml" />
+    <None Include="DBTables\TicketStage.dxml" />
+    <None Include="DBTables\TicketType.dxml" />
+    <None Include="DBTables\TimeUnit.dxml" />
     <None Include="EntityFiles\Activity.lxml" />
     <None Include="EntityFiles\ActivityEmailRecipient.lxml" />
     <None Include="EntityFiles\ActivityInvitee.lxml" />
@@ -134,6 +184,9 @@
     <None Include="EntityFiles\EmployeeGroupLine.lxml" />
     <None Include="EntityFiles\EscalationActionTimeIndicator.lxml" />
     <None Include="EntityFiles\EscalationPreDefinition.lxml" />
+    <None Include="EntityFiles\OccasionInvitee.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\Occasion.lxml" />
     <None Include="EntityFiles\OccasionStatus.lxml" />
     <None Include="EntityFiles\OccasionType.lxml" />
@@ -166,6 +219,7 @@
     </None>
     <None Include="EntityFiles\SLALine.lxml" />
     <None Include="EntityFiles\Stage.lxml" />
+    <None Include="EntityFiles\SupportMailbox.lxml" />
     <None Include="EntityFiles\Ticket.lxml" />
     <None Include="EntityFiles\TicketClassification.lxml" />
     <None Include="EntityFiles\Correspondence.lxml">
@@ -178,6 +232,9 @@
     <None Include="EntityFiles\TicketStage.lxml" />
     <None Include="EntityFiles\TicketType.lxml" />
     <None Include="EntityFiles\TimeUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\OccasionContact.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

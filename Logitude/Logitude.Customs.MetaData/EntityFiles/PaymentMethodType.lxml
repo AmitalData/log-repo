@@ -1,13 +1,620 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;4b89570b-8a93-41fd-8cc3-9287ee04120d&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" DBTableName="&quot;Customs.PaymentMethodTypes&quot;" ObjectTableSingular="&quot;Payment Method Type&quot;" ObjectTablePlural="&quot;Payment Method Types&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Payment Method Type&quot;" Code="&quot;9354&quot;" Name="&quot;Customs.PaymentMethodType Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;0fa83cb7-0d76-4f6b-acf0-310ccb677b57&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="3" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="3" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;d7df2f4d-2940-4fb8-b779-e9f5b65bfbc2&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;a71c93e3-1291-4007-9ec8-97afbb906fcb&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;b35f36a9-171b-468b-9eec-f49bcb80bef3&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;SearchFields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;59657c0d-ad0e-400c-b23b-16da71bee927&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;4b89570b-8a93-41fd-8cc3-9287ee04120d&quot;"
+  ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+  DBTableName="&quot;Customs.PaymentMethodTypes&quot;"
+  ObjectTableSingular="&quot;Payment Method Type&quot;"
+  ObjectTablePlural="&quot;Payment Method Types&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Payment Method Type&quot;"
+  Code="&quot;PAMT&quot;"
+  Name="&quot;Customs.PaymentMethodType&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;0fa83cb7-0d76-4f6b-acf0-310ccb677b57&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="3"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="3"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;d7df2f4d-2940-4fb8-b779-e9f5b65bfbc2&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;a71c93e3-1291-4007-9ec8-97afbb906fcb&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;b35f36a9-171b-468b-9eec-f49bcb80bef3&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;SearchFields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;59657c0d-ad0e-400c-b23b-16da71bee927&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PaymentMethodType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,מס&quot;ב הכנסה&quot;"
+      Inactive="false"
+      LocalName="&quot;מס&quot;ב הכנסה&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      SearchFields="&quot;10,רכב נכים אוצר&quot;"
+      Inactive="false"
+      LocalName="&quot;רכב נכים אוצר&quot;" />
+    <Record
+      Code="&quot;100&quot;"
+      SearchFields="&quot;100,העברה בנקאית - אשראי&quot;"
+      Inactive="false"
+      LocalName="&quot;העברה בנקאית - אשראי&quot;" />
+    <Record
+      Code="&quot;101&quot;"
+      SearchFields="&quot;101,ניצול פקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצול פקדון&quot;" />
+    <Record
+      Code="&quot;102&quot;"
+      SearchFields="&quot;102,החזר בסילוקין דרך חשכ&quot;ל&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר בסילוקין דרך חשכ&quot;ל&quot;" />
+    <Record
+      Code="&quot;103&quot;"
+      SearchFields="&quot;103,החזר ערבות ממומשת&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר ערבות ממומשת&quot;" />
+    <Record
+      Code="&quot;104&quot;"
+      SearchFields="&quot;104,אשראי אינטרנט&quot;"
+      Inactive="false"
+      LocalName="&quot;אשראי אינטרנט&quot;" />
+    <Record
+      Code="&quot;105&quot;"
+      SearchFields="&quot;105,ניצול עיקול&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצול עיקול&quot;" />
+    <Record
+      Code="&quot;11&quot;"
+      SearchFields="&quot;11,רכב נכים ביטוח לאומי&quot;"
+      Inactive="false"
+      LocalName="&quot;רכב נכים ביטוח לאומי&quot;" />
+    <Record
+      Code="&quot;12&quot;"
+      SearchFields="&quot;12,חילוט פיקדון&quot;"
+      Inactive="false"
+      LocalName="&quot;חילוט פיקדון&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      SearchFields="&quot;13,משרד הבטחון&quot;"
+      Inactive="false"
+      LocalName="&quot;משרד הבטחון&quot;" />
+    <Record
+      Code="&quot;14&quot;"
+      SearchFields="&quot;14,רכב נכים-פ.איבה&quot;"
+      Inactive="false"
+      LocalName="&quot;רכב נכים-פ.איבה&quot;" />
+    <Record
+      Code="&quot;15&quot;"
+      SearchFields="&quot;15,כרטיס אשראי&quot;"
+      Inactive="false"
+      LocalName="&quot;כרטיס אשראי&quot;" />
+    <Record
+      Code="&quot;16&quot;"
+      SearchFields="&quot;16,יצירת תב. מזורזת&quot;"
+      Inactive="false"
+      LocalName="&quot;יצירת תב. מזורזת&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      SearchFields="&quot;2,קופה&quot;"
+      Inactive="false"
+      LocalName="&quot;קופה&quot;" />
+    <Record
+      Code="&quot;20&quot;"
+      SearchFields="&quot;20,החזר הנהלה&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר הנהלה&quot;" />
+    <Record
+      Code="&quot;21&quot;"
+      SearchFields="&quot;21,החזר מס&quot;ב&quot;"
+      Inactive="false"
+      LocalName="&quot;החזר מס&quot;ב&quot;" />
+    <Record
+      Code="&quot;23&quot;"
+      SearchFields="&quot;23,אולם נוסעים&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם נוסעים&quot;" />
+    <Record
+      Code="&quot;24&quot;"
+      SearchFields="&quot;24,א. נוסעים&quot;"
+      Inactive="false"
+      LocalName="&quot;א. נוסעים&quot;" />
+    <Record
+      Code="&quot;28&quot;"
+      SearchFields="&quot;28,ממ&quot;ן החזרים&quot;"
+      Inactive="false"
+      LocalName="&quot;ממ&quot;ן החזרים&quot;" />
+    <Record
+      Code="&quot;29&quot;"
+      SearchFields="&quot;29,ממ&quot;ן הכנסה&quot;"
+      Inactive="false"
+      LocalName="&quot;ממ&quot;ן הכנסה&quot;" />
+    <Record
+      Code="&quot;3&quot;"
+      SearchFields="&quot;3,פקודות להעברה&quot;"
+      Inactive="false"
+      LocalName="&quot;פקודות להעברה&quot;" />
+    <Record
+      Code="&quot;32&quot;"
+      SearchFields="&quot;32,עיקול לחובת גורם&quot;"
+      Inactive="false"
+      LocalName="&quot;עיקול לחובת גורם&quot;" />
+    <Record
+      Code="&quot;33&quot;"
+      SearchFields="&quot;33,עיקול לזכות גורם&quot;"
+      Inactive="false"
+      LocalName="&quot;עיקול לזכות גורם&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      SearchFields="&quot;4,הלוואות מע&quot;מ&quot;"
+      Inactive="false"
+      LocalName="&quot;הלוואות מע&quot;מ&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      SearchFields="&quot;5,קרן מיוחדת&quot;"
+      Inactive="false"
+      LocalName="&quot;קרן מיוחדת&quot;" />
+    <Record
+      Code="&quot;50&quot;"
+      SearchFields="&quot;50,רטרו/חילוט&quot;"
+      Inactive="false"
+      LocalName="&quot;רטרו/חילוט&quot;" />
+    <Record
+      Code="&quot;51&quot;"
+      SearchFields="&quot;51,ניצול מימוש ערבות (שיוך)&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצול מימוש ערבות (שיוך)&quot;" />
+    <Record
+      Code="&quot;52&quot;"
+      SearchFields="&quot;52,מימוש ערבות&quot;"
+      Inactive="false"
+      LocalName="&quot;מימוש ערבות&quot;" />
+    <Record
+      Code="&quot;55&quot;"
+      SearchFields="&quot;55,חבילת שי&quot;"
+      Inactive="false"
+      LocalName="&quot;חבילת שי&quot;" />
+    <Record
+      Code="&quot;56&quot;"
+      SearchFields="&quot;56,נעמן החזרים&quot;"
+      Inactive="false"
+      LocalName="&quot;נעמן החזרים&quot;" />
+    <Record
+      Code="&quot;57&quot;"
+      SearchFields="&quot;57,נעמן הכנסה&quot;"
+      Inactive="false"
+      LocalName="&quot;נעמן הכנסה&quot;" />
+    <Record
+      Code="&quot;70&quot;"
+      SearchFields="&quot;70,ויזה&quot;"
+      Inactive="false"
+      LocalName="&quot;ויזה&quot;" />
+    <Record
+      Code="&quot;71&quot;"
+      SearchFields="&quot;71,ישרכארט&quot;"
+      Inactive="false"
+      LocalName="&quot;ישרכארט&quot;" />
+    <Record
+      Code="&quot;72&quot;"
+      SearchFields="&quot;72,לאומי קארד&quot;"
+      Inactive="false"
+      LocalName="&quot;לאומי קארד&quot;" />
+    <Record
+      Code="&quot;73&quot;"
+      SearchFields="&quot;73,דינרס&quot;"
+      Inactive="false"
+      LocalName="&quot;דינרס&quot;" />
+    <Record
+      Code="&quot;74&quot;"
+      SearchFields="&quot;74,ויזה-אינטרנט&quot;"
+      Inactive="false"
+      LocalName="&quot;ויזה-אינטרנט&quot;" />
+    <Record
+      Code="&quot;75&quot;"
+      SearchFields="&quot;75,ישרכארט אינטרנט&quot;"
+      Inactive="false"
+      LocalName="&quot;ישרכארט אינטרנט&quot;" />
+    <Record
+      Code="&quot;76&quot;"
+      SearchFields="&quot;76,לאומי אינטרנט&quot;"
+      Inactive="false"
+      LocalName="&quot;לאומי אינטרנט&quot;" />
+    <Record
+      Code="&quot;77&quot;"
+      SearchFields="&quot;77,העברה בנקאית&quot;"
+      Inactive="false"
+      LocalName="&quot;העברה בנקאית&quot;" />
+    <Record
+      Code="&quot;78&quot;"
+      SearchFields="&quot;78,העברת זהב&quot;"
+      Inactive="false"
+      LocalName="&quot;העברת זהב&quot;" />
+    <Record
+      Code="&quot;79&quot;"
+      SearchFields="&quot;79,ניצול העברת זהב&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצול העברת זהב&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      SearchFields="&quot;8,קרן הבאהיים&quot;"
+      Inactive="false"
+      LocalName="&quot;קרן הבאהיים&quot;" />
+    <Record
+      Code="&quot;88&quot;"
+      SearchFields="&quot;88,יצירת קרן&quot;"
+      Inactive="false"
+      LocalName="&quot;יצירת קרן&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      SearchFields="&quot;9,רכב נכים ביטחון&quot;"
+      Inactive="false"
+      LocalName="&quot;רכב נכים ביטחון&quot;" />
+    <Record
+      Code="&quot;99&quot;"
+      SearchFields="&quot;99,לאישור הסוכן&quot;"
+      Inactive="false"
+      LocalName="&quot;לאישור הסוכן&quot;" />
+    <Record
+      Code="&quot;999&quot;"
+      SearchFields="&quot;999,סעיף טכני&quot;"
+      Inactive="false"
+      LocalName="&quot;סעיף טכני&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PaymentMethodType&quot;"
+    ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PaymentMethodType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PAMT&quot;"
+    QueryGroupName="&quot;Customs.PaymentMethodType&quot;"
+    LocalTextCode="&quot;סוג אמצעי תשלום&quot;"
+    TextCode="&quot;Payment Method Types&quot;"
+    TextCodeCode="&quot;Customs.PaymentMethodType.Q.PaymentMethodTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PAYMENTMETHODTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PaymentMethodType.Features.PaymentMethodTypes&quot;"
+    FeatureDefaultText="&quot;Payment Method Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PaymentMethodType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PaymentMethodType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PaymentMethodType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PaymentMethodType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.PaymentMethodType&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.PaymentMethodType&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

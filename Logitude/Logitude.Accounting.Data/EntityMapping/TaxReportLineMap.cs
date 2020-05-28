@@ -60,6 +60,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsManuallyChanged).HasColumnName("IsManuallyChanged");
 
             this.Property(t => t.IsEquipment).HasColumnName("IsEquipment");
+
+            this.Property(t => t.IsExternalLine).HasColumnName("IsExternalLine");
+
+            this.Property(t => t.TotalInvoiceAmount).HasColumnName("TotalInvoiceAmount").HasPrecision(16, 2);
         }
     }
 }

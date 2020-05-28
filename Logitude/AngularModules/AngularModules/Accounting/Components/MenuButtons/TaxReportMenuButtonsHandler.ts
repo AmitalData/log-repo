@@ -54,6 +54,16 @@ export class TaxReportMenuButtonsHandler {
                                 }
                                 break;
                             }
+
+                        case "TRDL": {
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                            break;
+                        }
                     }
                 }
             }
@@ -109,7 +119,7 @@ export class TaxReportMenuButtonsHandler {
 
 
                     //this.CurrentSession.StartBusyIndicatorLoading();
-                    //this._TaxReportExtendedPMService.DownloadPNC874File(this.EntityPM).subscribe(myResult => {
+                    //this._TaxReportExtendedPMService.DownloadPNC874File(this.EntityPM).subscribe((myResult:any) => {
                     //  var mm: ServiceResponse = myResult;
                     //  var entity = mm.Result;
 

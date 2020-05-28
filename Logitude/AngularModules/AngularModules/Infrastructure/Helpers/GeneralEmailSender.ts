@@ -33,7 +33,6 @@ export class GeneralEmailSender {
     DocumentTypeLists: DocumentTypeList[];
     EntityPM: any;
     ToSpecificeEmail: string = "";
-    ExportQuotationsToIntegratedSystem: boolean;
     Subject: string;
     Replyto: string;
     From: string;
@@ -61,7 +60,7 @@ export class GeneralEmailSender {
         this.IsCrm = isCrm;
         this.EventTypeCode = eventTypeCode;
         this.ToSpecificeEmail = "";
-        this.ExportQuotationsToIntegratedSystem = false;
+
     }
 
 
@@ -118,14 +117,14 @@ export class GeneralEmailSender {
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
 
-            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
                     documentTypeList = myResult.filter(d => d.Code == this.DocumentTypeCode)[0];
                     if (documentTypeList) {
                         var documentOutPMService = new DocumentOutPMService();
-                        documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.CurrentEntityId, SessionInfo.LoggedUserTenant, "", documentTypeList.Id).subscribe(res => {
+                        documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.CurrentEntityId, SessionInfo.LoggedUserTenant, "", documentTypeList.Id).subscribe((res:any) => {
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
                                 var myResult = pmResponse.Result;
@@ -133,7 +132,7 @@ export class GeneralEmailSender {
                                 documentOutPM = myResult;
 
                                 if (!documentOutPM) {
-                                    documentOutPMService.getCreateDocumentOut(documentTypeList.Id, this.CurrentEntityId, "", "", this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+                                    documentOutPMService.getCreateDocumentOut(documentTypeList.Id, this.CurrentEntityId, "", "", this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                                         var pmResponse: ServiceResponse = res;
                                         if (!pmResponse.HasError) {
                                             var myResult = pmResponse.Result;
@@ -175,7 +174,7 @@ export class GeneralEmailSender {
 
         var documentTypePM = null;
         this.documentTypePMService = new DocumentTypePMExtendedService();
-        this.documentTypePMService.getSingleDocumentType(documentTypeList.Id, documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this.documentTypePMService.getSingleDocumentType(documentTypeList.Id, documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -217,7 +216,7 @@ export class GeneralEmailSender {
         SelectedInternalDocument.EventRefreshName = this.EventRefreshName;
         SelectedInternalDocument.AttachmentsLists = this.Attachments;
         SelectedInternalDocument.ToSpecificeEmail = this.ToSpecificeEmail;
-        SelectedInternalDocument.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
+
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;

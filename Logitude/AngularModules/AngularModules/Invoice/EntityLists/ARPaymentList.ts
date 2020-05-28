@@ -18,6 +18,7 @@ export class ARPaymentList {
 		LocalCurrencyCode: string;
 		AmountInLocalCurrency: number;
 		BranchId: string;
+		BranchName: string;
 		BillToId: string;
 		ARAccountId: string;
 		StatusCode: string;
@@ -40,6 +41,7 @@ export class ARPaymentList {
 		AmountInProfitCurrency: number;
 		InvoiceNumbers: string;
 		BillToName: string;
+		BillToLocalName: string;
 		PaymentCurrencyCode: string;
 		CreatedByUserName: string;
 		StatusName: string;
@@ -47,6 +49,7 @@ export class ARPaymentList {
 		ARAccountName: string;
 		CreditAccountName: string;
 		OpenAmount: number;
+		OpenAmountInLocalCurrency: number;
 		ChequeOrPaymentRef: string;
 		Bank: string;
 		BankBranch: string;
@@ -71,17 +74,31 @@ export class ARPaymentList {
 		TransmissionError: string;
 		BankAccountLiteId: string;
 		BankAccountName: string;
+		AccountingCancelationDate: Date;
+		CancelationNotes: string;
+		VoidedByJournalNumber: string;
 		MetodoPagoCode: string;
 		TipoCadenaPago: string;
 		CertPago: string;
 		CadPago: string;
 		SelloPago: string;
-		BranchName: string;
 		SATApprovalDate: Date;
 		ApprovedDate: Date;
 		ApprovedByUserId: string;
 		FirstApproveDate: Date;
 		IsFullAccounting: boolean;
 		FechaPago: Date;
+		CreatedByPartner: string;
+		IsPaymentNumberManuallySet: boolean;
+		Field1: string;
+		Field2: string;
+		Field3: string;
+		Field4: string;
+		Field5: string;
+		Field6: string;
+		Field7: string;
+		Field8: string;
+		Field9: string;
+		Field10: string;
 	
 }

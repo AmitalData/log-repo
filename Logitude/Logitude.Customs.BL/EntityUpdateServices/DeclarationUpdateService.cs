@@ -64,7 +64,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.CreateDateTime = DateTime.Now;
             }
-            //entityPM.AvailabilityDate = null;
+
+           
+
             ICustomContext context = MainContext as CustomContext;
             if (string.IsNullOrWhiteSpace(entityPM.ImporterTypeCode)) entityPM.ImporterTypeCode = "1";
             if (string.IsNullOrWhiteSpace(entityPM.TransferImporterTypeCode)) entityPM.TransferImporterTypeCode = "1";
@@ -95,7 +97,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     PackageMeasureQualifierCode = "2",
                     Tenant = entityPM.Tenant,
                     LineNumber = 1,
-
+                    PackageQuantity = 33,
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
 

@@ -227,7 +227,8 @@
                                                             <!-- SealNumber -->
                                                             <log-column [header]="'Customs.CargoSeal.F.SealNumber' | TextCodeTranslationPipe"
                                                                         [binding]="'SealNumber'" [width]="'100'" [Alignment]="'right'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.SealNumber}}</span>
                                                                     </div>
@@ -238,12 +239,14 @@
 
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- SealTypeCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.SealTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'SealTypeCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.SealTypeName}}</span>
                                                                     </div>
@@ -259,12 +262,14 @@
                                                                         </LogLov>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- SealCompletenessStateCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.SealCompletenessStateCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'SealCompletenessStateCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.SealCompletenessStateName}}</span>
                                                                     </div>
@@ -280,12 +285,14 @@
                                                                         </LogLov>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- UpdateReasonCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateReasonCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateReasonCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.UpdateReasonName}}</span>
                                                                     </div>
@@ -301,19 +308,42 @@
                                                                         </LogLov>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
-                                                            <!-- UpdateTypeCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
+                                                            [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
+                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.UpdateTypeName}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogLov [ObjectFieldName]="'UpdateTypeCode'"
+                                                            [ObjectTableName]="'Customs.AmendmentType'"
+                                                            [DataContext]="item"
+                                                            [LookUpTableName]="'Customs.AmendmentType'"
+                                                            (SelectedItemChanged)="item.SetLocalName($event,'UpdateTypeName')"
+                                                            [HideColumns]="true"
+                                                            [FocusOnMe]="true"
+                                                            [SelectedValue]="item.UpdateTypeCode">
+                                                    </LogLov>
+                                                        </div>
+                                                    </log-cell-template>
+</ng-template>
+                                                </log-column>
+
+
+                                                            <!-- UpdateTypeCode -->
+                                                            <!-- <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
-                                                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
                                                                     <div  class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode || item.CanToAdd!=false">
                                                                         <span>{{item.UpdateTypeName}}</span>
                                                                     </div>
                                                                     <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
-                                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="item.SetLocalName($event,'UpdateTypeName')">
-                                                                            <option *ngFor="let c of AmendmentTypes" [value]="c.Id" [selected]="c.Id==item.UpdateTypeCode">{{c.LocalName}}</option>
-                                                                        </select>-->
+                                                                        
                                                                         <LogLov [ObjectFieldName]="'UpdateTypeCode'"
                                                                                 [ObjectTableName]="'Customs.AmendmentType'"
                                                                                 [DataContext]="item"
@@ -325,12 +355,14 @@
                                                                         </LogLov>
                                                                     </div>
                                                                 </log-cell-template>
-                                                            </log-column>
+</ng-template>
+                                                            </log-column> -->
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"
                                                                         [binding]="'Remarks'" [width]="'150'" [Alignment]="'right'" [Editable]="true">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                                         <span>{{item.Remarks}}</span>
                                                                     </div>
@@ -340,15 +372,18 @@
                                                                                     [IsMultiline]="true"></LogTextBox>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- Delete Button-->
                                                             <log-column [width]="'70'" [Alignment]="'right'" >
-                                                                <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <ng-template let-item>
+<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
                                                                     <IconButton [Name]="'Delete'" [IsSmall]="true" *ngIf="!item.Id" (click)="DeleteCargoSealCommand(item)"
                                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                         </logitude-edit-grid>

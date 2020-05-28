@@ -68,6 +68,14 @@ namespace Logitude.Accounting.BL
                 LocalName = "חפ שגוי", 
                 SearchFields = "2,Wrong VAT Number,חפ שגוי", 
 			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "7", 
+                EnglishName = "Invoice not previously reported", 
+                LocalName = " חשבונית לא דווחה בדוח קודם", 
+                SearchFields = "7, חשבונית לא דווחה בדוח קודם,Invoice not previously reported", 
+			});
 			
             return all;
        }

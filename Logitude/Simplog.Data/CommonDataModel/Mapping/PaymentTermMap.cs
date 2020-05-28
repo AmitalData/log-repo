@@ -20,6 +20,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ExternalId).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.FromDateTypeCode).IsRequired().HasMaxLength(5).IsUnicode(true);
+            this.Property(t => t.Code).HasMaxLength(4).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("PaymentTerms");
@@ -38,6 +39,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsManuallySet).HasColumnName("IsManuallySet");
             this.Property(t => t.CurrentMonth).HasColumnName("CurrentMonth");
             this.Property(t => t.FromDateTypeCode).HasColumnName("FromDateTypeCode");
+            this.Property(t => t.Code).HasColumnName("Code");
 
             this.HasRequired(t => t.FromDateType).WithMany().HasForeignKey(d => d.FromDateTypeCode);
         }

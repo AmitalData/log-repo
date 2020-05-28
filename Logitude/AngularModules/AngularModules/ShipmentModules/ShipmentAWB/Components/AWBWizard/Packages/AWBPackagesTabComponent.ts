@@ -15,7 +15,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AWBPackagesTabComponent',
     templateUrl: './AWBPackagesTabComponent.html',
 })
@@ -133,8 +133,10 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("DescriptionOfGoods", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("SLAC", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetVisibility("AWBCommodityItemNumber", this.ObjectTableName, isFieldVisible);
         this.UIProperties.SetVisibility("DescriptionOfGoods", this.ObjectTableName, isFieldVisible);
+        this.UIProperties.SetVisibility("SLAC", this.ObjectTableName, isFieldVisible);
 
         this.ItemsSource.forEach(item => {
             item.SetUIProperties();
@@ -472,6 +474,13 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
     }
 
+    get SLAC() { return this.EntityPM.SLAC; }
+    set SLAC(newValue: string) {
+        if (this.EntityPM.SLAC != newValue) {
+            this.EntityPM.SLAC = newValue;
+        }
+    }
+
     get IsDangerous() { return this.EntityPM.IsDangerous; }
     set IsDangerous(newValue: boolean) {
         if (this.EntityPM.IsDangerous != newValue) {
@@ -525,9 +534,32 @@ export class AWBPackagesTabComponent extends BaseComponent {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.Validate();
+            this.ChargeableWeight_Kg();
             this.FireWizardEvent();
             this.ComputeAWBChargeAmount();
         }
+    }
+
+    ChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+ 
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
+                switch (this.EntityPM.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
 
     get AWBChargeAmount() { return this.EntityPM.AWBChargeAmount; }
@@ -614,25 +646,25 @@ export class AWBPackagesTabComponent extends BaseComponent {
             }
         });
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            if (this.firstDigit == ".") {
-                if (!this.GrossWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
+        // if (!AppTool.IsNullOrEmpty(input)) {
+        //     if (this.firstDigit == ".") {
+        //         if (!this.GrossWeightPasted) {
+        //             input = input.replace(/\./g, '');
+        //         }
+        //         input = input.replace(/,/g, ".");
+        //     }
 
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
-            valueInserted = Number(input);
-        }
+        //     else if (this.firstDigit == "'") {
+        //         input = input.replace(/'/g, '');
+        //     }
+        //     else {
+        //         input = AppTool.Replace(input, ",", "");
+        //     }
+        //     valueInserted = Number(input);
+        // }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
+        valueInserted = AppTool.GetNumberFromText(input);
         this.EntityPM.GrossWeightEdited = !(valueComputed == valueInserted);
         this.GrossWeight = valueInserted;        
         this.ComputeTotals();
@@ -644,25 +676,25 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            if (this.firstDigit == ".") {
-                if (!this.ChargeableWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
+        // if (!AppTool.IsNullOrEmpty(input)) {
+        //     if (this.firstDigit == ".") {
+        //         if (!this.ChargeableWeightPasted) {
+        //             input = input.replace(/\./g, '');
+        //         }
+        //         input = input.replace(/,/g, ".");
+        //     }
 
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
-            valueInserted = Number(input);
-        }
+        //     else if (this.firstDigit == "'") {
+        //         input = input.replace(/'/g, '');
+        //     }
+        //     else {
+        //         input = AppTool.Replace(input, ",", "");
+        //     }
+        //     valueInserted = Number(input);
+        // }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
+        valueInserted = AppTool.GetNumberFromText(input);
         this.EntityPM.ChargeableWeightEdited = !(valueComputed == valueInserted);
         this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         this.ComputeTotals();
@@ -728,7 +760,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
 
         if (!this.EntityPM.ChargeableWeightEdited) {
-            this.EntityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 
         this.SetUIProperties();

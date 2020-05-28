@@ -16,7 +16,7 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MainMenuComponent.html',
 })
 
@@ -28,7 +28,7 @@ export class MainMenuComponent {
     private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("MainMenuContainer", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
@@ -63,9 +63,9 @@ export class MainMenuComponent {
 
 
             else {
-                if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
                     isAddingItem = true;
-                }
+                } 
             }
          
             if (isAddingItem) {
@@ -117,7 +117,7 @@ export class MainMenuComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -289,7 +289,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.TariffModule": {
-                        myComponentPath = "./TariffModule/Components/Workspaces/TariffModuleWorkspaceComponent";
+                        myComponentPath = "./TariffModule/Components/Workspaces/TariffWorkspaceComponent";
                         break;
                     }
 
@@ -332,7 +332,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Importers": {
                         ServiceLocator.SendTotangoUserActivity("Importers", "Main View");
-                        myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
+                    myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
                         break;
                     }
                     case "General.MH.Accounting": {
@@ -392,7 +392,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Customer";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -414,7 +414,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Contact";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -434,7 +434,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Customs.CustomsCollateral";
                       //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                        listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -471,7 +471,8 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Customs.PaymentOrder";
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -481,6 +482,50 @@ export class MainMenuComponent {
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
                                 });
+                            });
+                        });
+                        break;
+                    }
+
+                    case "General.MH.PhysicalChecks": {
+                        
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.PhysicalCheck";
+                        listArgs.HideBackButton = true;
+                        
+                        this._entityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            });
+                        });
+                        break;
+                    }
+                    case "General.MH.Claims": {
+                        
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.Claim";
+                        listArgs.HideBackButton = true;
+                        
+                        this._entityResourceService.getEntityResourceByTableName("Customs.Claim", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            });
                         });
                         break;
                     }
@@ -516,7 +561,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
                         //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -532,7 +577,18 @@ export class MainMenuComponent {
                         
                     case "General.MH.Tasks": {
                         ServiceLocator.SendTotangoUserActivity("Tasks", "Main View");
-                        myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
+                        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CurrentSession.DestroyMenuReferences();
+                                    this.CurrentSession.DestroyListComponentReferences();
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            //myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
+                        });
                         break;
                     }
 
@@ -543,7 +599,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "CustomsShipper";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -603,7 +659,7 @@ export class MainMenuComponent {
                                         }
                                     }
 
-                                    this._entityResourceService.getEntityResourceByTableName(objectTable.Name, 0).subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName(objectTable.Name, 0).subscribe((response:any) => {
                                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                             .then(cmpRef => {
                                                 cmpRef.instance.ComponentRef = cmpRef;

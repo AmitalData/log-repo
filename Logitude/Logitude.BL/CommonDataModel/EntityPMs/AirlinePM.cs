@@ -325,35 +325,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 cardExternalCodeByCurrencies = value;
             }
         }
-
-
-        private List<AirlineAreaPM> airlineAreas;
-        [Include]
-        [Association("AirlineAreaPM", "Id", "AirlineId")]
-        [Composition]
-        [DataMember]
-        public virtual List<AirlineAreaPM> AirlineAreas
-        {
-            get
-            {
-
-                if (this.airlineAreas == null)
-                {
-                    airlineAreas = new List<AirlineAreaPM>();
-                }
-                return this.airlineAreas;
-            }
-            set
-            {             
-                    airlineAreas = value;                
-            }
-        }
-
-
-
-
-
-
+                
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string ExternalAccountingBusinessArea { get; set; }
@@ -379,5 +351,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ImageDetailId { get; set; }
+
+        [DataMember]
+        public string GLAccountId { get; set; }
     }
 }

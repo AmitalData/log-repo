@@ -37,8 +37,7 @@ import { GenericRequestParams } from "../../../../../Customs/DataContract/Reques
 import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
  import { DeclarationEventManager } from "../../../../../Customs/Utilities/DeclarationEventManager";
 
-@Component({
-    moduleId: module.id,
+@Component({    
     templateUrl: './DeclarationAmendmentComponent.html',
     providers: [DeclarationExtendedListService, DeclarationWebService]
 })

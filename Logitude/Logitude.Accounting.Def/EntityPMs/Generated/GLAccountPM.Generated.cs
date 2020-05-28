@@ -2309,6 +2309,271 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cardCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardCode  
+	   {
+	    
+	     get
+		{
+		   return cardCode;
+		 }
+		 set
+		 {
+		   if(cardCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardCode",OldValue=cardCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cardCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partnerTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerTypeId  
+	   {
+	    
+	     get
+		{
+		   return partnerTypeId;
+		 }
+		 set
+		 {
+		   if(partnerTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerTypeId",OldValue=partnerTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partnerTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private bool allowEditChequePayToName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowEditChequePayToName  
+	   {
+	    
+	     get
+		{
+		   return allowEditChequePayToName;
+		 }
+		 set
+		 {
+		   if(allowEditChequePayToName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditChequePayToName",OldValue=allowEditChequePayToName,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowEditChequePayToName=value;
+		   }
+			
+		 }
+	   }
+	  private bool? activeForInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? ActiveForInterest  
+	   {
+	    
+	     get
+		{
+		   return activeForInterest;
+		 }
+		 set
+		 {
+		   if(activeForInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   activeForInterest=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? interestCalculationStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InterestCalculationStartDate  
+	   {
+	    
+	     get
+		{
+		   return interestCalculationStartDate;
+		 }
+		 set
+		 {
+		   if(interestCalculationStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   interestCalculationStartDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool? activeForInterestCreditInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? ActiveForInterestCreditInvoice  
+	   {
+	    
+	     get
+		{
+		   return activeForInterestCreditInvoice;
+		 }
+		 set
+		 {
+		   if(activeForInterestCreditInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   activeForInterestCreditInvoice=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<GLAccountInterestPeriodPM> gLAccountInterestPeriods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountInterestPeriodGLAccount", "Id","GLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountInterestPeriodPM> GLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if (gLAccountInterestPeriods == null)
+                 {
+                     gLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return gLAccountInterestPeriods;
+              }
+             set { gLAccountInterestPeriods = value; }
+	    }
+		   
+	   private List<GLAccountInterestPeriodPM>  deletedGLAccountInterestPeriods;
+	   public virtual List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountInterestPeriods == null)
+                 {
+                      deletedGLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return  deletedGLAccountInterestPeriods;
+              }
+             set {  deletedGLAccountInterestPeriods = value; }
+	    }
+	  	  private decimal? interestCreditLimit ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? InterestCreditLimit  
+	   {
+	    
+	     get
+		{
+		   return interestCreditLimit;
+		 }
+		 set
+		 {
+		   if(interestCreditLimit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCreditLimit",OldValue=interestCreditLimit,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   interestCreditLimit=value;
+		   }
+			
+		 }
+	   }
+	  private string nameForPrintingCheques ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NameForPrintingCheques  
+	   {
+	    
+	     get
+		{
+		   return nameForPrintingCheques;
+		 }
+		 set
+		 {
+		   if(nameForPrintingCheques != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NameForPrintingCheques",OldValue=nameForPrintingCheques,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   nameForPrintingCheques=value;
+		   }
+			
+		 }
+	   }
+	  private bool smallcashbook ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Smallcashbook  
+	   {
+	    
+	     get
+		{
+		   return smallcashbook;
+		 }
+		 set
+		 {
+		   if(smallcashbook != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Smallcashbook",OldValue=smallcashbook,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   smallcashbook=value;
+		   }
+			
+		 }
+	   }
+	  private int? minimumInterestInvoiceBilling ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MinimumInterestInvoiceBilling  
+	   {
+	    
+	     get
+		{
+		   return minimumInterestInvoiceBilling;
+		 }
+		 set
+		 {
+		   if(minimumInterestInvoiceBilling != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   minimumInterestInvoiceBilling=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

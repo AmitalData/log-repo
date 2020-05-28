@@ -2,18 +2,19 @@ import {Component,ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
- import {Headers} from '@angular/http';
+ 
  import {AppTool} from '../../../../Infrastructure/Tools';
  import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
  import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
  import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
  import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
  import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './HybridPartnerTabComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -31,7 +32,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
         this._HybridPartnerPMService = new HybridPartnerPMService(); 
         this.myentityPM = entityArgs.EntityPM;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe(myResult => {
+        myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
                 this.Source = "data:image/JPEG;base64," + myResult;
                
@@ -95,7 +96,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerUploadLogoComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var myService: WebFreightDomainService = new WebFreightDomainService();
-            myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe(myResult => {
+            myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe((myResult: ServiceResponse) => {
                 if (myResult) {
                     this.Source = "data:image/JPEG;base64," + myResult;
 
@@ -124,7 +125,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
        
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-            this._HybridPartnerPMService.insert(this.myentityPM).subscribe(myResult => {
+            this._HybridPartnerPMService.insert(this.myentityPM).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindow();

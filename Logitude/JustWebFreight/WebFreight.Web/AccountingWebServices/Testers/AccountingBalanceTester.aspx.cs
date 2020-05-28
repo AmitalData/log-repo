@@ -43,6 +43,9 @@ using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -83,6 +86,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
             _ButtonYearTransferCancel_Click,
+            _ButtonExternalReconcile_click,
+            _ButtonCardIndexNew_Click
         }
 
         //DateTime _MyDate;
@@ -93,10 +98,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //testIt.GetDataTableFromWorkSheet(null,"");
             //var s = new ClearAccountingDB();
             //s.ClearDB(1148);
+            //var a = new ReconcileOpenAmountService();
+            //var l = a.GetLedgerOpenAmountDiff(69, 2019);
+
+            //ExternalReconcileAdjustBankFees();
+            //var myWorker = new JournalApproveService.JournalApproveWorker();
+            //myWorker.CreateBatchAccountingIntegrityCheck();
             try
             {
 
-               
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -139,6 +149,21 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //_TextBoxDate.Text = "0";
                 //_LabelDate.Text = _MyDate.ToString();
             }
+
+        }
+
+        private void ExternalReconcileAdjustBankFees()
+        {
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ",DateTime.Now);
+            var aa = a.TheNewJournal;
+
+            var us = new JournalUpdateService(AccountingContext.GetContext(a.TheNewJournal.Tenant), new Dictionary<string, IContext>(), a.TheNewJournal.Tenant);
+            us.Update(a.TheNewJournal, true);
+            _LabelResult.Text = JsonConvert.SerializeObject(a.TheNewJournal); ;
 
         }
 
@@ -186,7 +211,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
                 
                 ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
-                    
+                    false,
                     param.includeAccoutingDateLTransaction,
                     
                     param.verbose);
@@ -345,7 +370,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
-
+                
 
                 var accountingIntegrityService = new AccountingIntegrityService();
 
@@ -784,8 +809,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var agingReport = new AgingReportService(myAgingReportParam);
                 var xml = agingReport.RunReport();
-                var MyPeriodList = agingReport.MyPeriodList;
-                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodList);
+                //var MyPeriodList = agingReport.MyPeriodList;
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToXmlString(agingReport.MyPeriodExtendedList);
                 _LabelResult.Text = xmlMyPeriodList;
 
                 ReloadGrid(System.Text.Encoding.UTF8.GetBytes(xml));
@@ -900,23 +925,21 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
             myLedgerTransactionCardIndexFilter.CallBack = new LedgerTransactionCardIndexFilterCallBack()
             {
-                //EndCardIndexForeign = ledgerTransactionCardIndexService.Response.EndCardIndexForeign,
-                //  StartCardIndexForeignList = ledgerTransactionCardIndexService.Response.StartCardIndexForeignList,
-                //   EndCardIndexLocal = ledgerTransactionCardIndexService.Response.EndCardIndexLocal,
-                //   Have1CurrencyIdInPeriod = ledgerTransactionCardIndexService.Response.Have1CurrencyIdInPeriod,
+                StartBalanceForeignList = ledgerTransactionCardIndexService.Response.StartBalanceForeignList,
+                EndBalanceLocal = ledgerTransactionCardIndexService.Response.EndBalanceLocal,
+                Have1CurrencyIdInPeriod = ledgerTransactionCardIndexService.Response.Have1CurrencyIdInPeriod,
                 //   MaxCreateAt = ledgerTransactionCardIndexService.Response.MaxCreateAt,
 
-                //StartCardIndexForeign = ledgerTransactionCardIndexService.Response.StartCardIndexForeign,
-                //   EndCardIndexForeignList = ledgerTransactionCardIndexService.Response.EndCardIndexForeignList,
+                EndBalanceForeignList = ledgerTransactionCardIndexService.Response.EndBalanceForeignList,
                 AllIdAccounts = ledgerTransactionCardIndexService.Response.AllIdAccounts,
-                //    OpenCardIndexForYearInLocalCurrency = ledgerTransactionCardIndexService.Response.OpenCardIndexForYearInLocalCurrency,
                 HaveAccountingQueued = ledgerTransactionCardIndexService.Response.HaveAccountingQueued,
-                //    StartCardIndexLocal = ledgerTransactionCardIndexService.Response.StartCardIndexLocal,
+                StartBalanceLocal = ledgerTransactionCardIndexService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionCardIndexService.Response.TotalRowCount,
                 SearchFields = ledgerTransactionCardIndexService.Response.SearchFields,
                 OmitAllCardIndex = ledgerTransactionCardIndexService.Response.OmitAllCardIndex,
-                //BeginOfYearLocalAmountCardIndex = ledgerTransactionCardIndexService.Response.BeginOfYearLocalAmountCardIndex,
-                //   SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionCardIndexService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+                SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionCardIndexService.Response.SuppressCumulativeDueMultiCurrencyInPeriod,
+                OpenBalanceForYearInLocalCurrency = ledgerTransactionCardIndexService.Response.OpenBalanceForYearInLocalCurrency,
+                YearTransferLedgerTransactionIds = ledgerTransactionCardIndexService.Response.YearTransferLedgerTransactionIds,
             };
             var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<LedgerTransactionCardIndexFilter>(myLedgerTransactionCardIndexFilter);
             _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
@@ -1375,9 +1398,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         var accountingContext = AccountingContext.GetContext(tenant);
-
+                        string userId = AuthenticationUtil.ResolveUserId(tenant);
                         ICheckAndQYearTransferService yearTransferService = new YearTransferService();
-                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant, userId);
 
                         scope.Complete();
                     }
@@ -1410,9 +1433,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 var accountingContext = AccountingContext.GetContext(tenant);
-
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
                 IYearTransferService yearTransferService = new YearTransferService();
-                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant, userId);
                 if (journal != null)
                 {
                     //var parser = new JournalApproveParser(journal, false,
@@ -1467,11 +1490,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YY = param.YY;
                 int tenant = param.Tenant;
                 JournalPM journal = null;
+                
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(tenant);
                     ICancelYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant/*, userId*/);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
@@ -2085,6 +2110,19 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     TaxWithholding = param.BuildAccountingTenant.TaxWithholding,
                     VatAccounts = param.BuildAccountingTenant.VatAccounts,
                 };
+                if (BuildAccountingTenant.ControlAccounts)
+                {
+                    BuildAccountingTenant.ChartOfAccountsId = null;
+                    BuildAccountingTenant.ControlAccountId= null;
+                    //BuildAccountingTenant.CreateCustomerControlAccountId = true;
+                    //BuildAccountingTenant.CreateVendorControlAccountId = true;
+                    //BuildAccountingTenant.CreateFileControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanExportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanImportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateAirImportJobControlAccountId = true;
+
+                }
+                BuildAccountingTenant.CheckAndInsertPoco = true;
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 
@@ -2219,6 +2257,75 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+
+
+
+        protected void _ButtonExternalReconcile_click(object sender, EventArgs e)
+        {
+
+
+
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 1064,
+
+                LedgerTransactionId = "1-3069551",
+                ReconcileExternalPageLineId = "1-1313",//"1-12225"
+            };
+            
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonExternalReconcile_click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+
+                int Tenant = param.Tenant;
+                string LedgerTransactionId = param.LedgerTransactionId;
+                string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
+
+                
+                var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
+                myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
+                us.Update(myExternalReconcileJournalService.TheJournalPM, true);
+                _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonExternalReconcile_click.ToString();
+                if (param == null)
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(paramDefault);
+                }
+                else
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(param);
+                }
+
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+
+                
+            }
+        }
+
+
         private void SetHttpAuth(int tenant)
         {
             var email = AuthenticationUtil.SystemIdentityName(tenant);
@@ -2226,7 +2333,74 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 email
                 /*authToken.Email*/), new string[0]);
         }
-    }
+
+        private CardIndexReportParams UpdateDefaultCardIndexNew(CardIndexReportParams myLedgerTransactionBalanceFilter)
+        {
+            _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
+            myLedgerTransactionBalanceFilter = new CardIndexReportParams()
+            {
+                Tenant = 62,
+                From = DateTime.Now.AddMonths(-1),
+                To = DateTime.Now,
+                CurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(1),
+                DateTypeCode = "1",
+                GLAccountId = "1-1533",
+
+                SearchFields = "",
+                PageStartAtRecordIndex = 0,
+                PageSize = 20000,
+                Category1Id = "",
+                Category2Id = "",
+                Category3Id = "",
+                Category4Id = "",
+                Category5Id = "",
+                ChartOfAccountsId = "1-186",
+                AccountTypeCode = "",
+                IsReconciled = null,
+                ChartOfAccountsTypeCode = "2"
+
+            };
+            var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myLedgerTransactionBalanceFilter);
+            _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam);
+            return myLedgerTransactionBalanceFilter;
+        }
+        protected void _ButtonCardIndexNew_Click(object sender, EventArgs e)
+        {
+
+
+            CardIndexReportParams myCardIndexReportParams = null;
+
+            if (GetMyLastAction() != MyLastAction._ButtonLedgerTransactionBalance_Click)
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+            {
+                myCardIndexReportParams = UpdateDefaultCardIndexNew(myCardIndexReportParams) as CardIndexReportParams;
+                return;
+            }
+            myCardIndexReportParams =
+                LogitudeXmlSerializer.DeserializeObject<CardIndexReportParams>(_TextBoxParam.Text);
+
+            _MyLastAction.Value = MyLastAction._ButtonLedgerTransactionBalance_Click.ToString();
+            var accountingContext = AccountingContext.GetContext(myCardIndexReportParams.Tenant);
+            var CardIndexReportService = new CardIndexReportService(accountingContext, myCardIndexReportParams);
+            CardIndexReportService.Run();
+
+            //_LabelResult.Text = "ledgerTransactionBalance" +ledgerTransactionBalanceService.Response.StartBalanceLocal + " " + ledgerTransactionBalanceService.Response.EndBalanceLocal;
+
+
+            var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myCardIndexReportParams);
+
+            _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
+
+            var SerializeObjectJson = LogitudeXmlSerializer.SerializeObjectToJosnString<List<LedgerTransactionBalanceResponse>>(CardIndexReportService.CardIndexs);
+            ///ReloadGrid(SerializeObjectByte);
+            _LabelLog.Text = SerializeObjectJson;//LogMessagingUtil.Instance.ToString();
+
+        }
+        }
 
     public class ReconcileParam
     {

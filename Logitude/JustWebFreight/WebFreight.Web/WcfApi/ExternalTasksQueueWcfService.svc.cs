@@ -63,58 +63,24 @@ namespace WebFreight.Web.WcfApi
                 //message = client.Receive(new TimeSpan(0, 0, 20));
                 if (queueResponse.MessageId != null)
                 {
-                    //if (message.Properties["CommunicationLogId"] != null)
-                    //{
                     string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
                     int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
-
-                    //   string communicationLogId = message.Properties["CommunicationLogId"].ToString();
-                    //int.TryParse(message.Properties["Tenant"].ToString(), out tenant);
                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                     DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                     CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(commoncontext);
                     commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-                    //if (commLog == null)
-                    //{
-                    //    if (response.RetryNumber <= 5)
-                    //    {
-                    //        int count = 0;
-                    //        while (count < 3)
-                    //        {
-                    //            Thread.Sleep(50);
-                    //            commLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-                    //            if (commLog != null)
-                    //            {
-                    //                break;
-                    //            }
-
-                    //            count++;
-                    //        }
-
-                    //        if (commLog == null)
-                    //        {
-                    //            //AzureLog.SaveLogsInStorage("Message abandoned from activation queue (entityPM.CustomerStatusCode != WAC)", "L", DateTime.Now, "", "", 0, loggedContact.Id, loggedContact.EnglishName, HttpContext.Current.Request.UserHostAddress);
-                    //            queueservice.CompleteAsFailed();
-                    //            return null;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        //AzureLog.SaveLogsInStorage("Message removed from activation queue (entityPM.CustomerStatusCode != WAC)", "L", DateTime.Now, "", "", 0, loggedContact.Id, loggedContact.EnglishName, HttpContext.Current.Request.UserHostAddress);
-                    //        queueservice.Complete();
-                    //        return null;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    // Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, message.LockToken.ToString(), "P", "Message retrieved from queue " + DateTime.Now.ToString(), null);
                     if (commLog.CommunicationStatusTypeCode == "D")
                     {
                         Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "D", "Message removed from queue (Communication log status = Done) " + DateTime.Now.ToString(), null);
                         queueservice.Complete();
                     }
-                    else
+                    else if (queueResponse.RetryNumber >= 4)
                     {
+                        queueservice.CompleteAsFailed();
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, queueResponse.MessageId, "F", "queue message exceeded 5 retries" + DateTime.Now.ToString(), null);
+                    }
+
+                   else {
                         Document document = documentRepository.GetSingleDocument(tenant, commLog.DocumentId);
                         Uploader uploader = new Uploader();
 
@@ -130,8 +96,6 @@ namespace WebFreight.Web.WcfApi
                             envelope.CommunicationLogId = communicationLogId;
 
                             envelope.Tasks = taskslist;
-
-
                         }
                         else
                         {
@@ -151,19 +115,7 @@ namespace WebFreight.Web.WcfApi
                     commLog.MessageLockId = queueResponse.MessageId;
                     communicationLogRep.Update(commLog);
                     communicationLogRep.SubmitChanges();
-                    //}
-
-
-                    // }
-                    // else
-                    // {
-                    //    message.Complete();
-                    // }
-
-                    // + "," + message.SequenceNumber;
                 }
-
-
 
                 return result;
 

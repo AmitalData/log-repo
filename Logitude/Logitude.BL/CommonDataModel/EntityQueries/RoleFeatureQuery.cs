@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = a.Tenant,
                         RoleId = a.RoleId,
                         FeatureAccessLevelCode = a.FeatureAccessLevelCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).FirstOrDefault();
         }
 
@@ -56,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = a.Tenant,
                         RoleId = a.RoleId,
                         FeatureAccessLevelCode = a.FeatureAccessLevelCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     });
         }
 
@@ -70,6 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Tenant = a.Tenant,
                         RoleId = a.RoleId,
                         FeatureAccessLevelCode = a.FeatureAccessLevelCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
     }

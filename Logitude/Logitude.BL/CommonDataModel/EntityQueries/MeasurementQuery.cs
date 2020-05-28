@@ -168,7 +168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      Name = a.Name,
                                                      ShortName = a.ShortName,
                                                      SearchFields = a.SearchFields,
-                                                     LocalName = a.LocalName,
+                                                     LocalName = a.LocalName,  
                                                  };
             return result;
         }

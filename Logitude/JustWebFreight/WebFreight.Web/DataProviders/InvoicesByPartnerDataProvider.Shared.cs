@@ -44,6 +44,7 @@ namespace WebFreight.Web.DataProviders
             public string HouseNumber { get; set; }
             public string Description { get; set; }
             public double? Amount { get; set; }
+            public double? AmountInProfitCurrency { get; set; }
             public string YourRefrence { get; set; }
             public string BillToName { get; set; }
         }

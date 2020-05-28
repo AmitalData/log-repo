@@ -43,7 +43,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.PayToGLAccountId).HasColumnName("PayToGLAccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.PayToName).HasColumnName("PayToName").IsRequired().HasMaxLength(30).IsUnicode(true);
+            this.Property(t => t.PayToName).HasColumnName("PayToName").IsRequired().HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.BankAccountId).HasColumnName("BankAccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

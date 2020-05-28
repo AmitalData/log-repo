@@ -423,6 +423,11 @@ export class ARInvoicePM {
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
     private isPrinted: boolean;
     public get IsPrinted() { return this.isPrinted; }
     public set IsPrinted(newValue: boolean) { if (this.isPrinted != newValue) { this.isPrinted = newValue; this.MarkAsDirty("IsPrinted"); } }
@@ -603,9 +608,9 @@ export class ARInvoicePM {
     public set OperationalDate(newValue: Date) { if (this.operationalDate != newValue) { this.operationalDate = newValue; this.MarkAsDirty("OperationalDate"); } }
        
 	 
-    private dateForVATInterest: Date;
-    public get DateForVATInterest() { return this.dateForVATInterest; }
-    public set DateForVATInterest(newValue: Date) { if (this.dateForVATInterest != newValue) { this.dateForVATInterest = newValue; this.MarkAsDirty("DateForVATInterest"); } }
+    private dateForInterest: Date;
+    public get DateForInterest() { return this.dateForInterest; }
+    public set DateForInterest(newValue: Date) { if (this.dateForInterest != newValue) { this.dateForInterest = newValue; this.MarkAsDirty("DateForInterest"); } }
        
 	 
     private splitJournalByCurrency: boolean;
@@ -661,6 +666,11 @@ export class ARInvoicePM {
     private sATApprovalDate: Date;
     public get SATApprovalDate() { return this.sATApprovalDate; }
     public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+       
+	 
+    private isShowAmountLocalCurrencyColumnInSharedLogistics: boolean;
+    public get IsShowAmountLocalCurrencyColumnInSharedLogistics() { return this.isShowAmountLocalCurrencyColumnInSharedLogistics; }
+    public set IsShowAmountLocalCurrencyColumnInSharedLogistics(newValue: boolean) { if (this.isShowAmountLocalCurrencyColumnInSharedLogistics != newValue) { this.isShowAmountLocalCurrencyColumnInSharedLogistics = newValue; this.MarkAsDirty("IsShowAmountLocalCurrencyColumnInSharedLogistics"); } }
        
 	 
     private bankAccountLiteId: string;
@@ -982,9 +992,54 @@ export class ARInvoicePM {
     public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
        
 	 
+    private documentFilingId: string;
+    public get DocumentFilingId() { return this.documentFilingId; }
+    public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
+       
+	 
     private batchTaskExecutionId: string;
     public get BatchTaskExecutionId() { return this.batchTaskExecutionId; }
     public set BatchTaskExecutionId(newValue: string) { if (this.batchTaskExecutionId != newValue) { this.batchTaskExecutionId = newValue; this.MarkAsDirty("BatchTaskExecutionId"); } }
+       
+	 
+    private isCreatingConsolidation: boolean;
+    public get IsCreatingConsolidation() { return this.isCreatingConsolidation; }
+    public set IsCreatingConsolidation(newValue: boolean) { if (this.isCreatingConsolidation != newValue) { this.isCreatingConsolidation = newValue; this.MarkAsDirty("IsCreatingConsolidation"); } }
+       
+	 
+    private isFromConsolidationBatch: boolean;
+    public get IsFromConsolidationBatch() { return this.isFromConsolidationBatch; }
+    public set IsFromConsolidationBatch(newValue: boolean) { if (this.isFromConsolidationBatch != newValue) { this.isFromConsolidationBatch = newValue; this.MarkAsDirty("IsFromConsolidationBatch"); } }
+       
+	 
+    private billToCity: string;
+    public get BillToCity() { return this.billToCity; }
+    public set BillToCity(newValue: string) { if (this.billToCity != newValue) { this.billToCity = newValue; this.MarkAsDirty("BillToCity"); } }
+       
+	 
+    private billToCountry: string;
+    public get BillToCountry() { return this.billToCountry; }
+    public set BillToCountry(newValue: string) { if (this.billToCountry != newValue) { this.billToCountry = newValue; this.MarkAsDirty("BillToCountry"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
+    private billToGLAccountId: string;
+    public get BillToGLAccountId() { return this.billToGLAccountId; }
+    public set BillToGLAccountId(newValue: string) { if (this.billToGLAccountId != newValue) { this.billToGLAccountId = newValue; this.MarkAsDirty("BillToGLAccountId"); } }
+       
+	 
+    private regionalTaxId: string;
+    public get RegionalTaxId() { return this.regionalTaxId; }
+    public set RegionalTaxId(newValue: string) { if (this.regionalTaxId != newValue) { this.regionalTaxId = newValue; this.MarkAsDirty("RegionalTaxId"); } }
+       
+	 
+    private regionalTaxPercentage: number;
+    public get RegionalTaxPercentage() { return this.regionalTaxPercentage; }
+    public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
        
 	 
 

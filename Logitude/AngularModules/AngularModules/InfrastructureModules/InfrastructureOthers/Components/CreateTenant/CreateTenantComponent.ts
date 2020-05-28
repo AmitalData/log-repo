@@ -1,9 +1,6 @@
 
 import {Component, OnInit}  from '@angular/core';
-declare var System: any;
-declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SignUpService} from '../../../../Infrastructure/Services/ExtendedPMs/SignUpService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,13 +10,10 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {SignUpInfoClass} from '../../../../InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantPackageSelectionComponent';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
-@Component({
-    moduleId: module.id,
 
+@Component({
     selector: 'CreateTenantComponent',
     templateUrl: './CreateTenantComponent.html',
-
-
 })
 
 

@@ -38,11 +38,13 @@ import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 
 export class NewGeneralARInvoiceComponent extends BaseComponent {
+  public BillToDependencyValue1IsList: any;
+
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
     public DataContext = this;
@@ -52,10 +54,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public DisplaySATPaymentMethod: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    IsAccountingActivated:boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
@@ -100,7 +104,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private accountingPeriod: any;
     private GetClosedMonth() {
         return new Promise(resolve => {
-            var periodTypeCode = "1" // 1-Regular
+            var periodTypeCode = "2" // 2-Invoice
             this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
@@ -116,7 +120,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     CreateNewEntity() {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new ARInvoicePM();
-        this.EntityPM.BillToPartnerTypeId = "CS";
+        this.EntityPM.BillToPartnerTypeId = null;
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -228,12 +232,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
 
     // BillTo
-    public BillToDependencyProperty1: string = null;
-    public BillToDependencyProperty1IsList: boolean = true;
+    public BillToDependencyValue1: string = "CS";
+    public BillToDependencyValue2: boolean = false;
+    public BillToDependencyProperty1IsList: boolean = false;
     BuildPartnersTypes() {
 
-        this.BillToDependencyProperty1 = "CS";
-
+      //  this.BillToDependencyProperty1 = "CS";
+        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
         if (this.EntityPM.Id == null) {
             //if (this.args.EntityTableName == "Shipment") {
             //    var customer: InvoicePartnerType = this.InvoicePartners.filter(d => d.Code == "CUS")[0];
@@ -249,8 +255,25 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
-    public SelectedPartnerType: InvoicePartnerType = null;
 
+    public SelectedPartnerType: InvoicePartnerType = null;
+    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
+        if (this.SelectedPartnerType != selected) {
+            this.SelectedPartnerType = selected;
+
+            this.BillToId = null;
+            this.BillToAddressId = null;
+            this.BillToPartnerTypeId = null;
+
+            if (selected) {
+                this.BillToPartnerTypeId = selected.PartnerTypeId;
+                this.BillToDependencyValue1 = selected.PartnerTypeId;
+                this.BillToDependencyValue2 = selected.IsCustomer;
+            }
+
+            this.SetUIProperties();
+        }
+    }
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
@@ -536,6 +559,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Load Date
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
@@ -659,7 +689,8 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-
+ 
+        this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.GetClosedMonth().then(res => {
@@ -672,9 +703,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             if (isEntityValid) {
 
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.LoadCurrencyRates().then(res => {
+               // this.LoadCurrencyRates().then(res => {
                     this.SubmitChanges();
-                });
+              //  });
 
             }
 

@@ -16,7 +16,6 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './MainPageComponent.html',
 
 })
@@ -112,7 +111,7 @@ export class MainPageComponent implements AfterViewInit {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
                 this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
@@ -123,7 +122,7 @@ export class MainPageComponent implements AfterViewInit {
                 this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
             }
         });
-        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();

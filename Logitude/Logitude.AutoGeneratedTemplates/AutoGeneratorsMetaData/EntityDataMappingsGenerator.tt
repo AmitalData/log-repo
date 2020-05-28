@@ -63,7 +63,13 @@ public void GenerateMappingClass(string xmlFilePath,string outputFilePath,bool i
     }
     var entity = FromFile(xmlFilePath);
 
-	
+	 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
 
 	if(isCustom)
     {

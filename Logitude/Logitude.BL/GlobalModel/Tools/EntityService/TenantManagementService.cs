@@ -34,7 +34,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         private TenantManagementRepository entityRepository;
         private TenantManagementLicenseRepository tenantManagementLicenseRepository;
         private TenantAddOnRepository tenantAddOnRepository;
-        public TenantManagementService(IGlobalContext objectContext,int tenant = 0)
+        public TenantManagementService(IGlobalContext objectContext, int tenant = 0)
         {
             this.objectContext = objectContext;
             this.entityRepository = new TenantManagementRepository(objectContext);
@@ -86,9 +86,11 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
             this.UpdateParticipants();
             this.UpdateDocumentsArchive();
+            this.UpdateGlobalTenants();
+
+            this.CheckSubscriptionSwitch();
             this.UpdateLicenses();
             this.UpdateAddOns();
-            this.UpdateGlobalTenants();
             this.ClearAllUsersCache();
             this.BrandingEvent();
             this.CheckParentTenants();
@@ -97,7 +99,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             TenantManagementMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
-
         }
 
         private void BrandingEvent()
@@ -113,9 +114,9 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                     {
                         if (!string.IsNullOrEmpty(entityPM.UpdateByUserId.Split('^')[0])) updateByUserId = entityPM.UpdateByUserId.Split('^')[0];
                         if (!string.IsNullOrEmpty(entityPM.UpdateByUserId.Split('^')[1])) tenant = Int32.Parse(entityPM.UpdateByUserId.Split('^')[1]);
-                
+
                     }
-                  
+
                     string eventCode = entityPM.EnableBranding ? "BREN" : "BRDI";
                     string note = entityPM.EnableBranding ? "Branding enabled" : "Branding disabled";
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -162,17 +163,19 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 var tenantRepository = new TenantRepository(0);
                 Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                var LBtenantRepository = new LogBoxTenantSettingRepository(0);
+                LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Id);
 
-                if (currentTenant != null && entityPM.PackageCode == "IMPO" && !currentTenant.IsDocumentsArchive)
+                if (currentTenant != null && entityPM.PackageCode == "IMPO" && !LBcurrentTenant.IsDocumentsArchive)
                 {
-                    currentTenant.IsDocumentsArchive = true;
+                    LBcurrentTenant.IsDocumentsArchive = true;
                     tenantRepository.Update(currentTenant);
                     tenantRepository.SubmitChanges();
                 }
 
-                else if (currentTenant != null && entityPM.PackageCode != "IMPO" && currentTenant.IsDocumentsArchive)
+                else if (currentTenant != null && entityPM.PackageCode != "IMPO" && LBcurrentTenant.IsDocumentsArchive)
                 {
-                    currentTenant.IsDocumentsArchive = false;
+                    LBcurrentTenant.IsDocumentsArchive = false;
                     tenantRepository.Update(currentTenant);
                     tenantRepository.SubmitChanges();
                 }
@@ -180,6 +183,163 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 scope.Complete();
             }
         }
+        private void UpdateGlobalTenants()
+        {
+            GlobalTenantRepository Rep = new GlobalTenantRepository();
+            GlobalTenant Gtenant = Rep.GetGlobalTenantsByTenant(this.entityPM.Id);
+            if (Gtenant != null)
+            {
+                Gtenant.PrivateLabelId = this.entityPM.PrivateLabelId;
+                Rep.Update(Gtenant);
+                Rep.SubmitChanges();
+            }
+        }
+        private void CheckSubscriptionSwitch()
+        {
+            if (entityPM.MainAdditionalPackageApplied != entityPoco.MainAdditionalPackageApplied)
+            {
+                if (entityPM.MainAdditionalPackageApplied)
+                {
+                    if (entityPM.IsMultiPackage)
+                    {
+                        if (entityPM.TenantManagementLicenses.Count > 0)
+                        {
+                            if (!entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode).Any())
+                            {
+                                throw new ApplicationException("Main package should be one of the additional packages");
+                            }
+
+                            if (entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
+                            {
+                                throw new ApplicationException("Main package should be deleted from the additional packages");
+                            }
+                        }
+
+                        this.SwitchToMainAdditionalPackageMulti();                        
+                    }
+
+                    else
+                    {
+                        this.SwitchToMainAdditionalPackageSingle();
+                    }
+                }
+
+                else
+                {
+                    throw new ApplicationException("Switching to Single/Multi Package is not allowed");                   
+                }
+            }
+        }
+
+        private void SwitchToMainAdditionalPackageMulti()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
+
+                List<User> allUsers = (from myUser in iContext.Users.Include("Contact")
+                                       join db_UserLicenses in iContext.UserLicenses on myUser.Id equals db_UserLicenses.Id into UserLicenses
+                                       from iUserLicense in UserLicenses.DefaultIfEmpty()
+                                       where
+                                       myUser.Tenant == tenant
+                                       && myUser.AdditionalPackagesOnly == false
+                                       && myUser.Contact.UserType == "R"
+                                       && myUser.Contact.InActive == false
+                                       && !iContext.UserLicenses.Any(f => f.UserId == myUser.Id && f.PackageCode == entityPM.PackageCode)
+                                       select myUser).ToList();
+
+                if (allUsers.Count > 0)
+                {
+                    UserRepository userRepository = new UserRepository(iContext);
+
+                    foreach (User item in allUsers)
+                    {
+                        item.AdditionalPackagesOnly = true;
+                        userRepository.Update(item);
+                    }
+
+                    userRepository.SubmitChanges();
+                }
+
+                this.DeleteLicennsesForMainPackage(iContext);
+
+                scope.Complete();
+            }
+        }
+        private void SwitchToMainAdditionalPackageSingle()
+        {
+            /*
+                select * from Users
+                join Contacts on Users.Id = Contacts.Id
+                where Users.Tenant = 1
+                and Contacts.InActive = 0
+                and Contacts.UserType = 'R'
+             * */
+
+            /*                          
+                select * from UserLicenses
+                where UserId in
+                (
+                select Users.Id from Users
+                join Contacts on Users.Id = Contacts.Id
+                where Users.Tenant = 1
+                and Contacts.InActive = 0
+                and Contacts.UserType = 'R'
+                )             
+             * */
+
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
+
+            //    List<string> allUsersIds = (from iUser in iContext.Users.Include("Contact")
+            //                                join db_UserLicenses in iContext.UserLicenses on iUser.Id equals db_UserLicenses.Id into UserLicenses
+            //                                from iUserLicense in UserLicenses.DefaultIfEmpty()
+            //                                where iUser.Tenant == tenant
+            //                                && iUser.Contact.UserType == "R"
+            //                                && iUser.Contact.InActive == false
+            //                                && !iContext.UserLicenses.Any(f => f.UserId == iUser.Id && f.PackageCode == entityPM.PackageCode)
+            //                                select iUser.Id).ToList();
+
+            //    if (allUsersIds.Count > 0)
+            //    {
+            //        UserLicenseRepository userLicenseRepository = new UserLicenseRepository(iContext);
+
+            //        foreach (string id in allUsersIds)
+            //        {
+            //            UserLicense userLicense = new UserLicense()
+            //            {
+            //                Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
+            //                Tenant = entityPM.Id,
+            //                PackageCode = entityPM.PackageCode,
+            //                UserId = id,
+            //            };
+
+            //            userLicenseRepository.Add(userLicense);
+            //        }
+
+            //        userLicenseRepository.SubmitChanges();
+            //    }
+
+            //    scope.Complete();
+            //}
+        }
+        private void DeleteLicennsesForMainPackage(ICommonDataContext iContext)
+        {
+            UserLicenseRepository userLicenseRepository = new UserLicenseRepository(iContext);
+            List<UserLicense> userLicenses = userLicenseRepository.GetUserLicensesByPackageCode(entityPM.PackageCode, tenant);
+
+            if (userLicenses.Count > 0)
+            {
+                foreach (UserLicense item in userLicenses)
+                {
+                    userLicenseRepository.Remove(item);
+                }
+
+                userLicenseRepository.SubmitChanges();
+            }
+        }
+        
         private void UpdateLicenses()
         {
             if (isNewEntity)
@@ -219,6 +379,52 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 }
             }
         }
+        private void CreateTenantManagementLicense(TenantManagementLicensePM itemPM)
+        {
+            //bool isExists = (from d in this.objectContext.TenantManagementLicenses
+            //                 where d.PackageCode == itemPM.PackageCode
+            //                 select d).Any();
+
+            itemPM.Id = IdCounter.GetNumber("TenantManagementLicense", tenant).ToString();
+            itemPM.Tenant = tenant;
+
+            TenantManagementLicense itemPoco = new TenantManagementLicense()
+            {
+                Id = itemPM.Id,
+                Tenant = itemPM.Tenant,
+                PackageCode = itemPM.PackageCode,
+                NumberOfUsers = itemPM.NumberOfUsers,
+                FreeUsers = itemPM.FreeUsers,
+                Price = itemPM.FreeUsers,
+                TotalPrice = itemPM.TotalPrice,
+            };
+
+            tenantManagementLicenseRepository.Add(itemPoco);
+        }
+        private void UpdateTenantManagementLicense(TenantManagementLicensePM itemPM)
+        {
+            TenantManagementLicense itemPoco = tenantManagementLicenseRepository.GetSingleTenantManagementLicense(itemPM.Id);
+
+            if (itemPoco != null)
+            {
+                itemPoco.PackageCode = itemPM.PackageCode;
+                itemPoco.NumberOfUsers = itemPM.NumberOfUsers;
+                itemPoco.FreeUsers = itemPM.FreeUsers;
+                itemPoco.Price = itemPM.Price;
+                itemPoco.TotalPrice = itemPM.TotalPrice;
+                tenantManagementLicenseRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteTenantManagementLicense(TenantManagementLicensePM itemPM)
+        {
+            TenantManagementLicense itemPoco = tenantManagementLicenseRepository.GetSingleTenantManagementLicense(itemPM.Id);
+
+            if (itemPoco != null)
+            {
+                tenantManagementLicenseRepository.Remove(itemPoco);
+            }
+        }
+
         private void UpdateAddOns()
         {
             if (isNewEntity)
@@ -258,58 +464,6 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 }
             }
         }
-
-        private void CreateTenantManagementLicense(TenantManagementLicensePM itemPM)
-        {
-            //bool isExists = (from d in this.objectContext.TenantManagementLicenses
-            //                 where d.PackageCode == itemPM.PackageCode
-            //                 select d).Any();
-
-            itemPM.Id = IdCounter.GetNumber("TenantManagementLicense", tenant).ToString();            
-            itemPM.Tenant = tenant;
-
-            TenantManagementLicense itemPoco = new TenantManagementLicense()
-            {
-                Id = itemPM.Id,
-                Tenant = itemPM.Tenant,
-                PackageCode = itemPM.PackageCode,
-                NumberOfUsers = itemPM.NumberOfUsers,
-            };
-
-            tenantManagementLicenseRepository.Add(itemPoco);
-        }
-        private void UpdateGlobalTenants()
-        {
-           GlobalTenantRepository Rep = new GlobalTenantRepository();
-           GlobalTenant Gtenant = Rep.GetGlobalTenantsByTenant(this.entityPM.Id);
-           if (Gtenant != null)
-           {
-               Gtenant.PrivateLabelId = this.entityPM.PrivateLabelId;
-               Rep.Update(Gtenant);
-               Rep.SubmitChanges();
-           }
-        }
-        private void UpdateTenantManagementLicense(TenantManagementLicensePM itemPM)
-        {
-            TenantManagementLicense itemPoco = tenantManagementLicenseRepository.GetSingleTenantManagementLicense(itemPM.Id);
-
-            if (itemPoco != null)
-            {
-                itemPoco.PackageCode = itemPM.PackageCode;
-                itemPoco.NumberOfUsers = itemPM.NumberOfUsers;
-                tenantManagementLicenseRepository.Update(itemPoco);
-            }
-        }
-        private void DeleteTenantManagementLicense(TenantManagementLicensePM itemPM)
-        {
-            TenantManagementLicense itemPoco = tenantManagementLicenseRepository.GetSingleTenantManagementLicense(itemPM.Id);
-
-            if (itemPoco != null)
-            {
-                tenantManagementLicenseRepository.Remove(itemPoco);
-            }
-        }
-
         private void CreateTenantAddOn(TenantAddOnPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("TenantAddOn", tenant).ToString();
@@ -436,14 +590,13 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 }
             }
         }
-
         private void CheckParentTenants()
         {
             if (!entityPM.IsParentTenant && entityPoco.IsParentTenant)
             {
                 List<TenantManagement> childTenants = entityRepository.GetChildTenantManagements(this.entityPM.Id).ToList();
 
-                if(childTenants.Count > 0)
+                if (childTenants.Count > 0)
                 {
                     throw new Exception("Sorry You can't unckek Parent Tenant since there are connected child tenants!");
                 }

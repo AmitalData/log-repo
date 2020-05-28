@@ -31,7 +31,7 @@ import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/Windo
 
 @Component({
     selector: 'ConsigmentTabContent',
-    moduleId: module.id,
+    
     templateUrl: './ConsigmentTabContentComponent.html',
 })
 
@@ -668,7 +668,7 @@ export class ConsigmentTabContentComponent
     private SaveChangesAndSendRequest() {
         this.CurrentSession.StartBusyIndicatorSaving();
         var sub=
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult:any) => {
                 sub.unsubscribe();
             var res: ServiceResponse = myResult;
             if (!res.HasError) {
@@ -783,7 +783,7 @@ export class ConsigmentTabContentComponent
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Consignment', true);
             });
         });

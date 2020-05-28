@@ -81,33 +81,39 @@
                         <log-column [width]="'100'" [Alignment]="'right'"
                                     [header]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe"
                                     [binding]="'VendorID'">
-                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
                                 <div class="RightCenter">
                                     <span>{{item.VendorID}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
                         <!-- VendorName -->
                         <log-column [width]="'200'" [Alignment]="'right'"
                                     [header]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe"
                                     [binding]="'VendorName'">
-                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
                                 <div class="RightCenter">
                                     <span>{{item.VendorName }}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
                         <!-- CountryCode -->
                         <log-column [width]="'100'" [Alignment]="'right'"
                                     [header]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe"
                                     [binding]="'CountryCode'">
-                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
                                 <div class="RightCenter">
                                     <span>{{item.DBCountryCode }}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
                         <!-- ImporterDespositionNumber -->
@@ -115,11 +121,13 @@
                         <log-column [width]="'100'" [Alignment]="'right'"
                                     [header]="'תצהיר'"
                                     [binding]="'PeriodDeclarationID'">
-                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
                                 <div class="RightCenter">
                                     <span>{{item.PeriodDeclarationID}}</span>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
 
@@ -128,13 +136,15 @@
                         <log-column [width]="'100'" [Alignment]="'right'"
                                     [header]="'תוקף תצהיר'"
                                     [binding]="'ExpirationDate'">
-                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
-                                <div style="width:100%;height:100%;">
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate (CellClicked)="onPeriodDeclarationCellSelected($event,item)">
+                                <div style="width:100%;height:100%;color: limegreen;">
                                     <div class="RightCenter">
                                         <span>{{item.ExpirationDate }}</span>
                                     </div>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
 
@@ -142,13 +152,15 @@
                         <log-column [width]="'100'" [Alignment]="'right'"
                                     [header]=""
                                     [binding]="'ExpirationDate'">
-                            <log-cell-template template="let item" #logcelltemplate>
+                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                 <div style="width:100%;height:100%;"  *ngIf="!item.DBVendorID" >
                                     <div class="RightCenter">
                                         <span><button class="Button" (click)="SearchAddVendorRequest(item)">הוסף ספק</button></span>
                                     </div>
                                 </div>
                             </log-cell-template>
+</ng-template>
                         </log-column>
 
 

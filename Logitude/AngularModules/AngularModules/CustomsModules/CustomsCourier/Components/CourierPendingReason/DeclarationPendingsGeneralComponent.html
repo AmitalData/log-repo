@@ -47,7 +47,8 @@
 
                                 <!-- CourierPendingReasonCode -->
                                 <log-column [header]="'Customs.DeclarationPending.F.CourierPendingReasonCode' | TextCodeTranslationPipe" [binding]="'CourierPendingReasonCode'" [width]="'130'" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CourierPendingReasonName}}</span>
                                         </div>
@@ -64,11 +65,13 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- PendingRemarks --> <!-- [Text]="PendingRemarks" -->
                                 <log-column [header]="'Customs.DeclarationPending.F.PendingRemarks' | TextCodeTranslationPipe" [binding]="'PendingRemarks'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PendingRemarks}}</span>
                                             </div>
@@ -77,11 +80,13 @@
                                                             [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                             </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- Status --> <!-- [Text]="item.Status" -->
                                 <log-column [header]="'Customs.DeclarationPending.F.Status' | TextCodeTranslationPipe" [binding]="'Status'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.SelectedItemStatus.Value}}</span>
                                         </div>
@@ -89,15 +94,18 @@
                                             <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
-                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                                         <div style="width: 30px; float: right; height:20px;padding-top:3px">
                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

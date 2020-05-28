@@ -79,6 +79,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  SATForeignRFC = a.Card.SATForeignRFC,
                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                  UsoCFDICode = a.Card.UsoCFDICode,
+                                 GLAccountId = a.Card.GLAccountId,
+                                 StorageFreeDays = a.Card.StorageFreeDays,
                                  Card = new CardPM()
                                  {
                                      Id = a.Id,
@@ -267,7 +269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AgentList> GetIQueryableEntityList(IQueryable<Agent> iQueryable)
         {
-            IQueryable<AgentList> result = from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency")
+            IQueryable<AgentList> result = from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency").Include("Card.PaymentTerm")
                                            select new AgentList()
                                            {
                                                Code = a.Card.Code,
@@ -313,6 +315,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                PrimaryContactName = a.PrimaryContactName,
                                                PrimaryContactEmail = a.PrimaryContactEmail,
                                                PrimaryContactPhone = a.PrimaryContactPhone,
+                                               StateName = a.Card.StateName,
                                            };
             return result;
         }

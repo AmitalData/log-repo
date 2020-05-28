@@ -31,70 +31,192 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.CloseTables;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class ReconcileExternalPageUpdateService : EntityUpdateService<ReconcileExternalPage, ReconcileExternalPagePM, EntityPM>
     {
-        protected override void OnCreating(ReconcileExternalPagePM entityPM, EntityPM entityParentPM)
+        protected override void OnCreating(ReconcileExternalPagePM pagePM, EntityPM entityParentPM)
+        {
+            SetPageId(pagePM);
+            SetCreatedByFields(pagePM);
+            SetPageStatus(pagePM);
+
+            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+
+            pagePM.PageNo = GetNewPageNumber(additionalData);
+            UpdateAdditionalDataLastPage(pagePM, additionalData);
+
+        }
+
+
+        private void SetPageNumber(ReconcileExternalPagePM pagePM, ExternalPageAdditionalDataPM additionalData)
+        {
+            pagePM.PageNo = GetNewPageNumber(additionalData);
+        }
+
+        private static void SetPageStatus(ReconcileExternalPagePM pagePM)
+        {
+            //fill Status
+            if (string.IsNullOrWhiteSpace(pagePM.StatusCode))
+            {
+                pagePM.StatusCode = "1"; // 1- Draft
+            }
+        }
+
+        private void SetCreatedByFields(ReconcileExternalPagePM pagePM)
+        {
+            //created by 
+            ContactRepository contactRep = new ContactRepository(pagePM.Tenant);
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(pagePM.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, pagePM.Tenant);
+            pagePM.CreatedByUserId = contact.Id;
+            pagePM.CreatedByUserName = contact.LocalName;
+            //
+        }
+
+        private static void SetPageId(ReconcileExternalPagePM pagePM)
+        {
+            if (pagePM.Id == null || pagePM.Id == "")
+            {
+                pagePM.Id = IdCounter.GetNumber("ReconcileExternalPage", pagePM.Tenant);
+
+            }
+        }
+
+        private ObjectTablePM GetObjectTable(int tenant, string objectTableId)
+        {
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+            ObjectTablePM objectTable = objectTableQuery.GetSinglePM(objectTableId, tenant);
+            return objectTable;
+        }
+
+        private void UpdateAdditionalDataLastPage(ReconcileExternalPagePM lastPagePM, ExternalPageAdditionalDataPM additionalDataPM)
+        {
+            additionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            SetLastPageFieldsForAdditionalData(lastPagePM, additionalDataPM);
+            SubmitAdditionalData(additionalDataPM, additionalDataPM.Tenant);
+        }
+
+        private ExternalPageAdditionalDataPM GetOrCreateEntityAdditionalData(ReconcileExternalPagePM pagePM)
         {
 
-            if (entityPM.Id == null || entityPM.Id == "")
+            ExternalPageAdditionalDataPM additionalDataPM = GetAdditionalDataFromDB(pagePM);
+
+            if (additionalDataPM == null)
+                additionalDataPM = CreateNewAdditionalData(pagePM);
+
+            return additionalDataPM;
+        }
+
+        private void SetLastPageFieldsForAdditionalData(ReconcileExternalPagePM pagePM, ExternalPageAdditionalDataPM additionalDataPM)
+        {
+            additionalDataPM.LastPageCloseBalance = pagePM == null ? 0 : pagePM.CloseBalance;
+            additionalDataPM.LastPageEndDate = pagePM == null ? DateTime.Now : pagePM.ToDate;
+            additionalDataPM.LastPageNumber = pagePM == null ? null : pagePM.PageNo.ToString();
+        }
+
+        private ExternalPageAdditionalDataPM CreateNewAdditionalData(ReconcileExternalPagePM pagePM)
+        {
+            ObjectTablePM objectTable = GetObjectTable(pagePM.Tenant, pagePM.ObjectTableId);
+
+            ExternalPageAdditionalDataPM data =  new ExternalPageAdditionalDataPM
             {
-                entityPM.Id = IdCounter.GetNumber("ReconcileExternalPage", entityPM.Tenant);
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = pagePM.Tenant,
+                ObjectTableId = objectTable.Id,
+                EntityId = pagePM.EntityId,
+            };
 
-            }
+            SubmitAdditionalData(data, pagePM.Tenant);
 
-            //created by 
-            ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
-            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
-            entityPM.CreatedByUserId = contact.Id;
-            entityPM.CreatedByUserName = contact.LocalName;
-            //
+            return data;
+        }
 
-            //fill Status
-            if (string.IsNullOrWhiteSpace(entityPM.StatusCode))
+        private void SubmitAdditionalData(ExternalPageAdditionalDataPM newAdditionalDataPM, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            ExternalPageAdditionalDataUpdateService additionalDataUpdateService = new ExternalPageAdditionalDataUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            additionalDataUpdateService.Update(newAdditionalDataPM, true);
+        }
+
+        private ExternalPageAdditionalDataPM GetAdditionalDataFromDB(ReconcileExternalPagePM pagePM)
+        {
+            ObjectTablePM objectTable = GetObjectTable(pagePM.Tenant, pagePM.ObjectTableId);
+
+            ExternalPageAdditionalDataQueryService additionalDataQueryService = new ExternalPageAdditionalDataQueryService(pagePM.Tenant);
+            ExternalPageAdditionalDataPM additionalDataPM = additionalDataQueryService.GetSingle(objectTable.Id, pagePM.EntityId, false, false);
+            return additionalDataPM;
+        }
+
+        private static void SetBankAccountLastPage(ReconcileExternalPagePM entityPM, BankAccountPM bankAccountPM)
+        {
+            ////update BankAccount
+            //IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            //BankAccountUpdateService bankService = new BankAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+
+            //bankAccountPM.LastPageNumber = entityPM.PageNo.ToString();
+            //bankAccountPM.LastPageCloseBalance = entityPM.CloseBalance;
+            //bankAccountPM.LastPageEndDate = entityPM.ToDate;
+            //bankAccountPM.IsBankPageEvent = true;
+            //bankAccountPM.ChangeSetOp = ChangeSetOperation.Update;
+            //bankService.Update(bankAccountPM, true);
+        }
+        private int GetNewPageNumber(ExternalPageAdditionalDataPM additionalData)
+        {
+
+            int pageNumber;
+            if (string.IsNullOrWhiteSpace(additionalData.LastPageNumber))
             {
-                entityPM.StatusCode = "1"; // 1- Draft
-            }
-
-
-            IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
-            BankAccountUpdateService bankService = new BankAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
-            ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(entityPM.Tenant);
-            BankAccountPM bank = bankQuery.GetSingle(entityPM.BankAccountId, false, false);
-
-
-            //fill new PageNo
-            if (string.IsNullOrWhiteSpace(bank.LastPageNumber))
-            {
-                entityPM.PageNo = 1;
+                pageNumber = 1;
             }
             else
             {
-                // old
-                //int lastNumber = Convert.ToInt32(bank.LastPageNumber);
-                //entityPM.PageNo = (lastNumber + 1).ToString();
-
-                //new
-                int lastPageNumber = pageQuery.GetLastPageNo(entityPM.BankAccountId, entityPM.Tenant);
-                entityPM.PageNo = (lastPageNumber + 1);
-
+                int lastPageNumber = GetEntityLastPageNumber(additionalData);
+                pageNumber = (lastPageNumber + 1);
             }
 
-            //entityPM.prev = bank.LastPageNumber;
+            return pageNumber;
+        }
 
-            //update BankAccount
-            bank.LastPageNumber = entityPM.PageNo.ToString();
-            bank.LastPageCloseBalance = entityPM.CloseBalance;
-            bank.LastPageEndDate = entityPM.ToDate;
-            bank.IsBankPageEvent = true;
-            bank.ChangeSetOp = ChangeSetOperation.Update;
-            bankService.Update(bank, true);
+        //private int GetNewPageNumberOld(BankAccountPM bankAccountPM)
+        //{
+        //    int pageNumber;
+        //    if (string.IsNullOrWhiteSpace(bankAccountPM.LastPageNumber))
+        //    {
+        //        pageNumber = 1;
+        //    }
+        //    else
+        //    {
+        //        // old
+        //        //int lastNumber = Convert.ToInt32(bank.LastPageNumber);
+        //        //entityPM.PageNo = (lastNumber + 1).ToString();
 
+        //        //new
+        //        int lastPageNumber = GetLastPageNumberForBankAccount(bankAccountPM.Id, bankAccountPM.Tenant);
+        //        pageNumber = (lastPageNumber + 1);
 
+        //    }
+
+        //    return pageNumber;
+        //}
+
+        private int GetEntityLastPageNumber(ExternalPageAdditionalDataPM additionalData)
+        {
+            ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(additionalData.Tenant);
+            int lastPageNumber = pageQuery.GetLastPageNumber(additionalData.EntityId, additionalData.ObjectTableId, additionalData.Tenant);
+            return lastPageNumber;
+        }
+
+        private  BankAccountPM GetBankAccountById(string bankAccountId, int tenant)
+        {
+            BankAccountQueryService bankQuery = new BankAccountQueryService(tenant);
+            BankAccountPM bank = bankQuery.GetSingle(bankAccountId, false, false);
+            return bank;
         }
 
         protected override void OnUpdating(ReconcileExternalPagePM entityPM)
@@ -105,41 +227,82 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        protected override void OnUpdating(ReconcileExternalPagePM entityPM, ReconcileExternalPage entityPOCO)
+        protected override void OnUpdating(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO)
         {
-            IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
-            if (entityPOCO.StatusCode != null && (entityPM.StatusCode == "3" && entityPOCO.StatusCode != "3"))
+            if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
-                // canceled!!
-                //update bankaccount , last page fields
-                ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(entityPOCO.Tenant);
-                ReconcileExternalPagePM prevPage = pageQuery.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPOCO.Tenant);
-
-                BankAccountQueryService bankQuery = new BankAccountQueryService(entityPOCO.Tenant);
-                BankAccountPM bankAccount = bankQuery.GetSingle(entityPOCO.BankAccountId, false, false);
-
-             
-                BankAccountUpdateService bankService = new BankAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-           
-
-              
-
-                bankAccount.LastPageCloseBalance = prevPage==null ? 0 : prevPage.CloseBalance;
-                bankAccount.LastPageEndDate = prevPage == null ? DateTime.Now : prevPage.ToDate;
-                bankAccount.LastPageNumber = prevPage == null ? null : prevPage.PageNo.ToString();
-                bankAccount.IsBankPageEvent = true;
-                bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                bankService.Update(bankAccount, true);
-
+                OnPageCanceled(pagePM, pagePOCO);
             }
 
-            PaymentChequeQueryService paymentChequeService = new PaymentChequeQueryService(entityPM.Tenant);
-            PaymentChequeUpdateService paymentChequeUpdService = new PaymentChequeUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            if (entityPM.ReconcileExternalPageLines.Count > 0)
+            if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
             {
-                foreach (var item in entityPM.ReconcileExternalPageLines)
+                OnPageRestored(pagePM);
+            }
+
+            UpdatePaymentCheques(pagePM);
+
+        }
+
+        private void OnPageRestored(ReconcileExternalPagePM pagePM)
+        {
+            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+            UpdateAdditionalDataLastPage(pagePM, additionalData);
+        }
+
+        private void OnPageCanceled(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO)
+        {
+            pagePM.ReconcileExternalPageLines.ForEach(a => { a.ChangeSetOp = ChangeSetOperation.None; });
+            ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
+
+            ReconcileExternalPagePM prevPage = GetPreviousPage(pagePM, pagePOCO, objectTable);
+
+            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+            UpdateAdditionalDataLastPage(prevPage, additionalData);
+
+            CreatePageCanceledEvent(pagePM, pagePOCO);
+        }
+
+        private ReconcileExternalPagePM GetPreviousPage(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO, ObjectTable objectTable)
+        {
+            ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(pagePOCO.Tenant);
+            ReconcileExternalPagePM prevPage = pageQuery.GetPreviousPageByNumber(pagePM.PageNo, pagePM.EntityId, objectTable.Name, pagePOCO.Tenant);
+            return prevPage;
+        }
+
+        private void CreatePageCanceledEvent(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO)
+        {
+            ObjectTablePM objectTable = GetObjectTable(pagePM.Tenant, pagePM.ObjectTableId);
+
+            switch (objectTable.Name)
+            {
+                case "BankAccount":
+                    {
+                        SetBankAccountFields(pagePOCO); // event will created inside bankaccount trace service!
+
+                        break;
+                    }
+
+                case "GLAccount":
+                    {
+                        // not developed yet!
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+
+        private static void UpdatePaymentCheques(ReconcileExternalPagePM pagePM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(pagePM.Tenant);
+
+            PaymentChequeQueryService paymentChequeService = new PaymentChequeQueryService(pagePM.Tenant);
+            PaymentChequeUpdateService paymentChequeUpdService = new PaymentChequeUpdateService(accountingContext, new Dictionary<string, IContext>(), pagePM.Tenant);
+            if (pagePM.ReconcileExternalPageLines.Count > 0)
+            {
+                foreach (var item in pagePM.ReconcileExternalPageLines)
                 {
-                    PaymentChequePM paymentCheque = paymentChequeService.GetPaymentChequeByChequeNoAndBankAccount(entityPM.BankAccountId, item.Reference, entityPM.Tenant);
+                    PaymentChequePM paymentCheque = paymentChequeService.GetPaymentChequeByChequeNoAndBankAccount(pagePM.EntityId, item.Reference, pagePM.Tenant);
                     if (paymentCheque != null)
                     {
                         paymentCheque.PaymentChequeStatusCode = "3";
@@ -148,7 +311,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
-            base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void SetBankAccountFields(ReconcileExternalPage pagePOCO)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(pagePOCO.Tenant);
+
+            BankAccountQueryService bankQuery = new BankAccountQueryService(pagePOCO.Tenant);
+            BankAccountPM bankAccount = bankQuery.GetSingle(pagePOCO.EntityId, false, false);
+            BankAccountUpdateService bankService = new BankAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), pagePOCO.Tenant);
+            bankAccount.IsBankPageEvent = true;
+            bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+            bankService.Update(bankAccount, true);
         }
 
         protected override void UpdateComposition(ReconcileExternalPagePM entityPM)
@@ -216,8 +390,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Validate(ReconcileExternalPagePM entityPM)
         {
-            List<string> errors = new List<string>();
 
+            var result = ReconcileExternalPageValidator.IsReconciliationValid(entityPM, null);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
+
+        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM)
+        {
+
+            List<string> errors = new List<string>();
             if (entityPM.StatusCode != "1") // 1- Draft
             {
 
@@ -226,7 +411,33 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.StatusCode == "2") // 2- Approved
                     CheckPageBalance(entityPM, errors);
-               
+
+            }
+            ObjectTable objectTable = GetObjectTable(entityPM.ObjectTableId, entityPM.Tenant);
+
+            ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPreviousPageByNumber(entityPM.PageNo, entityPM.EntityId, objectTable.Name, entityPM.Tenant);
+            if (prevPage != null)
+            {
+                bool avoidCheckReferenceDate = true;//ohad+ eyal
+
+                if (avoidCheckReferenceDate)
+                {
+
+                }
+                //else
+                //{
+                //    //1
+                //    if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
+                //    {
+                //        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
+                //    }
+                //}
+                ////2
+                //if (entityPM.ToDate.Date < entityPM.FromDate.Date)
+                //{
+                //    errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.ToDateShouldBiggerFromDate", entityPM.Tenant, useLocal));
+                //}
             }
 
             CheckCreditAndDebitFieldForLines(entityPM);
@@ -289,8 +500,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void CheckPreviousPage(ReconcileExternalPagePM pagePM, List<string> errors)
         {
             bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant);
+            ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
+
             ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(pagePM.Tenant);
-            ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(pagePM.PageNo, pagePM.BankAccountId, pagePM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPreviousPageByNumber(pagePM.PageNo, pagePM.EntityId, objectTable.Name, pagePM.Tenant);
             bool isSamePage = prevPage?.Id == pagePM.Id;
             if (prevPage != null && !isSamePage)
             {
@@ -327,6 +540,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
+
+        private static ObjectTable GetObjectTable(string id,int tenant)
+        {
+            ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = tableRepository.GetSingleObjectTable(id, tenant, false);
+            return objectTable;
         }
     }
 }

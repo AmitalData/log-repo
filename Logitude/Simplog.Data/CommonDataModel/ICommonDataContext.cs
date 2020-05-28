@@ -4,10 +4,13 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
+//using Simplog.Server.Infrastructure;
+
 namespace Simplog.Data.CommonDataModel
 {
     public interface ICommonDataContext : IContext
     {
+        IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; }
         IDbSet<AddressType> AddressTypes { get; }
         IDbSet<Country> Countries { get; }
         IDbSet<State> States { get; }
@@ -28,8 +31,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
-        IDbSet<AirlineArea> AirlineAreas { get; }
-        IDbSet<AirlineAreasPort> AirlineAreasPorts { get; }
+        IDbSet<CarrierArea> CarrierAreas { get; }
+        IDbSet<CarrierAreasPort> CarrierAreasPorts { get; }
 
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
@@ -88,6 +91,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<TermsofUseSignature> TermsofUseSignatures { get; }
         IDbSet<ChargeTypeAccounting> ChargeTypeAccountings { get; }
         IDbSet<ContactLastLogin> ContactLastLogins { get; }
+        IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; }
         IDbSet<ContactLoginLog> ContactLoginLogs { get; }
         IDbSet<Report> Reports { get; }
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
@@ -208,14 +212,21 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
         IDbSet<DWHSetting> DWHSettings { get; set; }
-        IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
+        IDbSet<PaymentGatewayPartner> PaymentGatewayPartners { get; set; }
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
         IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         IDbSet<CustomsShipper> CustomsShippers { get; }
         IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set;}
         IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         IDbSet<CardContactProduct> CardContactProducts { get; set; }
-
+        IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
+        IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+        IDbSet<AccountingPartner> AccountingPartners { get; set; }
+        IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
+        IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
+        IDbSet<UserLastSettings> UserLastSettings { get; set; }
+        IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
+        
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

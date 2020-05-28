@@ -83,9 +83,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.OriginalJournalId != null)
             {
                 accContext= accContext ??AccountingContext.GetContext(entityPOCO.Tenant);
-                JournalQueryService journalQueryService = new JournalQueryService(accContext);
-                JournalPM parent = journalQueryService.GetSingle(entityPOCO.OriginalJournalId, false, false);
-                entityPM.OriginalJournalName = parent.JournalNumber;
+
+                JournalRepository journalRepository = new JournalRepository(entityPOCO.Tenant);
+                Journal journal = journalRepository.GetSingle(entityPOCO.OriginalJournalId, entityPOCO.Tenant);
+                
+                entityPM.OriginalJournalName = journal.JournalNumber;
                
             }
                    
@@ -122,7 +124,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.StatusName = type.EnglishName;
 
                 ContactPM user = GetLoggedContact(entityPOCO.Tenant);
-                entityPM.StatusName = showLocal ? type.LocalName : type.EnglishName;
+                entityPM.StatusName =  type.EnglishName;
+                
                 entityPM.StatusLocalName = type.LocalName;
 
 
@@ -132,12 +135,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-                Contact userContact = ContactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant, true);
+                Contact userContact = GetCreatedByUserContactPM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+
                 contact = contact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM();
                 if (userContact != null)
                 {
                     entityPM.CreatedByUserName = contact.DontShowLocal ? userContact.EnglishName : userContact.LocalName;
                 }
+              
             }
 
 
@@ -155,7 +160,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
 
-
+        private Contact GetCreatedByUserContactPM(string id,int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact userContact = contactRepository.GetSingleContactByIdAndTenant(id, tenant, true);
+            if (userContact == null)
+            {
+                userContact = contactRepository.GetSingleContactByIdAndTenant(id, 0, true);
+            }
+            return userContact;
+        }
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";

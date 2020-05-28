@@ -23,6 +23,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -232,20 +233,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                            }                            
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }                           
                         }
+
                         else {
                             button.IsHidden = true;
                         }
@@ -253,19 +256,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
-                                button.IsDisabled = true;
-                            }
+                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
 
-                            else {
-                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
                             }
+
+                            else {
+                                button.IsHidden = true;
+                            } 
                         }
                         else {
                             button.IsHidden = true;
@@ -284,6 +288,23 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             }
 
                             button.IsHidden = false;
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "SendToAMANAC") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.IsCancelled || this.EntityPM.IsOperationalClosed || this.EntityPM.IsAccountingClosed) {
+                                button.IsDisabled = true;
+                            }
+
+                            else {
+                                if (this.EntityPM.TransportModeId == 'I' || this.EntityPM.ShipmentLevelCode == "C" || (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId))) {
+                                    button.IsHidden = true;
+                                }
+                            }                            
                         }
                         else {
                             button.IsHidden = true;
@@ -379,6 +400,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         break;
                     }
 
+                    case "SendToAMANAC":
+                        {
+                            this.SendToAMANACClicked();
+                            break;
+                        }
+
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -422,6 +449,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             this.DoConvertShipmentDirection();
                         }
 
+                        if (this.IsSendToAMANACClicked) {
+                            this.DoSendToAMANA();
+                        }
+
                         if (this.Reload) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
@@ -460,6 +491,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
         this.IsConvertDirectionClicked = false;
+        this.IsSendToAMANACClicked = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -875,27 +907,24 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             });
         });
-
-
-
-
-
-
     }
+
     private CancelShipment() {
-
-
         this.currentActionName = "CancelShipment";
 
         if (this.EntityPM.ShipmentReceivables.filter(p => p.ARInvoiceId != null)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Cancelling Shipment";
             messageWindow.Show("This shipment can't be canceled because it has one or more invoices. all invoices must be disconnect to cancel this shipment");
+        }
 
+        else if (this.EntityPM.TransportModeId == "A" && this.EntityPM.DirectionId == "E" && !AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
         }
 
         else if (this.EntityPM.BookingId != null && this.EntityPM.BookingId != "") {
-
             var confirmWindow: ConfirmWindow = new ConfirmWindow();
             confirmWindow.Title = "Cancel Shipment";
             confirmWindow.Width = 400;
@@ -903,25 +932,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             confirmWindow.YesButtonText = "Yes";
             confirmWindow.NoButtonText = "No";
 
-
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-
-                    // console.log("Yes");
                     this.ConfirmCanceling();
-
                 }
 
                 else if (confirmWindow.No) {
-                    // console.log("No");
+
                 }
 
                 this.ResetButtonClicked();
-
             });
-
         }
-        else this.ConfirmCanceling();
+
+        else {
+            this.ConfirmCanceling();
+        }
 
     }
     private ResetButtonClicked() {
@@ -1279,6 +1305,37 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private IsSendToAMANACClicked: boolean = false;
+    private SendToAMANACClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsSendToAMANACClicked = true;
+            this.OkButton();
+        }
+    }
+    private DoSendToAMANA() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.shipmentService.SendToAMANAC(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName: string = myResponse.Result;               
+
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
+                {
+                    window.open(url);
+                }
+            }
+
+            else {
+                
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
     private myCloner: Cloner;
     private Clone(EntityPM: ShipmentPM) {
         this.myCloner.AddField('IsOperationalClosed');
@@ -1405,7 +1462,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = _tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);

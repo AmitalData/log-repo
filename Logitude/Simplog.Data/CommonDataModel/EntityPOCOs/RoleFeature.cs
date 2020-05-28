@@ -12,11 +12,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FeatureId { get; set; }
         public string FeatureAccessLevelCode  { get; set; }
         public bool IsDeleted { get; set; }
+        public string FeatureUniqeCode { get; set; }
 
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
 
-        [ForeignKey("FeatureId")]
+        //[ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
         [ForeignKey("FeatureAccessLevelCode")]

@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -23,10 +24,10 @@ import {GatepassRequestPM} from '../../EntityPMs/GatepassRequestsPM';
 @Injectable()
 
 export class GatepassRequestPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/gatepassrequests';      
     }
 
@@ -36,7 +37,7 @@ export class GatepassRequestPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
-		 return Observable.defer(() => {
+		 return defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'mastercourierid=' + mastercourierid+'&'+'gatepassnumber=' + gatepassnumber, {
                     headers: authHeader
                 }).map(response => {
@@ -59,14 +60,14 @@ export class GatepassRequestPMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
 	 insert(entityPM: GatepassRequestPM) {
  
         var callTime = new Date();        
-        return Observable.defer(() => {
+        return defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -103,14 +104,14 @@ export class GatepassRequestPMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }
@@ -121,7 +122,7 @@ export class GatepassRequestPMService {
     update(entityPM: GatepassRequestPM) {
 
             var callTime = new Date();         
-            return Observable.defer(() => {
+            return defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -157,14 +158,14 @@ export class GatepassRequestPMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }

@@ -775,6 +775,41 @@ export class TenantManagementPM {
     public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
        
 	 
+    private mainAdditionalPackageApplied: boolean;
+    public get MainAdditionalPackageApplied() { return this.mainAdditionalPackageApplied; }
+    public set MainAdditionalPackageApplied(newValue: boolean) { if (this.mainAdditionalPackageApplied != newValue) { this.mainAdditionalPackageApplied = newValue; this.MarkAsDirty("MainAdditionalPackageApplied"); } }
+       
+	 
+    private totalPrice: number;
+    public get TotalPrice() { return this.totalPrice; }
+    public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
+       
+	 
+    private supportDomain: string;
+    public get SupportDomain() { return this.supportDomain; }
+    public set SupportDomain(newValue: string) { if (this.supportDomain != newValue) { this.supportDomain = newValue; this.MarkAsDirty("SupportDomain"); } }
+       
+	 
+    private totalNumberOfUsers: number;
+    public get TotalNumberOfUsers() { return this.totalNumberOfUsers; }
+    public set TotalNumberOfUsers(newValue: number) { if (this.totalNumberOfUsers != newValue) { this.totalNumberOfUsers = newValue; this.MarkAsDirty("TotalNumberOfUsers"); } }
+       
+	 
+    private totalFreeUsers: number;
+    public get TotalFreeUsers() { return this.totalFreeUsers; }
+    public set TotalFreeUsers(newValue: number) { if (this.totalFreeUsers != newValue) { this.totalFreeUsers = newValue; this.MarkAsDirty("TotalFreeUsers"); } }
+       
+	 
+    private averagePrice: number;
+    public get AveragePrice() { return this.averagePrice; }
+    public set AveragePrice(newValue: number) { if (this.averagePrice != newValue) { this.averagePrice = newValue; this.MarkAsDirty("AveragePrice"); } }
+       
+	 
+    private totalPaymentamount: number;
+    public get TotalPaymentamount() { return this.totalPaymentamount; }
+    public set TotalPaymentamount(newValue: number) { if (this.totalPaymentamount != newValue) { this.totalPaymentamount = newValue; this.MarkAsDirty("TotalPaymentamount"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

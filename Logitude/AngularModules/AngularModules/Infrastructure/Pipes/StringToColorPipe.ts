@@ -69,6 +69,7 @@ export class StringToColorPipe {
             case "Hybriding":
             case "Booking Request":
             case "Used":
+            case "Entered":
                 {
                     // Green
                     color = "#009161";

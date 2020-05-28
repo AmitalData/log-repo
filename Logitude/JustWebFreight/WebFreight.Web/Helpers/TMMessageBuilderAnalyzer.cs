@@ -6,6 +6,10 @@ using Microsoft.VisualStudio.Services.WebApi;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Logitude.Server.Tools.QueueService;
+using System.Transactions;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -24,7 +28,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+            var personalAccessToken = GetPersonalKey(); 
             int workItemId = wi;
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
@@ -59,5 +63,24 @@ namespace WebFreight.Web.Helpers
                 }
             }
         }
+
+        private string GetPersonalKey()
+        {
+            string personalAccessKey = "";
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                if (setting != null)
+                {
+                    personalAccessKey = setting.TMPersonalAccessToken;
+                }
+
+                scope.Complete();
+            }
+
+            return personalAccessKey;
+        }
+
     }
 }

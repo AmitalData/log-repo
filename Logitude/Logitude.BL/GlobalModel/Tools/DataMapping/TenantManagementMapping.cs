@@ -121,7 +121,6 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.CustomerURL = entityPM.CustomerURL;
             entityPOCO.HideSharedlogistics = entityPM.HideSharedlogistics;
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;
-            entityPM.PackageName = entityPM.PackageCode;
             entityPOCO.IsParentTenant = entityPM.IsParentTenant;
             entityPOCO.ParentTenantId = entityPM.ParentTenantId;
             entityPOCO.AgentSharedLogisticsStatisticsLastDate = entityPM.AgentSharedLogisticsStatisticsLastDate;
@@ -133,24 +132,31 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
             entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
             entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
+            entityPOCO.TotalPrice = entityPM.TotalPrice;
+            entityPOCO.SupportDomain = entityPM.SupportDomain;
 
-            if (entityPM.IsMultiPackage)
-            {
-                entityPM.PackageName = "Multi Package";
-            }
+            entityPOCO.TotalNumberOfUsers = entityPM.TotalNumberOfUsers;
+            entityPOCO.TotalFreeUsers = entityPM.TotalFreeUsers;
+            entityPOCO.AveragePrice = entityPM.AveragePrice;
+            entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
 
-            entityPOCO.PackageName = entityPM.PackageName;
-
+            string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
+                PackageRepository packageRepository = new PackageRepository(entityPM.Id);
+                LogBoxTenantSettingRepository LBtenantsettingRepository = new LogBoxTenantSettingRepository(entityPM.Id);
+
                 Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                LogBoxTenantSetting LBtenantsetting = LBtenantsettingRepository.GetSingleLBTenant(entityPM.Id);
+
+              
 
                 if (tenant != null)
                 {
                     tenant.Company = entityPM.Name;
-                    tenant.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
-                    tenant.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                    LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                    LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;
@@ -163,10 +169,26 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenantRepository.SubmitChanges();
                 }
 
+                Package package = packageRepository.GetSinglePackage(entityPM.PackageCode);
+                if(package != null)
+                {
+                    packageName = package.Name;
+                }
+
                 scope.Complete();
             }
 
+            if (entityPM.MainAdditionalPackageApplied || !entityPM.IsMultiPackage)
+            {
+                entityPM.PackageName = packageName;
+            }
 
+            else
+            {
+                entityPM.PackageName = "Multi Package";
+            }
+
+            entityPOCO.PackageName = entityPM.PackageName;
             BuildPackageCodeSearchFields(entityPM, entityPOCO);
         }
 

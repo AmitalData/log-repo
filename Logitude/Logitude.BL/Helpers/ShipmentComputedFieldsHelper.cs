@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -19,12 +20,12 @@ namespace Logitude.BL.Helpers
     public class ShipmentComputedFieldsHelper
     {
 
-        public void UpdateShipmentComputedFields(ShipmentComputedFields shipmentComputedFields)
+        public void UpdateShipmentComputedFields(ShipmentComputedFields shipmentComputedFields, IShipmentsContext context)
         {
             if (shipmentComputedFields != null)
             {
                 bool isSaveShipmentComputedFields = false;
-                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                 {
                     ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
                     ShipmentComputedFields oldShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentComputedFields.Id, shipmentComputedFields.Tenant);
@@ -49,12 +50,17 @@ namespace Logitude.BL.Helpers
                             shipmentPM.ConsigneeReference1 = shipmentPM.CustomerReference1;
                             shipmentPM.ShipperReference2 = shipmentPM.CustomerReference2;
                             shipmentPM.ConsigneeReference2 = shipmentPM.CustomerReference2;
+                            shipmentPM.CreatedFromDigital = shipmentComputedFields.CreatedFromDigital;
                             //shipmentPM.ShipperId = shipmentPM.CustomerId;
                             shipmentPM.IsShipmentComputedFieldChange = true;
                             shipmentPM.IsImporterShipment = true;
-                            IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
-                            ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
-                            shipmentService.entityComputedFields = shipmentComputedFields;
+
+                            string email = "system@tenant" + shipmentComputedFields.Tenant.ToString() + ".com"; //SecurityUtility.GetAuthenticatedUser(shipmentComputedFields.Tenant);
+
+                            //IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);                  
+                             
+                            ShipmentService shipmentService = new ShipmentService(context, shipmentPM, email);
+                            shipmentService.UpdatedShipmentComputedFields = shipmentComputedFields;
                             shipmentService.Update();
                             isSaveShipmentComputedFields = true;
                         }
@@ -63,7 +69,7 @@ namespace Logitude.BL.Helpers
 
                 if (!isSaveShipmentComputedFields)
                 {
-                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
+                    ShipmentComputedFieldsRepository shipmentComputedFieldsRepository  = new ShipmentComputedFieldsRepository(context);
                     shipmentComputedFieldsRepository.Update(shipmentComputedFields);
                     shipmentComputedFieldsRepository.SubmitChanges();
                     isSaveShipmentComputedFields = true;
@@ -87,6 +93,7 @@ namespace Logitude.BL.Helpers
                 if (oldShipmentComputedFields.IsDigitalSignRequired != newShipmentComputedFields.IsDigitalSignRequired) return true;
                 if (oldShipmentComputedFields.IsDepositionRequired != newShipmentComputedFields.IsDepositionRequired) return true;
                 if (oldShipmentComputedFields.ImporterDepositionRequestDetails != newShipmentComputedFields.ImporterDepositionRequestDetails) return true;
+                if (oldShipmentComputedFields.CreatedFromDigital != newShipmentComputedFields.CreatedFromDigital) return true;
                 //if (oldShipmentComputedFields.LastDocumentDateTime != newShipmentComputedFields.LastDocumentDateTime) return true;
             }
             return result;

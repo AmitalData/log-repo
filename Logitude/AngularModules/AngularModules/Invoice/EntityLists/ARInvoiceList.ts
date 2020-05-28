@@ -72,6 +72,7 @@ export class ARInvoiceList {
 		UpdateDate: Date;
 		UpdatedByUserId: string;
 		BranchId: string;
+		BranchName: string;
 		IsPrinted: boolean;
 		PaymentTermExternalId: string;
 		IsConstituentInvoice: boolean;
@@ -102,7 +103,7 @@ export class ARInvoiceList {
 		ApprovedByUserId: string;
 		ApprovedByUserName: string;
 		OperationalDate: Date;
-		DateForVATInterest: Date;
+		DateForInterest: Date;
 		SplitJournalByCurrency: boolean;
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
@@ -128,8 +129,16 @@ export class ARInvoiceList {
 		TotaVatableAmountForTaxReport: number;
 		TotalVAT: number;
 		SATApprovalDate: Date;
+		DocumentFilingId: string;
 		IsFullAccounting: boolean;
 		ARInvoiceStockId: string;
 		IsInvoiceNumberFromStock: boolean;
+		BillToCity: string;
+		BillToCountry: string;
+		CreatedByPartner: string;
+		SATXML: string;
+		BillToGLAccountId: string;
+		RegionalTaxId: string;
+		RegionalTaxPercentage: number;
 	
 }

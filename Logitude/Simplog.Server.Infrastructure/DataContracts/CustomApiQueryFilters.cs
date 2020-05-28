@@ -16,6 +16,8 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public int? Tenant { get; set; }
 
         public string queryId { get; set; }
+        public string queryCode { get; set; }
+
         //public int tenant { get; set; }
         public string userid { get; set; }
         public string ObjectTableName { get; set; }

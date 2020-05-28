@@ -6,4 +6,5 @@ export class DWQueryData {
     public PageIndex: number;
     public PageSize: number;
     public ColumnsSort: string;
+    public FactTableName: string;
 }

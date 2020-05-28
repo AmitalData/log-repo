@@ -1,13 +1,2293 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;8736dfab-f994-4648-b463-3a2ea4faa4e6&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" DBTableName="&quot;Customs.PackingTypes&quot;" ObjectTableSingular="&quot;Customs.PackingType&quot;" ObjectTablePlural="&quot;Customs.PackingTypes&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="false" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="true" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Packing Type&quot;" Code="&quot;4495&quot;" Name="&quot;Customs.PackingType Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;112d692b-d7b7-47a2-8043-0b264604bf01&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="4" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="4" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PackingType&quot;" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;3780607b-18bb-4f18-94c4-22b991329af3&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PackingType&quot;" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;4d9a6d18-6ea4-4a79-b75d-e6cec6ee8160&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="true" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PackingType&quot;" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;22ab53a4-92e3-4bf0-95db-157fe2fd7608&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="40" DisplayInList="false" IsCustomFilter="false" Operator="&quot;Contains&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PackingType&quot;" ValidForQuerySection2="&quot;Customs.PackingTypeFollowUp&quot;" DisplayInEntityVariables="true" DigitsAfterPoint="0" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search codes/ names&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" HelpTextCode="&quot;SearchFields&quot;" HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;d933ce2d-322d-4daf-a5da-0c1708967448&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.PackingType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;Inactive&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;Inactive&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;8736dfab-f994-4648-b463-3a2ea4faa4e6&quot;"
+  ObjectTableName="&quot;Customs.PackingType&quot;"
+  DBTableName="&quot;Customs.PackingTypes&quot;"
+  ObjectTableSingular="&quot;Customs.PackingType&quot;"
+  ObjectTablePlural="&quot;Customs.PackingTypes&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="false"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="true"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Packing Type&quot;"
+  Code="&quot;PAKT&quot;"
+  Name="&quot;Customs.PackingType&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;112d692b-d7b7-47a2-8043-0b264604bf01&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="4"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="4"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PackingType&quot;"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;3780607b-18bb-4f18-94c4-22b991329af3&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PackingType&quot;"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;4d9a6d18-6ea4-4a79-b75d-e6cec6ee8160&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="true"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PackingType&quot;"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;22ab53a4-92e3-4bf0-95db-157fe2fd7608&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    Operator="&quot;Contains&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PackingType&quot;"
+    ValidForQuerySection2="&quot;Customs.PackingTypeFollowUp&quot;"
+    DisplayInEntityVariables="true"
+    DigitsAfterPoint="0"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search codes/ names&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFields&quot;"
+    HelpTextCode="&quot;SearchFields&quot;"
+    HelpTextDefaultText="&quot;Searching by :&#xA;1: code&#xA;2: name&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;d933ce2d-322d-4daf-a5da-0c1708967448&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.PackingType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;Inactive&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;Inactive&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1A&quot;"
+      SearchFields="&quot;1A,Drum, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, steel&quot;" />
+    <Record
+      Code="&quot;1B&quot;"
+      SearchFields="&quot;1B,Drum, aluminium&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, aluminium&quot;" />
+    <Record
+      Code="&quot;1D&quot;"
+      SearchFields="&quot;1D,Drum, plywood&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, plywood&quot;" />
+    <Record
+      Code="&quot;1F&quot;"
+      SearchFields="&quot;1F,Container, flexible&quot;"
+      Inactive="false"
+      LocalName="&quot;Container, flexible&quot;" />
+    <Record
+      Code="&quot;1G&quot;"
+      SearchFields="&quot;1G,Drum, fibre&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, fibre&quot;" />
+    <Record
+      Code="&quot;1W&quot;"
+      SearchFields="&quot;1W,Drum, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, wooden&quot;" />
+    <Record
+      Code="&quot;2C&quot;"
+      SearchFields="&quot;2C,Barrel, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Barrel, wooden&quot;" />
+    <Record
+      Code="&quot;31&quot;"
+      SearchFields="&quot;31,TRAILER/SLAVE/MAFI&quot;"
+      Inactive="false"
+      LocalName="&quot;TRAILER/SLAVE/MAFI&quot;" />
+    <Record
+      Code="&quot;3A&quot;"
+      SearchFields="&quot;3A,Jerrican, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, steel&quot;" />
+    <Record
+      Code="&quot;3H&quot;"
+      SearchFields="&quot;3H,Jerrican, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, plastic&quot;" />
+    <Record
+      Code="&quot;43&quot;"
+      SearchFields="&quot;43,Bag, super bulk&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, super bulk&quot;" />
+    <Record
+      Code="&quot;44&quot;"
+      SearchFields="&quot;44,Bag, polybag&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, polybag&quot;" />
+    <Record
+      Code="&quot;4A&quot;"
+      SearchFields="&quot;4A,Box, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, steel&quot;" />
+    <Record
+      Code="&quot;4B&quot;"
+      SearchFields="&quot;4B,Box, aluminium&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, aluminium&quot;" />
+    <Record
+      Code="&quot;4C&quot;"
+      SearchFields="&quot;4C,Box, natural wood&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, natural wood&quot;" />
+    <Record
+      Code="&quot;4D&quot;"
+      SearchFields="&quot;4D,Box, plywood&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, plywood&quot;" />
+    <Record
+      Code="&quot;4F&quot;"
+      SearchFields="&quot;4F,Box, reconstituted wood&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, reconstituted wood&quot;" />
+    <Record
+      Code="&quot;4G&quot;"
+      SearchFields="&quot;4G,Box, fibreboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, fibreboard&quot;" />
+    <Record
+      Code="&quot;4H&quot;"
+      SearchFields="&quot;4H,Box, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, plastic&quot;" />
+    <Record
+      Code="&quot;5H&quot;"
+      SearchFields="&quot;5H,Bag, woven plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, woven plastic&quot;" />
+    <Record
+      Code="&quot;5L&quot;"
+      SearchFields="&quot;5L,Bag, textile&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, textile&quot;" />
+    <Record
+      Code="&quot;5M&quot;"
+      SearchFields="&quot;5M,Bag, paper&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, paper&quot;" />
+    <Record
+      Code="&quot;6H&quot;"
+      SearchFields="&quot;6H,Composite packaging, plastic receptacle&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle&quot;" />
+    <Record
+      Code="&quot;6P&quot;"
+      SearchFields="&quot;6P,Composite packaging, glass receptacle&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle&quot;" />
+    <Record
+      Code="&quot;7A&quot;"
+      SearchFields="&quot;7A,Case, car&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, car&quot;" />
+    <Record
+      Code="&quot;7B&quot;"
+      SearchFields="&quot;7B,Case, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, wooden&quot;" />
+    <Record
+      Code="&quot;8A&quot;"
+      SearchFields="&quot;8A,Pallet, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, wooden&quot;" />
+    <Record
+      Code="&quot;8B&quot;"
+      SearchFields="&quot;8B,Crate, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, wooden&quot;" />
+    <Record
+      Code="&quot;8C&quot;"
+      SearchFields="&quot;8C,Bundle, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Bundle, wooden&quot;" />
+    <Record
+      Code="&quot;999&quot;"
+      SearchFields="&quot;999,Hasavot&quot;"
+      Inactive="false"
+      LocalName="&quot;Hasavot&quot;" />
+    <Record
+      Code="&quot;AA&quot;"
+      SearchFields="&quot;AA,Intermediate bulk container, rigid plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic&quot;" />
+    <Record
+      Code="&quot;AB&quot;"
+      SearchFields="&quot;AB,Receptacle, fibre&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, fibre&quot;" />
+    <Record
+      Code="&quot;AC&quot;"
+      SearchFields="&quot;AC,Receptacle, paper&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, paper&quot;" />
+    <Record
+      Code="&quot;AD&quot;"
+      SearchFields="&quot;AD,Receptacle, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, wooden&quot;" />
+    <Record
+      Code="&quot;AE&quot;"
+      SearchFields="&quot;AE,Aerosol&quot;"
+      Inactive="false"
+      LocalName="&quot;Aerosol&quot;" />
+    <Record
+      Code="&quot;AF&quot;"
+      SearchFields="&quot;AF,Pallet, modular, collars 80cms * 60cms&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, modular, collars 80cms * 60cms&quot;" />
+    <Record
+      Code="&quot;AG&quot;"
+      SearchFields="&quot;AG,Pallet, shrinkwrapped&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, shrinkwrapped&quot;" />
+    <Record
+      Code="&quot;AH&quot;"
+      SearchFields="&quot;AH,Pallet, 100cms * 110cms&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, 100cms * 110cms&quot;" />
+    <Record
+      Code="&quot;AI&quot;"
+      SearchFields="&quot;AI,Clamshell&quot;"
+      Inactive="false"
+      LocalName="&quot;Clamshell&quot;" />
+    <Record
+      Code="&quot;AJ&quot;"
+      SearchFields="&quot;AJ,Cone&quot;"
+      Inactive="false"
+      LocalName="&quot;Cone&quot;" />
+    <Record
+      Code="&quot;AL&quot;"
+      SearchFields="&quot;AL,Ball&quot;"
+      Inactive="false"
+      LocalName="&quot;Ball&quot;" />
+    <Record
+      Code="&quot;AM&quot;"
+      SearchFields="&quot;AM,Ampoule, non-protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Ampoule, non-protected&quot;" />
+    <Record
+      Code="&quot;AP&quot;"
+      SearchFields="&quot;AP,Ampoule, protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Ampoule, protected&quot;" />
+    <Record
+      Code="&quot;AT&quot;"
+      SearchFields="&quot;AT,Atomizer&quot;"
+      Inactive="false"
+      LocalName="&quot;Atomizer&quot;" />
+    <Record
+      Code="&quot;AV&quot;"
+      SearchFields="&quot;AV,Capsule&quot;"
+      Inactive="false"
+      LocalName="&quot;Capsule&quot;" />
+    <Record
+      Code="&quot;B4&quot;"
+      SearchFields="&quot;B4,Belt&quot;"
+      Inactive="false"
+      LocalName="&quot;Belt&quot;" />
+    <Record
+      Code="&quot;BA&quot;"
+      SearchFields="&quot;BA,Barrel&quot;"
+      Inactive="false"
+      LocalName="&quot;Barrel&quot;" />
+    <Record
+      Code="&quot;BB&quot;"
+      SearchFields="&quot;BB,Bobbin&quot;"
+      Inactive="false"
+      LocalName="&quot;Bobbin&quot;" />
+    <Record
+      Code="&quot;BC&quot;"
+      SearchFields="&quot;BC,Bottlecrate / bottlerack&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottlecrate / bottlerack&quot;" />
+    <Record
+      Code="&quot;BD&quot;"
+      SearchFields="&quot;BD,Board&quot;"
+      Inactive="false"
+      LocalName="&quot;Board&quot;" />
+    <Record
+      Code="&quot;BE&quot;"
+      SearchFields="&quot;BE,Bundle&quot;"
+      Inactive="false"
+      LocalName="&quot;Bundle&quot;" />
+    <Record
+      Code="&quot;BF&quot;"
+      SearchFields="&quot;BF,Balloon, non-protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Balloon, non-protected&quot;" />
+    <Record
+      Code="&quot;BG&quot;"
+      SearchFields="&quot;BG,Bag&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag&quot;" />
+    <Record
+      Code="&quot;BH&quot;"
+      SearchFields="&quot;BH,Bunch&quot;"
+      Inactive="false"
+      LocalName="&quot;Bunch&quot;" />
+    <Record
+      Code="&quot;BI&quot;"
+      SearchFields="&quot;BI,Bin&quot;"
+      Inactive="false"
+      LocalName="&quot;Bin&quot;" />
+    <Record
+      Code="&quot;BJ&quot;"
+      SearchFields="&quot;BJ,Bucket&quot;"
+      Inactive="false"
+      LocalName="&quot;Bucket&quot;" />
+    <Record
+      Code="&quot;BK&quot;"
+      SearchFields="&quot;BK,Basket&quot;"
+      Inactive="false"
+      LocalName="&quot;Basket&quot;" />
+    <Record
+      Code="&quot;BL&quot;"
+      SearchFields="&quot;BL,Bale, compressed&quot;"
+      Inactive="false"
+      LocalName="&quot;Bale, compressed&quot;" />
+    <Record
+      Code="&quot;BM&quot;"
+      SearchFields="&quot;BM,Basin&quot;"
+      Inactive="false"
+      LocalName="&quot;Basin&quot;" />
+    <Record
+      Code="&quot;BN&quot;"
+      SearchFields="&quot;BN,Bale, non-compressed&quot;"
+      Inactive="false"
+      LocalName="&quot;Bale, non-compressed&quot;" />
+    <Record
+      Code="&quot;BO&quot;"
+      SearchFields="&quot;BO,Bottle, non-protected, cylindrical&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottle, non-protected, cylindrical&quot;" />
+    <Record
+      Code="&quot;BP&quot;"
+      SearchFields="&quot;BP,Balloon, protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Balloon, protected&quot;" />
+    <Record
+      Code="&quot;BQ&quot;"
+      SearchFields="&quot;BQ,Bottle, protected cylindrical&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottle, protected cylindrical&quot;" />
+    <Record
+      Code="&quot;BR&quot;"
+      SearchFields="&quot;BR,Bar&quot;"
+      Inactive="false"
+      LocalName="&quot;Bar&quot;" />
+    <Record
+      Code="&quot;BS&quot;"
+      SearchFields="&quot;BS,Bottle, non-protected, bulbous&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottle, non-protected, bulbous&quot;" />
+    <Record
+      Code="&quot;BT&quot;"
+      SearchFields="&quot;BT,Bolt&quot;"
+      Inactive="false"
+      LocalName="&quot;Bolt&quot;" />
+    <Record
+      Code="&quot;BU&quot;"
+      SearchFields="&quot;BU,Butt&quot;"
+      Inactive="false"
+      LocalName="&quot;Butt&quot;" />
+    <Record
+      Code="&quot;BV&quot;"
+      SearchFields="&quot;BV,Bottle, protected bulbous&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottle, protected bulbous&quot;" />
+    <Record
+      Code="&quot;BW&quot;"
+      SearchFields="&quot;BW,Box, for liquids&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, for liquids&quot;" />
+    <Record
+      Code="&quot;BX&quot;"
+      SearchFields="&quot;BX,Box&quot;"
+      Inactive="false"
+      LocalName="&quot;Box&quot;" />
+    <Record
+      Code="&quot;BY&quot;"
+      SearchFields="&quot;BY,Board, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Board, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;BZ&quot;"
+      SearchFields="&quot;BZ,Bars, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Bars, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;CA&quot;"
+      SearchFields="&quot;CA,Can, rectangular&quot;"
+      Inactive="false"
+      LocalName="&quot;Can, rectangular&quot;" />
+    <Record
+      Code="&quot;CB&quot;"
+      SearchFields="&quot;CB,Crate, beer&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, beer&quot;" />
+    <Record
+      Code="&quot;CC&quot;"
+      SearchFields="&quot;CC,Churn&quot;"
+      Inactive="false"
+      LocalName="&quot;Churn&quot;" />
+    <Record
+      Code="&quot;CD&quot;"
+      SearchFields="&quot;CD,Can, with handle and spout&quot;"
+      Inactive="false"
+      LocalName="&quot;Can, with handle and spout&quot;" />
+    <Record
+      Code="&quot;CE&quot;"
+      SearchFields="&quot;CE,Creel&quot;"
+      Inactive="false"
+      LocalName="&quot;Creel&quot;" />
+    <Record
+      Code="&quot;CF&quot;"
+      SearchFields="&quot;CF,Coffer&quot;"
+      Inactive="false"
+      LocalName="&quot;Coffer&quot;" />
+    <Record
+      Code="&quot;CG&quot;"
+      SearchFields="&quot;CG,Cage&quot;"
+      Inactive="false"
+      LocalName="&quot;Cage&quot;" />
+    <Record
+      Code="&quot;CH&quot;"
+      SearchFields="&quot;CH,Chest&quot;"
+      Inactive="false"
+      LocalName="&quot;Chest&quot;" />
+    <Record
+      Code="&quot;CI&quot;"
+      SearchFields="&quot;CI,Canister&quot;"
+      Inactive="false"
+      LocalName="&quot;Canister&quot;" />
+    <Record
+      Code="&quot;CJ&quot;"
+      SearchFields="&quot;CJ,Coffin&quot;"
+      Inactive="false"
+      LocalName="&quot;Coffin&quot;" />
+    <Record
+      Code="&quot;CK&quot;"
+      SearchFields="&quot;CK,Cask&quot;"
+      Inactive="false"
+      LocalName="&quot;Cask&quot;" />
+    <Record
+      Code="&quot;CL&quot;"
+      SearchFields="&quot;CL,Coil&quot;"
+      Inactive="false"
+      LocalName="&quot;Coil&quot;" />
+    <Record
+      Code="&quot;CM&quot;"
+      SearchFields="&quot;CM,Card&quot;"
+      Inactive="false"
+      LocalName="&quot;Card&quot;" />
+    <Record
+      Code="&quot;CN&quot;"
+      SearchFields="&quot;CN,Container, not otherwise specified as transport equipment&quot;"
+      Inactive="false"
+      LocalName="&quot;Container, not otherwise specified as transport equipment&quot;" />
+    <Record
+      Code="&quot;CO&quot;"
+      SearchFields="&quot;CO,Carboy, non-protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Carboy, non-protected&quot;" />
+    <Record
+      Code="&quot;CP&quot;"
+      SearchFields="&quot;CP,Carboy, protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Carboy, protected&quot;" />
+    <Record
+      Code="&quot;CQ&quot;"
+      SearchFields="&quot;CQ,Cartridge&quot;"
+      Inactive="false"
+      LocalName="&quot;Cartridge&quot;" />
+    <Record
+      Code="&quot;CR&quot;"
+      SearchFields="&quot;CR,Crate&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate&quot;" />
+    <Record
+      Code="&quot;CS&quot;"
+      SearchFields="&quot;CS,Case&quot;"
+      Inactive="false"
+      LocalName="&quot;Case&quot;" />
+    <Record
+      Code="&quot;CT&quot;"
+      SearchFields="&quot;CT,Carton&quot;"
+      Inactive="false"
+      LocalName="&quot;Carton&quot;" />
+    <Record
+      Code="&quot;CU&quot;"
+      SearchFields="&quot;CU,Cup&quot;"
+      Inactive="false"
+      LocalName="&quot;Cup&quot;" />
+    <Record
+      Code="&quot;CV&quot;"
+      SearchFields="&quot;CV,Cover&quot;"
+      Inactive="false"
+      LocalName="&quot;Cover&quot;" />
+    <Record
+      Code="&quot;CW&quot;"
+      SearchFields="&quot;CW,Cage, roll&quot;"
+      Inactive="false"
+      LocalName="&quot;Cage, roll&quot;" />
+    <Record
+      Code="&quot;CX&quot;"
+      SearchFields="&quot;CX,Can, cylindrical&quot;"
+      Inactive="false"
+      LocalName="&quot;Can, cylindrical&quot;" />
+    <Record
+      Code="&quot;CY&quot;"
+      SearchFields="&quot;CY,Cylinder&quot;"
+      Inactive="false"
+      LocalName="&quot;Cylinder&quot;" />
+    <Record
+      Code="&quot;CZ&quot;"
+      SearchFields="&quot;CZ,Canvas&quot;"
+      Inactive="false"
+      LocalName="&quot;Canvas&quot;" />
+    <Record
+      Code="&quot;D5&quot;"
+      SearchFields="&quot;D5,CONTAINER&quot;"
+      Inactive="false"
+      LocalName="&quot;CONTAINER&quot;" />
+    <Record
+      Code="&quot;DA&quot;"
+      SearchFields="&quot;DA,Crate, multiple layer, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, multiple layer, plastic&quot;" />
+    <Record
+      Code="&quot;DB&quot;"
+      SearchFields="&quot;DB,Crate, multiple layer, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, multiple layer, wooden&quot;" />
+    <Record
+      Code="&quot;DC&quot;"
+      SearchFields="&quot;DC,Crate, multiple layer, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, multiple layer, cardboard&quot;" />
+    <Record
+      Code="&quot;DG&quot;"
+      SearchFields="&quot;DG,Cage, Commonwealth Handling Equipment Pool  (CHEP)&quot;"
+      Inactive="false"
+      LocalName="&quot;Cage, Commonwealth Handling Equipment Pool  (CHEP)&quot;" />
+    <Record
+      Code="&quot;DH&quot;"
+      SearchFields="&quot;DH,Box, Commonwealth Handling Equipment Pool (CHEP), Eurobox&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, Commonwealth Handling Equipment Pool (CHEP), Eurobox&quot;" />
+    <Record
+      Code="&quot;DI&quot;"
+      SearchFields="&quot;DI,Drum, iron&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, iron&quot;" />
+    <Record
+      Code="&quot;DJ&quot;"
+      SearchFields="&quot;DJ,Demijohn, non-protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Demijohn, non-protected&quot;" />
+    <Record
+      Code="&quot;DK&quot;"
+      SearchFields="&quot;DK,Crate, bulk, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, bulk, cardboard&quot;" />
+    <Record
+      Code="&quot;DL&quot;"
+      SearchFields="&quot;DL,Crate, bulk, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, bulk, plastic&quot;" />
+    <Record
+      Code="&quot;DM&quot;"
+      SearchFields="&quot;DM,Crate, bulk, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, bulk, wooden&quot;" />
+    <Record
+      Code="&quot;DN&quot;"
+      SearchFields="&quot;DN,Dispenser&quot;"
+      Inactive="false"
+      LocalName="&quot;Dispenser&quot;" />
+    <Record
+      Code="&quot;DP&quot;"
+      SearchFields="&quot;DP,Demijohn, protected&quot;"
+      Inactive="false"
+      LocalName="&quot;Demijohn, protected&quot;" />
+    <Record
+      Code="&quot;DR&quot;"
+      SearchFields="&quot;DR,Drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum&quot;" />
+    <Record
+      Code="&quot;DS&quot;"
+      SearchFields="&quot;DS,Tray, one layer no cover, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, one layer no cover, plastic&quot;" />
+    <Record
+      Code="&quot;DT&quot;"
+      SearchFields="&quot;DT,Tray, one layer no cover, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, one layer no cover, wooden&quot;" />
+    <Record
+      Code="&quot;DU&quot;"
+      SearchFields="&quot;DU,Tray, one layer no cover, polystyrene&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, one layer no cover, polystyrene&quot;" />
+    <Record
+      Code="&quot;DV&quot;"
+      SearchFields="&quot;DV,Tray, one layer no cover, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, one layer no cover, cardboard&quot;" />
+    <Record
+      Code="&quot;DW&quot;"
+      SearchFields="&quot;DW,Tray, two layers no cover, plastic tray&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, two layers no cover, plastic tray&quot;" />
+    <Record
+      Code="&quot;DX&quot;"
+      SearchFields="&quot;DX,Tray, two layers no cover, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, two layers no cover, wooden&quot;" />
+    <Record
+      Code="&quot;DY&quot;"
+      SearchFields="&quot;DY,Tray, two layers no cover, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, two layers no cover, cardboard&quot;" />
+    <Record
+      Code="&quot;EC&quot;"
+      SearchFields="&quot;EC,Bag, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, plastic&quot;" />
+    <Record
+      Code="&quot;ED&quot;"
+      SearchFields="&quot;ED,Case, with pallet base&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, with pallet base&quot;" />
+    <Record
+      Code="&quot;EE&quot;"
+      SearchFields="&quot;EE,Case, with pallet base, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, with pallet base, wooden&quot;" />
+    <Record
+      Code="&quot;EF&quot;"
+      SearchFields="&quot;EF,Case, with pallet base, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, with pallet base, cardboard&quot;" />
+    <Record
+      Code="&quot;EG&quot;"
+      SearchFields="&quot;EG,Case, with pallet base, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, with pallet base, plastic&quot;" />
+    <Record
+      Code="&quot;EH&quot;"
+      SearchFields="&quot;EH,Case, with pallet base, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, with pallet base, metal&quot;" />
+    <Record
+      Code="&quot;EI&quot;"
+      SearchFields="&quot;EI,Case, isothermic&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, isothermic&quot;" />
+    <Record
+      Code="&quot;EN&quot;"
+      SearchFields="&quot;EN,Envelope&quot;"
+      Inactive="false"
+      LocalName="&quot;Envelope&quot;" />
+    <Record
+      Code="&quot;FB&quot;"
+      SearchFields="&quot;FB,Flexibag&quot;"
+      Inactive="false"
+      LocalName="&quot;Flexibag&quot;" />
+    <Record
+      Code="&quot;FC&quot;"
+      SearchFields="&quot;FC,Crate, fruit&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, fruit&quot;" />
+    <Record
+      Code="&quot;FD&quot;"
+      SearchFields="&quot;FD,Crate, framed&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, framed&quot;" />
+    <Record
+      Code="&quot;FE&quot;"
+      SearchFields="&quot;FE,Flexitank&quot;"
+      Inactive="false"
+      LocalName="&quot;Flexitank&quot;" />
+    <Record
+      Code="&quot;FI&quot;"
+      SearchFields="&quot;FI,Firkin&quot;"
+      Inactive="false"
+      LocalName="&quot;Firkin&quot;" />
+    <Record
+      Code="&quot;FL&quot;"
+      SearchFields="&quot;FL,Flask&quot;"
+      Inactive="false"
+      LocalName="&quot;Flask&quot;" />
+    <Record
+      Code="&quot;FO&quot;"
+      SearchFields="&quot;FO,Footlocker&quot;"
+      Inactive="false"
+      LocalName="&quot;Footlocker&quot;" />
+    <Record
+      Code="&quot;FP&quot;"
+      SearchFields="&quot;FP,Filmpack&quot;"
+      Inactive="false"
+      LocalName="&quot;Filmpack&quot;" />
+    <Record
+      Code="&quot;FR&quot;"
+      SearchFields="&quot;FR,Frame&quot;"
+      Inactive="false"
+      LocalName="&quot;Frame&quot;" />
+    <Record
+      Code="&quot;FT&quot;"
+      SearchFields="&quot;FT,Foodtainer&quot;"
+      Inactive="false"
+      LocalName="&quot;Foodtainer&quot;" />
+    <Record
+      Code="&quot;FW&quot;"
+      SearchFields="&quot;FW,Cart, flatbed&quot;"
+      Inactive="false"
+      LocalName="&quot;Cart, flatbed&quot;" />
+    <Record
+      Code="&quot;FX&quot;"
+      SearchFields="&quot;FX,Bag, flexible container&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, flexible container&quot;" />
+    <Record
+      Code="&quot;GB&quot;"
+      SearchFields="&quot;GB,Bottle, gas&quot;"
+      Inactive="false"
+      LocalName="&quot;Bottle, gas&quot;" />
+    <Record
+      Code="&quot;GI&quot;"
+      SearchFields="&quot;GI,Girder&quot;"
+      Inactive="false"
+      LocalName="&quot;Girder&quot;" />
+    <Record
+      Code="&quot;GL&quot;"
+      SearchFields="&quot;GL,Container, gallon&quot;"
+      Inactive="false"
+      LocalName="&quot;Container, gallon&quot;" />
+    <Record
+      Code="&quot;GR&quot;"
+      SearchFields="&quot;GR,Receptacle, glass&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, glass&quot;" />
+    <Record
+      Code="&quot;GU&quot;"
+      SearchFields="&quot;GU,Tray, containing horizontally stacked flat items&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, containing horizontally stacked flat items&quot;" />
+    <Record
+      Code="&quot;GY&quot;"
+      SearchFields="&quot;GY,Bag, gunny&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, gunny&quot;" />
+    <Record
+      Code="&quot;GZ&quot;"
+      SearchFields="&quot;GZ,Girders, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Girders, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;HA&quot;"
+      SearchFields="&quot;HA,Basket, with handle, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Basket, with handle, plastic&quot;" />
+    <Record
+      Code="&quot;HB&quot;"
+      SearchFields="&quot;HB,Basket, with handle, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Basket, with handle, wooden&quot;" />
+    <Record
+      Code="&quot;HC&quot;"
+      SearchFields="&quot;HC,Basket, with handle, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Basket, with handle, cardboard&quot;" />
+    <Record
+      Code="&quot;HG&quot;"
+      SearchFields="&quot;HG,Hogshead&quot;"
+      Inactive="false"
+      LocalName="&quot;Hogshead&quot;" />
+    <Record
+      Code="&quot;HR&quot;"
+      SearchFields="&quot;HR,Hamper&quot;"
+      Inactive="false"
+      LocalName="&quot;Hamper&quot;" />
+    <Record
+      Code="&quot;IA&quot;"
+      SearchFields="&quot;IA,Package, display, wooden&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, display, wooden&quot;" />
+    <Record
+      Code="&quot;IB&quot;"
+      SearchFields="&quot;IB,Package, display, cardboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, display, cardboard&quot;" />
+    <Record
+      Code="&quot;IC&quot;"
+      SearchFields="&quot;IC,Package, display, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, display, plastic&quot;" />
+    <Record
+      Code="&quot;ID&quot;"
+      SearchFields="&quot;ID,Package, display, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, display, metal&quot;" />
+    <Record
+      Code="&quot;IE&quot;"
+      SearchFields="&quot;IE,Package, show&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, show&quot;" />
+    <Record
+      Code="&quot;IF&quot;"
+      SearchFields="&quot;IF,Package, flow&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, flow&quot;" />
+    <Record
+      Code="&quot;IG&quot;"
+      SearchFields="&quot;IG,Package, paper wrapped&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, paper wrapped&quot;" />
+    <Record
+      Code="&quot;IH&quot;"
+      SearchFields="&quot;IH,Drum, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, plastic&quot;" />
+    <Record
+      Code="&quot;IK&quot;"
+      SearchFields="&quot;IK,Package, cardboard, with bottle grip-holes&quot;"
+      Inactive="false"
+      LocalName="&quot;Package, cardboard, with bottle grip-holes&quot;" />
+    <Record
+      Code="&quot;IL&quot;"
+      SearchFields="&quot;IL,Tray, rigid, lidded stackable (CEN TS 14482:2002)&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray, rigid, lidded stackable (CEN TS 14482:2002)&quot;" />
+    <Record
+      Code="&quot;IN&quot;"
+      SearchFields="&quot;IN,Ingot&quot;"
+      Inactive="false"
+      LocalName="&quot;Ingot&quot;" />
+    <Record
+      Code="&quot;IZ&quot;"
+      SearchFields="&quot;IZ,Ingots, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Ingots, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;JB&quot;"
+      SearchFields="&quot;JB,Bag, jumbo&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, jumbo&quot;" />
+    <Record
+      Code="&quot;JC&quot;"
+      SearchFields="&quot;JC,Jerrican, rectangular&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, rectangular&quot;" />
+    <Record
+      Code="&quot;JG&quot;"
+      SearchFields="&quot;JG,Jug&quot;"
+      Inactive="false"
+      LocalName="&quot;Jug&quot;" />
+    <Record
+      Code="&quot;JR&quot;"
+      SearchFields="&quot;JR,Jar&quot;"
+      Inactive="false"
+      LocalName="&quot;Jar&quot;" />
+    <Record
+      Code="&quot;JT&quot;"
+      SearchFields="&quot;JT,Jutebag&quot;"
+      Inactive="false"
+      LocalName="&quot;Jutebag&quot;" />
+    <Record
+      Code="&quot;JY&quot;"
+      SearchFields="&quot;JY,Jerrican, cylindrical&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, cylindrical&quot;" />
+    <Record
+      Code="&quot;KG&quot;"
+      SearchFields="&quot;KG,Keg&quot;"
+      Inactive="false"
+      LocalName="&quot;Keg&quot;" />
+    <Record
+      Code="&quot;KI&quot;"
+      SearchFields="&quot;KI,Kit&quot;"
+      Inactive="false"
+      LocalName="&quot;Kit&quot;" />
+    <Record
+      Code="&quot;LE&quot;"
+      SearchFields="&quot;LE,Luggage&quot;"
+      Inactive="false"
+      LocalName="&quot;Luggage&quot;" />
+    <Record
+      Code="&quot;LG&quot;"
+      SearchFields="&quot;LG,Log&quot;"
+      Inactive="false"
+      LocalName="&quot;Log&quot;" />
+    <Record
+      Code="&quot;LT&quot;"
+      SearchFields="&quot;LT,Lot&quot;"
+      Inactive="false"
+      LocalName="&quot;Lot&quot;" />
+    <Record
+      Code="&quot;LU&quot;"
+      SearchFields="&quot;LU,Lug&quot;"
+      Inactive="false"
+      LocalName="&quot;Lug&quot;" />
+    <Record
+      Code="&quot;LV&quot;"
+      SearchFields="&quot;LV,Liftvan&quot;"
+      Inactive="false"
+      LocalName="&quot;Liftvan&quot;" />
+    <Record
+      Code="&quot;LZ&quot;"
+      SearchFields="&quot;LZ,Logs, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Logs, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;MA&quot;"
+      SearchFields="&quot;MA,Crate, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, metal&quot;" />
+    <Record
+      Code="&quot;MB&quot;"
+      SearchFields="&quot;MB,Bag, multiply&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, multiply&quot;" />
+    <Record
+      Code="&quot;MC&quot;"
+      SearchFields="&quot;MC,Crate, milk&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, milk&quot;" />
+    <Record
+      Code="&quot;ME&quot;"
+      SearchFields="&quot;ME,Container, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Container, metal&quot;" />
+    <Record
+      Code="&quot;MR&quot;"
+      SearchFields="&quot;MR,Receptacle, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, metal&quot;" />
+    <Record
+      Code="&quot;MS&quot;"
+      SearchFields="&quot;MS,Sack, multi-wall&quot;"
+      Inactive="false"
+      LocalName="&quot;Sack, multi-wall&quot;" />
+    <Record
+      Code="&quot;MT&quot;"
+      SearchFields="&quot;MT,Mat&quot;"
+      Inactive="false"
+      LocalName="&quot;Mat&quot;" />
+    <Record
+      Code="&quot;MW&quot;"
+      SearchFields="&quot;MW,Receptacle, plastic wrapped&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, plastic wrapped&quot;" />
+    <Record
+      Code="&quot;MX&quot;"
+      SearchFields="&quot;MX,Matchbox&quot;"
+      Inactive="false"
+      LocalName="&quot;Matchbox&quot;" />
+    <Record
+      Code="&quot;NA&quot;"
+      SearchFields="&quot;NA,Not available&quot;"
+      Inactive="false"
+      LocalName="&quot;Not available&quot;" />
+    <Record
+      Code="&quot;NE&quot;"
+      SearchFields="&quot;NE,Unpacked or unpackaged&quot;"
+      Inactive="false"
+      LocalName="&quot;Unpacked or unpackaged&quot;" />
+    <Record
+      Code="&quot;NF&quot;"
+      SearchFields="&quot;NF,Unpacked or unpackaged, single unit&quot;"
+      Inactive="false"
+      LocalName="&quot;Unpacked or unpackaged, single unit&quot;" />
+    <Record
+      Code="&quot;NG&quot;"
+      SearchFields="&quot;NG,Unpacked or unpackaged, multiple units&quot;"
+      Inactive="false"
+      LocalName="&quot;Unpacked or unpackaged, multiple units&quot;" />
+    <Record
+      Code="&quot;NS&quot;"
+      SearchFields="&quot;NS,Nest&quot;"
+      Inactive="false"
+      LocalName="&quot;Nest&quot;" />
+    <Record
+      Code="&quot;NT&quot;"
+      SearchFields="&quot;NT,Net&quot;"
+      Inactive="false"
+      LocalName="&quot;Net&quot;" />
+    <Record
+      Code="&quot;NU&quot;"
+      SearchFields="&quot;NU,Net, tube, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Net, tube, plastic&quot;" />
+    <Record
+      Code="&quot;NV&quot;"
+      SearchFields="&quot;NV,Net, tube, textile&quot;"
+      Inactive="false"
+      LocalName="&quot;Net, tube, textile&quot;" />
+    <Record
+      Code="&quot;OA&quot;"
+      SearchFields="&quot;OA,Pallet, CHEP 40 cm x 60 cm&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, CHEP 40 cm x 60 cm&quot;" />
+    <Record
+      Code="&quot;OB&quot;"
+      SearchFields="&quot;OB,Pallet, CHEP 80 cm x 120 cm&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, CHEP 80 cm x 120 cm&quot;" />
+    <Record
+      Code="&quot;OC&quot;"
+      SearchFields="&quot;OC,Pallet, CHEP 100 cm x 120 cm&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, CHEP 100 cm x 120 cm&quot;" />
+    <Record
+      Code="&quot;OD&quot;"
+      SearchFields="&quot;OD,Pallet, AS 4068-1993&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, AS 4068-1993&quot;" />
+    <Record
+      Code="&quot;OE&quot;"
+      SearchFields="&quot;OE,Pallet, ISO T11&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, ISO T11&quot;" />
+    <Record
+      Code="&quot;OF&quot;"
+      SearchFields="&quot;OF,Platform, unspecified weight or dimension&quot;"
+      Inactive="false"
+      LocalName="&quot;Platform, unspecified weight or dimension&quot;" />
+    <Record
+      Code="&quot;OK&quot;"
+      SearchFields="&quot;OK,Block&quot;"
+      Inactive="false"
+      LocalName="&quot;Block&quot;" />
+    <Record
+      Code="&quot;OT&quot;"
+      SearchFields="&quot;OT,Octabin&quot;"
+      Inactive="false"
+      LocalName="&quot;Octabin&quot;" />
+    <Record
+      Code="&quot;OU&quot;"
+      SearchFields="&quot;OU,Container, outer&quot;"
+      Inactive="false"
+      LocalName="&quot;Container, outer&quot;" />
+    <Record
+      Code="&quot;P2&quot;"
+      SearchFields="&quot;P2,Pan&quot;"
+      Inactive="false"
+      LocalName="&quot;Pan&quot;" />
+    <Record
+      Code="&quot;PA&quot;"
+      SearchFields="&quot;PA,Packet&quot;"
+      Inactive="false"
+      LocalName="&quot;Packet&quot;" />
+    <Record
+      Code="&quot;PB&quot;"
+      SearchFields="&quot;PB,Pallet, box Combined open-ended box and pallet&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, box Combined open-ended box and pallet&quot;" />
+    <Record
+      Code="&quot;PC&quot;"
+      SearchFields="&quot;PC,Parcel&quot;"
+      Inactive="false"
+      LocalName="&quot;Parcel&quot;" />
+    <Record
+      Code="&quot;PD&quot;"
+      SearchFields="&quot;PD,Pallet, modular, collars 80cms * 100cms&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, modular, collars 80cms * 100cms&quot;" />
+    <Record
+      Code="&quot;PE&quot;"
+      SearchFields="&quot;PE,Pallet, modular, collars 80cms * 120cms&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, modular, collars 80cms * 120cms&quot;" />
+    <Record
+      Code="&quot;PF&quot;"
+      SearchFields="&quot;PF,Pen&quot;"
+      Inactive="false"
+      LocalName="&quot;Pen&quot;" />
+    <Record
+      Code="&quot;PG&quot;"
+      SearchFields="&quot;PG,Plate&quot;"
+      Inactive="false"
+      LocalName="&quot;Plate&quot;" />
+    <Record
+      Code="&quot;PH&quot;"
+      SearchFields="&quot;PH,Pitcher&quot;"
+      Inactive="false"
+      LocalName="&quot;Pitcher&quot;" />
+    <Record
+      Code="&quot;PI&quot;"
+      SearchFields="&quot;PI,Pipe&quot;"
+      Inactive="false"
+      LocalName="&quot;Pipe&quot;" />
+    <Record
+      Code="&quot;PJ&quot;"
+      SearchFields="&quot;PJ,Punnet&quot;"
+      Inactive="false"
+      LocalName="&quot;Punnet&quot;" />
+    <Record
+      Code="&quot;PK&quot;"
+      SearchFields="&quot;PK,Package&quot;"
+      Inactive="false"
+      LocalName="&quot;Package&quot;" />
+    <Record
+      Code="&quot;PL&quot;"
+      SearchFields="&quot;PL,Pail&quot;"
+      Inactive="false"
+      LocalName="&quot;Pail&quot;" />
+    <Record
+      Code="&quot;PN&quot;"
+      SearchFields="&quot;PN,Plank&quot;"
+      Inactive="false"
+      LocalName="&quot;Plank&quot;" />
+    <Record
+      Code="&quot;PO&quot;"
+      SearchFields="&quot;PO,Pouch&quot;"
+      Inactive="false"
+      LocalName="&quot;Pouch&quot;" />
+    <Record
+      Code="&quot;PP&quot;"
+      SearchFields="&quot;PP,Piece&quot;"
+      Inactive="false"
+      LocalName="&quot;Piece&quot;" />
+    <Record
+      Code="&quot;PR&quot;"
+      SearchFields="&quot;PR,Receptacle, plastic&quot;"
+      Inactive="false"
+      LocalName="&quot;Receptacle, plastic&quot;" />
+    <Record
+      Code="&quot;PT&quot;"
+      SearchFields="&quot;PT,Pot&quot;"
+      Inactive="false"
+      LocalName="&quot;Pot&quot;" />
+    <Record
+      Code="&quot;PU&quot;"
+      SearchFields="&quot;PU,Tray&quot;"
+      Inactive="false"
+      LocalName="&quot;Tray&quot;" />
+    <Record
+      Code="&quot;PV&quot;"
+      SearchFields="&quot;PV,Pipes, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Pipes, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;PX&quot;"
+      SearchFields="&quot;PX,Pallet&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet&quot;" />
+    <Record
+      Code="&quot;PY&quot;"
+      SearchFields="&quot;PY,Plates, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Plates, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;PZ&quot;"
+      SearchFields="&quot;PZ,Planks, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Planks, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;QA&quot;"
+      SearchFields="&quot;QA,Drum, steel, non-removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, steel, non-removable head&quot;" />
+    <Record
+      Code="&quot;QB&quot;"
+      SearchFields="&quot;QB,Drum, steel, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, steel, removable head&quot;" />
+    <Record
+      Code="&quot;QC&quot;"
+      SearchFields="&quot;QC,Drum, aluminium, non-removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, aluminium, non-removable head&quot;" />
+    <Record
+      Code="&quot;QD&quot;"
+      SearchFields="&quot;QD,Drum, aluminium, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, aluminium, removable head&quot;" />
+    <Record
+      Code="&quot;QF&quot;"
+      SearchFields="&quot;QF,Drum, plastic, non-removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, plastic, non-removable head&quot;" />
+    <Record
+      Code="&quot;QG&quot;"
+      SearchFields="&quot;QG,Drum, plastic, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Drum, plastic, removable head&quot;" />
+    <Record
+      Code="&quot;QH&quot;"
+      SearchFields="&quot;QH,Barrel, wooden, bung type&quot;"
+      Inactive="false"
+      LocalName="&quot;Barrel, wooden, bung type&quot;" />
+    <Record
+      Code="&quot;QJ&quot;"
+      SearchFields="&quot;QJ,Barrel, wooden, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Barrel, wooden, removable head&quot;" />
+    <Record
+      Code="&quot;QK&quot;"
+      SearchFields="&quot;QK,Jerrican, steel, non-removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, steel, non-removable head&quot;" />
+    <Record
+      Code="&quot;QL&quot;"
+      SearchFields="&quot;QL,Jerrican, steel, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, steel, removable head&quot;" />
+    <Record
+      Code="&quot;QM&quot;"
+      SearchFields="&quot;QM,Jerrican, plastic, non-removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, plastic, non-removable head&quot;" />
+    <Record
+      Code="&quot;QN&quot;"
+      SearchFields="&quot;QN,Jerrican, plastic, removable head&quot;"
+      Inactive="false"
+      LocalName="&quot;Jerrican, plastic, removable head&quot;" />
+    <Record
+      Code="&quot;QP&quot;"
+      SearchFields="&quot;QP,Box, wooden, natural wood, ordinary&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, wooden, natural wood, ordinary&quot;" />
+    <Record
+      Code="&quot;QQ&quot;"
+      SearchFields="&quot;QQ,Box, wooden, natural wood, with sift proof walls&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, wooden, natural wood, with sift proof walls&quot;" />
+    <Record
+      Code="&quot;QR&quot;"
+      SearchFields="&quot;QR,Box, plastic, expanded&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, plastic, expanded&quot;" />
+    <Record
+      Code="&quot;QS&quot;"
+      SearchFields="&quot;QS,Box, plastic, solid&quot;"
+      Inactive="false"
+      LocalName="&quot;Box, plastic, solid&quot;" />
+    <Record
+      Code="&quot;RD&quot;"
+      SearchFields="&quot;RD,Rod&quot;"
+      Inactive="false"
+      LocalName="&quot;Rod&quot;" />
+    <Record
+      Code="&quot;RG&quot;"
+      SearchFields="&quot;RG,Ring&quot;"
+      Inactive="false"
+      LocalName="&quot;Ring&quot;" />
+    <Record
+      Code="&quot;RJ&quot;"
+      SearchFields="&quot;RJ,Rack, clothing hanger&quot;"
+      Inactive="false"
+      LocalName="&quot;Rack, clothing hanger&quot;" />
+    <Record
+      Code="&quot;RK&quot;"
+      SearchFields="&quot;RK,Rack&quot;"
+      Inactive="false"
+      LocalName="&quot;Rack&quot;" />
+    <Record
+      Code="&quot;RL&quot;"
+      SearchFields="&quot;RL,Reel&quot;"
+      Inactive="false"
+      LocalName="&quot;Reel&quot;" />
+    <Record
+      Code="&quot;RO&quot;"
+      SearchFields="&quot;RO,Roll&quot;"
+      Inactive="false"
+      LocalName="&quot;Roll&quot;" />
+    <Record
+      Code="&quot;RT&quot;"
+      SearchFields="&quot;RT,Rednet&quot;"
+      Inactive="false"
+      LocalName="&quot;Rednet&quot;" />
+    <Record
+      Code="&quot;RZ&quot;"
+      SearchFields="&quot;RZ,Rods, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Rods, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;SA&quot;"
+      SearchFields="&quot;SA,Sack&quot;"
+      Inactive="false"
+      LocalName="&quot;Sack&quot;" />
+    <Record
+      Code="&quot;SB&quot;"
+      SearchFields="&quot;SB,Slab&quot;"
+      Inactive="false"
+      LocalName="&quot;Slab&quot;" />
+    <Record
+      Code="&quot;SC&quot;"
+      SearchFields="&quot;SC,Crate, shallow&quot;"
+      Inactive="false"
+      LocalName="&quot;Crate, shallow&quot;" />
+    <Record
+      Code="&quot;SD&quot;"
+      SearchFields="&quot;SD,Spindle&quot;"
+      Inactive="false"
+      LocalName="&quot;Spindle&quot;" />
+    <Record
+      Code="&quot;SE&quot;"
+      SearchFields="&quot;SE,Sea-chest&quot;"
+      Inactive="false"
+      LocalName="&quot;Sea-chest&quot;" />
+    <Record
+      Code="&quot;SH&quot;"
+      SearchFields="&quot;SH,Sachet&quot;"
+      Inactive="false"
+      LocalName="&quot;Sachet&quot;" />
+    <Record
+      Code="&quot;SI&quot;"
+      SearchFields="&quot;SI,Skid&quot;"
+      Inactive="false"
+      LocalName="&quot;Skid&quot;" />
+    <Record
+      Code="&quot;SK&quot;"
+      SearchFields="&quot;SK,Case, skeleton&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, skeleton&quot;" />
+    <Record
+      Code="&quot;SL&quot;"
+      SearchFields="&quot;SL,Slipsheet&quot;"
+      Inactive="false"
+      LocalName="&quot;Slipsheet&quot;" />
+    <Record
+      Code="&quot;SM&quot;"
+      SearchFields="&quot;SM,Sheetmetal&quot;"
+      Inactive="false"
+      LocalName="&quot;Sheetmetal&quot;" />
+    <Record
+      Code="&quot;SO&quot;"
+      SearchFields="&quot;SO,Spool&quot;"
+      Inactive="false"
+      LocalName="&quot;Spool&quot;" />
+    <Record
+      Code="&quot;SP&quot;"
+      SearchFields="&quot;SP,Sheet, plastic wrapping&quot;"
+      Inactive="false"
+      LocalName="&quot;Sheet, plastic wrapping&quot;" />
+    <Record
+      Code="&quot;SS&quot;"
+      SearchFields="&quot;SS,Case, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Case, steel&quot;" />
+    <Record
+      Code="&quot;ST&quot;"
+      SearchFields="&quot;ST,Sheet&quot;"
+      Inactive="false"
+      LocalName="&quot;Sheet&quot;" />
+    <Record
+      Code="&quot;SU&quot;"
+      SearchFields="&quot;SU,Suitcase&quot;"
+      Inactive="false"
+      LocalName="&quot;Suitcase&quot;" />
+    <Record
+      Code="&quot;SV&quot;"
+      SearchFields="&quot;SV,Envelope, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Envelope, steel&quot;" />
+    <Record
+      Code="&quot;SW&quot;"
+      SearchFields="&quot;SW,Shrinkwrapped&quot;"
+      Inactive="false"
+      LocalName="&quot;Shrinkwrapped&quot;" />
+    <Record
+      Code="&quot;SX&quot;"
+      SearchFields="&quot;SX,Set&quot;"
+      Inactive="false"
+      LocalName="&quot;Set&quot;" />
+    <Record
+      Code="&quot;SY&quot;"
+      SearchFields="&quot;SY,Sleeve&quot;"
+      Inactive="false"
+      LocalName="&quot;Sleeve&quot;" />
+    <Record
+      Code="&quot;SZ&quot;"
+      SearchFields="&quot;SZ,Sheets, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Sheets, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;T1&quot;"
+      SearchFields="&quot;T1,Tablet&quot;"
+      Inactive="false"
+      LocalName="&quot;Tablet&quot;" />
+    <Record
+      Code="&quot;TB&quot;"
+      SearchFields="&quot;TB,Tub&quot;"
+      Inactive="false"
+      LocalName="&quot;Tub&quot;" />
+    <Record
+      Code="&quot;TC&quot;"
+      SearchFields="&quot;TC,Tea-chest&quot;"
+      Inactive="false"
+      LocalName="&quot;Tea-chest&quot;" />
+    <Record
+      Code="&quot;TD&quot;"
+      SearchFields="&quot;TD,Tube, collapsible&quot;"
+      Inactive="false"
+      LocalName="&quot;Tube, collapsible&quot;" />
+    <Record
+      Code="&quot;TE&quot;"
+      SearchFields="&quot;TE,Tyre&quot;"
+      Inactive="false"
+      LocalName="&quot;Tyre&quot;" />
+    <Record
+      Code="&quot;TG&quot;"
+      SearchFields="&quot;TG,Tank container, generic&quot;"
+      Inactive="false"
+      LocalName="&quot;Tank container, generic&quot;" />
+    <Record
+      Code="&quot;TI&quot;"
+      SearchFields="&quot;TI,Tierce&quot;"
+      Inactive="false"
+      LocalName="&quot;Tierce&quot;" />
+    <Record
+      Code="&quot;TK&quot;"
+      SearchFields="&quot;TK,Tank, rectangular&quot;"
+      Inactive="false"
+      LocalName="&quot;Tank, rectangular&quot;" />
+    <Record
+      Code="&quot;TL&quot;"
+      SearchFields="&quot;TL,Tub, with lid&quot;"
+      Inactive="false"
+      LocalName="&quot;Tub, with lid&quot;" />
+    <Record
+      Code="&quot;TN&quot;"
+      SearchFields="&quot;TN,Tin&quot;"
+      Inactive="false"
+      LocalName="&quot;Tin&quot;" />
+    <Record
+      Code="&quot;TO&quot;"
+      SearchFields="&quot;TO,Tun&quot;"
+      Inactive="false"
+      LocalName="&quot;Tun&quot;" />
+    <Record
+      Code="&quot;TR&quot;"
+      SearchFields="&quot;TR,Trunk&quot;"
+      Inactive="false"
+      LocalName="&quot;Trunk&quot;" />
+    <Record
+      Code="&quot;TS&quot;"
+      SearchFields="&quot;TS,Truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Truss&quot;" />
+    <Record
+      Code="&quot;TT&quot;"
+      SearchFields="&quot;TT,Bag, tote&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, tote&quot;" />
+    <Record
+      Code="&quot;TU&quot;"
+      SearchFields="&quot;TU,Tube&quot;"
+      Inactive="false"
+      LocalName="&quot;Tube&quot;" />
+    <Record
+      Code="&quot;TV&quot;"
+      SearchFields="&quot;TV,Tube, with nozzle&quot;"
+      Inactive="false"
+      LocalName="&quot;Tube, with nozzle&quot;" />
+    <Record
+      Code="&quot;TW&quot;"
+      SearchFields="&quot;TW,Pallet, triwall&quot;"
+      Inactive="false"
+      LocalName="&quot;Pallet, triwall&quot;" />
+    <Record
+      Code="&quot;TY&quot;"
+      SearchFields="&quot;TY,Tank, cylindrical&quot;"
+      Inactive="false"
+      LocalName="&quot;Tank, cylindrical&quot;" />
+    <Record
+      Code="&quot;TZ&quot;"
+      SearchFields="&quot;TZ,Tubes, in bundle/bunch/truss&quot;"
+      Inactive="false"
+      LocalName="&quot;Tubes, in bundle/bunch/truss&quot;" />
+    <Record
+      Code="&quot;UC&quot;"
+      SearchFields="&quot;UC,Uncaged&quot;"
+      Inactive="false"
+      LocalName="&quot;Uncaged&quot;" />
+    <Record
+      Code="&quot;UN&quot;"
+      SearchFields="&quot;UN,Unit&quot;"
+      Inactive="false"
+      LocalName="&quot;Unit&quot;" />
+    <Record
+      Code="&quot;VA&quot;"
+      SearchFields="&quot;VA,Vat&quot;"
+      Inactive="false"
+      LocalName="&quot;Vat&quot;" />
+    <Record
+      Code="&quot;VG&quot;"
+      SearchFields="&quot;VG,Bulk, gas (at 1031 mbar and 15°C)&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, gas (at 1031 mbar and 15°C)&quot;" />
+    <Record
+      Code="&quot;VI&quot;"
+      SearchFields="&quot;VI,Vial&quot;"
+      Inactive="false"
+      LocalName="&quot;Vial&quot;" />
+    <Record
+      Code="&quot;VK&quot;"
+      SearchFields="&quot;VK,Vanpack&quot;"
+      Inactive="false"
+      LocalName="&quot;Vanpack&quot;" />
+    <Record
+      Code="&quot;VL&quot;"
+      SearchFields="&quot;VL,Bulk, liquid&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, liquid&quot;" />
+    <Record
+      Code="&quot;VN&quot;"
+      SearchFields="&quot;VN,Vehicle&quot;"
+      Inactive="false"
+      LocalName="&quot;Vehicle&quot;" />
+    <Record
+      Code="&quot;VO&quot;"
+      SearchFields="&quot;VO,Bulk, solid, large particles (“nodules”)&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, solid, large particles (“nodules”)&quot;" />
+    <Record
+      Code="&quot;VP&quot;"
+      SearchFields="&quot;VP,Vacuum-packed&quot;"
+      Inactive="false"
+      LocalName="&quot;Vacuum-packed&quot;" />
+    <Record
+      Code="&quot;VQ&quot;"
+      SearchFields="&quot;VQ,Bulk, liquefied gas (at abnormal temperature/pressure)&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, liquefied gas (at abnormal temperature/pressure)&quot;" />
+    <Record
+      Code="&quot;VR&quot;"
+      SearchFields="&quot;VR,Bulk, solid, granular particles (“grains”)&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, solid, granular particles (“grains”)&quot;" />
+    <Record
+      Code="&quot;VS&quot;"
+      SearchFields="&quot;VS,Bulk, scrap metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, scrap metal&quot;" />
+    <Record
+      Code="&quot;VY&quot;"
+      SearchFields="&quot;VY,Bulk, solid, fine particles (“powders”)&quot;"
+      Inactive="false"
+      LocalName="&quot;Bulk, solid, fine particles (“powders”)&quot;" />
+    <Record
+      Code="&quot;WA&quot;"
+      SearchFields="&quot;WA,Intermediate bulk container&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container&quot;" />
+    <Record
+      Code="&quot;WB&quot;"
+      SearchFields="&quot;WB,Wickerbottle&quot;"
+      Inactive="false"
+      LocalName="&quot;Wickerbottle&quot;" />
+    <Record
+      Code="&quot;WC&quot;"
+      SearchFields="&quot;WC,Intermediate bulk container, steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, steel&quot;" />
+    <Record
+      Code="&quot;WD&quot;"
+      SearchFields="&quot;WD,Intermediate bulk container, aluminium&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, aluminium&quot;" />
+    <Record
+      Code="&quot;WF&quot;"
+      SearchFields="&quot;WF,Intermediate bulk container, metal&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, metal&quot;" />
+    <Record
+      Code="&quot;WG&quot;"
+      SearchFields="&quot;WG,Intermediate bulk container, steel, pressurised &gt; 10 kpa&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, steel, pressurised &gt; 10 kpa&quot;" />
+    <Record
+      Code="&quot;WH&quot;"
+      SearchFields="&quot;WH,Intermediate bulk container, aluminium, pressurised &gt; 10 kpa&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, aluminium, pressurised &gt; 10 kpa&quot;" />
+    <Record
+      Code="&quot;WJ&quot;"
+      SearchFields="&quot;WJ,Intermediate bulk container, metal, pressure 10 kpa&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, metal, pressure 10 kpa&quot;" />
+    <Record
+      Code="&quot;WK&quot;"
+      SearchFields="&quot;WK,Intermediate bulk container, steel, liquid&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, steel, liquid&quot;" />
+    <Record
+      Code="&quot;WL&quot;"
+      SearchFields="&quot;WL,Intermediate bulk container, aluminium, liquid&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, aluminium, liquid&quot;" />
+    <Record
+      Code="&quot;WM&quot;"
+      SearchFields="&quot;WM,Intermediate bulk container, metal, liquid&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, metal, liquid&quot;" />
+    <Record
+      Code="&quot;WN&quot;"
+      SearchFields="&quot;WN,Intermediate bulk container, woven plastic, without coat/liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, woven plastic, without coat/liner&quot;" />
+    <Record
+      Code="&quot;WP&quot;"
+      SearchFields="&quot;WP,Intermediate bulk container, woven plastic, coated&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, woven plastic, coated&quot;" />
+    <Record
+      Code="&quot;WQ&quot;"
+      SearchFields="&quot;WQ,Intermediate bulk container, woven plastic, with liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, woven plastic, with liner&quot;" />
+    <Record
+      Code="&quot;WR&quot;"
+      SearchFields="&quot;WR,Intermediate bulk container, woven plastic, coated and liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, woven plastic, coated and liner&quot;" />
+    <Record
+      Code="&quot;WS&quot;"
+      SearchFields="&quot;WS,Intermediate bulk container, plastic film&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, plastic film&quot;" />
+    <Record
+      Code="&quot;WT&quot;"
+      SearchFields="&quot;WT,Intermediate bulk container, textile with out coat/liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, textile with out coat/liner&quot;" />
+    <Record
+      Code="&quot;WU&quot;"
+      SearchFields="&quot;WU,Intermediate bulk container, natural wood, with inner liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, natural wood, with inner liner&quot;" />
+    <Record
+      Code="&quot;WV&quot;"
+      SearchFields="&quot;WV,Intermediate bulk container, textile, coated&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, textile, coated&quot;" />
+    <Record
+      Code="&quot;WW&quot;"
+      SearchFields="&quot;WW,Intermediate bulk container, textile, with liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, textile, with liner&quot;" />
+    <Record
+      Code="&quot;WX&quot;"
+      SearchFields="&quot;WX,Intermediate bulk container, textile, coated and liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, textile, coated and liner&quot;" />
+    <Record
+      Code="&quot;WY&quot;"
+      SearchFields="&quot;WY,Intermediate bulk container, plywood, with inner liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, plywood, with inner liner&quot;" />
+    <Record
+      Code="&quot;WZ&quot;"
+      SearchFields="&quot;WZ,Intermediate bulk container, reconstituted wood, with inner liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, reconstituted wood, with inner liner&quot;" />
+    <Record
+      Code="&quot;XA&quot;"
+      SearchFields="&quot;XA,Bag, woven plastic, without inner coat/liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, woven plastic, without inner coat/liner&quot;" />
+    <Record
+      Code="&quot;XB&quot;"
+      SearchFields="&quot;XB,Bag, woven plastic, sift proof&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, woven plastic, sift proof&quot;" />
+    <Record
+      Code="&quot;XC&quot;"
+      SearchFields="&quot;XC,Bag, woven plastic, water resistant&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, woven plastic, water resistant&quot;" />
+    <Record
+      Code="&quot;XD&quot;"
+      SearchFields="&quot;XD,Bag, plastics film&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, plastics film&quot;" />
+    <Record
+      Code="&quot;XF&quot;"
+      SearchFields="&quot;XF,Bag, textile, without inner coat/liner&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, textile, without inner coat/liner&quot;" />
+    <Record
+      Code="&quot;XG&quot;"
+      SearchFields="&quot;XG,Bag, textile, sift proof&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, textile, sift proof&quot;" />
+    <Record
+      Code="&quot;XH&quot;"
+      SearchFields="&quot;XH,Bag, textile, water resistant&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, textile, water resistant&quot;" />
+    <Record
+      Code="&quot;XJ&quot;"
+      SearchFields="&quot;XJ,Bag, paper, multi-wall&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, paper, multi-wall&quot;" />
+    <Record
+      Code="&quot;XK&quot;"
+      SearchFields="&quot;XK,Bag, paper, multi-wall, water resistant&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, paper, multi-wall, water resistant&quot;" />
+    <Record
+      Code="&quot;YA&quot;"
+      SearchFields="&quot;YA,Composite packaging, plastic receptacle in steel drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in steel drum&quot;" />
+    <Record
+      Code="&quot;YB&quot;"
+      SearchFields="&quot;YB,Composite packaging, plastic receptacle in steel crate box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in steel crate box&quot;" />
+    <Record
+      Code="&quot;YC&quot;"
+      SearchFields="&quot;YC,Composite packaging, plastic receptacle in aluminium drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in aluminium drum&quot;" />
+    <Record
+      Code="&quot;YD&quot;"
+      SearchFields="&quot;YD,Composite packaging, plastic receptacle in aluminium crate&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in aluminium crate&quot;" />
+    <Record
+      Code="&quot;YF&quot;"
+      SearchFields="&quot;YF,Composite packaging, plastic receptacle in wooden box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in wooden box&quot;" />
+    <Record
+      Code="&quot;YG&quot;"
+      SearchFields="&quot;YG,Composite packaging, plastic receptacle in plywood drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in plywood drum&quot;" />
+    <Record
+      Code="&quot;YH&quot;"
+      SearchFields="&quot;YH,Composite packaging, plastic receptacle in plywood box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in plywood box&quot;" />
+    <Record
+      Code="&quot;YJ&quot;"
+      SearchFields="&quot;YJ,Composite packaging, plastic receptacle in fibre drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in fibre drum&quot;" />
+    <Record
+      Code="&quot;YK&quot;"
+      SearchFields="&quot;YK,Composite packaging, plastic receptacle in fibreboard box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in fibreboard box&quot;" />
+    <Record
+      Code="&quot;YL&quot;"
+      SearchFields="&quot;YL,Composite packaging, plastic receptacle in plastic drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in plastic drum&quot;" />
+    <Record
+      Code="&quot;YM&quot;"
+      SearchFields="&quot;YM,Composite packaging, plastic receptacle in solid plastic box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, plastic receptacle in solid plastic box&quot;" />
+    <Record
+      Code="&quot;YN&quot;"
+      SearchFields="&quot;YN,Composite packaging, glass receptacle in steel drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in steel drum&quot;" />
+    <Record
+      Code="&quot;YP&quot;"
+      SearchFields="&quot;YP,Composite packaging, glass receptacle in steel crate box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in steel crate box&quot;" />
+    <Record
+      Code="&quot;YQ&quot;"
+      SearchFields="&quot;YQ,Composite packaging, glass receptacle in aluminium drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in aluminium drum&quot;" />
+    <Record
+      Code="&quot;YR&quot;"
+      SearchFields="&quot;YR,Composite packaging, glass receptacle in aluminium crate&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in aluminium crate&quot;" />
+    <Record
+      Code="&quot;YS&quot;"
+      SearchFields="&quot;YS,Composite packaging, glass receptacle in wooden box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in wooden box&quot;" />
+    <Record
+      Code="&quot;YT&quot;"
+      SearchFields="&quot;YT,Composite packaging, glass receptacle in plywood drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in plywood drum&quot;" />
+    <Record
+      Code="&quot;YV&quot;"
+      SearchFields="&quot;YV,Composite packaging, glass receptacle in wickerwork hamper&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in wickerwork hamper&quot;" />
+    <Record
+      Code="&quot;YW&quot;"
+      SearchFields="&quot;YW,Composite packaging, glass receptacle in fibre drum&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in fibre drum&quot;" />
+    <Record
+      Code="&quot;YX&quot;"
+      SearchFields="&quot;YX,Composite packaging, glass receptacle in fibreboard box&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in fibreboard box&quot;" />
+    <Record
+      Code="&quot;YY&quot;"
+      SearchFields="&quot;YY,Composite packaging, glass receptacle in expandable plastic pack&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in expandable plastic pack&quot;" />
+    <Record
+      Code="&quot;YZ&quot;"
+      SearchFields="&quot;YZ,Composite packaging, glass receptacle in solid plastic pack&quot;"
+      Inactive="false"
+      LocalName="&quot;Composite packaging, glass receptacle in solid plastic pack&quot;" />
+    <Record
+      Code="&quot;ZA&quot;"
+      SearchFields="&quot;ZA,Intermediate bulk container, paper, multi-wall&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, paper, multi-wall&quot;" />
+    <Record
+      Code="&quot;ZB&quot;"
+      SearchFields="&quot;ZB,Bag, large&quot;"
+      Inactive="false"
+      LocalName="&quot;Bag, large&quot;" />
+    <Record
+      Code="&quot;ZC&quot;"
+      SearchFields="&quot;ZC,Intermediate bulk container, paper, multi-wall, water resistant&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, paper, multi-wall, water resistant&quot;" />
+    <Record
+      Code="&quot;ZD&quot;"
+      SearchFields="&quot;ZD,Intermediate bulk container, rigid plastic, with structural equipment, solids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, with structural equipment, solids&quot;" />
+    <Record
+      Code="&quot;ZF&quot;"
+      SearchFields="&quot;ZF,Intermediate bulk container, rigid plastic, freestanding, solids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, freestanding, solids&quot;" />
+    <Record
+      Code="&quot;ZG&quot;"
+      SearchFields="&quot;ZG,Intermediate bulk container, rigid plastic, with structural equipment, pressurised&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, with structural equipment, pressurised&quot;" />
+    <Record
+      Code="&quot;ZH&quot;"
+      SearchFields="&quot;ZH,Intermediate bulk container, rigid plastic, freestanding, pressurised&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, freestanding, pressurised&quot;" />
+    <Record
+      Code="&quot;ZJ&quot;"
+      SearchFields="&quot;ZJ,Intermediate bulk container, rigid plastic, with structural equipment, liquids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, with structural equipment, liquids&quot;" />
+    <Record
+      Code="&quot;ZK&quot;"
+      SearchFields="&quot;ZK,Intermediate bulk container, rigid plastic, freestanding, liquids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, rigid plastic, freestanding, liquids&quot;" />
+    <Record
+      Code="&quot;ZL&quot;"
+      SearchFields="&quot;ZL,Intermediate bulk container, composite, rigid plastic, solids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, rigid plastic, solids&quot;" />
+    <Record
+      Code="&quot;ZM&quot;"
+      SearchFields="&quot;ZM,Intermediate bulk container, composite, flexible plastic, solids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, flexible plastic, solids&quot;" />
+    <Record
+      Code="&quot;ZN&quot;"
+      SearchFields="&quot;ZN,Intermediate bulk container, composite, rigid plastic, pressurised&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, rigid plastic, pressurised&quot;" />
+    <Record
+      Code="&quot;ZP&quot;"
+      SearchFields="&quot;ZP,Intermediate bulk container, composite, flexible plastic, pressurised&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, flexible plastic, pressurised&quot;" />
+    <Record
+      Code="&quot;ZQ&quot;"
+      SearchFields="&quot;ZQ,Intermediate bulk container, composite, rigid plastic, liquids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, rigid plastic, liquids&quot;" />
+    <Record
+      Code="&quot;ZR&quot;"
+      SearchFields="&quot;ZR,Intermediate bulk container, composite, flexible plastic, liquids&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite, flexible plastic, liquids&quot;" />
+    <Record
+      Code="&quot;ZS&quot;"
+      SearchFields="&quot;ZS,Intermediate bulk container, composite&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, composite&quot;" />
+    <Record
+      Code="&quot;ZT&quot;"
+      SearchFields="&quot;ZT,Intermediate bulk container, fibreboard&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, fibreboard&quot;" />
+    <Record
+      Code="&quot;ZU&quot;"
+      SearchFields="&quot;ZU,Intermediate bulk container, flexible&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, flexible&quot;" />
+    <Record
+      Code="&quot;ZV&quot;"
+      SearchFields="&quot;ZV,Intermediate bulk container, metal, other than steel&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, metal, other than steel&quot;" />
+    <Record
+      Code="&quot;ZW&quot;"
+      SearchFields="&quot;ZW,Intermediate bulk container, natural wood&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, natural wood&quot;" />
+    <Record
+      Code="&quot;ZX&quot;"
+      SearchFields="&quot;ZX,Intermediate bulk container, plywood&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, plywood&quot;" />
+    <Record
+      Code="&quot;ZY&quot;"
+      SearchFields="&quot;ZY,Intermediate bulk container, reconstituted wood&quot;"
+      Inactive="false"
+      LocalName="&quot;Intermediate bulk container, reconstituted wood&quot;" />
+    <Record
+      Code="&quot;ZZ&quot;"
+      SearchFields="&quot;ZZ,Mutually defined&quot;"
+      Inactive="false"
+      LocalName="&quot;Mutually defined&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;PackingType&quot;"
+    ObjectTableName="&quot;Customs.PackingType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.PackingType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;PAKT&quot;"
+    QueryGroupName="&quot;Customs.PackingType&quot;"
+    LocalTextCode="&quot;קוד סוג אריזה&quot;"
+    TextCode="&quot;Packing Types&quot;"
+    TextCodeCode="&quot;Customs.PackingType.Q.PackingTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;PACKINGTYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.PackingType.Features.PackingTypes&quot;"
+    FeatureDefaultText="&quot;Packing Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;PackingType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;PackingType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;PackingType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;PackingType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.PackingType&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.PackingType&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.PackingType&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

@@ -18,7 +18,7 @@ declare var window: any;
 
 @Component({
     selector: 'AccountingSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomerFieldsUpdateSettingComponent.html',
 })
 
@@ -71,7 +71,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
     private selectedObjectField: ObjectFieldPM;
     public get SelectedObjectField() {
         if (this.EntityPM) {
-            this.selectedObjectField = this.ObjectFieldPMLists.filter(t => t.Id === this.EntityPM.ObjectFieldId)[0];
+            this.selectedObjectField = this.ObjectFieldPMLists.filter(t => t.FieldCode === this.EntityPM.ObjectFieldCode)[0];
         }
 
         return this.selectedObjectField;
@@ -81,6 +81,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
         if (this.selectedObjectField != newValue) {
             this.selectedObjectField = newValue;
             this.EntityPM.ObjectFieldId = newValue.Id;
+            this.EntityPM.ObjectFieldCode = newValue.FieldCode;
 
         }
     }
@@ -111,14 +112,14 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
 
                         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                         if (!AppTool.IsNullOrEmpty(this.EntityId)) {
-                            this.customerFieldsUpdateSettingPMService.get(this.EntityId).subscribe(response => {
+                            this.customerFieldsUpdateSettingPMService.get(this.EntityId).subscribe((response:any) => {
                                 this.CurrentSession.StopBusyIndicator();
 
                                 var pmResponse: ServiceResponse = response;
                                 if (!pmResponse.HasError && pmResponse.Result) {
                                     this.EntityPM = pmResponse.Result;
 
-                                    this.SelectedObjectField = this.ObjectFieldPMLists.filter(d => d.Id == this.EntityPM.ObjectFieldId)[0];
+                                    this.SelectedObjectField = this.ObjectFieldPMLists.filter(d => d.FieldCode == this.EntityPM.ObjectFieldCode)[0];
                                     this.SelectedUpdateDirection = this.UpdateDirectionLists.filter(t => t.Code === this.EntityPM.UpdateDirection)[0];
                                 }
 
@@ -150,7 +151,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             if (this.IsNewEntity) {
-                this.customerFieldsUpdateSettingPMService.insert(this.EntityPM).subscribe(response => {
+                this.customerFieldsUpdateSettingPMService.insert(this.EntityPM).subscribe((response:any) => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
@@ -162,7 +163,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
 
                 });
             } else {
-                this.customerFieldsUpdateSettingPMService.update(this.EntityPM).subscribe(response => {
+                this.customerFieldsUpdateSettingPMService.update(this.EntityPM).subscribe((response:any) => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {

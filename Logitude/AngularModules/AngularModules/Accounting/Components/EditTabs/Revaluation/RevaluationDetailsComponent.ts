@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {RevaluationPM} from '../../../EntityPMs/RevaluationPM';
@@ -12,11 +12,13 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RevaluationDetailsComponent.html',
 })
 
 export class RevaluationDetailsComponent extends BaseComponent {
+  public IsJournalLinesVisibile: boolean = false;
+
 
     DataContext: any = this;
     ObjectTableName: string = "Revaluation";
@@ -28,9 +30,9 @@ export class RevaluationDetailsComponent extends BaseComponent {
     visible: boolean;
     constructor(private entityArgs: EntityArgs) {
         super();
-        this.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Revaluation").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => {
+                this.entityResourceService.getEntityResourceByTableName("Revaluation").subscribe((response: any) => {
                     this.visible = true;
                     this.EntityPM = entityArgs.EntityPM;
                     this.Journals = new ObservableCollection([]);
@@ -89,7 +91,7 @@ export class RevaluationDetailsComponent extends BaseComponent {
         editWindow.Width = 1500;
        
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
         
 

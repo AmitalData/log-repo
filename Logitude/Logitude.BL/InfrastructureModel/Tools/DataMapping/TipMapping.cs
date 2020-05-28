@@ -11,7 +11,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             tip.ShortTextCode = tipPM.ShortTextCodeId;
             tip.Tenant = tipPM.Tenant;
             tip.VisibilityDefaultValue = tipPM.VisibilityDefaultValue;
-            tip.ObjectTableId = tipPM.ObjectTableId;  
+            tip.ObjectTableId = tipPM.ObjectTableId;
+            tip.ShortTextCodeCode = tipPM.ShortTextCodeCode;
         }
     }
 }

@@ -24,12 +24,13 @@ import { DeclarationCourierStatusWebService } from '../../../../Customs/Services
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
     providers: [DeclarationCourierStatusWebService, CourierWorksheetSharedDataService]
 })
 
 export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
+  public ObjectTableName: any;
+
     @Output() ReloadUserQueries = new EventEmitter();
     public RecentGLAccountsCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -61,7 +62,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
                 {
                     _declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                        data => {
+                        (data:any) => {
                              this.counters = data.Result;
                             this.isScreenLoaded = true;
                             this.CurrentSession.StopBusyIndicator();
@@ -93,7 +94,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     RefreshButtonClicked() {
         this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-            data => {
+            (data:any) => {
                 this.counters = data.Result;
                 this.LoadAllScreenData();
                 this.RefreshList();
@@ -265,7 +266,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             listArgs.ObjectTableName = "Customs.Declaration";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Declarations");
-            listArgs.Perspective = "CourierMasterWS";
+            //listArgs.Perspective = "CourierMasterWS";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -275,7 +276,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.LoadAllScreenData();
                         this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                            data => {
+                            (data:any) => {
                                 this.counters = data.Result;
 
                                 this.CurrentSession.AddMenuReference(cmpRef);

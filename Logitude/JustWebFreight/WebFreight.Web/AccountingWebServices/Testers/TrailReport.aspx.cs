@@ -29,10 +29,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                        FromDate = new DateTime(2015, 1, 20),
                        ToDate = DateTime.Now.Date, //new DateTime(2016, 11, 20),
                        TrailReportLevelOption = "ChartofaccountType=1,Chartofaccount=2,GLAccount=3",
-                       MyTrailReportLevel = ReportLevel.ChartofaccountType,
+                       MyTrailReportLevel = ReportLevel.GLAccount,
                        CurrenciesDetailed = true,
                        //filter the GLAccount ?!?!?
                        Category1 = "",
+                       Category2="",
+                       Category3 = "",
+                       Category4 = "",
                        Category5 = "",
 
                        //filter the GLAccount ?!?!?
@@ -41,14 +44,20 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                        DetailedControlJob = false,
                        DetailedControlFile = false,
                        Suppress_DoNotShowCardWithoutActivity= true,
-                   };
+                    ChartOfAccountsTypeCodeList = new List<string>()
+                    {
+                        "1","2"
+                    },
+                    ChartOfAccountsIdList = new List<string>(),
+
+                };
                 _HiddenFieldTrail.Value= _TextBoxParam.Text = JsonConvert.SerializeObject(param);
 
 
                 var param1 = new //RevenueExpenseReportParam
                 {
                     Tenant = 989,
-                    
+                    FromDate = DateTime.Now.Date.AddMonths(-3),
                     ToDate = DateTime.Now.Date, //new DateTime(2016, 11, 20),
                     MyRevenueExpenseReportLevelOptions = "ChartofaccountType=1,Chartofaccount=2,GLAccount=3",
                     MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType,

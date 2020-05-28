@@ -1,13 +1,1855 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;9d98c69c-9567-4551-bcf9-c71bebc1e53f&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" DBTableName="&quot;Customs.CustomMetaDataTypes&quot;" ObjectTableSingular="&quot;CustomMetaDataType&quot;" ObjectTablePlural="&quot;CustomMetaDataTypes&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="true" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="true" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;BR&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Custom MetaData Type&quot;" Code="&quot;e5df&quot;" Name="&quot;Customs.CustomMetaDataType Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;ef677a7d-89d3-4d58-b7b5-402c51e37aa1&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="6" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="6" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;5f58a5c6-d8be-4a37-8f25-3569aff93b3b&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;d0ac6346-957f-4bf4-a3ce-d16e47e3e692&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="false" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;905cc5ec-c686-448c-9ab3-1f4ad5dca793&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;SearchFields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;20e365c9-cf04-47d6-95f0-d8bad23a3483&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;9d98c69c-9567-4551-bcf9-c71bebc1e53f&quot;"
+  ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+  DBTableName="&quot;Customs.CustomMetaDataTypes&quot;"
+  ObjectTableSingular="&quot;CustomMetaDataType&quot;"
+  ObjectTablePlural="&quot;CustomMetaDataTypes&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="true"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="true"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;BR&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Custom MetaData Type&quot;"
+  Code="&quot;CMDT&quot;"
+  Name="&quot;Customs.CustomMetaDataType&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;ef677a7d-89d3-4d58-b7b5-402c51e37aa1&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="6"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="6"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;5f58a5c6-d8be-4a37-8f25-3569aff93b3b&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;d0ac6346-957f-4bf4-a3ce-d16e47e3e692&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;905cc5ec-c686-448c-9ab3-1f4ad5dca793&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;SearchFields&quot;"
+    ListFieldLable="&quot;SearchFieldsListLable&quot;"
+    ListLableDefaultText="&quot;SearchFields&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;20e365c9-cf04-47d6-95f0-d8bad23a3483&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomMetaDataType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;1&quot;"
+      EnglishName="&quot;Analysis&quot;"
+      LocalName="&quot;ארץ היבוא&quot;"
+      SearchFields="&quot;1,ארץ היבוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;10&quot;"
+      LocalName="&quot;מדינה מנפיקה&quot;"
+      SearchFields="&quot;10,מדינה מנפיקה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;100&quot;"
+      LocalName="&quot;מזהה מטען (מפתח 1)&quot;"
+      SearchFields="&quot;100,מזהה מטען (מפתח 1)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;101&quot;"
+      LocalName="&quot;מזהה מטען (מפתח 2)&quot;"
+      SearchFields="&quot;101,מזהה מטען (מפתח 2)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;102&quot;"
+      LocalName="&quot;מזהה מטען (מפתח 3)&quot;"
+      SearchFields="&quot;102,מזהה מטען (מפתח 3)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;103&quot;"
+      LocalName="&quot;מספר פנקס פיזי&quot;"
+      SearchFields="&quot;103,מספר פנקס פיזי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;104&quot;"
+      LocalName="&quot;מזהה היתר ביטחוני&quot;"
+      SearchFields="&quot;104,מזהה היתר ביטחוני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;105&quot;"
+      LocalName="&quot;תאריך תעודה&quot;"
+      SearchFields="&quot;105,תאריך תעודה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;106&quot;"
+      EnglishName="&quot;Damage Report&quot;"
+      LocalName="&quot;האם השכלה תיכונית&quot;"
+      SearchFields="&quot;106,האם השכלה תיכונית&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;107&quot;"
+      LocalName="&quot;האם תעודת השכלה על תיכונית&quot;"
+      SearchFields="&quot;107,האם תעודת השכלה על תיכונית&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;108&quot;"
+      LocalName="&quot;מספר זהות מעסיק&quot;"
+      SearchFields="&quot;108,מספר זהות מעסיק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;109&quot;"
+      LocalName="&quot;מספר זהות עובד&quot;"
+      SearchFields="&quot;109,מספר זהות עובד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;11&quot;"
+      LocalName="&quot;מדינת יעד&quot;"
+      SearchFields="&quot;11,מדינת יעד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;110&quot;"
+      LocalName="&quot;מספר זהות מועמד&quot;"
+      SearchFields="&quot;110,מספר זהות מועמד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;111&quot;"
+      LocalName="&quot;מספר טיסה&quot;"
+      SearchFields="&quot;111,מספר טיסה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;112&quot;"
+      LocalName="&quot;מועד טיסה&quot;"
+      SearchFields="&quot;112,מועד טיסה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;119&quot;"
+      EnglishName="&quot;Discharge Report&quot;"
+      LocalName="&quot;דוח פריקה&quot;"
+      SearchFields="&quot;119,דוח פריקה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;12&quot;"
+      LocalName="&quot;מדינת יעד/מקור&quot;"
+      SearchFields="&quot;12,מדינת יעד/מקור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;122&quot;"
+      LocalName="&quot;דוח הטענה&quot;"
+      SearchFields="&quot;122,דוח הטענה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;13&quot;"
+      LocalName="&quot;מזהה אתר אחסון&quot;"
+      SearchFields="&quot;13,מזהה אתר אחסון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;14&quot;"
+      LocalName="&quot;מזהה יבואן&quot;"
+      SearchFields="&quot;14,מזהה יבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;15&quot;"
+      EnglishName="&quot;selling importer&quot;"
+      LocalName="&quot;מזהה יבואן מוכר&quot;"
+      SearchFields="&quot;15,מזהה יבואן מוכר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;16&quot;"
+      LocalName="&quot;מזהה יבואן מצהיר&quot;"
+      SearchFields="&quot;16,מזהה יבואן מצהיר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;17&quot;"
+      EnglishName="&quot;buying importer&quot;"
+      LocalName="&quot;מזהה יבואן רוכש&quot;"
+      SearchFields="&quot;17,מזהה יבואן רוכש&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;18&quot;"
+      LocalName="&quot;מזהה יצואן&quot;"
+      SearchFields="&quot;18,מזהה יצואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;19&quot;"
+      LocalName="&quot;מזהה יצואן/יבואן&quot;"
+      SearchFields="&quot;19,מזהה יצואן/יבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;2&quot;"
+      LocalName="&quot;ארץ הנפקה&quot;"
+      SearchFields="&quot;2,ארץ הנפקה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;20&quot;"
+      LocalName="&quot;מזהה ישות תביעה&quot;"
+      SearchFields="&quot;20,מזהה ישות תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;21&quot;"
+      LocalName="&quot;מזהה לקוח&quot;"
+      SearchFields="&quot;21,מזהה לקוח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;22&quot;"
+      LocalName="&quot;מזהה מאשר&quot;"
+      SearchFields="&quot;22,מזהה מאשר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;23&quot;"
+      LocalName="&quot;מזהה מוטב להחזר&quot;"
+      SearchFields="&quot;23,מזהה מוטב להחזר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;24&quot;"
+      LocalName="&quot;מזהה מורשה&quot;"
+      SearchFields="&quot;24,מזהה מורשה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;25&quot;"
+      LocalName="&quot;מזהה מנפיק החשבון (לא ח.פ)&quot;"
+      SearchFields="&quot;25,מזהה מנפיק החשבון (לא ח.פ)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;26&quot;"
+      LocalName="&quot;מזהה מרשה&quot;"
+      SearchFields="&quot;26,מזהה מרשה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;27&quot;"
+      LocalName="&quot;מזהה סוכן&quot;"
+      SearchFields="&quot;27,מזהה סוכן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;270&quot;"
+      LocalName="&quot;כתב הגעה צפי&quot;"
+      SearchFields="&quot;270,כתב הגעה צפי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;271&quot;"
+      LocalName="&quot;רשימת אריזה&quot;"
+      SearchFields="&quot;271,רשימת אריזה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;28&quot;"
+      LocalName="&quot;קוד משלח&quot;"
+      SearchFields="&quot;28,קוד משלח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;29&quot;"
+      LocalName="&quot;מזהה רואה חשבון (ח.פ)&quot;"
+      SearchFields="&quot;29,מזהה רואה חשבון (ח.פ)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;298&quot;"
+      LocalName="&quot;רשימת חומרים מסוכנים&quot;"
+      SearchFields="&quot;298,רשימת חומרים מסוכנים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;3&quot;"
+      EnglishName="&quot;invoice country&quot;"
+      LocalName="&quot;ארץ חשבון&quot;"
+      SearchFields="&quot;3,ארץ חשבון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;30&quot;"
+      LocalName="&quot;מס' אילוץ&quot;"
+      SearchFields="&quot;30,מס' אילוץ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;32&quot;"
+      LocalName="&quot;מס' סוכן מכס&quot;"
+      SearchFields="&quot;32,מס' סוכן מכס&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;325&quot;"
+      LocalName="&quot;חשבון פרופורמה&quot;"
+      SearchFields="&quot;325,חשבון פרופורמה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;336&quot;"
+      LocalName="&quot;רשימת אנשי צוות&quot;"
+      SearchFields="&quot;336,רשימת אנשי צוות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;35&quot;"
+      LocalName="&quot;מס' תעודה&quot;"
+      SearchFields="&quot;35,מס' תעודה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;36&quot;"
+      LocalName="&quot;מספר אישור&quot;"
+      SearchFields="&quot;36,מספר אישור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;37&quot;"
+      LocalName="&quot;מספר דף&quot;"
+      SearchFields="&quot;37,מספר דף&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;380&quot;"
+      LocalName="&quot;חשבון ספק (חשבון מכר)&quot;"
+      SearchFields="&quot;380,חשבון ספק (חשבון מכר)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;39&quot;"
+      EnglishName="&quot;invoice number&quot;"
+      LocalName="&quot;מספר חשבון&quot;"
+      SearchFields="&quot;39,מספר חשבון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;4&quot;"
+      LocalName="&quot;ארץ חשבון פרופורמה&quot;"
+      SearchFields="&quot;4,ארץ חשבון פרופורמה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;40&quot;"
+      LocalName="&quot;מספר חשבון להחזר&quot;"
+      SearchFields="&quot;40,מספר חשבון להחזר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;41&quot;"
+      EnglishName="&quot;invoice number&quot;"
+      LocalName="&quot;מספר חשבון מכר&quot;"
+      SearchFields="&quot;41,מספר חשבון מכר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;419&quot;"
+      LocalName="&quot;שטר מטען יצוא אווירי&quot;"
+      SearchFields="&quot;419,שטר מטען יצוא אווירי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;42&quot;"
+      LocalName="&quot;מספר חשבון פרופורמה&quot;"
+      SearchFields="&quot;42,מספר חשבון פרופורמה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;422&quot;"
+      LocalName="&quot;הצהרת מטענים CRI&quot;"
+      SearchFields="&quot;422,הצהרת מטענים CRI&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;43&quot;"
+      LocalName="&quot;מספר ספק&quot;"
+      SearchFields="&quot;43,מספר ספק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;44&quot;"
+      LocalName="&quot;מספר קרנה&quot;"
+      SearchFields="&quot;44,מספר קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;45&quot;"
+      LocalName="&quot;מספר רשיון&quot;"
+      SearchFields="&quot;45,מספר רשיון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;46&quot;"
+      LocalName="&quot;מספר תעודה&quot;"
+      SearchFields="&quot;46,מספר תעודה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;47&quot;"
+      LocalName="&quot;נערב&quot;"
+      SearchFields="&quot;47,נערב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;49&quot;"
+      LocalName="&quot;סוג רישיון/אישור&quot;"
+      SearchFields="&quot;49,סוג רישיון/אישור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;5&quot;"
+      LocalName="&quot;ארץ מקור הטובין&quot;"
+      SearchFields="&quot;5,ארץ מקור הטובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;50&quot;"
+      LocalName="&quot;סכום ערבות&quot;"
+      SearchFields="&quot;50,סכום ערבות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;52&quot;"
+      LocalName="&quot;קוד פטור&quot;"
+      SearchFields="&quot;52,קוד פטור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;53&quot;"
+      LocalName="&quot;רשות מוסמכת&quot;"
+      SearchFields="&quot;53,רשות מוסמכת&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;54&quot;"
+      LocalName="&quot;שם יצרן&quot;"
+      SearchFields="&quot;54,שם יצרן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;55&quot;"
+      EnglishName="&quot;invoice date&quot;"
+      LocalName="&quot;תאריך החשבון&quot;"
+      SearchFields="&quot;55,תאריך החשבון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;56&quot;"
+      LocalName="&quot;תאריך החשבון פרופורמה&quot;"
+      SearchFields="&quot;56,תאריך החשבון פרופורמה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;57&quot;"
+      EnglishName="&quot;issue date&quot;"
+      LocalName="&quot;תאריך הנפקה&quot;"
+      SearchFields="&quot;57,תאריך הנפקה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;58&quot;"
+      LocalName="&quot;תאריך הנפקה (תאריך אישור המכס)&quot;"
+      SearchFields="&quot;58,תאריך הנפקה (תאריך אישור המכס)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;6&quot;"
+      LocalName="&quot;זיהוי הצהרת יבוא&quot;"
+      SearchFields="&quot;6,זיהוי הצהרת יבוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;60&quot;"
+      LocalName="&quot;תאריך תוקף&quot;"
+      SearchFields="&quot;60,תאריך תוקף&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;61&quot;"
+      LocalName="&quot;מספר אסמכתא&quot;"
+      SearchFields="&quot;61,מספר אסמכתא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;62&quot;"
+      LocalName="&quot;מספר שטר מטען&quot;"
+      SearchFields="&quot;62,מספר שטר מטען&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;635&quot;"
+      LocalName="&quot;תעודת עיכוב&quot;"
+      SearchFields="&quot;635,תעודת עיכוב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;64&quot;"
+      LocalName="&quot;מספר מכולה&quot;"
+      SearchFields="&quot;64,מספר מכולה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;640&quot;"
+      LocalName="&quot;פקודת מסירה&quot;"
+      SearchFields="&quot;640,פקודת מסירה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;65&quot;"
+      LocalName="&quot;מספר תעודת עיכוב&quot;"
+      SearchFields="&quot;65,מספר תעודת עיכוב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;66&quot;"
+      LocalName="&quot;מספר מצהר&quot;"
+      SearchFields="&quot;66,מספר מצהר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;67&quot;"
+      LocalName="&quot;זיהוי כלי תובלה&quot;"
+      SearchFields="&quot;67,זיהוי כלי תובלה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;68&quot;"
+      LocalName="&quot;מספר פקודת מסירה&quot;"
+      SearchFields="&quot;68,מספר פקודת מסירה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;69&quot;"
+      EnglishName="&quot;is document also preferential doc&quot;"
+      LocalName="&quot;האם החשבון משמש כמסמך העדפה&quot;"
+      SearchFields="&quot;69,האם החשבון משמש כמסמך העדפה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;7&quot;"
+      LocalName="&quot;זיהוי הצהרת יצוא&quot;"
+      SearchFields="&quot;7,זיהוי הצהרת יצוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;70&quot;"
+      LocalName="&quot;האם הוארך תוקף&quot;"
+      SearchFields="&quot;70,האם הוארך תוקף&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;700&quot;"
+      LocalName="&quot;שטר מטען רגיל באוויר&quot;"
+      SearchFields="&quot;700,שטר מטען רגיל באוויר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;703&quot;"
+      LocalName="&quot;שטר מטען פנימי באוויר&quot;"
+      SearchFields="&quot;703,שטר מטען פנימי באוויר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;704&quot;"
+      LocalName="&quot;שטר מטען ראשי (באוויר ובים)&quot;"
+      SearchFields="&quot;704,שטר מטען ראשי (באוויר ובים)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;705&quot;"
+      LocalName="&quot;שטר מטען רגיל/ שטר מטען פנימי בים&quot;"
+      SearchFields="&quot;705,שטר מטען רגיל/ שטר מטען פנימי בים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;706&quot;"
+      LocalName="&quot;שטר מטען מקורי&quot;"
+      SearchFields="&quot;706,שטר מטען מקורי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;707&quot;"
+      LocalName="&quot;העתק שטר מטען&quot;"
+      SearchFields="&quot;707,העתק שטר מטען&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;71&quot;"
+      LocalName="&quot;האם שטר מטען משולב&quot;"
+      SearchFields="&quot;71,האם שטר מטען משולב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;712&quot;"
+      LocalName="&quot;מסמך הובלה ימי לא סחיר&quot;"
+      SearchFields="&quot;712,מסמך הובלה ימי לא סחיר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;714&quot;"
+      LocalName="&quot;שטר מטען פנימי&quot;"
+      SearchFields="&quot;714,שטר מטען פנימי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;72&quot;"
+      LocalName="&quot;האם רב פעמי&quot;"
+      SearchFields="&quot;72,האם רב פעמי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;740&quot;"
+      LocalName="&quot;2 שטר מטען רגיל&quot;"
+      SearchFields="&quot;740,2 שטר מטען רגיל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;741&quot;"
+      LocalName="&quot;שטר מטען מאסטר&quot;"
+      SearchFields="&quot;741,שטר מטען מאסטר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;75&quot;"
+      LocalName="&quot;ערכאה&quot;"
+      SearchFields="&quot;75,ערכאה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;77&quot;"
+      LocalName="&quot;האם בוצע עיבוד&quot;"
+      SearchFields="&quot;77,האם בוצע עיבוד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;78&quot;"
+      LocalName="&quot;מדינת העיבוד&quot;"
+      SearchFields="&quot;78,מדינת העיבוד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;780&quot;"
+      LocalName="&quot;חשבון מטענים  (חשבון הובלה)&quot;"
+      SearchFields="&quot;780,חשבון מטענים  (חשבון הובלה)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;785&quot;"
+      LocalName="&quot;מצהר&quot;"
+      SearchFields="&quot;785,מצהר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;79&quot;"
+      LocalName="&quot;מספר שלדה&quot;"
+      SearchFields="&quot;79,מספר שלדה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;8&quot;"
+      LocalName="&quot;ישות תביעה&quot;"
+      SearchFields="&quot;8,ישות תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;80&quot;"
+      LocalName="&quot;מזהה מגיש הבקשה&quot;"
+      SearchFields="&quot;80,מזהה מגיש הבקשה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;81&quot;"
+      LocalName="&quot;מזהה מבקש הבקשה&quot;"
+      SearchFields="&quot;81,מזהה מבקש הבקשה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;82&quot;"
+      LocalName="&quot;תוקף&quot;"
+      SearchFields="&quot;82,תוקף&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;83&quot;"
+      LocalName="&quot;סכום&quot;"
+      SearchFields="&quot;83,סכום&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;84&quot;"
+      LocalName="&quot;מספר בקשה לפקדון&quot;"
+      SearchFields="&quot;84,מספר בקשה לפקדון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;85&quot;"
+      LocalName="&quot;סוג פקדון&quot;"
+      SearchFields="&quot;85,סוג פקדון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;86&quot;"
+      LocalName="&quot;תאריך קבלת הוכחת ייצוא&quot;"
+      SearchFields="&quot;86,תאריך קבלת הוכחת ייצוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;87&quot;"
+      EnglishName="&quot;original document&quot;"
+      LocalName="&quot;האם מסמך מקורי&quot;"
+      SearchFields="&quot;87,האם מסמך מקורי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;88&quot;"
+      LocalName="&quot;סוג זיהוי עבור מסמכים&quot;"
+      SearchFields="&quot;88,סוג זיהוי עבור מסמכים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;89&quot;"
+      LocalName="&quot;מספר רישוי הרכב&quot;"
+      SearchFields="&quot;89,מספר רישוי הרכב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;890&quot;"
+      LocalName="&quot;הצהרת מטענים מסוכנים&quot;"
+      SearchFields="&quot;890,הצהרת מטענים מסוכנים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;9&quot;"
+      LocalName="&quot;מגיש&quot;"
+      SearchFields="&quot;9,מגיש&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;90&quot;"
+      LocalName="&quot;מזהה חיצוני של מקח&quot;"
+      SearchFields="&quot;90,מזהה חיצוני של מקח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;91&quot;"
+      LocalName="&quot;מועד תפיסה&quot;"
+      SearchFields="&quot;91,מועד תפיסה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;92&quot;"
+      LocalName="&quot;תאריך מתן כתב ההרשאה&quot;"
+      SearchFields="&quot;92,תאריך מתן כתב ההרשאה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;93&quot;"
+      LocalName="&quot;מספר דרישת בטוחה&quot;"
+      SearchFields="&quot;93,מספר דרישת בטוחה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;94&quot;"
+      LocalName="&quot;פרט מכס&quot;"
+      SearchFields="&quot;94,פרט מכס&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;95&quot;"
+      LocalName="&quot;מספר היטל&quot;"
+      SearchFields="&quot;95,מספר היטל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;96&quot;"
+      LocalName="&quot;אינדיקצית יצואן מאושר&quot;"
+      SearchFields="&quot;96,אינדיקצית יצואן מאושר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;97&quot;"
+      LocalName="&quot;קוד בנק&quot;"
+      SearchFields="&quot;97,קוד בנק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;98&quot;"
+      LocalName="&quot;מספר כתב ערבות&quot;"
+      SearchFields="&quot;98,מספר כתב ערבות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;99&quot;"
+      LocalName="&quot;סוג מזהה מטען&quot;"
+      SearchFields="&quot;99,סוג מזהה מטען&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_1&quot;"
+      LocalName="&quot;צ'ק דוגמא&quot;"
+      SearchFields="&quot;IL_1,צ'ק דוגמא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_100&quot;"
+      LocalName="&quot;כתב ערבות בנקאי או פוליסת ביטוח&quot;"
+      SearchFields="&quot;IL_100,כתב ערבות בנקאי או פוליסת ביטוח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_103&quot;"
+      LocalName="&quot;בקשה לעדכון תוקף פיקדון&quot;"
+      SearchFields="&quot;IL_103,בקשה לעדכון תוקף פיקדון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_104&quot;"
+      LocalName="&quot;בקשה להחזרת פיקדון&quot;"
+      SearchFields="&quot;IL_104,בקשה להחזרת פיקדון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_105&quot;"
+      LocalName="&quot;בקשות לשינויים&quot;"
+      SearchFields="&quot;IL_105,בקשות לשינויים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_11&quot;"
+      LocalName="&quot;תצהיר יבואן תקופתי – תמונה&quot;"
+      SearchFields="&quot;IL_11,תצהיר יבואן תקופתי – תמונה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_119&quot;"
+      LocalName="&quot;מחירון של היצרן&quot;"
+      SearchFields="&quot;IL_119,מחירון של היצרן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_123&quot;"
+      LocalName="&quot;העברת בעלות&quot;"
+      SearchFields="&quot;IL_123,העברת בעלות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_124&quot;"
+      LocalName="&quot;תעודת מקור (יבוא)&quot;"
+      SearchFields="&quot;IL_124,תעודת מקור (יבוא)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_125&quot;"
+      LocalName="&quot;מסמך העדפה (יצוא)&quot;"
+      SearchFields="&quot;IL_125,מסמך העדפה (יצוא)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_126&quot;"
+      LocalName="&quot;תעודת שוק&quot;"
+      SearchFields="&quot;IL_126,תעודת שוק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_128&quot;"
+      LocalName="&quot;תעודת לשכת המסחר הירדנית&quot;"
+      SearchFields="&quot;IL_128,תעודת לשכת המסחר הירדנית&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_129&quot;"
+      LocalName="&quot;הצהרה ע&quot;פ צי&quot;ח&quot;"
+      SearchFields="&quot;IL_129,הצהרה ע&quot;פ צי&quot;ח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_13&quot;"
+      LocalName="&quot;תצהיר יבואן להצהרת יבוא (רשימון) – תמונה&quot;"
+      SearchFields="&quot;IL_13,תצהיר יבואן להצהרת יבוא (רשימון) – תמונה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_132&quot;"
+      LocalName="&quot;רישיון&quot;"
+      SearchFields="&quot;IL_132,רישיון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_133&quot;"
+      LocalName="&quot;אישור&quot;"
+      SearchFields="&quot;IL_133,אישור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_134&quot;"
+      LocalName="&quot;פטור מרישיון/אישור&quot;"
+      SearchFields="&quot;IL_134,פטור מרישיון/אישור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_135&quot;"
+      LocalName="&quot;העתק קרנה אטא&quot;"
+      SearchFields="&quot;IL_135,העתק קרנה אטא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_136&quot;"
+      LocalName="&quot;העתק דף קרנה&quot;"
+      SearchFields="&quot;IL_136,העתק דף קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_138&quot;"
+      LocalName="&quot;טופס 130&quot;"
+      SearchFields="&quot;IL_138,טופס 130&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_139&quot;"
+      LocalName="&quot;פטור מחשבון מכר&quot;"
+      SearchFields="&quot;IL_139,פטור מחשבון מכר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_14&quot;"
+      LocalName="&quot;מסמך כללי&quot;"
+      SearchFields="&quot;IL_14,מסמך כללי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_140&quot;"
+      LocalName="&quot;תצהיר יצואן&quot;"
+      SearchFields="&quot;IL_140,תצהיר יצואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_141&quot;"
+      LocalName="&quot;פוליסת ביטוח&quot;"
+      SearchFields="&quot;IL_141,פוליסת ביטוח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_142&quot;"
+      LocalName="&quot;הסבר על יצוא ללא תמורה&quot;"
+      SearchFields="&quot;IL_142,הסבר על יצוא ללא תמורה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_143&quot;"
+      LocalName="&quot;תעודת הסמכה ליצואן מאושר&quot;"
+      SearchFields="&quot;IL_143,תעודת הסמכה ליצואן מאושר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_144&quot;"
+      LocalName="&quot;אישור רשם החברות&quot;"
+      SearchFields="&quot;IL_144,אישור רשם החברות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_145&quot;"
+      LocalName="&quot;תעודת שער נמלית ליצוא&quot;"
+      SearchFields="&quot;IL_145,תעודת שער נמלית ליצוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_147&quot;"
+      LocalName="&quot;טופס 370 מקוצר&quot;"
+      SearchFields="&quot;IL_147,טופס 370 מקוצר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_148&quot;"
+      LocalName="&quot;מכתב הצהרה&quot;"
+      SearchFields="&quot;IL_148,מכתב הצהרה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_149&quot;"
+      LocalName="&quot;התחייבות (טופס 373)&quot;"
+      SearchFields="&quot;IL_149,התחייבות (טופס 373)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_15&quot;"
+      LocalName="&quot;תמונת תעודה מזהה&quot;"
+      SearchFields="&quot;IL_15,תמונת תעודה מזהה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_17&quot;"
+      LocalName="&quot;כתב הרשאה (ייפוי כוח) – תמונה&quot;"
+      SearchFields="&quot;IL_17,כתב הרשאה (ייפוי כוח) – תמונה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_180&quot;"
+      LocalName="&quot;כתב הסמכה לחתום בשם תאגיד&quot;"
+      SearchFields="&quot;IL_180,כתב הסמכה לחתום בשם תאגיד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_182&quot;"
+      LocalName="&quot;ייפוי כוח לעורך דין לפי סעיף 91 לחוק לשכת עורכי הדין&quot;"
+      SearchFields="&quot;IL_182,ייפוי כוח לעורך דין לפי סעיף 91 לחוק לשכת עורכי הדין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_183&quot;"
+      LocalName="&quot;כתב שיפוי&quot;"
+      SearchFields="&quot;IL_183,כתב שיפוי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_184&quot;"
+      LocalName="&quot;תעודת יורומד&quot;"
+      SearchFields="&quot;IL_184,תעודת יורומד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_185&quot;"
+      LocalName="&quot;תעודת אפטא&quot;"
+      SearchFields="&quot;IL_185,תעודת אפטא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_199&quot;"
+      LocalName="&quot;אישור בנק בגין קיום חשבון&quot;"
+      SearchFields="&quot;IL_199,אישור בנק בגין קיום חשבון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_202&quot;"
+      LocalName="&quot;הצהרת ערך נמוך יבוא מסחרי&quot;"
+      SearchFields="&quot;IL_202,הצהרת ערך נמוך יבוא מסחרי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_203&quot;"
+      LocalName="&quot;הצהרת ערך נמוך יבוא אישי&quot;"
+      SearchFields="&quot;IL_203,הצהרת ערך נמוך יבוא אישי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_204&quot;"
+      LocalName="&quot;קרנה&quot;"
+      SearchFields="&quot;IL_204,קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_205&quot;"
+      LocalName="&quot;טופס המרת משפט&quot;"
+      SearchFields="&quot;IL_205,טופס המרת משפט&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_206&quot;"
+      LocalName="&quot;טופס פניה לוועדת ייבוא&quot;"
+      SearchFields="&quot;IL_206,טופס פניה לוועדת ייבוא&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_207&quot;"
+      LocalName="&quot;מסמך מצורף לאילוץ&quot;"
+      SearchFields="&quot;IL_207,מסמך מצורף לאילוץ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_208&quot;"
+      LocalName="&quot;מסמך נדרש למילוי תנאי האילוץ&quot;"
+      SearchFields="&quot;IL_208,מסמך נדרש למילוי תנאי האילוץ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_209&quot;"
+      LocalName="&quot;חשבוניות מכירה&quot;"
+      SearchFields="&quot;IL_209,חשבוניות מכירה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_21&quot;"
+      LocalName="&quot;יפוי כוח (טופס 165)&quot;"
+      SearchFields="&quot;IL_21,יפוי כוח (טופס 165)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_210&quot;"
+      LocalName="&quot;טופס מכס 89&quot;"
+      SearchFields="&quot;IL_210,טופס מכס 89&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_211&quot;"
+      LocalName="&quot;טופס מכס 89 א&quot;"
+      SearchFields="&quot;IL_211,טופס מכס 89 א&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_212&quot;"
+      LocalName="&quot;אסמכתאות על חסר ( גרעון עצמי)&quot;"
+      SearchFields="&quot;IL_212,אסמכתאות על חסר ( גרעון עצמי)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_22&quot;"
+      LocalName="&quot;יפוי כח נוטריוני (לא טופס 165).&quot;"
+      SearchFields="&quot;IL_22,יפוי כח נוטריוני (לא טופס 165).&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_23&quot;"
+      LocalName="&quot;טופס מכס 91&quot;"
+      SearchFields="&quot;IL_23,טופס מכס 91&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_234&quot;"
+      LocalName="&quot;טופס מענה לדרישה לבטוחה&quot;"
+      SearchFields="&quot;IL_234,טופס מענה לדרישה לבטוחה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_235&quot;"
+      LocalName="&quot;כתב תביעה&quot;"
+      SearchFields="&quot;IL_235,כתב תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_236&quot;"
+      LocalName="&quot;בקשה לסעד זמני&quot;"
+      SearchFields="&quot;IL_236,בקשה לסעד זמני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_237&quot;"
+      LocalName="&quot;בקשה למתן צו עיכוב הליכי גביה&quot;"
+      SearchFields="&quot;IL_237,בקשה למתן צו עיכוב הליכי גביה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_238&quot;"
+      LocalName="&quot;כתב הגנה&quot;"
+      SearchFields="&quot;IL_238,כתב הגנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_239&quot;"
+      LocalName="&quot;תגובה לסעד זמני&quot;"
+      SearchFields="&quot;IL_239,תגובה לסעד זמני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_24&quot;"
+      LocalName="&quot;טופס מכס 91 א&quot;"
+      SearchFields="&quot;IL_24,טופס מכס 91 א&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_240&quot;"
+      LocalName="&quot;תגובה למתן צו עיכוב הליכי גביה&quot;"
+      SearchFields="&quot;IL_240,תגובה למתן צו עיכוב הליכי גביה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_241&quot;"
+      LocalName="&quot;שאלון&quot;"
+      SearchFields="&quot;IL_241,שאלון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_242&quot;"
+      LocalName="&quot;תצהיר גילוי מסמכים&quot;"
+      SearchFields="&quot;IL_242,תצהיר גילוי מסמכים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_243&quot;"
+      LocalName="&quot;תצהירי עדות ראשית (תובעת)&quot;"
+      SearchFields="&quot;IL_243,תצהירי עדות ראשית (תובעת)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_244&quot;"
+      LocalName="&quot;תצהירי עדות ראשית (נתבעת)&quot;"
+      SearchFields="&quot;IL_244,תצהירי עדות ראשית (נתבעת)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_245&quot;"
+      LocalName="&quot;פרוטוקול&quot;"
+      SearchFields="&quot;IL_245,פרוטוקול&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_246&quot;"
+      LocalName="&quot;סיכומי התובעת&quot;"
+      SearchFields="&quot;IL_246,סיכומי התובעת&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_247&quot;"
+      LocalName="&quot;סיכומי הנתבעת&quot;"
+      SearchFields="&quot;IL_247,סיכומי הנתבעת&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_248&quot;"
+      LocalName="&quot;החלטות ביניים של בית משפט&quot;"
+      SearchFields="&quot;IL_248,החלטות ביניים של בית משפט&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_249&quot;"
+      LocalName="&quot;הסכם פשרה&quot;"
+      SearchFields="&quot;IL_249,הסכם פשרה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_25&quot;"
+      LocalName="&quot;פרטי חשבון בנק להחזר&quot;"
+      SearchFields="&quot;IL_25,פרטי חשבון בנק להחזר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_252&quot;"
+      LocalName="&quot;כתב תביעה מעודכן&quot;"
+      SearchFields="&quot;IL_252,כתב תביעה מעודכן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;Il_253&quot;"
+      LocalName="&quot;בקשה לצו מניעה זמני&quot;"
+      SearchFields="&quot;Il_253,בקשה לצו מניעה זמני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_254&quot;"
+      LocalName="&quot;תגובה לבקשה לצו מניעה זמני&quot;"
+      SearchFields="&quot;IL_254,תגובה לבקשה לצו מניעה זמני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_255&quot;"
+      LocalName="&quot;דרישה לגילוי מסמכים&quot;"
+      SearchFields="&quot;IL_255,דרישה לגילוי מסמכים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_256&quot;"
+      LocalName="&quot;תצהיר תשובות לשאלון&quot;"
+      SearchFields="&quot;IL_256,תצהיר תשובות לשאלון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_257&quot;"
+      LocalName="&quot;בקשת ביניים&quot;"
+      SearchFields="&quot;IL_257,בקשת ביניים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_258&quot;"
+      LocalName="&quot;תשובה לבקשת ביניים&quot;"
+      SearchFields="&quot;IL_258,תשובה לבקשת ביניים&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_26&quot;"
+      LocalName="&quot;פרוספקט&quot;"
+      SearchFields="&quot;IL_26,פרוספקט&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_261&quot;"
+      LocalName="&quot;Declaration of Non-Qualifying Operation&quot;"
+      SearchFields="&quot;IL_261,Declaration of Non-Qualifying Operation&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_262&quot;"
+      LocalName="&quot;תעודת עיבוד מינורי&quot;"
+      SearchFields="&quot;IL_262,תעודת עיבוד מינורי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_265&quot;"
+      LocalName="&quot;תמונת רכב&quot;"
+      SearchFields="&quot;IL_265,תמונת רכב&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_27&quot;"
+      LocalName="&quot;קטלוג של היצרן&quot;"
+      SearchFields="&quot;IL_27,קטלוג של היצרן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_271&quot;"
+      LocalName="&quot;הרשאה לחיוב חשבון&quot;"
+      SearchFields="&quot;IL_271,הרשאה לחיוב חשבון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_272&quot;"
+      LocalName="&quot;מסמך בקשה מקורית  פרהרולינג&quot;"
+      SearchFields="&quot;IL_272,מסמך בקשה מקורית  פרהרולינג&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_273&quot;"
+      LocalName="&quot;טופס בקשה מאתר תהילה&quot;"
+      SearchFields="&quot;IL_273,טופס בקשה מאתר תהילה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_278&quot;"
+      LocalName="&quot;בקשה סווגה&quot;"
+      SearchFields="&quot;IL_278,בקשה סווגה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_28&quot;"
+      LocalName="&quot;מרכיבי הטובין&quot;"
+      SearchFields="&quot;IL_28,מרכיבי הטובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_281&quot;"
+      LocalName="&quot;דו&quot;ח מעבדה&quot;"
+      SearchFields="&quot;IL_281,דו&quot;ח מעבדה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_282&quot;"
+      LocalName="&quot;תמונה&quot;"
+      SearchFields="&quot;IL_282,תמונה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_283&quot;"
+      LocalName="&quot;קטלוג/פרוספקט&quot;"
+      SearchFields="&quot;IL_283,קטלוג/פרוספקט&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_284&quot;"
+      LocalName="&quot;בקשה לפקדון&quot;"
+      SearchFields="&quot;IL_284,בקשה לפקדון&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_285&quot;"
+      LocalName="&quot;הוכחת ייצוא קרנה&quot;"
+      SearchFields="&quot;IL_285,הוכחת ייצוא קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;Il_286&quot;"
+      LocalName="&quot;ספח תנועת קרנה&quot;"
+      SearchFields="&quot;Il_286,ספח תנועת קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_289&quot;"
+      LocalName="&quot;צילום תצהיר יבואן בטחוני&quot;"
+      SearchFields="&quot;IL_289,צילום תצהיר יבואן בטחוני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_29&quot;"
+      LocalName="&quot;תהליך יצור&quot;"
+      SearchFields="&quot;IL_29,תהליך יצור&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_290&quot;"
+      LocalName="&quot;אישור מיוחד לזכאי&quot;"
+      SearchFields="&quot;IL_290,אישור מיוחד לזכאי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_3&quot;"
+      LocalName="&quot;קטלוג החברה המפרט פעילות החברה ומוצריה&quot;"
+      SearchFields="&quot;IL_3,קטלוג החברה המפרט פעילות החברה ומוצריה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_30&quot;"
+      LocalName="&quot;מפרט טכני&quot;"
+      SearchFields="&quot;IL_30,מפרט טכני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_300&quot;"
+      LocalName="&quot;מק&quot;ח&quot;"
+      SearchFields="&quot;IL_300,מק&quot;ח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_303&quot;"
+      LocalName="&quot;מסמך תפיסה&quot;"
+      SearchFields="&quot;IL_303,מסמך תפיסה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_304&quot;"
+      LocalName="&quot;ייפוי כוח מבעל הרכב לנהג&quot;"
+      SearchFields="&quot;IL_304,ייפוי כוח מבעל הרכב לנהג&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_306&quot;"
+      LocalName="&quot;אישור תקינה ממשרד התחבורה&quot;"
+      SearchFields="&quot;IL_306,אישור תקינה ממשרד התחבורה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_309&quot;"
+      LocalName="&quot;פסק דין לפרט מכס&quot;"
+      SearchFields="&quot;IL_309,פסק דין לפרט מכס&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_31&quot;"
+      LocalName="&quot;הסבר יצרן על יעוד הטובין&quot;"
+      SearchFields="&quot;IL_31,הסבר יצרן על יעוד הטובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_310&quot;"
+      LocalName="&quot;בקשה לחקירה&quot;"
+      SearchFields="&quot;IL_310,בקשה לחקירה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_311&quot;"
+      LocalName="&quot;היטל&quot;"
+      SearchFields="&quot;IL_311,היטל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_32&quot;"
+      LocalName="&quot;הסבר יבואן על יעוד הטובין&quot;"
+      SearchFields="&quot;IL_32,הסבר יבואן על יעוד הטובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_325&quot;"
+      LocalName="&quot;מ.ב 71&quot;"
+      SearchFields="&quot;IL_325,מ.ב 71&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_327&quot;"
+      LocalName="&quot;הצהרה על אי ניכוי מס תשומות בכפל&quot;"
+      SearchFields="&quot;IL_327,הצהרה על אי ניכוי מס תשומות בכפל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_33&quot;"
+      LocalName="&quot;דוגמאות טובין&quot;"
+      SearchFields="&quot;IL_33,דוגמאות טובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_331&quot;"
+      LocalName="&quot;תצהיר מנכ&quot;ל&quot;"
+      SearchFields="&quot;IL_331,תצהיר מנכ&quot;ל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_333&quot;"
+      LocalName="&quot;עיקול בהסכמה&quot;"
+      SearchFields="&quot;IL_333,עיקול בהסכמה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_334&quot;"
+      LocalName="&quot;עיקול ברישום&quot;"
+      SearchFields="&quot;IL_334,עיקול ברישום&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_336&quot;"
+      LocalName="&quot;הודעת זיכוי למימוש ערבות&quot;"
+      SearchFields="&quot;IL_336,הודעת זיכוי למימוש ערבות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_338&quot;"
+      LocalName="&quot;בקשה להמרת קרנה&quot;"
+      SearchFields="&quot;IL_338,בקשה להמרת קרנה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_339&quot;"
+      LocalName="&quot;אישור לשכת מסחר להארכת תוקף&quot;"
+      SearchFields="&quot;IL_339,אישור לשכת מסחר להארכת תוקף&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_34&quot;"
+      LocalName="&quot;אישור משלח על עלות הובלה&quot;"
+      SearchFields="&quot;IL_34,אישור משלח על עלות הובלה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_340&quot;"
+      LocalName="&quot;אישור כניסה לארץ&quot;"
+      SearchFields="&quot;IL_340,אישור כניסה לארץ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_341&quot;"
+      LocalName="&quot;היתר בטחוני&quot;"
+      SearchFields="&quot;IL_341,היתר בטחוני&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_342&quot;"
+      LocalName="&quot;אישור קמ&quot;ת&quot;"
+      SearchFields="&quot;IL_342,אישור קמ&quot;ת&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_345&quot;"
+      LocalName="&quot;תעודת השכלה&quot;"
+      SearchFields="&quot;IL_345,תעודת השכלה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_346&quot;"
+      LocalName="&quot;הצהרה במינוי סוכן מכס/משלח בי&quot;ל אחראי&quot;"
+      SearchFields="&quot;IL_346,הצהרה במינוי סוכן מכס/משלח בי&quot;ל אחראי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_347&quot;"
+      LocalName="&quot;הצהרה במינוי פקיד רישוי (מ.ב. 126)&quot;"
+      SearchFields="&quot;IL_347,הצהרה במינוי פקיד רישוי (מ.ב. 126)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_348&quot;"
+      LocalName="&quot;יפוי כוח לקבלת מירשם פלילי&quot;"
+      SearchFields="&quot;IL_348,יפוי כוח לקבלת מירשם פלילי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_349&quot;"
+      LocalName="&quot;בקשה להתמנות כפקיד רישוי (מט/7410 א')&quot;"
+      SearchFields="&quot;IL_349,בקשה להתמנות כפקיד רישוי (מט/7410 א')&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_35&quot;"
+      LocalName="&quot;הסבר על מהות ההנחה&quot;"
+      SearchFields="&quot;IL_35,הסבר על מהות ההנחה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_350&quot;"
+      LocalName="&quot;תקנון החברה&quot;"
+      SearchFields="&quot;IL_350,תקנון החברה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_351&quot;"
+      LocalName="&quot;תעודה על רישום החברה ברשם החברות (תעודת התאגדות)&quot;"
+      SearchFields="&quot;IL_351,תעודה על רישום החברה ברשם החברות (תעודת התאגדות)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_352&quot;"
+      LocalName="&quot;אישור עו&quot;ד/רו&quot;ח לגבי בעלי המניות ומורשי החתימה בתאגיד&quot;"
+      SearchFields="&quot;IL_352,אישור עו&quot;ד/רו&quot;ח לגבי בעלי המניות ומורשי החתימה בתאגיד&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_353&quot;"
+      LocalName="&quot;אישור עו&quot;ד/רו&quot;ח על מורשה חתימה&quot;"
+      SearchFields="&quot;IL_353,אישור עו&quot;ד/רו&quot;ח על מורשה חתימה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_354&quot;"
+      LocalName="&quot;אישור רו&quot;ח בדבר ניהול פנקסי חשבונות&quot;"
+      SearchFields="&quot;IL_354,אישור רו&quot;ח בדבר ניהול פנקסי חשבונות&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_355&quot;"
+      LocalName="&quot;הצהרה בהצטרפות למינוי פקיד רישוי&quot;"
+      SearchFields="&quot;IL_355,הצהרה בהצטרפות למינוי פקיד רישוי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_356&quot;"
+      LocalName="&quot;סריקת טופס חתום ע&quot;י המבקש&quot;"
+      SearchFields="&quot;IL_356,סריקת טופס חתום ע&quot;י המבקש&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_37&quot;"
+      LocalName="&quot;אסמכתה על ערך העסקה&quot;"
+      SearchFields="&quot;IL_37,אסמכתה על ערך העסקה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_38&quot;"
+      LocalName="&quot;אסמכתאות על ערך העסקה בפועל&quot;"
+      SearchFields="&quot;IL_38,אסמכתאות על ערך העסקה בפועל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_4&quot;"
+      LocalName="&quot;מסמכי עזר&quot;"
+      SearchFields="&quot;IL_4,מסמכי עזר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_40&quot;"
+      LocalName="&quot;מחירון של הספק&quot;"
+      SearchFields="&quot;IL_40,מחירון של הספק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_41&quot;"
+      LocalName="&quot;אישור ביצוע זיכוי מטעם היצרן&quot;"
+      SearchFields="&quot;IL_41,אישור ביצוע זיכוי מטעם היצרן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_42&quot;"
+      LocalName="&quot;אסמכתאות על החוסר&quot;"
+      SearchFields="&quot;IL_42,אסמכתאות על החוסר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_43&quot;"
+      LocalName="&quot;אסמכתה לביצוע התחשבנות על חוסר&quot;"
+      SearchFields="&quot;IL_43,אסמכתה לביצוע התחשבנות על חוסר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_44&quot;"
+      LocalName="&quot;אישור משלח מחול&quot;"
+      SearchFields="&quot;IL_44,אישור משלח מחול&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_45&quot;"
+      LocalName="&quot;הצהרת אי קיזוז מע&quot;מ&quot;"
+      SearchFields="&quot;IL_45,הצהרת אי קיזוז מע&quot;מ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_48&quot;"
+      LocalName="&quot;אסמכתת אובדן&quot;"
+      SearchFields="&quot;IL_48,אסמכתת אובדן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_49&quot;"
+      LocalName="&quot;אישורי ליקוי או נזק&quot;"
+      SearchFields="&quot;IL_49,אישורי ליקוי או נזק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_50&quot;"
+      LocalName="&quot;נימוקי יבואן לאיחור בהגשת תביעה&quot;"
+      SearchFields="&quot;IL_50,נימוקי יבואן לאיחור בהגשת תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_52&quot;"
+      LocalName="&quot;אסמכתת השמדת טובין&quot;"
+      SearchFields="&quot;IL_52,אסמכתת השמדת טובין&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_53&quot;"
+      LocalName="&quot;נימוקי יבואן לאיחור מעל 6 חודשים בהגשת תביעה&quot;"
+      SearchFields="&quot;IL_53,נימוקי יבואן לאיחור מעל 6 חודשים בהגשת תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_54&quot;"
+      LocalName="&quot;נימוקי יבואן לאיחור מעל שנה בהגשת תביעה&quot;"
+      SearchFields="&quot;IL_54,נימוקי יבואן לאיחור מעל שנה בהגשת תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_55&quot;"
+      LocalName="&quot;הצהרת יבואן בשינוי שם יבואן&quot;"
+      SearchFields="&quot;IL_55,הצהרת יבואן בשינוי שם יבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_56&quot;"
+      LocalName="&quot;הצהרת רואה חשבון בשינוי שם יבואן&quot;"
+      SearchFields="&quot;IL_56,הצהרת רואה חשבון בשינוי שם יבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_57&quot;"
+      LocalName="&quot;הצהרת סוכן בשינוי שם יבואן&quot;"
+      SearchFields="&quot;IL_57,הצהרת סוכן בשינוי שם יבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_58&quot;"
+      LocalName="&quot;הסבר על טעות בשם היבואן&quot;"
+      SearchFields="&quot;IL_58,הסבר על טעות בשם היבואן&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_60&quot;"
+      LocalName="&quot;דו&quot;ח חברת הביטוח&quot;"
+      SearchFields="&quot;IL_60,דו&quot;ח חברת הביטוח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_61&quot;"
+      LocalName="&quot;דוח שמאי&quot;"
+      SearchFields="&quot;IL_61,דוח שמאי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_63&quot;"
+      LocalName="&quot;אישור מהנמל על  כמות הטובין שיובאו ( דו&quot;ח טלי)&quot;"
+      SearchFields="&quot;IL_63,אישור מהנמל על  כמות הטובין שיובאו ( דו&quot;ח טלי)&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_64&quot;"
+      LocalName="&quot;אישור ממחסן רשוי על כמות הטובין שהתקבלו בפועל&quot;"
+      SearchFields="&quot;IL_64,אישור ממחסן רשוי על כמות הטובין שהתקבלו בפועל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_67&quot;"
+      LocalName="&quot;מכתב ערעור על החלטת בתיק תביעה&quot;"
+      SearchFields="&quot;IL_67,מכתב ערעור על החלטת בתיק תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_68&quot;"
+      LocalName="&quot;מכתב פניה לביטול תיק תביעה&quot;"
+      SearchFields="&quot;IL_68,מכתב פניה לביטול תיק תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_69&quot;"
+      LocalName="&quot;מכתב בקשת תביעה&quot;"
+      SearchFields="&quot;IL_69,מכתב בקשת תביעה&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_70&quot;"
+      LocalName="&quot;חשבון ביטוח&quot;"
+      SearchFields="&quot;IL_70,חשבון ביטוח&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_81&quot;"
+      LocalName="&quot;אחר&quot;"
+      SearchFields="&quot;IL_81,אחר&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_83&quot;"
+      LocalName="&quot;הצהרת אב&quot;כ&quot;"
+      SearchFields="&quot;IL_83,הצהרת אב&quot;כ&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_85&quot;"
+      LocalName="&quot;מוצג פיזי&quot;"
+      SearchFields="&quot;IL_85,מוצג פיזי&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_9&quot;"
+      LocalName="&quot;אישור רו&quot;ח על ניהול פנקסים כחוק&quot;"
+      SearchFields="&quot;IL_9,אישור רו&quot;ח על ניהול פנקסים כחוק&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;IL_97&quot;"
+      LocalName="&quot;פסק דין&quot;"
+      SearchFields="&quot;IL_97,פסק דין&quot;"
+      Inactive="false" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;CustomMetaDataType&quot;"
+    ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.CustomMetaDataType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;CMDT&quot;"
+    QueryGroupName="&quot;Customs.CustomMetaDataType&quot;"
+    LocalTextCode="&quot;Document Meta Datas&quot;"
+    TextCode="&quot;Document Meta Data&quot;"
+    TextCodeCode="&quot;Customs.CustomMetaDataType.Q.CustomMetaDataTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;CUSTOMMETADATATYPE&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.CustomMetaDataType.Features.CustomMetaDataTypes&quot;"
+    FeatureDefaultText="&quot;Custom Meta Data Types&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;CustomMetaDataType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;CustomMetaDataType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;CustomMetaDataType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;CustomMetaDataType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CustomMetaDataType&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

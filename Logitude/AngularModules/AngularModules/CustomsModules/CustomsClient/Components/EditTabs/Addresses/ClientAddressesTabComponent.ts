@@ -16,7 +16,7 @@ import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCo
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientAddressesTabComponent.html',
 })
 
@@ -30,7 +30,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
     responseData: INF_MSG_GenericResponseData;
     requestParams: AddAddressContactForClientRequestParams;
 
-    private Mode: string = "";
+    Mode: string = "";
     private newAddressButtonVisibility: boolean = true;
     private editButtonVisibility: boolean = true;
     Parent: ClaimGeneralTabComponent;
@@ -63,8 +63,8 @@ export class ClientAddressesTabComponent extends BaseComponent{
     public set EditButtonVisibility(newValue: boolean) { this.editButtonVisibility = newValue; }
 
     NewAddressButtonClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {
 
                // this.entityPM.ClientAddresses[0].IsHebrewAddress                
             var item = new ClientAddressPM(this.entityPM);
@@ -93,8 +93,8 @@ export class ClientAddressesTabComponent extends BaseComponent{
     }
 
     EditAddress(address: ClientAddressPM) {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {    
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {    
 
                 var windowArgs: any = {};
                 windowArgs.clientAddressPM = address;

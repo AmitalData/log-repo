@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.WarehouseLib.MetaData</RootNamespace>
     <AssemblyName>Logitude.WarehouseLib.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -71,6 +71,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WarehouseClassesGenerated.cs</LastGenOutput>
     </None>
+    <None Include="DBTables\WarehouseEntry.dxml" />
+    <None Include="DBTables\WarehouseEntryPackage.dxml" />
+    <None Include="DBTables\WarehouseEntryPackagesRelease.dxml" />
+    <None Include="DBTables\WarehouseEntryStatus.dxml" />
+    <None Include="DBTables\WarehouseRelease.dxml" />
+    <None Include="DBTables\WarehouseReleasePackage.dxml" />
+    <None Include="DBTables\WarehouseReleaseStatus.dxml" />
     <None Include="EntityFiles\WarehouseEntry.lxml" />
     <None Include="EntityFiles\WarehouseEntryPackage.lxml" />
     <None Include="EntityFiles\WarehouseEntryPackagesRelease.lxml" />

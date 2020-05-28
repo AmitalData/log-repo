@@ -15,7 +15,6 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 
 @Component({
     selector: 'VATSettingsComponent',
-    moduleId: module.id,
     templateUrl: './VATSettingsComponent.html',
 })
 
@@ -273,6 +272,10 @@ export class VATSettingsComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.tenantPM, this.DataContext.ObjectTableName, errors);
+
+        if (!AppTool.IsNullOrZero(this.VatSize) && this.VatSize > 20) {
+            errors.push("VAT Size should not exceed 20");
+        }
 
         if (this.VatFormatTypeCode == "FSC") {
             if (AppTool.IsNullOrEmpty(this.VatFormatCountryId)) {

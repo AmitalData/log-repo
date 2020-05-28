@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
+import {TariffLinesContainersPricePM} from './TariffLinesContainersPricePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -335,6 +336,170 @@ export class TariffLinePM {
     private isToAllOtherPorts: boolean;
     public get IsToAllOtherPorts() { return this.isToAllOtherPorts; }
     public set IsToAllOtherPorts(newValue: boolean) { if (this.isToAllOtherPorts != newValue) { this.isToAllOtherPorts = newValue; this.MarkAsDirty("IsToAllOtherPorts"); } }
+       
+	 
+    private surcharge1MinPrice: number;
+    public get Surcharge1MinPrice() { return this.surcharge1MinPrice; }
+    public set Surcharge1MinPrice(newValue: number) { if (this.surcharge1MinPrice != newValue) { this.surcharge1MinPrice = newValue; this.MarkAsDirty("Surcharge1MinPrice"); } }
+       
+	 
+    private surcharge2MinPrice: number;
+    public get Surcharge2MinPrice() { return this.surcharge2MinPrice; }
+    public set Surcharge2MinPrice(newValue: number) { if (this.surcharge2MinPrice != newValue) { this.surcharge2MinPrice = newValue; this.MarkAsDirty("Surcharge2MinPrice"); } }
+       
+	 
+    private surcharge3MinPrice: number;
+    public get Surcharge3MinPrice() { return this.surcharge3MinPrice; }
+    public set Surcharge3MinPrice(newValue: number) { if (this.surcharge3MinPrice != newValue) { this.surcharge3MinPrice = newValue; this.MarkAsDirty("Surcharge3MinPrice"); } }
+       
+	 
+    private surcharge4MinPrice: number;
+    public get Surcharge4MinPrice() { return this.surcharge4MinPrice; }
+    public set Surcharge4MinPrice(newValue: number) { if (this.surcharge4MinPrice != newValue) { this.surcharge4MinPrice = newValue; this.MarkAsDirty("Surcharge4MinPrice"); } }
+       
+	 
+    private surcharge5MinPrice: number;
+    public get Surcharge5MinPrice() { return this.surcharge5MinPrice; }
+    public set Surcharge5MinPrice(newValue: number) { if (this.surcharge5MinPrice != newValue) { this.surcharge5MinPrice = newValue; this.MarkAsDirty("Surcharge5MinPrice"); } }
+       
+	 
+    private surcharge6MinPrice: number;
+    public get Surcharge6MinPrice() { return this.surcharge6MinPrice; }
+    public set Surcharge6MinPrice(newValue: number) { if (this.surcharge6MinPrice != newValue) { this.surcharge6MinPrice = newValue; this.MarkAsDirty("Surcharge6MinPrice"); } }
+       
+	 
+    private surcharge7MinPrice: number;
+    public get Surcharge7MinPrice() { return this.surcharge7MinPrice; }
+    public set Surcharge7MinPrice(newValue: number) { if (this.surcharge7MinPrice != newValue) { this.surcharge7MinPrice = newValue; this.MarkAsDirty("Surcharge7MinPrice"); } }
+       
+	 
+    private surcharge8MinPrice: number;
+    public get Surcharge8MinPrice() { return this.surcharge8MinPrice; }
+    public set Surcharge8MinPrice(newValue: number) { if (this.surcharge8MinPrice != newValue) { this.surcharge8MinPrice = newValue; this.MarkAsDirty("Surcharge8MinPrice"); } }
+       
+	 
+    private surcharge9MinPrice: number;
+    public get Surcharge9MinPrice() { return this.surcharge9MinPrice; }
+    public set Surcharge9MinPrice(newValue: number) { if (this.surcharge9MinPrice != newValue) { this.surcharge9MinPrice = newValue; this.MarkAsDirty("Surcharge9MinPrice"); } }
+       
+	 
+    private surcharge10MinPrice: number;
+    public get Surcharge10MinPrice() { return this.surcharge10MinPrice; }
+    public set Surcharge10MinPrice(newValue: number) { if (this.surcharge10MinPrice != newValue) { this.surcharge10MinPrice = newValue; this.MarkAsDirty("Surcharge10MinPrice"); } }
+       
+	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
+     
+	private containersPrices: TariffLinesContainersPricePM[];
+    get  ContainersPrices() {
+        if (this.containersPrices == null) {
+            this.containersPrices = [];
+        }
+
+        return this.containersPrices;
+    }
+    set  ContainersPrices(newValue: TariffLinesContainersPricePM[]) {
+        if (this.containersPrices != newValue) {
+            this.containersPrices = newValue;
+        }
+    }
+    public AddTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
+        if (item != null) {
+            var index = this. ContainersPrices.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ContainersPrices.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
+        if (item != null) {
+            var index = this. ContainersPrices.indexOf(item);
+            if (index > -1) {
+                this. ContainersPrices.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ContainersPrices: Array<TariffLinesContainersPricePM>= [];
+     private originPortCombinedCode: string;
+    public get OriginPortCombinedCode() { return this.originPortCombinedCode; }
+    public set OriginPortCombinedCode(newValue: string) { if (this.originPortCombinedCode != newValue) { this.originPortCombinedCode = newValue; this.MarkAsDirty("OriginPortCombinedCode"); } }
+       
+	 
+    private destinationPortCombinedCode: string;
+    public get DestinationPortCombinedCode() { return this.destinationPortCombinedCode; }
+    public set DestinationPortCombinedCode(newValue: string) { if (this.destinationPortCombinedCode != newValue) { this.destinationPortCombinedCode = newValue; this.MarkAsDirty("DestinationPortCombinedCode"); } }
+       
+	 
+    private transitTime: string;
+    public get TransitTime() { return this.transitTime; }
+    public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }
+       
+	 
+    private originPortHasWrongTransMode: boolean;
+    public get OriginPortHasWrongTransMode() { return this.originPortHasWrongTransMode; }
+    public set OriginPortHasWrongTransMode(newValue: boolean) { if (this.originPortHasWrongTransMode != newValue) { this.originPortHasWrongTransMode = newValue; this.MarkAsDirty("OriginPortHasWrongTransMode"); } }
+       
+	 
+    private destinationPortHasWrongTransMode: boolean;
+    public get DestinationPortHasWrongTransMode() { return this.destinationPortHasWrongTransMode; }
+    public set DestinationPortHasWrongTransMode(newValue: boolean) { if (this.destinationPortHasWrongTransMode != newValue) { this.destinationPortHasWrongTransMode = newValue; this.MarkAsDirty("DestinationPortHasWrongTransMode"); } }
+       
+	 
+    private isMinPriceMinus: boolean;
+    public get IsMinPriceMinus() { return this.isMinPriceMinus; }
+    public set IsMinPriceMinus(newValue: boolean) { if (this.isMinPriceMinus != newValue) { this.isMinPriceMinus = newValue; this.MarkAsDirty("IsMinPriceMinus"); } }
+       
+	 
+    private isPrice1Minus: boolean;
+    public get IsPrice1Minus() { return this.isPrice1Minus; }
+    public set IsPrice1Minus(newValue: boolean) { if (this.isPrice1Minus != newValue) { this.isPrice1Minus = newValue; this.MarkAsDirty("IsPrice1Minus"); } }
+       
+	 
+    private isPrice2Minus: boolean;
+    public get IsPrice2Minus() { return this.isPrice2Minus; }
+    public set IsPrice2Minus(newValue: boolean) { if (this.isPrice2Minus != newValue) { this.isPrice2Minus = newValue; this.MarkAsDirty("IsPrice2Minus"); } }
+       
+	 
+    private isPrice3Minus: boolean;
+    public get IsPrice3Minus() { return this.isPrice3Minus; }
+    public set IsPrice3Minus(newValue: boolean) { if (this.isPrice3Minus != newValue) { this.isPrice3Minus = newValue; this.MarkAsDirty("IsPrice3Minus"); } }
+       
+	 
+    private isPrice4Minus: boolean;
+    public get IsPrice4Minus() { return this.isPrice4Minus; }
+    public set IsPrice4Minus(newValue: boolean) { if (this.isPrice4Minus != newValue) { this.isPrice4Minus = newValue; this.MarkAsDirty("IsPrice4Minus"); } }
+       
+	 
+    private isPrice5Minus: boolean;
+    public get IsPrice5Minus() { return this.isPrice5Minus; }
+    public set IsPrice5Minus(newValue: boolean) { if (this.isPrice5Minus != newValue) { this.isPrice5Minus = newValue; this.MarkAsDirty("IsPrice5Minus"); } }
+       
+	 
+    private isPrice6Minus: boolean;
+    public get IsPrice6Minus() { return this.isPrice6Minus; }
+    public set IsPrice6Minus(newValue: boolean) { if (this.isPrice6Minus != newValue) { this.isPrice6Minus = newValue; this.MarkAsDirty("IsPrice6Minus"); } }
+       
+	 
+    private isPrice7Minus: boolean;
+    public get IsPrice7Minus() { return this.isPrice7Minus; }
+    public set IsPrice7Minus(newValue: boolean) { if (this.isPrice7Minus != newValue) { this.isPrice7Minus = newValue; this.MarkAsDirty("IsPrice7Minus"); } }
+       
+	 
+    private isPrice8Minus: boolean;
+    public get IsPrice8Minus() { return this.isPrice8Minus; }
+    public set IsPrice8Minus(newValue: boolean) { if (this.isPrice8Minus != newValue) { this.isPrice8Minus = newValue; this.MarkAsDirty("IsPrice8Minus"); } }
        
 	 
 

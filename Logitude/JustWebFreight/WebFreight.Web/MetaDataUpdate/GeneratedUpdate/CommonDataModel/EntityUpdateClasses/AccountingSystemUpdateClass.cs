@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AccountingSystemUpdateClass
-   {  
+   {  		
+		public const string HashString = "d31c963ebdb029e47d5f2ea673a58423";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "AccountingSystem",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingSystems",
-			      				    OldDBTableName =  "AccountingSystems",
 			      				    ObjectTableSingular =  "Accounting System",
 			      				    ObjectTablePlural =  "Accounting Systems",
 			      				    HasCustomFilter =  false,
@@ -129,23 +129,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "AccountingSystem,AccountingSystems,,Code,",
+			      				    HashString =  AccountingSystemUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  4,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -193,19 +194,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -257,21 +258,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "AccountingSystem",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -319,22 +320,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsExternalCodesFromTable",
-					  						OldFieldName =  "IsExternalCodesFromTable",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -382,23 +383,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsExternalCodesFromTable",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsExternalCodesSyncEnabled",
-					  						OldFieldName =  "IsExternalCodesSyncEnabled",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -446,23 +447,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsExternalCodesSyncEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsSingleTaxPerInvoice",
-					  						OldFieldName =  "IsSingleTaxPerInvoice",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -510,23 +511,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsSingleTaxPerInvoice",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsSingleCurrencyAccount",
-					  						OldFieldName =  "IsSingleCurrencyAccount",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -574,23 +575,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsSingleCurrencyAccount",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowManuallyDueDate",
-					  						OldFieldName =  "AllowManuallyDueDate",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -638,23 +639,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowManuallyDueDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsJournalMode",
-					  						OldFieldName =  "IsJournalMode",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -702,23 +703,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsJournalMode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsTaxItemManaged",
-					  						OldFieldName =  "IsTaxItemManaged",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -766,23 +767,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsTaxItemManaged",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowMinusInvoiceLines",
-					  						OldFieldName =  "AllowMinusInvoiceLines",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -830,23 +831,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowMinusInvoiceLines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShowDownloadScreen",
-					  						OldFieldName =  "ShowDownloadScreen",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -894,23 +895,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShowDownloadScreen",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowARInvoicesTransfer",
-					  						OldFieldName =  "AllowARInvoicesTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -958,23 +959,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowARInvoicesTransfer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowAPInvoicesTransfer",
-					  						OldFieldName =  "AllowAPInvoicesTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1022,23 +1023,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowAPInvoicesTransfer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowPositiveAmountsInTheCreditNote",
-					  						OldFieldName =  "AllowPositiveAmountsInTheCreditNote",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1086,23 +1087,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowPositiveAmountsInTheCreditNote",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1150,23 +1151,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsExternalCodesFromAPI",
-					  						OldFieldName =  "IsExternalCodesFromAPI",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1214,23 +1215,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsExternalCodesFromAPI",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowARPaymentsTransfer",
-					  						OldFieldName =  "AllowARPaymentsTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1278,23 +1279,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowARPaymentsTransfer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CanTransferToDropbox",
-					  						OldFieldName =  "CanTransferToDropbox",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1340,23 +1341,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CanTransferToDropbox",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AllowAPPaymentsTransfer",
-					  						OldFieldName =  "AllowAPPaymentsTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1404,85 +1405,163 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowAPPaymentsTransfer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CanTransferToFTP",
+					  						ObjectTableName =  "AccountingSystem",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CanTransferToFTP",
+					  						ListPropertyPath =  "CanTransferToFTP",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "AccountingSystem",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CanTransferToFTP",
+					  						DefaultText =  "Can Transfer To FTP",
+					  						ListFieldLable =  "CanTransferToFTPListLable",
+					  						ListLableDefaultText =  "Can Transfer ToF TP",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingSystemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCS", Name = "Accounting System" }, queryGroupRepository);
-						QueryGroup AccountingSystemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3956", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingSystemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCS", Name = "Accounting System" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingSystemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3956", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AccountingSystemObjectTable = objectTables.ContainsKey("AccountingSystem") ? objectTables["AccountingSystem"] : null;
+            if (AccountingSystemObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable AccountingSystemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> AccountingSystemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingSystem").ToList();   
+                AccountingSystemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode AccountingSystemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = @"Accounting Systems",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingSystemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTINGSYSTEMS", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.AllAccountingSystems", NameTextCodeDefaultText = "All Accounting Systems", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode AccountingSystemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = @"Accounting Systems",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingSystemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTINGSYSTEMS", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.AllAccountingSystems", NameTextCodeDefaultText = "All Accounting Systems", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,AccountingSystemObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, NameTextCodeCode = AccountingSystemTextCode_0.Code, ObjectTableName = "AccountingSystem", Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id,FeatureUniqeCode= AccountingSystemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingSystem.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 1, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingSystem.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 2, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsExternalCodesFromTable" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromTable" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 3, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsExternalCodesSyncEnabled" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingSystem.IsExternalCodesSyncEnabled" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 4, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsSingleTaxPerInvoice" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingSystem.IsSingleTaxPerInvoice" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 5, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsSingleCurrencyAccount" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingSystem.IsSingleCurrencyAccount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 6, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "AllowManuallyDueDate" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingSystem.AllowManuallyDueDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 7, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsJournalMode" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingSystem.IsJournalMode" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 8, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsTaxItemManaged" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AccountingSystem.IsTaxItemManaged" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 9, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "AllowMinusInvoiceLines" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AccountingSystem.AllowMinusInvoiceLines" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 10, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "ShowDownloadScreen" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AccountingSystem.ShowDownloadScreen" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 11, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "AllowARInvoicesTransfer" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AccountingSystem.AllowARInvoicesTransfer" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 12, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "AllowAPInvoicesTransfer" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AccountingSystem.AllowAPInvoicesTransfer" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 13, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "AllowPositiveAmountsInTheCreditNote" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "AccountingSystem.AllowPositiveAmountsInTheCreditNote" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 14, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "AccountingSystem.InActive" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id, IndexOrder = 15, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "IsExternalCodesFromAPI" && d.ObjectTableId == AccountingSystemObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAccountingSystemsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromAPI" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AccountingSystemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AccountingSystemObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingSystem").ToList();
+		   //List<ObjectField> AccountingSystemObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingSystem").ToList();
 		       
 	      
 
 	         Screen AccountingSystemHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingSystem.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingSystemObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingSystemHeaderScreenScreen0.Id,ScreenCode = AccountingSystemHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingSystem.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingSystemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AccountingSystemHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingSystemAccountingSystemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingSystemHeaderScreenScreen0.Id,ScreenCode = AccountingSystemHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingSystem.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingSystemObjectTable.HeaderScreenId = AccountingSystemHeaderScreenScreen0.Id;
+		    AccountingSystemObjectTable.HeaderScreenCode = AccountingSystemHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
@@ -1493,13 +1572,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AccountingSystemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingSystemGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingSystemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingSystem.Tab.General", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingSystemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingSystem.Tab.General", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingSystemObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "AyGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingSystemGeneralFeature_TH0.Id,FeatureUniqeCode = AccountingSystemGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.AccountingSystemGeneralTabControl", ObjectTableId = AccountingSystemObjectTable.Id, TabNameTextCodeId = AccountingSystemGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingSystemGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

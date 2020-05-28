@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CommodityUpdateClass
-   {  
+   {  		
+		public const string HashString = "09ad89dc5049f6f3677a4e708e1fb2da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,11 +121,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    SearchFields =  "Commodity,Commodities,,Id,",
 			      				    ClientModuleName =  "Common",
 			      				    DescriptionDefaultText =  "Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.",
+			      				    HashString =  CommodityUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -185,7 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "Code",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -246,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "Name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -304,7 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -314,7 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Commodity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
@@ -365,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "InActive",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -425,59 +427,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "AirlineId",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CommodityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMMD", Name = "Commodity" }, queryGroupRepository);
+	        QueryGroup CommodityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMMD", Name = "Commodity" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CommodityObjectTable = objectTables.ContainsKey("Commodity") ? objectTables["Commodity"] : null;
+            if (CommodityObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable CommodityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> CommodityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Commodity").ToList();   
+                CommodityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode CommodityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = @"All Commodities",LocalDefaultText = null, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CommodityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Q.AllQuery", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.AllCommodities", NameTextCodeDefaultText = "All Commodities", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+			   TextCode CommodityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.Q.AllCommodities", DefaultText = @"All Commodities",LocalDefaultText = null, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CommodityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Q.AllQuery", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.AllCommodities", NameTextCodeDefaultText = "All Commodities", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CommodityObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCommoditiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommodityTextCode_0.Id, NameTextCodeCode = CommodityTextCode_0.Code, ObjectTableName = "Commodity", Code = "All Commodities",  QueryGroupCode = "CMMD", IndexOrder = 0, Tenant = 0, ObjectTableId = CommodityObjectTable.Id, QuerySection = "Commodity", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CommodityFeature_0.Id,FeatureUniqeCode= CommodityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCommoditiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id, IndexOrder = 1, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCommoditiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id,QueryCode = AllCommoditiesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Commodity.Code" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn AllCommoditiesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id, IndexOrder = 2, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CommodityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCommoditiesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommoditiesQuery.Id,QueryCode = AllCommoditiesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Commodity.Name" , ColumnWidth = 250 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CommodityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CommodityObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Commodity").ToList();
+		   //List<ObjectField> CommodityObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Commodity").ToList();
 		       
 	      
 
 	         Screen CommodityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Commodity.HeaderScreen", Name = "Header Screen", ObjectTableId = CommodityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CommodityCommodityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CommodityHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommodityCommodityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityHeaderScreenScreen0.Id,ScreenCode = CommodityHeaderScreenScreen0.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CommodityObjectTable.HeaderScreenId = CommodityHeaderScreenScreen0.Id;
+		    CommodityObjectTable.HeaderScreenCode = CommodityHeaderScreenScreen0.Code;
+
 	   		  
 	      
 
 	         Screen CommodityGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Commodity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CommodityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CommodityCommodityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CommodityGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommodityCommodityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommodityCommodityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CommodityGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommodityCommodityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CommodityCommodityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CommodityObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CommodityGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CommodityCommodityGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CommodityGeneralTabScreenScreen1.Id,ScreenCode = CommodityGeneralTabScreenScreen1.Code, ObjectFieldCode = "Commodity.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -488,19 +508,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CommodityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CommodityGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CommodityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.General", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CommodityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.General", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CommodityObjectTable);
  
                  
 			   TextCode CommodityEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Commodity.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CommodityEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.Events", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CommodityEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.Tab.Events", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CommodityObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityGeneralFeature_TH0.Id,FeatureUniqeCode = CommodityGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityGeneralTextCode_TH0.Id, TabNameTextCodeCode = CommodityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommodityEventsFeature_TH1.Id,FeatureUniqeCode = CommodityEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommodityObjectTable.Id, TabNameTextCodeId = CommodityEventsTextCode_TH1.Id, TabNameTextCodeCode = CommodityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -508,14 +528,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CommodityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Commodity" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CommodityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CommodityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CommodityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CommodityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.PackageFeature", NameTextCodeDefaultText = "Commodity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature CommodityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CommodityObjectTable);
+		   Feature CommodityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CommodityObjectTable);
+		   Feature CommodityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CommodityObjectTable);
+		   Feature CommodityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.PackageFeature", NameTextCodeDefaultText = "Commodity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CommodityObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature CommodityFeature_Commodity_M_Commodities = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.M.Commodities", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Commodities", NameTextCodeDefaultText = @"Commodities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CommodityFeature_Commodity_M_Commodities = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Commodity.M.Commodities", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CommodityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Commodity.Features.Commodities", NameTextCodeDefaultText = @"Commodities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CommodityObjectTable);
 
    
 	    

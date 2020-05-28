@@ -38,7 +38,7 @@ using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-
+using Simplog.Data.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -88,7 +88,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {
@@ -106,8 +106,9 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    var result = client.PostAsync(AuthURI, content);
+                    result.Wait();
+                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -129,7 +130,7 @@ namespace CommunicationWorkerRole
 
                             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
-                            string CorrelationId = response.MessageValues.ContainsKey("CorrelationId") ? response.MessageValues["CorrelationId"].ToString() : Guid.NewGuid().ToString();
+                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();//response.MessageValues.ContainsKey("CorrelationId") ? response.MessageValues["CorrelationId"].ToString() : Guid.NewGuid().ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
                             #region APILogs
@@ -191,7 +192,7 @@ namespace CommunicationWorkerRole
                                     ShipmentAdditionalCloudDataRepository Repo = new ShipmentAdditionalCloudDataRepository(tenant);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                                     HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
-                                    HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository); 
+                                    HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(ForwarderShipment.ForwarderPartnerId);
                                     //var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
                                     var Data = Repo.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
@@ -210,8 +211,8 @@ namespace CommunicationWorkerRole
                                             string ImporterShipmentsURI = URI + "ImporterApprovalReceived";
                                             client.DefaultRequestHeaders.Add("Token", Token);
                                             client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
-                                           
-                                            
+
+
                                             LogPM.Subject = "Send ImporterApprovalReceived Confirmation To Forwarder By ImporterApprovalReceived Controller";
                                             if (IsNewLog)
                                             {
@@ -237,17 +238,18 @@ namespace CommunicationWorkerRole
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
                                                 Code = "VDK",
-                                                Date = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
-                                                Time = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Date = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortDateString(),//DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortTimeString(),//DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = "Approval Task Received",
                                                 Direction = ForwarderShipment.DirectionId
                                             };
                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
-                                            
+
                                             var serializedObject = JsonConvert.SerializeObject(DataAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                            var result = await client.PostAsync(ImporterShipmentsURI, content);
-                                            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                            var result = client.PostAsync(ImporterShipmentsURI, content);
+                                            result.Wait();
+                                            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                             {
                                                 msg = "Confirmation sent To Forwarder " + DateTime.Now;
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
@@ -257,7 +259,7 @@ namespace CommunicationWorkerRole
                                             }
                                             else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                             {
-                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                                 if (EXC != null)
                                                 {
                                                     var Failmsg = EXC.ErrorType + " Fail To Send Confirmation To Forwarder Tenant " + DateTime.Now;
@@ -269,6 +271,11 @@ namespace CommunicationWorkerRole
 
 
                                         }
+                                        //if (!IsNewLog)
+                                        //{
+                                        //    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+
+                                        //}
                                         #endregion
 
                                     }
@@ -280,7 +287,7 @@ namespace CommunicationWorkerRole
                             {
                                 #region HandleException
                                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", "", null);
-                                if (response.MessageValues.Keys.Contains("Id"))
+                                if (response.MessageValues.Keys.Contains("ShipmentId"))
                                 {
                                     //if (IsNewLog)
                                     //{

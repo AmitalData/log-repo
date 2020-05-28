@@ -3,7 +3,7 @@ import {Component, OnInit, ViewChild, ViewContainerRef, EventEmitter, Output} fr
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ListComponentArgs} from '../../../Infrastructure/Args';
-import {InvoiceDomainService, DebtorsClass} from '../../../Invoice/Services/InvoiceDomainService';
+import { InvoiceDomainService, AccountReceivablesSummary, DebtorsClass} from '../../../Invoice/Services/InvoiceDomainService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -23,7 +23,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 declare var makeAmBarChart: any;
 @Component({
     selector: 'OperationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountReceivablesComponent.html',
 })
 
@@ -61,13 +61,13 @@ export class AccountReceivablesComponent implements OnInit {
     }
 
     InitComponent() {
-      this.LoadAllScreenData();
-      
-      this.ARInvoicesSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "SATFAILEDINVOICES") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
-      this.ARPaymentsSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "SATFAILEDPAYMENTS") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
-      this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
-      this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ErrorInTransfer")) ? true : false;
+        this.LoadAllScreenData();
 
+        this.ARInvoicesSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "SATFAILEDINVOICES") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
+        this.ARPaymentsSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "SATFAILEDPAYMENTS") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
+
+        this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoice.Q.ErrorInTransfer")) ? true : false;
+        this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ARPayment.Q.ErrorInTransfer")) ? true : false;
     }
 
     FillFilters() {
@@ -92,7 +92,7 @@ export class AccountReceivablesComponent implements OnInit {
     }
 
     LoadBarQueries(months: number, days: number, index: number, currency: number) {
-        this.myChartsService.GetMoneyStatusForTenant(null,months, days, this.TenantPM.Id, index, currency).subscribe(myResult => {
+        this.myChartsService.GetMoneyStatusForTenant(null, months, days, this.TenantPM.Id, index, currency).subscribe((myResult: ServiceResponse) => {
             this.FillBarsMoney(myResult);
         });
     }
@@ -338,7 +338,7 @@ export class AccountReceivablesComponent implements OnInit {
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -366,18 +366,20 @@ export class AccountReceivablesComponent implements OnInit {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetAccountingReceivablesSummary().subscribe(myResult => {
-            if (myResult != null) {
-                this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
-                this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();
-                this.ARInvoicesOpenConstituentCount = myResult.ARInvoicesOpenConstituentCount > 1000 ? "1000+" : myResult.ARInvoicesOpenConstituentCount.toString();
-                this.ARPaymentsDraftsCount = myResult.ARPaymentsDraftsCount > 1000 ? "1000+" : myResult.ARPaymentsDraftsCount.toString();
-                this.ARPaymentsOpenedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsOpenedCount.toString();
-              this.ARInvoicesSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARInvoicesSATFailedCount.toString();
-                this.ARPaymentsSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsSATFailedCount.toString();
-                this.ARInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.ARInvoicesFailedCount.toString();
-                this.ARPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.ARPaymentFailedCount.toString();
-
+        this.invoiceDomainService.GetAccountingReceivablesSummary().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null && !myResponse.HasError) {
+                var myResult: AccountReceivablesSummary = myResponse.Result;
+                if (myResult != null) {
+                    this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
+                    this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();
+                    this.ARInvoicesOpenConstituentCount = myResult.ARInvoicesOpenConstituentCount > 1000 ? "1000+" : myResult.ARInvoicesOpenConstituentCount.toString();
+                    this.ARPaymentsDraftsCount = myResult.ARPaymentsDraftsCount > 1000 ? "1000+" : myResult.ARPaymentsDraftsCount.toString();
+                    this.ARPaymentsOpenedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsOpenedCount.toString();
+                    this.ARInvoicesSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARInvoicesSATFailedCount.toString();
+                    this.ARPaymentsSATFailedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsSATFailedCount.toString();
+                    this.ARInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.ARInvoicesFailedCount.toString();
+                    this.ARPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.ARPaymentFailedCount.toString();
+                }
             }
         });
     }

@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
 
     
-    public partial class AccountsController : ApiController
+    public partial class Accounts1Controller : ApiController
     {
 	  
        

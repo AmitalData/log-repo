@@ -41,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DocumentDate).HasColumnName("DocumentDate").IsRequired();
 
-            this.Property(t => t.DueDate).HasColumnName("DueDate");
+            this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
 
             this.Property(t => t.LocalAmountDebit).HasColumnName("LocalAmountDebit").HasPrecision(16, 2);
 
@@ -93,6 +93,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.InReconcileProgress).HasColumnName("InReconcileProgress");
 
             this.Property(t => t.ReconcileRemarks).HasColumnName("ReconcileRemarks").HasMaxLength(400).IsUnicode(true);
+
+            this.Property(t => t.InProgressExternalReconcile).HasColumnName("InProgressExternalReconcile");
         }
     }
 }

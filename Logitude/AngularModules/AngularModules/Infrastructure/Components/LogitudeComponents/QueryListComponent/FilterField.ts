@@ -16,6 +16,7 @@ export class FilterField extends BaseComponent {
     filters: ApiQueryFilters;
     iswidnowMode: boolean = false;
     QueryId: string;
+    QueryCode: string;
     public ControlId: string = null;
     SessionIdx: number = 0;
     public IsCustomFilter: boolean = false;
@@ -27,11 +28,11 @@ export class FilterField extends BaseComponent {
     public DateFiltersEnabled: boolean = false;
     public PickFiltersEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
+    constructor(objectField: any, queryCode: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
         this.SessionIdx = this.CurrentSession.SessionIndex;
         this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
-        this.QueryId = queryId;
+        this.QueryCode = queryCode;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;
         this.AdvancedQueryFilterPMs = AdvancedQFPMs;
@@ -41,9 +42,9 @@ export class FilterField extends BaseComponent {
         this.iswidnowMode = iswidnowMode;
         this.FieldName = this.ObjectField.FieldName;
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
-
-        if (queryId != null && queryId != undefined && queryId != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id && d.QueryId == queryId)[0];
+        
+        if (queryCode != null && queryCode != undefined && queryCode != "") {
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == objectField.FieldCode)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -71,7 +72,7 @@ export class FilterField extends BaseComponent {
         }
 
         else {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldCode == objectField.FieldCode)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -98,7 +99,7 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
         if (currentQuery != null) {
             if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
                 if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
@@ -212,8 +213,8 @@ export class FilterField extends BaseComponent {
                     //if (this.exists == false) {
                     tempField.IsDeleted = true;
                     //if (!this.IsDeleted){
-                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
-                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
+                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
+                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
                     }
                     this.ParentClass.DeteteFilter(this);
                     //if (this.TextValue != null && this.TextValue != '') {
@@ -400,8 +401,8 @@ export class FilterField extends BaseComponent {
         //this.AdvancedQueryFilterPM = filter;
         var temp = this;
         temp.IsDeleted = true;
-        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
-            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
+        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
+            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
         }
         this.ParentClass.DeteteFilter(this);
         if (this.TextValue != null) {
@@ -480,7 +481,7 @@ export class FilterFieldsClass {
         this.FilterFields = [];
     }
 
-    AddFiltersList(objectsList: any, queryId: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
+    AddFiltersList(objectsList: any, queryCode: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
         //ObservableCollection
         if (this.ParentClass == null) {
             var ss = "";
@@ -488,7 +489,7 @@ export class FilterFieldsClass {
         var newList = [];
         //.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : a ? -1 : 1 })
         objectsList.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : (a.FieldName < b.FieldName) ? -1 : 1 }).forEach((item, key) => {
-            newList.push(new FilterField(item, queryId, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
+            newList.push(new FilterField(item, queryCode, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
         });
 
         this.FilterFields = newList.sort((a, b) => { return (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() === TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? 0 : (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() < TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? -1 : 1 });

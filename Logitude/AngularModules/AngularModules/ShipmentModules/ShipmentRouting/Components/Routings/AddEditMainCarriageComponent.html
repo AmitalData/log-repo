@@ -188,7 +188,7 @@
 
                                                                     <td>
                                                                         <div>
-                                                                            <Hyperlink *ngIf="MainCarriageCarrierId && TransportModeId == 'A'" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</Hyperlink>
+                                                                            <Hyperlink id="{{'AddStock' | IdGeneratorPipe}}" *ngIf="MainCarriageCarrierId && TransportModeId == 'A'" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</Hyperlink>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

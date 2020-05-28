@@ -64,6 +64,8 @@ import {BooleanFilter} from './BooleanFilter';
 import { NotificationBellComponent } from './NotificationBell/NotificationBellComponent';
 import {UserFilter} from './UserFilter';
 import {ConnectToFilter} from './ConnectToFilter';
+import { ParticipatedFilter } from './ParticipatedFilter';
+import { InvitedFilter } from './InvitedFilter';
 
 
 
@@ -76,6 +78,7 @@ export const Pipes =
         IdGeneratorPipe,
         DateToMonthPipe,
         MinutesToTimePipe,
+        
     ];
 
 export const Components =
@@ -137,6 +140,8 @@ export const Components =
         ToggleButtonItem,
         UserFilter,
         ConnectToFilter,
+        ParticipatedFilter,
+        InvitedFilter
     ];
 
 export class ModuleDeclarations {

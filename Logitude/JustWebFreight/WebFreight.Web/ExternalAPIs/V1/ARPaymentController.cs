@@ -23,6 +23,8 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using Logitude.SystemLogs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class ARPaymentController : ApiController
@@ -105,18 +107,30 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo,entityPM.Id, entityPM.Tenant);
-                       
+                        
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
-                        service.Create(entityPM);
+                        entityPM = mappingService.MapAPPaymentChequeFieldsToARPayment(entity, entityPM);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
+                        service.Create(entityPM);
+                      
                        
 
                         entity = mappingService.ARPaymentDataMapping(entityPM, tenant);
+
                         APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", tenant);
 
                         scope.Complete();
-
+                        if (entityPM.AccountingPaymentMethodCode == "CA")
+                        {
+                            entity.ARPaymentCheques = null;
+                        }
                         entity.PaymentInvoices = null;
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
@@ -171,7 +185,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         service.Update(entityPM, true);
 

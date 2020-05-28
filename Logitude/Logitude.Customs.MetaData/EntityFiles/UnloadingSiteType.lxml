@@ -1,13 +1,553 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;56f5a934-4904-4727-9c29-15220a0b2a67&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" DBTableName="&quot;Customs.UnloadingSiteType&quot;" ObjectTableSingular="&quot;UnloadingSiteType&quot;" ObjectTablePlural="&quot;UnloadingSiteTypes&quot;" HasCustomFilter="false" IsEditable="false" IsNewWizard="false" LookUp1="&quot;Code&quot;" LookUp2="&quot;LocalName&quot;" KeyPropertyPath="&quot;Code&quot;" AutoCompleteSearchWindow="false" IsClosed="true" CacheOnClient="false" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="false" IsAutoComplete="false" EnableEditFromLOV="false" SortingByObjectField="&quot;Code&quot;" InActive="false" IsSaveButtonVisible="false" IsComposition="false" EnableSecurity="false" AllowCustomFields="false" HasDynamicHeader="false" ObjectTableTypeCode="&quot;MD&quot;" MaxNumberOfCustomFields="0" DefaultText="&quot;Unloading Site Type&quot;" Code="&quot;7041&quot;" Name="&quot;Customs.UnloadingSiteType Query Group&quot;" CloseTableCode="&quot;Code&quot;" CloseTableName="&quot;LocalName&quot;" GenerateDomainService="false" ClientModuleName="&quot;Customs&quot;" ServerModuleName="&quot;Customs&quot;">
-  <field Id="&quot;e696a0d3-a04a-4854-b498-f77ee122e150&quot;" FieldName="&quot;Code&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="17" IsRequired="true" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="17" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Code&quot;" ListPropertyPath="&quot;Code&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Code&quot;" DefaultText="&quot;Code&quot;" FullLocalDefaultText="&quot;קוד&quot;" ListFieldLable="&quot;CodeListLable&quot;" ListLableDefaultText="&quot;Code&quot;" ListLocalDefaultText="&quot;קוד&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="true" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;c5a92229-f3b0-4b1f-a951-6dd9cdb78aea&quot;" FieldName="&quot;EnglishName&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" FieldsDataType="&quot;Text&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;EnglishName&quot;" ListPropertyPath="&quot;EnglishName&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;EnglishName&quot;" DefaultText="&quot;English Name&quot;" FullLocalDefaultText="&quot;שם אנגלית&quot;" ListFieldLable="&quot;EnglishNameListLable&quot;" ListLableDefaultText="&quot;English Name&quot;" ListLocalDefaultText="&quot;שם אנגלית&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;0a1ccdf6-c4b8-4262-985d-88a01b79fc18&quot;" FieldName="&quot;LocalName&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="100" IsRequired="false" DisplayOnLookUp="true" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="100" DisplayInList="true" IsCustomFilter="false" Operator="&quot;StartsWith&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;LocalName&quot;" ListPropertyPath="&quot;LocalName&quot;" DisplayInLookUpIndex="1" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="1" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;LocalName&quot;" DefaultText="&quot;Local Name&quot;" FullLocalDefaultText="&quot;שם מקומי&quot;" ListFieldLable="&quot;LocalNameListLable&quot;" ListLableDefaultText="&quot;Local Name&quot;" ListLocalDefaultText="&quot;שם מקומי&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;405a2a18-1811-4bd4-ac97-c252789957c7&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" FieldsDataType="&quot;nText&quot;" MinLength="0" MaxLength="1000" IsRequired="false" DisplayOnLookUp="false" CanFilter="false" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="1000" DisplayInList="false" IsCustomFilter="false" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;Search&quot;" IsNullable="true" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
-  <field Id="&quot;6682083c-eb96-4b99-810e-6b62e138d01e&quot;" FieldName="&quot;Inactive&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" FieldsDataType="&quot;Boolean&quot;" MinLength="0" MaxLength="0" IsRequired="false" DisplayOnLookUp="false" CanFilter="true" DisplayOnly="false" SystemRequired="false" ObjectFieldNotRequired="false" SystemMaxLength="0" DisplayInList="true" IsCustomFilter="false" Operator="&quot;Equals&quot;" MultiLine="false" IsTimeFrameFilter="false" DisplayInSearchWindowList="false" PMPropertyPath="&quot;Inactive&quot;" ListPropertyPath="&quot;Inactive&quot;" DisplayInLookUpIndex="0" AutomaticField="false" UniqueField="false" DisplayInSearchWindowListIndex="0" IsMulti="false" DependencyFilter1IsList="false" DependencyFilter2IsList="false" ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;" DisplayInEntityVariables="false" InActive="false" DisplayLongName="false" FullFieldLable="&quot;Inactive&quot;" DefaultText="&quot;Inactive &quot;" FullLocalDefaultText="&quot;לא פּעיל&quot;" ListFieldLable="&quot;InactiveListLable&quot;" ListLableDefaultText="&quot;Inactive&quot;" ListLocalDefaultText="&quot;לא פּעיל&quot;" IsNullable="false" IsForeignKey="false" IsPrimaryKey="false" HasDataBaseField="true" HasPMField="true" IsComposition="false" IsMaxLength="false" NoMetaDataField="false" GenerateInList="true" IsFixedLength="false" EnableAutoFill="false" IncludeInSearchField="false" AllowedinAutomationConditions="false" AutomationEmailRecipient="false" CanAutomateSetValue="false" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity
+  Id="&quot;56f5a934-4904-4727-9c29-15220a0b2a67&quot;"
+  ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+  DBTableName="&quot;Customs.UnloadingSiteType&quot;"
+  ObjectTableSingular="&quot;UnloadingSiteType&quot;"
+  ObjectTablePlural="&quot;UnloadingSiteTypes&quot;"
+  HasCustomFilter="false"
+  IsEditable="false"
+  IsNewWizard="false"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
+  KeyPropertyPath="&quot;Code&quot;"
+  AutoCompleteSearchWindow="false"
+  IsClosed="true"
+  CacheOnClient="false"
+  EditableFromAutoCompleteWindow="false"
+  HasCounter="false"
+  EnableAddFromLOV="false"
+  IsRestrictable="false"
+  IsMain="false"
+  IsAutoComplete="false"
+  EnableEditFromLOV="false"
+  SortingByObjectField="&quot;Code&quot;"
+  InActive="false"
+  IsSaveButtonVisible="false"
+  IsComposition="false"
+  EnableSecurity="false"
+  AllowCustomFields="false"
+  HasDynamicHeader="false"
+  ObjectTableTypeCode="&quot;MD&quot;"
+  MaxNumberOfCustomFields="0"
+  DefaultText="&quot;Unloading Site Type&quot;"
+  Code="&quot;USTG&quot;"
+  Name="&quot;Customs.UnloadingSiteTypes&quot;"
+  CloseTableCode="&quot;Code&quot;"
+  CloseTableName="&quot;LocalName&quot;"
+  GenerateDomainService="false"
+  ClientModuleName="&quot;Customs&quot;"
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
+  <field
+    Id="&quot;e696a0d3-a04a-4854-b498-f77ee122e150&quot;"
+    FieldName="&quot;Code&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="17"
+    IsRequired="true"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="17"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Code&quot;"
+    ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Code&quot;"
+    DefaultText="&quot;Code&quot;"
+    FullLocalDefaultText="&quot;קוד&quot;"
+    ListFieldLable="&quot;CodeListLable&quot;"
+    ListLableDefaultText="&quot;Code&quot;"
+    ListLocalDefaultText="&quot;קוד&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="true"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;c5a92229-f3b0-4b1f-a951-6dd9cdb78aea&quot;"
+    FieldName="&quot;EnglishName&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;EnglishName&quot;"
+    ListPropertyPath="&quot;EnglishName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;EnglishName&quot;"
+    DefaultText="&quot;English Name&quot;"
+    FullLocalDefaultText="&quot;שם אנגלית&quot;"
+    ListFieldLable="&quot;EnglishNameListLable&quot;"
+    ListLableDefaultText="&quot;English Name&quot;"
+    ListLocalDefaultText="&quot;שם אנגלית&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;0a1ccdf6-c4b8-4262-985d-88a01b79fc18&quot;"
+    FieldName="&quot;LocalName&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    DisplayOnLookUp="true"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;StartsWith&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;LocalName&quot;"
+    ListPropertyPath="&quot;LocalName&quot;"
+    DisplayInLookUpIndex="1"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="1"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;LocalName&quot;"
+    DefaultText="&quot;Local Name&quot;"
+    FullLocalDefaultText="&quot;שם מקומי&quot;"
+    ListFieldLable="&quot;LocalNameListLable&quot;"
+    ListLableDefaultText="&quot;Local Name&quot;"
+    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;405a2a18-1811-4bd4-ac97-c252789957c7&quot;"
+    FieldName="&quot;SearchFields&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="1000"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1000"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SearchFields&quot;"
+    ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SearchFields&quot;"
+    DefaultText="&quot;Search&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <field
+    Id="&quot;6682083c-eb96-4b99-810e-6b62e138d01e&quot;"
+    FieldName="&quot;Inactive&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    DisplayOnLookUp="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Inactive&quot;"
+    ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    ValidForQuerySection1="&quot;Customs.UnloadingSiteType&quot;"
+    DisplayInEntityVariables="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Inactive&quot;"
+    DefaultText="&quot;Inactive &quot;"
+    FullLocalDefaultText="&quot;לא פּעיל&quot;"
+    ListFieldLable="&quot;InactiveListLable&quot;"
+    ListLableDefaultText="&quot;Inactive&quot;"
+    ListLocalDefaultText="&quot;לא פּעיל&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false" />
+  <Records>
+    <Record
+      Code="&quot;13086&quot;"
+      SearchFields="&quot;13086,אלנבי&quot;"
+      Inactive="false"
+      LocalName="&quot;אלנבי&quot;" />
+    <Record
+      Code="&quot;13087&quot;"
+      SearchFields="&quot;13087,ניצנה&quot;"
+      Inactive="false"
+      LocalName="&quot;ניצנה&quot;" />
+    <Record
+      Code="&quot;13089&quot;"
+      SearchFields="&quot;13089,קונטרה&quot;"
+      Inactive="false"
+      LocalName="&quot;קונטרה&quot;" />
+    <Record
+      Code="&quot;13090&quot;"
+      SearchFields="&quot;13090,אולם 18&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 18&quot;" />
+    <Record
+      Code="&quot;13091&quot;"
+      SearchFields="&quot;13091,אולם 16&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 16&quot;" />
+    <Record
+      Code="&quot;13092&quot;"
+      SearchFields="&quot;13092,אולם 15&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 15&quot;" />
+    <Record
+      Code="&quot;13093&quot;"
+      SearchFields="&quot;13093,אולם 14&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם 14&quot;" />
+    <Record
+      Code="&quot;13094&quot;"
+      SearchFields="&quot;13094,שיקוף מכולות&quot;"
+      Inactive="false"
+      LocalName="&quot;שיקוף מכולות&quot;" />
+    <Record
+      Code="&quot;13095&quot;"
+      SearchFields="&quot;13095,תפזורות&quot;"
+      Inactive="false"
+      LocalName="&quot;תפזורות&quot;" />
+    <Record
+      Code="&quot;13096&quot;"
+      SearchFields="&quot;13096,מלט במשאבות&quot;"
+      Inactive="false"
+      LocalName="&quot;מלט במשאבות&quot;" />
+    <Record
+      Code="&quot;13097&quot;"
+      SearchFields="&quot;13097,טובין חריגים&quot;"
+      Inactive="false"
+      LocalName="&quot;טובין חריגים&quot;" />
+    <Record
+      Code="&quot;13098&quot;"
+      SearchFields="&quot;13098,חומרים מסוכנים&quot;"
+      Inactive="false"
+      LocalName="&quot;חומרים מסוכנים&quot;" />
+    <Record
+      Code="&quot;13099&quot;"
+      SearchFields="&quot;13099,אגף רכב&quot;"
+      Inactive="false"
+      LocalName="&quot;אגף רכב&quot;" />
+    <Record
+      Code="&quot;13100&quot;"
+      SearchFields="&quot;13100,רמפה בידוק&quot;"
+      Inactive="false"
+      LocalName="&quot;רמפה בידוק&quot;" />
+    <Record
+      Code="&quot;13101&quot;"
+      SearchFields="&quot;13101,סככה בידוק&quot;"
+      Inactive="false"
+      LocalName="&quot;סככה בידוק&quot;" />
+    <Record
+      Code="&quot;13106&quot;"
+      SearchFields="&quot;13106,מעבר גבול טאבה&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול טאבה&quot;" />
+    <Record
+      Code="&quot;13226&quot;"
+      SearchFields="&quot;13226,מעבר גבול ע&quot;ש יצחק רבין&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול ע&quot;ש יצחק רבין&quot;" />
+    <Record
+      Code="&quot;265&quot;"
+      SearchFields="&quot;265,שדה תעופה אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;שדה תעופה אילת&quot;" />
+    <Record
+      Code="&quot;273&quot;"
+      SearchFields="&quot;273,שדה תעופה חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;שדה תעופה חיפה&quot;" />
+    <Record
+      Code="&quot;Code&quot;"
+      EnglishName="&quot;EnglishName&quot;"
+      SearchFields="&quot;SearchFields&quot;"
+      Inactive="true"
+      LocalName="&quot;LocalName&quot;" />
+    <Record
+      Code="&quot;ILALN&quot;"
+      SearchFields="&quot;ILALN,מעבר גבול אלנבי&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול אלנבי&quot;" />
+    <Record
+      Code="&quot;ILARV&quot;"
+      SearchFields="&quot;ILARV,מעבר גבול רבין (ערבה)&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול רבין (ערבה)&quot;" />
+    <Record
+      Code="&quot;ILASB&quot;"
+      SearchFields="&quot;ILASB,אשדוד בונדד- אוירי&quot;"
+      Inactive="false"
+      LocalName="&quot;אשדוד בונדד- אוירי&quot;" />
+    <Record
+      Code="&quot;ILASH&quot;"
+      SearchFields="&quot;ILASH,נמל אשדוד&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל אשדוד&quot;" />
+    <Record
+      Code="&quot;ILBGA&quot;"
+      SearchFields="&quot;ILBGA,נמל תעופה בן גוריון&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל תעופה בן גוריון&quot;" />
+    <Record
+      Code="&quot;ILETH&quot;"
+      SearchFields="&quot;ILETH,נמל אילת&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל אילת&quot;" />
+    <Record
+      Code="&quot;ILHFA&quot;"
+      SearchFields="&quot;ILHFA,נמל חיפה&quot;"
+      Inactive="false"
+      LocalName="&quot;נמל חיפה&quot;" />
+    <Record
+      Code="&quot;ILJOR&quot;"
+      SearchFields="&quot;ILJOR,מעבר גבול גשר נהר הירדן&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול גשר נהר הירדן&quot;" />
+    <Record
+      Code="&quot;ILKRM&quot;"
+      SearchFields="&quot;ILKRM,כרם שלום&quot;"
+      Inactive="false"
+      LocalName="&quot;כרם שלום&quot;" />
+    <Record
+      Code="&quot;ILMMN&quot;"
+      SearchFields="&quot;ILMMN,ממן מסופי מטען וניטול בעמ&quot;"
+      Inactive="false"
+      LocalName="&quot;ממן מסופי מטען וניטול בעמ&quot;" />
+    <Record
+      Code="&quot;ILMSP&quot;"
+      SearchFields="&quot;ILMSP,מספנות ישראל&quot;"
+      Inactive="false"
+      LocalName="&quot;מספנות ישראל&quot;" />
+    <Record
+      Code="&quot;ILNZN&quot;"
+      SearchFields="&quot;ILNZN,מעבר גבול ניצנה&quot;"
+      Inactive="false"
+      LocalName="&quot;מעבר גבול ניצנה&quot;" />
+    <Record
+      Code="&quot;ILSWS&quot;"
+      SearchFields="&quot;ILSWS,סוויספורט&quot;"
+      Inactive="false"
+      LocalName="&quot;סוויספורט&quot;" />
+    <Record
+      Code="&quot;ILVDA&quot;"
+      SearchFields="&quot;ILVDA,אולם נוסעים עובדה&quot;"
+      Inactive="false"
+      LocalName="&quot;אולם נוסעים עובדה&quot;" />
+  </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures></AdditionalFeatures>
+  <Query
+    Code="&quot;UnloadingSiteType&quot;"
+    ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+    IsAddNewEntity="false"
+    SystemLevel="true"
+    QuerySection="&quot;Customs.UnloadingSiteType&quot;"
+    IndexOrder="0"
+    QueryGroupCode="&quot;USTG&quot;"
+    QueryGroupName="&quot;Customs.UnloadingSiteTypes&quot;"
+    LocalTextCode="&quot;סוג האתר פריקה&quot;"
+    TextCode="&quot;Unloading Site Type&quot;"
+    TextCodeCode="&quot;Customs.UnloadingSiteType.Q.UnloadingSiteTypeQuery&quot;"
+    IsSpellChecked="false"
+    FeatureCode="&quot;UNLOADINGSITETYPEQUERY&quot;"
+    IsPackagable="true"
+    FeatureTextCodeCode="&quot;Customs.UnloadingSiteType.Features.UnloadingSiteTypes&quot;"
+    FeatureDefaultText="&quot;Unloading Site Type&quot;">
+    <QueryColumns>
+      <QueryColumn
+        IndexOrder="0"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Code&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="1"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="2"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;LocalName&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+      <QueryColumn
+        IndexOrder="3"
+        ColumnWidth="130"
+        ObjectFieldName="&quot;Inactive&quot;"
+        QueryCode="&quot;UnloadingSiteType&quot;" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <EventTypes>
-    <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" />
-    <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.UnloadingSiteType&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" />
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+      ShortView="true"
+      IsManualEntry="false"
+      LocalName="&quot;Created&quot;"
+      EnglishName="&quot;Created&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.UnloadingSiteType&quot;"
+      ShortView="false"
+      IsManualEntry="false"
+      LocalName="&quot;Updated&quot;"
+      EnglishName="&quot;Updated&quot;"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
-  <Records />
 </entity>

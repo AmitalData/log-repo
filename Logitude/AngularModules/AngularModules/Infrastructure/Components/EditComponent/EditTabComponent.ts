@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef}  from '@angul
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditTabComponent.html',
 })
 
@@ -10,7 +10,7 @@ export class EditTabComponent {
     public TabCode: string;
   public ComponentPath: string;
   public ComponentRef: any;
-  @ViewChild('Child', { read: ViewContainerRef }) ViewContainerRef: ViewContainerRef;
+  @ViewChild('Child', { read: ViewContainerRef, static: false }) ViewContainerRef: ViewContainerRef;
   public ComponentInst: any;
     constructor(private ChangeDetectorRef: ChangeDetectorRef) {
 
@@ -49,7 +49,7 @@ export class EditTabComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

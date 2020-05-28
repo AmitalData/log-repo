@@ -6,7 +6,7 @@ import {AdditionalServiceListService} from './Services/StandardLists/AdditionalS
 import {AddressListService} from './Services/StandardLists/AddressListService';
 import {AgentListService} from './Services/StandardLists/AgentListService';
 import {AirlineListService} from './Services/StandardLists/AirlineListService';
-import {AirlineStatisticsListService} from './Services/StandardLists/AirlineStatisticsListService';
+import { AirlineStatisticsListService } from './Services/StandardLists/AirlineStatisticsListService';
 import {AutomationResultEmailRecipientListService} from './Services/StandardLists/AutomationResultEmailRecipientListService';
 import {BranchListService} from './Services/StandardLists/BranchListService';
 import {BusinessUnitListService} from './Services/StandardLists/BusinessUnitListService';
@@ -30,7 +30,6 @@ import {CustomerTenantAccessListService} from './Services/StandardLists/Customer
 import {AirlineMessagingRuleListService} from './Services/StandardLists/AirlineMessagingRuleListService';
 import {CustomsShipperListService} from './Services/StandardLists/CustomsShipperListService';
 
-//import {CustomerAdditionalServiceListService} from './Services/StandardLists/CustomerAdditionalServiceListService';
 import {CustomerListService} from './Services/StandardLists/CustomerListService';
 //import {CustomerProductActualDataListService} from './Services/StandardLists/CustomerProductActualDataListService';
 //import {CustomerProductListService} from './Services/StandardLists/CustomerProductListService';
@@ -199,9 +198,15 @@ import {CustomerTenantAccessMenuButtonsHandler} from './Components/MenuButtons/C
 import {ReportsTemplatePMService} from './Services/StandardPMs/ReportsTemplatePMService';
 import {ReportsTemplatesVersionPMService} from './Services/StandardPMs/ReportsTemplatesVersionPMService';
 import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuButtonsHandler';
-
+import { AgentMenuButtonsHandler } from './Components/MenuButtons/AgentMenuButtonsHandler';
 import {DocumentsFilingExtendedPMService} from './Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-
+import { ShippingAgentMenuButtonsHandler } from './Components/MenuButtons/ShippingAgentMenuButtonsHandler';
+import { CustomAgentMenuButtonsHandler } from './Components/MenuButtons/CustomAgentMenuButtonsHandler';
+import { ShippingLineMenuButtonsHandler } from './Components/MenuButtons/ShippingLineMenuButtonsHandler';
+import { TruckerMenuButtonsHandler } from './Components/MenuButtons/TruckerMenuButtonsHandler';
+import { VendorMenuButtonsHandler } from './Components/MenuButtons/VendorMenuButtonsHandler';
+import { AirlineMenuButtonsHandler } from './Components/MenuButtons/AirlineMenuButtonsHandler';
+import { AccountingPartnerMenuButtonsHandler } from './Components/MenuButtons/AccountingPartnerMenuButtonsHandler';
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
 import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
 
@@ -232,6 +237,11 @@ import {DocumentFilingBackupBatchListService} from './Services/StandardLists/Doc
 import {DocumentFilingBackupSettingPMService} from './Services/StandardPMs/DocumentFilingBackupSettingPMService';
 import {DocumentFilingBackupBatchPMService} from './Services/StandardPMs/DocumentFilingBackupBatchPMService';
 import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/CheckDigitControlAlgorithmListService';
+import { PaymentGatewayPartnerListService } from './Services/StandardLists/PaymentGatewayPartnerListService';
+import { AccountingPartnerListService } from './Services/StandardLists/AccountingPartnerListService';
+import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPartnerPMService';
+import { UserLastSettingsPMService } from './Services/StandardPMs/UserLastSettingsPMService';
+import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLastSettingsExtendedPMService';
 
 
 export class ModuleProviders {
@@ -249,6 +259,7 @@ export class ModuleProviders {
             case "AgentListService": { myResult = new AgentListService(); break; }
             case "AirlineListService": { myResult = new AirlineListService(); break; }
             case "AirlineStatisticsListService": { myResult = new AirlineStatisticsListService(); break; }
+            case "AirlineMessagingRuleListService": { myResult = new AirlineMessagingRuleListService(); break; }
             case "AutomationResultEmailRecipientListService": { myResult = new AutomationResultEmailRecipientListService(); break; }
             case "BranchListService": { myResult = new BranchListService(); break; }
             case "BusinessUnitListService": { myResult = new BusinessUnitListService(); break; }
@@ -426,13 +437,19 @@ export class ModuleProviders {
             case "CustomsShipperPMService": { myResult = new CustomsShipperPMService(); break; }
                 
             //case "WeightUnitPMService": { myResult = new WeightUnitPMService(); break; }
-
+            case "AgentMenuButtonsHandler": { myResult = new AgentMenuButtonsHandler(); break;}
             case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }    
             case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }  
             case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; } 
             case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }   
             case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }   
-
+            case "CustomAgentMenuButtonsHandler": { myResult = new CustomAgentMenuButtonsHandler(); break; }
+            case "ShippingAgentMenuButtonsHandler": { myResult = new ShippingAgentMenuButtonsHandler(); break; }
+            case "ShippingLineMenuButtonsHandler": { myResult = new ShippingLineMenuButtonsHandler(); break; }
+            case "VendorMenuButtonsHandler": { myResult = new VendorMenuButtonsHandler(); break; }
+            case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
+            case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
+          case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break;}
             case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }   
             case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }   
 
@@ -477,8 +494,12 @@ export class ModuleProviders {
             case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
             case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
             case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
-
-
+            case "PaymentGatewayPartnerListService": { myResult = new PaymentGatewayPartnerListService(); break; }
+            case "AccountingPartnerListService": { myResult = new AccountingPartnerListService(); break; }
+            case "AccountingPartnerPMService": { myResult = new AccountingPartnerPMService(); break; }
+            case "UserLastSettingsPMService": { myResult = new UserLastSettingsPMService(); break; }
+            case "UserLastSettingsExtendedPMService": { myResult = new UserLastSettingsExtendedPMService(); break; }
+  
                 
         }
 

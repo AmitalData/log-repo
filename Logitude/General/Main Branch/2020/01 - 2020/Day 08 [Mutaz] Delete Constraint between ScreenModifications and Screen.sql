@@ -1,0 +1,1 @@
+ALTER TABLE ScreenModifications DROP CONSTRAINT FK_ScreenModificationScreen

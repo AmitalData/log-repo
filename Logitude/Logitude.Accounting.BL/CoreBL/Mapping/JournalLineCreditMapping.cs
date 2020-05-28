@@ -10,11 +10,12 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
     public class JournalLineCreditMapping : JournalLineMappingBase
     {
+        private IAccountingSettingResolver _myIAccountingSettingResolver;
 
-        public JournalLineCreditMapping(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider)
-            : base(journalLine, journalPM, myGLAccountPMProvider)
+        public JournalLineCreditMapping(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
+            : base(journalLine, journalPM, myGLAccountPMProvider, myIAccountingSettingResolver)
         {
-
+            this._myIAccountingSettingResolver = myIAccountingSettingResolver;
         }
 
         protected override void MapIt()
@@ -122,7 +123,8 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         
         public virtual string ResolveAccountingCurrencyId(int Tenant)
         {
-            return (new AccountingSettingResolver()).ResolveAccountingCurrencyId(Tenant);
+            return _myIAccountingSettingResolver//(new AccountingSettingResolver())
+                .ResolveAccountingCurrencyId(Tenant);
         }
 
 

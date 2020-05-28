@@ -193,12 +193,15 @@
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('EBookingInProgress')" *ngIf="IsQueryVisible_EBookingInProgress">{{'Shipment.Q.EBookingInProgress' | TextCodeTranslationPipe}}</p>
 
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false">
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}} ({{ExpectedDeparturesNotTransmittedCount}})</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}} ({{ShippingInstructionsLast7DaysCount}})</p>
                                             <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}} ({{ContainerStatusLast7DaysCount}})</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('EBookingInProgress')" *ngIf="IsQueryVisible_EBookingInProgress">{{'Shipment.Q.EBookingInProgress' | TextCodeTranslationPipe}} ({{EBookingInProgressCount}})</p>
+
                                         </div>
                                     </div>
 

@@ -20,17 +20,77 @@ namespace Logitude.Customs.BL
    {
        public List<CollateralRequestStatusDetails> GetAll()
        {
-		    var all = new List<CollateralRequestStatusDetails>(); 
+		    var all = new List<CollateralRequestStatusDetails>();  
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,ממתינה למענה", 
+                Inactive = false, 
+                LocalName = "ממתינה למענה", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,קיבלה מענה", 
+                Inactive = false, 
+                LocalName = "קיבלה מענה", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,בוצע חיוב אשראי", 
+                Inactive = false, 
+                LocalName = "בוצע חיוב אשראי", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "4", 
+                SearchFields = "4,במעקב", 
+                Inactive = false, 
+                LocalName = "במעקב", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "5", 
+                SearchFields = "5,מבוטלת", 
+                Inactive = false, 
+                LocalName = "מבוטלת", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "6", 
+                SearchFields = "6,סגורה", 
+                Inactive = false, 
+                LocalName = "סגורה", 
+			});
+			 
+            all.Add(new CollateralRequestStatusDetails()
+            {    
+                Code = "7", 
+                SearchFields = "7,פג תוקף ההמתנה למענה", 
+                Inactive = false, 
+                LocalName = "פג תוקף ההמתנה למענה", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(CollateralRequestStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(CollateralRequestStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
         }
    }
 }

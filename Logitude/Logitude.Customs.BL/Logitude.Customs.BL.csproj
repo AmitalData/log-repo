@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Customs.BL</RootNamespace>
     <AssemblyName>Logitude.Customs.BL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -421,7 +422,7 @@
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentProtestDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPendingDataMapping.cs" />
-    <Compile Include="EntityDataMappings\DeclarationRefernatDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationReferantDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationTaxDataMapping.cs" />
@@ -599,7 +600,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentProtestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPendingDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\DeclarationRefernatDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationReferantDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationTaxDataMapping.Generated.cs" />
@@ -1479,7 +1480,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationCourierStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationMamanSpecialActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationPendingUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\DeclarationRefernatDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationReferantDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitDecisionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
@@ -1980,6 +1981,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0009_AmendmentType.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0017_CargoSealID.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0031_AddControllerUserId.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0030_ReferantAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0019_SealB2Pioneers.cs" />

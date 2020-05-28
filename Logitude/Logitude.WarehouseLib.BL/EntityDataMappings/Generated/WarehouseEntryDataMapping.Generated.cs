@@ -74,7 +74,14 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight,
+	         TotalVolumetricWeight, 
+	         LastStatusUpdateDate, 
+	         ConnectedTo, 
+	         Ratio, 
+	         ToTypeCode, 
+	         FromTypeCode, 
+	         FromCountryId, 
+	         ToCountryId,
 	      }
 
 
@@ -142,7 +149,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight,
+	         TotalVolumetricWeight, 
+	         LastStatusUpdateDate, 
+	         MasterHouse, 
+	         EntryReferencesAndDate, 
+	         ConnectedTo, 
+	         Ratio, 
+	         ToTypeCode, 
+	         FromTypeCode, 
+	         FromCountryId, 
+	         ToCountryId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -409,6 +425,41 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
             {
 				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
+            {
+				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+				entityPOCO.ToTypeCode = entityPM.ToTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
+            {
+				entityPOCO.FromTypeCode = entityPM.FromTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+				entityPOCO.FromCountryId = entityPM.FromCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+				entityPOCO.ToCountryId = entityPM.ToCountryId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -682,6 +733,41 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusUpdateDate))
+            {
+					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTypeCode))
+            {
+					entityPM.ToTypeCode = entityPOCO.ToTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromTypeCode))
+            {
+					entityPM.FromTypeCode = entityPOCO.FromTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromCountryId))
+            {
+					entityPM.FromCountryId = entityPOCO.FromCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToCountryId))
+            {
+					entityPM.ToCountryId = entityPOCO.ToCountryId;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -946,6 +1032,41 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
             {
                 oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
+            {
+                oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+                oldEntityPM.ToTypeCode = entityPM.ToTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
+            {
+                oldEntityPM.FromTypeCode = entityPM.FromTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+                oldEntityPM.FromCountryId = entityPM.FromCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+                oldEntityPM.ToCountryId = entityPM.ToCountryId;
             }
 			
 		}

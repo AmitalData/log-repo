@@ -32,7 +32,7 @@ import {ReportsTemplatePMService} from '../../../Common/Services/StandardPMs/Rep
 import {ReportsTemplatePMExtendedService} from '../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'GeneralSendControl',
     templateUrl: './GeneralSendComponent.html',
     providers: [ DocumentOutPMService, DocumentTypeListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService],
@@ -239,15 +239,15 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             });
         }
 
-        if (totalsize > 15) {
-            this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
+        if (totalsize > 20) {
+            this.ShowMessage("The maximum size of documents you can attach is 20 MB. Please send the documents in separated emails", "Attachment Limit");
          //   this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
 
-        this._htmlEditorService.sendDocumentHtml(filter).subscribe(res => {
+        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.froalaEditorSetting.froalaEditorComponent.DestroyfroalaEditor();
@@ -275,7 +275,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.IsEnableLinkDocOout = false;
         if (!this.DocTypeLists) {
 
-            this._documentTypeListExtendedService.getDocumentTypesListByObjectTableAndTenant(SessionInfo.LoggedUserTenant, this.ObjectTableId).subscribe(res => {
+            this._documentTypeListExtendedService.getDocumentTypesListByObjectTableAndTenant(SessionInfo.LoggedUserTenant, this.ObjectTableId).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -307,7 +307,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         this.DocumentCopiesList = new Array<DocumentOutCopyViewModel>();
         
         this.DocumentOutLists = new Array<DocumentOutPM>();
-        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -420,7 +420,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
         this.IsEnableLinkDocIn = false;
 
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -648,7 +648,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         var att = new AttachmentDocment(item.DocumentTypeCopyNameWithDocumentTypeName, item.FileSize, item.Id, this.order++);
 
 
-        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe(res => {
+        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -784,7 +784,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         if (!this.IsOpenWidnow) {
             this.IsOpenWidnow = true;
             if (!this.PartnersObslist) {
-                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName).subscribe(res => {
+                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
@@ -935,7 +935,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.IsShowTemplateArea = true;
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-            this.reportPMService.get(this.EntityId).subscribe(res => {
+            this.reportPMService.get(this.EntityId).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.StopBusyIndicator();
                 if (!pmResponse.HasError) {
@@ -1006,7 +1006,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.Subject = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.Subject) ? this.SelectedTemplate.EntityPM.Subject : "";
 
 
-            this.reportsTemplatePMExtendedService.GetReportTemplateEditorHtmlData(id, version, SessionInfo.LoggedUserId, this.Subject, this.From, this.ReplyTo, this.Cc).subscribe(res => {
+            this.reportsTemplatePMExtendedService.GetReportTemplateEditorHtmlData(id, version, SessionInfo.LoggedUserId, this.Subject, this.From, this.ReplyTo, this.Cc).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -1114,7 +1114,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                     this.UpdateReportTemplatePM(item.EntityPM);
                 }
                 else {
-                    this.reportsTemplatePMService.get(selectitem.Id).subscribe(res => {
+                    this.reportsTemplatePMService.get(selectitem.Id).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -1224,7 +1224,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     UpdateReportPM() {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.reportPMService.update(this.EntityPM).subscribe(res => {
+        this.reportPMService.update(this.EntityPM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -1240,7 +1240,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     UpdateReportTemplatePM(item:any) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.reportsTemplatePMService.update(item).subscribe(res => {
+        this.reportsTemplatePMService.update(item).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {

@@ -23,7 +23,7 @@ import {DateTimePipe} from '../../../Controls/Pipes/DateTimePipe';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MasterActionConfirmationComponent.html',
 })
 
@@ -42,11 +42,11 @@ export class MasterActionConfirmationComponent extends BaseComponent {
     SetWindowArgs(args: ShipmentMenuButtonsHandler) {
         this.CurrentSession.StartBusyIndicator("Loading...");
         this.shipmentService = new ShipmentDomainService();
-        this.shipmentService.GetConnectedShipmentsByMasterIdAndTenant(args.EntityPM.Id, args.EntityPM.Tenant).subscribe(response => {
+        this.shipmentService.GetConnectedShipmentsByMasterIdAndTenant(args.EntityPM.Id, args.EntityPM.Tenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {                                
                 this.FatherComponent = args;
     
-                this.shipmentService.GetShipmentConsolidationPackages(this.FatherComponent.EntityPM.Id).subscribe(result => {
+                this.shipmentService.GetShipmentConsolidationPackages(this.FatherComponent.EntityPM.Id).subscribe((result:any) => {
                     this.FatherComponent.EntityPM.IsOperationalClosed = true;                  
                     this.MasterViewModel = new MasterActionConfirmationViewModel(this.FatherComponent.EntityPM, result.Result);
                     this.MasterViewModel.IsMaster = true;
@@ -685,7 +685,7 @@ export class MasterActionConfirmationViewModel {
              succeeded = false;
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = _tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = _tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);

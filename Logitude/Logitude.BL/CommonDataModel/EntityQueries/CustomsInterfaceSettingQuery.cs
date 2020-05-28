@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomsInterfaceSettingPM GetSinglePM(int id, int otherTenant)
         {
-            CustomsInterfaceSettingPM entityPM = (from a in repository.context.CustomsInterfaceSettings.Include("ArtemusOutSettings").Include("ArtemusInSettings")
+            CustomsInterfaceSettingPM entityPM = (from a in repository.context.CustomsInterfaceSettings.Include("ArtemusOutSettings").Include("ArtemusInSettings").Include("LocalCustomsInterface")
                                                   where a.Tenant == id
                                                   select new CustomsInterfaceSettingPM()
                                                   {
@@ -48,6 +48,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       ArtemusOutSettingsId = a.ArtemusOutSettingsId,
                                                       ArtemusOutSettingsHost = a.ArtemusOutSettings == null ? null : a.ArtemusOutSettings.Host,
                                                       ArtemusInSettingsHost = a.ArtemusInSettings == null ? null : a.ArtemusInSettings.Host,
+                                                      AMCAirStartDate = a.AMCAirStartDate,
+                                                      AMCOceanStartDate = a.AMCOceanStartDate,
+                                                      LocalCustomsInterfaceName = a.LocalCustomsInterface == null ? null : a.LocalCustomsInterface.Name,
                                                   }).FirstOrDefault();
 
             return entityPM;
@@ -70,6 +73,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               ArtemusOutSettingsId = a.ArtemusOutSettingsId,
                                                               ArtemusOutSettingsHost = a.ArtemusOutSettings == null ? null : a.ArtemusOutSettings.Host,
                                                               ArtemusInSettingsHost = a.ArtemusInSettings == null ? null : a.ArtemusInSettings.Host,
+                                                              AMCAirStartDate = a.AMCAirStartDate,
+                                                              AMCOceanStartDate = a.AMCOceanStartDate,
                                                           });
             return list;
         }
@@ -89,6 +94,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            ActivateCustomsManagementInShipments = a.ActivateCustomsManagementInShipments,
                                                            ArtemusInSettingsId = a.ArtemusInSettingsId,
                                                            ArtemusOutSettingsId = a.ArtemusOutSettingsId,
+                                                           AMCAirStartDate = a.AMCAirStartDate,
+                                                           AMCOceanStartDate = a.AMCOceanStartDate,
                                                        };
             return result;
         }
@@ -108,6 +115,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ActivateCustomsManagementInShipments = a.ActivateCustomsManagementInShipments,
                               ArtemusInSettingsId = a.ArtemusInSettingsId,
                               ArtemusOutSettingsId = a.ArtemusOutSettingsId,
+                              AMCAirStartDate = a.AMCAirStartDate,
+                              AMCOceanStartDate = a.AMCOceanStartDate,
                           });
 
             return result;

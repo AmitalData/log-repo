@@ -20,17 +20,45 @@ namespace Logitude.Customs.BL
    {
        public List<StorageStatusDetails> GetAll()
        {
-		    var all = new List<StorageStatusDetails>(); 
+		    var all = new List<StorageStatusDetails>();  
+            all.Add(new StorageStatusDetails()
+            {    
+                Code = "1", 
+                Name = "Approved", 
+                SearchFields = "1,approved,מאושר", 
+                LocalName = "מאושר", 
+			});
+			 
+            all.Add(new StorageStatusDetails()
+            {    
+                Code = "2", 
+                Name = "Denied", 
+                SearchFields = "2,denied,נדחה", 
+                LocalName = "נדחה", 
+			});
+			 
+            all.Add(new StorageStatusDetails()
+            {    
+                Code = "3", 
+                Name = "Waiting", 
+                SearchFields = "3,waiting,ממתין", 
+                LocalName = "ממתין", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(StorageStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.LocalName = this.LocalName;   
         }
 
 		public string GetSearchFields(StorageStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",",rec.LocalName,",");
         }
    }
 }

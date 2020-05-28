@@ -28,6 +28,11 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
+using System.Web;
+using Logitude.SystemLogs;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -46,13 +51,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool isDropBox = false;
         private ChargesTypeRepository chargesTypeRepository;
         private APInvoiceTotalVATRepository totalVATRepository;
-
-        public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false)
+        private bool UsingFTP = false;
+        private string FTPDetailId;
+        public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
             this.filename = filename;
             this.invoices = invoices;
             this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
+
             this.invoiceCotnext = InvoiceContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
@@ -67,6 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.PayableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.PayableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
 
@@ -144,16 +153,24 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                    && allChargesTypesIds.Contains(f.ChargesTypeId)
                    select f).ToList();
 
+            List<APInvoiceTotalVAT> allInvoicesTotalVATs = (from d in invoiceCotnext.APInvoiceTotalVATs.Include("VatType")
+                                                            where d.Tenant == tenant
+                                                            && allInvoiceIds.Contains(d.APInvoiceId)
+                                                            select d).ToList();
+
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
             ShipmentQuery shipmentQuery = new ShipmentQuery(new ShipmentRepository(this.shipmentsContext));
             ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(this.shipmentsContext);
             PrepaidCollectRepository prepaidCollectRepository = new PrepaidCollectRepository(tenant);
+            VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
 
             foreach (APInvoice item in invoices)
             {
                 APInvoiceElement invoiceElement = new APInvoiceElement();
+
+                List<APInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.APInvoiceId == item.Id).ToList();
 
                 ShipmentPM shipment = null;
                 if (!item.IsMultipleEntities)
@@ -181,6 +198,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.RateInvoiceCurrency = item.InvoiceCurrencyExchangeRate == null ? 0 : (decimal)item.InvoiceCurrencyExchangeRate;
                 invoiceElement.VATNumber = item.VATNumber;
                 invoiceElement.PaymentTermExternalId = item.PaymentTermExternalId;
+                invoiceElement.TotalTaxAmountInInvoiceCurrency = (decimal)myTotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
                 #endregion
 
                 #region Card
@@ -254,7 +272,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceLines = new List<APInvoiceLineElement>();
                 List<APInvoiceLine> dueVatLines = new List<APInvoiceLine>();
                 List<APInvoiceLine> lines = allInvoicesLines.Where(d => d.APInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
-                
+                List<string> allInvoiceLinesVATTypesIds = lines.Select(s => s.VatTypeId).Distinct().ToList();
+
+                List<VATTypesGroup> allVATTypesGroups = (from d in commonContext.VATTypesGroups
+                                                         where d.Tenant == tenant
+                                                         && allInvoiceLinesVATTypesIds.Contains(d.GroupVATTypeId)
+                                                         select d).ToList();
                 int count = 1;
                 foreach (APInvoiceLine myline in lines)
                 {
@@ -268,13 +291,19 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         AmountInOriginalCurrency = myline.ForiegnCurrencyAmount == null ? 0 : (decimal)myline.ForiegnCurrencyAmount,
                         AmountInInvoiceCurrency = myline.InvoiceCurrencyAmount == null ? 0 : (decimal)myline.InvoiceCurrencyAmount,
                         AmountInLocalCurrency = myline.LocalCurrencyAmount == null ? 0 : (decimal)myline.LocalCurrencyAmount,
-                        TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
                         ChargeTypeCode = myline.ChargesType == null ? "" : myline.ChargesType.Code,
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
-                        Quantity=null,
+                        Quantity = null,
+                        IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
                     };
 
-                    if(tenant == 303 || tenant == 814)
+                    VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
+                    if (LineVat != null)
+                    {
+                        lineElement.VATExternalId = LineVat.PayablesExternalId;
+                    }
+
+                    if (tenant == 303 || tenant == 814)
                     {
                         lineElement.Quantity = 0;
                     }
@@ -352,6 +381,52 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }
                     }
 
+                    lineElement.TaxDetails = new List<LineTaxDetailsElement>();
+                    if (LineVat != null)
+                    {
+                        if (LineVat.IsMultiPercentage)
+                        {
+                            double multiVatPercentage = 0;
+
+                            List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == LineVat.Id).ToList();
+                            foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
+                            {
+                                APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
+                                VatTypePercentage percentageItem = vatTypePercentageRepository.GetVatTypePercentageByDate(vATGroupItem.SingleVATTypeId, tenant, item.InvoiceDate);
+
+                                if (percentageItem != null)
+                                {
+                                    if (percentageItem.Percentage != null)
+                                    {
+                                        multiVatPercentage += percentageItem.Percentage.Value;
+                                    }
+
+                                    lineElement.TaxDetails.Add(new LineTaxDetailsElement()
+                                    {
+                                        TaxCode = percentageItem.VatType == null ? null : percentageItem.VatType.Code,
+                                        TaxPercentage = percentageItem.Percentage == null ? 0 : (decimal)percentageItem.Percentage,
+                                        VATExternalId = percentageItem.VatType != null ? percentageItem.VatType.PayablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
+                                    });
+                                }
+                            }
+
+                            lineElement.TaxPercentage = (decimal)multiVatPercentage;
+                        }
+
+                        else
+                        {
+                            APInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == LineVat.Id).FirstOrDefault();
+                            lineElement.TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage;
+
+                            lineElement.TaxDetails.Add(new LineTaxDetailsElement()
+                            {
+                                TaxCode = LineVat.Code,
+                                TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
+                                VATExternalId = !string.IsNullOrEmpty(LineVat.ReceivablesExternalId) ? LineVat.ReceivablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
+                            });
+                        }
+                    }
+
                     invoiceElement.InvoiceLines.Add(lineElement);
                     count++;
 
@@ -363,18 +438,18 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     #endregion
                 }
 
-                if (dueVatLines.Count != 0)
-                {
-                    foreach (APInvoiceLine myline in dueVatLines)
-                    {
-                        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
-                    }
-                }
+                //if (dueVatLines.Count != 0)
+                //{
+                //    foreach (APInvoiceLine myline in dueVatLines)
+                //    {
+                //        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
+                //    }
+                //}
 
-                else
-                {
-                    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
-                }
+                //else
+                //{
+                //    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
+                //}
                 #endregion
 
                 #region Shipment
@@ -974,6 +1049,22 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
                 #endregion
 
+                #region TAX
+                invoiceElement.TaxTotalsInInvoiceCurrency = new List<InvoiceTaxElement>();
+                
+                foreach (APInvoiceTotalVAT myline in myTotalVATs)
+                {
+                    InvoiceTaxElement invoiceTaxElement = new InvoiceTaxElement()
+                    {
+                        TaxCode = myline.VatType == null ? null : myline.VatType.Code,
+                        TaxPercentage = (decimal)myline.VatPercent,
+                        TaxAmount = (decimal)myline.InvoiceCurrencyVATAmount,
+                    };
+
+                    invoiceElement.TaxTotalsInInvoiceCurrency.Add(invoiceTaxElement);
+                }
+                #endregion
+
                 log.Invoices.Add(invoiceElement);
             }
 
@@ -1523,8 +1614,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (!string.IsNullOrEmpty(message.TransactionTypeCode)) { str.Append(message.TransactionTypeCode.PadRight(4)); }
             else { str.Append(' ', 4); }
 
-            if (message.Reference1.Length < 9) { str.Append(message.Reference1.PadLeft(8)).Append(' '); }
-            else { str.Append(message.Reference1.Substring(0, 8)).Append(' '); }
+            if (!string.IsNullOrEmpty(message.Reference1))
+            {
+                if (message.Reference1.Length < 9)
+                {
+                    str.Append(message.Reference1.PadLeft(8)).Append(' ');
+                }
+                else
+                {
+                    str.Append(message.Reference1.Substring(0, 8)).Append(' ');
+                }
+            }
+            else
+            {
+                str.Append(' ', 8);
+            }
 
             if (message.Reference2 != null)
             {
@@ -1723,9 +1827,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
+
+            else if (this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
+            {
+                this.BuildFile_ViaFTP(bytearray);
+            }
+
             else
             {
-                Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -1740,19 +1849,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Write(bytearray, fileInfo);
-
-                    //CloudBlobContainer blobContainer = null;
-                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                    //blobContainer.CreateIfNotExists();
-
-                    //CloudBlockBlob blobfile = blobContainer.GetBlockBlobReference(fileName);
-
-                    //using (blbstr = blobfile.OpenWrite())
-                    //{
-                    //    StringBuilder stringbuilder = new StringBuilder();
-                    //    Encoding encoding = new UTF8Encoding();
-                    //    blbstr.Write(bytearray, 0, bytearray.Length);
-                    //}
                 }
             }
         }
@@ -1769,6 +1865,65 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = invoice.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "APInvoices","AP Invoice", entityId);
+        }
+
+        private string myDocumentId;
+        private string myDocumentFolder;
+        private string myDocumentExtension;
+        private string myCommunicationLogId;
+        private void BuildFile_ViaFTP(byte[] myByteArray)
+        {
+            ObjectTableRepository repo = new ObjectTableRepository(tenant);
+            string objectTableId = repo.GetObjectTableIdByName("APInvoice");
+            string FTPFileName = "";
+
+            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);
+            var invoice = this.invoices.FirstOrDefault();
+            var entityId = "";
+            if (invoice != null)
+            {
+                entityId = invoice.Id;
+                FTPFileName = ("APInvoice_" + invoice.InvoiceNumber).ToLower();
+            }
+
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
+
+            this.myDocumentId = helper.DocumentId;
+            this.myDocumentFolder = helper.DocumentFolder;
+            this.myDocumentExtension = helper.DocumentExtension;
+            this.myCommunicationLogId = commLog.Id;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = myDocumentId,
+                FolderName = myDocumentFolder,
+                Extension = myDocumentExtension,
+                Tenant = tenant,
+                FileSize = myByteArray.Length,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(myByteArray, fileInfo);
+
+            try
+            {
+                //helper.Test(commLog, tenant);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(commLog.QueueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+            }
+
+            catch (Exception ex)
+            {
+                string ip = "";
+
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    ip = HttpContext.Current.Request.UserHostAddress;
+                }
+
+                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AP Invoice Transfer", null, ip);
+            }
         }
         #endregion
 
@@ -1802,7 +1957,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     if (!string.IsNullOrEmpty(fieldValue))
                     {
-                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeId, tenant).DefaultText;
+                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeCode, tenant).DefaultText;
                         PropertyInfo namePropInfo = element.GetType().GetProperty(objectTableName + field.FieldName + "Name");
                         namePropInfo.SetValue(element, fieldName, null);
                     }

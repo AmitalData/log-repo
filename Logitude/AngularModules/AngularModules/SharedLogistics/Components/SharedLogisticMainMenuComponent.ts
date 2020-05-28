@@ -5,7 +5,7 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticMainMenuComponent',
     templateUrl: './SharedLogisticMainMenuComponent.html',
     providers: [EntityResourceService],
@@ -46,7 +46,7 @@ export class SharedLogisticMainMenuComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

@@ -1,7 +1,5 @@
 import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
-import {RoutingHelper} from '../../../../Shipment/Tools';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -13,7 +11,6 @@ import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDi
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import {WarehouseReleasePM} from '../../../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
@@ -22,13 +19,16 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/ShipmentDeliveryValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditDeliveryComponent.html',
 })
 
 export class AddEditDeliveryComponent implements OnDestroy {
+  public SelectedTab: any;
+
     public EntityPM: ShipmentDeliveryPM;
     myCardListService: CardListService;
     public ShipmentPM: ShipmentPM;
@@ -49,7 +49,9 @@ export class AddEditDeliveryComponent implements OnDestroy {
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();   
     }
-    
+
+    SavedEntityId: string;
+    SavedEntityNumber: string;
     SetWindowArgs(args: any) {
         this.IsNewEntity = args['IsNewEntity'];
         this.ShipmentPM = args['ShipmentPM'];
@@ -61,6 +63,9 @@ export class AddEditDeliveryComponent implements OnDestroy {
         this.IsCreatingContainerDelivery = args["IsCreatingContainerDelivery"];
         var isOutSource = args['IsOutSource'];
         if (isOutSource) this.IsShipmentEditComponent = false;
+
+        this.SavedEntityId = this.EntityPM.Id;
+        this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
         if (!this.EntityPM.TransportModeCode) {
             this.EntityPM.TransportModeCode = "BYTR";
@@ -81,15 +86,31 @@ export class AddEditDeliveryComponent implements OnDestroy {
                 this.IsResourcesReady = true;
                 this.BuildTabs();
                 this.RunComponent();
+                this.Listen();
             });
         });
     }
 
     private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
         this.SaveCompletedEvent = null;
+        this.LoadCompletedEvent = null;
+    }
 
+    Listen() {
+        if (this.CurrentSession.CurrentEditComponent) {
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.ResetEntityPM();
+                    }
+                });
+            }
+        }
     }
 
     BuildTabs() {
@@ -129,7 +150,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -233,6 +254,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
         windowArgs.ExpectedReleaseDate = this.EntityPM.ETA;
         windowArgs.ActualReleaseDate = this.EntityPM.ATA;
         windowArgs.ShipmentPM = this.ShipmentPM;
+        windowArgs.ConnectedTo = "Delivery";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;
@@ -359,7 +381,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
 
                     case "PACG": {
                         if (this.PageChild_PACG == null) {
-                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/DeliveryTabs/DeliveryPackagesTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_PACG = cmpRef.instance;
@@ -438,8 +460,8 @@ export class AddEditDeliveryComponent implements OnDestroy {
 
         if (isValid) {
 
-            var SavedEntityId = this.EntityPM.Id;
-            var SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
+            this.SavedEntityId = this.EntityPM.Id;
+            this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
             if (this.IsNewEntity) {
                 ServiceLocator.SendTotangoUserActivity("Container F/U", "Added Delivery");
@@ -449,8 +471,9 @@ export class AddEditDeliveryComponent implements OnDestroy {
 
             if (this.CurrentSession.CurrentEditComponent != null && this.IsShipmentEditComponent) {
                 if (!this.SaveCompletedEvent) {
+
                     this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        this.OnSaveCompleted(isSaveSuccess, isClosingWindow, SavedEntityId, SavedEntityNumber);
+                        this.OnSaveCompleted(isSaveSuccess, isClosingWindow);
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -479,196 +502,10 @@ export class AddEditDeliveryComponent implements OnDestroy {
             }
         }
     }
+
     Validate() {
-
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        // From
-        switch (this.EntityPM.PickUpDeliveryFromTypeCode) {
-            case "PART": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromPartnerCardId)) {
-                    errors.push(msg.replace("%FieldName", "From Partner"));
-                }
-                break;
-            }
-
-            case "PORT": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromPortId)) {
-                    errors.push(msg.replace("%FieldName", "From Port"));
-                }
-                break;
-            }
-
-            case "CASL": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromAddressCity) && AppTool.IsNullOrEmpty(this.EntityPM.FromAddressZipCode)) {
-                    errors.push("From City or from Zip Code is required");
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromAddressCountryId)) {
-                    errors.push(msg.replace("%FieldName", "From Country"));
-                }
-                break;
-            }
-        }
-
-        // To
-        switch (this.EntityPM.PickUpDeliveryToTypeCode) {
-            case "PART": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToPartnerCardId)) {
-                    errors.push(msg.replace("%FieldName", "To Partner"));
-                }
-                break;
-            }
-
-            case "PORT": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToPortId)) {
-                    errors.push(msg.replace("%FieldName", "To Port"));
-                }
-                break;
-            }
-
-            case "CASL": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToAddressCity) && AppTool.IsNullOrEmpty(this.EntityPM.ToAddressZipCode)) {
-                    errors.push("To City or to Zip Code is required");
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToAddressCountryId)) {
-                    errors.push(msg.replace("%FieldName", "To Country"));
-                }
-                break;
-            }
-        }
-
-        // Actual Dates
-        if (!DateTool.IsActualDateValid(this.EntityPM.ATD)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATD")));
-        }
-
-        if (!DateTool.IsActualDateValid(this.EntityPM.ATA)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATA")));
-        }
-
-        // Series Dates
-        var ETD: number = DateTool.GetDateParts(this.EntityPM.ETD).DateTicks;
-        var ETA: number = DateTool.GetDateParts(this.EntityPM.ETA).DateTicks;
-        var ATD: number = DateTool.GetDateParts(this.EntityPM.ATD).DateTicks;
-        var ATA: number = DateTool.GetDateParts(this.EntityPM.ATA).DateTicks;
-
-        var isMainCarriageExists: boolean = true;
-        var MainCarriageETD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETD).DateTicks;
-        var MainCarriageETA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETA).DateTicks;
-        var MainCarriageATD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATD).DateTicks;
-        var MainCarriageATA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATA).DateTicks;
-
-        var isTransshipment1Exists: boolean = (this.ShipmentPM.Transshipment1FromPortId != null && this.ShipmentPM.Transshipment1ToPortId != null) ? true : false;
-        var Transshipment1ETD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETD).DateTicks : 0;
-        var Transshipment1ETA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETA).DateTicks : 0;
-        var Transshipment1ATD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATD).DateTicks : 0;
-        var Transshipment1ATA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATA).DateTicks : 0;
-
-        var isTransshipment2Exists: boolean = (this.ShipmentPM.Transshipment2FromPortId != null && this.ShipmentPM.Transshipment2ToPortId != null) ? true : false;
-        var Transshipment2ETD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETD).DateTicks : 0;
-        var Transshipment2ETA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETA).DateTicks : 0;
-        var Transshipment2ATD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATD).DateTicks : 0;
-        var Transshipment2ATA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATA).DateTicks : 0;
-
-        var isTransshipment3Exists: boolean = (this.ShipmentPM.Transshipment3FromPortId != null && this.ShipmentPM.Transshipment3ToPortId != null) ? true : false;
-        var Transshipment3ETD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETD).DateTicks : 0;
-        var Transshipment3ETA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETA).DateTicks : 0;
-        var Transshipment3ATD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATD).DateTicks : 0;
-        var Transshipment3ATA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATA).DateTicks : 0;
-
-        var isOnCarriageExists: boolean = (this.ShipmentPM.OnCarriageFromPortId != null && this.ShipmentPM.OnCarriageToPortId != null) ? true : false;
-        var OnCarriageETD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETD).DateTicks : 0;
-        var OnCarriageETA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETA).DateTicks : 0;
-        var OnCarriageATD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATD).DateTicks : 0;
-        var OnCarriageATA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATA).DateTicks : 0;
-
-        var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId == "I") ? true : false;
-        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
-        var WarehouseLegERD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedReleaseDate).DateTicks : 0;
-        var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualEntryDate).DateTicks : 0;
-        var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualReleaseDate).DateTicks : 0;
-
-        // Self
-        if (!RoutingHelper.IsRoutingLegDatesValid(ETD, ETA)) {
-            errors.push("Expected departure must be less than Expected arrival");
-        }
-
-        if (!RoutingHelper.IsRoutingLegDatesValid(ATD, ATA)) {
-            errors.push("Actual departure must be less than Actual arrival");
-        }
-
-        //if (RoutingHelper.CompairDateSeries(ETD, ETA, ">")) {
-        //    errors.push("Expected departure must be less than Expected arrival");
-        //}
-
-        //if (RoutingHelper.CompairDateSeries(ATD, ATA, ">")) {
-        //    errors.push("Actual departure must be less than Actual arrival");
-        //}
-
-        // Previous
-        if (isWarehouseLegExists) {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, WarehouseLegERD)) {
-                errors.push("Delivery expected departure must be bigger than Warehouse expected release");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, WarehouseLegARD)) {
-                errors.push("Delivery actual departure must be bigger than Warehouse actual release");
-            }
-        }
-
-        else if (isOnCarriageExists) {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, OnCarriageETA)) {
-                errors.push("Expected departure must be bigger than On-Carriage expected arrival");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, OnCarriageATA)) {
-                errors.push("Actual departure must be bigger than On-Carriage actual arrival");
-            }
-        }
-
-        else if (isTransshipment3Exists) {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment3ETA)) {
-                errors.push("Expected departure must be bigger than Transshipment3 expected arrival");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment3ATA)) {
-                errors.push("Actual departure must be bigger than Transshipment3 actual arrival");
-            }
-        }
-
-        else if (isTransshipment2Exists) {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment2ETA)) {
-                errors.push("Expected departure must be bigger than Transshipment2 expected arrival");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment2ATA)) {
-                errors.push("Actual departure must be bigger than Transshipment2 actual arrival");
-            }
-        }
-
-        else if (isTransshipment1Exists) {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, Transshipment1ETA)) {
-                errors.push("Expected departure must be bigger than Transshipment1 expected arrival");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, Transshipment1ATA)) {
-                errors.push("Actual departure must be bigger than Transshipment1 actual arrival");
-            }
-        }
-
-        else {
-            if (RoutingHelper.IsDateSeriesSmaller(ETD, MainCarriageETA)) {
-                errors.push("Expected departure must be bigger than Main-Carriage expected arrival");
-            }
-
-            if (RoutingHelper.IsDateSeriesSmaller(ATD, MainCarriageATA)) {
-                errors.push("Actual departure must be bigger than Main-Carriage actual arrival");
-            }
-        }
+        var validator = new ShipmentDeliveryValidator();
+        var errors: string[] = validator.Validate(this.EntityPM, this.ShipmentPM);
 
         if (errors.length == 0) {
             var myShipmentValidator = new ShipmentValidator();
@@ -684,7 +521,8 @@ export class AddEditDeliveryComponent implements OnDestroy {
 
         return isValid;
     }
-    OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean, SavedEntityId: string, SavedEntityNumber: string) {
+
+    OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean) {
         if (isSaveSuccess) {
 
             if (this.IsNewEntity) {
@@ -701,33 +539,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
             }
 
             else {
-                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-                if (SavedEntityId) {
-                    this.EntityPM = this.ShipmentPM.ShipmentDeliveries.filter(f => f.Id == SavedEntityId)[0];
-                }
-
-                else if (SavedEntityNumber) {
-                    this.EntityPM = this.ShipmentPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryNumber == SavedEntityNumber)[0];
-                }
-
-                if (this.PageChild_MAIN) {
-                    this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
-                }
-
-                if (this.PageChild_PACG) {
-                    this.PageChild_PACG.InitTab(this.EntityPM, this.ShipmentPM, this);
-                }
-
-                if (this.PageChild_DCSO) {
-                    this.PageChild_DCSO.InitTab(this.EntityPM, this.ShipmentPM);
-                }
-
-                if (this.PageChild_DCSI) {
-                    this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
-                }
-
-                this.Clone();
+                this.ResetEntityPM();
             }
         }
 
@@ -737,6 +549,42 @@ export class AddEditDeliveryComponent implements OnDestroy {
 
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         this.SaveCompletedEvent = null;
+    }
+
+    ResetEntityPM() {
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+
+            if (this.SavedEntityId) {
+                this.EntityPM = this.ShipmentPM.ShipmentDeliveries.filter(f => f.Id == this.SavedEntityId)[0];
+            }
+
+            else if (this.SavedEntityNumber) {
+                this.EntityPM = this.ShipmentPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryNumber == this.SavedEntityNumber)[0];
+
+                if (this.EntityPM) {
+                    this.SavedEntityId = this.EntityPM.Id;
+                }
+            }
+
+            if (this.PageChild_MAIN) {
+                this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.PageChild_PACG) {
+                this.PageChild_PACG.InitTab(this.EntityPM, this.ShipmentPM, this);
+            }
+
+            if (this.PageChild_DCSO) {
+                this.PageChild_DCSO.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.PageChild_DCSI) {
+                this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            this.Clone();
+        }
     }
 
     private myCloner: Cloner;

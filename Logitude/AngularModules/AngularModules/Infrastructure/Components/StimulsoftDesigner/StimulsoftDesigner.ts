@@ -9,7 +9,7 @@ declare var window: any;
 declare var startLinking;
 @Component({
     selector: 'DropBoxLogin',
-    moduleId: module.id,
+    
     templateUrl: './StimulsoftDesigner.html',
 //    template: `
  

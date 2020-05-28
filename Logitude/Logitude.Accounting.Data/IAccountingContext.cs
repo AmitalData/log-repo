@@ -42,21 +42,32 @@ namespace Logitude.Accounting.Data
 		 IDbSet<Category5> Category5 { get; }
 		 IDbSet<ChartOfAccount> ChartOfAccounts { get; }
 		 IDbSet<ChartOfAccountsType> ChartOfAccountsTypes { get; }
+		 IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; }
 		 IDbSet<ExternalReconciliation> ExternalReconciliations { get; }
 		 IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; }
 		 IDbSet<FullAccountingSetting> FullAccountingSettings { get; }
 		 IDbSet<GLAccount> GLAccounts { get; }
 		 IDbSet<GLAccountCounter> GLAccountCounters { get; }
 		 IDbSet<GLAccountCurrency> GLAccountCurrencies { get; }
+		 IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods { get; }
 		 IDbSet<GLAccountMoreData> GLAccountMoreDatas { get; }
 		 IDbSet<GLAccountTotalByMonth> GLAccountTotalByMonths { get; }
 		 IDbSet<GLAccountTotalDateType> GLAccountTotalDateTypes { get; }
 		 IDbSet<GLAccountType> GLAccountTypes { get; }
 		 IDbSet<GLAccountWithholdingTax> GLAccountWithholdingTax { get; }
 		 IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; }
+		 IDbSet<InterestBasesPeriod> InterestBasesPeriods { get; }
+		 IDbSet<InterestBasesType> InterestBasesTypes { get; }
+		 IDbSet<InterestEntityType> InterestEntityTypes { get; }
+		 IDbSet<InterestReport> InterestReports { get; }
+		 IDbSet<InterestReportLine> InterestReportLines { get; }
+		 IDbSet<InterestReportLinesByDate> InterestReportLinesByDates { get; }
+		 IDbSet<InterestReportStatuse> InterestReportStatuses { get; }
+		 IDbSet<InterestTransaction> InterestTransactions { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }
+		 IDbSet<JournalExternalReconcile> JournalExternalReconciles { get; }
 		 IDbSet<JournalLine> JournalLines { get; }
 		 IDbSet<JournalMoreData> JournalMoreDatas { get; }
 		 IDbSet<JournalReconcile> JournalReconciles { get; }

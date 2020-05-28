@@ -18,7 +18,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 @Component({
     selector: 'DeclarationReshimonConversionComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationReshimonConversionComponent.html',
 })
 
@@ -124,7 +124,7 @@ export class DeclarationReshimonConversionComponent
 
 
 
-    private DeclarationNumberTextChanged(DeclarationNumberText) {
+    DeclarationNumberTextChanged(DeclarationNumberText) {
         this.ValidationErrorsList = [];
 
         if (DeclarationNumberText == this.ReshimonNumberLast) {

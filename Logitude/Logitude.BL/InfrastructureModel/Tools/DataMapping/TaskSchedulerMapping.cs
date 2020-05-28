@@ -50,6 +50,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.LastRunStartTime = TaskSchedulerPM.LastRunStartTime;
 
             TaskScheduler.LastRunStartTimeUTC = TaskSchedulerPM.LastRunStartTimeUTC;
+            TaskScheduler.AverageRunTime = TaskScheduler.AverageRunTime;
+            TaskScheduler.EntityId = TaskSchedulerPM.EntityId;
+            TaskScheduler.MonthlyDay = 0;
 
 
         }
