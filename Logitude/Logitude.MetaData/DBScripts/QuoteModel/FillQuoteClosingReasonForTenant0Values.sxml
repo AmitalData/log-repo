@@ -1,5 +1,5 @@
-﻿<Script DBType="Main">
-  <Sql Version="1" Pre="true">
+﻿<Script DBType="Main" Pre="true">
+  <Sql Version="1">
     <![CDATA[
     
       alter table QuoteClosingReasons add Id varchar(15) null
