@@ -104,7 +104,11 @@ export class TextCodeTranslator {
             }
             else {
                 if (this.ShowAlertMessage(value)) {
-                    alert("This Code '" + value + "' Not Found!");
+                    if (SessionLocator.LoggedUserPM.Email.includes("logitudeworld.com")) 
+                    {
+                       alert("This Code '" + value + "' Not Found!");
+                    }   
+    
                 }
             }
         }
