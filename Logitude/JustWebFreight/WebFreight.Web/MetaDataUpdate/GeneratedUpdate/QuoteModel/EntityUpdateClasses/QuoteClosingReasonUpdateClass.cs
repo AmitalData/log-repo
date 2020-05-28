@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteClosingReasonUpdateClass
    {  		
-		public const string HashString = "456063e01505a44dd221690fdb376832";
+		public const string HashString = "1cf090b71f98326a000b700d715c35f5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,20 +93,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  true,
+			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Name",
-			      				    KeyPropertyPath =  "Code",
+			      				    LookUp1 =  "Code",
+			      				    LookUp2 =  "Name",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableAddFromLOV =  false,
+			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    EnableEditFromLOV =  false,
+			      				    EnableEditFromLOV =  true,
 			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
@@ -859,7 +860,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteClosingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable);
 		   Feature QuoteClosingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable);
 		   Feature QuoteClosingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable);
-		   Feature QuoteClosingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.PackageFeature", NameTextCodeDefaultText = "QuoteClosingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable);    
+		   Feature QuoteClosingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.PackageFeature", NameTextCodeDefaultText = "QuoteClosingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature QuoteClosingReasonFeature_QuoteClosingReason_M_ClosingReasons = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteClosingReason.M.ClosingReasons", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteClosingReason.Features.QuoteClosingReason.M.QuoteStages", NameTextCodeDefaultText = @"Quote Closing Reasons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteClosingReasonObjectTable);
+
+   
 	    
 		}
 

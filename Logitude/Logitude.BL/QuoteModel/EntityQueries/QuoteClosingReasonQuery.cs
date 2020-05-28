@@ -52,7 +52,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         public IQueryable<QuoteClosingReasonList> GetIQueryableEntityList(IQueryable<QuoteClosingReason> iQueryable)
         {
-            IQueryable<QuoteClosingReasonList> result = from a in iQueryable.Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+            IQueryable<QuoteClosingReasonList> result = from a in iQueryable
                                                         select new QuoteClosingReasonList()
                                                         {
                                                             Code = a.Code,

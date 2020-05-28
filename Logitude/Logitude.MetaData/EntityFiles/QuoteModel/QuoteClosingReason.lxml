@@ -13,20 +13,21 @@
   HasShortTitle="false"
   HasFiltersMenu="false"
   HasCustomValidator="false"
-  IsEditable="true"
+  IsEditable="false"
   IsNewWizard="false"
-  LookUp1="&quot;Name&quot;"
-  KeyPropertyPath="&quot;Code&quot;"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;Name&quot;"
+  KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"
   CacheOnClient="true"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"
-  EnableAddFromLOV="false"
+  EnableAddFromLOV="true"
   IsRestrictable="false"
   IsMain="true"
   IsAutoComplete="true"
-  EnableEditFromLOV="false"
+  EnableEditFromLOV="true"
   SortingByObjectField="&quot;Name&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
@@ -49,7 +50,7 @@
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false"
+  ApplyDefaultValues="true"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
@@ -1141,5 +1142,15 @@
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;QuoteClosingReason.M.ClosingReasons&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;QuoteClosingReason.Features.QuoteClosingReason.M.QuoteStages&quot;"
+      FeatureDefaultText="&quot;Quote Closing Reasons&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

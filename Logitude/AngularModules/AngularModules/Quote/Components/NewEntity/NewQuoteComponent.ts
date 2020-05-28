@@ -1156,6 +1156,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.EntityPM.AutomaticallyCloseDays = null;
                 this.EntityPM.AutomaticallyCloseDate = null;
                 this.EntityPM.QuoteClosingReasonCode = null;
+                this.EntityPM.QuoteClosingReasonId = null;
             }
 
             this.SetUIProperties_AutomaticallyClosed();

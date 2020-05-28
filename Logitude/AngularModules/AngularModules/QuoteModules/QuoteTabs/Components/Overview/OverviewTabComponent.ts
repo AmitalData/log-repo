@@ -100,10 +100,10 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("StageId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("StageDueDate", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("RatingCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("QuoteClosingReasonCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("QuoteClosingReasonId", this.ObjectTableName, false);
 
-        var isClosingReasonVisibile = this.EntityPM.IsClosed && !AppTool.IsNullOrEmpty(this.QuoteClosingReasonCode);
-        this.UIProperties.SetVisibility("QuoteClosingReasonCode", this.ObjectTableName, isClosingReasonVisibile);
+        var isClosingReasonVisibile = this.EntityPM.IsClosed && !AppTool.IsNullOrEmpty(this.QuoteClosingReasonId);
+        this.UIProperties.SetVisibility("QuoteClosingReasonId", this.ObjectTableName, isClosingReasonVisibile);
 
         this.IsClosingReasonVisible = isClosingReasonVisibile;
     }
@@ -137,7 +137,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    get QuoteClosingReasonCode() { return this.EntityPM.QuoteClosingReasonCode; }
+    get QuoteClosingReasonId() { return this.EntityPM.QuoteClosingReasonId; }
 
     get ControlIsEnabled()
     {

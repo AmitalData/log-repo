@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {QuoteClosingReasonPM} from '../../EntityPMs/QuoteClosingReasonPM';
 
+import {QuoteClosingReasonPMInitService} from '../../EntityPMInitServices/QuoteClosingReasonPMInitService';
 
 @Injectable()
 
@@ -45,6 +46,8 @@ export class QuoteClosingReasonPMService {
 						var entity: QuoteClosingReasonPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      QuoteClosingReasonPMInitService.InitValues(entity, false);
+                      QuoteClosingReasonPMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -219,6 +222,10 @@ export class QuoteClosingReasonPMService {
 		    var entityPM: QuoteClosingReasonPM;
 			entityPM = new QuoteClosingReasonPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			QuoteClosingReasonPMInitService.InitValues(entityPM, true);
+			QuoteClosingReasonPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 
