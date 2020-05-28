@@ -76,7 +76,12 @@ namespace WebFreight.Web.Helpers
 
                         if (queryParameters.ContainsKey("transactionDate"))
                         {
-                            DateTime? transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
+                            DateTime? transactionDate = null;
+                            if (!string.IsNullOrEmpty(queryParameters["transactionDate"]))
+                            {
+                                transactionDate = DateTime.Parse(queryParameters["transactionDate"]);
+                            }
+
                             bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
                         }
                     }
