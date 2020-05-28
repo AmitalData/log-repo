@@ -1,4 +1,4 @@
-﻿import {Pipe} from '@angular/core';
+import {Pipe} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {ControlsIdCounter} from '../../Infrastructure/Utilities/ControlsIdCounter';
 
@@ -9,6 +9,7 @@ export class IdGeneratorPipe {
 
         if (value) {
             value = AppTool.Replace(value, " ", "");
+            value = AppTool.Replace(value, ".", "");
         }
 
         var UnuieqDomId: string = value;

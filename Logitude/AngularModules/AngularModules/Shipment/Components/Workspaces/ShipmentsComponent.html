@@ -119,9 +119,9 @@
                                         <div>Operational Open</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
                                             <ToggleButton id="{{'NEWSHIP' | IdGeneratorPipe}}" [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="75">
-                                                <ToggleButtonItem id="{{'NEWDIRECT' | IdGeneratorPipe}}" [Text]="'Direct'" (click)="RunNewShipmentWizard('D')"></ToggleButtonItem>
-                                                <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorPipe}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')"></ToggleButtonItem>
-                                                <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorPipe}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWDIRECT' | IdGeneratorPipe}}" [Text]="'Direct'" (click)="RunNewShipmentWizard('D')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorPipe}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorPipe}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')" style="height:100%; width: 100%;"></ToggleButtonItem>
                                             </ToggleButton>
                                         </div>
                                         <div *ngIf="IsCloudDeployment == true">
