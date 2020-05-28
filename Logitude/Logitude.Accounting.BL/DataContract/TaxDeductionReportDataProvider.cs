@@ -490,7 +490,7 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-            groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
+            groupedbyVendor.DeductionFileNumber = setting.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = gLAccount.EnglishName;
             groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
