@@ -114,6 +114,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private ARInvoicePM MapautoCreditInvoice(ARInvoicePM autoCreditInvoice,ARInvoicePM aRInvoice)
         {
+            autoCreditInvoice.SetApproved = true;
             autoCreditInvoice.StatusCode = "AC";
             autoCreditInvoice.StatusName = "Auto Credit";
             autoCreditInvoice.IsAutoCredit = true;
