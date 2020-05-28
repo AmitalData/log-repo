@@ -121,6 +121,7 @@ namespace Logitude.Server.Tools.QueueService
                         OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
                         OracleParameter customerId = new OracleParameter("CustomerId", OracleDbType.VarChar, 15);
                         OracleParameter batchNumber = new OracleParameter("BatchNumber", OracleDbType.VarChar, 15);
+                        OracleParameter hashCodePar = new OracleParameter("HashCode", OracleDbType.NVarChar, 1000);
                         //OracleParameter NextRunDateTime = new OracleParameter("NextRunDate", OracleDbType.Date);
 
                         OracleParameter queueMessageIdPar = new OracleParameter("v_QueueMessageId", OracleDbType.Number);
@@ -131,6 +132,7 @@ namespace Logitude.Server.Tools.QueueService
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
+                        hashCodePar.Direction = ParameterDirection.Input;
                         //NextRunDateTime.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
@@ -189,6 +191,7 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter customerId = new SqlParameter("@CustomerId", SqlDbType.VarChar, 15);
                         SqlParameter batchNumber = new SqlParameter("@BatchNumber", SqlDbType.VarChar, 15);
                         SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
+                        SqlParameter hashCodePar = new SqlParameter("@HashCode", SqlDbType.NVarChar, 1000);
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -196,6 +199,7 @@ namespace Logitude.Server.Tools.QueueService
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
                         NextRunDateTime.Direction = ParameterDirection.Input;
+                        hashCodePar.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
