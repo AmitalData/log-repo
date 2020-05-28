@@ -44,6 +44,7 @@ using System.Drawing;
 using WebFreight.Web.Helpers;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using General = WebFreight.Web.DataProviders.General;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -318,17 +319,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                invoicedataprovider.AccountingNumber = currentInvoice.DebitAccount != null ? currentInvoice.DebitAccount : !string.IsNullOrEmpty(invoicedataprovider.DebitAccount) ? invoicedataprovider.DebitAccount : "";
-
-                User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
-                if (salesman != null)
-                {
-                    if (salesman.Contact != null)
-                    {
-                        invoicedataprovider.SalesMan = salesman.Contact.EnglishName;
-                    }
-                }
-
+                invoicedataprovider.AccountingNumber = currentInvoice.DebitAccount != null ? currentInvoice.DebitAccount : !string.IsNullOrEmpty(invoicedataprovider.DebitAccount) ? invoicedataprovider.DebitAccount : "";                
                 invoicedataprovider.InvoiceDate = currentInvoice.InvoiceDate != null ? String.Format("{0:dd.MMM.yyyy}", currentInvoice.InvoiceDate) : "";
                 invoicedataprovider.InvoiceDateAsDateFormat = currentInvoice.InvoiceDate;
                 invoicedataprovider.DueDate = currentInvoice.DueDate != null ? String.Format("{0:dd.MMM.yyyy}", currentInvoice.DueDate) : "";
@@ -371,7 +362,6 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.ShipmentCreateDate = shipment.CreateDateTime == null ? "" : String.Format("{0:dd.MMM.yyyy}", shipment.CreateDateTime);
                     invoicedataprovider.ShipmentCreateDateAsDateFormat = shipment.CreateDateTime;
                     invoicedataprovider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
-
                     invoicedataprovider.IsAir = shipment.TransportModeId == "A" ? true : false;
                     invoicedataprovider.IsOcean = shipment.TransportModeId == "O" ? true : false;
                     invoicedataprovider.IsInland = shipment.TransportModeId == "I" ? true : false;
@@ -394,13 +384,25 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MainHarmonize = shipment.MainHarmonize;
                     invoicedataprovider.AgentReference1 = shipment.AgentReference1;
                     invoicedataprovider.AgentReference2 = shipment.AgentReference2;
-
                     invoicedataprovider.Transshipment1MasterNumber = shipment.Transshipment1AdditionalMAWBOBLBL;
                     invoicedataprovider.Transshipment1FromPortName = shipment.Transshipment1FromPortName;
                     invoicedataprovider.Transshipment1CarrierName = shipment.Transshipment1CarrierName;
                     invoicedataprovider.CustomsClearancePointName = shipment.CustomClearancePointName;
                     invoicedataprovider.ValueOfGoods = shipment.ValueOfGoods;
-                   
+                    invoicedataprovider.MoveType = shipment.MoveTypeName;
+                    invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
+                    invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
+
+                    User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
+                    if (salesman != null)
+                    {
+                        if (salesman.Contact != null)
+                        {
+                            invoicedataprovider.SalesMan = salesman.Contact.EnglishName;
+                            invoicedataprovider.SalesmanEmail = salesman.Contact.Email;
+                        }
+                    }
+                    
                     if (shipment.ValueOfGoodsCurrencyId != null)
                     {
                         Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
@@ -1278,6 +1280,12 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.ContactPersonEmail = billToContact.Email;
                         invoicedataprovider.BillToPrimaryContactMobile = billToContact.Mobile;
                         invoicedataprovider.BillToPrimaryContactBusinessPhone = billToContact.BusinessPhone;
+                    }
+
+                    Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
+                    if(billingAddress != null)
+                    {
+                        invoicedataprovider.BillToBillingAddress = General.GetAddress(billingAddress);
                     }
                 }
                 #endregion
