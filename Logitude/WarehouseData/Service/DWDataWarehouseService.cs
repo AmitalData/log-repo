@@ -121,6 +121,17 @@ namespace WarehouseData.Service
             generalDataWarehouseService.ExecuteSql(cmd, connectionString);
         }
 
+
+        public void CreateAdditionalIndexes(TableClass table, string destinationConnectionString)
+        {
+
+            foreach (string index in table.AdditionalIndexes.Split(','))
+            {
+                CreateIndex(table, index, destinationConnectionString);
+            }
+
+        }
+
         public void AddConstraint(TableClass table, string connectionString)
         {
             string cmd = string.Empty;
