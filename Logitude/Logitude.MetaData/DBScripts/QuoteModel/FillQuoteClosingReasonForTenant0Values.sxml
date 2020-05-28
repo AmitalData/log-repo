@@ -1,8 +1,16 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="1" Pre="true">
     <![CDATA[
     
-      select * from QuoteClosingReasons
+      alter table QuoteClosingReasons add Id varchar(15) null
+      alter table QuoteClosingReasons add Tenant int null
+      alter table QuoteClosingReasons add Inactive bit not null default 0
+      alter table QuoteClosingReasons add CreateDate datetime null
+      alter table QuoteClosingReasons add UpdateDate datetime null
+      alter table QuoteClosingReasons add CreatedByUserId varchar(15) null
+      alter table QuoteClosingReasons add UpdatedByUserId varchar(15) null
+      
+      
       declare @EntityId as varchar(15)
       declare @UserId as varchar(15)
       set @UserId = (select Id from Contacts where Email = 'system@tenant0.com' and Tenant = 0) 
