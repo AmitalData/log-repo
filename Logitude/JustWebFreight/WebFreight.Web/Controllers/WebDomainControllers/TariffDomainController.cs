@@ -2794,10 +2794,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
                 queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant", tenant.ToString() }
-                }, tenant);
+                                    {
+                                        { "BatchTaskExecutionId", taskExe.Id },
+                                        { "Tenant", tenant.ToString() }
+                                    }
+                , tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
