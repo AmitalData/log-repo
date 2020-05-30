@@ -1191,6 +1191,12 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         logWindow.WindowClosed.subscribe(s => {
             this.SetUIProperties_VatTypeFilter();
+
+            if (this.ItemsSource != null) {
+                this.ItemsSource.Collection.forEach((item: APInvoiceLineItem) => {
+                    item.SetUIProperties();
+                });
+            }
         });
 
         logWindow.Show('./InvoiceModules/APInvoice/Components/Others/APInvoiceTotalVATOnlyComponent');
@@ -1299,7 +1305,7 @@ export class APInvoiceLineItem extends BaseComponent {
     public IsRateEnabled: boolean = false;
     public IsEditingEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    private SetUIProperties() {
+    SetUIProperties() {
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
 
         this.IsEditingEnabled = this.EditControlIsEnabled;
@@ -1378,7 +1384,7 @@ export class APInvoiceLineItem extends BaseComponent {
             this.UIProperties.SetEnabled("OpenAmount", this.ObjectTableName, false);
         }
     }
-    private SetUIProperties_VAT() {
+    SetUIProperties_VAT() {
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, this.IsScreenEnabled);
         this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, this.IsScreenEnabled);
 
@@ -1386,18 +1392,24 @@ export class APInvoiceLineItem extends BaseComponent {
             this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
         }
 
+        var isVatRequired: boolean = false;
         var isVatPercentageRequired = false;
 
-        if (AppTool.IsNullOrEmpty(this.VatPercentage)) {
-            isVatPercentageRequired = true;
+        if (!this.invoicePM.TotalVATOnly) {
 
-            if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
-                if (this.VatIsMultiPercentage) {
-                    isVatPercentageRequired = false;
+            if (AppTool.IsNullOrEmpty(this.VatTypeId)) {
+                isVatRequired = true;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.VatPercentage)) {
+
+                if (!this.VatIsMultiPercentage) {
+                    isVatPercentageRequired = true;
                 }
             }
         }
 
+        this.UIProperties.SetRequired("VatTypeId", this.ObjectTableName, isVatRequired);
         this.UIProperties.SetRequired("VatPercentage", this.ObjectTableName, isVatPercentageRequired);
     }
 

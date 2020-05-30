@@ -666,7 +666,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         DateTime? todayDateTime = null;
         private void InitializeComponent()
         {
-            todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            //todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             //if (initializer.IsNewEntity)
             //{

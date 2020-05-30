@@ -2773,6 +2773,7 @@
   <ItemGroup>
     <Folder Include="AccountingModel\APIDataContract\QueryService\" />
     <Folder Include="GlobalModel\APIDataContract\QueryService\" />
+    <Folder Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\" />
     <Folder Include="TaxesApprovalModel\" />
   </ItemGroup>
   <ItemGroup />

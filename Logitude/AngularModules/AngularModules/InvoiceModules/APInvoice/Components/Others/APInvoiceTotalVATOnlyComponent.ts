@@ -154,7 +154,7 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
                 });
 
                 this.DetailsTabComponent.ComputeTotals();
-                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindowEmit("Ok");
             }
         }
     }

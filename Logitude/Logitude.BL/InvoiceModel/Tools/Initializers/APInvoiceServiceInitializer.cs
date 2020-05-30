@@ -32,6 +32,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         public ICommonDataContext CommonContext { get; private set; }
         public APInvoiceRepository Repository { get; private set; }
         public Tenant LoggedTenant { get; private set; }
+        public AccountingSystem AccountingSystem { get; private set; }
+        public AccountingSetting AccountingSetting { get; private set; }
         public string LoggedContactId { get; private set; }
         public DateTime? TodayDate { get; private set; }
         public DateTime? TodayDateTime { get; private set; }
@@ -40,8 +42,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         public bool IsAlreadyVoided { get; private set; }
         public bool IsInvoiceLinesChanged { get; private set; }
         public bool IsInvoiceTotalVATsChanged { get; private set; }
-
-        public AccountingSetting AccountingSetting { get; private set; }
+        public List<APInvoiceLinePM> ActiveLines { get; private set; }
+        public List<VatType> AllVatTypes { get; private set; }
+        public List<VatTypePercentagePM> AllVatPercentages { get; private set; }
         public APInvoiceServiceInitializer(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.EntityPM = entityPM;
@@ -59,10 +62,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             InitializeLoggedTenant();
             InitializeLoggedContact();
             InitializeAccountingSetting();
+            InitializeAccountingSystem();
 
             InitializeEntity();
             InitializeFlags();
             InitializeVATs();
+            InitializeActiveLines();
         }
 
         public void HandleBehaviours()
@@ -113,6 +118,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(CommonContext);
             AccountingSetting = accountingSettingRepository.GetSingleAccountSetting(Tenant);
+        }
+        private void InitializeAccountingSystem()
+        {
+            if (AccountingSetting != null)
+            {
+                AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(CommonContext);
+                AccountingSystem = accountingSystemRepository.GetSingleAccountingSystem(AccountingSetting.AccountingSystemCode);
+            }
         }
         private void InitializeEntity()
         {
@@ -197,18 +210,25 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
 
             IsInvoiceTotalVATsChanged = isChanged;
         }
-
-        public List<VatType> AllVatTypes { get; private set; }
-        public List<VatTypePercentagePM> AllVatPercentages { get; private set; }
         private void InitializeVATs()
         {
             VatTypeRepository vatTypeRepository = new VatTypeRepository(CommonContext);
-
-            AllVatTypes = vatTypeRepository.GetVatTypes(Tenant).ToList();
-
             VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(CommonContext);
             VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+
+            AllVatTypes = vatTypeRepository.GetVatTypes(Tenant).ToList();
             AllVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(Tenant, TodayDate);
+        }
+        private void InitializeActiveLines()
+        {
+            if (IsNewEntity)
+            {
+                ActiveLines = EntityPM.InvoiceLines.ToList();
+            }
+            else
+            {
+                ActiveLines = EntityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
         }
     }
 }
