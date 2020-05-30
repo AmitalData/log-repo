@@ -466,7 +466,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestCreateDate',
             DataTypeCode: 'Date',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestCreateDate"),
-            Styles: { width: '140px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
           HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',

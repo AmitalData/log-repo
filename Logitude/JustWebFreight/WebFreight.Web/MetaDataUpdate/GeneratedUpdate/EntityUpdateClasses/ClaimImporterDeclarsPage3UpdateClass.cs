@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimImporterDeclarsPage3UpdateClass
    {  		
-		public const string HashString = "feafc0882eab537733622463c4435874";
+		public const string HashString = "f450d4495e1dd480f97790e24f8e7741";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סעיף 3 - תצהיר היבואן",
 			      				    DefaultText =  "Claim Importer Declarations Page 3",
-			      				    Code =  "0c70",
+			      				    Code =  "9155",
 			      				    Name =  "Customs.ClaimImporterDeclarsPage3 Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -304,10 +304,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterLoiDeclarationTypeCode",
 					  						DefaultText =  "Importer Loi Declaration Type",
-					  						FullLocalDefaultText =  "הצהרת היבואן",
+					  						FullLocalDefaultText =  "הצהיר יבואן",
 					  						ListFieldLable =  "ImporterLoiDeclarationTypeCodeListLable",
 					  						ListLableDefaultText =  "Importer Loi Declaration Type",
-					  						ListLocalDefaultText =  "הצהרת היבואן",
+					  						ListLocalDefaultText =  "הצהיר יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
