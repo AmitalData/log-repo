@@ -64,7 +64,6 @@ export class ExceptionReasonExtendedListService {
             return this._http.get(this._mainApiUrl + '/getsingle?' + 'code=' + exceptionReasonCode, {
                 headers: authHeader
             }).map(response => {
-                debugger;
                 var myJsonResult = response.json();
                 var entityPM = new ExceptionReasonPM();
                 entityPM = this.MapJsonToEntityPM(myJsonResult);
