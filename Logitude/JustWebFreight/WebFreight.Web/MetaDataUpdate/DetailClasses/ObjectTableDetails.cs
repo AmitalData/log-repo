@@ -83,7 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string Code1 { get; set; }
         public string CodeField { get; set; }
         public string NameField { get; set; }
-        public bool AllowedInQueues { get; set; }
+        public bool AllowedInTicket { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
         public bool IsTabsHidden { get; set; }

@@ -110,7 +110,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CodeField).HasColumnName("CodeField");            
             this.Property(t => t.SplitComponentPath).HasColumnName("SplitComponentPath");
             this.Property(t => t.DisableSearchBox).HasColumnName("DisableSearchBox");
-            this.Property(t => t.AllowedInQueues).HasColumnName("AllowedInQueues");
+            this.Property(t => t.AllowedInTicket).HasColumnName("AllowedInTicket");
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");
             this.Property(t => t.DescriptionTextCodeCode).HasColumnName("DescriptionTextCodeCode");
             this.Property(t => t.NewButtonTextCodeCode).HasColumnName("NewButtonTextCodeCode");

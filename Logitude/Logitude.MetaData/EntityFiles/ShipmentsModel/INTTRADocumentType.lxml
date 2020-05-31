@@ -43,7 +43,7 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  AllowedInQueues="false"
+  
   IsTabsHidden="false"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
