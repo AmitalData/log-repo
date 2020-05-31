@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="Queue_DelayMessageandChangeStatusTozero"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+Create procedure [dbo].[Queue_DelayMessageandChangeStatusTozero]
+(
+   @MessageId bigint,
+   @DelaySeconds int
+)
+ as begin
+
+IF exists (SELECT [Id]
+FROM [dbo].[QueueMessages] WITH (UPDLOCK) WHERE  [ID] = @MessageId)
+
+BEGIN
+UPDATE [dbo].[QueueMessages]
+SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate()),[Status] = 0
+WHERE [Id] = @MessageId and [Status] <> 0
+
+UPDATE [dbo].[QueueMessageMoreDetails]
+SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate()),[Status] = 0
+WHERE [Id] = @MessageId and [Status] <> 0
+END
+
+
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -1894,11 +1894,18 @@ namespace Logitude.DBMigrations.Models
             string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
             if (File.Exists(versionInfoFilePath))
             {
-                string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
-                VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
-                if(ToolVersion != versionInfo.VersionNumber)
+                try
                 {
-                    ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                    string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
+                    VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
+                    if (ToolVersion != versionInfo.VersionNumber)
+                    {
+                        ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                    }
+                }
+                catch (Exception)
+                {
+                    ExitTool("Error: Cannot Read Version Info File");
                 }
             }
             else

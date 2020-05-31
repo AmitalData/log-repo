@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_PreDeleteMetadata"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+create PROCEDURE [dbo].[usp_PreDeleteMetadata]
+(
+    @pTableName    varchar(50)
+)
+AS
+
+ 
+ 
+ Declare @ObjectTableId As varchar(15)
+
+ Begin
+ 
+ SELECT TOP 1 @ObjectTableId = Id FROM ObjectTables where name = @pTableName
+
+
+----*--Before Delete--*--
+
+
+
+if object_id('dbo.TempOldFeatures') is not null
+drop table TempOldFeatures
+
+select * into TempOldFeatures
+from (select Code,FeatureUniqeCode,IsOld,Tenant
+		from features 
+		where IsOld = 1) as t
+
+		--select * from TempOldFeatures
+
+
+		if object_id('dbo.TempIsSpellCheckedTextCodes') is not null
+drop table TempIsSpellCheckedTextCodes
+
+select * into TempIsSpellCheckedTextCodes
+from (select *
+		from TextCodes 
+		where IsSpellChecked = 1) as t
+
+		--select * from TempIsSpellCheckedTextCodes
+
+        End
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

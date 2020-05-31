@@ -120,6 +120,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CRMClassesGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBOthers\Procedures\usp_DeleteCRMRecords.dxml" />
+    <None Include="DBOthers\Procedures\usp_DeleteTicketsRecords.dxml" />
     <None Include="DBScripts\FixFeatureBusinessUnitProperty.sxml" />
     <None Include="DBTables\Activity.dxml" />
     <None Include="DBTables\ActivityEmailRecipient.dxml" />
