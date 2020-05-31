@@ -444,7 +444,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
+        if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = false; }
        
         if (this.CurrentSession == null) {
             this.ListComponentId = "ListComponentId_-1_-1";
