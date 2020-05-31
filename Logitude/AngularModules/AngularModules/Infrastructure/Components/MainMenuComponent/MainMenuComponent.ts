@@ -487,29 +487,29 @@ export class MainMenuComponent {
                         break;
                     }
 
-                    case "General.MH.Declarations": {
+                    // case "General.MH.Declarations": {
                         
-                        var listArgs = new ListComponentArgs();
-                        listArgs.ObjectTableName = "Customs.Declaration";
-                        listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
-                            this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice", 0).subscribe((response:any) => {
-                             this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat", 0).subscribe((response:any) => {
+                    //     var listArgs = new ListComponentArgs();
+                    //     listArgs.ObjectTableName = "Customs.Declaration";
+                    //     listArgs.HideBackButton = true;
+                    //     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                    //         this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice", 0).subscribe((response:any) => {
+                    //          this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat", 0).subscribe((response:any) => {
 
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run(listArgs);
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
-                            });
-                        });
-                    });
-                        break;
-                    }
+                    //         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    //             .then(cmpRef => {
+                    //                 cmpRef.instance.ComponentRef = cmpRef;
+                    //                 cmpRef.instance.Run(listArgs);
+                    //                 this.CurrentSession.AddMenuReference(cmpRef);
+                    //                 this.ChangeSessionHeader(this.SelectedMenu);
+                    //                 this.isChangingSelected = false;
+                    //                 //this.pointerEvents = 'all';
+                    //             });
+                    //         });
+                    //     });
+                    // });
+                    //     break;
+                    // }
 
                     case "General.MH.PhysicalChecks": {
                         
