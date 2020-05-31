@@ -728,6 +728,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
+
+    private isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
+
+            this.ItemsCollection.forEach((item: AirSurchargeTariffLineData) => {
+                item.IsLineSelected = value;
+            });
+        }
+    }
 }
 
 export class VersionClass {

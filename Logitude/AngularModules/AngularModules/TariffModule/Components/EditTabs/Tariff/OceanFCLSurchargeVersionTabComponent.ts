@@ -781,6 +781,18 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             item.IsRowHover = isRowHover;
         }
     }
+
+    private isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
+
+            this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
+                item.IsLineSelected = value;
+            });
+        }
+    }
 }
 
 export class OceanFCLSurchargeTariffLineData extends BaseComponent {
@@ -1487,6 +1499,14 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.FatherComponent.ReloadDetails.emit("");
 
         this.DoCompareContainerPrices(false);  
+    }
+
+    private isLineSelected: boolean = false;
+    get IsLineSelected() { return this.isLineSelected; }
+    set IsLineSelected(value: boolean) {
+        if (this.isLineSelected != value) {
+            this.isLineSelected = value;
+        }
     }
 }
 

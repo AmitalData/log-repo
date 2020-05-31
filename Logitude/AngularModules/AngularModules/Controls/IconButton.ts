@@ -144,6 +144,12 @@ export class IconButton implements OnInit {
                     break;
                 }
 
+                case "actions": {
+                    this.mySource = './Images/Icons/ActionsGray.png';
+                    this.mySourceOver = './Images/Icons/Actions.png';
+                    break;
+                }
+
                 case "payments": {
                     this.mySource = './Images/Icons/payments.png';
                     this.mySourceOver = './Images/Icons/payments_Blue.png';

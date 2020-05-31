@@ -835,6 +835,14 @@ export class AirCostTariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
+
+    private isLineSelected: boolean = false;
+    get IsLineSelected() { return this.isLineSelected; }
+    set IsLineSelected(value: boolean) {
+        if (this.isLineSelected != value) {
+            this.isLineSelected = value;
+        }
+    }
 }
 
 export class AirSurchargeTariffLineData extends BaseComponent {
@@ -2124,6 +2132,14 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             }            
         }
     }
+
+    private isLineSelected: boolean = false;
+    get IsLineSelected() { return this.isLineSelected; }
+    set IsLineSelected(value: boolean) {
+        if (this.isLineSelected != value) {
+            this.isLineSelected = value;
+        }
+    }
 }
 
 export class OceanFCLFreightTariffLineData extends BaseComponent {
@@ -2705,6 +2721,14 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
 
         else {
             return FontTool.Red;
+        }
+    }
+
+    private isLineSelected: boolean = false;
+    get IsLineSelected() { return this.isLineSelected; }
+    set IsLineSelected(value: boolean) {
+        if (this.isLineSelected != value) {
+            this.isLineSelected = value;
         }
     }
 }
