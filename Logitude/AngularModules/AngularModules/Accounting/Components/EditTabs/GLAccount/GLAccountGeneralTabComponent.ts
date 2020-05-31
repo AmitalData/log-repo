@@ -331,7 +331,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             } else {
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
             }
-
+            if(!this.EntityPM.IsControlAccount) this.EntityPM.AccountTypeCode = null;
         }
     }
 
