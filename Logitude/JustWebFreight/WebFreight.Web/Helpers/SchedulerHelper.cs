@@ -141,7 +141,7 @@ namespace WebFreight.Web.Helpers
             if (task.TriggerType.ToUpper() != "O")
             {
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, task.Tenant, null, null, null, task.NextRunTime);
 
             }
 

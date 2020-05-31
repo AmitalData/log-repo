@@ -269,7 +269,7 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", args.Tenant.ToString() }
-                }, myTimeSpan);
+                }, args.Tenant, myTimeSpan);
             }
             else
             {

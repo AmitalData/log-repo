@@ -104,7 +104,9 @@ using Simplog.Data.QuoteModel;
 					 temp.PriceBreaks = QuotePriceStepsService4.QuotePriceStepsDataMapping(item.QuoteChargePriceSteps,Tenant);
 				}
 
-							 					
+							 
+				   temp.VendorName = item.VendorName;
+				   temp.VendorCode = item.VendorCode;					
 					MyList.Add(temp);
 				}
 					
@@ -227,7 +229,9 @@ using Simplog.Data.QuoteModel;
 						temp.QuoteChargePriceSteps = QuotePriceStepsService4.QuotePriceStepsDataMappingAndValidatin(item.PriceBreaks,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.VendorName = item.VendorName;
+					temp.VendorCode = item.VendorCode;					   
 						MyList.Add(temp);
 					}
 						

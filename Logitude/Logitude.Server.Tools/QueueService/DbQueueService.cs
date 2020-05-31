@@ -65,11 +65,11 @@ namespace Logitude.Server.Tools.QueueService
             return def;
         }
 
-        public void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        public void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
-            SendReturnId(messageValues, delayTime, CustomerId, BatchNumber, NextRunDate);
+            SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
-        protected int? SendReturnId(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        protected int? SendReturnId(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
             int? queueMessageId = null;
             if (LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
@@ -118,6 +118,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         OracleParameter queueCodePar = new OracleParameter("QueueDefinitionCode", OracleDbType.VarChar, 255);
                         OracleParameter msgBodyPar = new OracleParameter("MessageBody", OracleDbType.VarChar, 1000);
+                        OracleParameter tenantPar = new OracleParameter("Tenant", OracleDbType.Number);
                         OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
                         OracleParameter customerId = new OracleParameter("CustomerId", OracleDbType.VarChar, 15);
                         OracleParameter batchNumber = new OracleParameter("BatchNumber", OracleDbType.VarChar, 15);
@@ -129,6 +130,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
+                        tenantPar.Direction = ParameterDirection.Input;
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
@@ -137,6 +139,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
+                        tenantPar.Value = tenant;
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
@@ -144,6 +147,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
+                        cmd.Parameters.Add(tenantPar);
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
@@ -187,6 +191,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.CommandType = CommandType.StoredProcedure;
                         SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.VarChar, 255);
                         SqlParameter msgBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                        SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
                         SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
                         SqlParameter customerId = new SqlParameter("@CustomerId", SqlDbType.VarChar, 15);
                         SqlParameter batchNumber = new SqlParameter("@BatchNumber", SqlDbType.VarChar, 15);
@@ -195,6 +200,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
+                        tenantPar.Direction = ParameterDirection.Input;
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
@@ -203,6 +209,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
+                        tenantPar.Value = tenant;
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
@@ -210,6 +217,7 @@ namespace Logitude.Server.Tools.QueueService
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
+                        cmd.Parameters.Add(tenantPar);
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);

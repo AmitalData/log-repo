@@ -58,6 +58,7 @@ namespace WarehouseData.Helper
             if (table.TableName != "WaterMark")
             {
                 dWDataWarehouseService.CreateIndex(table, "AutomaticLastUpdateDate", destinationConnectionString);
+                if (!string.IsNullOrEmpty(table.AdditionalIndexes)) dWDataWarehouseService.CreateAdditionalIndexes(table, destinationConnectionString);
                 if (table.HasConstraint) dWDataWarehouseService.AddConstraint(table, destinationConnectionString);
                 if (table.HasNotSpecifiedValue) dWDataWarehouseService.InSertNotSpecifiedValueToDW(table, destinationConnectionString);
             }

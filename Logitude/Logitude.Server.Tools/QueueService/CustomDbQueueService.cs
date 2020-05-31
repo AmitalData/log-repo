@@ -84,9 +84,9 @@ namespace Logitude.Server.Tools.QueueService
         new private void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         { throw new NotImplementedException(); }
 
-        public int? Send(Dictionary<string, string> messageValues)
+        public int? Send(Dictionary<string, string> messageValues, int tenant)
         {
-            var queueId= base.SendReturnId(messageValues);
+            var queueId= base.SendReturnId(messageValues, tenant);
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + queueId);
             return queueId;
         }

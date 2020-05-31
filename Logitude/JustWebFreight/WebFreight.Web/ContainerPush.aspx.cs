@@ -479,7 +479,7 @@ namespace WebFreight.Web
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "CommunicationLogId", communicationLogId } });
+                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "CommunicationLogId", communicationLogId } }, tenant);
                 //BrokeredMessage message = new BrokeredMessage();
 
                 //message.Properties["CommunicationLogId"] = communicationLogId;

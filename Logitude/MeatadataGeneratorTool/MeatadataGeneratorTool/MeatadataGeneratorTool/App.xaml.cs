@@ -6,6 +6,7 @@ using MeatadataGeneratorTool.MenuButtons;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
+using MeatadataGeneratorTool.ToolVersion;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,11 +34,38 @@ namespace MeatadataGeneratorTool
 
         public static List<string> LXMLFilesPaths { get; set; }
         public static List<string> DXMLFilesPaths { get; set; }
-
+        public string CurrentVersion = "1.0";
         protected override void OnStartup(StartupEventArgs e)
         {
             if (e.Args != null && e.Args.Length > 0)
             {
+                try
+                {
+                    string workingDirectory = Directory.GetCurrentDirectory(); 
+                    string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName; 
+                    if (projectDirectory.EndsWith(@"Logitude"))
+                    {
+                        projectDirectory = projectDirectory + @"\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\ToolVersion";
+                    }
+                    string[] DirectoryFiles = Directory.GetFiles(projectDirectory, "Version.vxml", SearchOption.AllDirectories);//, "Version.vxml", SearchOption.AllDirectories);
+                    string verisonFilePath = DirectoryFiles[0];//.Where(a => a.Contains("Version.vxml")).FirstOrDefault(); 
+                    string verisonFileString = File.ReadAllText(verisonFilePath);
+                    VersionInfo versionInfo = verisonFileString.ParseXML<VersionInfo>();
+                    if (versionInfo == null || versionInfo.VersionNo != CurrentVersion)
+                    {
+                        MessageBox.Show("You don't have the latest version of the tool, Please rebuild the tool to use the latest version.");
+                        base.OnStartup(e); 
+                        Environment.Exit(0);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Environment.Exit(0);
+                    return;
+
+                }
                 //e.Args[0].ToString();//@@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Teeeeem.lxml";//
                 DirectOpenPath = e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Test121.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//
                 //DirectOpenPath = @"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\QuoteModel\Quote.lxml";//e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//

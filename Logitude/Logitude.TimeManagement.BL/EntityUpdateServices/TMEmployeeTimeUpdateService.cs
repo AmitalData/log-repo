@@ -138,7 +138,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                         { "CompletedWork", completedWork.ToString("0.##")},
                     };
 
-                    queueservice.Send(message);
+                    queueservice.Send(message, tenant);
                 }
                 catch (Exception ex)
                 {

@@ -2031,7 +2031,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(commLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
             }
 
             catch (Exception ex)

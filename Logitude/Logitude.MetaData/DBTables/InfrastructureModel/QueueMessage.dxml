@@ -12,6 +12,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="QueueDefinitionCode"
     Type="varchar"
     Size="265">

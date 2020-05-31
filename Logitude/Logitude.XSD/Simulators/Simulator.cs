@@ -483,7 +483,7 @@ namespace Logitude.XSD.Simulators
             {
                 DbQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ChampAnalyzer", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
                 queueservice.Complete();
             }
         }

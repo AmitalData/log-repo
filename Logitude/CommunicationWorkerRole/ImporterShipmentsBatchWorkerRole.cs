@@ -549,7 +549,7 @@ namespace CommunicationWorkerRole
 
                                                         queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);
 
-                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
 
                                                         var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                                         var Donemsg = "Updates Of Shipment Sent To Importer Successfully , Total Succeeded = " + customerTenantAccessCardsBatch.Totalsucceeded + " " + DateTime.Now;
@@ -811,7 +811,7 @@ namespace CommunicationWorkerRole
 
 
                                                         queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);//"ImportersShipmentsDocsScheduleQueue", 0);
-                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
                                                         queueservice.Complete();
                                                         //if (response.RetryNumber == 0)
                                                         //{

@@ -79,6 +79,10 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public double? SaleMinAmount { get; set; }
     
     public List<QuotePriceSteps> PriceBreaks { get; set; }
+    
+    public string VendorName { get; set; }
+    
+    public string VendorCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

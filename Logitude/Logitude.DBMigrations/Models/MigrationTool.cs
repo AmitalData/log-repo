@@ -13,6 +13,8 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
+        private readonly int ToolVersion = 1;
+
         private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
@@ -26,6 +28,7 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
+            ValidateToolVersion();
             ValidateAppSettings();
 
             Arguments = arguments;
@@ -1882,6 +1885,25 @@ namespace Logitude.DBMigrations.Models
             if (String.IsNullOrEmpty(systemLogsConnectionString))
             {
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+        }
+
+        private void ValidateToolVersion()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            if (File.Exists(versionInfoFilePath))
+            {
+                string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
+                VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
+                if(ToolVersion != versionInfo.VersionNumber)
+                {
+                    ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                }
+            }
+            else
+            {
+                ExitTool("Error: Cannot Find File " + versionInfoFilePath);
             }
         }
 

@@ -205,7 +205,7 @@ namespace WebFreight.Web.Helpers.SendGrid
             {
                 IQueueService queueservice = QueueServiceManager.GetQueueService("sendgridnotifyqueue", Tenant);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "EmailDeliveryError", emailDeliveryError }, { "CreatedByUserId", createdByUserId }, { "EmailSubject", subject }, { "CurrentLogId", currentLogId } };
-                queueservice.Send(param);
+                queueservice.Send(param, tenant);
             }
             catch (Exception ex)
             {
