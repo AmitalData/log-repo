@@ -301,7 +301,7 @@
                 <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick($event)">
                     <div (click)="ButtonClick($event)">
                         <courier-filter-button #MyDropdownMenuFilterComponent
-                                               [IsDisabled]="IsDisplayOnly">
+                                               [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
                             <div class="class-filter-content">
                                 <div>
                                     <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
@@ -309,7 +309,7 @@
                             </div>
 
                             <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
-                                <ul class="P-button-drop-menu" style="text-align:right">
+                                <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowDeclaration($event);  ">
                                         <span>כניסה להצהרה</span>
                                     </li>
@@ -318,7 +318,7 @@
                                     </li>
 
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowGFUUSTS();">
-                                        <span>הזנת סטטוס</span>
+                                        <span>מסך F/U</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveSIToOCRScreen();">
                                         <span>העברת חשבונות ספק ל-OCR</span>

@@ -58,7 +58,6 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
         }
-
         if (this.IsSpotLightTemplate) {
             this.RunComponent();
         }
@@ -94,7 +93,9 @@ export class FieldTemplateComponent {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
+    CheckForAvailableReason(ExceptionReasonsList:any) {
 
+    }
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
