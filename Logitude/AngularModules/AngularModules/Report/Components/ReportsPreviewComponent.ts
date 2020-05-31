@@ -58,7 +58,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = false;
+    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -81,7 +81,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.ReportsTemplateLists = reportTemplateLists;
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
-        this.ReportsRunUsingWR = false;
+        this.ReportsRunUsingWR = true;
         this.RunComponent();
     }
 
