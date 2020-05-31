@@ -57,13 +57,31 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.chargesTypePMService = new ChargesTypeListService();
         this.packageTypeListService = new PackageTypeListService();
         this.EntityPM = this.myService.GetNewEntityPM();
+       
         this.FillChargesIDsAndUOMS();
         this.FillContainerTypeIds();
+     
     }
 
     ngOnInit() {
         this.GetTenantTariffSetting();
         this.GetBCNTMeasurementId();
+    }
+
+    private SetDefaultFreightChargeId() {
+        var chargeCode = 'OFT';
+        if (this.EntityPM.TypeCode == 'AFC') {
+            chargeCode = 'AFT';
+        }
+
+        this.chargesTypePMService.getAllFromCache().subscribe(p => {
+            var chargeType: ChargesTypeList = p.Result.filter(p => p.Code == chargeCode)[0];
+            if (chargeType != null) {
+                this.FreightChargeId = chargeType.Id;
+
+            }
+        });
+
     }
 
     private BCNTmeasurementId: string;
@@ -100,7 +118,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
-
+        this.SetDefaultFreightChargeId();
         this.BuildQueryFilters();
         this.BuildFreightChargesQueryFilters();
         this.SetUIProperties();
