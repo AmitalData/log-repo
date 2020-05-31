@@ -61,15 +61,31 @@ namespace WebFreight.Web.InfrastructureModel
         static BranchRepository branchRepository;
         static DepartmentRepository departmentRepository;
         static ObjectTableRepository objectTableRepository;
+        static TextCodeRepository textCodeRepository;
+        static ObjectFieldRepository objectFieldsRepository;
+        static ObjectFieldValidationRepository objectFieldValidationRepository;
         static RoleRepository roleRepository;
+        static FeatureRepository featureRepository;
+        static RoleFeatureRepository roleFeatureRepository;
         static UserRepository userRepository;
         static CounterRepository counterRepository;
         static CounterDefinitionRepository counterDefinitionRepository;
         static TenantSettingRepository tenantSettingRepository;
+        static ObjectTableTabRepository objectTableTabRepository;
+        static ObjectTableHelperControlRepository objectTableHelperControlRepository;
+        static ScreensRepository screensRepository;
+        static ScreenFieldsRepository screenFieldsRepository;
+        static ObjectTableRuleRepository objectTableRuleRepository;
+        static ObjectTableRuleFieldRepository objectTableRuleFieldRepository;
+        static QueryRepository queryRepository;
+        static QueryColumnRepository queryColumnRepository;
+        static AdvancedQueryFilterRepository advancedQueryFilterRepository;
+        static TranslationHeaderRepository translationHeaderRepository;
         static PaymentTermRepository paymentTermRepository;
         static DocumentTypeRepository documentTypeRepository;
         static DocumentTypeCopyRepository documentTypeCopyRepository;
         static DocumentTypeTemplateRepository documentTypeTemplateRepository;
+        static MenusTableRepository menusTableRepository;
         static EntityStatusRepository entityStatusRepository;
         static EventTypeRepository eventTypeRepository;
         static MeasurementRepository measurementRepository;
@@ -107,19 +123,67 @@ namespace WebFreight.Web.InfrastructureModel
         static SLAHeaderRepository slaHeaderRepository;
         static SLALineRepository slaLineRepository;
         static WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository;
+        private static AdvancedQueryFilterQuery advancedQueryFilterQuery;
         private static ChargesTypeQuery chargesTypeQuery;
         private static ChargesGroupQuery chargesGroupQuery;
         private static EntityStatusQuery entityStatusQuery;
         private static EventTypeQuery eventTypeQuery;
+        private static MenusTableQuery menusTableQuery;
+        private static ObjectFieldQuery objectFieldsQuery;
         private static DocumentTypeQuery documentTypeQuery;
         private static MeasurementQuery measurementQuery;
         private static PackageTypeQuery packageTypeQuery;
+        private static ObjectTableHelperControlQuery objectTableHelperControlQuery;
+        private static ObjectTableRuleFieldQuery objectTableRuleFieldQuery;
+        private static ObjectTableTabQuery objectTableTabQuery;
+        private static QueryColumnQuery queryColumnQuery;
+        private static QueryQuery queryQuery;
+        private static ScreenFieldsQuery screenFieldsQuery;
+        private static ScreensQuery screensQuery;
         private static TenantSettingQuery tenantSettingQuery;
         private static CreditCardTypeQuery creditCardTypeQuery;
         private static MoveTypeQuery moveTypeQuery;
+        private static LeadSourceQuery leadSourceQuery;
+        private static StageQueryService stageQuery;
         private static IndustryQuery industryQuery;
+        private static AdditionalServiceQuery additionalServiceQuery;
+        private static OpportunityClosingReasonQueryService closingReasonQuery;
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
-        
+        public static ScreenFieldsRepository ScreenFieldsRepository
+        {
+            get { return screenFieldsRepository; }
+            set { screenFieldsRepository = value; }
+        }
+
+        public static ObjectFieldValidationRepository ObjectFieldValidationRepository
+        {
+            get { return objectFieldValidationRepository; }
+            set { objectFieldValidationRepository = value; }
+        }
+
+        public static RoleFeatureRepository RoleFeatureRepository
+        {
+            get { return roleFeatureRepository; }
+            set { roleFeatureRepository = value; }
+        }
+
+        public static ObjectTableTabRepository ObjectTableTabRepository
+        {
+            get { return objectTableTabRepository; }
+            set { objectTableTabRepository = value; }
+        }
+
+        public static ObjectTableHelperControlRepository ObjectTableHelperControlRepository
+        {
+            get { return objectTableHelperControlRepository; }
+            set { objectTableHelperControlRepository = value; }
+        }
+
+        public static ObjectTableRuleFieldRepository ObjectTableRuleFieldRepository
+        {
+            get { return objectTableRuleFieldRepository; }
+            set { objectTableRuleFieldRepository = value; }
+        }
         #endregion
 
         public static CustomsRequiredFieldRepository CustomsRequiredFieldRepository
@@ -142,15 +206,31 @@ namespace WebFreight.Web.InfrastructureModel
             branchRepository = new BranchRepository(theTenant);
             departmentRepository = new DepartmentRepository(theTenant);
             objectTableRepository = new ObjectTableRepository(theTenant);
+            textCodeRepository = new TextCodeRepository(theTenant);
+            objectFieldsRepository = new ObjectFieldRepository(theTenant);
+            ObjectFieldValidationRepository = new ObjectFieldValidationRepository(theTenant);
             roleRepository = new RoleRepository(theTenant);
+            featureRepository = new FeatureRepository(theTenant);
+            RoleFeatureRepository = new RoleFeatureRepository(theTenant);
             userRepository = new UserRepository(theTenant);
             counterRepository = new CounterRepository(theTenant);
             counterDefinitionRepository = new CounterDefinitionRepository(theTenant);
             tenantSettingRepository = new TenantSettingRepository(theTenant);
+            ObjectTableTabRepository = new ObjectTableTabRepository(theTenant);
+            ObjectTableHelperControlRepository = new ObjectTableHelperControlRepository(theTenant);
+            screensRepository = new ScreensRepository(theTenant);
+            ScreenFieldsRepository = new ScreenFieldsRepository(theTenant);
+            objectTableRuleRepository = new ObjectTableRuleRepository(theTenant);
+            ObjectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(theTenant);
+            queryRepository = new QueryRepository(theTenant);
+            queryColumnRepository = new QueryColumnRepository(theTenant);
+            advancedQueryFilterRepository = new AdvancedQueryFilterRepository(theTenant);
+            translationHeaderRepository = new TranslationHeaderRepository(theTenant);
             paymentTermRepository = new PaymentTermRepository(theTenant);
             documentTypeRepository = new DocumentTypeRepository(theTenant);
             documentTypeCopyRepository = new DocumentTypeCopyRepository(theTenant);
             documentTypeTemplateRepository = new DocumentTypeTemplateRepository(theTenant);
+            menusTableRepository = new MenusTableRepository(theTenant);
             entityStatusRepository = new EntityStatusRepository(theTenant);
             eventTypeRepository = new EventTypeRepository(theTenant);
             measurementRepository = new MeasurementRepository(theTenant);
@@ -190,8 +270,14 @@ namespace WebFreight.Web.InfrastructureModel
             slaHeaderRepository = new SLAHeaderRepository(theTenant);
             slaLineRepository = new SLALineRepository(theTenant);
             withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(theTenant);
+            objectFieldsQuery = new ObjectFieldQuery(objectFieldsRepository);
+            screensQuery = new ScreensQuery(screensRepository);
+            queryQuery = new QueryQuery(queryRepository);
+            queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
+            menusTableQuery = new MenusTableQuery(menusTableRepository);
             entityStatusQuery = new EntityStatusQuery(entityStatusRepository);
             eventTypeQuery = new EventTypeQuery(eventTypeRepository);
+            advancedQueryFilterQuery = new AdvancedQueryFilterQuery(theTenant);
             chargesTypeQuery = new ChargesTypeQuery(theTenant);
             chargesGroupQuery = new ChargesGroupQuery(theTenant);
             documentTypeQuery = new DocumentTypeQuery(theTenant);
@@ -199,7 +285,11 @@ namespace WebFreight.Web.InfrastructureModel
             packageTypeQuery = new PackageTypeQuery(theTenant);
             creditCardTypeQuery = new CreditCardTypeQuery(theTenant);
             moveTypeQuery = new MoveTypeQuery(moveTypeRepository);
+            leadSourceQuery = new LeadSourceQuery(leadSourceRepository);
+            stageQuery = new StageQueryService(stageRepository);
             industryQuery = new IndustryQuery(industryRepository);
+            additionalServiceQuery = new AdditionalServiceQuery(additionalServiceRepository);
+            closingReasonQuery = new OpportunityClosingReasonQueryService(closingReasonRepository);
 
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
