@@ -249,7 +249,6 @@ export class ExceptionReason extends BaseComponent {
     public parent: ReferantSpotlightDataTemplate;
     public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
-    exceptionReasonPMService: ExceptionReasonPMService = new ExceptionReasonPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
@@ -261,7 +260,6 @@ export class ExceptionReason extends BaseComponent {
             this.ShowCode = false;
         }
         this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
-            debugger;
             this.ExceptionReason = response.Result;
         });
     }
@@ -295,17 +293,17 @@ export class ExceptionReason extends BaseComponent {
         }
 
     }
-    get ExceptionReasonsCode() { debugger; return this.EntityPM.ExceptionReasonsCode; }
+    get ExceptionReasonsCode() { return this.EntityPM.ExceptionReasonsCode; }
     set ExceptionReasonsCode(value: string) {
         if (this.EntityPM.ExceptionReasonsCode != null ) {
         }
         if (this.EntityPM.ExceptionReasonsCode != value) {
             this.EntityPM.ExceptionReasonsCode = value;
             this.spotlightSharedDataService.IsDirty = true;
+
         }
 
     }
-
 
     get ExceptionRemarks() { return this.EntityPM.ExceptionRemarks; }
     set ExceptionRemarks(value: string) {
@@ -319,7 +317,6 @@ export class ExceptionReason extends BaseComponent {
 
     reasonName:any;
     get ExceptionReasonName() {
-        debugger;
         return this.reasonName;
     }
     set ExceptionReasonName(value: string) {
@@ -328,7 +325,6 @@ export class ExceptionReason extends BaseComponent {
         }
     }
     SetLocalName(entity, fieldName) {
-        debugger;
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
         } else {
@@ -344,6 +340,7 @@ export class ExceptionReason extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.reasonName = value.LocalName;
         } else {
+            this.ExceptionReasonsCode = null;
             this.reasonName = null;
         }
     }
