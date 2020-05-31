@@ -10,7 +10,8 @@
       @DelaySeconds int,
       @CustomerId varchar(15),
       @BatchNumber varchar(15),
-      @NextRunDTime datetime = null
+      @NextRunDTime datetime = null,
+      @HashCode nvarchar(1000)
 
       )
       as begin
@@ -23,8 +24,8 @@
       set @nextRunDateTime = @NextRunDTime
       --set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
 
-      insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber)
-      values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0)
+      insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,HashCode)
+      values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0,@HashCode)
 
       declare @CId as varchar(15);
       declare @BNo as varchar(15);
@@ -55,7 +56,8 @@
         v_DelaySeconds        IN NUMBER,
         v_CustomerId          IN VARCHAR2,
         v_BatchNumber         IN VARCHAR2 ,
-        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE 
+        v_HashCode         IN NVARCHAR2,
+        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
         )
     AS
       v_currentdate     DATE;  
@@ -74,7 +76,8 @@
           MessageBody,
           Tenant,
           NextRunDateTime,
-          RetryNumber
+          RetryNumber,
+          HashCode
         )
         VALUES
         (
@@ -84,7 +87,8 @@
           v_MessageBody,
           v_Tenant,
           v_nextRunDateTime,
-          0
+          0,
+          v_HashCode
         );
       IF v_CustomerId = ' ' THEN
         v_CId        := NULL ;

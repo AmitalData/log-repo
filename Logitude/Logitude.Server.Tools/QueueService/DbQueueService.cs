@@ -85,6 +85,9 @@ namespace Logitude.Server.Tools.QueueService
             {
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
                 string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
+                string bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
+                
+
                 QueueResponse response = new QueueResponse();
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
@@ -144,6 +147,7 @@ namespace Logitude.Server.Tools.QueueService
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
                         //NextRunDateTime.Value = NextRunDate;
+                        hashCodePar.Value = bodyHashCode;
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
@@ -151,6 +155,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
+                        cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(queueMessageIdPar);
 
 
@@ -214,6 +219,7 @@ namespace Logitude.Server.Tools.QueueService
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
                         NextRunDateTime.Value = NextRunDate;
+                        hashCodePar.Value = bodyHashCode;
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
@@ -222,6 +228,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(NextRunDateTime);
+                        cmd.Parameters.Add(hashCodePar);
 
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
