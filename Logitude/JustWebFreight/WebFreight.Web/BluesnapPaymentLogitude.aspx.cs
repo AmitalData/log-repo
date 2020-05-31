@@ -31,8 +31,8 @@ namespace WebFreight.Web
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-            {              
-                string values = "";             
+            {
+                string values = "";
                 using (var reader = new StreamReader(Request.InputStream))
                 {
                     values = reader.ReadToEnd();
@@ -42,9 +42,13 @@ namespace WebFreight.Web
                 {
                     this.InsertNewAnalyzeQueue(values);
                 }
+                else
+                {
+                    throw new Exception("Bluesnap Empty values");
+                }
             }
             catch (Exception errorInfo)
-           {
+            {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("Bluesnap payment logitude error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
             }
