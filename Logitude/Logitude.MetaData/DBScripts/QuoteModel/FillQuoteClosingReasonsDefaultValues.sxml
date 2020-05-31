@@ -21,6 +21,9 @@
           set @UserEmail = 'system@tenant'+ @TenantString + '.com'
 		      set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant) 
 
+          if (@UserId is not null)
+          begin 
+          
               if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'EQ')
               begin 		    
 			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
@@ -55,7 +58,7 @@
                   insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
                   values('XQ', 'Expired Quote', 'XQ,Expired Quote', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)                            
               end
-		
+		  end
                  FETCH NEXT FROM TenantsCursor INTO @Tenant      
               END
 	      CLOSE TenantsCursor
