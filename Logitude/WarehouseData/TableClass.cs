@@ -33,6 +33,8 @@ namespace WarehouseData
         public string RefreshIds { get; set; }
         public List<TableClass> RelatedEntities { get; set; }
         public string ParentKeyName { get; set; }
+
+        public string AdditionalIndexes { get; set; }
     }
 
     public class DWObjectFieldDB
