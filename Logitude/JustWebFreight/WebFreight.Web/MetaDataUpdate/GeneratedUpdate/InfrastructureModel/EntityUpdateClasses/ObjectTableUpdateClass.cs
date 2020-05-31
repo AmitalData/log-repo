@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectTableUpdateClass
    {  		
-		public const string HashString = "83899889c2838052129022e4c2955938";
+		public const string HashString = "63508e2d9331f451444b8b5e9ff33dfa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,7 +98,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    LookUp1 =  "Name",
 			      				    DependencyFilter1 =  "HasDocuments",
 			      				    DependencyFilter2 =  "AllowedForComputingPartners",
-			      				    DependencyFilter3 =  "AllowedInQueues",
+			      				    DependencyFilter3 =  "AllowedInTicket",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "8d1d",
+			      				    Code =  "8c24",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -491,6 +491,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowedInTicket",
 					  						DefaultText =  "AllowedInTicket",
+					  						ListFieldLable =  "AllowedInTicketListLable",
+					  						ListLableDefaultText =  "AllowedInTicket",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

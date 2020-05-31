@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    AllowedInTicket =  false,
 			      				    IsTabsHidden =  false,
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
