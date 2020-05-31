@@ -1752,7 +1752,16 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     var DetailsDivsHeight = 0;
     //var t1 = this.controller.cachedData.filter(a => a.rowIndex == rowIndex.rowIndex);
     //var t2 = this.controller.cachedData.filter(a => a.rowIndex == rowIndex.rowIndex)[0];
-    this.controller.cachedData[rowIndex.rowIndex].ShowDetails = !(this.controller.cachedData[rowIndex.rowIndex].ShowDetails);
+        var ShowDetails = this.controller.cachedData[rowIndex.rowIndex].ShowDetails = !(this.controller.cachedData[rowIndex.rowIndex].ShowDetails);
+        if (!ShowDetails) {
+            this.controller.cachedData[rowIndex.rowIndex].DetailsIcon = "./Images/SpotLightPlusIcon.png";
+
+        }
+        else {
+            this.controller.cachedData[rowIndex.rowIndex].DetailsIcon = "./Images/spotlightMinusIcon.png";
+            //ShowSpot = true;
+        }
+        this.cd.detectChanges();
     this.rows.forEach((value, key) => {
       //console.log("rows value.rowIndex :" + value.rowIndex);
       var top = 0;
