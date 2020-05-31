@@ -18,5 +18,13 @@
     Size="265">
     <Constraints
       Nullable="false" />
+  
+  </Column>
+
+ <Column
+    Name="EnableMessageHash"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

@@ -183,6 +183,7 @@
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateTenantCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteDuplicatedQueueMessagesProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\QueueEnQueueProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\AgingReportInvoiceDataView.dxml" />
