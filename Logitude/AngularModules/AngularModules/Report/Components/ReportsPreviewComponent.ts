@@ -336,7 +336,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this.IsUsedReportsRunUsingWR = false;
             this.IsRunReportSucceeded = true;
             this.SetReportData();
-       
+
         }
     }
 
@@ -448,7 +448,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
-        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;
 
         if (isUsedWorkerRoleAlalways) {
             this.StartBusyIndicator("Generating...");
