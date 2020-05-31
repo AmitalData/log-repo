@@ -11,7 +11,7 @@
                     <td style=" width:10%; padding-bottom:115px; left:110px; z-index:99">
                         <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
                     </td>
-                    <td style="left:150px">
+                    <td style="left:130px">
                         <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:300px">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
@@ -25,7 +25,7 @@
                                      <ng-template let-item>
 <log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.ExceptionReasonsCode}}</span>
+                                            <span>{{item.ExceptionReasonName}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogLov #ReferantReasonLovBox
@@ -33,7 +33,7 @@
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="item"
                                                     [LookUpTableName]="'Customs.ExceptionReason'"
-                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CourierPendingReasonName')"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
                                                     [FocusOnMe]="'true'"
                                                     [HideColumns]="true">
                                             </LogLov>

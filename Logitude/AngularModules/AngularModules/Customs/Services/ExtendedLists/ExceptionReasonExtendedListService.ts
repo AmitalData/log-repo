@@ -13,9 +13,12 @@ import { ExceptionReasonPM } from '../../EntityPMs/ExceptionReasonPM';
 export class ExceptionReasonExtendedListService {
     private _http: HttpClient
     private _apiUrl: string;
+    private _mainApiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExceptionReason';
+        this._mainApiUrl = ServiceHelper.GetLogitudeURL() + 'api/exceptionreasonviews';  
+
     }
 
     GetExceptionReasonByUnifreightStatus(unifreightStatusCode: string) {
@@ -54,9 +57,24 @@ export class ExceptionReasonExtendedListService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+    get(exceptionReasonCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        return Observable.defer(() => {
+            return this._http.get(this._mainApiUrl + '/getsingle?' + 'code=' + exceptionReasonCode, {
+                headers: authHeader
+            }).map(response => {
+                var myJsonResult = response.json();
+                var entityPM = new ExceptionReasonPM();
+                entityPM = this.MapJsonToEntityPM(myJsonResult);
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entityPM;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     MapJsonToEntityPM(jsonPM: any) {
-
         var entityPM: ExceptionReasonPM;
         entityPM = new ExceptionReasonPM();
         var jsonPMKeys = Object.keys(jsonPM);
