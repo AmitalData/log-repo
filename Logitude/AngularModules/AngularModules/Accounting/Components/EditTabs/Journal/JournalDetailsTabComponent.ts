@@ -301,7 +301,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.ValidateDates(value, "DocumentDate");
             }
 
-            this.EntityPM.DocumentDate = value;
+          this.EntityPM.DocumentDate = value;
+          this.UpdateLinesDates();
         }
     }
 
@@ -311,7 +312,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
               if (value != null) {
                   this.ValidateDates(value, "DueDate");
             }
-            this.EntityPM.DueDate = value;
+          this.EntityPM.DueDate = value;
+          this.UpdateLinesDates();
         }
     }
     get AccountingDate() { return this.EntityPM.AccountingDate; }
@@ -324,7 +326,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
 
             this.EntityPM.AccountingDate = value;
-            this.UpdateLinesAccountingDates();
+          this.UpdateLinesAccountingDates();
+          this.UpdateLinesDates();
         }
 
 
@@ -591,7 +594,20 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         var lines = this.JournalLines;
         console.log("[TEST] ", entity, this.JournalLines);
     }
+  UpdateLinesDates() {
+    var lines = this.JournalLines.Collection;
+    if (lines) {
+      lines.forEach((line: JournalLineModel) => {
+        if (line.Line == this.JournalLines.Length) {
+          if (!line.AccountingDate) line.AccountingDate = this.AccountingDate;
+          if (!line.DueDate) line.DueDate = this.DueDate;
+          if (!line.DocumentDate) line.DocumentDate = this.DocumentDate;
+        }});
 
+        
+    }
+
+  }
 
 }
 
