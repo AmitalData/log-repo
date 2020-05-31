@@ -25,7 +25,7 @@ namespace Logitude.Server.Tools.QueueService
             this.QueueClient = Communications.GetQueueClient(this.QueueCode);
         }
 
-        public void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        public void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
             using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
             {

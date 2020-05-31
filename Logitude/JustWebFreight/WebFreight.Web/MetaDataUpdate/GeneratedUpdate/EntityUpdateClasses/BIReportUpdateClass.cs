@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BIReportUpdateClass
    {  		
-		public const string HashString = "8d358a6f8d7f9619f7c733642713b811";
+		public const string HashString = "59f72f5c7f9d315e3d95a2ac19360915";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1297,7 +1297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature BIReportFeature_BIReportCopyFromLibrary = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopyFromLibrary", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopyFromLibrary", NameTextCodeDefaultText = @"Copy From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
-		   Feature BIReportFeature_BIReportRun = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportRun", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportRun", NameTextCodeDefaultText = @"Run reports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+		   Feature BIReportFeature_BIReportRun = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportRun", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportRun", NameTextCodeDefaultText = @"Run" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
 		   Feature BIReportFeature_BIReport_Fact_Shipments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.Shipments", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.Shipments", NameTextCodeDefaultText = @"Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 

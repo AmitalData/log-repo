@@ -783,6 +783,11 @@ export class QuotePM {
     public set QuoteClosingReasonCode(newValue: string) { if (this.quoteClosingReasonCode != newValue) { this.quoteClosingReasonCode = newValue; this.MarkAsDirty("QuoteClosingReasonCode"); } }
        
 	 
+    private quoteClosingReasonId: string;
+    public get QuoteClosingReasonId() { return this.quoteClosingReasonId; }
+    public set QuoteClosingReasonId(newValue: string) { if (this.quoteClosingReasonId != newValue) { this.quoteClosingReasonId = newValue; this.MarkAsDirty("QuoteClosingReasonId"); } }
+       
+	 
     private stageId: string;
     public get StageId() { return this.stageId; }
     public set StageId(newValue: string) { if (this.stageId != newValue) { this.stageId = newValue; this.MarkAsDirty("StageId"); } }

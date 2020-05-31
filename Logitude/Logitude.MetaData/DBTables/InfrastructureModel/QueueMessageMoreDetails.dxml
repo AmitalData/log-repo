@@ -5,22 +5,9 @@
   DBType="Main"
   Module="Infrastructure">
   <Column
-    Name="Id"
-    Type="bigint">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="QueueDefinitionCode"
     Type="varchar"
     Size="265">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreateDateTime"
-    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -81,6 +68,26 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="bigint">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="-1">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="QueueDefinitionCode"

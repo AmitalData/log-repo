@@ -145,6 +145,11 @@ export class QuoteChargePM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
+    private vendorCode: string;
+    public get VendorCode() { return this.vendorCode; }
+    public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
+       
+	 
     private costMeasurementId: string;
     public get CostMeasurementId() { return this.costMeasurementId; }
     public set CostMeasurementId(newValue: string) { if (this.costMeasurementId != newValue) { this.costMeasurementId = newValue; this.MarkAsDirty("CostMeasurementId"); } }

@@ -36,7 +36,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
-
+            UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
             // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
@@ -218,6 +218,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             }
+        private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine )
+        {
+            if(taxReportLinePM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if(taxReportLine.TransmitStatusCode != taxReportLinePM.TransmitStatusCode)
+                {
+                    if(taxReportLinePM.TransmitStatusCode != "0")
+                    {
+                        taxReportLinePM.StatusCode = "6";
+                    }
+                }
+            }
+        }
+
+
         private string ModifyVatNumberToValidLength(string vatnumber)
         {
             string vatNumber = null;

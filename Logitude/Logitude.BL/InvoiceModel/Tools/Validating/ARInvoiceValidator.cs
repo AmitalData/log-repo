@@ -715,7 +715,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
                 //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                 double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency * Math.Round( entityPM.InvoiceCurrencyExchangeRate.Value ,2));
+                 double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency *  entityPM.InvoiceCurrencyExchangeRate.Value );
                 localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
                 if (localAmount != localAmount_Computed)
                 {

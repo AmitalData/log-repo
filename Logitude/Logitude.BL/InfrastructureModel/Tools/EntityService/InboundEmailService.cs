@@ -228,7 +228,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         { "ChildObjectTableId", childObjectTableId} ,
                     };
 
-                queueservice.Send(message);
+                queueservice.Send(message, tenant);
             }
             catch (Exception ex)
             {

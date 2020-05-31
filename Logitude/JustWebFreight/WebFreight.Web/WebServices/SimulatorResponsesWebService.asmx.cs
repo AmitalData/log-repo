@@ -226,7 +226,7 @@ namespace WebFreight.Web.WebServices
                         if (invoice.ARInvoiceTypeCode == "CD")
                             InvoiceTypeName = "MEMO";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -239,7 +239,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "APInvoice";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -252,7 +252,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "ARPayment";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -265,7 +265,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "APPayment";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "ARInvoiceVoid";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -291,7 +291,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "VendorCredit";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
                     }
 
@@ -304,7 +304,7 @@ namespace WebFreight.Web.WebServices
                         QBOqueueservice.InitializeQueue("QBO", 0);
                         var InvoiceTypeName = "ARPaymentVoid";
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", commlog.Id }, { "Tenant", tenant.ToString() }, { "type", InvoiceTypeName } };
-                        QBOqueueservice.Send(param);
+                        QBOqueueservice.Send(param, tenant);
                         QBOqueueservice.Complete();
 
 
@@ -316,7 +316,7 @@ namespace WebFreight.Web.WebServices
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue(commlog.QueueName, 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
                 }
 
                 else
@@ -340,7 +340,7 @@ namespace WebFreight.Web.WebServices
                         DbQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("SATInterface", 0);
                         Dictionary<string, string> param = new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() }, { "CancellationRequest", (commlog.Subject == "SAT Interface Cancellation Request").ToString() } };
-                        queueservice.Send(param);
+                        queueservice.Send(param, tenant);
 
                     }
                     else
@@ -353,7 +353,7 @@ namespace WebFreight.Web.WebServices
                             queueName = commlog.QueueName;
                         }
 						DbQueueService queueservice = new DbQueueService(queueName, tenant);
-						queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+						queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
 					}
 
                 }

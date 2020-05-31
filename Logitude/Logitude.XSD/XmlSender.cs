@@ -292,7 +292,7 @@ namespace Logitude.XSD
                         //}
 
                         DbQueueService queueservice = new DbQueueService(queueName, Tenant);
-                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
+                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } }, Tenant);
                     }
 
                     catch (Exception ex)

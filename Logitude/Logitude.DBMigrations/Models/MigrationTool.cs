@@ -13,7 +13,9 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private readonly int ToolVersion = 1;
+
+        private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
         private readonly RunSettings RunSettings;
@@ -26,8 +28,12 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
+            ValidateToolVersion();
+            ValidateAppSettings();
+
             Arguments = arguments;
             RunSettings = runSettings;
+            DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
         }
 
         public void RunTool()
@@ -107,7 +113,7 @@ namespace Logitude.DBMigrations.Models
                     GeneratedScript scriptsToSave = GetScriptsToSave(toolTablesScript, preGeneralScript, migrationsScript, postGeneralScript);
                     SaveScript(scriptsToSave);
 
-                    PrintMissingIndexesWarnings();
+                    ExportMissingIndexesWarnings();
                 }
                 else
                 {
@@ -361,21 +367,30 @@ namespace Logitude.DBMigrations.Models
 
         private void SaveScript(GeneratedScript generatedScript)
         {
-            string globalScript = !string.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !string.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !string.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
+            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
+            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
+            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
 
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
-            File.WriteAllText(globalScriptFilePath, globalScript);
+            if (File.Exists(globalScriptFilePath))
+            {
+                File.WriteAllText(globalScriptFilePath, globalScript);
+            }
 
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
-            File.WriteAllText(mainScriptFilePath, mainScript);
+            if (File.Exists(mainScriptFilePath))
+            {
+                File.WriteAllText(mainScriptFilePath, mainScript);
+            }
 
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
-            File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+            if (File.Exists(systemLogsScriptFilePath))
+            {
+                File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+            }
 
             if (IsGeneratedScriptsEmpty(generatedScript))
             {
@@ -494,11 +509,14 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void PrintMissingIndexesWarnings()
+        private void ExportMissingIndexesWarnings()
         {
-            if (!String.IsNullOrEmpty(MissingIndexesWarnings))
+            string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string missingIndexesWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingIndexesWarnings.txt");
+            if (File.Exists(missingIndexesWarningsFilePath))
             {
-                Console.WriteLine(MissingIndexesWarnings.TrimEnd('\n'));
+                File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
             }
         }
 
@@ -1841,10 +1859,58 @@ namespace Logitude.DBMigrations.Models
             return toolDxmlFilesNames;
         }
 
+        private void ValidateAppSettings()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+
+            if (String.IsNullOrEmpty(databaseType))
+            {
+                ExitTool("Error: Cannot Find DatabaseType in Configuration File");
+            }
+            if(databaseType != "msql" && databaseType != "oracle")
+            {
+                ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
+            }
+            if (String.IsNullOrEmpty(globalConnectionString))
+            {
+                ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(mainConnectionString))
+            {
+                ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(systemLogsConnectionString))
+            {
+                ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+        }
+
+        private void ValidateToolVersion()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            if (File.Exists(versionInfoFilePath))
+            {
+                string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
+                VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
+                if(ToolVersion != versionInfo.VersionNumber)
+                {
+                    ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                }
+            }
+            else
+            {
+                ExitTool("Error: Cannot Find File " + versionInfoFilePath);
+            }
+        }
+
         private void ExitTool(string message)
         {
             Console.WriteLine(message);
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
     }
 }

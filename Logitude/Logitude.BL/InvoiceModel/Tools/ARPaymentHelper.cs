@@ -315,7 +315,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPaymentVoid" }, { "OldTransferStatusCode", null } });
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPaymentVoid" }, { "OldTransferStatusCode", null } }, tenant);
                 queueservice.Complete();
             }
 
@@ -593,7 +593,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARPayment" }, { "OldTransferStatusCode", null } };
-                queueservice.Send(param);
+                queueservice.Send(param, tenant);
                 queueservice.Complete();
             }
 

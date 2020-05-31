@@ -98,6 +98,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ToAddressCity).HasMaxLength(25).IsUnicode(true);
             this.Property(t => t.ToAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteClosingReasonCode).HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.QuoteClosingReasonId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreelancerAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreelancerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreelancerContactId).HasMaxLength(15).IsUnicode(false);
@@ -249,6 +250,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.UsageCount).HasColumnName("UsageCount");
             this.Property(t => t.LastUsageDate).HasColumnName("LastUsageDate");
             this.Property(t => t.QuoteClosingReasonCode).HasColumnName("QuoteClosingReasonCode");
+            this.Property(t => t.QuoteClosingReasonId).HasColumnName("QuoteClosingReasonId");
             this.Property(t => t.SentDate).HasColumnName("SentDate");
             this.Property(t => t.AcceptedDate).HasColumnName("AcceptedDate");
             this.Property(t => t.DeclinedDate).HasColumnName("DeclinedDate");
@@ -350,7 +352,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.FromAddressCountry).WithMany().HasForeignKey(d => d.FromAddressCountryId);            
             this.HasOptional(t => t.ToAddressCountry).WithMany().HasForeignKey(d => d.ToAddressCountryId);
             this.HasOptional(t => t.QuoteTemplate).WithMany().HasForeignKey(d => d.QuoteTemplateId);
-            this.HasOptional(t => t.QuoteClosingReason).WithMany().HasForeignKey(d => d.QuoteClosingReasonCode);
+            this.HasOptional(t => t.QuoteClosingReason).WithMany().HasForeignKey(d => d.QuoteClosingReasonId);
             this.HasOptional(t => t.FreelancerCard).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasOptional(t => t.FreelancerContact).WithMany().HasForeignKey(d => d.FreelancerContactId);
             this.HasOptional(t => t.FreelancerAdress).WithMany().HasForeignKey(d => d.FreelancerAddressId);

@@ -9,8 +9,17 @@ namespace Logitude.BL.QuoteModel.EntityLists
     public class QuoteClosingReasonList
     {
         [Key]
+        public string Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string SearchFields { get; set; }
+        public int Tenant { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string CreatedByUserId { get; set; }
+        public string UpdatedByUserId { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
+        public bool Inactive { get; set; }
     }
 }

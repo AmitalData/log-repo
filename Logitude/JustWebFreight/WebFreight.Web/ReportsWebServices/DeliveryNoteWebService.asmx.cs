@@ -335,6 +335,17 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    if (!string.IsNullOrEmpty(shipment.ShipperContactId))
+                    {
+                        Contact contact = ContactRepository.GetSingleContact(shipment.ShipperContactId, tenant, true);
+                        if (contact != null)
+                        {
+                            dataProvider.ShipperContactName = contact.EnglishName;
+                            dataProvider.ShipperContactMobileNumber = contact.Mobile;
+                        }
+                    }
+
                 }
             }
         }

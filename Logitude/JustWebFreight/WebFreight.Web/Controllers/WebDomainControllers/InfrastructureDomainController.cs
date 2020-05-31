@@ -1279,7 +1279,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                });
+                }, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -1682,7 +1682,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     DbQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ChampAnalyzer", tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, tenant);
                     queueservice.Complete();
                 }
 

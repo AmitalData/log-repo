@@ -1,370 +1,483 @@
--- Create New Table With Name DBMigrationsHistory
-CREATE TABLE [dbo].[DBMigrationsHistory](
-[Id] NVARCHAR(128) NOT NULL,
-[DxmlFileName] VARCHAR(500) NOT NULL,
-[TableName] VARCHAR(500) NOT NULL,
-[ColumnName] VARCHAR(MAX) NULL,
-[MigrationType] VARCHAR(50) NOT NULL,
-[ExecutionDate] DATETIME NOT NULL,
-[MigrationScript] NVARCHAR(MAX) NOT NULL,
-CONSTRAINT [PK_DBMigrationsHistory] PRIMARY KEY([Id])
-);
+-- Add New Column With Name TaxReportDate
+ALTER TABLE [dbo].[TaxReportLines] ADD [TaxReportDate] DATETIME NULL;
 
-
--- Rename Column From Drop_DocumentDate To DocumentDate
-EXEC SP_RENAME 'dbo.Journals.Drop_DocumentDate', 'DocumentDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('cc9875c4-7816-48c8-a14f-766df391cc7e', 'Journal.dxml', 'Journals', 'Drop_DocumentDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_DocumentDate To DocumentDateEXEC SP_RENAME ''dbo.Journals.Drop_DocumentDate'', ''DocumentDate'', ''COLUMN'';');
-
--- Rename Column From Drop_DueDate To DueDate
-EXEC SP_RENAME 'dbo.Journals.Drop_DueDate', 'DueDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0caa08dc-6948-4ef8-b3db-41e1f871fc8e', 'Journal.dxml', 'Journals', 'Drop_DueDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_DueDate To DueDateEXEC SP_RENAME ''dbo.Journals.Drop_DueDate'', ''DueDate'', ''COLUMN'';');
-
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TaxReportLine.dxml', 'TaxReportLines', 'TaxReportDate', 'Add Column', GETDATE(), '-- Add New Column With Name TaxReportDate
+ALTER TABLE [dbo].[TaxReportLines] ADD [TaxReportDate] DATETIME NULL;');
 
 -- Add New Column With Name IsExternalLine
 ALTER TABLE [dbo].[TaxReportLines] ADD [IsExternalLine] BIT DEFAULT(0) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('28b19e61-e289-4e4d-a4c0-2709531efba5', 'TaxReportLine.dxml', 'TaxReportLines', 'IsExternalLine', 'Add Column', GETDATE(), '-- Add New Column With Name IsExternalLineALTER TABLE [dbo].[TaxReportLines] ADD [IsExternalLine] BIT DEFAULT(0) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TaxReportLine.dxml', 'TaxReportLines', 'IsExternalLine', 'Add Column', GETDATE(), '-- Add New Column With Name IsExternalLine
+ALTER TABLE [dbo].[TaxReportLines] ADD [IsExternalLine] BIT DEFAULT(0) NOT NULL;');
 
 -- Add New Column With Name TotalInvoiceAmount
 ALTER TABLE [dbo].[TaxReportLines] ADD [TotalInvoiceAmount] DECIMAL(16, 2) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9a766a9a-0677-48e6-b183-82a5af6b5deb', 'TaxReportLine.dxml', 'TaxReportLines', 'TotalInvoiceAmount', 'Add Column', GETDATE(), '-- Add New Column With Name TotalInvoiceAmountALTER TABLE [dbo].[TaxReportLines] ADD [TotalInvoiceAmount] DECIMAL(16, 2) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TaxReportLine.dxml', 'TaxReportLines', 'TotalInvoiceAmount', 'Add Column', GETDATE(), '-- Add New Column With Name TotalInvoiceAmount
+ALTER TABLE [dbo].[TaxReportLines] ADD [TotalInvoiceAmount] DECIMAL(16, 2) NULL;');
+
+-- Add New Column With Name OriginalReference
+ALTER TABLE [dbo].[TaxReportLines] ADD [OriginalReference] VARCHAR(20) NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TaxReportLine.dxml', 'TaxReportLines', 'OriginalReference', 'Add Column', GETDATE(), '-- Add New Column With Name OriginalReference
+ALTER TABLE [dbo].[TaxReportLines] ADD [OriginalReference] VARCHAR(20) NULL;');
 
 
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.ChargesTypes.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
+-- Rename Column From ExcelOnly To DisablePreview
+EXEC SP_RENAME 'dbo.Reports.ExcelOnly', 'DisablePreview', 'COLUMN';
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b5ae6290-e8c6-481b-9010-b80585d6d308', 'ChargesType.dxml', 'ChargesTypes', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.ChargesTypes.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On ChargesTypes Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ChargesTypes_AutomaticLastUpdateDate] ON [dbo].[ChargesTypes]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('41712eb9-371d-423b-a7f4-cb45c75f8dde', 'ChargesType.dxml', 'ChargesTypes', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ChargesTypes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ChargesTypes_AutomaticLastUpdateDate] ON [dbo].[ChargesTypes]([AutomaticLastUpdateDate])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Report.dxml', 'Reports', 'ExcelOnly', 'Rename Column', GETDATE(), '-- Rename Column From ExcelOnly To DisablePreview
+EXEC SP_RENAME ''dbo.Reports.ExcelOnly'', ''DisablePreview'', ''COLUMN'';');
 
 
--- Add New Column With Name AddedManually
-ALTER TABLE [dbo].[DocumentTypes] ADD [AddedManually] BIT DEFAULT(0) NOT NULL;
+-- Rename Column From ExcelOnly To DisablePreview
+EXEC SP_RENAME 'dbo.ReportExecutionLogs.ExcelOnly', 'DisablePreview', 'COLUMN';
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('424170fd-8419-4166-9dcf-5fd467be0b02', 'DocumentType.dxml', 'DocumentTypes', 'AddedManually', 'Add Column', GETDATE(), '-- Add New Column With Name AddedManuallyALTER TABLE [dbo].[DocumentTypes] ADD [AddedManually] BIT DEFAULT(0) NOT NULL;');
-
-
--- Add New Column With Name DisablePreview
-ALTER TABLE [dbo].[Reports] ADD [DisablePreview] BIT DEFAULT(0) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('af7d5048-3f16-4cad-94e7-d532795d2ab9', 'Report.dxml', 'Reports', 'DisablePreview', 'Add Column', GETDATE(), '-- Add New Column With Name DisablePreviewALTER TABLE [dbo].[Reports] ADD [DisablePreview] BIT DEFAULT(0) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ReportExecutionLog.dxml', 'ReportExecutionLogs', 'ExcelOnly', 'Rename Column', GETDATE(), '-- Rename Column From ExcelOnly To DisablePreview
+EXEC SP_RENAME ''dbo.ReportExecutionLogs.ExcelOnly'', ''DisablePreview'', ''COLUMN'';');
 
 
--- Add New Column With Name DisablePreview
-ALTER TABLE [dbo].[ReportExecutionLogs] ADD [DisablePreview] BIT DEFAULT(0) NOT NULL;
+-- Create Unique Constraint On Queries Table
+EXEC('ALTER TABLE [dbo].[Queries] ADD CONSTRAINT [UQ_Queries_UniqueCode] UNIQUE([UniqueCode])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d23fc031-49bc-4c4c-b801-b41896d005b0', 'ReportExecutionLog.dxml', 'ReportExecutionLogs', 'DisablePreview', 'Add Column', GETDATE(), '-- Add New Column With Name DisablePreviewALTER TABLE [dbo].[ReportExecutionLogs] ADD [DisablePreview] BIT DEFAULT(0) NOT NULL;');
-
-
--- Create New Table With Name ShipmentHeaders
-CREATE TABLE [dbo].[ShipmentHeaders](
-[Id] VARCHAR(15) NOT NULL,
-[Tenant] INT NULL,
-[CustomerId] VARCHAR(15) NULL,
-[TransportModeId] CHAR(1) NULL,
-[Master] VARCHAR(20) NULL,
-[House] VARCHAR(20) NULL,
-[ShipmentNumber] VARCHAR(20) NULL,
-[FromPortId] VARCHAR(15) NULL,
-[ToPortId] VARCHAR(15) NULL,
-[ShipperId] VARCHAR(15) NULL,
-[ConsigneeId] VARCHAR(15) NULL,
-[GrossWeight] FLOAT NULL,
-[Volume] FLOAT NULL,
-[PickupDone] BIT NULL,
-[PickupDate] DATETIME NULL,
-CONSTRAINT [PK_ShipmentHeaders] PRIMARY KEY([Id])
-);
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('fe03b63a-e495-4c16-9b21-f64c62ced416', 'ShipmentHeader.dxml', 'ShipmentHeaders', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name ShipmentHeadersCREATE TABLE [dbo].[ShipmentHeaders]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NULL,[CustomerId] VARCHAR(15) NULL,[TransportModeId] CHAR(1) NULL,[Master] VARCHAR(20) NULL,[House] VARCHAR(20) NULL,[ShipmentNumber] VARCHAR(20) NULL,[FromPortId] VARCHAR(15) NULL,[ToPortId] VARCHAR(15) NULL,[ShipperId] VARCHAR(15) NULL,[ConsigneeId] VARCHAR(15) NULL,[GrossWeight] FLOAT NULL,[Volume] FLOAT NULL,[PickupDone] BIT NULL,[PickupDate] DATETIME NULL,CONSTRAINT [PK_ShipmentHeaders] PRIMARY KEY([Id]));');
-
-
--- Add New Column With Name DisplayDocumentsAndEvents
-ALTER TABLE [dbo].[Tenants] ADD [DisplayDocumentsAndEvents] BIT DEFAULT(0) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e0e14727-9f6d-4e4a-b460-99a7b541b6ef', 'Tenant.dxml', 'Tenants', 'DisplayDocumentsAndEvents', 'Add Column', GETDATE(), '-- Add New Column With Name DisplayDocumentsAndEventsALTER TABLE [dbo].[Tenants] ADD [DisplayDocumentsAndEvents] BIT DEFAULT(0) NOT NULL;');
-
-
--- Set Nullable For Column ObjectFieldId
-ALTER TABLE [dbo].[AdvancedQueryFilters] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ae8fbe96-7113-43ab-becd-b831de9055f2', 'AdvancedQueryFilter.dxml', 'AdvancedQueryFilters', 'ObjectFieldId', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column ObjectFieldIdALTER TABLE [dbo].[AdvancedQueryFilters] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;');
-
-
--- Add New Column With Name OriginalObjectFieldCode
-ALTER TABLE [dbo].[DWObjectFields] ADD [OriginalObjectFieldCode] VARCHAR(200) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7dfe57f2-4495-4250-92b0-1ba6db6d2ee3', 'DWObjectField.dxml', 'DWObjectFields', 'OriginalObjectFieldCode', 'Add Column', GETDATE(), '-- Add New Column With Name OriginalObjectFieldCodeALTER TABLE [dbo].[DWObjectFields] ADD [OriginalObjectFieldCode] VARCHAR(200) NULL;');
-
-
--- Add New Column With Name CustomField
-ALTER TABLE [dbo].[EventTypes] ADD [CustomField] VARCHAR(200) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a4939828-3264-49d4-9bca-41c7fef4bfaa', 'EventType.dxml', 'EventTypes', 'CustomField', 'Add Column', GETDATE(), '-- Add New Column With Name CustomFieldALTER TABLE [dbo].[EventTypes] ADD [CustomField] VARCHAR(200) NULL;');
-
-
--- Set Nullable For Column ObjectFieldId
-ALTER TABLE [dbo].[QueryColumns] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e8ead43d-0468-471e-a505-57dd73666f43', 'QueryColumn.dxml', 'QueryColumns', 'ObjectFieldId', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column ObjectFieldIdALTER TABLE [dbo].[QueryColumns] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;');
-
-
--- Set Nullable For Column ObjectFieldId
-ALTER TABLE [dbo].[ScreenFields] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('20bae82f-c761-40e4-831e-d6782f5f3670', 'ScreenField.dxml', 'ScreenFields', 'ObjectFieldId', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column ObjectFieldIdALTER TABLE [dbo].[ScreenFields] ALTER COLUMN [ObjectFieldId] VARCHAR(15) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Query.dxml', 'Queries', 'UniqueCode', 'Create Unique Constraint', GETDATE(), '-- Create Unique Constraint On Queries Table
+EXEC(''ALTER TABLE [dbo].[Queries] ADD CONSTRAINT [UQ_Queries_UniqueCode] UNIQUE([UniqueCode])'');');
 
 
 -- Change Size From 15 To 40 For Column CreatedBy
 ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [CreatedBy] VARCHAR(40) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f1fc7462-a7ae-4cb1-b303-91b7327ea10c', 'TasksScheduler.dxml', 'TasksScheduler', 'CreatedBy', 'Alter Column Size', GETDATE(), '-- Change Size From 15 To 40 For Column CreatedByALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [CreatedBy] VARCHAR(40) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TasksScheduler.dxml', 'TasksScheduler', 'CreatedBy', 'Alter Column Size', GETDATE(), '-- Change Size From 15 To 40 For Column CreatedBy
+ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [CreatedBy] VARCHAR(40) NOT NULL;');
 
 -- Change Size From 15 To 40 For Column UpdatedBy
 ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [UpdatedBy] VARCHAR(40) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('05458e40-de4f-4946-b3f9-4de7f0214550', 'TasksScheduler.dxml', 'TasksScheduler', 'UpdatedBy', 'Alter Column Size', GETDATE(), '-- Change Size From 15 To 40 For Column UpdatedByALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [UpdatedBy] VARCHAR(40) NOT NULL;');
-
--- Change Type From varchar To nvarchar For Column Name
-ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [Name] NVARCHAR(100);
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('45612ac5-5dfe-43cc-9577-2290f500cbc2', 'TasksScheduler.dxml', 'TasksScheduler', 'Name', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column NameALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [Name] NVARCHAR(100);');
-
--- Change Type From varchar To nvarchar For Column Description
-ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [Description] NVARCHAR(200);
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b91be41e-0830-4b7b-9081-3fe9f5a2e4c4', 'TasksScheduler.dxml', 'TasksScheduler', 'Description', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column DescriptionALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [Description] NVARCHAR(200);');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('TasksScheduler.dxml', 'TasksScheduler', 'UpdatedBy', 'Alter Column Size', GETDATE(), '-- Change Size From 15 To 40 For Column UpdatedBy
+ALTER TABLE [dbo].[TasksScheduler] ALTER COLUMN [UpdatedBy] VARCHAR(40) NOT NULL;');
 
 
 -- Change Size From 20 To 30 For Column EntityReference
 ALTER TABLE [dbo].[AccountingTransferLines] ALTER COLUMN [EntityReference] VARCHAR(30);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4ef8f54c-1ef9-4729-8e89-ef14e21f9fc5', 'AccountingTransferLine.dxml', 'AccountingTransferLines', 'EntityReference', 'Alter Column Size', GETDATE(), '-- Change Size From 20 To 30 For Column EntityReferenceALTER TABLE [dbo].[AccountingTransferLines] ALTER COLUMN [EntityReference] VARCHAR(30);');
-
-
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.APInvoices.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8bffe9c8-d378-4ed4-b826-58fa42a1e0f3', 'APInvoice.dxml', 'APInvoices', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.APInvoices.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On APInvoices Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_APInvoices_AutomaticLastUpdateDate] ON [dbo].[APInvoices]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f3aed414-e43e-4c5d-8916-688d04af6c88', 'APInvoice.dxml', 'APInvoices', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On APInvoices TableEXEC(''CREATE NONCLUSTERED INDEX [IX_APInvoices_AutomaticLastUpdateDate] ON [dbo].[APInvoices]([AutomaticLastUpdateDate])'');');
-
-
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.APInvoiceLines.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7969c080-529c-4ce3-bb0a-e4e110c12f42', 'APInvoiceLine.dxml', 'APInvoiceLines', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.APInvoiceLines.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On APInvoiceLines Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_APInvoiceLines_AutomaticLastUpdateDate] ON [dbo].[APInvoiceLines]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4d129bf8-8016-4886-a65d-a5467a6c4d5f', 'APInvoiceLine.dxml', 'APInvoiceLines', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On APInvoiceLines TableEXEC(''CREATE NONCLUSTERED INDEX [IX_APInvoiceLines_AutomaticLastUpdateDate] ON [dbo].[APInvoiceLines]([AutomaticLastUpdateDate])'');');
-
-
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.ARInvoices.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d95bfb0d-dac8-46ff-b216-fc96f01e7666', 'ARInvoice.dxml', 'ARInvoices', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.ARInvoices.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On ARInvoices Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ARInvoices_AutomaticLastUpdateDate] ON [dbo].[ARInvoices]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('6fb0ea9e-f236-4241-aec5-b8dc7ed0db85', 'ARInvoice.dxml', 'ARInvoices', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ARInvoices TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ARInvoices_AutomaticLastUpdateDate] ON [dbo].[ARInvoices]([AutomaticLastUpdateDate])'');');
-
-
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.ARInvoiceLines.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a354d1ee-14bc-4831-bfcb-570a9f5973c7', 'ARInvoiceLine.dxml', 'ARInvoiceLines', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.ARInvoiceLines.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On ARInvoiceLines Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ARInvoiceLines_AutomaticLastUpdateDate] ON [dbo].[ARInvoiceLines]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('125655ab-64e7-4854-87c8-6c03ed18cc06', 'ARInvoiceLine.dxml', 'ARInvoiceLines', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ARInvoiceLines TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ARInvoiceLines_AutomaticLastUpdateDate] ON [dbo].[ARInvoiceLines]([AutomaticLastUpdateDate])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('AccountingTransferLine.dxml', 'AccountingTransferLines', 'EntityReference', 'Alter Column Size', GETDATE(), '-- Change Size From 20 To 30 For Column EntityReference
+ALTER TABLE [dbo].[AccountingTransferLines] ALTER COLUMN [EntityReference] VARCHAR(30);');
 
 
 -- Drop Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges That Reference To Column Id In Table Measurements
 EXEC('IF (OBJECT_ID(''[dbo].[FK_CostQuoteChargesMeasurement]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QuoteCharges] DROP CONSTRAINT [FK_CostQuoteChargesMeasurement] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('65b8859f-d0ca-42ea-bf53-c1eb8cdb8332', 'QuoteCharge.dxml', 'QuoteCharges', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges That Reference To Column Id In Table MeasurementsEXEC(''IF (OBJECT_ID(''''[dbo].[FK_CostQuoteChargesMeasurement]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QuoteCharges] DROP CONSTRAINT [FK_CostQuoteChargesMeasurement] END'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QuoteCharge.dxml', 'QuoteCharges', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges That Reference To Column Id In Table Measurements
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_CostQuoteChargesMeasurement]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QuoteCharges] DROP CONSTRAINT [FK_CostQuoteChargesMeasurement] END'');');
 
 -- Drop Index IX_FK_CostQuoteChargesMeasurement From Table QuoteCharges
 EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_CostQuoteChargesMeasurement'' AND object_id = OBJECT_ID(''[dbo].[QuoteCharges]'', ''U'')) BEGIN DROP INDEX [IX_FK_CostQuoteChargesMeasurement] ON [dbo].[QuoteCharges] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('64468b29-ac06-4718-b5c0-827c4da928a3', 'QuoteCharge.dxml', 'QuoteCharges', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_CostQuoteChargesMeasurement From Table QuoteChargesEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_CostQuoteChargesMeasurement'''' AND object_id = OBJECT_ID(''''[dbo].[QuoteCharges]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_CostQuoteChargesMeasurement] ON [dbo].[QuoteCharges] END'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QuoteCharge.dxml', 'QuoteCharges', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_CostQuoteChargesMeasurement From Table QuoteCharges
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_CostQuoteChargesMeasurement'''' AND object_id = OBJECT_ID(''''[dbo].[QuoteCharges]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_CostQuoteChargesMeasurement] ON [dbo].[QuoteCharges] END'');');
 
 -- Unset Nullable For Column CostMeasurementId
 ALTER TABLE [dbo].[QuoteCharges] ALTER COLUMN [CostMeasurementId] VARCHAR(15) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('20c98991-bb16-4a70-84ca-24714195f3f3', 'QuoteCharge.dxml', 'QuoteCharges', 'CostMeasurementId', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CostMeasurementIdALTER TABLE [dbo].[QuoteCharges] ALTER COLUMN [CostMeasurementId] VARCHAR(15) NOT NULL;');
-
-
--- Add New Column With Name CreatedFromDigital
-ALTER TABLE [dbo].[ShipmentComputedFields] ADD [CreatedFromDigital] BIT DEFAULT(0) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('5c9f3c95-37ac-476c-ae29-676c196050fc', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'CreatedFromDigital', 'Add Column', GETDATE(), '-- Add New Column With Name CreatedFromDigitalALTER TABLE [dbo].[ShipmentComputedFields] ADD [CreatedFromDigital] BIT DEFAULT(0) NOT NULL;');
-
-
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.ShipmentPayables.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('339a3e94-e52e-4291-b2a8-aa571be659e9', 'ShipmentPayable.dxml', 'ShipmentPayables', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.ShipmentPayables.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
-
-
--- Create Index On ShipmentPayables Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentPayables_AutomaticLastUpdateDate] ON [dbo].[ShipmentPayables]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('57deada0-d31e-4a18-93e2-f80b13714a78', 'ShipmentPayable.dxml', 'ShipmentPayables', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ShipmentPayables TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentPayables_AutomaticLastUpdateDate] ON [dbo].[ShipmentPayables]([AutomaticLastUpdateDate])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QuoteCharge.dxml', 'QuoteCharges', 'CostMeasurementId', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CostMeasurementId
+ALTER TABLE [dbo].[QuoteCharges] ALTER COLUMN [CostMeasurementId] VARCHAR(15) NOT NULL;');
 
 
 -- Change Size From 20 To 25 For Column PickUpDeliveryNumber
 ALTER TABLE [dbo].[ShipmentPickUpDeliveries] ALTER COLUMN [PickUpDeliveryNumber] VARCHAR(25) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7d030628-f4ba-48bf-8948-6ee183a27d3a', 'ShipmentPickUpDelivery.dxml', 'ShipmentPickUpDeliveries', 'PickUpDeliveryNumber', 'Alter Column Size', GETDATE(), '-- Change Size From 20 To 25 For Column PickUpDeliveryNumberALTER TABLE [dbo].[ShipmentPickUpDeliveries] ALTER COLUMN [PickUpDeliveryNumber] VARCHAR(25) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ShipmentPickUpDelivery.dxml', 'ShipmentPickUpDeliveries', 'PickUpDeliveryNumber', 'Alter Column Size', GETDATE(), '-- Change Size From 20 To 25 For Column PickUpDeliveryNumber
+ALTER TABLE [dbo].[ShipmentPickUpDeliveries] ALTER COLUMN [PickUpDeliveryNumber] VARCHAR(25) NOT NULL;');
 
 
--- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDate
-EXEC SP_RENAME 'dbo.ShipmentReceivables.Drop_AutomaticLastUpdateDate', 'AutomaticLastUpdateDate', 'COLUMN';
+-- Drop Foreign Key Constraint For Column RuleFieldId In Table AirlineMessagingRules That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[AirlineMessagingRules] DROP CONSTRAINT [FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('af45d8bb-e0c9-4974-9741-da9d9cc371d9', 'ShipmentReceivable.dxml', 'ShipmentReceivables', 'Drop_AutomaticLastUpdateDate', 'Rename Column', GETDATE(), '-- Rename Column From Drop_AutomaticLastUpdateDate To AutomaticLastUpdateDateEXEC SP_RENAME ''dbo.ShipmentReceivables.Drop_AutomaticLastUpdateDate'', ''AutomaticLastUpdateDate'', ''COLUMN'';');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('AirlineMessagingRule.dxml', 'AirlineMessagingRules', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column RuleFieldId In Table AirlineMessagingRules That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[AirlineMessagingRules] DROP CONSTRAINT [FK_dbo.AirlineMessagingRules_dbo.ObjectFields_RuleFieldId] END'');');
 
+-- Drop Index IX_RuleFieldId From Table AirlineMessagingRules
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_RuleFieldId'' AND object_id = OBJECT_ID(''[dbo].[AirlineMessagingRules]'', ''U'')) BEGIN DROP INDEX [IX_RuleFieldId] ON [dbo].[AirlineMessagingRules] END');
 
--- Create Index On ShipmentReceivables Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentReceivables_AutomaticLastUpdateDate] ON [dbo].[ShipmentReceivables]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f479ced6-8293-44e9-bb49-c5cb520d1edb', 'ShipmentReceivable.dxml', 'ShipmentReceivables', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ShipmentReceivables TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentReceivables_AutomaticLastUpdateDate] ON [dbo].[ShipmentReceivables]([AutomaticLastUpdateDate])'');');
-
-
--- Add New Column With Name LastUsedDate
-ALTER TABLE [dbo].[Tariffs] ADD [LastUsedDate] DATETIME NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3069c8b2-331f-4c21-9902-596f0c2dc8a1', 'Tariff.dxml', 'Tariffs', 'LastUsedDate', 'Add Column', GETDATE(), '-- Add New Column With Name LastUsedDateALTER TABLE [dbo].[Tariffs] ADD [LastUsedDate] DATETIME NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('AirlineMessagingRule.dxml', 'AirlineMessagingRules', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_RuleFieldId From Table AirlineMessagingRules
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_RuleFieldId'''' AND object_id = OBJECT_ID(''''[dbo].[AirlineMessagingRules]'''', ''''U'''')) BEGIN DROP INDEX [IX_RuleFieldId] ON [dbo].[AirlineMessagingRules] END'');');
 
 
--- Add Foreign Key Constraint For Column CustomerId In Table ShipmentHeaders As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_CustomerId] FOREIGN KEY([CustomerId]) REFERENCES [dbo].[Cards]([Id])');
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table CustomerFieldsUpdateSettings That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[CustomerFieldsUpdateSettings] DROP CONSTRAINT [FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8b4b64c0-9457-4d1c-99c0-f6cdf63000d7', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'CustomerId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CustomerId In Table ShipmentHeaders As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_CustomerId] FOREIGN KEY([CustomerId]) REFERENCES [dbo].[Cards]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('CustomerFieldsUpdateSetting.dxml', 'CustomerFieldsUpdateSettings', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table CustomerFieldsUpdateSettings That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[CustomerFieldsUpdateSettings] DROP CONSTRAINT [FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId] END'');');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_CustomerId] ON [dbo].[ShipmentHeaders]([CustomerId])');
+-- Drop Index IX_ObjectFieldId From Table CustomerFieldsUpdateSettings
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_ObjectFieldId'' AND object_id = OBJECT_ID(''[dbo].[CustomerFieldsUpdateSettings]'', ''U'')) BEGIN DROP INDEX [IX_ObjectFieldId] ON [dbo].[CustomerFieldsUpdateSettings] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f668a281-ca0f-4733-8a06-48ebda3d3a98', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'CustomerId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_CustomerId] ON [dbo].[ShipmentHeaders]([CustomerId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('CustomerFieldsUpdateSetting.dxml', 'CustomerFieldsUpdateSettings', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_ObjectFieldId From Table CustomerFieldsUpdateSettings
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_ObjectFieldId'''' AND object_id = OBJECT_ID(''''[dbo].[CustomerFieldsUpdateSettings]'''', ''''U'''')) BEGIN DROP INDEX [IX_ObjectFieldId] ON [dbo].[CustomerFieldsUpdateSettings] END'');');
 
--- Add Foreign Key Constraint For Column ShipperId In Table ShipmentHeaders As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_ShipperId] FOREIGN KEY([ShipperId]) REFERENCES [dbo].[Cards]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ec2a18a8-071d-4ba8-b60f-e9b4f6d4b044', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ShipperId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ShipperId In Table ShipmentHeaders As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_ShipperId] FOREIGN KEY([ShipperId]) REFERENCES [dbo].[Cards]([Id])'');');
+-- Drop Foreign Key Constraint For Column NameTextCodeId In Table Features That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_FeatureTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Features] DROP CONSTRAINT [FK_FeatureTextCode] END');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ShipperId] ON [dbo].[ShipmentHeaders]([ShipperId])');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Feature.dxml', 'Features', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column NameTextCodeId In Table Features That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_FeatureTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Features] DROP CONSTRAINT [FK_FeatureTextCode] END'');');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('41799139-8447-416e-a158-5c212331ef7f', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ShipperId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ShipperId] ON [dbo].[ShipmentHeaders]([ShipperId])'');');
+-- Drop Index IX_FK_FeatureTextCode From Table Features
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_FeatureTextCode'' AND object_id = OBJECT_ID(''[dbo].[Features]'', ''U'')) BEGIN DROP INDEX [IX_FK_FeatureTextCode] ON [dbo].[Features] END');
 
--- Add Foreign Key Constraint For Column ConsigneeId In Table ShipmentHeaders As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_ConsigneeId] FOREIGN KEY([ConsigneeId]) REFERENCES [dbo].[Cards]([Id])');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Feature.dxml', 'Features', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_FeatureTextCode From Table Features
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_FeatureTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[Features]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_FeatureTextCode] ON [dbo].[Features] END'');');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e38d09cc-8405-4779-b592-37073a87a4cd', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ConsigneeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ConsigneeId In Table ShipmentHeaders As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Cards_ConsigneeId] FOREIGN KEY([ConsigneeId]) REFERENCES [dbo].[Cards]([Id])'');');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ConsigneeId] ON [dbo].[ShipmentHeaders]([ConsigneeId])');
+-- Drop Foreign Key Constraint For Column FeatureId In Table PackageFeatures That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_PackageFeatureFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[PackageFeatures] DROP CONSTRAINT [FK_PackageFeatureFeature] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('71c82fe9-13ef-4c34-b4a4-0fc67e8e1fab', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ConsigneeId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ConsigneeId] ON [dbo].[ShipmentHeaders]([ConsigneeId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('PackageFeature.dxml', 'PackageFeatures', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table PackageFeatures That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_PackageFeatureFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[PackageFeatures] DROP CONSTRAINT [FK_PackageFeatureFeature] END'');');
 
--- Add Foreign Key Constraint For Column FromPortId In Table ShipmentHeaders As Reference To Column Id In Table Ports
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Ports_FromPortId] FOREIGN KEY([FromPortId]) REFERENCES [dbo].[Ports]([Id])');
+-- Drop Index IX_FK_PackageFeatureFeature From Table PackageFeatures
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_PackageFeatureFeature'' AND object_id = OBJECT_ID(''[dbo].[PackageFeatures]'', ''U'')) BEGIN DROP INDEX [IX_FK_PackageFeatureFeature] ON [dbo].[PackageFeatures] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c1cade59-7665-4f91-b642-3efde96fccad', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'FromPortId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column FromPortId In Table ShipmentHeaders As Reference To Column Id In Table PortsEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Ports_FromPortId] FOREIGN KEY([FromPortId]) REFERENCES [dbo].[Ports]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('PackageFeature.dxml', 'PackageFeatures', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_PackageFeatureFeature From Table PackageFeatures
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_PackageFeatureFeature'''' AND object_id = OBJECT_ID(''''[dbo].[PackageFeatures]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_PackageFeatureFeature] ON [dbo].[PackageFeatures] END'');');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_FromPortId] ON [dbo].[ShipmentHeaders]([FromPortId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b4bc7079-28de-41a8-923d-71967a0a9147', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'FromPortId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_FromPortId] ON [dbo].[ShipmentHeaders]([FromPortId])'');');
+-- Drop Foreign Key Constraint For Column FeatureId In Table Reports That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.Reports_dbo.Features_FeatureId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Reports] DROP CONSTRAINT [FK_dbo.Reports_dbo.Features_FeatureId] END');
 
--- Add Foreign Key Constraint For Column ToPortId In Table ShipmentHeaders As Reference To Column Id In Table Ports
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Ports_ToPortId] FOREIGN KEY([ToPortId]) REFERENCES [dbo].[Ports]([Id])');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Report.dxml', 'Reports', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table Reports That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.Reports_dbo.Features_FeatureId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Reports] DROP CONSTRAINT [FK_dbo.Reports_dbo.Features_FeatureId] END'');');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('078005e9-21ae-464e-834d-d7d2652b5b3d', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ToPortId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ToPortId In Table ShipmentHeaders As Reference To Column Id In Table PortsEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_Ports_ToPortId] FOREIGN KEY([ToPortId]) REFERENCES [dbo].[Ports]([Id])'');');
+-- Drop Index IX_FeatureId From Table Reports
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FeatureId'' AND object_id = OBJECT_ID(''[dbo].[Reports]'', ''U'')) BEGIN DROP INDEX [IX_FeatureId] ON [dbo].[Reports] END');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ToPortId] ON [dbo].[ShipmentHeaders]([ToPortId])');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Report.dxml', 'Reports', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FeatureId From Table Reports
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FeatureId'''' AND object_id = OBJECT_ID(''''[dbo].[Reports]'''', ''''U'''')) BEGIN DROP INDEX [IX_FeatureId] ON [dbo].[Reports] END'');');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('77ae581a-8eeb-4571-af2f-4e0fe0146253', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'ToPortId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_ToPortId] ON [dbo].[ShipmentHeaders]([ToPortId])'');');
 
--- Add Foreign Key Constraint For Column TransportModeId In Table ShipmentHeaders As Reference To Column Id In Table TransportModes
-EXEC('ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_TransportModes_TransportModeId] FOREIGN KEY([TransportModeId]) REFERENCES [dbo].[TransportModes]([Id])');
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table Restrictions That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_RestrictionObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Restrictions] DROP CONSTRAINT [FK_RestrictionObjectField] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b3ae9569-8878-4b47-bc58-248edde6e4ae', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'TransportModeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column TransportModeId In Table ShipmentHeaders As Reference To Column Id In Table TransportModesEXEC(''ALTER TABLE [dbo].[ShipmentHeaders] ADD CONSTRAINT [FK_ShipmentHeaders_TransportModes_TransportModeId] FOREIGN KEY([TransportModeId]) REFERENCES [dbo].[TransportModes]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Restriction.dxml', 'Restrictions', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table Restrictions That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_RestrictionObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Restrictions] DROP CONSTRAINT [FK_RestrictionObjectField] END'');');
 
--- Create Index On ShipmentHeaders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_TransportModeId] ON [dbo].[ShipmentHeaders]([TransportModeId])');
+-- Drop Index IX_FK_RestrictionObjectField From Table Restrictions
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_RestrictionObjectField'' AND object_id = OBJECT_ID(''[dbo].[Restrictions]'', ''U'')) BEGIN DROP INDEX [IX_FK_RestrictionObjectField] ON [dbo].[Restrictions] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e33d6261-7be4-47d0-b4a8-f69a8ab9c0c7', 'ShipmentHeader.dxml', 'ShipmentHeaders', 'TransportModeId', 'Create Index', GETDATE(), '-- Create Index On ShipmentHeaders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentHeaders_TransportModeId] ON [dbo].[ShipmentHeaders]([TransportModeId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Restriction.dxml', 'Restrictions', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_RestrictionObjectField From Table Restrictions
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_RestrictionObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[Restrictions]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_RestrictionObjectField] ON [dbo].[Restrictions] END'');');
+
+
+-- Drop Foreign Key Constraint For Column FeatureId In Table RoleFeatures That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_RoleFeatureFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[RoleFeatures] DROP CONSTRAINT [FK_RoleFeatureFeature] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('RoleFeature.dxml', 'RoleFeatures', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table RoleFeatures That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_RoleFeatureFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[RoleFeatures] DROP CONSTRAINT [FK_RoleFeatureFeature] END'');');
+
+-- Drop Index IX_FK_RoleFeatureFeature From Table RoleFeatures
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_RoleFeatureFeature'' AND object_id = OBJECT_ID(''[dbo].[RoleFeatures]'', ''U'')) BEGIN DROP INDEX [IX_FK_RoleFeatureFeature] ON [dbo].[RoleFeatures] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('RoleFeature.dxml', 'RoleFeatures', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_RoleFeatureFeature From Table RoleFeatures
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_RoleFeatureFeature'''' AND object_id = OBJECT_ID(''''[dbo].[RoleFeatures]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_RoleFeatureFeature] ON [dbo].[RoleFeatures] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table AdvancedQueryFilters That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectFieldAdvancedQueryFilter]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[AdvancedQueryFilters] DROP CONSTRAINT [FK_ObjectFieldAdvancedQueryFilter] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('AdvancedQueryFilter.dxml', 'AdvancedQueryFilters', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table AdvancedQueryFilters That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectFieldAdvancedQueryFilter]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[AdvancedQueryFilters] DROP CONSTRAINT [FK_ObjectFieldAdvancedQueryFilter] END'');');
+
+-- Drop Index IX_FK_ObjectFieldAdvancedQueryFilter From Table AdvancedQueryFilters
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectFieldAdvancedQueryFilter'' AND object_id = OBJECT_ID(''[dbo].[AdvancedQueryFilters]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectFieldAdvancedQueryFilter] ON [dbo].[AdvancedQueryFilters] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('AdvancedQueryFilter.dxml', 'AdvancedQueryFilters', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectFieldAdvancedQueryFilter From Table AdvancedQueryFilters
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectFieldAdvancedQueryFilter'''' AND object_id = OBJECT_ID(''''[dbo].[AdvancedQueryFilters]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectFieldAdvancedQueryFilter] ON [dbo].[AdvancedQueryFilters] END'');');
+
+
+-- Drop Foreign Key Constraint For Column LabelTextCodeId In Table MenuButtons That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_TextCodeMenuButton]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenuButtons] DROP CONSTRAINT [FK_TextCodeMenuButton] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenuButton.dxml', 'MenuButtons', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column LabelTextCodeId In Table MenuButtons That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_TextCodeMenuButton]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenuButtons] DROP CONSTRAINT [FK_TextCodeMenuButton] END'');');
+
+-- Drop Index IX_FK_TextCodeMenuButton From Table MenuButtons
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_TextCodeMenuButton'' AND object_id = OBJECT_ID(''[dbo].[MenuButtons]'', ''U'')) BEGIN DROP INDEX [IX_FK_TextCodeMenuButton] ON [dbo].[MenuButtons] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenuButton.dxml', 'MenuButtons', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_TextCodeMenuButton From Table MenuButtons
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_TextCodeMenuButton'''' AND object_id = OBJECT_ID(''''[dbo].[MenuButtons]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_TextCodeMenuButton] ON [dbo].[MenuButtons] END'');');
+
+-- Drop Foreign Key Constraint For Column FeatureId In Table MenuButtons That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_MenuButtonFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenuButtons] DROP CONSTRAINT [FK_MenuButtonFeature] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenuButton.dxml', 'MenuButtons', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table MenuButtons That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_MenuButtonFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenuButtons] DROP CONSTRAINT [FK_MenuButtonFeature] END'');');
+
+-- Drop Index IX_FK_MenuButtonFeature From Table MenuButtons
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_MenuButtonFeature'' AND object_id = OBJECT_ID(''[dbo].[MenuButtons]'', ''U'')) BEGIN DROP INDEX [IX_FK_MenuButtonFeature] ON [dbo].[MenuButtons] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenuButton.dxml', 'MenuButtons', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_MenuButtonFeature From Table MenuButtons
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_MenuButtonFeature'''' AND object_id = OBJECT_ID(''''[dbo].[MenuButtons]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_MenuButtonFeature] ON [dbo].[MenuButtons] END'');');
+
+
+-- Drop Foreign Key Constraint For Column FeatureId In Table MenusTables That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_MenusTableFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenusTables] DROP CONSTRAINT [FK_MenusTableFeature] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenusTable.dxml', 'MenusTables', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table MenusTables That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_MenusTableFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[MenusTables] DROP CONSTRAINT [FK_MenusTableFeature] END'');');
+
+-- Drop Index IX_FK_MenusTableFeature From Table MenusTables
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_MenusTableFeature'' AND object_id = OBJECT_ID(''[dbo].[MenusTables]'', ''U'')) BEGIN DROP INDEX [IX_FK_MenusTableFeature] ON [dbo].[MenusTables] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('MenusTable.dxml', 'MenusTables', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_MenusTableFeature From Table MenusTables
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_MenusTableFeature'''' AND object_id = OBJECT_ID(''''[dbo].[MenusTables]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_MenusTableFeature] ON [dbo].[MenusTables] END'');');
+
+
+-- Drop Foreign Key Constraint For Column HelpTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_TextCodeObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_TextCodeObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column HelpTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_TextCodeObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_TextCodeObjectField] END'');');
+
+-- Drop Index IX_FK_TextCodeObjectField From Table ObjectFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_TextCodeObjectField'' AND object_id = OBJECT_ID(''[dbo].[ObjectFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_TextCodeObjectField] ON [dbo].[ObjectFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_TextCodeObjectField From Table ObjectFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_TextCodeObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_TextCodeObjectField] ON [dbo].[ObjectFields] END'');');
+
+-- Drop Foreign Key Constraint For Column FullNameTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_TextCodeObjectField1]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_TextCodeObjectField1] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FullNameTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_TextCodeObjectField1]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_TextCodeObjectField1] END'');');
+
+-- Drop Index IX_FK_TextCodeObjectField1 From Table ObjectFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_TextCodeObjectField1'' AND object_id = OBJECT_ID(''[dbo].[ObjectFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_TextCodeObjectField1] ON [dbo].[ObjectFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_TextCodeObjectField1 From Table ObjectFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_TextCodeObjectField1'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_TextCodeObjectField1] ON [dbo].[ObjectFields] END'');');
+
+-- Drop Foreign Key Constraint For Column ListTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ListFieldLableObjectFieldTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_ListFieldLableObjectFieldTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ListTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ListFieldLableObjectFieldTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_ListFieldLableObjectFieldTextCode] END'');');
+
+-- Drop Index IX_FK_ListFieldLableObjectFieldTextCode From Table ObjectFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ListFieldLableObjectFieldTextCode'' AND object_id = OBJECT_ID(''[dbo].[ObjectFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_ListFieldLableObjectFieldTextCode] ON [dbo].[ObjectFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ListFieldLableObjectFieldTextCode From Table ObjectFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ListFieldLableObjectFieldTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ListFieldLableObjectFieldTextCode] ON [dbo].[ObjectFields] END'');');
+
+-- Drop Foreign Key Constraint For Column ShortNameTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectFieldTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_ObjectFieldTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ShortNameTextCodeId In Table ObjectFields That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectFieldTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFields] DROP CONSTRAINT [FK_ObjectFieldTextCode] END'');');
+
+-- Drop Index IX_FK_ObjectFieldTextCode From Table ObjectFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectFieldTextCode'' AND object_id = OBJECT_ID(''[dbo].[ObjectFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectFieldTextCode] ON [dbo].[ObjectFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectField.dxml', 'ObjectFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectFieldTextCode From Table ObjectFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectFieldTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectFieldTextCode] ON [dbo].[ObjectFields] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectFieldModifications That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectFieldModificationObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFieldModifications] DROP CONSTRAINT [FK_ObjectFieldModificationObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectFieldModification.dxml', 'ObjectFieldModifications', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectFieldModifications That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectFieldModificationObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFieldModifications] DROP CONSTRAINT [FK_ObjectFieldModificationObjectField] END'');');
+
+-- Drop Index IX_FK_ObjectFieldModificationObjectField From Table ObjectFieldModifications
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectFieldModificationObjectField'' AND object_id = OBJECT_ID(''[dbo].[ObjectFieldModifications]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectFieldModificationObjectField] ON [dbo].[ObjectFieldModifications] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectFieldModification.dxml', 'ObjectFieldModifications', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectFieldModificationObjectField From Table ObjectFieldModifications
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectFieldModificationObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFieldModifications]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectFieldModificationObjectField] ON [dbo].[ObjectFieldModifications] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectFieldValidations That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectFieldValidationObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFieldValidations] DROP CONSTRAINT [FK_ObjectFieldValidationObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectFieldValidation.dxml', 'ObjectFieldValidations', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectFieldValidations That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectFieldValidationObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectFieldValidations] DROP CONSTRAINT [FK_ObjectFieldValidationObjectField] END'');');
+
+-- Drop Index IX_FK_ObjectFieldValidationObjectField From Table ObjectFieldValidations
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectFieldValidationObjectField'' AND object_id = OBJECT_ID(''[dbo].[ObjectFieldValidations]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectFieldValidationObjectField] ON [dbo].[ObjectFieldValidations] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectFieldValidation.dxml', 'ObjectFieldValidations', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectFieldValidationObjectField From Table ObjectFieldValidations
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectFieldValidationObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectFieldValidations]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectFieldValidationObjectField] ON [dbo].[ObjectFieldValidations] END'');');
+
+
+-- Drop Foreign Key Constraint For Column DescriptionTextCodeId In Table ObjectTables That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_DescriptionObjectTableTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTables] DROP CONSTRAINT [FK_DescriptionObjectTableTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTable.dxml', 'ObjectTables', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column DescriptionTextCodeId In Table ObjectTables That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_DescriptionObjectTableTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTables] DROP CONSTRAINT [FK_DescriptionObjectTableTextCode] END'');');
+
+-- Drop Index IX_FK_DescriptionObjectTableTextCode From Table ObjectTables
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_DescriptionObjectTableTextCode'' AND object_id = OBJECT_ID(''[dbo].[ObjectTables]'', ''U'')) BEGIN DROP INDEX [IX_FK_DescriptionObjectTableTextCode] ON [dbo].[ObjectTables] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTable.dxml', 'ObjectTables', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_DescriptionObjectTableTextCode From Table ObjectTables
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_DescriptionObjectTableTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTables]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_DescriptionObjectTableTextCode] ON [dbo].[ObjectTables] END'');');
+
+-- Drop Foreign Key Constraint For Column NewButtonTextCodeId In Table ObjectTables That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.ObjectTables_dbo.TextCodes_NewButtonTextCodeId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTables] DROP CONSTRAINT [FK_dbo.ObjectTables_dbo.TextCodes_NewButtonTextCodeId] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTable.dxml', 'ObjectTables', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column NewButtonTextCodeId In Table ObjectTables That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.ObjectTables_dbo.TextCodes_NewButtonTextCodeId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTables] DROP CONSTRAINT [FK_dbo.ObjectTables_dbo.TextCodes_NewButtonTextCodeId] END'');');
+
+-- Drop Index IX_NewButtonTextCodeId From Table ObjectTables
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_NewButtonTextCodeId'' AND object_id = OBJECT_ID(''[dbo].[ObjectTables]'', ''U'')) BEGIN DROP INDEX [IX_NewButtonTextCodeId] ON [dbo].[ObjectTables] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTable.dxml', 'ObjectTables', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_NewButtonTextCodeId From Table ObjectTables
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_NewButtonTextCodeId'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTables]'''', ''''U'''')) BEGIN DROP INDEX [IX_NewButtonTextCodeId] ON [dbo].[ObjectTables] END'');');
+
+
+-- Drop Foreign Key Constraint For Column TriggerFieldId In Table ObjectTableRules That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectTableRuleObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableRules] DROP CONSTRAINT [FK_ObjectTableRuleObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableRule.dxml', 'ObjectTableRules', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column TriggerFieldId In Table ObjectTableRules That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectTableRuleObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableRules] DROP CONSTRAINT [FK_ObjectTableRuleObjectField] END'');');
+
+-- Drop Index IX_FK_ObjectTableRuleObjectField From Table ObjectTableRules
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectTableRuleObjectField'' AND object_id = OBJECT_ID(''[dbo].[ObjectTableRules]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectTableRuleObjectField] ON [dbo].[ObjectTableRules] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableRule.dxml', 'ObjectTableRules', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectTableRuleObjectField From Table ObjectTableRules
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectTableRuleObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTableRules]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectTableRuleObjectField] ON [dbo].[ObjectTableRules] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectTableRuleFields That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectTableRuleFieldObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableRuleFields] DROP CONSTRAINT [FK_ObjectTableRuleFieldObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableRuleField.dxml', 'ObjectTableRuleFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ObjectTableRuleFields That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectTableRuleFieldObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableRuleFields] DROP CONSTRAINT [FK_ObjectTableRuleFieldObjectField] END'');');
+
+-- Drop Index IX_FK_ObjectTableRuleFieldObjectField From Table ObjectTableRuleFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectTableRuleFieldObjectField'' AND object_id = OBJECT_ID(''[dbo].[ObjectTableRuleFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectTableRuleFieldObjectField] ON [dbo].[ObjectTableRuleFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableRuleField.dxml', 'ObjectTableRuleFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectTableRuleFieldObjectField From Table ObjectTableRuleFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectTableRuleFieldObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTableRuleFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectTableRuleFieldObjectField] ON [dbo].[ObjectTableRuleFields] END'');');
+
+
+-- Drop Foreign Key Constraint For Column TabNameTextCodeId In Table ObjectTableTabs That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectTableTabTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableTabs] DROP CONSTRAINT [FK_ObjectTableTabTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableTab.dxml', 'ObjectTableTabs', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column TabNameTextCodeId In Table ObjectTableTabs That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectTableTabTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableTabs] DROP CONSTRAINT [FK_ObjectTableTabTextCode] END'');');
+
+-- Drop Index IX_FK_ObjectTableTabTextCode From Table ObjectTableTabs
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectTableTabTextCode'' AND object_id = OBJECT_ID(''[dbo].[ObjectTableTabs]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectTableTabTextCode] ON [dbo].[ObjectTableTabs] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableTab.dxml', 'ObjectTableTabs', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectTableTabTextCode From Table ObjectTableTabs
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectTableTabTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTableTabs]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectTableTabTextCode] ON [dbo].[ObjectTableTabs] END'');');
+
+-- Drop Foreign Key Constraint For Column FeatureId In Table ObjectTableTabs That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectTableTabFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableTabs] DROP CONSTRAINT [FK_ObjectTableTabFeature] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableTab.dxml', 'ObjectTableTabs', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table ObjectTableTabs That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectTableTabFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ObjectTableTabs] DROP CONSTRAINT [FK_ObjectTableTabFeature] END'');');
+
+-- Drop Index IX_FK_ObjectTableTabFeature From Table ObjectTableTabs
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectTableTabFeature'' AND object_id = OBJECT_ID(''[dbo].[ObjectTableTabs]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectTableTabFeature] ON [dbo].[ObjectTableTabs] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ObjectTableTab.dxml', 'ObjectTableTabs', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectTableTabFeature From Table ObjectTableTabs
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectTableTabFeature'''' AND object_id = OBJECT_ID(''''[dbo].[ObjectTableTabs]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectTableTabFeature] ON [dbo].[ObjectTableTabs] END'');');
+
+
+-- Drop Foreign Key Constraint For Column NameTextCodeId In Table Queries That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_QueryTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Queries] DROP CONSTRAINT [FK_QueryTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Query.dxml', 'Queries', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column NameTextCodeId In Table Queries That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_QueryTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Queries] DROP CONSTRAINT [FK_QueryTextCode] END'');');
+
+-- Drop Index IX_FK_QueryTextCode From Table Queries
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_QueryTextCode'' AND object_id = OBJECT_ID(''[dbo].[Queries]'', ''U'')) BEGIN DROP INDEX [IX_FK_QueryTextCode] ON [dbo].[Queries] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Query.dxml', 'Queries', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_QueryTextCode From Table Queries
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_QueryTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[Queries]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_QueryTextCode] ON [dbo].[Queries] END'');');
+
+-- Drop Foreign Key Constraint For Column FeatureId In Table Queries That Reference To Column Id In Table Features
+EXEC('IF (OBJECT_ID(''[dbo].[FK_QueryFeature]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Queries] DROP CONSTRAINT [FK_QueryFeature] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Query.dxml', 'Queries', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column FeatureId In Table Queries That Reference To Column Id In Table Features
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_QueryFeature]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Queries] DROP CONSTRAINT [FK_QueryFeature] END'');');
+
+-- Drop Index IX_FK_QueryFeature From Table Queries
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_QueryFeature'' AND object_id = OBJECT_ID(''[dbo].[Queries]'', ''U'')) BEGIN DROP INDEX [IX_FK_QueryFeature] ON [dbo].[Queries] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Query.dxml', 'Queries', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_QueryFeature From Table Queries
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_QueryFeature'''' AND object_id = OBJECT_ID(''''[dbo].[Queries]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_QueryFeature] ON [dbo].[Queries] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table QueryColumns That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_QueryColumnObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QueryColumns] DROP CONSTRAINT [FK_QueryColumnObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QueryColumn.dxml', 'QueryColumns', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table QueryColumns That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_QueryColumnObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QueryColumns] DROP CONSTRAINT [FK_QueryColumnObjectField] END'');');
+
+-- Drop Index IX_FK_QueryColumnObjectField From Table QueryColumns
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_QueryColumnObjectField'' AND object_id = OBJECT_ID(''[dbo].[QueryColumns]'', ''U'')) BEGIN DROP INDEX [IX_FK_QueryColumnObjectField] ON [dbo].[QueryColumns] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QueryColumn.dxml', 'QueryColumns', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_QueryColumnObjectField From Table QueryColumns
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_QueryColumnObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[QueryColumns]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_QueryColumnObjectField] ON [dbo].[QueryColumns] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table RuleConditionFields That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_RuleConditionFieldsObjectField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[RuleConditionFields] DROP CONSTRAINT [FK_RuleConditionFieldsObjectField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('RuleConditionField.dxml', 'RuleConditionFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table RuleConditionFields That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_RuleConditionFieldsObjectField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[RuleConditionFields] DROP CONSTRAINT [FK_RuleConditionFieldsObjectField] END'');');
+
+-- Drop Index IX_FK_RuleConditionFieldsObjectField From Table RuleConditionFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_RuleConditionFieldsObjectField'' AND object_id = OBJECT_ID(''[dbo].[RuleConditionFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_RuleConditionFieldsObjectField] ON [dbo].[RuleConditionFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('RuleConditionField.dxml', 'RuleConditionFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_RuleConditionFieldsObjectField From Table RuleConditionFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_RuleConditionFieldsObjectField'''' AND object_id = OBJECT_ID(''''[dbo].[RuleConditionFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_RuleConditionFieldsObjectField] ON [dbo].[RuleConditionFields] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ScreenFields That Reference To Column Id In Table ObjectFields
+EXEC('IF (OBJECT_ID(''[dbo].[FK_ObjectFieldScreenField]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ScreenFields] DROP CONSTRAINT [FK_ObjectFieldScreenField] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ScreenField.dxml', 'ScreenFields', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ObjectFieldId In Table ScreenFields That Reference To Column Id In Table ObjectFields
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_ObjectFieldScreenField]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[ScreenFields] DROP CONSTRAINT [FK_ObjectFieldScreenField] END'');');
+
+-- Drop Index IX_FK_ObjectFieldScreenField From Table ScreenFields
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_ObjectFieldScreenField'' AND object_id = OBJECT_ID(''[dbo].[ScreenFields]'', ''U'')) BEGIN DROP INDEX [IX_FK_ObjectFieldScreenField] ON [dbo].[ScreenFields] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ScreenField.dxml', 'ScreenFields', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_ObjectFieldScreenField From Table ScreenFields
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_ObjectFieldScreenField'''' AND object_id = OBJECT_ID(''''[dbo].[ScreenFields]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_ObjectFieldScreenField] ON [dbo].[ScreenFields] END'');');
+
+
+-- Drop Foreign Key Constraint For Column ShortTextCode In Table Tips That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_TipTextCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Tips] DROP CONSTRAINT [FK_TipTextCode] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Tip.dxml', 'Tips', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ShortTextCode In Table Tips That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_TipTextCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Tips] DROP CONSTRAINT [FK_TipTextCode] END'');');
+
+-- Drop Index IX_FK_TipTextCode From Table Tips
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_TipTextCode'' AND object_id = OBJECT_ID(''[dbo].[Tips]'', ''U'')) BEGIN DROP INDEX [IX_FK_TipTextCode] ON [dbo].[Tips] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Tip.dxml', 'Tips', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_TipTextCode From Table Tips
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_TipTextCode'''' AND object_id = OBJECT_ID(''''[dbo].[Tips]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_TipTextCode] ON [dbo].[Tips] END'');');
+
+
+-- Drop Foreign Key Constraint For Column TextCodeId In Table Translations That Reference To Column Id In Table TextCodes
+EXEC('IF (OBJECT_ID(''[dbo].[FK_TextCodeTranslation]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Translations] DROP CONSTRAINT [FK_TextCodeTranslation] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Translation.dxml', 'Translations', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column TextCodeId In Table Translations That Reference To Column Id In Table TextCodes
+EXEC(''IF (OBJECT_ID(''''[dbo].[FK_TextCodeTranslation]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Translations] DROP CONSTRAINT [FK_TextCodeTranslation] END'');');
+
+-- Drop Index IX_FK_TextCodeTranslation From Table Translations
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_FK_TextCodeTranslation'' AND object_id = OBJECT_ID(''[dbo].[Translations]'', ''U'')) BEGIN DROP INDEX [IX_FK_TextCodeTranslation] ON [dbo].[Translations] END');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('Translation.dxml', 'Translations', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_FK_TextCodeTranslation From Table Translations
+EXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_FK_TextCodeTranslation'''' AND object_id = OBJECT_ID(''''[dbo].[Translations]'''', ''''U'''')) BEGIN DROP INDEX [IX_FK_TextCodeTranslation] ON [dbo].[Translations] END'');');
 
 
 -- Add Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges As Reference To Column Id In Table Measurements
 EXEC('ALTER TABLE [dbo].[QuoteCharges] ADD CONSTRAINT [FK_QuoteCharges_Measurements_CostMeasurementId] FOREIGN KEY([CostMeasurementId]) REFERENCES [dbo].[Measurements]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('cca66a27-f9d5-4f00-9f6b-0eb461fa96bf', 'QuoteCharge.dxml', 'QuoteCharges', 'CostMeasurementId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges As Reference To Column Id In Table MeasurementsEXEC(''ALTER TABLE [dbo].[QuoteCharges] ADD CONSTRAINT [FK_QuoteCharges_Measurements_CostMeasurementId] FOREIGN KEY([CostMeasurementId]) REFERENCES [dbo].[Measurements]([Id])'');');
-
--- Create Index On QuoteCharges Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_QuoteCharges_CostMeasurementId] ON [dbo].[QuoteCharges]([CostMeasurementId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('017d3f4a-2268-4fc7-90c3-6f773bb06fc8', 'QuoteCharge.dxml', 'QuoteCharges', 'CostMeasurementId', 'Create Index', GETDATE(), '-- Create Index On QuoteCharges TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteCharges_CostMeasurementId] ON [dbo].[QuoteCharges]([CostMeasurementId])'');');
-
-
--- DataView Script From CardGLAccountDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[CardGLAccountDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[CardGLAccountDataView] END');
-EXEC('CREATE VIEW [dbo].[CardGLAccountDataView]
-AS SELECT
-dbo.Cards.EnglishName AS CardEnglishName, dbo.Cards.GLAccountId AS CardGLAccountId, dbo.GLAccounts.EnglishName AS GLAccountEnglishName,
-dbo.Cards.SalesmanUserId, SalesMan.EnglishName AS SalesManEnglishName, dbo.Cards.CollectorId, Collectors.EnglishName AS CollectorEnglishName,
-dbo.GLAccounts.Id, dbo.GLAccounts.Tenant, dbo.GLAccounts.InternalNumber, dbo.GLAccounts.AccountTypeCode, dbo.GLAccounts.DisplayNumber,
-dbo.GLAccounts.LocalName AS GLAccountLocalName, dbo.GLAccounts.SearchFields, dbo.GLAccounts.IsMultiCurrency, dbo.GLAccounts.CurrencyId,
-dbo.GLAccounts.RevenueExpenseType, dbo.GLAccounts.IsControlAccount, dbo.GLAccounts.ChartOfAccountsId, dbo.GLAccounts.Inactive,
-dbo.GLAccounts.ChartOfAccountsTypeCode, dbo.GLAccounts.ReconcileMethodCode, dbo.GLAccounts.ControlAccountId, dbo.GLAccounts.AutomaticReconcileId,
-dbo.GLAccounts.PreviousEnglishName, dbo.GLAccounts.PreviousEnglishNameChangeDate, dbo.GLAccounts.PreviousLocalName,
-dbo.GLAccounts.PreviousLocalNameChangeDate, dbo.GLAccounts.PreviousNumber, dbo.GLAccounts.PreviousNumberChangeDate,
-dbo.GLAccounts.PreviousChartOfAccountsId, dbo.GLAccounts.PreviousChartOfAccountsChangeDate, MOREDATA.BalanceInLocalCurrency,
-dbo.GLAccounts.RevaluationEnabled, dbo.GLAccounts.ParentAccountId, dbo.GLAccounts.Category2Id, dbo.GLAccounts.Category3Id, dbo.GLAccounts.Category4Id,
-dbo.GLAccounts.Category5Id, dbo.GLAccounts.Category1Id, dbo.GLAccounts.IsVATExempt, dbo.GLAccounts.CustomerGLAccountId, dbo.Cards.VatNumber,
-MOREDATA.LocalBalanceInDue, MOREDATA.NextDueDate,
-dbo.Cards.LocalName AS CardLocalName, SalesMan.LocalName AS SalesManLocalName, Collectors.LocalName AS CollectorLocalName, dbo.Cards.VatTypeId,
-dbo.Cards.CountryId, dbo.Cards.CountryCode, dbo.Cards.CityName, dbo.Cards.CountryName, dbo.Cards.PaymentTermId,
-dbo.ChartOfAccounts.LocalName AS ChartOfAccountsLocalName, dbo.ChartOfAccounts.EnglishName AS ChartOfAccountsEnglishName,
-dbo.ChartOfAccounts.Code AS ChartOfAccountsCode
-FROM dbo.Cards
-LEFT OUTER JOIN
-dbo.Contacts
-AS Collectors
-ON dbo.Cards.CollectorId = Collectors.Id
-LEFT OUTER JOIN
-dbo.Contacts
-AS SalesMan
-ON dbo.Cards.SalesmanUserId = SalesMan.Id
-RIGHT OUTER JOIN
-dbo.GLAccounts
-ON dbo.Cards.GLAccountId = dbo.GLAccounts.Id
-LEFT OUTER JOIN
-dbo.ChartOfAccounts
-ON dbo.GLAccounts.ChartOfAccountsId = dbo.ChartOfAccounts.Id
-INNER JOIN dbo.GLAccountMoreDatas
-AS MOREDATA
-ON dbo.GLAccounts.Id = MOREDATA.AccountId');
+INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('QuoteCharge.dxml', 'QuoteCharges', 'CostMeasurementId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CostMeasurementId In Table QuoteCharges As Reference To Column Id In Table Measurements
+EXEC(''ALTER TABLE [dbo].[QuoteCharges] ADD CONSTRAINT [FK_QuoteCharges_Measurements_CostMeasurementId] FOREIGN KEY([CostMeasurementId]) REFERENCES [dbo].[Measurements]([Id])'');');
 
 
 -- DataView Script From CustomersDataView.dxml
@@ -538,22 +651,6 @@ dbo.MessagingStocks.StockType,
 dbo.Tenants.Company as TenantName
 FROM         dbo.MessagingStocks Inner join
 dbo.Tenants ON  dbo.MessagingStocks.TenantNumber = dbo.Tenants.Id');
-
-
--- DataView Script From ShipmentCountryDashboardView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentCountryDashboardView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentCountryDashboardView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentCountryDashboardView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId,
-dbo.Shipments.CountryForStatisticsId, dbo.Countries.Code AS CountryForStatisticsCode, dbo.Countries.EnglishName AS CountryForStatisticsName,
-dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.CustomerId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
-dbo.Shipments.ShipmentLevelCode, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency,dbo.Shipments.OpenReceivablesInProfitCurrency,
-dbo.Shipments.ProfitInProfitCurrency, dbo.Shipments.BranchId, dbo.Shipments.IsCancelled
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Countries
-ON dbo.Shipments.CountryForStatisticsId = dbo.Countries.Id');
 
 
 -- DataView Script From ShipmentDataView.dxml
@@ -780,7 +877,6 @@ ShipmentComputedFields.RequestedDocumentsCount as RequestedDocumentsCount,
 ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 ShipmentComputedFields.IsDigitalSignRequired as IsDigitalSignRequired,
 ShipmentComputedFields.IsDepositionRequired as IsDepositionRequired,
-ShipmentComputedFields.CreatedFromDigital as CreatedFromDigital,
 ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
 ShipmentComputedFields.NumberOfHouses as NumberOfHouses,
 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData,
@@ -916,25 +1012,6 @@ dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OU
 dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
 dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id');
-
-
--- DataView Script From ShipmentDirectionTransmodeView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentDirectionTransmodeView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentDirectionTransmodeView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentDirectionTransmodeView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.CreateDateTime,dbo.Shipments.OperationalDate, dbo.Shipments.TransportModeId,
-dbo.Shipments.DirectionId, dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.OpenReceivablesInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.CustomerId, dbo.Shipments.ProfitInProfitCurrency,
-dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Directions.Name AS DirectionName,
-dbo.TransportModes.Name AS TransportModeName, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.IsCancelled, dbo.Shipments.BranchId
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Directions
-ON dbo.Shipments.DirectionId = dbo.Directions.Id
-INNER JOIN
-dbo.TransportModes
-ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id');
 
 
 -- DataView Script From ShipmentFollowUpDataView.dxml
@@ -1222,22 +1299,6 @@ dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OU
 dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
 dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id');
-
-
--- DataView Script From ShipmentsCustomersDashboardView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentsCustomersDashboardView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentsCustomersDashboardView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentsCustomersDashboardView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.BranchId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
-dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId, dbo.Shipments.IsCancelled, dbo.Shipments.OpenReceivablesInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.CustomerId, dbo.Shipments.ProfitInProfitCurrency,
-dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.ShipmentLevelCode,
-dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Cards.EnglishName AS CustomerName
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Cards
-ON dbo.Shipments.CustomerId = dbo.Cards.Id');
 
 
 -- Procedure Script From UpdateAllTenantsCustomersActualDataProcedure.dxml
@@ -1660,54 +1721,6 @@ insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime)
 values(@Tenant,	@StartDateTime,	@EndDateTime)
 end
 END');
-
-
--- Procedure Script From IdCounter GetIdRange Procedure.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_GetNextTableIdsRange]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_GetNextTableIdsRange] END');
-EXEC('Create PROCEDURE [dbo].[usp_GetNextTableIdsRange]
-(
-@pEndNumber   int OUTPUT,
-@pStartNumber int OutPUT,
-@DBStringNumber varchar(50) OutPUT,
-@pTableName    varchar(40),
-@pNumberOfIds int
-)
-AS
-DECLARE @COUNTERINIT AS INT
-SET @COUNTERINIT = @pNumberOfIds
-SET @pStartNumber = 1
-Declare @Current As Int
-Declare @DataBaseNumber As Int
---Declare @DBStringNumber As varchar(50)
-Declare @StartStrNumber As varchar(50)
-Declare @EndStrNumber As varchar(50)
-SELECT TOP 1 @DataBaseNumber = DataBaseNumber FROM DataBaseProperties
-Set @DBStringNumber = CONVERT(varchar(50) , @DataBaseNumber)
-IF NOT EXISTS (SELECT TableName
-FROM DBIdCounters (UPDLOCK) WHERE TableName =@pTableName)
-BEGIN;
-INSERT INTO DBIdCounters
-(
-TableName,
-LastIdNumber
-)
-VALUES
-(
-@pTableName,
-@COUNTERINIT
-)
-Set @Current = 1
-End
-Else
-BEGIN;
-Set @Current	= (SELECT  LastIdNumber
-FROM DBIdCounters with (UPDLOCK) WHERE  TableName =@pTableName)
-set @pEndNumber = @Current + @pNumberOfIds
-set @pStartNumber =  @Current + 1
-Update DBIdCounters
-set LastIdNumber = LastIdNumber + @pNumberOfIds
-Where TableName = @pTableName
-End;');
 
 
 -- Procedure Script From ComputeShipmentFirstApprovalDateProcedure.dxml
@@ -4241,46 +4254,4 @@ BEGIN
 UPDATE Shipments SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)
 END;');
 
-
--- General Script From FixFeatureBusinessUnitProperty.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-update Features set IsBusinessUnitEnabled = 0
-declare @CustomerTableId as varchar(15)
-declare @QuoteTableId as varchar(15)
-declare @ActivityTableId as varchar(15)
-declare @OpportunityTableId as varchar(15)
-set @CustomerTableId = (select Id from ObjectTables where Name = 'Customer')
-set @QuoteTableId = (select Id from ObjectTables where Name = 'Quote')
-set @ActivityTableId = (select Id from ObjectTables where Name = 'Activity')
-set @OpportunityTableId = (select Id from ObjectTables where Name = 'Opportunity')
-update Features
-set IsBusinessUnitEnabled = 1
-where
-ObjectTableId in (@CustomerTableId, @QuoteTableId, @ActivityTableId, @OpportunityTableId)
-and Code in ('NEW', 'READ', 'UPDATE')
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('FixFeatureBusinessUnitProperty.sxml', GETDATE(), 'update Features set IsBusinessUnitEnabled = 0
-declare @CustomerTableId as varchar(15)
-declare @QuoteTableId as varchar(15)
-declare @ActivityTableId as varchar(15)
-declare @OpportunityTableId as varchar(15)
-set @CustomerTableId = (select Id from ObjectTables where Name = ''Customer'')
-set @QuoteTableId = (select Id from ObjectTables where Name = ''Quote'')
-set @ActivityTableId = (select Id from ObjectTables where Name = ''Activity'')
-set @OpportunityTableId = (select Id from ObjectTables where Name = ''Opportunity'')
-update Features
-set IsBusinessUnitEnabled = 1
-where
-ObjectTableId in (@CustomerTableId, @QuoteTableId, @ActivityTableId, @OpportunityTableId)
-and Code in (''NEW'', ''READ'', ''UPDATE'')', DATEDIFF(MS,@StartTime,@EndTime), '11313c219477bd0296f4c33838080c22', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
 

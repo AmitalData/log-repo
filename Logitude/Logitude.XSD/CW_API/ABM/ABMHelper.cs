@@ -168,7 +168,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             //string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
             DbQueueService queueservice = new DbQueueService(queueName, Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
 
             //try
             //{

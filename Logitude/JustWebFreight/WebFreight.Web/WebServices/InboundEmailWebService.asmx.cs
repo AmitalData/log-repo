@@ -182,7 +182,7 @@ namespace WebFreight.Web.WebServices
 
 			 
 				DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", tenant.ToString() } });
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
 			}
 
             catch (Exception ex)

@@ -10,7 +10,7 @@ namespace Logitude.Server.Tools.QueueService
     public interface IQueueService
     {
         void InitializeQueue(string queueCode, int tenant);
-        void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
+        void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
         //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
         void Complete();

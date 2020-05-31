@@ -110,10 +110,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             this.OnInsertTraceEventForShipment(args.EntityId, args.EventTypeId, newTraceEvent, tenant, webFreightContext, myResult);
                         }
+
+                        if (objectTable.AllowCustomFields)
+                        {
+                            EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable != null ? objectTable.Name : null, Tenant = tenant });
+                        }
                     }
 
-
-                    EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable!=null?  objectTable.Name:null, Tenant = tenant });
+              
 
 
                     scope.Complete();

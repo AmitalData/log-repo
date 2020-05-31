@@ -143,7 +143,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue(commLog.QueueName, 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } }, Tenant);
                 }
 
                 catch (Exception ex)

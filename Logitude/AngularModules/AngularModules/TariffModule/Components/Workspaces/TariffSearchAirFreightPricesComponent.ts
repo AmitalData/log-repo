@@ -995,13 +995,21 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.FatherComponent.EntityPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
+                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
 
                 if (newQuantity != null) {
-                    shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
+
                     shipmentPayable.Quantity = AppTool.Round(newQuantity, 3);
+                    if (newRecord.UnitOfMesurmentCode == "PRVL" || newRecord.UnitOfMesurmentCode == "PRFR") {
+                        var price = shipmentPayable.ExpectedAmount * 100;
+                        shipmentPayable.UnitPrice = AppTool.Round(price / shipmentPayable.Quantity, 3);
+                    }
+                    else {
+                        shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
+
+                    }
                 }
 
-                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
                 shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
                 shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
@@ -1023,8 +1031,19 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
                 shipmentPayable.MinAmount = newRecord.MinPrice;
+               
                 this.TariffList_Shipment.push(shipmentPayable);
             }
+        });
+
+        this.OnAmountChanged(); 
+    }
+
+    OnAmountChanged() {
+        this.TariffList_Shipment.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
+            var newQuantity = this.GetQuantity(item.MeasurementCode);
+            var price = item.ExpectedAmount * 100;
+            item.UnitPrice = AppTool.Round(price / newQuantity, 3);
         });
     }
 

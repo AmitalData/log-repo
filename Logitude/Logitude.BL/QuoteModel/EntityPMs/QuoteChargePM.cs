@@ -52,6 +52,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VendorId { get; set; }
         public string VendorName { get; set; }
+        public string VendorCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CostMeasurementId { get; set; }

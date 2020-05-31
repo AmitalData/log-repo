@@ -1,0 +1,36 @@
+﻿<Script DBType="Main" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+    
+      declare @EntityId as varchar(15)
+      declare @UserId as varchar(15)
+      set @UserId = (select Id from Contacts where Email = 'system@tenant0.com' and Tenant = 0) 
+
+      update QuoteClosingReasons 
+      set 
+      Tenant = 0,
+      CreateDate = GETDATE(),
+      UpdateDate = GETDATE(),
+      CreatedByUserId = @UserId,
+      UpdatedByUserId = @UserId,
+      Inactive = 0
+
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+      update QuoteClosingReasons set Id = @EntityId where Code = 'EQ'
+
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+      update QuoteClosingReasons set Id = @EntityId where Code = 'GS'
+
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+      update QuoteClosingReasons set Id = @EntityId where Code = 'LC'
+
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+      update QuoteClosingReasons set Id = @EntityId where Code = 'LS'
+
+      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+      update QuoteClosingReasons set Id = @EntityId where Code = 'XQ'
+      
+    ]]>
+  </Sql>
+</Script>
+
