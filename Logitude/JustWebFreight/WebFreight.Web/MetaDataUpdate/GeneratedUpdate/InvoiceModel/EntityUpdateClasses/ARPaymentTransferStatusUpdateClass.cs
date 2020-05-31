@@ -76,63 +76,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentTransferStatusUpdateClass
    {  		
-		public const string HashString = "03246cf1883ab4212b2a7b9e1f4749b9";
-        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, ObjectTableRepository ObjectTableRepository, TextCodeRepository TextCodeRepository)
-        {
-
+		public const string HashString = "7264de1a99d285a4f47d327a02dc5349";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
-
-                ObjectTableName = "ARPaymentTransferStatus",
-                DBTableName = "ARPaymentTransferStatus",
-                ObjectTableSingular = "A/R Payment Transfer Status",
-                ObjectTablePlural = "A/R Payment Transfer Status",
-                DefaultText = "A/R Payment Transfer Status",
-                Name = "ARPaymentTransferStatus",
-                IsNewWizard = false,
-                LookUp1 = "Code",
-                LookUp2 = "Name",
-                HasCustomFilter = false,
-                KeyPropertyPath = "Code",
-                AutoCompleteSearchWindow = false,
-                IsClosed = true,
-                CacheOnClient = true,
-                EditableFromAutoCompleteWindow = true,
-                HasCounter = false,
-                EnableEditFromLOV = false,
-                EnableAddFromLOV = false,
-                IsRestrictable = false,
-                IsMain = true,
-                IsAutoComplete = true,
-                CustomFieldsCount = 0,
-                HasCustomFields = false,
-                InActive = false,
-                SearchFields = "ARPaymentTransferStatus,ARPaymentTransferStatus,,Code,",
-                IsSaveButtonVisible = true,
-                EnableSecurity = false,
-                ObjectTableTypeCode = "MD",
-                IsComposition = false,
-                MaxNumberOfCustomFields = 0,
-                AllowCustomFields = false,
-                HasDynamicHeader = false,
-                HasDocuments = false,
-                IsLookUp = true,
-                IsEditable = false,
-                AllowedForComputingPartners = false,
-                DisableSearchBox = false,
-                ClientModuleName = "Invoice",
-                HasHelper = false,
-                HasShortTitle = false,
-                HasMenuButtons = false,
-                HasFiltersMenu = false,
-                AllowedInTicket = false,
-                IsTabsHidden = false,
-                CloseTableCode = "Code",
-                CloseTableName = "Name",
-                HashString = ARPaymentTransferStatusUpdateClass.HashString,
-
+			
+	             				    ObjectTableName =  "ARPaymentTransferStatus",
+			      				    DBTableName =  "ARPaymentTransferStatus",
+			      				    ObjectTableSingular =  "A/R Payment Transfer Status",
+			      				    ObjectTablePlural =  "A/R Payment Transfer Status",
+			      				    DefaultText =  "A/R Payment Transfer Status",
+			      				    Name =  "ARPaymentTransferStatus",
+			      				    IsNewWizard =  false,
+			      				    LookUp1 =  "Code",
+			      				    LookUp2 =  "Name",
+			      				    HasCustomFilter =  false,
+			      				    KeyPropertyPath =  "Code",
+			      				    AutoCompleteSearchWindow =  false,
+			      				    IsClosed =  true,
+			      				    CacheOnClient =  true,
+			      				    EditableFromAutoCompleteWindow =  true,
+			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  true,
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
+			      				    InActive =  false,
+			      				    SearchFields =  "ARPaymentTransferStatus,ARPaymentTransferStatus,,Code,",
+			      				    IsSaveButtonVisible =  true,
+			      				    EnableSecurity =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  true,
+			      				    IsEditable =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
+			      				    ClientModuleName =  "Invoice",
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsTabsHidden =  false,
+			      				    CloseTableCode =  "Code",
+			      				    CloseTableName =  "Name",
+			      				    HashString =  ARPaymentTransferStatusUpdateClass.HashString,
+			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
-        }
+		}
 	
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
