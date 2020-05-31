@@ -415,3 +415,5 @@ __pycache__/
 /Logitude/Logitude.HybridTest/Properties/DataSources
 /Logitude/AngularModules/AngularModules/node_modules.rar
 /Logitude/Logitude.Update/performancelog.csv
+/Logitude/AngularModules/AngularModules/cypress
+/Logitude/AngularModules/AngularModules/report.20200531.114949.5976.0.001.json
