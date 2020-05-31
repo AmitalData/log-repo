@@ -135,12 +135,16 @@
                         <td width="200px" *ngIf="UploadSuccess">
                             <label style="font-size:12px;"> הקובץ נקלט בהצלחה</label>
                         </td>
-                        <td width="57px">
-                            <button class="Button" [disabled]="!ExportAsExcelButtonIsEnabled" (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">נקה נתונים</button>
                         </td>
                         <td style="width: 5px;">
                             <div></div>
                         </td>
+                        <td width="57px">
+                            <button class="Button" [disabled]="!ExportAsExcelButtonIsEnabled" (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                        </td>
+
                         <td width="57px">
                             <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                         </td>

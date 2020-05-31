@@ -184,7 +184,15 @@ export class ReceiptCertificateFromFileComponent
         });
 
     }
-
+    DeleteFileButtonClicked() {
+        this.filterImageParameter = null;
+        this.IsShowProgressBar = false;
+        this.UploadButtonIsEnabled = true;
+        this.FileName = "";
+        this.ProgressBarPercentText = "";
+        this.ErrorsResultList.Clear();
+        this.ExportAsExcelButtonIsEnabled = false;
+    }
     ExportExcel() {
         var url = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvioceItemCertificats/GetSupplierInvoiceItemCertificatErrors2Excel?' + 'tenant=' + this.tenant.toString() + '&key=' + this.filterImageParameter.Key;
         window.open(url);
