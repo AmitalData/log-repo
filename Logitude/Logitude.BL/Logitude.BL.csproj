@@ -552,7 +552,10 @@
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
+    <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteClosingReason.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />

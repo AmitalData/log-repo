@@ -43,6 +43,7 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityOtherServices;
+using Logitude.BL.QuoteModel.EntityQueries;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -108,6 +109,8 @@ namespace WebFreight.Web.InfrastructureModel
         static OpportunityTypeRepository opportunityTypeRepository;
         static DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository;
         static AccountingPaymentMethodRepository PaymentMethodRepository;
+        static QuoteClosingReasonRepository quoteClosingReasonRepository;
+
         // Tariff 
         static PriceStepRepository priceStepRepository;
         static TariffProductRepository tariffProductRepository;
@@ -149,6 +152,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static AdditionalServiceQuery additionalServiceQuery;
         private static OpportunityClosingReasonQueryService closingReasonQuery;
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
+        private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -254,6 +258,7 @@ namespace WebFreight.Web.InfrastructureModel
             customsRequiredFieldRepository = new Logitude.Customs.Data.Repsitories.CustomsRequiredFieldRepository(theTenant);
             documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theTenant);
             PaymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(theTenant);
+            quoteClosingReasonRepository = new QuoteClosingReasonRepository(theTenant);
 
             //Tariff 
             priceStepRepository = new PriceStepRepository(theTenant);
@@ -290,6 +295,7 @@ namespace WebFreight.Web.InfrastructureModel
             industryQuery = new IndustryQuery(industryRepository);
             additionalServiceQuery = new AdditionalServiceQuery(additionalServiceRepository);
             closingReasonQuery = new OpportunityClosingReasonQueryService(closingReasonRepository);
+            quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
 
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
@@ -347,6 +353,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
+                List<QuoteClosingReason> tenantZeroQuoteClosingReasons;
 
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
@@ -397,6 +404,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
                     tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
+                    tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
 
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
@@ -477,7 +485,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
-
+                AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
                 AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
@@ -713,6 +721,30 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void AddQuoteClosingReasons(int tenant, QuoteClosingReasonRepository quoteClosingReasonRepository, List<QuoteClosingReason> tenantZeroQuoteClosingReasons)
+        {
+            User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
+
+            List<QuoteClosingReason> closingReasonsList = tenantZeroQuoteClosingReasons.Where(d => d.Tenant == 0).ToList();
+            foreach (QuoteClosingReason closingReason in closingReasonsList)
+            {
+                QuoteClosingReason newClosingReason = new QuoteClosingReason()
+                {
+                    Tenant = tenant,
+                    Name = closingReason.Name,
+                    Code = closingReason.Code,
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    CreatedByUserId = myUser.Id,
+                    UpdatedByUserId = myUser.Id,
+                    SearchFields = closingReason.SearchFields,                    
+                    Id = IdCounter.GetNumber("QuoteClosingReason", tenant).ToString(),
+                };
+                quoteClosingReasonRepository.Add(newClosingReason);
+            }
+            quoteClosingReasonRepository.SubmitChanges();
         }
 
         private static void AddPriceSteps(TariffSetting setting)
