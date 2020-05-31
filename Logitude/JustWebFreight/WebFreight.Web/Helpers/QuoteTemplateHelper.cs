@@ -1170,47 +1170,48 @@ namespace WebFreight.Web.Helpers
 
         #region CopyQuoteTemplateFromTenantZero
 
-        public string CopyQuoteTemplateFromTenantZero(int tenant , string quoteTemplateId = null, string userId = null)
+        public string CopyQuoteTemplateFromTenantZero(QuoteTemplateCopyDetails quoteTemplateCopyDetails)
         {
-            QuoteTemplateQuery quoteTemplateRepository = new QuoteTemplateQuery(tenant);
-            this.Tenant = tenant;
+            QuoteTemplateQuery quoteTemplateRepository = new QuoteTemplateQuery(quoteTemplateCopyDetails.Tenant);
+            this.Tenant = quoteTemplateCopyDetails.Tenant;
             List<QuoteTemplatePM> QuoteTemplateLists = new List<QuoteTemplatePM>();
             string result = "";
-            if (string.IsNullOrEmpty(quoteTemplateId))
+            if (string.IsNullOrEmpty(quoteTemplateCopyDetails.QuoteTemplateId))
             {
-                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).Where(d => d.IsCopiedAtSignup == true).ToList();
+                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).ToList();
             }
             else
             {
-                QuoteTemplateLists.Add(quoteTemplateRepository.GetSinglePM(quoteTemplateId,0));
+                QuoteTemplateLists.Add(quoteTemplateRepository.GetSinglePM(quoteTemplateCopyDetails.QuoteTemplateId,0));
             }
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(quoteTemplateCopyDetails.UserId))
             {
                 ContactRepository contactRepository = new ContactRepository(0);
-                userId = contactRepository.GetConactIdByemail("system@tenant" + tenant.ToString() + ".com", tenant);
+                quoteTemplateCopyDetails.UserId = contactRepository.GetConactIdByemail("system@tenant" + quoteTemplateCopyDetails.Tenant.ToString() + ".com", quoteTemplateCopyDetails.Tenant);
             }
-
+            if (quoteTemplateCopyDetails.UpdateFromTenantData)
+            {
+                RemoveExisitingQuoteTemplates(quoteTemplateCopyDetails.Tenant, quoteTemplateRepository, QuoteTemplateLists);
+            }
             foreach (QuoteTemplatePM item in QuoteTemplateLists)
             {
-                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(item.QuoteTemplateSettingId, tenant , 0);
+                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(item.QuoteTemplateSettingId, quoteTemplateCopyDetails.Tenant, 0);
                 if (copySetting != null)
                 {
                     QuoteTemplatePM newQuoteTemplateCopy = new QuoteTemplatePM()
                     {
-                        Tenant = tenant,
+                        Tenant = quoteTemplateCopyDetails.Tenant,
                         Name = item.Name,
-                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        CreatedByUserId = userId,
+                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(quoteTemplateCopyDetails.Tenant),
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(quoteTemplateCopyDetails.Tenant),
+                        CreatedByUserId = quoteTemplateCopyDetails.UserId,
                         QuoteTemplateSettingId = copySetting.Id,
                         TemplateTypeCode = item.TemplateTypeCode,
                         IsTemplate = true,
-                        OriginalQuoteTemplateId = item.Id,
-                        
-
+                        OriginalQuoteTemplateId = item.Id
                     };
                     CreateCopyFromQuoteTemplatePM(newQuoteTemplateCopy, item);
-                    result = !string.IsNullOrEmpty(quoteTemplateId) ? newQuoteTemplateCopy.Id : "";
+                    result = !string.IsNullOrEmpty(quoteTemplateCopyDetails.QuoteTemplateId) ? newQuoteTemplateCopy.Id : "";
 
                 }
 
@@ -1219,7 +1220,30 @@ namespace WebFreight.Web.Helpers
 
             return result;
         }
+
+        private static void RemoveExisitingQuoteTemplates(int tenant, QuoteTemplateQuery quoteTemplateRepository, List<QuoteTemplatePM> QuoteTemplateLists)
+        {
+            List<QuoteTemplatePM> CurrentTenantQuoteTemplateLists = new List<QuoteTemplatePM>();
+            CurrentTenantQuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(tenant).ToList();
+
+            foreach (QuoteTemplatePM item in CurrentTenantQuoteTemplateLists)
+            {
+                QuoteTemplatePM quoteTemplate = QuoteTemplateLists.SingleOrDefault(i => i.Id == item.OriginalQuoteTemplateId);
+                if (quoteTemplate != null)
+                {
+                    QuoteTemplateLists.Remove(quoteTemplate);
+                }
+            }
+        }
         #endregion
 
+    }
+
+    public class QuoteTemplateCopyDetails
+    {
+        public int Tenant;
+        public string QuoteTemplateId;
+        public string UserId;
+        public bool UpdateFromTenantData;
     }
 }
