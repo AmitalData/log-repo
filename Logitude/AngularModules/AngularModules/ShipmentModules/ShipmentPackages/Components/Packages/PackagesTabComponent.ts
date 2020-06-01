@@ -633,11 +633,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private ComputeGrossWeight_PerStorageDays() {
         var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
         var weightPerStorageDays;
-        if (this.EntityPM.TransportModeId == "A") {
+        if (this.EntityPM.TransportModeId != "A") {
             weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
         }
         else {
-            weightPerStorageDays = Math.floor(this.EntityPM.ChargeableWeight) * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
         }
         this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
     }
@@ -684,6 +684,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight_Kg();
+            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
