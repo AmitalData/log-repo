@@ -546,17 +546,18 @@ namespace WebFreight.Web.ReportsWebServices
                     APTotalVat reportTotalVAT = new APTotalVat();
 
                     VatType vatType = (from vat in commonContext.VatTypes where vat.Id == item.VatTypeId select vat).FirstOrDefault();                    
-                    List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vatType.Id orderby percentage.FromDate descending select percentage).ToList();
+                    //List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vatType.Id orderby percentage.FromDate descending select percentage).ToList();
 
                     reportTotalVAT.Type = vatType != null ? vatType.EnglishName : "";
                     reportTotalVAT.TotalVatAmountInInvoiceCurrency = item.InvoiceCurrencyVATAmount;
+                    reportTotalVAT.Percentage = item.VatPercent;
+                    
+                   //if (vattypepercentageList.Count > 0)
+                   //{
+                   //    reportTotalVAT.Percentage = vattypepercentageList[0].Percentage;
+                   //}
 
-                    if (vattypepercentageList.Count > 0)
-                    {
-                        reportTotalVAT.Percentage = vattypepercentageList[0].Percentage;
-                    }
-
-                    invoiceDataProvider.APTotalVatList.Add(reportTotalVAT);
+                   invoiceDataProvider.APTotalVatList.Add(reportTotalVAT);
                 }
                 #endregion
 
