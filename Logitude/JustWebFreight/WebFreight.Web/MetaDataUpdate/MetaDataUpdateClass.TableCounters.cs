@@ -2,6 +2,7 @@
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -500,26 +501,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 };
 
 
-                CounterDefinition myCounterDefinition_08 = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = myCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "IT",
-                    Prefix = "IT",
-                };
-
-                CounterDefinition myCounterDefinition_09 = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = myCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "IC",
-                    Prefix = "IC",
-                };
-
                 CounterRepository.Add(myCounter);
                 CounterDefinitionRepository.Add(myCounterDefinition_01);
                 CounterDefinitionRepository.Add(myCounterDefinition_02);
@@ -528,8 +509,37 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_05);
                 CounterDefinitionRepository.Add(myCounterDefinition_06);
                 CounterDefinitionRepository.Add(myCounterDefinition_07);
-                CounterDefinitionRepository.Add(myCounterDefinition_08);
-                CounterDefinitionRepository.Add(myCounterDefinition_09);
+
+
+                if ( LogitudeSettings.DeploymentStage == "amitalstorage" )
+                {
+                    CounterDefinition myCounterDefinition_08 = new CounterDefinition()
+                    {
+                        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                        CounterId = myCounter.Id,
+                        Tenant = 0,
+                        StartNumber = 1000,
+                        Parameter1 = "IT",
+                        Prefix = "IT",
+                    };
+
+                    CounterDefinition myCounterDefinition_09 = new CounterDefinition()
+                    {
+                        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                        CounterId = myCounter.Id,
+                        Tenant = 0,
+                        StartNumber = 1000,
+                        Parameter1 = "IC",
+                        Prefix = "IC",
+                    };
+
+                    CounterDefinitionRepository.Add(myCounterDefinition_08);
+                    CounterDefinitionRepository.Add(myCounterDefinition_09);
+                }
+           
+
+         
+               
 
             }
             #endregion
