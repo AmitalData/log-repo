@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ContainerFollowupWizardTemplate} from './ContainerFollowupWizardTemplate';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -21,7 +21,7 @@ import {RoutingHelper} from '../../../../../Shipment/Tools';
     templateUrl: './ContainerFollowupWizardComponent.html',
 })
 
-export class ContainerFollowupWizardComponent extends BaseComponent {
+export class ContainerFollowupWizardComponent extends BaseComponent implements AfterViewInit {
     public ShipmentPM: ShipmentPM;
     public EntityPM: ShipmentPackagePM;
     public EntityId: string;
@@ -66,8 +66,6 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
                                     }
                                 }
 
-                                this.RunComponent();
-
                                 this.IsResourcesReady = true;
                             }
 
@@ -84,30 +82,11 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     }
 
     private isLoaderReady: boolean = false;
-    RunComponent() {
-        if (this.ChildViewContainerRef) {
-            this.isLoaderReady = true;
-            this.LoadTemplate();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
+    ngAfterViewInit() {
+        this.isLoaderReady = true;
+        this.LoadTemplate();
     }
 
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
     LoadTemplate() {
         if (this.ChildViewContainerRef) {
             this.ChildViewContainerRef.clear();
