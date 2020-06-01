@@ -100,6 +100,10 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         if (!this.ExportFile) {
             errors.push("עליך להזין מספר תיק יצוא");
         }
+
+        if (!this.CustomerId) {
+            errors.push("עליך להזין לקוח");
+        }
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
             return;
