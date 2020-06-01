@@ -734,7 +734,7 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static void AddQuoteClosingReasons(int tenant, QuoteClosingReasonRepository quoteClosingReasonRepository, List<QuoteClosingReason> tenantZeroQuoteClosingReasons)
         {
-            User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
+            //User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
 
             List<QuoteClosingReason> closingReasonsList = tenantZeroQuoteClosingReasons.Where(d => d.Tenant == 0).ToList();
             foreach (QuoteClosingReason closingReason in closingReasonsList)
@@ -746,8 +746,8 @@ namespace WebFreight.Web.InfrastructureModel
                     Code = closingReason.Code,
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    CreatedByUserId = myUser.Id,
-                    UpdatedByUserId = myUser.Id,
+                    CreatedByUserId = closingReason.CreatedByUserId,
+                    UpdatedByUserId = closingReason.UpdatedByUserId,
                     SearchFields = closingReason.SearchFields,                    
                     Id = IdCounter.GetNumber("QuoteClosingReason", tenant).ToString(),
                 };
