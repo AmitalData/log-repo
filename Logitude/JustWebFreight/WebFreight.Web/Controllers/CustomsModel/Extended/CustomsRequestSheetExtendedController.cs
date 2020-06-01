@@ -263,9 +263,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
        
-                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "15" && x.RequestStatusCode != "21") != null)
+                if (entityLists.FirstOrDefault(x => x.RequestStatusCode != "15") != null)
                 {
-                    throw new Exception("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל או ניתוח נכשל");
+                    throw new Exception("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל");
 
                 }
 
