@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main">
   <Sql Version="1">
-    <![CDATA[      
-      
+    <![CDATA[
+    
       declare @Tenant as int
       declare @TenantString as varchar(50)
       declare @EntityId as varchar(15)
@@ -58,14 +58,28 @@
                   insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
                   values('XQ', 'Expired Quote', 'XQ,Expired Quote', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)                            
               end
+              
+               if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'BM')
+              begin 		    
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+                  insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
+                  values('BM', 'Benchmarking', 'BM,Benchmarking', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)                            
+              end
+              
+               if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'LT')
+              begin 		    
+			      EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+                  insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
+                  values('LT', 'Long Term Project', 'LT,Long Term Project', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)                            
+              end
+              
 		  end
                  FETCH NEXT FROM TenantsCursor INTO @Tenant      
               END
 	      CLOSE TenantsCursor
 	      DEALLOCATE TenantsCursor
       END
-
-    ]]>       
+      
+    ]]>
   </Sql>
 </Script>
-

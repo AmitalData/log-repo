@@ -42,7 +42,7 @@ BEGIN
                      )
               end    
 
-			  set @Code = 'REAC'
+			        set @Code = 'REAC'
               set @Name = 'Reactivated'
 
               if not exists (select * from EventTypes where Code = @Code and Tenant = @Tenant)
