@@ -840,6 +840,28 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             });
         }
     }
+
+    DeleteLinesClicked() {
+        if (this.ItemsCollection.filter(f => f.IsLineSelected).length == 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("Please select lines you would like to delete");
+        }
+
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Selected lines will be deleted");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: AirCostTariffLineData) => {
+                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                        this.TariffsLinesSource.Remove(item);                        
+                    });
+
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);                    
+                }
+            });
+        }
+    }
 }
 
 export class VersionClass {
