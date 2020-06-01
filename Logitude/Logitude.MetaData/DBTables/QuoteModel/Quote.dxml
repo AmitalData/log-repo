@@ -1463,4 +1463,5 @@
     Columns="OpportunityId" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
+  
 </Table>
