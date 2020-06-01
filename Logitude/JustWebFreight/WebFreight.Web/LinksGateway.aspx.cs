@@ -17,19 +17,19 @@ namespace WebFreight.Web
         {
             //http://localhost:9996/LinksGateway.aspx?Menu=PREQ&SecurityKey=cfeb18b0f2044ccab43bb1d2cc67048e&Tenant=203
             var Menu = Request.QueryString["Menu"];
-            if (Menu == "PREQ")
+            if (Menu == "PREQ" || Menu == "UID")
             {
                 var Tenant = Request.QueryString["Tenant"];
-                var SecurityKey = Request.QueryString["SecurityKey"]; 
+                var SecurityKey = Request.QueryString["SecurityKey"];
                 IGlobalContext objectContext = GlobalContext.GetContext();
                 SettingRepository MySettingRepository = new SettingRepository(objectContext);
                 SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
                 var MySettings = MySettingQuery.GetSinglePM();
-                string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
+                string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
                 Response.Redirect("~/" + RedirectUrl);
             }
-           
+
         }
-        
+
     }
 }
