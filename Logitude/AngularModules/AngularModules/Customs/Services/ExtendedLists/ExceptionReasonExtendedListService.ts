@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -17,7 +17,7 @@ export class ExceptionReasonExtendedListService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExceptionReason';
-        this._mainApiUrl = ServiceHelper.GetLogitudeURL() + 'api/exceptionreasonviews';  
+        this._mainApiUrl = ServiceHelper.GetLogitudeURL() + 'api/exceptionreasonviews';
 
     }
 
@@ -26,7 +26,7 @@ export class ExceptionReasonExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetExceptionReasonByUnifreightStatus/?' + 'unifreightStatusCode=' + unifreightStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+            return this._http.get(this._apiUrl + '/GetExceptionReasonByUnifreightStatus/?' + 'unifreightStatusCode=' + unifreightStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
                 var serviceResponse: ServiceResponse = response;
                 var _mappedListsArray: Array<ExceptionReasonPM> = [];
                 if (serviceResponse.Result) {
@@ -40,7 +40,7 @@ export class ExceptionReasonExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -54,24 +54,26 @@ export class ExceptionReasonExtendedListService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     get(exceptionReasonCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
 
-        return Observable.defer(() => {
-            return this._http.get(this._mainApiUrl + '/getsingle?' + 'code=' + exceptionReasonCode, {
-                headers: authHeader
-            }).map(response => {
-                var myJsonResult = response.json();
-                var entityPM = new ExceptionReasonPM();
-                entityPM = this.MapJsonToEntityPM(myJsonResult);
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entityPM;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + exceptionReasonCode, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var myJsonResult = response.body;
+                        var entityPM = new ExceptionReasonPM();
+                        entityPM = this.MapJsonToEntityPM(myJsonResult);
+                        var serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entityPM;
+                        return serviceResponse;
+
+                    }),
+
+                    catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapJsonToEntityPM(jsonPM: any) {
