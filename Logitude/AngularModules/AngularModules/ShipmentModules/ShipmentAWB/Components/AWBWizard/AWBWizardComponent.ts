@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
@@ -55,7 +55,7 @@ import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentA
     providers: [EntityArgs, DocumentTypeListExtendedService, DocumentOutPMService, DocumentTypePMExtendedService]
 })
 
-export class AWBWizardComponent {
+export class AWBWizardComponent implements AfterViewInit{
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter < boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public TenantPM: TenantPM;
@@ -85,40 +85,12 @@ export class AWBWizardComponent {
     SetWindowArgs(windowArgs: AWBWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
-        this.RunComponent();
     }
 
     private isViewInited = false;
-    RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.toArray().length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isViewInited = true;
-                this.InitializeComponent();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
+    ngAfterViewInit() {
+        this.isViewInited = true;
+        this.InitializeComponent();
     }
 
     public YellowIconHelpMessage: string;
