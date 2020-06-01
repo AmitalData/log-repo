@@ -133,7 +133,7 @@
                 <table>
                     <tr>
                         <td width="200px" *ngIf="UploadSuccess">
-                            <label style="font-size:12px;"> הקובץ נקלט בהצלחה</label>
+                            <label style="font-size:12px;" *ngIf="UploadSuccessLabel"> הקובץ נקלט בהצלחה</label>
                         </td>
                         <td style="width: 57px;">
                             <button class="Button" (click)="DeleteFileButtonClicked()" *ngIf="filterImageParameter != null ">נקה נתונים</button>
