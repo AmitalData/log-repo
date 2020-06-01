@@ -87,38 +87,48 @@
                 </tr>
                 <tr>
                     <td style="width:50px"> <div></div>  </td>
-                    <td style="width:200px;padding-top: 10px;">
+                    <td style="width:250px;padding-top: 10px;">
                         <table>
                             <tr>
                                 <td>
                                     <table>
                                         <tr style="height:80px"><td><div></div></td> </tr>
                                         <!-- CustomFileNo -->
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <label style="font-size:12px; padding-left:20px">מספר תיק יצוא:</label>
+                                        <tr class="FormFieldRow" style="width:200px;text-align: right;">
+                                            <td style="text-align: right;">
+                                                <!--<LogLabel style="font-size:12px; padding-left:20px"
+                                                          [ObjectFieldName]="'ExportFile'"
+                                                          [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>-->
+                                              <label style="font-size:12px; padding-left:20px;text-align: right;">מספר תיק יצוא:</label> 
                                             </td>
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'ExportFile'"
-                                                            [InputType]="'integertext'"
-                                                            [DataContext]="DataContext"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [HideColumns]="true"></LogTextBox>
+                                            <td  style="width:130px">
+                                                <div style="width:135px">
+                                                    <LogTextBox [ObjectFieldName]="'ExportFile'"
+                                                                [InputType]="'integertext'"
+                                                                [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                          
                                             </td>
                                         </tr>
-                                        <tr style="width:10px;">
-                                        </tr>
-                                        <tr class="FormFieldRow">
-                                            <td  >
+                                        <!--<tr style="width:10px;">
+                                        </tr>-->
+                                        <tr class="FormFieldRow" style="text-align: right;">
+                                            <td>
                                                 <LogLabel style="font-size:12px; padding-left:20px"
                                                           [ObjectFieldName]="'CustomerId'"
                                                           [ObjectTableName]="ObjectTableName"
                                                           [DataContext]="DataContext"></LogLabel>
+               
+
+
                                             </td>
                                             <!--<td style="width: 25px; padding-right: 5px;">
                                                 <IconButton [Name]="'Add'" (click)="AddCustomerClicked()" [IsIconOnly]="true"></IconButton>
                                             </td>-->
-                                            <td>
+                                            <td  style="width:150px">
                                                 <LogLov [ObjectFieldName]="'CustomerId'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
@@ -129,7 +139,7 @@
                                                         [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
                                                 </LogLov>
                                             </td>
-                                            <td><div></div></td>
+                                            <!--<td><div></div></td>-->
                                         </tr>
                                         <tr style="height:200px"><td><div></div></td> </tr>
                                     </table>
