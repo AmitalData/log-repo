@@ -54,6 +54,7 @@ export class ReceiptCertificateFromFileComponent
     IsShowProgressBar: boolean = false;
     IsUploadCanceled: boolean;
     IsUploadInProgress: boolean;
+    UploadSuccessLabel:boolean
     Placeholder: any="";
     tenant: number;
     ResponseMessage: any;
@@ -63,6 +64,7 @@ export class ReceiptCertificateFromFileComponent
         super();
         this.ErrorsResultList = new ObservableCollection([]);
         this.tenant = SessionLocator.Tenant;
+        this.UploadSuccessLabel = false;
     }
 
 
@@ -147,7 +149,7 @@ export class ReceiptCertificateFromFileComponent
                 this.filterImageParameter.UploadMode = "Block";
                 this.filterImageParameter.FileSize = file.size;
                 this.filterImageParameter.Tenant = SessionLocator.Tenant;
-
+                this.UploadSuccessLabel = true;
                 this.ArrayBufferToBase64(file, this);
             }
         }
@@ -191,6 +193,8 @@ export class ReceiptCertificateFromFileComponent
         this.FileName = "";
         this.ProgressBarPercentText = "";
         this.ErrorsResultList.Clear();
+        debugger;
+        this.UploadSuccessLabel = false;
         this.ExportAsExcelButtonIsEnabled = false;
     }
     ExportExcel() {
