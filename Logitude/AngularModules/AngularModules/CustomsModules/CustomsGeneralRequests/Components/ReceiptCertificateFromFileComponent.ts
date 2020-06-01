@@ -193,7 +193,6 @@ export class ReceiptCertificateFromFileComponent
         this.FileName = "";
         this.ProgressBarPercentText = "";
         this.ErrorsResultList.Clear();
-        debugger;
         this.UploadSuccessLabel = false;
         this.ExportAsExcelButtonIsEnabled = false;
     }
