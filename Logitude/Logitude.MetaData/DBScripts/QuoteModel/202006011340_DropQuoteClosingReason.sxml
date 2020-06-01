@@ -16,6 +16,12 @@
      begin
         alter table quotes drop constraint FK_Quotes_QuoteClosingReasons_QuoteClosingReasonId
       end
+     
+     if exists (SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode')
+     begin
+        alter table quotes drop constraint [FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode]
+      end
+      
       
      if exists (SELECT * FROM sys.tables WHERE name='QuoteClosingReasons')
      begin
