@@ -36,6 +36,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             ICustomContext MyContext = CustomContext.GetContext(tenant);
             SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             SupplierInvioceItemCertificatRepository repo = new SupplierInvioceItemCertificatRepository(tenant);
+            Boolean foundInvoiceItem = false;
 
 
 
@@ -45,7 +46,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                     if(model.ConfirmationCode=="")
                     {
                         AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
-                        continue;                    }
+                    }
                     var list = supplierInvoiceRepository.GetDeclarationIdfromInvoiceNumber(item.SupplierItemInvoice, tenant);
                     var decList = delcarationRepository.GetDeclarationsByIdAndClientID(list,clientID);
                     if (decList.Count == 0)
@@ -53,30 +54,32 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                         AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "	הצהרה ו/או מס' חשבון ספק לא אותר");
                         continue;
                     }
+                    foundInvoiceItem = false;
                     foreach (var dec in decList)
                     {
-                        if (dec.PaymentDate != null)
-                        {
-                            AddErrors(dec.DeclarationNumber,model.RowNumber,dec.CustomFileNo,item.SupplierItemInvoice,model.ModelCode,"הצהרה שולמה");
-                            continue;
-                        }
-                        if (dec.DeclarationStatusTypeCode == "1")
-                        {
-                            AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה בוטלה");
-                            continue;
-                        }
                         var invoiceItems = supplierInvoiceItemRepository.GetSupplierInvoiceItemByInvoiceNumber(tenant,dec.Id, model.ModelCode);
-                        if (invoiceItems.Count == 0)
-                        {
-                            AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
-                        }
                         foreach(SupplierInvoiceItemPM invoiceItem in invoiceItems)
                         {
-                            if (!repo.IsExist(dec.Id, invoiceItem.CounterKey, invoiceItem.LineNumber,tenant,"2402",model.ConfirmationCode,model.RequestNumber))
+                            foundInvoiceItem = true;
+                            if (dec.PaymentDate != null)
+                            {
+                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה שולמה");
+                                continue;
+                            }
+                            if (dec.DeclarationStatusTypeCode == "1")
+                            {
+                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "הצהרה בוטלה");
+                                continue;
+                            }
+                            if (model.ConfirmationCode != "" &&!repo.IsExist(dec.Id, invoiceItem.CounterKey, invoiceItem.LineNumber,tenant,"2402",model.ConfirmationCode,model.RequestNumber))
                             {
                                 updateService.InsertSupplierInvioceItemCertificatByCsvFile(model.ConfirmationCode, model.RequestNumber, tenant, dec.Id, invoiceItem.LineNumber, invoiceItem.CounterKey, invoiceItem);
                             }
                         }
+                    }
+                    if (!foundInvoiceItem)
+                    {
+                        AddErrors("",model.RowNumber,"", item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
                     }
                 }
             }
