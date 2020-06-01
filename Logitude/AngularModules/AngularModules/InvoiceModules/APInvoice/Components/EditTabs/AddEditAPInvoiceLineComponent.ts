@@ -49,21 +49,23 @@ export class AddEditAPInvoiceLineComponent {
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
-            var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
-            errors.push(msg.replace("%FieldName", field));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
-            if (!this.EntityPM.VatIsMultiPercentage) {
-                var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
+        if (!this.TotalVATOnly) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
+                var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
                 errors.push(msg.replace("%FieldName", field));
             }
-        }
 
-        if (this.EntityPM.VatIsMultiPercentage) {
-            if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
-                errors.push(VatTypesValidator.GetError());
+            if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
+                if (!this.EntityPM.VatIsMultiPercentage) {
+                    var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
+                    errors.push(msg.replace("%FieldName", field));
+                }
+            }
+
+            if (this.EntityPM.VatIsMultiPercentage) {
+                if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
+                    errors.push(VatTypesValidator.GetError());
+                }
             }
         }
 
