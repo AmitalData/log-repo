@@ -173,7 +173,7 @@ export class ReceiptCertificateFromFileComponent
     }
     UploadSuccess: any = false;
     OkButtonClicked() {
-        this.ProgressBarPercentText = "0%";
+
 
         this._supplierInvioceItemCertificatsService.PutSupplierInvioceItemCertificatFromFileRequest(this.filterImageParameter, this.tenant, this.CustomerId).subscribe((myServiceResponse: ServiceResponse) => {
             this.UploadSuccess = true;
