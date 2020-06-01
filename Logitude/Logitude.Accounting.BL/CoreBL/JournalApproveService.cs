@@ -675,7 +675,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     ThrowException("test");
                 }
                 //queueClient.Send(mQueue);
-                queueService.Send(messageProperties);
+                queueService.Send(messageProperties, entityPM.Tenant);
             }
             catch (Exception e)
             {

@@ -523,7 +523,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APInvoice" } };
-                queueservice.Send(param);
+                queueservice.Send(param, tenant);
                 queueservice.Complete();           
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id,tenant);
@@ -593,7 +593,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "VendorCredit" } };
-                queueservice.Send(param);
+                queueservice.Send(param, tenant);
                 queueservice.Complete();
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id, tenant);

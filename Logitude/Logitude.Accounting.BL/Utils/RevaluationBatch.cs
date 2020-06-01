@@ -372,7 +372,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         { QP_Tenant, tenant.ToString() },
                         { QP_RevaluationNumber, revaluationNumber.ToString() }
-                    });
+                    }, tenant);
             }
 
             public void WorkUntilQEmptyQueueDB()

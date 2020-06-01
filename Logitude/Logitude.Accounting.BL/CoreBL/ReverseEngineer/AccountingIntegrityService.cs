@@ -498,7 +498,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     { "BatchTaskExecutionId", taskExecution.Id },
                     { "Tenant", taskExecution.Tenant.ToString() }
-                });
+                }, taskExecution.Tenant);
 
         }
 

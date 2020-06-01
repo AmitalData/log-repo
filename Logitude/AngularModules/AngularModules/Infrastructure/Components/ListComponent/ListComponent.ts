@@ -445,6 +445,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     constructor(private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
+       
         if (this.CurrentSession == null) {
             this.ListComponentId = "ListComponentId_-1_-1";
            
@@ -622,6 +623,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsNavigateButtonVisible = true;
         }
         this.Listen();
+        //this.CD.detectChanges();
     }
 
     private ReloadAllListEvent: any = null;
@@ -2084,6 +2086,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
                                     DWQueryId: $event.rowData.DWQueryId,
+                                    Name: $event.rowData.Name,
                                     ObjectTableName: 'BIReport',
                                     EntityList: $event.rowData,
                                     EntityId: $event.rowData.Id

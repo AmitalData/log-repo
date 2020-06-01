@@ -380,7 +380,7 @@ namespace WebFreight.Web.WebServices
                                 //}
 
                                 DbQueueService queueservice = new DbQueueService("champmessageoutqueue", tenant);
-                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
                             }
 
                             catch (Exception ex)

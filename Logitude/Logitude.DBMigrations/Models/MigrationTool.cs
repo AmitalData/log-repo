@@ -13,7 +13,9 @@ namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private readonly string DatabaseType = ConfigurationManager.AppSettings["DatabseType"];
+        private readonly int ToolVersion = 1;
+
+        private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
         private readonly RunSettings RunSettings;
@@ -26,8 +28,12 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
+            ValidateToolVersion();
+            ValidateAppSettings();
+
             Arguments = arguments;
             RunSettings = runSettings;
+            DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
         }
 
         public void RunTool()
@@ -1341,11 +1347,11 @@ namespace Logitude.DBMigrations.Models
                         {
                             if (IncludedModules.Include)
                             {
-                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                             else
                             {
-                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                         }
                         else
@@ -1469,11 +1475,11 @@ namespace Logitude.DBMigrations.Models
                         {
                             if (IncludedModules.Include)
                             {
-                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                             else
                             {
-                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                         }
                         else
@@ -1819,18 +1825,18 @@ namespace Logitude.DBMigrations.Models
             {
                 if (IncludedModules.Include)
                 {
-                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower())).ToList();
+                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TableDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ViewDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ProcedureDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TriggerDefinition.Module)).ToList();
                     return dxmlDefinitions;
                 }
                 else
                 {
-                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => !IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => !IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => !IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => !IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower())).ToList();
+                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => !IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TableDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => !IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ViewDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => !IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ProcedureDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => !IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TriggerDefinition.Module)).ToList();
                     return dxmlDefinitions;
                 }
             }
@@ -1853,10 +1859,65 @@ namespace Logitude.DBMigrations.Models
             return toolDxmlFilesNames;
         }
 
+        private void ValidateAppSettings()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+
+            if (String.IsNullOrEmpty(databaseType))
+            {
+                ExitTool("Error: Cannot Find DatabaseType in Configuration File");
+            }
+            if(databaseType != "msql" && databaseType != "oracle")
+            {
+                ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
+            }
+            if (String.IsNullOrEmpty(globalConnectionString))
+            {
+                ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(mainConnectionString))
+            {
+                ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(systemLogsConnectionString))
+            {
+                ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+        }
+
+        private void ValidateToolVersion()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            if (File.Exists(versionInfoFilePath))
+            {
+                try
+                {
+                    string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
+                    VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
+                    if (ToolVersion != versionInfo.VersionNumber)
+                    {
+                        ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                    }
+                }
+                catch (Exception)
+                {
+                    ExitTool("Error: Cannot Read Version Info File");
+                }
+            }
+            else
+            {
+                ExitTool("Error: Cannot Find File " + versionInfoFilePath);
+            }
+        }
+
         private void ExitTool(string message)
         {
             Console.WriteLine(message);
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
     }
 }

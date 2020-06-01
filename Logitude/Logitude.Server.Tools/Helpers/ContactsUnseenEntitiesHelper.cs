@@ -27,7 +27,7 @@ namespace Logitude.Server.Tools.Helpers
          {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("contactunseenentityqueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "TenantName", tenantpm.Company }, { "TraceEventId", traceEventId}, { "SourceEventDate", DateTime.UtcNow.ToString() } }, null, null, null, null);
+                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "TenantName", tenantpm.Company }, { "TraceEventId", traceEventId}, { "SourceEventDate", DateTime.UtcNow.ToString() } }, tenant, null, null, null, null);
 
 
                 //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())

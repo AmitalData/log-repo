@@ -31,11 +31,9 @@ import { filter } from 'rxjs/operators';
   //pipes: [TextCodeTranslationPipe],
   inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp'],
   changeDetection: ChangeDetectionStrategy.OnPush
-})
-
+}) 
 export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnDestroy {
-  func: Function;
-
+  func: Function; 
   public IsCheckBoxEnabled: boolean = true;
   Disabled: boolean = false;
   ReloadData: boolean = false;
@@ -1754,7 +1752,16 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     var DetailsDivsHeight = 0;
     //var t1 = this.controller.cachedData.filter(a => a.rowIndex == rowIndex.rowIndex);
     //var t2 = this.controller.cachedData.filter(a => a.rowIndex == rowIndex.rowIndex)[0];
-    this.controller.cachedData[rowIndex.rowIndex].ShowDetails = !(this.controller.cachedData[rowIndex.rowIndex].ShowDetails);
+        var ShowDetails = this.controller.cachedData[rowIndex.rowIndex].ShowDetails = !(this.controller.cachedData[rowIndex.rowIndex].ShowDetails);
+        if (!ShowDetails) {
+            this.controller.cachedData[rowIndex.rowIndex].DetailsIcon = "./Images/SpotLightPlusIcon.png";
+
+        }
+        else {
+            this.controller.cachedData[rowIndex.rowIndex].DetailsIcon = "./Images/spotlightMinusIcon.png";
+            //ShowSpot = true;
+        }
+        this.cd.detectChanges();
     this.rows.forEach((value, key) => {
       //console.log("rows value.rowIndex :" + value.rowIndex);
       var top = 0;

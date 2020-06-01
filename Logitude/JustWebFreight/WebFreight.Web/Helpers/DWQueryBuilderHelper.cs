@@ -632,6 +632,7 @@ namespace WebFreight.Web.Helpers
                     sourceConnection.Open();
 
                     SqlCommand commandSourceData = new SqlCommand(sqlCommandDefinition.SQLString, sourceConnection);
+                    commandSourceData.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
                     foreach (SqlParameterDetails sqlParameter in sqlCommandDefinition.Parameters)
                     {
                         commandSourceData.Parameters.Add(GetNewInstanceFromSqlParameter(sqlParameter.ParameterName, sqlParameter.Value));

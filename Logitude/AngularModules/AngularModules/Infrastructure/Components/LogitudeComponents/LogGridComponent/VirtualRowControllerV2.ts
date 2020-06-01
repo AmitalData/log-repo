@@ -3,6 +3,7 @@ import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 interface IRow {
   pageIndex: number;
@@ -85,11 +86,19 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
   connect(collectionViewer: CollectionViewer): Observable<(any | undefined)[]> {
     this.myCollectionViewer = collectionViewer;
       this.subscription.add(collectionViewer.viewChange.subscribe(range => {
-          //if (this.timer) {
-          //    clearTimeout(this.timer);
-          //}
-          //this.timer = setTimeout(() => this.HandleRange(range), 200);
-          this.HandleRange(range); 
+          if (this.timer) {
+              clearTimeout(this.timer);
+          }
+          this.timer = setTimeout(() => this.HandleRange(range), 200);
+   /*range.valueChanges
+        .pipe(
+          
+        ).subscribe((search: string): any => {
+          
+        });*/
+          //debounceTime(500);
+          //distinctUntilChanged();
+          //this.HandleRange(range); 
     }));
       return this.dataStream; 
     }
@@ -126,7 +135,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
         this.dataSource.getRows(page * this.pageSize, this.pageSize, this.myMetaData.sortingCol, this.myMetaData.sortingDir, false, this.myMetaData.searchFields, this.myMetaData.Filters).then(res => {
             res.subscribe((viewResponse: ServiceResponse) => {
                 if (!viewResponse.HasError) {
-                    if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
+                    //if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
                         this.MyCallTime = viewResponse.CallTime;
                         console.log("this.MyCallTime " + this.MyCallTime);
                         this.RecievedDataCount = viewResponse.Result.length;
@@ -139,11 +148,11 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                             this.myMetaData.cd.detectChanges();
                         }
                         keepPage = true;
-                    }
+                    //}
                 }
-                if (keepPage == false) {
-                    this.fetchedPages.delete(page);
-                }
+                //if (keepPage == false) {
+                  //  this.fetchedPages.delete(page);
+               // }
             });
         });
     }

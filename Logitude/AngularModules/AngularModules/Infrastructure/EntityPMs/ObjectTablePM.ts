@@ -310,9 +310,9 @@ export class ObjectTablePM {
     public set DisableSearchBox(newValue: boolean) { if (this.disableSearchBox != newValue) { this.disableSearchBox = newValue; this.MarkAsDirty("DisableSearchBox"); } }
        
 	 
-    private allowedInQueues: boolean;
-    public get AllowedInQueues() { return this.allowedInQueues; }
-    public set AllowedInQueues(newValue: boolean) { if (this.allowedInQueues != newValue) { this.allowedInQueues = newValue; this.MarkAsDirty("AllowedInQueues"); } }
+    private allowedInTicket: boolean;
+    public get AllowedInTicket() { return this.allowedInTicket; }
+    public set AllowedInTicket(newValue: boolean) { if (this.allowedInTicket != newValue) { this.allowedInTicket = newValue; this.MarkAsDirty("AllowedInTicket"); } }
        
 	 
     private lovDisplayMemberPath: string;

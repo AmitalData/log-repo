@@ -303,9 +303,12 @@ namespace Logitude.Accounting.BL.DataContract
                 string vendorId = GetVendorId(transaction);
 
                 taxDeductionReportLine.VendorId = vendorId; 
-                taxDeductionReportLine.MonthOfRegisterDate = transaction.DocumentDate.Month;
-                LedgerTransaction oppositeTransaction = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).FirstOrDefault();
-                taxDeductionReportLine.AmountInLocalCurrency = oppositeTransaction != null ? (double?)oppositeTransaction.LocalAmountDebit: 0;
+                taxDeductionReportLine.MonthOfRegisterDate = transaction.AccountingDate.Month;
+                List<LedgerTransaction> oppositeTransactions = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).ToList();
+                if(oppositeTransactions != null &&oppositeTransactions.Count > 0)
+                {
+                    taxDeductionReportLine.AmountInLocalCurrency =  (double?)oppositeTransactions.Sum(d=> d.LocalAmountDebit);
+                }
                 taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round( (transaction.LocalAmountCredit / (transaction.LocalAmountCredit * 2)),2));
                 GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
@@ -407,8 +410,9 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.VendorLocalName = selectedVendors[0].LocalName;
                         groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value, 0);
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value, 0);
-                        byVendorList.Add(groupedbyVendor);
-                   
+                        if (groupedbyVendor.SumOfAmountInLocalCurrency != 0)
+                          byVendorList.Add(groupedbyVendor) ;
+                  
                 }
             }
             return byVendorList;
@@ -487,7 +491,7 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-            groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
+            groupedbyVendor.DeductionFileNumber = setting.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = gLAccount.EnglishName;
             groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
@@ -535,7 +539,7 @@ namespace Logitude.Accounting.BL.DataContract
         private TaxDeductionReportData FillTotalForCompany(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {          
             taxDeduction.VendorsCount = taxDeduction.ByVendorList.GroupBy(d => d.VendorId).Count();
-            taxDeduction.TotalAmountInLocalCurrency = Math.Round(deductionLines.Sum(d => d.AmountInLocalCurrency+(double?) d.TaxDeductionLocalAmount).Value, 0);
+            taxDeduction.TotalAmountInLocalCurrency = Math.Round(deductionLines.Sum(d => d.AmountInLocalCurrency ).Value, 0);
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(deductionLines.Sum(d => d.TaxDeductionLocalAmount).Value, 0);
             taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(deductionLines.Where(d => d.DeductionType == "08").Sum(d => d.AmountInLocalCurrency).Value, 0);
             taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(deductionLines.Where(d => d.DeductionType == "08").Sum(d => d.TaxDeductionLocalAmount).Value, 0);

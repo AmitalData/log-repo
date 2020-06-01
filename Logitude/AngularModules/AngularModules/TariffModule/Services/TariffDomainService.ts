@@ -407,6 +407,7 @@ export class SurchargeSummary {
     LineId: string;
     IsAllIn: boolean;
     ContainersPrices: Array<ContainersPrice>;
+    CurrencySign: string;
 }
 
 export class ExcelTariffLines {

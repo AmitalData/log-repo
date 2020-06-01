@@ -610,7 +610,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                });
+                }, tenant);
                 scope.Complete();
             }
 

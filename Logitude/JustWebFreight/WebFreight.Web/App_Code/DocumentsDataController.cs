@@ -108,98 +108,24 @@ namespace WebFreight.Web.App_Code
 
         public List<SharedLogisticDocumentPM> GetEntityDocuments(string entityId, string partnerType, int tenant)
         {
-            List<SharedLogisticDocumentPM> myResult = new List<SharedLogisticDocumentPM>();
+            List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
 
-            ShipmentRepository rep = new ShipmentRepository(tenant);
-            Shipment shipment = rep.GetSingleShipment(entityId, tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            Shipment shipment = shipmentRepository.GetSingleShipment(entityId, tenant);
 
             if (shipment != null)
             {
-                //CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
 
-                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
-                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
-                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-
-                if (partnerType == "AG")
-                {
-                    myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
-                }
-
-                else //if (partnerType == "CS") commented: if view from external link there will be no partner type and we want to show customer view events
-                {
-                    myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
-                }
-
-                List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
-                List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
-                if (missedDocuments.Count > 0)
-                {
-                    List<string> allIds = missedDocuments.Select(s=>s.Id).ToList();
-
-                    allcopies = (from d in myContext.DocumentOutCopies
-                                 where allIds.Contains(d.DocumentOutId)
-                                 select d).ToList();
-                }
-
-                foreach (DocumentsFilingPM item in myDocumentFilings)
-                {
-                    if (item.DirectionCode == "O" && item.DoucmentTypeTemplateFormatCode == "M")
-                    {
-                        continue;
-                    }
-
-                    else
-                    {
-                        string myDocumentId = item.DocumentId;
-                        string myFileName = item.CalculatedFileName;
-                        string myFileExtension = item.FileExtension;
-                        string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
-
-                        if (item.DirectionCode == "O" && item.DocumentId == null)
-                        {
-                            List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
-                            if (myCopies.Count > 0)
-                            {
-                                myDocumentId = myCopies.FirstOrDefault().DocumentId;
-                                if (myDocumentId != null)
-                                {
-                                    Document myDocument = (from d in myContext.Documents
-                                                           where d.Id == myDocumentId
-                                                           select d).FirstOrDefault();
-                                    if (myDocument != null)
-                                    {
-                                        myFileName = !string.IsNullOrEmpty(myDocument.CalculatedFileName) ? myDocument.CalculatedFileName:  myDocument.FileName;
-                                        myFileExtension = myDocument.Extension;
-                                    }
-                                }
-                            }
-                        }
-
-                        string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + myDocumentId + ":ship:" + shipment.Id;
-
-                        myResult.Add(new SharedLogisticDocumentPM()
-                        {
-                            Id = myPrefix + item.Id,
-                            Url = url,                            
-                            Name = item.DocumentTypeName,
-                            DocumentId = myDocumentId,
-                            FileName = myFileName,
-                            FileExtension = myFileExtension,
-                            IsDigitallySigned = item.IsDigitallySigned,
-                            Reference = item.ChildEntityReference,
-                        });                                           
-                    }
-                }
+                output = this.GetShipmentSharedDocuments(entityId, partnerType, tenant, false);
             }
 
-            return myResult.OrderBy(o => o.Name).ToList();
+            return output.OrderBy(o => o.Name).ToList();
         }
 
         public List<SharedLogisticDocumentPM> GetShipmentDocuments(string securitykey, string entityId, string partnerType, int tenant)
         {
-            List<SharedLogisticDocumentPM> myResult = new List<SharedLogisticDocumentPM>();
+            List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
 
             ShipmentRepository rep = new ShipmentRepository(tenant);
             Shipment shipment = rep.GetSingleShipment(entityId, tenant);
@@ -212,90 +138,125 @@ namespace WebFreight.Web.App_Code
                     {
                         partnerType = "CS";
 
-                        ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
-                        DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
-                        DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                        List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-
-                        if (partnerType == "AG")
-                        {
-                            myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
-                        }
-
-                        else if (partnerType == "CS")
-                        {
-                            myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
-                        }
-
-
-                        List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
-                        List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
-                        if (missedDocuments.Count > 0)
-                        {
-                            List<string> allIds = missedDocuments.Select(s => s.Id).ToList();
-
-                            allcopies = (from d in myContext.DocumentOutCopies
-                                         where allIds.Contains(d.DocumentOutId)
-                                         select d).ToList();
-                        }
-
-                        foreach (DocumentsFilingPM item in myDocumentFilings)
-                        {
-                            if (item.DirectionCode == "O" && item.DoucmentTypeTemplateFormatCode == "M")
-                            {
-                                continue;
-                            }
-
-                            else
-                            {
-                                string myDocumentId = item.DocumentId;
-                                string myFileName = item.FileName;
-                                string myFileExtension = item.FileExtension;
-
-                                if (item.DirectionCode == "O" && item.DocumentId == null)
-                                {
-                                    List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
-                                    if (myCopies.Count > 0)
-                                    {
-                                        myDocumentId = myCopies.FirstOrDefault().DocumentId;
-                                        if (myDocumentId != null)
-                                        {
-                                            Document myDocument = (from d in myContext.Documents
-                                                                   where d.Id == myDocumentId
-                                                                   select d).FirstOrDefault();
-                                            if (myDocument != null)
-                                            {
-                                                myFileName = myDocument.FileName;
-                                                myFileExtension = myDocument.Extension;
-                                            }
-                                        }
-                                    }
-                                }
-                                string encodedUrl = item.SecurityId + "~" + tenant;
-                                encodedUrl = HttpUtility.UrlEncode(encodedUrl);
-                                string url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
-
-                                myResult.Add(new SharedLogisticDocumentPM()
-                                {
-                                    Id = item.Id,
-                                    Url = url,
-                                    DocumentId = myDocumentId,
-                                    Name = item.DocumentTypeName,
-                                    FileName = myFileName,
-                                    FileExtension = myFileExtension,
-                                    IsDigitallySigned = item.IsDigitallySigned,
-                                    Reference = item.ChildEntityReference,
-                                });
-                            }
-                        }
+                        output = this.GetShipmentSharedDocuments(entityId, partnerType, tenant, true);
                     }
                 }
             }
 
-            return myResult.OrderBy(o => o.Name).ToList();
+            return output.OrderBy(o => o.Name).ToList();
         }
 
-        public bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
+        private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(string entityId, string partnerType, int tenant, bool isExternalURL)
+        {
+            List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
+
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
+
+            if (partnerType == "AG")
+            {
+                myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
+            }
+
+            else if (partnerType == "CS")
+            {
+                myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+            }
+
+            List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
+            List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
+            if (missedDocuments.Count > 0)
+            {
+                List<string> allIds = missedDocuments.Select(s => s.Id).ToList();
+
+                allcopies = (from d in myContext.DocumentOutCopies
+                             where allIds.Contains(d.DocumentOutId)
+                             select d).ToList();
+            }
+
+            foreach (DocumentsFilingPM item in myDocumentFilings)
+            {
+                if (item.DirectionCode == "O" && item.DoucmentTypeTemplateFormatCode == "M")
+                {
+                    continue;
+                }
+
+                else
+                {
+                    string myDocumentId = item.DocumentId;
+                    string myFileName = isExternalURL ? item.FileName : item.CalculatedFileName;
+                    string myFileExtension = item.FileExtension;
+
+                    if (item.DirectionCode == "O" && item.DocumentId == null)
+                    {
+                        List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
+                        if (myCopies.Count > 0)
+                        {
+                            myDocumentId = myCopies.FirstOrDefault().DocumentId;
+                            if (myDocumentId != null)
+                            {
+                                Document myDocument = (from d in myContext.Documents
+                                                       where d.Id == myDocumentId
+                                                       select d).FirstOrDefault();
+                                if (myDocument != null)
+                                {
+                                    if (isExternalURL)
+                                    {
+                                        myFileName = myDocument.FileName;
+                                    }
+
+                                    else
+                                    {
+                                        myFileName = !string.IsNullOrEmpty(myDocument.CalculatedFileName) ? myDocument.CalculatedFileName : myDocument.FileName;
+                                    }
+
+                                    myFileExtension = myDocument.Extension;
+                                }
+                            }
+                        }
+                    }
+
+                    string url = null;
+                    string id = null;
+
+                    if (isExternalURL)
+                    {
+                        id = item.Id;
+
+                        string encodedUrl = item.SecurityId + "~" + tenant;
+                        encodedUrl = HttpUtility.UrlEncode(encodedUrl);
+                        url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
+                    }
+
+                    else
+                    {
+                        string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
+                        id = myPrefix + item.Id;
+
+                        url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + myDocumentId + ":ship:" + entityId;
+                    }
+
+                    output.Add(new SharedLogisticDocumentPM()
+                    {
+                        Id = id,
+                        Url = url,
+                        Name = item.DocumentTypeName,
+                        DocumentId = myDocumentId,
+                        FileName = myFileName,
+                        FileExtension = myFileExtension,
+                        IsDigitallySigned = item.IsDigitallySigned,
+                        Reference = item.ChildEntityReference,
+                    });
+                }
+            }
+
+            return output;
+        }
+
+
+        private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
         {
             if (tenant != 0)
             {

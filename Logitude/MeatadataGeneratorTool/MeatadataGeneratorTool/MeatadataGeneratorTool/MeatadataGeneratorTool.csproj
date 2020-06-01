@@ -156,6 +156,7 @@
     <Compile Include="Helpers\RowIndexConverter.cs" />
     <Compile Include="Helpers\GridConverters.cs" />
     <Compile Include="Helpers\TrueIfFalseConverter.cs" />
+    <Compile Include="Helpers\XMLParser.cs" />
     <Compile Include="Helpers\XmlParserHelper.cs" />
     <Compile Include="LoadFileWindow.xaml.cs">
       <DependentUpon>LoadFileWindow.xaml</DependentUpon>
@@ -212,6 +213,7 @@
       <DependentUpon>TextCodesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TextCodes\TextCodesViewModel.cs" />
+    <Compile Include="ToolVersion\VersionInfo.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="XmlGeneratorClass.cs" />
@@ -381,6 +383,9 @@
   <ItemGroup>
     <Content Include="bin\Debug\MeatadataGeneratorTool.exe" />
     <Content Include="bin\Debug\MeatadataGeneratorTool.pdb" />
+    <None Include="ToolVersion\Version.vxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Resource Include="logo_tr_AVr_icon.ico" />
     <Resource Include="Eraser-icon.png" />
   </ItemGroup>

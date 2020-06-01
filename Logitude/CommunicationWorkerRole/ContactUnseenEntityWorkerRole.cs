@@ -271,7 +271,7 @@ namespace CommunicationWorkerRole
 
                                         IQueueService queueservice = new DbQueueService();
                                         queueservice.InitializeQueue("mobilenotificationlogqueue",0);
-                                        queueservice.Send(new Dictionary<string, string>() { { "Tenant", traceEvent.Tenant.ToString() }, { "TenantName", tenantName }, { "NotificationId", notificationId } }, null, null, null, null);
+                                        queueservice.Send(new Dictionary<string, string>() { { "Tenant", traceEvent.Tenant.ToString() }, { "TenantName", tenantName }, { "NotificationId", notificationId } }, traceEvent.Tenant, null, null, null, null);
 
                                     }
                                 }

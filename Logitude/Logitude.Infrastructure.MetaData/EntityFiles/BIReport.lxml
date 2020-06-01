@@ -1660,7 +1660,7 @@
       Code="&quot;BIReportRun&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;BIReport.Features.BIReportRun&quot;"
-      FeatureDefaultText="&quot;Run reports&quot;"
+      FeatureDefaultText="&quot;Run&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

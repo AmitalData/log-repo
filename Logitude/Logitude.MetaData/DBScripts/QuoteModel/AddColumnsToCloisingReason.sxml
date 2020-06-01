@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+    
+      alter table QuoteClosingReasons add Id varchar(15) null;
+      alter table QuoteClosingReasons add Tenant int null;
+      alter table QuoteClosingReasons add Inactive bit not null default 0;
+      alter table QuoteClosingReasons add CreateDate datetime null;
+      alter table QuoteClosingReasons add UpdateDate datetime null;
+      alter table QuoteClosingReasons add CreatedByUserId varchar(15) null;
+      alter table QuoteClosingReasons add UpdatedByUserId varchar(15) null;   
+      
+    ]]>
+  </Sql>
+</Script>

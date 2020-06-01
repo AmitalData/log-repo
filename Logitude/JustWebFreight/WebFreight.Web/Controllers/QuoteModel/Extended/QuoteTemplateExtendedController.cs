@@ -151,7 +151,13 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
 
                 QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
-                string templateId =  quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(authToken.Tenant, quoteTemplateId, userId);
+                QuoteTemplateCopyDetails quoteTemplateCopyDetails = new QuoteTemplateCopyDetails
+                {
+                    Tenant = authToken.Tenant,
+                    QuoteTemplateId = quoteTemplateId,
+                    UserId = userId
+                };
+                string templateId =  quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(quoteTemplateCopyDetails);
                 return Request.CreateResponse(HttpStatusCode.OK, templateId);
             }
             catch (Exception ex)

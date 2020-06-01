@@ -74,7 +74,7 @@ namespace CommunicationWorkerRole
                                                 foreach (var DocumentFilingPMId in documentIds)
                                                 {
                                                     queueservice.InitializeQueue("DocumentFilingBackupBatchQueue", 0);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", Tenant.ToString() }, { "BatchId", BatchId } }, null, BatchId, documentsBatch.BatchNumber);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", Tenant.ToString() }, { "BatchId", BatchId } }, Tenant, null, BatchId, documentsBatch.BatchNumber);
 
                                                 }
                                             }

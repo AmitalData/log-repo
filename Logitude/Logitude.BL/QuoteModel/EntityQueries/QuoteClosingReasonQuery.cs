@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityPMs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -28,22 +29,45 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             repository = quoteQuery;
         }
 
-        public QuoteClosingReasonPM GetSingleQuoteClosingReasonPM(string code)
+        public QuoteClosingReasonPM GetSinglePM(string id, int tenant)
         {
-            return (from a in repository.context.QuoteClosingReasons
-                    where a.Code == code
-                    select new QuoteClosingReasonPM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
+            return (from a in repository.context.QuoteClosingReasons.Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+                    where a.Id == id && a.Tenant == tenant
+                    select new QuoteClosingReasonPM()
+                    {
+                        Code = a.Code,
+                        Name = a.Name,
+                        SearchFields = a.SearchFields,
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreateDate = a.CreateDate,
+                        UpdateDate = a.UpdateDate,
+                        CreatedByUserId = a.CreatedByUserId,
+                        UpdatedByUserId = a.UpdatedByUserId,
+                        Inactive = a.Inactive,
+                        CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                        UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                    }).FirstOrDefault();
         }
 
         public IQueryable<QuoteClosingReasonList> GetIQueryableEntityList(IQueryable<QuoteClosingReason> iQueryable)
         {
-            IQueryable<QuoteClosingReasonList> result = from entity in iQueryable
+            IQueryable<QuoteClosingReasonList> result = from a in iQueryable
                                                         select new QuoteClosingReasonList()
-                                               {
-                                                   Name = entity.Name,
-                                                   Code = entity.Code,
-                                                   SearchFields = entity.SearchFields,
-                                               };
+                                                        {
+                                                            Code = a.Code,
+                                                            Name = a.Name,
+                                                            SearchFields = a.SearchFields,
+                                                            Id = a.Id,
+                                                            Tenant = a.Tenant,
+                                                            CreateDate = a.CreateDate,
+                                                            UpdateDate = a.UpdateDate,
+                                                            CreatedByUserId = a.CreatedByUserId,
+                                                            UpdatedByUserId = a.UpdatedByUserId,
+                                                            Inactive = a.Inactive,
+                                                            CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                                                            UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                                                        };
             return result;
         }
     }
