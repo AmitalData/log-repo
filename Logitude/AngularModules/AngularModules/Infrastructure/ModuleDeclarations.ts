@@ -172,7 +172,7 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
-
+//import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
     [
         FocusMeDirective,
@@ -275,7 +275,7 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
         ImageLibraryComponent,
-        TaskSchedulerHistoryComponent
+        TaskSchedulerHistoryComponent, 
     ];
 export const Components =
     [
