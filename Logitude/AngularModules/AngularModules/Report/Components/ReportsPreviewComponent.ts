@@ -449,7 +449,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
-        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;
+        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
         if (isUsedWorkerRoleAlalways) {
             this.StartBusyIndicator("Generating...");
@@ -523,7 +523,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
-                                   
+
                                     // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
                                     //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
                                     // }
