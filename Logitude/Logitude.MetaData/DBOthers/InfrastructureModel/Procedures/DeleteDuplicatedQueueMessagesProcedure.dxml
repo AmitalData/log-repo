@@ -1,7 +1,7 @@
 <Procedure DBType="Main" Name="Queue_Enqueue" Schema="dbo" Module="Infrastructure">
   <SqlScript>
     <![CDATA[
- CREATE procedure [dbo].[DeleteDuplicatedQueueMessagesProcedure]
+ CREATE procedure [dbo].[DeleteDuplicatedQueueMessages]
      
       as begin
      
@@ -39,7 +39,7 @@ SELECT  id
   <OracleScript>
     <![CDATA[
                                  
-CREATE OR REPLACE PROCEDURE DeleteDuplicatedQueueMessagesProcedure
+CREATE OR REPLACE PROCEDURE DeleteDuplicatedQueueMessages
 AS
 
 BEGIN
