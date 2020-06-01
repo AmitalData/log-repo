@@ -10,7 +10,7 @@ import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageC
 import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
-
+import { BatchInvoicesComponent } from './Components/Others/BatchInvoicesComponent';
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -132,6 +132,7 @@ export const Components =
         BanksPageComponent,
         MiscPageComponent,
         InterestPageComponent,
+        BatchInvoicesComponent, 
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -363,7 +364,7 @@ export class ModuleDeclarations {
             case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
             case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
-
+            case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
         }
 
         return myResult;

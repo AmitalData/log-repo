@@ -81,12 +81,59 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-				private IQueryable<InterestReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
+		private IQueryable<InterestReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
+        public List<InterestReportList> GetDraftInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant)
+        {
+            return (from a in context.InterestReports
+                    where
+a.Tenant == tenant && a.InterestCalculationDate >= fromDate && a.InterestCalculationDate <= toDate && a.InterestReportStatusCode == "1"
+                    select new InterestReportList()
+                    {
 
+                        Id = a.Id,
 
+                        Tenant = a.Tenant,
+
+                        CreateDateTime = a.CreateDateTime,
+
+                        CreatedByUserId = a.CreatedByUserId,
+
+                        UpdateDateTime = a.UpdateDateTime,
+
+                        UpdatedByUserId = a.UpdatedByUserId,
+
+                        GLAccountId = a.GLAccountId,
+
+                        ReportNumber = a.ReportNumber,
+
+                        InterestCalculationDate = a.InterestCalculationDate,
+
+                        TotalAmount = a.TotalAmount,
+
+                        OpenBalance = a.OpenBalance,
+
+                        CloseBalance = a.CloseBalance,
+
+                        ARinvoiceId = a.ARinvoiceId,
+
+                        InvoiceAmount = a.InvoiceAmount,
+
+                        GLAccountInterestCreditLimit = a.GLAccountInterestCreditLimit,
+
+                        InterestReportStatusCode = a.InterestReportStatusCode,
+                        CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,                    
+                        UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+                        InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.EnglishName,
+                        InterestReportStatusLocalName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
+                        GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
+                        ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
+                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
+
+                    }).ToList();
+        }
 
 
     }
