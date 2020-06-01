@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
                         if (DebitControlAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
+                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.DebitControlAccount + " doesn't exist");
 
                         }
                         else
