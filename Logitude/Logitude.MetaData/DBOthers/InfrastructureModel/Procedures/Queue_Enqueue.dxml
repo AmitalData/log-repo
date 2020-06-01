@@ -10,6 +10,7 @@ CREATE procedure [dbo].[Queue_Enqueue]
     @QueueDefinitionCode varchar(255),
   
     @MessageBody varchar(1000),
+    @Tenant int,
 	@DelaySeconds int,
 	@CustomerId varchar(15),
 	@BatchNumber varchar(15),
@@ -26,8 +27,8 @@ CREATE procedure [dbo].[Queue_Enqueue]
     set @nextRunDateTime = @NextRunDTime
   --set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
 
- insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[NextRunDateTime],RetryNumber)
-                             values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@nextRunDateTime,0)
+ insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber)
+                             values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0)
                              
                              declare @CId as varchar(15);
                              declare @BNo as varchar(15);
@@ -40,8 +41,8 @@ CREATE procedure [dbo].[Queue_Enqueue]
                              else
                              set @BNo = @BatchNumber
                              
- insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[NextRunDateTime],RetryNumber,Field1,Field2)
-                             values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,0,@MessageBody,@nextRunDateTime,0,@CId,@BNo)
+ insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,Field1,Field2)
+                             values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
 
 
 end
