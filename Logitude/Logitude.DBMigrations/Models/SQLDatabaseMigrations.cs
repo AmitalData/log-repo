@@ -715,32 +715,13 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetRenameColumnScript(ColumnMigration columnMigration)
         {
-            if (CurrentTable.Columns.Where(c => c.Name.ToLower() == columnMigration.CurrentColumn.Name.ToLower()).Any() && CurrentTable.Columns.Where(c => c.Name.ToLower() == "drop_" + columnMigration.NewColumn.Name.ToLower()).Any())
-            {
-                string renameScript = "-- Rename Column From " + "Drop_" + columnMigration.NewColumn.Name + " To " + columnMigration.NewColumn.Name + "\n";
-                renameScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + "Drop_" + columnMigration.NewColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
-                renameScript += ";\n\n";
+            string renameScript = "-- Rename Column From " + columnMigration.CurrentColumn.Name + " To " + columnMigration.NewColumn.Name + "\n";
+            renameScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + columnMigration.CurrentColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
+            renameScript += ";\n\n";
 
-                string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", TableMigrations.DxmlTableName, "Drop_" + columnMigration.NewColumn.Name, renameScript);
+            string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, renameScript);
 
-                string dropScript = "-- Drop Column " + columnMigration.CurrentColumn.Name + "\n";
-                dropScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + columnMigration.CurrentColumn.Name + "', '" + "Drop_" + columnMigration.CurrentColumn.Name + "', 'COLUMN'";
-                dropScript += ";\n\n";
-
-                string dropWithHistoryScript = dropScript + GetInsertScriptForMigrationsHistory("Drop Column", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, dropScript);
-
-                return renameWithHistoryScript + dropWithHistoryScript;
-            }
-            else
-            {
-                string renameScript = "-- Rename Column From " + columnMigration.CurrentColumn.Name + " To " + columnMigration.NewColumn.Name + "\n";
-                renameScript += "EXEC SP_RENAME '" + TableMigrations.DxmlTableSchema + "." + TableMigrations.DxmlTableName + "." + columnMigration.CurrentColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
-                renameScript += ";\n\n";
-
-                string renameWithHistoryScript = renameScript + GetInsertScriptForMigrationsHistory("Rename Column", TableMigrations.DxmlTableName, columnMigration.CurrentColumn.Name, renameScript);
-
-                return renameWithHistoryScript;
-            }
+            return renameWithHistoryScript;
         }
 
         protected override string GetDropColumnScript(ColumnMigration columnMigration)
