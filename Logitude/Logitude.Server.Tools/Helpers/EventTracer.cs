@@ -165,7 +165,7 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
-                        UpdateEventCustomFieldValue(new EventCustomFieldValue() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                        UpdateEventCustomFieldService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
                     }
 
                 }
@@ -322,43 +322,7 @@ namespace Logitude.Server.Tools.Helpers
             return id;
         }
 
-        #region UpdateEventCustomFieldValue
-        public static void UpdateEventCustomFieldValue(EventCustomFieldValue args)
-        {
-            ObjectField objectField = GetCustomObjectField(args);
-            if (objectField != null)
-            {
-                object entity = args.Entity;
-                CustomFieldClass customFieldValue = new CustomFieldClass(objectField.FieldName, args.ObjectTableName, new CustomFieldClass().SetFieldDataType(objectField.DataTypeCode, args.EventDateTime));
-                if (entity == null)
-                {
-                    entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(args.ObjectTableName, args.EntityId, args.Tenant);
-                    if (entity != null)
-                    {
-                        SetPropertyValue(objectField, entity, customFieldValue);
-                        InjectionUtil.Instance.UpdateEntity(entity, args.ObjectTableName, args.Tenant);
-                    }
-                }
-                else SetPropertyValue(objectField, entity, customFieldValue);
-            }
-        }
-        private static ObjectField GetCustomObjectField(EventCustomFieldValue args)
-        {
-            ObjectField objectField = null;
-            string customField = !string.IsNullOrEmpty(args.CustomField) ? args.CustomField : new EventTypeRepository(args.Tenant).GetCustomFieldByEventTypeId(args.EventTypeId, args.Tenant);
-            if (!string.IsNullOrEmpty(customField))
-            {
-                ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(args.Tenant);
-                objectField = objectFieldRepository.GetSingleObjectFieldByFieldCode(customField, args.Tenant);
-            }
-            return objectField;
-        }
-        private static void SetPropertyValue(ObjectField objectField, object entity, object fieldValue)
-        {
-            PropertyInfo propInfo = entity.GetType().GetProperty(objectField.FieldName);
-            if (propInfo != null) propInfo.SetValue(entity, fieldValue, null);
-        }
-        #endregion
+
     }
 
     public class TraceEventParams
@@ -396,7 +360,7 @@ namespace Logitude.Server.Tools.Helpers
         public object Entity { get; set; }
     }
 
-    public class EventCustomFieldValue
+    public class UpdateEventCustomFieldArgs
     {
         public int Tenant { get; set; }
         public string EntityId { get; set; }
