@@ -82,6 +82,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string ControllerUserId  { get; set; }
        [DataMember]
        public string CollectorUserId  { get; set; }
+       [DataMember]
+       public bool NewFile  { get; set; }
+       [DataMember]
+       public bool Favorite  { get; set; }
    }
 
 }

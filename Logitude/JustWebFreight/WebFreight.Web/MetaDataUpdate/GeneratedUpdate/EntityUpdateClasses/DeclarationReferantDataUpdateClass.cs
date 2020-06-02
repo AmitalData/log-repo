@@ -2402,6 +2402,138 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NewFile",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NewFile",
+					  						ListPropertyPath =  "NewFile",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NewFile",
+					  						DefaultText =  "New File",
+					  						FullLocalDefaultText =  "תיק חדש",
+					  						ListFieldLable =  "NewFileListLable",
+					  						ListLableDefaultText =  "New File",
+					  						ListLocalDefaultText =  "תיק חדש",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Favorite",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Favorite",
+					  						ListPropertyPath =  "Favorite",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Favorite",
+					  						DefaultText =  "Favorite",
+					  						FullLocalDefaultText =  "מועדף",
+					  						ListFieldLable =  "FavoriteListLable",
+					  						ListLableDefaultText =  "Favorite",
+					  						ListLocalDefaultText =  "מועדף",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -2417,6 +2549,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.DERE", DefaultText = "Files In Process",LocalDefaultText = "תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature DeclarationReferantDataFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.DERE", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.DERE", NameTextCodeDefaultText = "DERE", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode DeclarationReferantDataTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.RFUD", DefaultText = "TrackingCases",LocalDefaultText = "תיקים במעקב", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationReferantDataFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.RFUD", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.RFUD", NameTextCodeDefaultText = "RFUD", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode DeclarationReferantDataTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.DRAC", DefaultText = "AllCases",LocalDefaultText = "כל התיקים ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationReferantDataFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.DRAC", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.DRAC", NameTextCodeDefaultText = "DRAC", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -2459,6 +2599,89 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn DEREQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn DEREQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter DEREQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "IsClosedForFollowUp" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = DEREQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query RFUDQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_1.Id, Code = "RFUD",  QueryGroupCode = "5277", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_1.Id, DefaultSortName = "ArrivalDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn RFUDQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 87 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 79 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 255 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 55 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 44 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "AvailabilityDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ExceptionReasonsList" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 34 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn RFUDQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RFUDQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
+
+			  Query DRACQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_2.Id, Code = "DRAC",  QueryGroupCode = "5277", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_2.Id, DefaultSortName = "ArrivalDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn DRACQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 87 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 79 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 255 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 55 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 44 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "AvailabilityDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ExceptionReasonsList" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 34 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn DRACQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DRACQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
