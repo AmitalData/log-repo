@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {TicketPM} from '../../../../CRM/EntityPMs/TicketPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -38,7 +38,7 @@ declare var window: any;
     templateUrl: './NewTicketComponent.html',
 })
 
-export class NewTicketComponent extends BaseComponent implements OnInit {
+export class NewTicketComponent extends BaseComponent implements OnInit, AfterViewInit {
     @Output() OnCloseWindow = new EventEmitter();
     public ObjectTableName: string = "Ticket";
     public TenantPM: TenantPM;
@@ -63,38 +63,18 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
         if (!AppTool.IsNullOrEmpty(this.CompanyId)) {
             this.Filters.addAdditionalFilter("CustomerId", this.CompanyId, null, null, "Equals", false, false, false, "string");
         }
-        // this.RunComponent();
         this.getGeneralClassification();
     }
 
     ngOnInit() {
-        //this.SetFieldsEnabled();
         this.CreateTicket();
         this.SetUIProperties();
         this.SetUIRequiredProperties();
         this.SetCustomerContactValue();
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
+    ngAfterViewInit() {
+        this.LoadChildComponent();
     }
 
     LoadChildComponent() {

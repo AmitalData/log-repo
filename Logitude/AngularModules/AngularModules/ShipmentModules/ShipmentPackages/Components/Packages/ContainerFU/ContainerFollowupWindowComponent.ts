@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -16,7 +16,7 @@ import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLoca
     templateUrl: './ContainerFollowupWindowComponent.html',
 })
 
-export class ContainerFollowupWindowComponent implements OnDestroy {
+export class ContainerFollowupWindowComponent implements AfterViewInit, OnDestroy {
     public Code: string;
     public EntityPM: ShipmentPackagePM;
     public DataContext: ShipmentPackageItem;
@@ -41,7 +41,12 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
         this.CheckMultiConnected();
 
         this.Listen();
-        this.RunComponent();
+    }
+
+    private isLoaderReady: boolean = false;
+    ngAfterViewInit() {
+        this.isLoaderReady = true;
+        this.LoadTemplate();
     }
 
     public IsDeliveryConnectedWithMultiContainers: boolean = false;
@@ -61,31 +66,6 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
         this.IsDeliveryConnectedWithMultiContainers = isDeliveryConnectedWithMultiContainers;
     }
 
-    private isLoaderReady: boolean = false;
-    RunComponent() {
-        if (this.ChildViewContainerRef) {
-            this.isLoaderReady = true;
-            this.LoadTemplate();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
     LoadTemplate() {
         if (this.ChildViewContainerRef) {
             this.ChildViewContainerRef.clear();

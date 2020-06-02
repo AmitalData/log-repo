@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -19,9 +19,22 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
     templateUrl: './EditClosedOpportunityComponent.html',
 })
 
-export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
+export class EditClosedOpportunityComponent extends BaseComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
+    constructor() {
+        super();
+    }
+
+    SetWindowArgs(args: OpportunityPM) {
+        this.EntityPM = args;
+    }
+
+    ngAfterViewInit() {
+        this.SetUIProperties();
+        this.LoadChildComponent();
+    }
 
     public EntityPM: OpportunityPM;
     public ObjectTableName: string = "Opportunity";
@@ -108,8 +121,8 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
 
         });
 
-
     }
+
     public AgentIdVisibility: boolean = false;
     public ForeignClientIdVisibility: boolean = false;
     public LeadUserIdVisibility: boolean = false;
@@ -127,6 +140,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
         this.SetUIProperties_GeneratedComponent(false);
         this.CurrentSession.CloseCurrentWindowEmit("cancle");
     }
+
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
@@ -146,8 +160,6 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
             }
         });
     }
-
-
 
     OnOpportunityTypeChanging(newValue: string) {
         var isConfirmNeeded: boolean = false;
@@ -195,10 +207,6 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
             }
         });
 
-
-
-
-
     }
 
 
@@ -220,38 +228,6 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
         }
 
         this.SetUIProperties();
-
-
-
-    }
-
-
-    constructor() {
-        super();
-   
-    }
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.SetUIProperties();
-            this.LoadChildComponent();
-        }
-        else {
-            this.RunComponentTimer();
-        }
     }
 
     LoadChildComponent() {
@@ -273,12 +249,4 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
         }
     }
 
-    SetWindowArgs(args: OpportunityPM) {
-        this.EntityPM = args;
-        //this.SetUIProperties();
-    }
-
-    ngOnInit() {
-        this.RunComponent();  
-    }
 }

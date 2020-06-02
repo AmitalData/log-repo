@@ -1,16 +1,6 @@
--- General Script From 202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-update ObjectTables set AllowedInTicket=1 where Name in ('shipment','Quote')
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml', GETDATE(), 'update ObjectTables set AllowedInTicket=1 where Name in (''shipment'',''Quote'')', DATEDIFF(MS,@StartTime,@EndTime), '23be70443f012ab36745546aaef594f9', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+-- Rename Column From Drop_CustomField To CustomField
+EXEC SP_RENAME 'dbo.EventTypes.Drop_CustomField', 'CustomField', 'COLUMN';
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9b7d58a8-4ca3-493c-8684-53b8fd5c174d', 'EventType.dxml', 'EventTypes', 'Drop_CustomField', 'Rename Column', GETDATE(), '-- Rename Column From Drop_CustomField To CustomFieldEXEC SP_RENAME ''dbo.EventTypes.Drop_CustomField'', ''CustomField'', ''COLUMN'';');
+
 
