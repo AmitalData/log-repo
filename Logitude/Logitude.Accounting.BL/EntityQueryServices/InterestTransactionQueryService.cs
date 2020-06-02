@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class InterestTransactionQueryService
     {
-        public List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(string glAccountId, DateTime InterestReportCalculationDate, int tenant)
+        public List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters)
         {
-            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
-            IQueryable<InterestTransaction> interestTransactions = interestTransactionRepository.GetInterestTransactionsForGlAccountAndInterestValueDate(glAccountId, InterestReportCalculationDate, tenant);
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransactionGetParameters.Tenant);
+            IQueryable<InterestTransaction> interestTransactions = interestTransactionRepository.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
 
-            List<InterestTransactionPM> interestTransactionPMs = MapInterestTransactionsPocosToPMs(interestTransactions);
+            List <InterestTransactionPM> interestTransactionPMs = MapInterestTransactionsPocosToPMs(interestTransactions);
             return interestTransactionPMs;
 
         }

@@ -1038,8 +1038,12 @@ namespace Logitude.Accounting.Data.Repositories
                    }; 
         }
 
-
- 
+        public DateTime? GetInterestCalculationStartDate(string glaccountId, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && a.Id == glaccountId
+                    select a.InterestCalculationStartDate).FirstOrDefault();
+        }
     }
 
     public class GLAccountAndMoreDTO//: GLAccount

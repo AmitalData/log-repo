@@ -1126,6 +1126,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return cardPM;
         }
 
+        public DateTime? GetInterestCalculationStartDate(string glaccountId,int tenant)
+        {
+            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
+            DateTime? interestCalculationStartDate = gLAccountRepository.GetInterestCalculationStartDate(glaccountId, tenant);
+            return interestCalculationStartDate;
+        }
+        
     }
     public class GLAccountCurrencyBalance
     {

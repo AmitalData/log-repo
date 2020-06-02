@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.Utilities;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -28,14 +29,15 @@ namespace Logitude.Accounting.Data.Repositories
                 .Any();
         }
 
-        public IQueryable<InterestTransaction> GetInterestTransactionsForGlAccountAndInterestValueDate(string glAccountId, DateTime InterestReportCalculationDate, int tenant)
+        public IQueryable<InterestTransaction> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters)
         {
-            return this.GetAll(tenant)
-                .Where(d =>d.Tenant==tenant 
-                && d.GLAccountId == glAccountId 
+            return this.GetAll(interestTransactionGetParameters.Tenant)
+                .Where(d =>d.Tenant== interestTransactionGetParameters.Tenant 
+                && d.GLAccountId == interestTransactionGetParameters.GLAccountId 
                 && !d.IsClosed
                 && !d.IsCancelled
-                && d.InterestValueDate <= InterestReportCalculationDate);
+                && d.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate
+                && d.InterestValueDate >= interestTransactionGetParameters.InterestCalculationStartDate);
 
         }
    }
