@@ -76,15 +76,15 @@ export class ExporterInvoiceItemComponent extends BaseComponent
         this.originalSupplierInvoiceItem.ClaimReasonCode = newValue;
     }
 
-    public get StatementType() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.StatementTypeCode : null; }
-    public set StatementType(newValue: string) {
+    public get StatementTypeCode() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.StatementTypeCode : null; }
+    public set StatementTypeCode(newValue: string) {
         this.originalSuppInvoiceItemsAbachStatement.StatementTypeCode = newValue;
         this.originalSuppInvoiceItemsAbachStatement.IsDirty = true;
 
     }
 
-    public get StatementInd() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.IsStatementInd : null; }
-    public set StatementInd(newValue: boolean) {
+    public get IsStatementInd() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.IsStatementInd : null; }
+    public set IsStatementInd(newValue: boolean) {
         this.originalSuppInvoiceItemsAbachStatement.IsStatementInd = newValue;
         this.originalSuppInvoiceItemsAbachStatement.IsDirty = true;
     }
