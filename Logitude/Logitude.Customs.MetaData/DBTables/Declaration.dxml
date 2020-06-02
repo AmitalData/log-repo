@@ -853,13 +853,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeclarationTypeCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="DestinationCountryCode"
     Type="varchar"
     Size="2">
@@ -1034,11 +1027,6 @@
   <Relation
     ForeignKeyColumn="ShipCode"
     ReferencedTable="CustomsShips"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="DeclarationTypeCode"
-    ReferencedTable="LeadDocumentTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

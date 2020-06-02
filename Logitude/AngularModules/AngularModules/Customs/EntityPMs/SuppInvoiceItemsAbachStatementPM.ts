@@ -52,14 +52,14 @@ export class SuppInvoiceItemsAbachStatementPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private statementType: string;
-    public get StatementType() { return this.statementType; }
-    public set StatementType(newValue: string) { if (this.statementType != newValue) { this.statementType = newValue; this.MarkAsDirty("StatementType"); } }
+    private statementTypeCode: string;
+    public get StatementTypeCode() { return this.statementTypeCode; }
+    public set StatementTypeCode(newValue: string) { if (this.statementTypeCode != newValue) { this.statementTypeCode = newValue; this.MarkAsDirty("StatementTypeCode"); } }
        
 	 
-    private statementInd: string;
-    public get StatementInd() { return this.statementInd; }
-    public set StatementInd(newValue: string) { if (this.statementInd != newValue) { this.statementInd = newValue; this.MarkAsDirty("StatementInd"); } }
+    private isStatementInd: boolean;
+    public get IsStatementInd() { return this.isStatementInd; }
+    public set IsStatementInd(newValue: boolean) { if (this.isStatementInd != newValue) { this.isStatementInd = newValue; this.MarkAsDirty("IsStatementInd"); } }
        
 	 
 

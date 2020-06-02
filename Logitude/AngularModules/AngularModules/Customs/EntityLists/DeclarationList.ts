@@ -173,7 +173,6 @@ export class DeclarationList {
 	Direction: string;
 	AgentRoleCode: string;
 	ExportFile: string;
-	DeclarationTypeCode: string;
 	DestinationCountryCode: string;
 	
 }

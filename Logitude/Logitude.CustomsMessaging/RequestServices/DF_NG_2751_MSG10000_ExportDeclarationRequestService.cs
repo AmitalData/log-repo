@@ -728,7 +728,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             customDeclaration.DeclarationOfficeID = SetIDTypeValue<DeclarationDeclarationOfficeIDType>(declarationPM.DeclarationOfficeCode);
  
 
-            customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
+            customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationDocumentTypeCode);// MUST  hard coded
 
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
@@ -1541,7 +1541,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement dangerousGoodsStatement = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement();
                 dangerousGoodsStatement.SequenceNumeric = dangerousGoodsStatement.SequenceNumeric;
-                dangerousGoodsStatement.StatementType = SetIDTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatementStatementType>(suppInvoiceItemsAbachStatement.StatementType);
+                dangerousGoodsStatement.StatementType = SetIDTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatementStatementType>(suppInvoiceItemsAbachStatement.StatementTypeCode);
                 dangerousGoodsStatement.DangerousGoodsStatementInd = new DangerousGoodsStatementIndType() { Value = true }; //change to StatementInd field 
                 dangerousGoodsStatements.Add(dangerousGoodsStatement);
             }

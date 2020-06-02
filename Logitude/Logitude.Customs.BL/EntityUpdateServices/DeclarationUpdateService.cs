@@ -208,7 +208,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             throw new Exception("סוג הובלה - שדה חובה ");
 
                         }
-                        if (string.IsNullOrEmpty(declarationPM.DeclarationTypeCode))
+                        if (string.IsNullOrEmpty(declarationPM.DeclarationDocumentTypeCode))
                         {
                             throw new Exception("סוג הצהרה - שדה חובה ");
 

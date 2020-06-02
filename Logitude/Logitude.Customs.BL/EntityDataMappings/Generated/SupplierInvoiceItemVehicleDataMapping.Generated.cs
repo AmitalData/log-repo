@@ -33,8 +33,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VehicleId, 
 	         Tenant, 
 	         ExcludeFromInterface, 
-	         IdentifierID, 
-	         VehicleIDTypeCode,
+	         IdentifierID,
 	      }
 
 
@@ -53,9 +52,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         RichbitFileStatus, 
 	         ExcludeFromInterface, 
-	         IdentifierID, 
-	         VehicleIDTypeCode, 
-	         VehicleIDTypeName,
+	         IdentifierID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -102,11 +99,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IdentifierID))
             {
 				entityPOCO.IdentifierID = entityPM.IdentifierID;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleIDTypeCode))
-            {
-				entityPOCO.VehicleIDTypeCode = entityPM.VehicleIDTypeCode;
 			}
 			}
 
@@ -173,11 +165,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IdentifierID = entityPOCO.IdentifierID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleIDTypeCode))
-            {
-					entityPM.VehicleIDTypeCode = entityPOCO.VehicleIDTypeCode;
-            }
-
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemVehiclePM entityPM, SupplierInvoiceItemVehiclePM oldEntityPM)
@@ -222,11 +209,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IdentifierID))
             {
                 oldEntityPM.IdentifierID = entityPM.IdentifierID;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleIDTypeCode))
-            {
-                oldEntityPM.VehicleIDTypeCode = entityPM.VehicleIDTypeCode;
             }
 			
 		}
