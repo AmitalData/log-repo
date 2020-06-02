@@ -27,11 +27,13 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
-            ValidateToolVersion();
-            ValidateAppSettings();
-
             Arguments = arguments;
             RunSettings = runSettings;
+
+            ValidateToolVersion();
+            ValidateToolSettings();
+            DisplayToolSettings();
+
             DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
         }
 
@@ -373,23 +375,34 @@ namespace Logitude.DBMigrations.Models
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
+            string generatedScriptDirPath = Path.Combine(projectDirectory, @"GeneratedScript");
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
-            if (File.Exists(globalScriptFilePath))
-            {
-                File.WriteAllText(globalScriptFilePath, globalScript);
-            }
-
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
-            if (File.Exists(mainScriptFilePath))
+            string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
+
+            if (!Directory.Exists(generatedScriptDirPath))
             {
-                File.WriteAllText(mainScriptFilePath, mainScript);
+                Directory.CreateDirectory(generatedScriptDirPath);
             }
 
-            string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
-            if (File.Exists(systemLogsScriptFilePath))
+            if (!File.Exists(globalScriptFilePath))
             {
-                File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+                File.Create(globalScriptFilePath).Dispose();
             }
+
+            if (!File.Exists(mainScriptFilePath))
+            {
+                File.Create(mainScriptFilePath).Dispose();
+            }
+
+            if (!File.Exists(systemLogsScriptFilePath))
+            {
+                File.Create(systemLogsScriptFilePath).Dispose();
+            }
+
+            File.WriteAllText(globalScriptFilePath, globalScript);
+            File.WriteAllText(mainScriptFilePath, mainScript);
+            File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
 
             if (IsGeneratedScriptsEmpty(generatedScript))
             {
@@ -1858,35 +1871,6 @@ namespace Logitude.DBMigrations.Models
             return toolDxmlFilesNames;
         }
 
-        private void ValidateAppSettings()
-        {
-            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
-            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
-            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
-            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
-
-            if (String.IsNullOrEmpty(databaseType))
-            {
-                ExitTool("Error: Cannot Find DatabaseType in Configuration File");
-            }
-            if(databaseType != "msql" && databaseType != "oracle")
-            {
-                ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
-            }
-            if (String.IsNullOrEmpty(globalConnectionString))
-            {
-                ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
-            }
-            if (String.IsNullOrEmpty(mainConnectionString))
-            {
-                ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
-            }
-            if (String.IsNullOrEmpty(systemLogsConnectionString))
-            {
-                ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
-            }
-        }
-
         private void ValidateToolVersion()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -1911,6 +1895,92 @@ namespace Logitude.DBMigrations.Models
             else
             {
                 ExitTool("Error: Cannot Find File " + versionInfoFilePath);
+            }
+        }
+
+        private void ValidateToolSettings()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+
+            if (String.IsNullOrEmpty(databaseType))
+            {
+                ExitTool("Error: Cannot Find DatabaseType in Configuration File");
+            }
+            if (databaseType != "msql" && databaseType != "oracle")
+            {
+                ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
+            }
+            if (String.IsNullOrEmpty(globalConnectionString))
+            {
+                ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(mainConnectionString))
+            {
+                ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
+            }
+            if (String.IsNullOrEmpty(systemLogsConnectionString))
+            {
+                ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
+            }
+        }
+
+        private void DisplayToolSettings()
+        {
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
+
+            if (databaseType.ToLower() == "oracle")
+            {
+                OracleConnectionStringBuilder globalConnectionStringBuilder = new OracleConnectionStringBuilder(globalConnectionString);
+                OracleConnectionStringBuilder mainConnectionStringBuilder = new OracleConnectionStringBuilder(mainConnectionString);
+                OracleConnectionStringBuilder systemLogsConnectionStringBuilder = new OracleConnectionStringBuilder(systemLogsConnectionString);
+                globalDB = globalConnectionStringBuilder.UserID;
+                globalSource = globalConnectionStringBuilder.DataSource;
+                mainDB = mainConnectionStringBuilder.UserID;
+                mainSource = mainConnectionStringBuilder.DataSource;
+                systemLogsDB = systemLogsConnectionStringBuilder.UserID;
+                systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
+                databaseTypeMessage = "Oracle";
+                databaseNameMessage = "User ID";
+            }
+            else
+            {
+                SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
+                SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
+                SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
+                globalDB = globalConnectionStringBuilder.InitialCatalog;
+                globalSource = globalConnectionStringBuilder.DataSource;
+                mainDB = mainConnectionStringBuilder.InitialCatalog;
+                mainSource = mainConnectionStringBuilder.DataSource;
+                systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
+                systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
+                databaseTypeMessage = "MSQL";
+                databaseNameMessage = "Initial Catalog";
+            }
+
+            string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
+                                        "Connected Global DB: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
+                                        "Connected Main DB: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
+                                        "Connected SystemLogs DB: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
+
+            Console.WriteLine(appSettingsMessage);
+
+            if (!IsArgumentProvided("-ignoresettingscheck"))
+            {
+                Console.WriteLine("Are You Sure Tool Settings And The Connected Databases ? y/n");
+                string userInput = Console.ReadLine().Trim().ToLower();
+                if (userInput != "y")
+                {
+                    ExitTool("");
+                }
+
+                Console.Write("\n");
             }
         }
 
