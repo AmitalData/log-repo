@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Reflection;
 
 namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private readonly int ToolVersion = 1;
-
         private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
@@ -1898,7 +1897,8 @@ namespace Logitude.DBMigrations.Models
                 {
                     string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
                     VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
-                    if (ToolVersion != versionInfo.VersionNumber)
+                    string toolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    if (toolVersion != versionInfo.Version)
                     {
                         ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
                     }
