@@ -7836,7 +7836,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -7913,7 +7913,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -8141,7 +8141,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -23767,7 +23767,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -32445,38 +32445,38 @@
     <Feature
       Code="&quot;SENDAWB&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Master.Features.SendAWB&quot;"
+      FeatureDefaultText="&quot;Send-AWB&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Master.Features.SendAWB&quot;"
-      FeatureDefaultText="&quot;Send-AWB&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;AIREXPORTONLY&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Master.Features.AirExportOnly&quot;"
+      FeatureDefaultText="&quot;Air-Export-Only&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Master.Features.AirExportOnly&quot;"
-      FeatureDefaultText="&quot;Air-Export-Only&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;ALLTRANSPORTMODES&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Master.Features.AllTransportModes&quot;"
+      FeatureDefaultText="&quot;AllTransportModes&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Master.Features.AllTransportModes&quot;"
-      FeatureDefaultText="&quot;AllTransportModes&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;NEWMASTER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Master.Features.NewMaster&quot;"
+      FeatureDefaultText="&quot;New Master&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Master.Features.NewMaster&quot;"
-      FeatureDefaultText="&quot;New Master&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
