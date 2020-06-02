@@ -522,7 +522,7 @@
     ReferencedTable="CommunicationLogs"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
-    Ignore="true"/>
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="SenderContactId"
     ReferencedTable="Contacts"
