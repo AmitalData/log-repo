@@ -66,7 +66,7 @@ namespace MeatadataGeneratorTool
                     VersionInfo versionInfo = verisonFileString.ParseXML<VersionInfo>();
                     if (versionInfo == null || versionInfo.VersionNo != CurrentVersion)
                     {
-                        MessageBox.Show("You don't have the latest version of the tool, Please rebuild the tool to use the latest version.");
+                        MessageBox.Show("You don't have the latest version of the tool, Please rebuild the tool to use the latest version. ( " + versionInfo.VersionNo +" )");
                         base.OnStartup(e);
                         Environment.Exit(0);
                         return;
