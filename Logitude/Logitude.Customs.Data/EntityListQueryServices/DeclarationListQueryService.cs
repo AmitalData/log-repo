@@ -451,7 +451,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ,
                                                      Direction = a.Direction,
                                                      ExportFile = a.ExportFile,
-                                                     DeclarationTypeCode = a.DeclarationTypeCode,
+                                                     DeclarationDocumentTypeCode = a.DeclarationDocumentTypeCode,
                                                      AgentRoleCode = a.AgentRoleCode,
                                                      DestinationCountryCode = a.DestinationCountryCode,
                                                      DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",

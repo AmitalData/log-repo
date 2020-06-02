@@ -1234,11 +1234,6 @@ export class DeclarationPM {
     public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
        
 	 
-    private declarationTypeCode: string;
-    public get DeclarationTypeCode() { return this.declarationTypeCode; }
-    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
-       
-	 
     private destinationCountryCode: string;
     public get DestinationCountryCode() { return this.destinationCountryCode; }
     public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }

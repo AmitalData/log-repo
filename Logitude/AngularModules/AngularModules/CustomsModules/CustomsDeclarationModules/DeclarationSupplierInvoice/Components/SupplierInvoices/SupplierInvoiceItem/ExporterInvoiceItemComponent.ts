@@ -76,16 +76,16 @@ export class ExporterInvoiceItemComponent extends BaseComponent
         this.originalSupplierInvoiceItem.ClaimReasonCode = newValue;
     }
 
-    public get StatementType() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.StatementType : null; }
+    public get StatementType() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.StatementTypeCode : null; }
     public set StatementType(newValue: string) {
-        this.originalSuppInvoiceItemsAbachStatement.StatementType = newValue;
+        this.originalSuppInvoiceItemsAbachStatement.StatementTypeCode = newValue;
         this.originalSuppInvoiceItemsAbachStatement.IsDirty = true;
 
     }
 
-    public get StatementInd() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.StatementInd : null; }
-    public set StatementInd(newValue: string) {
-        this.originalSuppInvoiceItemsAbachStatement.StatementInd = newValue;
+    public get StatementInd() { return this.originalSuppInvoiceItemsAbachStatement ? this.originalSuppInvoiceItemsAbachStatement.IsStatementInd : null; }
+    public set StatementInd(newValue: boolean) {
+        this.originalSuppInvoiceItemsAbachStatement.IsStatementInd = newValue;
         this.originalSuppInvoiceItemsAbachStatement.IsDirty = true;
     }
 
@@ -97,9 +97,9 @@ export class ExporterInvoiceItemComponent extends BaseComponent
     }
 
 
-    public get VehicleIDTypeCode() { return this.originalSupplierInvoiceItemVehicle ? this.originalSupplierInvoiceItemVehicle.VehicleIDTypeCode : null; }
-    public set VehicleIDTypeCode(newValue: any) {
-        this.originalSupplierInvoiceItemVehicle.VehicleIDTypeCode = newValue;
+    public get VehicleTypeCode() { return this.originalSupplierInvoiceItemVehicle ? this.originalSupplierInvoiceItemVehicle.VehicleTypeCode : null; }
+    public set VehicleTypeCode(newValue: any) {
+        this.originalSupplierInvoiceItemVehicle.VehicleTypeCode = newValue;
         this.originalSupplierInvoiceItemVehicle.IsDirty = true;
     }
 
@@ -165,13 +165,13 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
                         }
 
-                         if (this.StatementInd == "T") {
-                            this.StatementInd = "1";
-                        }
+                        // if (this.StatementInd == "T") {
+                        //    this.StatementInd = "1";
+                        //}
 
-                        if (this.StatementInd == "F") {
-                            this.StatementInd = "0";
-                        }
+                        //if (this.StatementInd == "F") {
+                        //    this.StatementInd = "0";
+                        //}
 
 
  }
@@ -262,13 +262,13 @@ export class ExporterInvoiceItemComponent extends BaseComponent
     OkButtonClicked() {
          var errors = [];
  
-        if (this.StatementInd == "1") {
-            this.StatementInd = "T";
-        }
+        //if (this.StatementInd == "1") {
+        //    this.StatementInd = "T";
+        //}
 
-        if (this.StatementInd == "0") {
-            this.StatementInd = "F";
-        }
+        //if (this.StatementInd == "0") {
+        //    this.StatementInd = "F";
+        //}
         if (this.originalSupplierInvoiceItemsPrice.IsDirty && this.originalSupplierInvoiceItemsPrice.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
             this.originalSupplierInvoiceItemsPrice.DeclarationId = this.originalSupplierInvoiceItem.DeclarationId;
             this.originalSupplierInvoiceItemsPrice.InvoiceCounterKey = this.originalSupplierInvoiceItem.CounterKey;
@@ -322,14 +322,14 @@ export class ExporterInvoiceItemComponent extends BaseComponent
         
         if (errors.length > 0) {
             {
-                this.ValidationErrorsList = errors;
-                if (this.StatementInd == "T") {
-                    this.StatementInd = "1";
-                }
+                //this.ValidationErrorsList = errors;
+                //if (this.StatementInd == "T") {
+                //    this.StatementInd = "1";
+                //}
 
-                if (this.StatementInd == "F") {
-                    this.StatementInd = "0";
-                }
+                //if (this.StatementInd == "F") {
+                //    this.StatementInd = "0";
+                //}
             }
         } else {
 

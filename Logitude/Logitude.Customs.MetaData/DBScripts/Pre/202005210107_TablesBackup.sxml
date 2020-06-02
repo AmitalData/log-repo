@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
 EXECUTE IMMEDIATE 'create table Bak_countries as select * from countries';
 EXECUTE IMMEDIATE 'create table Bak_states as select * from states';

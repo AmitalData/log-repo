@@ -27,8 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InvoiceItemLineNumber, 
 	         SequenceNumeric, 
 	         Tenant, 
-	         StatementType, 
-	         StatementInd,
+	         StatementTypeCode, 
+	         IsStatementInd,
 	      }
 
 
@@ -40,8 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InvoiceItemLineNumber, 
 	         SequenceNumeric, 
 	         Tenant, 
-	         StatementType, 
-	         StatementInd,
+	         StatementTypeCode, 
+	         IsStatementInd,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -55,14 +55,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementTypeCode))
             {
-				entityPOCO.StatementType = entityPM.StatementType;
+				entityPOCO.StatementTypeCode = entityPM.StatementTypeCode;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementInd))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStatementInd))
             {
-				entityPOCO.StatementInd = entityPM.StatementInd;
+				entityPOCO.IsStatementInd = entityPM.IsStatementInd;
 			}
 			}
 
@@ -94,14 +94,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatementType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatementTypeCode))
             {
-					entityPM.StatementType = entityPOCO.StatementType;
+					entityPM.StatementTypeCode = entityPOCO.StatementTypeCode;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatementInd))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsStatementInd))
             {
-					entityPM.StatementInd = entityPOCO.StatementInd;
+					entityPM.IsStatementInd = entityPOCO.IsStatementInd;
             }
 
 		}
@@ -115,14 +115,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementTypeCode))
             {
-                oldEntityPM.StatementType = entityPM.StatementType;
+                oldEntityPM.StatementTypeCode = entityPM.StatementTypeCode;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatementInd))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStatementInd))
             {
-                oldEntityPM.StatementInd = entityPM.StatementInd;
+                oldEntityPM.IsStatementInd = entityPM.IsStatementInd;
             }
 			
 		}
@@ -133,10 +133,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.StatementInd)) //T4 find type == nText 
-            {
-                entityPM.StatementInd = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StatementInd));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
