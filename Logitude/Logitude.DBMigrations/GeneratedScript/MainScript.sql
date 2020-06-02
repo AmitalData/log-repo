@@ -1,0 +1,30 @@
+-- Procedure Script From DeleteDuplicatedQueueMessagesProcedure.dxml
+EXEC('IF (OBJECT_ID(''[dbo].[Queue_Enqueue]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[Queue_Enqueue] END');
+EXEC('CREATE procedure [dbo].[RemoveDuplicatedQueueMessages]
+as begin
+update QueueMessages
+set Status = 2
+where id in (
+SELECT  id
+FROM QueueMessages WITH (UPDLOCK,READPAST)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
+WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
+AND HashCode in (select hashcode
+from QueueMessages
+where HashCode is not null
+group by HashCode
+having count(*) > 1
+)
+and id not in (SELECT  top 1 id
+FROM QueueMessages inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
+WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
+AND HashCode in (select hashcode
+from QueueMessages
+where HashCode is not null
+group by HashCode
+having count(*) > 1
+) ORDER BY NextRunDateTime)
+--ORDER BY NextRunDateTime
+)
+end;');
+
+

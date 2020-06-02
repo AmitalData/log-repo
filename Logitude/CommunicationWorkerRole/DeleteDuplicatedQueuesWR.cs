@@ -36,7 +36,7 @@ namespace CommunicationWorkerRole
                         string strConnString = TenantServerConfigration.GetDbConnection(0);
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[DeleteDuplicatedQueueMessages]", cn);
+                            SqlCommand cmd = new SqlCommand("[dbo].[RemoveDuplicatedQueueMessages]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();

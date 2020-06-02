@@ -22,7 +22,7 @@
   </Column>
 
  <Column
-    Name="EnableMessageHash"
+    Name="DuplicateMessagesAutoRemove"
     Type="bit">
     <Constraints
       Nullable="false" />

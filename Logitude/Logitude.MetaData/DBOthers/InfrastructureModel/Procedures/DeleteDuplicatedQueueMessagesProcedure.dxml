@@ -1,7 +1,7 @@
 <Procedure DBType="Main" Name="Queue_Enqueue" Schema="dbo" Module="Infrastructure">
   <SqlScript>
     <![CDATA[
- CREATE procedure [dbo].[DeleteDuplicatedQueueMessages]
+ CREATE procedure [dbo].[RemoveDuplicatedQueueMessages]
      
       as begin
      
@@ -9,8 +9,8 @@
 set Status = 2
 where id in (
 SELECT  id
-        FROM QueueMessages WITH (UPDLOCK,READPAST) 
-        WHERE Status = 0 
+        FROM QueueMessages WITH (UPDLOCK,READPAST)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
+        WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
               AND HashCode in (select hashcode 
 							from QueueMessages
 							where HashCode is not null
@@ -19,8 +19,8 @@ SELECT  id
 							)
 
 							and id not in (SELECT  top 1 id
-        FROM QueueMessages --WITH (UPDLOCK,READPAST) 
-        WHERE Status = 0 
+        FROM QueueMessages inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
+        WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
               AND HashCode in (select hashcode 
 							from QueueMessages
 							where HashCode is not null
@@ -32,52 +32,13 @@ SELECT  id
       end;
 
 
-
     ]]>
   </SqlScript>
   
   <OracleScript>
     <![CDATA[
                                  
-CREATE OR REPLACE PROCEDURE DeleteDuplicatedQueueMessages
-AS
-
-BEGIN
-   UPDATE QueueMessages
-      SET STATUS = 2
-    WHERE  id IN ( SELECT QUEUEMESSAGES.id 
-                   FROM QueueMessages 
-                  
-                    WHERE  QUEUEMESSAGES.STATUS = 0
-                             AND QUEUEMESSAGES.HashCode IN ( SELECT QUEUEMESSAGES.hashcode 
-                                                             FROM QueueMessages 
-                                                              WHERE  QUEUEMESSAGES.HashCode IS NOT NULL
-                                                               GROUP BY QUEUEMESSAGES.HashCode
-                                                             
-                                                                HAVING COUNT(*)  > 1 )
-
-                             AND QUEUEMESSAGES.id NOT IN ( SELECT QUEUEMESSAGES.id 
-                                                           FROM QueueMessages --WITH (UPDLOCK,READPAST) 
-                                                                 
-                                                            WHERE  QUEUEMESSAGES.STATUS = 0
-                                                                     AND QUEUEMESSAGES.HashCode IN ( SELECT QUEUEMESSAGES.hashcode 
-                                                                                                     FROM QueueMessages 
-                                                                                                      WHERE  QUEUEMESSAGES.HashCode IS NOT NULL
-                                                                                                       GROUP BY QUEUEMESSAGES.HashCode
-                                                                                                     
-                                                                                                        HAVING COUNT(*)  > 1 )
-                                                                                                        
-
-                                                             ORDER BY QUEUEMESSAGES.NextRunDateTime
-                                                             FETCH FIRST 1 ROWS ONLY )  --FOR UPDATE SKIP LOCKED
-                                                           
-                                                        
-    ) 
-   ;--ORDER BY NextRunDateTime
-
---EXCEPTION WHEN OTHERS THEN utils.handleerror(SQLCODE,SQLERRM);
-END;
-
+ 
 
        
     ]]>

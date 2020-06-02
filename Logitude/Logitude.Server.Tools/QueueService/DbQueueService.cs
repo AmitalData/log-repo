@@ -22,7 +22,7 @@ namespace Logitude.Server.Tools.QueueService
         protected int Tenant { get; set; }
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
-        private  bool EnableMessageHash { get; set; }
+ 
         public DbQueueService()
         {
 
@@ -55,7 +55,7 @@ namespace Logitude.Server.Tools.QueueService
                 queueDefRep.SubmitChanges();
             }
 
-            this.EnableMessageHash = queueDefinition.EnableMessageHash;
+            
         }
 
         private static QueueDefinition GetQueueDefFromCache(string queueCode, QueueDefinitionRepository queueDefRep)
@@ -88,13 +88,8 @@ namespace Logitude.Server.Tools.QueueService
             {
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
                 string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-                string bodyHashCode = null;//MD5HashUtil.GenerateHashForString(messageBody);
-                if (this.EnableMessageHash)
-                {
-                    bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
-                }
+                string bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
                 
-
                 QueueResponse response = new QueueResponse();
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
