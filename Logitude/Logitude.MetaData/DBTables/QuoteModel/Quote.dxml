@@ -1185,6 +1185,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteClosingReasonId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1371,11 +1378,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="QuoteClosingReasonCode"
-    ReferencedTable="QuoteClosingReasons"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="BusinessUnitId"
     ReferencedTable="BusinessUnits"
     ReferencedColumn="Id"
@@ -1450,10 +1452,16 @@
     ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteClosingReasonId"
+    ReferencedTable="QuoteClosingReasons"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,OpenDate" />
   <Index
     Columns="OpportunityId" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
+  
 </Table>

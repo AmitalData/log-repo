@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_GetNextTableIdValue"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+CREATE PROCEDURE [dbo].[usp_GetNextTableIdValue]
+(
+  @pLastNumber varchar(100) OUTPUT,
+  @pTableName    varchar(40)
+  
+)
+AS
+
+DECLARE @COUNTER AS INT
+   SET @COUNTER = 1
+  
+ 
+ 
+ Declare @Current As Int 
+ Declare @DataBaseNumber As Int 
+ Declare @DBStringNumber As varchar(50)
+ Declare @CurrentStrNumber As varchar(50)
+
+ 
+ SELECT TOP 1 @DataBaseNumber = DataBaseNumber FROM DataBaseProperties 
+
+Set @DBStringNumber = CONVERT(varchar(50) , @DataBaseNumber) 
+
+    IF NOT EXISTS (SELECT TableName 
+         FROM DBIdCounters with (UPDLOCK) WHERE TableName =@pTableName)
+		 
+BEGIN; 
+ 
+	 
+
+	  SET @COUNTER = 1
+		 INSERT INTO DBIdCounters
+   (
+       TableName,
+	   
+	   LastIdNumber
+   )
+   VALUES
+   (
+      @pTableName,
+       
+      @COUNTER 
+     )
+     
+     Set @Current = 1
+
+	 End
+
+    
+
+   Else   
+   
+ BEGIN;
+
+ 
+ Set @Current	= (SELECT  LastIdNumber
+         FROM DBIdCounters with (UPDLOCK) WHERE  TableName =@pTableName)
+
+		 Set @Current = @Current + 1
+
+		 Update DBIdCounters
+		 set LastIdNumber = @Current
+		 Where TableName = @pTableName
+	
+ End;
+
+ Set  @CurrentStrNumber = CONVERT(varchar(50) ,@Current)
+
+ Set @pLastNumber = @DBStringNumber + '-'+ @CurrentStrNumber
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -375,7 +375,7 @@
             </td>
         </tr>
 
-        <tr [class.Show]="IsAdvancedSearchOpened == true" [class.Hide]="IsAdvancedSearchOpened == false" style="height:210px;">
+        <tr *ngIf="UsingLogGridV2 || !UsingLogGridV2" [class.Show]="IsAdvancedSearchOpened == true" [class.Hide]="IsAdvancedSearchOpened == false" style="height:210px;">
             <td>
                 <div style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:205px;">
                     <AdvSearchComponent [ObjectTableName]="ObjectTableName" [QueryChangeEvent]="onQueryChangeEvent" [QueryId]="SelectedQueryId" [QueryCode]="SelectedQueryCode" [Filterchangeevent]="Filterchangeevent"></AdvSearchComponent>

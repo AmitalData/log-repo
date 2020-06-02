@@ -410,8 +410,9 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.VendorLocalName = selectedVendors[0].LocalName;
                         groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value, 0);
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value, 0);
-                        byVendorList.Add(groupedbyVendor);
-                   
+                        if (groupedbyVendor.SumOfAmountInLocalCurrency != 0)
+                          byVendorList.Add(groupedbyVendor) ;
+                  
                 }
             }
             return byVendorList;
@@ -538,7 +539,7 @@ namespace Logitude.Accounting.BL.DataContract
         private TaxDeductionReportData FillTotalForCompany(List<TaxDeductionReportLine> deductionLines, TaxDeductionReportData taxDeduction)
         {          
             taxDeduction.VendorsCount = taxDeduction.ByVendorList.GroupBy(d => d.VendorId).Count();
-            taxDeduction.TotalAmountInLocalCurrency = Math.Round(deductionLines.Sum(d => d.AmountInLocalCurrency+(double?) d.TaxDeductionLocalAmount).Value, 0);
+            taxDeduction.TotalAmountInLocalCurrency = Math.Round(deductionLines.Sum(d => d.AmountInLocalCurrency ).Value, 0);
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(deductionLines.Sum(d => d.TaxDeductionLocalAmount).Value, 0);
             taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(deductionLines.Where(d => d.DeductionType == "08").Sum(d => d.AmountInLocalCurrency).Value, 0);
             taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(deductionLines.Where(d => d.DeductionType == "08").Sum(d => d.TaxDeductionLocalAmount).Value, 0);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.QuoteModel.Repositories
 {
@@ -27,10 +28,10 @@ namespace Simplog.Data.QuoteModel.Repositories
             quotesContext = QuotesContext.GetContext(tenant);
         }
 
-        public QuoteClosingReason GetSingleQuoteClosingReason(string code)
+        public QuoteClosingReason GetSingleQuoteClosingReason(string id, int tenant)
         {
-            return (from a in context.QuoteClosingReasons
-                    where a.Code == code
+            return (from a in context.QuoteClosingReasons.Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -38,9 +39,11 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             return context.QuoteClosingReasons;
         }
-        public IQueryable<QuoteClosingReason> GetQuoteClosingReasons()
+        public IQueryable<QuoteClosingReason> GetQuoteClosingReasons(int tenant)
         {
-            return context.QuoteClosingReasons;
+            return (from a in context.QuoteClosingReasons.Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+                    where  a.Tenant == tenant
+                    select a);
         }
 
         public void Add(QuoteClosingReason entity)

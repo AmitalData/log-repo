@@ -1727,7 +1727,7 @@
 
             }
 
-            document.location.href = document.location.href + angularUrl;
+            document.location.href = angularUrl;
 
             $("#loginBusyindicator").hide();
           

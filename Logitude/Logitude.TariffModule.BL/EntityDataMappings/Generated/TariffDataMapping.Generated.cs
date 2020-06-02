@@ -70,7 +70,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType4Id, 
 	         ContainerType5Id, 
 	         TariffProductId, 
-	         LastUsedDate,
+	         LastUsedDate, 
+	         FreightChargeId,
 	      }
 
 
@@ -143,7 +144,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         TariffProductId, 
 	         SellerPartnerTypeId, 
 	         IsRefreshTranslations, 
-	         LastUsedDate,
+	         LastUsedDate, 
+	         FreightChargeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -390,6 +392,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
             {
 				entityPOCO.LastUsedDate = entityPM.LastUsedDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
+            {
+				entityPOCO.FreightChargeId = entityPM.FreightChargeId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -643,6 +650,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.LastUsedDate = entityPOCO.LastUsedDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FreightChargeId))
+            {
+					entityPM.FreightChargeId = entityPOCO.FreightChargeId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -887,6 +899,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
             {
                 oldEntityPM.LastUsedDate = entityPM.LastUsedDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
+            {
+                oldEntityPM.FreightChargeId = entityPM.FreightChargeId;
             }
 			
 		}

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="Queue_DelayMessage"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+CREATE procedure [dbo].[Queue_DelayMessage]
+(
+   @MessageId bigint,
+   @DelaySeconds int
+)
+ as begin
+
+IF exists (SELECT [Id]
+FROM [dbo].[QueueMessages] WITH (UPDLOCK) WHERE  [ID] = @MessageId)
+
+BEGIN
+UPDATE [dbo].[QueueMessages]
+SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate())
+WHERE [Id] = @MessageId
+
+UPDATE [dbo].[QueueMessageMoreDetails]
+SET  [NextRunDateTime] = dateadd(second,@DelaySeconds,getdate())
+WHERE [Id] = @MessageId
+END
+
+
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

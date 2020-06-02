@@ -334,7 +334,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     if (stage.Code == "QTDC")
                                     {
                                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonCode);
+                                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
                                         if (myQuoteClosingReason != null)
                                         {
                                             quoteStatus.QuoteDeclineReason.Code = myQuoteClosingReason.Code;

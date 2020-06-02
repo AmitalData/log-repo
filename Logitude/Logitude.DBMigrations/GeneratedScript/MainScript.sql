@@ -1,30 +1,6 @@
--- Procedure Script From DeleteDuplicatedQueueMessagesProcedure.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[Queue_Enqueue]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[Queue_Enqueue] END');
-EXEC('CREATE procedure [dbo].[RemoveDuplicatedQueueMessages]
-as begin
-update QueueMessages
-set Status = 2
-where id in (
-SELECT  id
-FROM QueueMessages WITH (UPDLOCK,READPAST)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
-WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
-AND HashCode in (select hashcode
-from QueueMessages
-where HashCode is not null
-group by HashCode
-having count(*) > 1
-)
-and id not in (SELECT  top 1 id
-FROM QueueMessages inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
-WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
-AND HashCode in (select hashcode
-from QueueMessages
-where HashCode is not null
-group by HashCode
-having count(*) > 1
-) ORDER BY NextRunDateTime)
---ORDER BY NextRunDateTime
-)
-end;');
+-- Rename Column From Drop_CustomField To CustomField
+EXEC SP_RENAME 'dbo.EventTypes.Drop_CustomField', 'CustomField', 'COLUMN';
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9b7d58a8-4ca3-493c-8684-53b8fd5c174d', 'EventType.dxml', 'EventTypes', 'Drop_CustomField', 'Rename Column', GETDATE(), '-- Rename Column From Drop_CustomField To CustomFieldEXEC SP_RENAME ''dbo.EventTypes.Drop_CustomField'', ''CustomField'', ''COLUMN'';');
 
 

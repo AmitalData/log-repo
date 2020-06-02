@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="SystemLogs"
+  Name="DeleteOldErrorLog"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+Create procedure [dbo].[DeleteOldErrorLog]
+as 
+
+begin
+
+delete from [dbo].[ErrorLogs] where [LogDate] < GETDATE() - 30
+ 
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

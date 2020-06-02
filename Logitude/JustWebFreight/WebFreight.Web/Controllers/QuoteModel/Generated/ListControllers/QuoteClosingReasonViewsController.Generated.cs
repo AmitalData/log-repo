@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -57,11 +57,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
 				
 		    	IQuotesContext MyContext = QuotesContext.GetContext(authToken.Tenant);
 				QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
 				QuoteClosingReasonList entityList = null;
-				QuoteClosingReason entityPoco = quoteClosingReasonRepository.GetSingleQuoteClosingReason(code );
+				QuoteClosingReason entityPoco = quoteClosingReasonRepository.GetSingleQuoteClosingReason(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -94,11 +95,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
 
 
 				IQuotesContext MyContext = QuotesContext.GetContext(authToken.Tenant);
 				QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
-				IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons();
+				IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons(authToken.Tenant);
 
 				QuoteClosingReasonQuery quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
 			    IQueryable<QuoteClosingReasonList> entityLists = quoteClosingReasonQuery.GetIQueryableEntityList(entityPocos);
@@ -124,7 +126,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				
+				                
+				SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "QuoteClosingReason",
@@ -213,7 +217,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
 
                 IQuotesContext MyContext = QuotesContext.GetContext(tenant);
                 QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
-                IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons();
+                IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
 
                 QuoteClosingReasonQuery quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
                 
