@@ -396,11 +396,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             else
             {
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
-                CalcIsAutonomy();
-                CalcProcedureCurrentCode();
-                if(this.IsAutonomy)
+                if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
-                    UpdateDeclarationPending("901");
+                    CalcIsAutonomy();
+                    CalcProcedureCurrentCode();
+                    if (this.IsAutonomy)
+                    {
+                        UpdateDeclarationPending("901");
+                    }
                 }
             }
 
