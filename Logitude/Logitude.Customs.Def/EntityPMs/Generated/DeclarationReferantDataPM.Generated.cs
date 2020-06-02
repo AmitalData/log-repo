@@ -503,6 +503,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool newFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool NewFile  
+	   {
+	    
+	     get
+		{
+		   return newFile;
+		 }
+		 set
+		 {
+		   if(newFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewFile",OldValue=newFile,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   newFile=value;
+		   }
+			
+		 }
+	   }
+	  private bool favorite ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Favorite  
+	   {
+	    
+	     get
+		{
+		   return favorite;
+		 }
+		 set
+		 {
+		   if(favorite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Favorite",OldValue=favorite,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   favorite=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
