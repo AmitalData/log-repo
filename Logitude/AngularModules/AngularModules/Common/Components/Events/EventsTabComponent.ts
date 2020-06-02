@@ -60,6 +60,8 @@ export class EventsTabComponent implements OnDestroy {
         this.LoadData();
     }
 
+    IsRefreshFollowUp: boolean = false;
+    IsOpenAddEditEventTypeComponent: boolean = false;
     public IsAddButtonEnabled: boolean = false;
     SetUIProperties() {
         var isEnabled = false
@@ -72,6 +74,7 @@ export class EventsTabComponent implements OnDestroy {
 
         this.IsAddButtonEnabled = isEnabled;
     }
+    private ReLoadEntityCompletedEvent: any = null;
 
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
@@ -93,14 +96,32 @@ export class EventsTabComponent implements OnDestroy {
                 }
             });
 
-            if (!this.EntityId) {
+            this.ReLoadEntityCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (this.IsRefreshFollowUp) {
+                    this.CurrentSession.FireEvent("FollowupsChanged");
+                    this.IsRefreshFollowUp = false;
+                }
+
+            });
+
                 this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityId = this.entityArgs.EditComponent.EntityPM.Id;
-                        this.SetUIProperties();
+                        if (!this.EntityId) {
+                            this.EntityId = this.entityArgs.EditComponent.EntityPM.Id;
+                            this.SetUIProperties();
+                        }
+
+                        if (this.IsOpenAddEditEventTypeComponent) {
+                            if (this.SelectedEventTypeClass) {
+                                this.ShowAddEditEventWindow(this.SelectedEventTypeClass, this.SelectedEventTypeClass.Title);
+                            }
+                            this.IsOpenAddEditEventTypeComponent = false;
+                            this.SelectedEventTypeClass = null;
+
+                        }
                     }
                 });
-            }
+            
         }
     }
 
@@ -108,6 +129,9 @@ export class EventsTabComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.ReLoadEntityCompletedEvent);
+
+        
     }
 
     public PagesMenu: PageMenu[];
@@ -274,13 +298,39 @@ export class EventsTabComponent implements OnDestroy {
             }
         });
     }
+    SelectedEventTypeClass: EventItemClass;
     RunAddEditWindow(item: EventItemClass, title: string) {
+
+        if (this.ObjectTableName == "Shipment" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM) {
+            item.Title = title;
+            this.SelectedEventTypeClass = item;
+            this.IsOpenAddEditEventTypeComponent = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+        else {
+            this.ShowAddEditEventWindow(item, title);
+        }
+
+    }
+
+
+
+
+    ShowAddEditEventWindow(item: EventItemClass, title: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
         logWindow.Height = 400;
         logWindow.WindowArgs = item
         logWindow.Title = title;
         logWindow.Show('./Common/Components/Events/AddEditEventComponent');
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (this.ObjectTableName == "Shipment" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
+                this.IsRefreshFollowUp = true;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+            }
+        });
+
     }
 }
 
@@ -288,6 +338,7 @@ export class EventItemClass extends BaseComponent {
     public IsNewEntity: boolean = false;
     public EntityPM: TraceEventPM;
     public ObjectTableName = "TraceEvent";
+    Title: string;
     constructor(item: TraceEventPM, public father: EventsTabComponent) {
         super();
         this.EntityPM = item;
