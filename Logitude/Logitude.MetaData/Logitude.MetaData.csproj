@@ -249,7 +249,6 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteDuplicatedQueueMessagesProcedure.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\QueueEnQueueProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldErrorLog.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldQueueMessageMoreDetailsTask.dxml" />
