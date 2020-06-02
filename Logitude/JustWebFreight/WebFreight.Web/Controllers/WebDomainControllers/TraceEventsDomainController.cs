@@ -113,7 +113,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         if (objectTable.AllowCustomFields)
                         {
-                            EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable != null ? objectTable.Name : null, Tenant = tenant });
+                            UpdateEventCustomFieldService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable != null ? objectTable.Name : null, Tenant = tenant });
+
                         }
                     }
 
