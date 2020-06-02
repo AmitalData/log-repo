@@ -202,7 +202,7 @@
         <div >
           <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
           <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
-            <cdk-virtual-scroll-viewport autosize [id]="LogGridRowsId" class="GeneratedGridBody" [minBufferPx]="viewportSize * rowHeight" [maxBufferPx]="viewportSize * 2 * rowHeight">
+            <cdk-virtual-scroll-viewport autosize [id]="LogGridRowsId" class="GeneratedGridBody" [minBufferPx]="778" [maxBufferPx]="778 * 3">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
                 <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
                     <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
