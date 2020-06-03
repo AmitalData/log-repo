@@ -146,7 +146,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Direction, 
 	         AgentRoleCode, 
 	         ExportFile, 
-	         DeclarationTypeCode, 
 	         DestinationCountryCode,
 	      }
 
@@ -352,7 +351,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Direction, 
 	         AgentRoleCode, 
 	         ExportFile, 
-	         DeclarationTypeCode, 
 	         DestinationCountryCode,
 	      }
 
@@ -975,11 +973,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
             {
 				entityPOCO.ExportFile = entityPM.ExportFile;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
-            {
-				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
@@ -1613,11 +1606,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportFile = entityPOCO.ExportFile;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
-            {
-					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationCountryCode))
             {
 					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
@@ -2242,11 +2230,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
             {
                 oldEntityPM.ExportFile = entityPM.ExportFile;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
-            {
-                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))

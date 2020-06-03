@@ -58,11 +58,11 @@
 
                 <tr style="height: 15px;">
                     <td>
-                        <LogLabel [ObjectFieldName]="'StatementType'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                        <LogLabel [ObjectFieldName]="'StatementTypeCode'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'StatementType'"
+                        <LogLov [ObjectFieldName]="'StatementTypeCode'"
                                 [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
@@ -71,15 +71,15 @@
                     </td>
                     <td style="width:7px"></td>
                     <td>
-                        <LogLabel [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                        <LogLabel [ObjectFieldName]="'IsStatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
                         <CheckBox style="float: right; margin-left: 8px;"
                                   
-                                  [Text]="'Customs.Declaration.F.StatementInd' | TextCodeTranslationPipe"
-                                  [IsChecked]="StatementInd"
-                                  (Checked)="StatementInd = $event"></CheckBox>
+                                  [Text]="'Customs.Declaration.F.IsStatementInd' | TextCodeTranslationPipe"
+                                  [IsChecked]="IsStatementInd"
+                                  (Checked)="IsStatementInd = $event"></CheckBox>
 
                         <!--<LogTextBox [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                         [Text]="StatementInd"
@@ -106,11 +106,11 @@
                     </td>
                     <td style="width:7px"></td>
                     <td>
-                        <LogLabel [ObjectFieldName]="'VehicleIDTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
+                        <LogLabel [ObjectFieldName]="'VehicleTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'VehicleIDTypeCode'"
+                        <LogLov [ObjectFieldName]="'VehicleTypeCode'"
                                 [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"

@@ -141,48 +141,48 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string statementType ;
+	  private string statementTypeCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string StatementType  
+       public string StatementTypeCode  
 	   {
 	    
 	     get
 		{
-		   return statementType;
+		   return statementTypeCode;
 		 }
 		 set
 		 {
-		   if(statementType != value)
+		   if(statementTypeCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatementType",OldValue=statementType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatementTypeCode",OldValue=statementTypeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   statementType=value;
+		   statementTypeCode=value;
 		   }
 			
 		 }
 	   }
-	  private string statementInd ;
+	  private bool isStatementInd ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string StatementInd  
+       public bool IsStatementInd  
 	   {
 	    
 	     get
 		{
-		   return statementInd;
+		   return isStatementInd;
 		 }
 		 set
 		 {
-		   if(statementInd != value)
+		   if(isStatementInd != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatementInd",OldValue=statementInd,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsStatementInd",OldValue=isStatementInd,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   statementInd=value;
+		   isStatementInd=value;
 		   }
 			
 		 }

@@ -35,9 +35,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          Tenant = a.Tenant,
 					
-					                          StatementType = a.StatementType,
+					                          StatementTypeCode = a.StatementTypeCode,
 					
-					                          StatementInd = a.StatementInd,
+					                          IsStatementInd = a.IsStatementInd,
 					
 		                    	            });
             return query;

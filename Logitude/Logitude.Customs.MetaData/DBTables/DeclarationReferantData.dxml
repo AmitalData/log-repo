@@ -146,6 +146,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NewFile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Favorite"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

@@ -1,47 +1,124 @@
--- Add New Column With Name CLASSIFIEDUSERID
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD "CLASSIFIEDUSERID" VARCHAR2(15 CHAR) NULL;
+-- General Script From 202005210107_TablesBackup.sxml File
+DECLARE
+StartTime TIMESTAMP;
+EndTime TIMESTAMP;
+BEGIN
+SAVEPOINT ScriptSavePoint;
+StartTime := SYSTIMESTAMP;
+BEGIN
+EXECUTE IMMEDIATE 'create table Bak_countries as select * from countries';
+EXECUTE IMMEDIATE 'create table Bak_states as select * from states';
+EXECUTE IMMEDIATE 'create table Bak_COUNTRYCITIES as select * from COUNTRYCITIES';
+EXECUTE IMMEDIATE 'create table Bak_INCOTERMS as select * from INCOTERMS';
+EXECUTE IMMEDIATE 'create table Bak_PORTS as select * from PORTS';
+EXECUTE IMMEDIATE 'create table Bak_objectfields as select * from objectfields';
+EXECUTE IMMEDIATE 'create table Bak_querycolumns as select * from querycolumns';
+EXECUTE IMMEDIATE 'create table Bak_ScreenFields as select * from ScreenFields';
+EXECUTE IMMEDIATE 'create table Bak_AdvancedQueryFilters as select * from AdvancedQueryFilters';
+EXECUTE IMMEDIATE 'create table Bak_RuleConditionFields as select * from RuleConditionFields';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableRuleFields as select * from ObjectTableRuleFields';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableRules as select * from ObjectTableRules';
+EXECUTE IMMEDIATE 'create table Bak_screens as select * from screens';
+EXECUTE IMMEDIATE 'create table Bak_Queries as select * from Queries';
+EXECUTE IMMEDIATE 'create table Bak_MenuButtons as select * from MenuButtons';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableTabs as select * from ObjectTableTabs';
+EXECUTE IMMEDIATE 'create table Bak_textcodes as select * from textcodes';
+EXECUTE IMMEDIATE 'create table Bak_Features as select * from Features';
+EXECUTE IMMEDIATE 'create table Bak_MenusTables as select * from MenusTables';
+EXECUTE IMMEDIATE 'create table Bak_CustomsRequiredFields as select * from CustomsRequiredFields';
+EXECUTE IMMEDIATE 'create table Bak_AirlineMessagingRules as select * from AirlineMessagingRules';
+EXECUTE IMMEDIATE 'create table Bak_restrictions as select * from restrictions';
+EXECUTE IMMEDIATE 'create table Bak_CustomerFieldsUpdateSettings as select * from CustomerFieldsUpdateSettings';
+EXECUTE IMMEDIATE 'create table Bak_ObjectFieldValidations as select * from ObjectFieldValidations';
+EXECUTE IMMEDIATE 'create table Bak_ObjectFieldModifications as select * from ObjectFieldModifications';
+EXECUTE IMMEDIATE 'create table Bak_ScreenModifications as select * from ScreenModifications';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTables as select * from ObjectTables';
+EXECUTE IMMEDIATE 'create table Bak_SharedUserQueries as select * from SharedUserQueries';
+EXECUTE IMMEDIATE 'create table Bak_Tips as select * from Tips';
+EXECUTE IMMEDIATE 'create table Bak_Translations as select * from Translations';
+EXECUTE IMMEDIATE 'create table Bak_PackageFeatures as select * from PackageFeatures';
+EXECUTE IMMEDIATE 'create table Bak_RoleFeatures as select * from RoleFeatures';
+EXECUTE IMMEDIATE 'create table Bak_Reports as select * from Reports';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableHelperControls as select * from ObjectTableHelperControls';
+END;
+EndTime:= SYSTIMESTAMP;
+BEGIN
+DECLARE ScriptBody NCLOB;
+BEGIN
+ScriptBody := 'EXECUTE IMMEDIATE ''create table Bak_countries as select * from countries'';
+EXECUTE IMMEDIATE ''create table Bak_states as select * from states'';
+EXECUTE IMMEDIATE ''create table Bak_COUNTRYCITIES as select * from COUNTRYCITIES'';
+EXECUTE IMMEDIATE ''create table Bak_INCOTERMS as select * from INCOTERMS'';
+EXECUTE IMMEDIATE ''create table Bak_PORTS as select * from PORTS'';
+EXECUTE IMMEDIATE ''create table Bak_objectfields as select * from objectfields'';
+EXECUTE IMMEDIATE ''create table Bak_querycolumns as select * from querycolumns'';
+EXECUTE IMMEDIATE ''create table Bak_ScreenFields as select * from ScreenFields'';
+EXECUTE IMMEDIATE ''create table Bak_AdvancedQueryFilters as select * from AdvancedQueryFilters'';
+EXECUTE IMMEDIATE ''create table Bak_RuleConditionFields as select * from RuleConditionFields'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectTableRuleFields as select * from ObjectTableRuleFields'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectTableRules as select * from ObjectTableRules'';
+EXECUTE IMMEDIATE ''create table Bak_screens as select * from screens'';
+EXECUTE IMMEDIATE ''create table Bak_Queries as select * from Queries'';
+EXECUTE IMMEDIATE ''create table Bak_MenuButtons as select * from MenuButtons'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectTableTabs as select * from ObjectTableTabs'';
+EXECUTE IMMEDIATE ''create table Bak_textcodes as select * from textcodes'';
+EXECUTE IMMEDIATE ''create table Bak_Features as select * from Features'';
+EXECUTE IMMEDIATE ''create table Bak_MenusTables as select * from MenusTables'';
+EXECUTE IMMEDIATE ''create table Bak_CustomsRequiredFields as select * from CustomsRequiredFields'';
+EXECUTE IMMEDIATE ''create table Bak_AirlineMessagingRules as select * from AirlineMessagingRules'';
+EXECUTE IMMEDIATE ''create table Bak_restrictions as select * from restrictions'';
+EXECUTE IMMEDIATE ''create table Bak_CustomerFieldsUpdateSettings as select * from CustomerFieldsUpdateSettings'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectFieldValidations as select * from ObjectFieldValidations'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectFieldModifications as select * from ObjectFieldModifications'';
+EXECUTE IMMEDIATE ''create table Bak_ScreenModifications as select * from ScreenModifications'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectTables as select * from ObjectTables'';
+EXECUTE IMMEDIATE ''create table Bak_SharedUserQueries as select * from SharedUserQueries'';
+EXECUTE IMMEDIATE ''create table Bak_Tips as select * from Tips'';
+EXECUTE IMMEDIATE ''create table Bak_Translations as select * from Translations'';
+EXECUTE IMMEDIATE ''create table Bak_PackageFeatures as select * from PackageFeatures'';
+EXECUTE IMMEDIATE ''create table Bak_RoleFeatures as select * from RoleFeatures'';
+EXECUTE IMMEDIATE ''create table Bak_Reports as select * from Reports'';
+EXECUTE IMMEDIATE ''create table Bak_ObjectTableHelperControls as select * from ObjectTableHelperControls'';';
+UPDATE "DBSCRIPTSHISTORY" SET "EXECUTIONDATE" = SYSDATE, "SCRIPTBODY" = ScriptBody, "ELAPSEDTIMEINMS" = EXTRACT(DAY FROM(EndTime - StartTime) * 24 * 60 * 60 * 1000), "HASHVALUE" = '45ab9dc5bd26c7fce2592d26e7b17fb8', "VERSION" = 2 WHERE "SXMLFILENAME" = '202005210107_TablesBackup.sxml';
+END;
+END;
+EXCEPTION
+WHEN OTHERS THEN
+ROLLBACK TO ScriptSavePoint;
+COMMIT;
+END;
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add New Column With Name CLASSIFIEDUSERIDALTER TABLE "DECLARATIONREFERANTDATAS" ADD "CLASSIFIEDUSERID" VARCHAR2(15 CHAR) NULL;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('89352d7c-3afa-4387-8a3b-3e9db735372f', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CLASSIFIEDUSERID', 'Add Column', SYSDATE, ScriptText); END;
+-- Drop Column DECLARATIONTYPECODE
+ALTER TABLE "DECLARATIONS" RENAME COLUMN "DECLARATIONTYPECODE" TO "DROP_DECLARATIONTYPECODE";
 
--- Add New Column With Name CONTROLLERUSERID
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD "CONTROLLERUSERID" VARCHAR2(15 CHAR) NULL;
-
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add New Column With Name CONTROLLERUSERIDALTER TABLE "DECLARATIONREFERANTDATAS" ADD "CONTROLLERUSERID" VARCHAR2(15 CHAR) NULL;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c3475e42-5af6-4313-a3a2-158eef192edd', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CONTROLLERUSERID', 'Add Column', SYSDATE, ScriptText); END;
-
--- Add New Column With Name COLLECTORUSERID
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD "COLLECTORUSERID" VARCHAR2(15 CHAR) NULL;
-
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add New Column With Name COLLECTORUSERIDALTER TABLE "DECLARATIONREFERANTDATAS" ADD "COLLECTORUSERID" VARCHAR2(15 CHAR) NULL;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('dff0a61c-1ea4-44a2-90cc-acbc130427a6', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'COLLECTORUSERID', 'Add Column', SYSDATE, ScriptText); END;
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Column DECLARATIONTYPECODEALTER TABLE "DECLARATIONS" RENAME COLUMN "DECLARATIONTYPECODE" TO "DROP_DECLARATIONTYPECODE";'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('4e516a8a-d321-48cb-b522-7b6de980d978', 'Declaration.dxml', 'DECLARATIONS', 'DECLARATIONTYPECODE', 'Drop Column', SYSDATE, ScriptText); END;
 
 
--- Add Foreign Key Constraint For Column CLASSIFIEDUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERS
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_QNVZB" FOREIGN KEY("CLASSIFIEDUSERID") REFERENCES "USERS"("ID");
+-- Drop Column VEHICLEIDTYPECODE
+ALTER TABLE "SUPPLIERINVOICEITEMVEHICLES" RENAME COLUMN "VEHICLEIDTYPECODE" TO "DROP_VEHICLEIDTYPECODE";
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column CLASSIFIEDUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERSALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_QNVZB" FOREIGN KEY("CLASSIFIEDUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('fccf1850-15e6-42d0-bc45-3bbfee73bd94', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CLASSIFIEDUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Column VEHICLEIDTYPECODEALTER TABLE "SUPPLIERINVOICEITEMVEHICLES" RENAME COLUMN "VEHICLEIDTYPECODE" TO "DROP_VEHICLEIDTYPECODE";'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('25799c04-985f-45d4-ab0b-6e5b7e53340d', 'SupplierInvoiceItemVehicle.dxml', 'SUPPLIERINVOICEITEMVEHICLES', 'VEHICLEIDTYPECODE', 'Drop Column', SYSDATE, ScriptText); END;
 
--- Create Index On DECLARATIONREFERANTDATAS Table
-CREATE INDEX "IX_DECLARATIONREFERANTDA_MRDBJ" ON "DECLARATIONREFERANTDATAS"("CLASSIFIEDUSERID");
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On DECLARATIONREFERANTDATAS TableCREATE INDEX "IX_DECLARATIONREFERANTDA_MRDBJ" ON "DECLARATIONREFERANTDATAS"("CLASSIFIEDUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('0b055329-01f8-4a88-9433-97afe403f776', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CLASSIFIEDUSERID', 'Create Index', SYSDATE, ScriptText); END;
+-- Drop Foreign Key Constraint For Column DECLARATIONTYPECODE In Table DECLARATIONS That Reference To Column CODE In Table LEADDOCUMENTTYPES
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_937603261'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "DECLARATIONS" DROP CONSTRAINT "FK_937603261"'; END IF; END;
 
--- Add Foreign Key Constraint For Column CONTROLLERUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERS
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_VC2NI" FOREIGN KEY("CONTROLLERUSERID") REFERENCES "USERS"("ID");
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column DECLARATIONTYPECODE In Table DECLARATIONS That Reference To Column CODE In Table LEADDOCUMENTTYPESDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_937603261''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "DECLARATIONS" DROP CONSTRAINT "FK_937603261"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('e5393cee-6351-4a7f-9e85-d245bf62b59f', 'Declaration.dxml', 'DECLARATIONS', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column CONTROLLERUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERSALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_VC2NI" FOREIGN KEY("CONTROLLERUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('d3d50d0d-88e1-4a06-b00a-078d9d1dc1eb', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CONTROLLERUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+-- Drop Index IX_N433128425 From Table DECLARATIONS
+DECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = 'IX_N433128425'; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE 'DROP INDEX "IX_N433128425"'; END IF; END;
 
--- Create Index On DECLARATIONREFERANTDATAS Table
-CREATE INDEX "IX_DECLARATIONREFERANTDA_JAWFA" ON "DECLARATIONREFERANTDATAS"("CONTROLLERUSERID");
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Index IX_N433128425 From Table DECLARATIONSDECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = ''IX_N433128425''; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE ''DROP INDEX "IX_N433128425"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('b4f39ee1-f381-4270-a034-b00e48e11079', 'Declaration.dxml', 'DECLARATIONS', NULL, 'Drop Index', SYSDATE, ScriptText); END;
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On DECLARATIONREFERANTDATAS TableCREATE INDEX "IX_DECLARATIONREFERANTDA_JAWFA" ON "DECLARATIONREFERANTDATAS"("CONTROLLERUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('f9faef9b-8dd3-4ec6-8e5d-3d3b6b2644d2', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'CONTROLLERUSERID', 'Create Index', SYSDATE, ScriptText); END;
 
--- Add Foreign Key Constraint For Column COLLECTORUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERS
-ALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_ZB6FK" FOREIGN KEY("COLLECTORUSERID") REFERENCES "USERS"("ID");
+-- Drop Foreign Key Constraint For Column VEHICLEIDTYPECODE In Table SUPPLIERINVOICEITEMVEHICLES That Reference To Column CODE In Table CARGOIDENTITYQUALIFIERS
+DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = 'FK_N640192686'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE "SUPPLIERINVOICEITEMVEHICLES" DROP CONSTRAINT "FK_N640192686"'; END IF; END;
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Add Foreign Key Constraint For Column COLLECTORUSERID In Table DECLARATIONREFERANTDATAS As Reference To Column ID In Table USERSALTER TABLE "DECLARATIONREFERANTDATAS" ADD CONSTRAINT "FK_DECLARATIONREFERANTDA_ZB6FK" FOREIGN KEY("COLLECTORUSERID") REFERENCES "USERS"("ID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('55be2ea6-4c59-4156-83b2-4cb23f59eb42', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'COLLECTORUSERID', 'Create Relation', SYSDATE, ScriptText); END;
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Foreign Key Constraint For Column VEHICLEIDTYPECODE In Table SUPPLIERINVOICEITEMVEHICLES That Reference To Column CODE In Table CARGOIDENTITYQUALIFIERSDECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = ''FK_N640192686''; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE ''ALTER TABLE "SUPPLIERINVOICEITEMVEHICLES" DROP CONSTRAINT "FK_N640192686"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('0ae928a6-f6dc-4c25-8574-37ed4197f8bf', 'SupplierInvoiceItemVehicle.dxml', 'SUPPLIERINVOICEITEMVEHICLES', NULL, 'Drop Relation', SYSDATE, ScriptText); END;
 
--- Create Index On DECLARATIONREFERANTDATAS Table
-CREATE INDEX "IX_DECLARATIONREFERANTDA_LG3T0" ON "DECLARATIONREFERANTDATAS"("COLLECTORUSERID");
+-- Drop Index IX_N941339729 From Table SUPPLIERINVOICEITEMVEHICLES
+DECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = 'IX_N941339729'; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE 'DROP INDEX "IX_N941339729"'; END IF; END;
 
-DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Create Index On DECLARATIONREFERANTDATAS TableCREATE INDEX "IX_DECLARATIONREFERANTDA_LG3T0" ON "DECLARATIONREFERANTDATAS"("COLLECTORUSERID");'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('7111059a-bf9f-45bb-9d78-497cd865fecb', 'DeclarationReferantData.dxml', 'DECLARATIONREFERANTDATAS', 'COLLECTORUSERID', 'Create Index', SYSDATE, ScriptText); END;
+DECLARE ScriptText NCLOB; BEGIN ScriptText := '-- Drop Index IX_N941339729 From Table SUPPLIERINVOICEITEMVEHICLESDECLARE IndexCount NUMBER; BEGIN SELECT COUNT(*) INTO IndexCount FROM USER_INDEXES WHERE INDEX_NAME = ''IX_N941339729''; IF (IndexCount <> 0) THEN EXECUTE IMMEDIATE ''DROP INDEX "IX_N941339729"''; END IF; END;'; INSERT INTO "DBMIGRATIONSHISTORY"("ID", "DXMLFILENAME", "TABLENAME", "COLUMNNAME", "MIGRATIONTYPE", "EXECUTIONDATE", "MIGRATIONSCRIPT")VALUES('c84a0997-28cf-4060-a9b5-8a60fdcf0cac', 'SupplierInvoiceItemVehicle.dxml', 'SUPPLIERINVOICEITEMVEHICLES', NULL, 'Drop Index', SYSDATE, ScriptText); END;
 
 

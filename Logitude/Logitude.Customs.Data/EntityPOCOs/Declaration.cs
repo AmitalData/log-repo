@@ -369,11 +369,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AgentRoleCode { get; set; }
         [Column("ExportFile")]
 	    public string ExportFile { get; set; }
-        [ForeignKey("LeadDocumentType")]
-        [Column("DeclarationTypeCode")]
-	    public string DeclarationTypeCode { get; set; }
-	      
-        public virtual LeadDocumentType LeadDocumentType { get; set; }
         [ForeignKey("CustomsCountry")]
         [Column("DestinationCountryCode")]
 	    public string DestinationCountryCode { get; set; }

@@ -38,12 +38,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [ForeignKey("NbcDeclarationType")]
-        [Column("StatementType")]
-	    public string StatementType { get; set; }
+        [Column("StatementTypeCode")]
+	    public string StatementTypeCode { get; set; }
 	      
         public virtual NbcDeclarationType NbcDeclarationType { get; set; }
-        [Column("StatementInd")]
-	    public string StatementInd { get; set; }
+        [Column("IsStatementInd")]
+	    public bool IsStatementInd { get; set; }
     }
 }
 	 
