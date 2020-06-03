@@ -25,7 +25,7 @@ namespace CommunicationWorkerRole.Tasks
             #region Communications
             int numberOfExecuteRows = 3000;
             int numberOfRecords = 0;
-            while (numberOfExecuteRows == 3000 && numberOfRecords < 500000)
+            while (numberOfExecuteRows == 3000 && numberOfRecords < 1500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
