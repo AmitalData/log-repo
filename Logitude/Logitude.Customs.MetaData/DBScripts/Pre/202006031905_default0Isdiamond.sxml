@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="5">
+    <![CDATA[
+update  DECLARATIONS set  isdiamonddeclaration  =0 where isdiamonddeclaration is null;
+update  DECLARATIONS set  ISMISSMANDATORYDIAMOND =0 where ISMISSMANDATORYDIAMOND is null;
+update  "DECLARATIONPAYMENTS" set  AUTOMATICPAYMENT   =0 where AUTOMATICPAYMENT is null;
+    ]]>
+  </Oracle>
+</Script>
