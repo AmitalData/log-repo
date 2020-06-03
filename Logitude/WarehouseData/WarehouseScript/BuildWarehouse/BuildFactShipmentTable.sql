@@ -208,6 +208,10 @@
  declare @GrossWeightPerTon as decimal
  declare @NextETA as datetime
  declare @NextETD as datetime
+ declare @Commodity as nvarchar(15)
+ declare @TrailerNumber as varchar(15)
+ declare @FromLocation as varchar(100)
+ declare @ToLocation as varchar(100)
 
 
 
@@ -230,7 +234,8 @@
 	dw_ShipmentComputedFields.FirstPickupATD, dw_ShipmentComputedFields.FirstPickupATA,dw_ShipmentComputedFields.FinalDeliveryETD, dw_ShipmentComputedFields.FinalDeliveryETA,dw_ShipmentComputedFields.FinalDeliveryATD,dw_ShipmentComputedFields.FinalDeliveryATA, dw_ShipmentMasterDatas.Transshipment1ETA , dw_ShipmentMasterDatas.Transshipment1ETD , dw_ShipmentMasterDatas.Transshipment1ATA ,  dw_ShipmentMasterDatas.Transshipment1ATD ,Transshipment1Vessel.Id_Number,Transshipment1Carrier.Id_Number,dw_ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, dw_ShipmentComputedFields.FirstPickupLocation, dw_ShipmentComputedFields.ContainersNumbers , dw_Shipments.Ratio , dw_Shipments.VolumetricWeight
 	,dw_Shipments.OrderGrossWeight,dw_Shipments.BookingVolume,dw_Shipments.BookingNumberOfPackages,dw_Shipments.OrderChargeableWeight,dw_Shipments.EstimateProfitInProfitCurrency,dw_Shipments.EstimateProfitInLocalCurrency , dw_Shipments.GrossWeightUnitCode,dw_Shipments.VolumeUnitCode,
 	ConsigneeNotImporter.Id_Number, IssuingCarrierAgent.Id_Number, OnCarriageTransportModes.Name ,dw_Shipments.FirstARInvoiceApprovalDate , dw_ShipmentMasterDatas.BookingConfirmationNotes , dw_ShipmentMasterDatas.BookingConfirmedBy,dw_ShipmentComputedFields.NumberOfDeliveries,OperationallyClosedByUser.Id_Number,dw_ShipmentComputedFields.LastPickupATA,dw_ShipmentComputedFields.LastPickupATD,dw_ShipmentComputedFields.LastPickupETA,dw_ShipmentComputedFields.LastPickupETD,DeliveryToPort.Id_Number,dw_ShipmentComputedFields.DeliveryFrom,dw_ShipmentComputedFields.DeliveryTo,dw_ShipmentComputedFields.PickupFrom,dw_ShipmentComputedFields.PickupTo,dw_Shipments.FreightRelease,
-    dw_Shipments.ShipmentPayableStatusCode, dw_Shipments.ShipmentReceivableStatusCode, dw_Shipments.CarrierLastStatusCode, dw_Shipments.CarrierLastStatusDate, dw_Shipments.AWBPrint, dw_Shipments.ExceptionDescription, dw_Shipments.HasException, dw_Shipments.ExceptionResolvedDescription, dw_Shipments.LastExceptionDescription, dw_Shipments.RegistryDate, dw_Shipments.GrossWeightPerTon, dw_Shipments.NextETA, dw_Shipments.NextETD
+    dw_Shipments.ShipmentPayableStatusCode, dw_Shipments.ShipmentReceivableStatusCode, dw_Shipments.CarrierLastStatusCode, dw_Shipments.CarrierLastStatusDate, dw_Shipments.AWBPrint, dw_Shipments.ExceptionDescription, dw_Shipments.HasException, dw_Shipments.ExceptionResolvedDescription, dw_Shipments.LastExceptionDescription, dw_Shipments.RegistryDate, dw_Shipments.GrossWeightPerTon, dw_Shipments.NextETA, dw_Shipments.NextETD,
+    dw_ShipmentComputedFields.Commodity, dw_ShipmentMasterDatas.TrailerNumber, dw_ShipmentMasterDatas.MainCarriageFromAddressId, dw_ShipmentMasterDatas.MainCarriageToAddressId
 	
     From dw_Shipments
 	inner JOIN NewDIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
@@ -310,7 +315,8 @@
     @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@Ratio,@VolumetricWeight,
 	@OrderGrossWeight,@BookingVolume,@BookingNumberOfPackages,@OrderChargeableWeight,@EstimateProfitInProfitCurrency,@EstimateProfitInLocalCurrency,  @GrossWeightUnitCode,@VolumeUnitCode,
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
-    @ShipmentPayableStatusCode, @ShipmentReceivableStatusCode, @CarrierLastStatusCode, @CarrierLastStatusDate, @AWBPrint, @ExceptionDescription, @HasException, @ExceptionResolvedDescription, @LastExceptionDescription, @RegistryDate, @GrossWeightPerTon, @NextETA, @NextETD
+    @ShipmentPayableStatusCode, @ShipmentReceivableStatusCode, @CarrierLastStatusCode, @CarrierLastStatusDate, @AWBPrint, @ExceptionDescription, @HasException, @ExceptionResolvedDescription, @LastExceptionDescription, @RegistryDate, @GrossWeightPerTon, @NextETA, @NextETD,
+    @Commodity, @TrailerNumber, @FromLocation, @ToLocation
 
 
 
@@ -430,6 +436,7 @@
 	  ,[Consignee Not Importer],[Issuing Carrier Agent],[On Carriage Transport Mode],[First AR Invoice Approval Date],[Order Confirmation Notes],[Order Confirmed By]
 	  ,[Number of Deliveries] , [Operational Closed By],[Last Pickup ATA],[Last Pickup ETA],[Delivery To Port],[Last Pickup ETD],[Last Pickup ATD],[Delivery From],[Delivery To],[Pickup From],[Pickup To],[Freight Release]
       ,[Shipment Payable Status],[Shipment Receivable Status],[Carrier Last Status],[Carrier Last Status Date],[AWB Print],[Exception Description],[Has Exception],[Exception Resolved Description],[Last Exception Description],[Registry Date],[Gross Weight Per Ton],[Next ETA],[Next ETD]
+      ,[Commodity], [Trailer Number], [From Location], [To Location]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@StatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -437,7 +444,8 @@
 
 	  @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,
 	   @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
-       @ShipmentPayableStatusCode,@ShipmentReceivableStatusCode,@CarrierLastStatusCode,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,dbo.GetDateFormateAsNumber(@RegistryDate),@GrossWeightPerTon,@NextETA,@NextETD)
+       @ShipmentPayableStatusCode,@ShipmentReceivableStatusCode,@CarrierLastStatusCode,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,dbo.GetDateFormateAsNumber(@RegistryDate),@GrossWeightPerTon,@NextETA,@NextETD,
+       @Commodity, @TrailerNumber, @FromLocation, @ToLocation)
 	END TRY 
 BEGIN CATCH  
 
@@ -465,7 +473,8 @@ END CATCH
     @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers ,@Ratio,@VolumetricWeight,
     @OrderGrossWeight,@BookingVolume,@BookingNumberOfPackages,@OrderChargeableWeight,@EstimateProfitInProfitCurrency,@EstimateProfitInLocalCurrency ,   @GrossWeightUnitCode,@VolumeUnitCode,
     @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy, @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupATD,@LastPickupETA,@LastPickupETD,@DeliveryToPort,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
-    @ShipmentPayableStatusCode,@ShipmentReceivableStatusCode,@CarrierLastStatusCode,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,@RegistryDate,@GrossWeightPerTon,@NextETA,@NextETD
+    @ShipmentPayableStatusCode,@ShipmentReceivableStatusCode,@CarrierLastStatusCode,@CarrierLastStatusDate,@AWBPrint,@ExceptionDescription,@HasException,@ExceptionResolvedDescription,@LastExceptionDescription,@RegistryDate,@GrossWeightPerTon,@NextETA,@NextETD,
+    @Commodity, @TrailerNumber, @FromLocation, @ToLocation
 	
 		End
 	CLOSE ShipmentsCursor
