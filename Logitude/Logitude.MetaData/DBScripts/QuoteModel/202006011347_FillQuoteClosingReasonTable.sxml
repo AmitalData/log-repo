@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       declare @Tenant as int
@@ -20,7 +20,8 @@
           set @TenantString = CONVERT(varchar(50), @Tenant)
           set @UserEmail = 'system@tenant'+ @TenantString + '.com'
 		      set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant) 
-
+          set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
+          
           if (@UserId is not null)
           begin 
           
