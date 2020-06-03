@@ -18,22 +18,44 @@ export class NewBIReportFolderComponent extends BaseComponent {
     public DataContext: NewBIReportFolderComponent = this;
     public ObjectTableName: string = "BIReportFolder";
     public IsNewQuery = true;
+    public IsReady:boolean = false;
+    private IsNew: boolean = true;
+    private FolderId: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        super();
-        this.EntityPM = new BIReportFolderPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();;
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.UpdateDate = DateTool.GetCurrentDateAsUtc();;
-        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        
+        super();        
         this.myService = new BIReportFolderPMService();
         this.SetUIProperties();
     }
 
-    SetWindowArgs() {        
-        this.SetUIProperties();
+    SetWindowArgs(args: any) {
+        this.IsNew = args.IsNew;
+        this.FolderId = args.FolderId;
+        this.SetEntityPM();
+    }
+
+    SetEntityPM() {
+        if (this.IsNew) {
+            this.EntityPM = new BIReportFolderPM();
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+            this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+            this.IsReady = true;
+        }
+        else {
+            this.CurrentSession.StartBusyIndicator("Loading...");
+            this.myService.get(this.FolderId).subscribe((myResponse: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+                else {
+                    this.EntityPM = myResponse.Result;
+                    this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                    this.IsReady = true;
+                }
+            });
+        }
     }
 
     SetUIProperties() {
@@ -70,15 +92,31 @@ export class NewBIReportFolderComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
-            this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
-                if (myResponse.HasError) {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-                else {
-                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
-                }
-            });
+            if (this.IsNew) {
+                this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
+                this.EntityPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (myResponse.HasError) {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
+                    else {
+                        this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    }
+                });
+            }
+            else {
+                this.EntityPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (myResponse.HasError) {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
+                    else {
+                        this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Name);
+                    }
+                });
+            }
         }
     }
 }

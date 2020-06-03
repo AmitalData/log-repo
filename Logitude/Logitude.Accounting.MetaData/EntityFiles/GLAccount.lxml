@@ -8578,6 +8578,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;MinimumInterestInvoiceBilling&quot;"
     ListPropertyPath="&quot;MinimumInterestInvoiceBilling&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -12598,8 +12599,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLTransactionReport.O.RequiredFields&quot;"
-      DefaultText="&quot;One of the fields  “glaccount” or “Chart of account” must be filled&quot;"
-      LocalDefaultText="&quot;חובה לתחום כרטיס או קבוצת מאזן&quot;"
+      DefaultText="&quot;One of the following filters is required: GLAccount, Chartofaccount or Category&quot;"
+      LocalDefaultText="&quot;חובה לתחום אחת מהאפשרויות הבאות : כרטיס \קבוצת מאזן \ סוג קבוצת מאזן \ קטגוריה &quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode

@@ -235,6 +235,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public DateTime? LastUsageDate { get; set; }
 
         public string QuoteClosingReasonCode { get; set; }
+        public string QuoteClosingReasonId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string StageId { get; set; }

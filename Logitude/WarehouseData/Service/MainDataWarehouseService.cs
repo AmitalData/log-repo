@@ -58,6 +58,7 @@ namespace WarehouseData.Helper
             if (table.TableName != "WaterMark")
             {
                 dWDataWarehouseService.CreateIndex(table, "AutomaticLastUpdateDate", destinationConnectionString);
+                if (!string.IsNullOrEmpty(table.AdditionalIndexes)) dWDataWarehouseService.CreateAdditionalIndexes(table, destinationConnectionString);
                 if (table.HasConstraint) dWDataWarehouseService.AddConstraint(table, destinationConnectionString);
                 if (table.HasNotSpecifiedValue) dWDataWarehouseService.InSertNotSpecifiedValueToDW(table, destinationConnectionString);
             }
@@ -235,11 +236,13 @@ namespace WarehouseData.Helper
                 {
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
-                    string destinationConnectionString = BuildConnectionString(catalog, destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+                    string userName = row["UserName"].ToString();
+                    string password = row["Password"].ToString();
+                    string server = row["Server"].ToString();
+
+                    string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
                     List<int> relatedTenants = privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
-
                     if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
-
                     string tenants = privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
                     if (type == "Build") BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);

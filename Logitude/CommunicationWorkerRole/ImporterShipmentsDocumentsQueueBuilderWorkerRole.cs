@@ -194,7 +194,7 @@ namespace CommunicationWorkerRole
                                             if (DocumentFilingPM.IsSharedWithCustomer)
                                             {
                                                 queueservice.InitializeQueue("ImportersShipmentDocumentsBatchQueue", 0);
-                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ShipmentId }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", CustomerId }, { "BatchNumber", BatchNumber } }, null, CustomerId, BatchNumber);
+                                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", ShipmentId }, { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", CustomerId }, { "BatchNumber", BatchNumber } }, tenant, null, CustomerId, BatchNumber);
 
                                             }
 

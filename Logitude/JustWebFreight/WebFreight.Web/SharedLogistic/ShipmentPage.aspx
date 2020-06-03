@@ -31,17 +31,17 @@
     
 <style type="text/css">
     img[src] {
-    visibility: visible;
-}
+        visibility: visible;
+    }
 
-img {
-    border: 0px;
-    outline: none;
-    visibility: hidden;
-    vertical-align: middle;
-}
-    #EntityHeaderArea
-    {
+    img {
+        border: 0px;
+        outline: none;
+        visibility: hidden;
+        vertical-align: middle;
+    }
+
+    #EntityHeaderArea {
         height: 60px;
         margin: 0 5px;
         background: #F7F7F7;
@@ -49,8 +49,7 @@ img {
         padding-top: 3px;
     }
 
-    .RoutingListBoxItem
-    {
+    .RoutingListBoxItem {
         float: left;
         width: 99%;
         height: 100px;
@@ -62,8 +61,7 @@ img {
         background: url('../HtmlHelpers/Images/Bars_Images/RoutingItemBody.png') repeat-x;
     }
 
-    .PartnerListBoxItem
-    {
+    .PartnerListBoxItem {
         float: left;
         width: 49%;
         margin: 0 2px 5px 2px;
@@ -75,13 +73,12 @@ img {
         border: 1px solid #D1D1D1;
     }
 
-    .DocumentListBoxItem
-    {
+    .DocumentListBoxItem {
         width: 100%;
         height: 30px;
         margin: 0px 0 5px 0;
         border: 1px solid #D1D1D1;
-        background:#F7F7F7;
+        background: #F7F7F7;
         text-indent: 5px;
         display: table;
         border-radius: 5px;
@@ -89,13 +86,12 @@ img {
         -moz-border-radius: 5px;
     }
 
-    .EventListBoxItem
-    {
+    .EventListBoxItem {
         width: 100%;
         height: 80px;
         margin: 0px 0 5px 0;
         border: 1px solid #D1D1D1;
-        background:#F7F7F7;
+        background: #F7F7F7;
         text-indent: 5px;
         /*display: table;*/
         border-radius: 1px;
@@ -209,8 +205,8 @@ img {
 
                                 <td style="vertical-align:central;">
                                     <div class="ShowOnDataControl" style="display:none; background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
-                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC}" />
-                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC}" />
+                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC }" />
+                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC }" />
                                         <span style="font-size:15px; display:inline; color:#1B90CB;" data-bind="text: ShipmentNumber"> </span>
                                     </div>
                                 </td>
@@ -1006,14 +1002,14 @@ img {
         }
 
         function GetURL() {
-            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType ;
+            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
         }
     </script>
    
     <script type="text/javascript" src="ShipmentPageViewModel.js"></script>
     
     <script type="text/javascript">
-        $(document).ready(function () {              
+        $(document).ready(function () {
             var myLogoMethodUrl = "../api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
             $.ajax({
                 url: myLogoMethodUrl,
@@ -1021,7 +1017,7 @@ img {
                 contentType: 'application/json',
 
                 success: function (myLogoCode) {
-                    
+
                     switch (myLogoCode) {
                         case "U.N.I": {
                             $(".Footer_UNI").show();
@@ -1032,51 +1028,44 @@ img {
                             $(".Footer_LOG").show();
                             break;
                         }
-                    }                                     
+                    }
                 },
             });
         });
     </script>
 
     <style>
-               
-        .headerDiv
-        {
-            height:25px;
+        .headerDiv {
+            height: 25px;
             background: url("../HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
-             border-radius:  5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
             -webkit-border-radius: 5px 5px 0 0;
-            -moz-border-radius:  5px 5px 0 0;  
-            display:table;
+            -moz-border-radius: 5px 5px 0 0;
+            display: table;
             text-indent: 5px;
-            width:100%;           
+            width: 100%;
         }
-        
-        .content
-        {
-            display:table-cell;
-            vertical-align: middle;             
+
+        .content {
+            display: table-cell;
+            vertical-align: middle;
         }
-        
-        .headerDiv .headerTitle
-        {
+
+        .headerDiv .headerTitle {
             font-size: 13px;
             color: #1B90CB;
         }
-        
-        .headerDiv .headerValue
-        {
+
+        .headerDiv .headerValue {
             font-size: 13px;
-            color: #282E30;            
+            color: #282E30;
         }
-                
-        .bodyDiv
-        {
+
+        .bodyDiv {
             padding: 5px;
             font-size: 10px;
             color: #6E7172;
         }
-        
     </style>
 
 </body>

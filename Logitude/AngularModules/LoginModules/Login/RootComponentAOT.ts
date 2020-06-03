@@ -19,7 +19,10 @@ declare var IsMobileDetected;
 })
 
 export class RootComponentAOT implements OnInit {
+
     @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
+
+
     isDSV: boolean = true;
     ResetPWD: string;
     constructor(compiler: Compiler, private resolver: ComponentFactoryResolver, private http: Http) {

@@ -677,8 +677,18 @@ namespace Logitude.DBMigrations.Models
         {
             if (IsColumnRenamed(currentTableColumn, dxmlTableColumn))
             {
-                ColumnMigration renameMigration = GetColumnMigration(MigrationTypes.RENAME, currentTableColumn, dxmlTableColumn);
-                ColumnsMigrations.Add(renameMigration);
+                if (CurrentTable.Columns.Where(c => c.Name.ToLower() == currentTableColumn.Name.ToLower()).Any() && CurrentTable.Columns.Where(c => c.Name.ToLower() == "drop_" + dxmlTableColumn.Name.ToLower()).Any())
+                {
+                    BuildDropColumnMigration(currentTableColumn, null);
+                    ColumnDefinition currentTableColumnToRename = CurrentTable.Columns.Where(c => c.Name.ToLower() == "drop_" + dxmlTableColumn.Name.ToLower()).First();
+                    ColumnMigration renameMigration = GetColumnMigration(MigrationTypes.RENAME, currentTableColumnToRename, dxmlTableColumn);
+                    ColumnsMigrations.Add(renameMigration);
+                }
+                else
+                {
+                    ColumnMigration renameMigration = GetColumnMigration(MigrationTypes.RENAME, currentTableColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(renameMigration);
+                }
             }
         }
 
@@ -1007,7 +1017,7 @@ namespace Logitude.DBMigrations.Models
         protected void ExitDatabaseMigrations(string message)
         {
             Console.WriteLine("Error: " + message);
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
 
 

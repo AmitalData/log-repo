@@ -37,7 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
-        public CustomAgentService(ICommonDataContext objectContext, int tenant)
+        public CustomAgentService(ICommonDataContext objectContext, int tenant, Contact loggedContact = null)
         {
             
             this.tenant = tenant;
@@ -48,7 +48,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.GetLoggedContact();
+            if (loggedContact != null)
+            {
+                this.loggedContact = loggedContact;
+            }
+            else
+            {
+                this.GetLoggedContact();
+            }
         }
 
         private void GetLoggedContact()

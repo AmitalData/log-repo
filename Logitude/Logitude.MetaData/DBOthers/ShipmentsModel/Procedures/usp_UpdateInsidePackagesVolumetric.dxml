@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_UpdateInsidePackagesVolumetric"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+Create PROCEDURE dbo.usp_UpdateInsidePackagesVolumetric 
+AS
+
+	-- Inside Package Fields
+	DECLARE @CurrentTenant AS INT
+	DECLARE @CurrentPackageId AS varchar(15)
+	DECLARE @CurrentInsidePackageId AS varchar(15)
+	DECLARE @CurrentShipmentId AS varchar(15)
+
+	--Shipment Fields
+	DECLARE @Ratio as float
+	DECLARE @VolumeUnitCode as varchar(3)
+	DECLARE @GrossWeigthUnitCode as varchar(3)
+	DECLARE @ChargeableWeightUnitCode as varchar(3)
+	DECLARE @TransportModeId as varchar(1)
+	DECLARE @ShipmentTypeId as varchar(4)
+
+	DECLARE PackagesCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id,Tenant,ShipmentPackageId
+	FROM InsideShipmentPackages 
+	OPEN PackagesCursor FETCH NEXT FROM PackagesCursor INTO @CurrentInsidePackageId,@CurrentTenant,@CurrentPackageId
+	WHILE @@FETCH_STATUS = 0 
+	BEGIN
+
+		set @CurrentShipmentId = (select ShipmentId from ShipmentPackages where Id = @CurrentPackageId AND Tenant = @CurrentTenant)
+
+		set @Ratio = (select Ratio from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)
+		set @VolumeUnitCode = (select VolumeUnitCode from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)
+		set @GrossWeigthUnitCode = (select GrossWeightUnitCode from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)
+		set @ChargeableWeightUnitCode = (select ChargeableWeightUnitCode from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)
+
+		if (@Ratio is NULL)
+		begin
+			set @TransportModeId = (select TransportModeId from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)			
+			if (@TransportModeId = 'A') set @Ratio = 6
+			else if (@TransportModeId = 'O') set @Ratio = 1
+			else if (@TransportModeId = 'I')
+			begin
+				set @ShipmentTypeId = (select ShipmentTypeId from Shipments where Tenant = @CurrentTenant AND Id = @CurrentShipmentId)
+				if (@ShipmentTypeId = 'LTL') set @Ratio = 3.3
+				else set @Ratio = 1
+			end
+
+			Update Shipments set Ratio = @Ratio where Id = @CurrentShipmentId AND Tenant = @CurrentTenant
+
+		end
+
+			DECLARE @Width as FLoat
+			DECLARE @Height as FLoat
+			DECLARE @Length as FLoat
+			DECLARE @Volume as FLoat
+			DECLARE @Weight as FLoat
+
+			DECLARE @VolumeCBM as FLoat
+			DECLARE @VolumeKG as FLoat
+			DECLARE @Volumetric as FLoat
+
+			set @Width = (SELECT Width from InsideShipmentPackages where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant)
+			set @Height = (SELECT Height from InsideShipmentPackages where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant)
+			set @Length = (SELECT Length from InsideShipmentPackages where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant)
+			set @Volume = (SELECT Volume from InsideShipmentPackages where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant)
+			set @Weight = (SELECT Weight from InsideShipmentPackages where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant)
+
+			-- Compute VolumeKG
+			if (@Width is NULL OR @Height is NULL OR @Length is NULL)
+			begin
+					if (@Volume is NULL)
+					begin
+							if (@GrossWeigthUnitCode = 'KG')
+							begin
+							set @VolumeKG = Round(@Weight,3)
+							end
+
+							else if (@GrossWeigthUnitCode = 'LB')
+							begin
+							set @VolumeKG = Round(@Weight / 2.20458,3)
+							end
+
+							else if (@GrossWeigthUnitCode = 'MT')
+							begin
+							set @VolumeKG = Round(@Weight * 1000,3)
+							end
+					end
+
+					else
+					begin
+							if (@VolumeUnitCode = 'CBM')
+							begin
+							set @VolumeCBM = Round(@Volume,3)
+							end
+
+							else if (@VolumeUnitCode = 'CBF')
+							begin
+							set @VolumeCBM = Round(@Volume / 35.31466,3)
+							end
+
+							else if (@VolumeUnitCode = 'CBI')
+							begin
+							set @VolumeCBM = Round(@Volume / 61023.74409,3)
+							end
+
+							set @VolumeKG = Round(@VolumeCBM * 1000 / @Ratio,3)
+					end			
+			end
+
+			else
+			begin
+							if (@VolumeUnitCode = 'CBM')
+							begin
+							set @VolumeCBM = Round(@Volume,3)
+							end
+
+							else if (@VolumeUnitCode = 'CBF')
+							begin
+							set @VolumeCBM = Round(@Volume / 35.31466,3)
+							end
+
+							else if (@VolumeUnitCode = 'CBI')
+							begin
+							set @VolumeCBM = Round(@Volume / 61023.74409,3)
+							end
+
+							set @VolumeKG = Round(@VolumeCBM * 1000 / @Ratio,3)
+			end
+
+			-- Compute Volumetric
+			if (@ChargeableWeightUnitCode = 'KG')
+			begin
+			set @Volumetric = Round(@VolumeKG,3)
+			end
+
+			else if (@ChargeableWeightUnitCode = 'LB')
+			begin
+			set @Volumetric = Round(@VolumeKG * 2.20458,3)
+			end
+
+			else if (@ChargeableWeightUnitCode = 'MT')
+			begin
+			set @Volumetric = Round(@VolumeKG / 1000,3)
+			end
+
+
+			--print '[PackageId:' + @CurrentPackageId + '] [Volume Unit:' + @VolumeUnitCode + '] [Gross Unit:' + @GrossWeigthUnitCode + '] [Chargeable Unit:' + @ChargeableWeightUnitCode + '] [Ratio:' + Convert(varchar,ISNULL(@Ratio,-1)) + '] [Volume:' + Convert(varchar,ISNULL(@Volume,-1)) + '] [VolumeKG:' + Convert(varchar,ISNULL(@VolumeKG,-1)) + '] [Volumetric:' + Convert(varchar,ISNULL(@Volumetric,-1))
+
+			Update InsideShipmentPackages set VolumetricWeight = @Volumetric where Id = @CurrentInsidePackageId AND Tenant = @CurrentTenant
+
+
+	FETCH NEXT FROM PackagesCursor INTO @CurrentInsidePackageId,@CurrentTenant,@CurrentPackageId
+	END
+	CLOSE PackagesCursor
+	DEALLOCATE PackagesCursor
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

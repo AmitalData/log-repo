@@ -8539,6 +8539,12 @@
       LocalDefaultText="&quot;Additional Fields&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.O.NoVendorCountry&quot;"
+      DefaultText="&quot;the Country of the vendor is not defined , The APPayment cannot be completed without this value&quot;"
+      LocalDefaultText="&quot; “לא הוגדר מדינה בכרטיס הספק התפעולי , לא ניתן להשלים את הוראת התשלום ללא ערך זה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

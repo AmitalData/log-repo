@@ -84,6 +84,9 @@ export class BIFolderReportComponent {
     NewFolderButtonClicked() {
         var logWindow = new LogitudeWindow();        
         logWindow.Title = "New Folder";
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReportFolderComponent');
         logWindow.WindowClosed.subscribe(d => {
             if (d) {

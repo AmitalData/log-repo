@@ -82,7 +82,11 @@ export class TotangoService {
 
                 }, (error) => {
                     console.error(error);
-                }));
+                })).subscribe((response2) => {
+
+                }, (error) => {
+                    console.error(error);
+                });
             }
         }
         catch (e) {

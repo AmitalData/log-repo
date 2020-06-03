@@ -113,7 +113,7 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width:20px;float:left;">
+                                            <td style="width:20px;float:left;" *ngIf="HasRunFeature">
                                                 <IconButton [Name]="'Edit'" [Title]="'Edit report'" [disabled]="IsNewEntity" (click)="EditBIReportClicked()"></IconButton>
                                             </td>
 
@@ -129,8 +129,14 @@
                                 <td></td>
                             </tr>
 
+                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                                <td>
+                                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                                </td>
+                            </tr>
+
                             <!-- Filters -->
-                            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
+                            <tr *ngIf="SelectedFiltersDataSource && HasRunFeature" style="height: 1px;">
                                 <td>
                                     <table class="BodyBackground">
                                         <tr>
@@ -146,14 +152,14 @@
                                                                 </td>
                                                             </tr>
                                                             <!--<tr>
-                                                                <td>
-                                                                    <div style="float:right;width:150px;margin-right: -12px;">
-                                                                        <LogCheckBox [ObjectFieldName]="'ShowStaticFilters'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                                        <label style="margin-right:-10px;">Show Fixed Filters</label>
-                                                                        
-                                                                    </div>
-                                                                </td>
-                                                            </tr>-->
+                                        <td>
+                                            <div style="float:right;width:150px;margin-right: -12px;">
+                                                <LogCheckBox [ObjectFieldName]="'ShowStaticFilters'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                <label style="margin-right:-10px;">Show Fixed Filters</label>
+
+                                            </div>
+                                        </td>
+                                    </tr>-->
                                                         </table>
                                                     </div>
                                                 </div>
@@ -165,7 +171,7 @@
                             </tr>
 
 
-                            <tr style="height: 1px;">
+                            <tr style="height: 1px;" *ngIf="HasRunFeature">
                                 <td style="display:block;border-bottom:1px solid gray;height:30px;background-color:#D1D6D8">
                                     <table>
                                         <tr style="height: 2px;">
@@ -272,7 +278,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr *ngIf="HasRunFeature">
                                 <td>
                                     <!--    [multiSortKey]="'ctrl'" [columnTypes]="columnTypes" [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
                                     <div class="MediaFill">
@@ -296,6 +302,10 @@
                                 </td>
                             </tr>
 
+                            <tr *ngIf="!HasRunFeature">
+                                <td></td>
+                            </tr>
+
                             <tr style="height: 20px;">
                                 <td>
                                     <div> </div>
@@ -306,7 +316,7 @@
                 </td>
             </tr>
         </table>
-    </div>    
+    </div>
 </div>
 
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

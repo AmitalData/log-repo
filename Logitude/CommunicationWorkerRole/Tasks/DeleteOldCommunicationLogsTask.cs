@@ -23,9 +23,9 @@ namespace CommunicationWorkerRole.Tasks
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
             #region Communications
-            int numberOfExecuteRows = 1000;
+            int numberOfExecuteRows = 3000;
             int numberOfRecords = 0;
-            while (numberOfExecuteRows == 1000 && numberOfRecords < 500000)
+            while (numberOfExecuteRows == 3000 && numberOfRecords < 1500000)
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {

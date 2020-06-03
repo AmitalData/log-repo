@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="Trigger_AutomaticLastUpdateDateDWHSettings"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript><![CDATA[
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateDWHSettings ON DWHSettings AFTER UPDATE  AS  BEGIN UPDATE DWHSettings SET AutomaticLastUpdateDate = GETDATE() WHERE Tenant IN (SELECT DISTINCT Tenant FROM Inserted)END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

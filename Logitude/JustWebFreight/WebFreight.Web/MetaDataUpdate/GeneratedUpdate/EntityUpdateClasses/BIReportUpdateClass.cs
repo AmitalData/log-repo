@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BIReportUpdateClass
    {  		
-		public const string HashString = "1ab3ade9a88ebeaaceda3fd13c83a85c";
+		public const string HashString = "59f72f5c7f9d315e3d95a2ac19360915";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "BIReport",
 			      				    IsNew =  true,
 			      				    DBTableName =  "BIReports",
-			      				    OldDBTableName =  "BIReports",
 			      				    ObjectTableSingular =  "BI Report",
 			      				    ObjectTablePlural =  "BI Reports",
 			      				    HasCustomFilter =  false,
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -262,7 +259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -322,7 +318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -380,7 +375,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -440,7 +434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -500,7 +493,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -560,7 +552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DWQueryId",
-					  						OldFieldName =  "DWQueryId",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -617,7 +608,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -674,7 +664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TypeCode",
-					  						OldFieldName =  "TypeCode",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BIReportsType",
@@ -732,7 +721,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AGGridOptionsXML",
-					  						OldFieldName =  "AGGridOptionsXML",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -789,7 +777,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BIReportFolderId",
-					  						OldFieldName =  "BIReportFolderId",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BIReportFolder",
@@ -847,7 +834,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -907,7 +893,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -967,7 +952,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunDate",
-					  						OldFieldName =  "LastRunDate",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1027,7 +1011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunByUserName",
-					  						OldFieldName =  "LastRunByUserName",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1087,7 +1070,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FactTableName",
-					  						OldFieldName =  "FactTableName",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1147,7 +1129,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunId",
-					  						OldFieldName =  "LastRun",
 					  						ObjectTableName =  "BIReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1315,6 +1296,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BIReportFeature_BIReportCopy = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopy", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopy", NameTextCodeDefaultText = @"Copy" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
 		   Feature BIReportFeature_BIReportCopyFromLibrary = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopyFromLibrary", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopyFromLibrary", NameTextCodeDefaultText = @"Copy From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReportRun = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportRun", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportRun", NameTextCodeDefaultText = @"Run" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_Shipments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.Shipments", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.Shipments", NameTextCodeDefaultText = @"Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_ShipmentCharges = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact.ShipmentCharges", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact.ShipmentCharges", NameTextCodeDefaultText = @"Shipment Charges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
    
 	    

@@ -73,7 +73,7 @@ export class BIReportComponent {
                     SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null });
+                            cmpRef.instance.Run({ DWQueryId: s.QID, Name: null, ObjectTableName: 'BIReport', EntityId: null });
                         });
                 }
             });
@@ -103,7 +103,7 @@ export class BIReportComponent {
         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ DWQueryId: report.DWQueryId, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });
+                cmpRef.instance.Run({ DWQueryId: report.DWQueryId, Name: report.Name, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });
             });
     }
 

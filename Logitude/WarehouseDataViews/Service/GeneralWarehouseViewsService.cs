@@ -29,7 +29,7 @@ namespace WarehouseDataViews.Service
             viewName += fieldName;
             return PluralViewName(viewName);
         }
-
+         
        public string PluralViewName(string viewName)
         {
             string result = string.Empty; 
@@ -44,11 +44,24 @@ namespace WarehouseDataViews.Service
                 else if (lastOneCharacter == "f" && lastTwoCharcter == "fe") result = lastOneCharacter == "f" ? viewName.Substring(0, viewName.Length - 1) + "ves" : viewName.Substring(0, viewName.Length - 2) + "ves";
                 else if (lastOneCharacter == "o" && !"a,3,i,o,u".Split(',').Contains(lastSecondCharacter)) result = viewName + "es";
                 else result = viewName + "s";
-                if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby" || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
-                {
 
+                if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby" || viewName.ToLower() == "dimdirecthouse" || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
+                {
                     result = viewName;
                 }
+                else if (viewName.ToLower() == "dimsalesman") result = "dimSalesmen";
+                else if (viewName.ToLower() == "dimconsigneenotimporter")
+                {
+
+                    result = "dimConsigneesNotImportes";
+                }
+
+
+                else if (viewName.ToLower() == "dimshippernotexporter")
+                {
+                    result = "dimShippersNotExporters";
+                }
+
             }
 
             return result;

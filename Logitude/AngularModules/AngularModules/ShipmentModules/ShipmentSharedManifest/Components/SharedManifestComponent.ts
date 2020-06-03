@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -23,7 +23,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
     templateUrl: './SharedManifestComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],
 })
-export class SharedManifestComponent {
+export class SharedManifestComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, private _entityResourceService: EntityResourceService, private _aentSharedManifestPMService: AgentSharedManifestPMService) {
 
@@ -61,6 +61,11 @@ export class SharedManifestComponent {
         this.LoadData();
 
     }
+
+    ngAfterViewInit() {
+        this.LoadChildComponent();
+    }
+
     agentManifestSharedRefListIds: string[] = [];
 
     LoadData() {
@@ -75,7 +80,6 @@ export class SharedManifestComponent {
                     if (!response.HasError) {
                     
                         this.CurrentEntity = response.Result;
-                        this.RunSharedManifestHeaderComponent();
                         this.ManifestSL = this.CurrentEntity.ManifestSL;
                         if (this.ManifestSL.ShipmentLevelCode == 'D') {
                             this.MessageNoHouseFound = "This is a direct shipment";
@@ -320,19 +324,7 @@ export class SharedManifestComponent {
     }
 
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    private timerToken: any;
-    private Retries: number = 0;
-
-    RunSharedManifestHeaderComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
+    
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestHeaderComponent', this.viewContainerRef)
             .then(cmpRef => {
@@ -342,17 +334,6 @@ export class SharedManifestComponent {
             });
     }
 
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunSharedManifestHeaderComponent(), 1);
-        }
-    }
 
 }
 

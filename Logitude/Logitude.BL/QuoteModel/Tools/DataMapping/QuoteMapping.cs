@@ -139,6 +139,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.UsageCount = entityPM.UsageCount;
             entityPoco.LastUsageDate = entityPM.LastUsageDate;
             entityPoco.QuoteClosingReasonCode = entityPM.QuoteClosingReasonCode;
+            entityPoco.QuoteClosingReasonId = entityPM.QuoteClosingReasonId;
             entityPoco.SentDate = entityPM.SentDate;
             entityPoco.AcceptedDate = entityPM.AcceptedDate;
             entityPoco.DeclinedDate = entityPM.DeclinedDate;

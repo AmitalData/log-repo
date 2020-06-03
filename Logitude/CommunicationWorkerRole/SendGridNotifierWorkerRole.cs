@@ -174,7 +174,7 @@ namespace CommunicationWorkerRole
 				//queueservice.Send(message);
 
 				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
 			}
 
             catch (Exception ex)

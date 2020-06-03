@@ -29,7 +29,7 @@ namespace WarehouseDataViews
 
         private int? tenant = 570;
         string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
-        string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
+        string dbDestinationConnection = "T570Unicargo,Admin1423,London2015!London2015!,logitudedw1.database.windows.net";
 
 
         public Form1()

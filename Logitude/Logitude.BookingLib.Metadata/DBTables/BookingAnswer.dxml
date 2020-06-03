@@ -136,7 +136,8 @@
     ForeignKeyColumn="CommunicationLogId"
     ReferencedTable="CommunicationLogs"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="BookingSpaceAllocationCode"
     ReferencedTable="BookingSpaceAllocations"

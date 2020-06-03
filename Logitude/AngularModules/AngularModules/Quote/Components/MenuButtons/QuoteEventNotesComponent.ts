@@ -32,10 +32,10 @@ export class QuoteEventNotesComponent extends BaseComponent {
     }
 
 
-    get QuoteClosingReasonCode() { return this.EntityPM.QuoteClosingReasonCode; }
-    set QuoteClosingReasonCode(value: string) {
-        if (this.EntityPM.QuoteClosingReasonCode != value) {
-            this.EntityPM.QuoteClosingReasonCode = value;
+    get QuoteClosingReasonId() { return this.EntityPM.QuoteClosingReasonId; }
+    set QuoteClosingReasonId(value: string) {
+        if (this.EntityPM.QuoteClosingReasonId != value) {
+            this.EntityPM.QuoteClosingReasonId = value;
         }
     }
 

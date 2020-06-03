@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ActivityUpdateClass
    {  		
-		public const string HashString = "dbca677b897a64bcbf726148e1295d8c";
+		public const string HashString = "a304536882ce63a4c9af043e43993d41";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Activity",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Activities",
-			      				    OldDBTableName =  "Activities",
 			      				    ObjectTableSingular =  "Activity",
 			      				    ObjectTablePlural =  "Activities",
 			      				    HasCustomFilter =  false,
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTypeCode",
-					  						OldFieldName =  "ActivityTypeCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityType",
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Subject",
-					  						OldFieldName =  "Subject",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -264,7 +261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DueDate",
-					  						OldFieldName =  "DueDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -326,7 +322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PriorityCode",
-					  						OldFieldName =  "PriorityCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityPriority",
@@ -388,7 +383,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OwnerId",
-					  						OldFieldName =  "OwnerId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -450,7 +444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StartDateTime",
-					  						OldFieldName =  "StartDateTime",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -512,7 +505,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EndDateTime",
-					  						OldFieldName =  "EndDateTime",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -574,7 +566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -635,7 +626,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallTypeCode",
-					  						OldFieldName =  "CallTypeCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CallType",
@@ -694,7 +684,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallPurpose",
-					  						OldFieldName =  "CallPurpose",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -755,7 +744,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallDetails",
-					  						OldFieldName =  "CallDetails",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -816,7 +804,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallResult",
-					  						OldFieldName =  "CallResult",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -877,7 +864,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PhoneNumber",
-					  						OldFieldName =  "PhoneNumber",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -938,7 +924,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Duration",
-					  						OldFieldName =  "Duration",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -999,7 +984,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1060,7 +1044,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -1120,7 +1103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1182,7 +1164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityStatusCode",
-					  						OldFieldName =  "ActivityStatusCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityStatus",
@@ -1244,7 +1225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -1303,7 +1283,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1365,7 +1344,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BranchId",
-					  						OldFieldName =  "BranchId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Branch",
@@ -1424,7 +1402,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllDayEvent",
-					  						OldFieldName =  "AllDayEvent",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1485,7 +1462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTimeTypeCode",
-					  						OldFieldName =  "ActivityTimeTypeCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ActivityTimeType",
@@ -1544,7 +1520,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Location",
-					  						OldFieldName =  "Location",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1605,7 +1580,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTypeName",
-					  						OldFieldName =  "ActivityTypeName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1666,7 +1640,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1726,7 +1699,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityStatusName",
-					  						OldFieldName =  "ActivityStatusName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1786,7 +1758,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OwnerName",
-					  						OldFieldName =  "OwnerName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1846,7 +1817,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PriorityName",
-					  						OldFieldName =  "PriorityName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1906,7 +1876,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MyOpenActivities",
-					  						OldFieldName =  "MyOpenActivities",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1964,7 +1933,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllOpenActivities",
-					  						OldFieldName =  "AllOpenActivities",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2022,7 +1990,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MyClosedActivities",
-					  						OldFieldName =  "MyClosedActivities",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2080,7 +2047,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AllClosedActivities",
-					  						OldFieldName =  "AllClosedActivities",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2138,7 +2104,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsLeftVoiceMail",
-					  						OldFieldName =  "IsLeftVoiceMail",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2199,7 +2164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OutlookId",
-					  						OldFieldName =  "OutlookId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2259,7 +2223,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NeedSynchronization",
-					  						OldFieldName =  "NeedSynchronization",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2320,7 +2283,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMarkedCompleted",
-					  						OldFieldName =  "IsMarkedCompleted",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2381,7 +2343,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsOpen",
-					  						OldFieldName =  "IsOpen",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2442,7 +2403,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MeetingSummary",
-					  						OldFieldName =  "MeetingSummary",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2503,7 +2463,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2567,7 +2526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunityId",
-					  						OldFieldName =  "OpportunityId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Opportunity",
@@ -2626,7 +2584,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CompleteDate",
-					  						OldFieldName =  "CompleteDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2688,7 +2645,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpportunitySubject",
-					  						OldFieldName =  "OpportunitySubject",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2748,7 +2704,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityInvitees",
-					  						OldFieldName =  "ActivityInvitees",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2806,7 +2761,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessUnitId",
-					  						OldFieldName =  "BusinessUnitId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BusinessUnit",
@@ -2868,7 +2822,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessUnitName",
-					  						OldFieldName =  "BusinessUnitName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2928,7 +2881,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SenderEmail",
-					  						OldFieldName =  "SenderEmail",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2986,7 +2938,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CommunicationLogId",
-					  						OldFieldName =  "CommunicationLogId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -3043,7 +2994,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityEmailRecipients",
-					  						OldFieldName =  "ActivityEmailRecipients",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -3101,7 +3051,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityNotes",
-					  						OldFieldName =  "ActivityNotes",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -3159,7 +3108,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3219,7 +3167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SenderContactId",
-					  						OldFieldName =  "SenderContactId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -3278,7 +3225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallWithId",
-					  						OldFieldName =  "CallWithId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -3337,7 +3283,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3394,7 +3339,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MeetingsSummary",
-					  						OldFieldName =  "MeetingsSummary",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3452,7 +3396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CancelledActivities",
-					  						OldFieldName =  "CancelledActivities",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3510,7 +3453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3570,7 +3512,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "QuoteId",
-					  						OldFieldName =  "QuoteId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Quote",
@@ -3629,7 +3570,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "QuoteNumber",
-					  						OldFieldName =  "QuoteNumber",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3689,7 +3629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TicketId",
-					  						OldFieldName =  "TicketId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Ticket",
@@ -3748,7 +3687,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SortingDate",
-					  						OldFieldName =  "SortingDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3805,7 +3743,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SortingBy",
-					  						OldFieldName =  "SortingBy",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3862,7 +3799,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SendReceiveDate",
-					  						OldFieldName =  "SendReceiveDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3919,7 +3855,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedtoCustomer",
-					  						OldFieldName =  "ConnectedtoCustomer",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3978,7 +3913,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedtoOpportunity",
-					  						OldFieldName =  "ConnectedtoOpportunity",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4037,7 +3971,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedtoTicket",
-					  						OldFieldName =  "ConnectedtoTicket",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4096,7 +4029,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedtoQuote",
-					  						OldFieldName =  "ConnectedtoQuote",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4155,7 +4087,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityWith",
-					  						OldFieldName =  "ActivityWith",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4215,7 +4146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DescriptionRightToLeft",
-					  						OldFieldName =  "DescriptionRightToLeft",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4273,7 +4203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MeetingSummaryRightToLeft",
-					  						OldFieldName =  "MeetingSummaryRightToLeft",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4331,7 +4260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SenderContactName",
-					  						OldFieldName =  "SenderContactName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4389,7 +4317,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginalActivitySubject",
-					  						OldFieldName =  "OriginalActivitySubject",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4446,7 +4373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsHybrid",
-					  						OldFieldName =  "IsHybrid",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4503,7 +4429,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityDocumentDatas",
-					  						OldFieldName =  "ActivityDocumentDatas",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -4561,7 +4486,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCustomerBlockedBusinessUnit",
-					  						OldFieldName =  "IsCustomerBlockedBusinessUnit",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4618,7 +4542,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCopy",
-					  						OldFieldName =  "IsCopy",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4675,7 +4598,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastModified",
-					  						OldFieldName =  "LastModified",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Byte[]",
 					  						MinLength =  0,
@@ -4732,7 +4654,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DontSetNeedSynchronization",
-					  						OldFieldName =  "DontSetNeedSynchronization",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4789,7 +4710,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTypePathCode",
-					  						OldFieldName =  "ActivityTypePathCode",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4846,7 +4766,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ObjectTableName",
-					  						OldFieldName =  "ObjectTableName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4903,7 +4822,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PostToFollowers",
-					  						OldFieldName =  "PostToFollowers",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4960,7 +4878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5018,7 +4935,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RecipientsEmails",
-					  						OldFieldName =  "RecipientsEmails",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5076,7 +4992,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "From",
-					  						OldFieldName =  "From",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5137,7 +5052,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "To",
-					  						OldFieldName =  "To",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5198,7 +5112,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Cc",
-					  						OldFieldName =  "Cc",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5259,7 +5172,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ArchiveDate",
-					  						OldFieldName =  "ArchiveDate",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -5320,7 +5232,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CallWithName",
-					  						OldFieldName =  "CallWithName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5380,7 +5291,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DueDateOffset",
-					  						OldFieldName =  "DueDateOffset",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5441,7 +5351,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DueDateDateField",
-					  						OldFieldName =  "DueDateDateField",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5502,7 +5411,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessProcessQueueId",
-					  						OldFieldName =  "BusinessProcessQueueId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BusinessProcessQueue",
@@ -5562,7 +5470,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TeamId",
-					  						OldFieldName =  "TeamId",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Team",
@@ -5622,7 +5529,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BusinessProcessQueueName",
-					  						OldFieldName =  "BusinessProcessQueueName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5682,7 +5588,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TeamName",
-					  						OldFieldName =  "TeamName",
 					  						ObjectTableName =  "Activity",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

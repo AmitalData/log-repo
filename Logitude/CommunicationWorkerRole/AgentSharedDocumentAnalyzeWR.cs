@@ -182,7 +182,7 @@ namespace CommunicationWorkerRole
                                                 {
                                                     IQueueService queueservice = new DbQueueService();
                                                     queueservice.InitializeQueue("AgentsSharedDocumentQueue", tenant);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocumentPM.Id }, { "Tenant", tenant.ToString() }, { "AgentTenant", agentSharedDocumentPM.Tenant.ToString() } }, null, null, null, null);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocumentPM.Id }, { "Tenant", tenant.ToString() }, { "AgentTenant", agentSharedDocumentPM.Tenant.ToString() } }, tenant, null, null, null, null);
 
                                                 }
 

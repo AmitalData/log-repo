@@ -304,11 +304,11 @@ namespace Logitude.Server.Tools
                     {
                         if (!queueParameters.Keys.Contains("CommunicationLogId"))
                             queueParameters.Add("CommunicationLogId", communicationLogId);
-                        queueservice.Send(queueParameters);
+                        queueservice.Send(queueParameters, tenant);
 
                     }  else
                     {
-                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
                     }
                   
 
@@ -332,7 +332,7 @@ namespace Logitude.Server.Tools
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties);
+                    var queueId = queueService.Send(messageProperties, tenant);
 
 
                     ///throw new Exception("Queue is DbMode "); 
@@ -614,7 +614,7 @@ namespace Logitude.Server.Tools
 			//queueservice.Send(message);
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } });
+			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } }, commLog.Tenant);
 		}
 
     }

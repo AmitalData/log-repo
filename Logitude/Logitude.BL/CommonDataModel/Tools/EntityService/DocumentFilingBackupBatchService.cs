@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentFilingBackupQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } });
+                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
 
                 scope.Complete();
             }
@@ -113,7 +113,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentFilingBackupQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
 
                 scope.Complete();
             }

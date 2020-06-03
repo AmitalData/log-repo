@@ -165,7 +165,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         { "BatchTaskExecutionId", iBatchTaskExecution.Id },
                         { "Tenant", tenant.ToString() }
-                    });
+                    }, tenant);
             //}
         }
 

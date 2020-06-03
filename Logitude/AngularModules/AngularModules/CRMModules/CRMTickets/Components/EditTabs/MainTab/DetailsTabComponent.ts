@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
@@ -34,7 +34,7 @@ declare var window: any;
     templateUrl: './DetailsTabComponent.html',
 })
 
-export class DetailsTabComponent extends BaseComponent implements AfterViewInit {
+export class DetailsTabComponent extends BaseComponent {
 
     public EntityPM: TicketPM;
     public Trigger: TicketMainTabComponent;
@@ -86,15 +86,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         this.TicketSeverityListService = new TicketSeverityListService();
         this.TicketClassificationListService = new TicketClassificationListService();
     }
-    ngAfterViewInit() {
-        //if (this.Trigger.EntityPM != null && this.Trigger.EntityPM.TicketCorrespondence != null && this.Trigger.EntityPM.TicketCorrespondence[0].Direction == "O") {
-        if (this.Trigger.EntityPM.Source == "MAL") {
-            this.IsFromOutSide = true;
-        }
-        else {
-            this.IsFromOutSide = false;
-        }
-    }
+    
     InitTab(trigger: TicketMainTabComponent) {
         this.Trigger = trigger;
         this.EntityPM = this.Trigger.EntityPM;
@@ -115,6 +107,13 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         this.ObjectTableName = this.Trigger.ObjectTableName;
         this.SetUIProperties();
         this.getGeneralClassification();
+
+        if (this.Trigger.EntityPM.Source == "MAL") {
+            this.IsFromOutSide = true;
+        }
+        else {
+            this.IsFromOutSide = false;
+        }
     }
     RefreshTab(trigger: TicketMainTabComponent) {
         this.EntityPM = this.Trigger.EntityPM;

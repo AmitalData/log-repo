@@ -1,5 +1,5 @@
 
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -28,7 +28,7 @@ import {OpportunityArgs} from '../../../../CRM/Args';
     templateUrl: './NewOpportunityComponent.html',
 })
 
-export class NewOpportunityComponent extends BaseComponent   {
+export class NewOpportunityComponent extends BaseComponent implements AfterViewInit {
     public ObjectTableName: string = "Opportunity";
     public DataContext: NewOpportunityComponent = this;
     public EntityPM: OpportunityPM = new OpportunityPM();
@@ -50,7 +50,20 @@ export class NewOpportunityComponent extends BaseComponent   {
         
     }
 
-    
+    constructor(private _entityResourceService: EntityResourceService) {
+        super();
+        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response: any) => {
+
+        });
+
+    }
+
+    ngAfterViewInit() {
+        this.SetUIProperties();
+        this.AddCustomerVisibility = AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) ? true : false;
+        OpportunityPMInitService.InitValues(this.EntityPM, this.IsNew);
+        this.LoadChildComponent();   
+    }
 
 
     public set OwnerId(value: string) {
@@ -383,41 +396,6 @@ export class NewOpportunityComponent extends BaseComponent   {
             this.EntityPM = args.Entity;
             this.IsNew = args.IsNew;
             this.addCustomerVisibility = args.IsAddCustomerVisible;
-        }
-    }
-
-    constructor(private _entityResourceService: EntityResourceService) {
-        super();
-        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response:any) => {
-
-        });
-        this.RunComponentTimer();         
-    }
-
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.SetUIProperties();
-            this.AddCustomerVisibility = AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) ? true : false;
-            OpportunityPMInitService.InitValues(this.EntityPM, this.IsNew);    
-            this.LoadChildComponent();            
-        }
-        else {
-            this.RunComponentTimer();
         }
     }
 

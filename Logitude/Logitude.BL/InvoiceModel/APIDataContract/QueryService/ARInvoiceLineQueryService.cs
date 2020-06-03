@@ -71,7 +71,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         }
                         else
                         {
-                            throw new ApplicationException("Opposite account is not found");
+                            throw new ApplicationException("Opposite account " +item.GLAccountId+ " is not found");
                         }
                     }
                   

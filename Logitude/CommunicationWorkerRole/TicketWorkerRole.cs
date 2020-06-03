@@ -204,7 +204,7 @@ namespace CommunicationWorkerRole
                 myTimeSpan = myDueDate - myCreateDate;
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "Tenant", Tenant.ToString() }, { "TicketId", myTicket.Id.ToString() } };
 
-                queueservice.Send(param, myTimeSpan);
+                queueservice.Send(param, Tenant, myTimeSpan);
             }
         }
 
@@ -313,7 +313,7 @@ namespace CommunicationWorkerRole
                 //queueservice.Send(message);
 
                 DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
             }
 
             catch (Exception ex)

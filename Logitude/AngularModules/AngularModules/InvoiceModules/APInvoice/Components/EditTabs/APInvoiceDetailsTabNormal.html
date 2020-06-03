@@ -220,13 +220,20 @@
                                                 </td>
 
                                                 <td style="width: 150px">
-                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
-                                                            [SelectedValue]="VatTypeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"
-                                                            [HideColumns]="true"  [DependencyFilter2Value]="false">
-                                                    </LogLov>
+                                                    <div class="MediaFill">
+                                                        <div class="MediaFillRelative">
+                                                            <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                                    [SelectedValue]="VatTypeId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'VatType'"
+                                                                    [HideColumns]="true"
+                                                                    [DependencyFilter2Value]="false">
+                                                            </LogLov>
+
+                                                            <div class="Value" style="position: absolute; left: 5px; top: 2px;" *ngIf="TotalVATOnly">Total VAT Only</div>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
                                                 <td style="width: 2px;">
