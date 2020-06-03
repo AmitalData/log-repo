@@ -727,7 +727,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1) { 
 
                     
-                        throw new ApplicationException(" Amount in Invoice Currency ("+ entityPM.AmountInInvoiceCurrency +") * Exchange Rate (" + entityPM.InvoiceCurrencyExchangeRate+") is not equal to local amount (insert amount) +- 0.1 ");
+                        throw new ApplicationException(" Amount in Invoice Currency ("+ entityPM.AmountInInvoiceCurrency +") * Exchange Rate (" + entityPM.InvoiceCurrencyExchangeRate+") is not equal to local amount ("+entityPM.AmountInLocalCurrency + ") +- 0.1 ");
 
                     }
 
