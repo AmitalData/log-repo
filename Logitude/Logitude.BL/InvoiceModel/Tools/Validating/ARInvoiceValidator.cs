@@ -723,9 +723,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
                 if(IsFullAccountingActivated(entityPM.Tenant))
                 {
-                    if(Math.Round(computedInvoiceAmount,2) != localAmount)
-                    {
-                        throw new ApplicationException(" Amount in Invoice Currency * Exchange Rate is not equal to local amount ");
+                    computedInvoiceAmount = Math.Round(computedInvoiceAmount, 2);
+                    if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1) { 
+
+                    
+                        throw new ApplicationException(" Amount in Invoice Currency ("+ entityPM.AmountInInvoiceCurrency +") * Exchange Rate (" + entityPM.InvoiceCurrencyExchangeRate+") is not equal to local amount ("+entityPM.AmountInLocalCurrency + ") +- 0.1 ");
 
                     }
 
