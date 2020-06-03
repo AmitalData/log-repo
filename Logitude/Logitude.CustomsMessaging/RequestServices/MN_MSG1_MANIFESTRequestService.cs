@@ -424,7 +424,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
                 declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
 
-            if(string.IsNullOrWhiteSpace(_DeclarationPM.CasualImporterTel))
+            if(!string.IsNullOrWhiteSpace(_DeclarationPM.CasualImporterTel))
             {
              declarationConsignmentConsignee.Communication = new DeclarationConsignmentConsigneeCommunication[1] {
                     new DeclarationConsignmentConsigneeCommunication() { 
