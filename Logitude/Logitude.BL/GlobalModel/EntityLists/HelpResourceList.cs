@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
+namespace Logitude.BL.GlobalModel.EntityLists
 {
-    public class HelpResource
+    public class HelpResourceList
     {
         [Key]
         public string Code { get; set; }
@@ -25,5 +24,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsNew { get; set; }
         public string FeatureCode { get; set; }
         public int Tenant { get; set; }
+
+        public string TypeName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

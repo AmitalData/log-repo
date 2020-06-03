@@ -419,6 +419,7 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\Communications\CommunicationsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\MoveType\NewMoveTypeComponent.html" />
@@ -1089,6 +1090,9 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleInfrastructureHelpResource.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
@@ -1144,6 +1148,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\HelpResourceList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LastRunDetailList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LogitudeLeadList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
@@ -1163,6 +1168,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWSubQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\HelpResourcePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
@@ -1186,6 +1192,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsInvitationStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsSettingListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\TeamListService.ts" />
@@ -1197,6 +1204,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CounterDefinitionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />

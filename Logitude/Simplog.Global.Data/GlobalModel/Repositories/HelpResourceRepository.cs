@@ -22,12 +22,17 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = context;
         }
 
-        public HelpResource GetSingleHelpResource(string code)
+        public HelpResource GetSingleHelpResource(string code, int tenant)
         {
             return (from a in context.HelpResources where a.Code == code select a).FirstOrDefault();
         }
 
         public IQueryable<HelpResource> GetAllHelpResources()
+        {
+            return from a in context.HelpResources select a;
+        }
+
+        public IQueryable<HelpResource> GetHelpResources(int tenant)
         {
             return from a in context.HelpResources select a;
         }

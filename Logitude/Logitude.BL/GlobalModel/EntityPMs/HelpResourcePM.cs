@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
+namespace Logitude.BL.GlobalModel.EntityPMs
 {
-    public class HelpResource
+    public class HelpResourcePM
     {
         [Key]
         public string Code { get; set; }

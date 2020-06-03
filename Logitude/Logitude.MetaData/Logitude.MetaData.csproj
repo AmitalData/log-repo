@@ -1118,7 +1118,9 @@
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\GlobalModel\HelpResource.lxml" />
+    <None Include="EntityFiles\GlobalModel\HelpResource.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
@@ -1302,7 +1304,9 @@
     <None Include="EntityFiles\QuoteModel\QuoteCharge.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\QuoteCostCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteCustomerType.lxml" />
     <None Include="EntityFiles\QuoteModel\QuotePackage.lxml" />
