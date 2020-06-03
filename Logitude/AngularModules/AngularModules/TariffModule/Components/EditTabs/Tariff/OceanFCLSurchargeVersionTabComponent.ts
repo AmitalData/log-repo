@@ -814,7 +814,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                         }
 
                         this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                        this.TariffsLinesSource.Remove(item);
                     });
 
                     this.FillTariffLines(this.CurrentVersion.TariffLines);

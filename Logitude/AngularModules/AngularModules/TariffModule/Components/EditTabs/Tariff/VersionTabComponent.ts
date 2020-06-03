@@ -853,8 +853,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: AirCostTariffLineData) => {
-                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                        //this.TariffsLinesSource.Remove(item);                        
+                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);                                          
                     });
 
                     this.FillTariffLines(this.CurrentVersion.TariffLines);                    

@@ -804,7 +804,6 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                 if (confirmWindow.Yes) {
                     this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: OceanFCLFreightTariffLineData) => {
                         this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                        this.TariffsLinesSource.Remove(item);
                     });
 
                     this.FillTariffLines(this.CurrentVersion.TariffLines);

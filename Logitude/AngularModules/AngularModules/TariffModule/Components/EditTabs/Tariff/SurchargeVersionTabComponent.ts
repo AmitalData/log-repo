@@ -754,7 +754,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 if (confirmWindow.Yes) {
                     this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: AirSurchargeTariffLineData) => {
                         this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                        this.TariffsLinesSource.Remove(item);
                     });
 
                     this.FillTariffLines(this.CurrentVersion.TariffLines);
