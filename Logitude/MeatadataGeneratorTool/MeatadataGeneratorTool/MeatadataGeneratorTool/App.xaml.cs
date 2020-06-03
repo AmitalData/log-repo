@@ -56,9 +56,14 @@ namespace MeatadataGeneratorTool
                 {
                     string workingDirectory = Directory.GetCurrentDirectory();
                     string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                    //MessageBox.Show(projectDirectory);
                     if (projectDirectory.EndsWith(@"Logitude"))
                     {
                         projectDirectory = projectDirectory + @"\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\ToolVersion";
+                    }
+                    else
+                    {
+                        projectDirectory = projectDirectory.Replace(@"\Logitude.MetaData", "") + @"\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\ToolVersion"; 
                     }
                     string[] DirectoryFiles = Directory.GetFiles(projectDirectory, "Version.vxml", SearchOption.AllDirectories);//, "Version.vxml", SearchOption.AllDirectories);
                     string verisonFilePath = DirectoryFiles[0];//.Where(a => a.Contains("Version.vxml")).FirstOrDefault(); 
