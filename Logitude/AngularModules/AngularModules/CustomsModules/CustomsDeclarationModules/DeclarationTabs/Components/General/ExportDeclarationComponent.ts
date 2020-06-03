@@ -10,6 +10,7 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
 
@@ -29,6 +30,8 @@ export class ExportDeclarationComponent extends BaseComponent {
     public OriginalEntityPM: DeclarationPM;
     public ClonedEntityPM: DeclarationPM;
     public IsDisplayOnly: boolean = false;
+    public PreceduralFilterItems: ApiQueryFilters;
+
     _DeclarationExportRecipientPM: DeclarationExportRecipientPM;
     ClonedDeclarationExportRecipientPM: DeclarationExportRecipientPM;
     public ValidationErrorsList: string[] = [];
@@ -68,6 +71,10 @@ export class ExportDeclarationComponent extends BaseComponent {
     public get CustomsShip() { return this._CustomsShip; }
     public set CustomsShip(newValue: string) {
         this._CustomsShip;
+    }
+    public get ProcedureCurrentCode() { return this.EntityPM.ProcedureCurrentCode; }
+    public set ProcedureCurrentCode(newValue: string) {
+        this.EntityPM.ProcedureCurrentCode = newValue;
     }
 
     DestinationCountry: any;
@@ -141,6 +148,8 @@ export class ExportDeclarationComponent extends BaseComponent {
                 this.ClonedDeclarationExportRecipientPM = this.CloneEntityDeclarationExportRecipientPM(this._DeclarationExportRecipientPM);
             }
 
+            this.PreceduralFilterItems = new ApiQueryFilters();
+            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, true, true, "NotEqual", false, false, false, "boolean");
 
             //Disable fields
             if (this.IsDisplayOnly) {
