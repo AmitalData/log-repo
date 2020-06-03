@@ -12358,7 +12358,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Shipment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="2000"
     IsRequired="false"

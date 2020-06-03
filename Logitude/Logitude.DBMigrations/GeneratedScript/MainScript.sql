@@ -1,19 +1,3 @@
--- Procedure Script From DeleteOldCommunicationLogs.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[DeleteOldCommunicationLogs]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[DeleteOldCommunicationLogs] END');
-EXEC('create procedure [dbo].[DeleteOldCommunicationLogs]
-as
-begin
-IF OBJECT_ID(''dbo.TempDeletedCommunicationLogs'') IS NOT NULL
-DROP TABLE TempDeletedCommunicationLogs
-SELECT * INTO TempDeletedCommunicationLogs
-FROM (SELECT top(1000) Id,DocumentId
-FROM CommunicationLogs
-WHERE CreateDate < GETDATE() - 120) AS t
-DELETE FROM CommunicationLogs WHERE Id IN (SELECT Id FROM TempDeletedCommunicationLogs)
-UPDATE Documents SET MarkForDelete = 1 WHERE Id IN (SELECT DocumentId FROM TempDeletedCommunicationLogs)
-end');
-
-
 -- General Script From 202006011347_FillQuoteClosingReasonTable.sxml File
 BEGIN TRAN
 BEGIN TRY

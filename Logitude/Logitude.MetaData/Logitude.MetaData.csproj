@@ -329,6 +329,8 @@
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateSpecialServicesTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentComputedFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentReceivableStatus.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPayableStatus.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentLevels.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentMasterDatas.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPayables.dxml" />

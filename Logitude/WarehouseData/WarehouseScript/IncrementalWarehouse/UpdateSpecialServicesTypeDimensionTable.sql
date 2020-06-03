@@ -14,7 +14,7 @@
    declare @Key as varchar(15)
    declare @Id as varchar(15)
    declare @Code as varchar(5)
-   declare @EnglishName as varchar(40)
+   declare @EnglishName as nvarchar(40)
    declare @LocalName as nvarchar(40)
    declare @SourceTenant int
    declare @ParentTenant int

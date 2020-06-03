@@ -26,4 +26,13 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime"
+    DefaultValue="CurrentDate">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

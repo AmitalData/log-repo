@@ -5,18 +5,18 @@
   DBType="Main"
   Module="Shipment">
   <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="4">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -26,4 +26,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime"
+    DefaultValue="CurrentDate">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>
