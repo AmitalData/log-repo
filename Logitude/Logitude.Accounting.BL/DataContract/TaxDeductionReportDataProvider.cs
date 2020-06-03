@@ -480,7 +480,7 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 endYearBalance = 0;
             }
-            return endYearBalance;
+            return endYearBalance*-1;
         }
        private ByVendorList SetGLAccountFields(GLAccountList gLAccount , ByVendorList groupedbyVendor)
         {
