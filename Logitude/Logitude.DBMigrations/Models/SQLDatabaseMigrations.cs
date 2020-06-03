@@ -454,7 +454,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                 {
                     ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
+                    isForeignKeyDataTypeChanged = IsColumnDataTypeChanged(dbForeignKeyColumn, dxmlForeignKeyColumn);
                 }
             }
             else
@@ -466,7 +466,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                     {
                         ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                        if ((dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
+                        if (IsColumnDataTypeChanged(dbForeignKeyColumn, dxmlForeignKeyColumn))
                         {
                             isForeignKeyDataTypeChanged = true;
                         }
@@ -474,19 +474,19 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).Any();
+            bool isRelationInCurrentTable = CurrentTable.Relations.Where(IsRelationInRelationsList(relation)).Any();
 
             return (!isForeignKeyDataTypeChanged && isRelationInCurrentTable);
         }
-
+        
         protected override bool IsRelationInDXMLTable(RelationDefinition relation)
         {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).Any();
+            return DXMLTable.Relations.Where(IsRelationInRelationsList(relation)).Any();
         }
 
         protected override RelationDefinition GetRelationFromDXMLTable(RelationDefinition relation)
         {
-            return DXMLTable.Relations.Where(r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() && r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() && r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower()).First();
+            return DXMLTable.Relations.Where(IsRelationInRelationsList(relation)).First();
         }
 
         protected override bool IsIndexInCurrentTable(IndexDefinition index)
@@ -500,19 +500,19 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                 {
                     ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                    isIndexColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                    isIndexColumnDataTypeChanged = IsColumnDataTypeChanged(dbColumn, dxmlColumn);
                 }
             }
             else
             {
                 List<ColumnDefinition> dxmlColumns = DXMLTable.Columns.Where(c => index.Columns.Split(',').Contains(c.Name)).ToList();
-
+                
                 foreach (var dxmlColumn in dxmlColumns)
                 {
                     if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                     {
                         ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        if (IsColumnDataTypeChanged(dbColumn, dxmlColumn))
                         {
                             isIndexColumnDataTypeChanged = true;
                         }
@@ -541,7 +541,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                 {
                     ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                    isUniqueConstraintColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                    isUniqueConstraintColumnDataTypeChanged = IsColumnDataTypeChanged(dbColumn, dxmlColumn);
                 }
             }
             else
@@ -553,7 +553,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                     {
                         ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        if (IsColumnDataTypeChanged(dbColumn, dxmlColumn))
                         {
                             isUniqueConstraintColumnDataTypeChanged = true;
                         }
@@ -1207,6 +1207,21 @@ namespace Logitude.DBMigrations.Models
             string dropIndexWithHistoryScript = dropIndexScript + GetInsertScriptForMigrationsHistory("Drop Index", DXMLTable.Name, null, dropIndexScript);
 
             return dropIndexWithHistoryScript;
+        }
+
+        protected bool IsColumnDataTypeChanged(ColumnDefinition dbColumn, ColumnDefinition dxmlColumn)
+        {
+            return (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) ||
+                   (dbColumn.Type != dxmlColumn.Type) ||
+                   (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
+                   (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+        }
+
+        protected Func<RelationDefinition, bool> IsRelationInRelationsList(RelationDefinition relation)
+        {
+            return (r => r.ForeignKeyColumn.ToLower() == relation.ForeignKeyColumn.ToLower() &&
+                         r.ReferencedTable.ToLower() == relation.ReferencedTable.ToLower() &&
+                         r.ReferencedColumn.ToLower() == relation.ReferencedColumn.ToLower());
         }
     }
 }
