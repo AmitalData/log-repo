@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class PickUpDeliveryPackageHarmonizeUpdateClass
    {  		
-		public const string HashString = "372a5c3d45f5db2b49991951c6174e60";
+		public const string HashString = "e9aadb65a64518a2a3b7830fecea8cd2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			      				    IsTabsHidden =  false,
 			      				    HashString =  PickUpDeliveryPackageHarmonizeUpdateClass.HashString,
 			                    

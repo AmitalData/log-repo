@@ -39,6 +39,7 @@ export class TariffList {
 	TransportModeCode: string;
 	TransportModeName: string;
 	LastUsedDate: Date;
+	FreightChargeId: string;
 	
 }
  

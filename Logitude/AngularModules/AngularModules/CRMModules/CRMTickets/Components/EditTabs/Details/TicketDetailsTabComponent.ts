@@ -65,10 +65,9 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         this.getGeneralClassification();
         this.Listen();
         this.InitializeServices();
-        this.RunComponent();
     }
     ngAfterViewInit() {
-        //if (this.EntityPM != null && this.EntityPM.TicketCorrespondence != null && this.EntityPM.TicketCorrespondence[0].Direction == "O") {
+        this.LoadChildComponent();
         if (this.EntityPM.Source == "MAL") {
             this.IsFromOutSide = true;
         }
@@ -76,6 +75,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         else {
             this.IsFromOutSide = false;
         }
+
     }
 
     private TabSelectedEvent: any = null;
@@ -105,17 +105,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
             });
         }
     }
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    private Retries: number = 0;
-    private timerToken: any;
+   
     private GeneratedComponent: any;
 
     private selectedFilter: EntityClass = null;
@@ -177,17 +167,6 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
     }
 
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="Queue_SetStatus"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+CREATE procedure [dbo].[Queue_SetStatus]
+(
+   @MessageId bigint,
+   @Statud int
+)
+ as begin
+
+IF exists (SELECT [Id]
+FROM [dbo].[QueueMessages] WITH (UPDLOCK) WHERE  [Id] = @MessageId)
+
+BEGIN
+UPDATE [dbo].[QueueMessages]
+SET  [Status] = @Statud,[CompleteDateTime] = getdate()
+WHERE [Id] = @MessageId
+
+UPDATE [dbo].[QueueMessageMoreDetails]
+SET  [Status] = @Statud,[CompleteDateTime] = getdate()
+WHERE [Id] = @MessageId
+
+END
+
+
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

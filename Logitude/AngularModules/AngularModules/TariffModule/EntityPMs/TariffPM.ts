@@ -423,6 +423,11 @@ export class TariffPM {
     public set LastUsedDate(newValue: Date) { if (this.lastUsedDate != newValue) { this.lastUsedDate = newValue; this.MarkAsDirty("LastUsedDate"); } }
        
 	 
+    private freightChargeId: string;
+    public get FreightChargeId() { return this.freightChargeId; }
+    public set FreightChargeId(newValue: string) { if (this.freightChargeId != newValue) { this.freightChargeId = newValue; this.MarkAsDirty("FreightChargeId"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

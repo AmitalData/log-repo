@@ -15,7 +15,9 @@ export class TextCodeTranslationPipe {
         }
         if (translation == "") {
             if (this.ShowAlertMessage(value)) {
-                alert("This code:'" + value + "' Not Found!");
+
+                    alert("This code:'" + value + "' Not Found!");
+     
             }
         }
         return translation;

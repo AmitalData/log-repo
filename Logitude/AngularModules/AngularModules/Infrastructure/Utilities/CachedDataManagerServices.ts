@@ -8,7 +8,8 @@ import {IATACodeListService} from '../Services/StandardLists/IATACodeListService
 import {MoveTypeListService} from '../Services/StandardLists/MoveTypeListService';
 import {RatesTableListService} from '../Services/StandardLists/RatesTableListService';
 import {BookingProductListService} from '../../Booking/Services/StandardLists/BookingProductListService';
-import {QuoteStageListService} from '../../Quote/Services/StandardLists/QuoteStageListService';
+import { QuoteStageListService } from '../../Quote/Services/StandardLists/QuoteStageListService';
+import { QuoteClosingReasonListService } from '../../Quote/Services/StandardLists/QuoteClosingReasonListService';
 import {AWBSpecialHandlingCodeListService} from '../../Shipment/Services/StandardLists/AWBSpecialHandlingCodeListService';
 import {APPaymentMethodListService} from '../../Invoice/Services/StandardLists/APPaymentMethodListService';
 import {AccountingPaymentMethodListService} from '../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
@@ -123,6 +124,7 @@ export class CachedDataManagerServices {
             case "RatesTableListService": { myResult = new RatesTableListService(); break; }
             case "BookingProductListService": { myResult = new BookingProductListService(); break; }
             case "QuoteStageListService": { myResult = new QuoteStageListService(); break; }
+            case "QuoteClosingReasonListService": { myResult = new QuoteClosingReasonListService(); break; }
             case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }
             case "APPaymentMethodListService": { myResult = new APPaymentMethodListService(); break; }
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }

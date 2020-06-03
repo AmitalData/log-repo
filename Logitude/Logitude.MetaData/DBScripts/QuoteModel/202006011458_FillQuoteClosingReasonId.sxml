@@ -1,0 +1,11 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+    
+      update Quotes 
+      set QuoteClosingReasonId = (select Id from QuoteClosingReasons where Code = Quotes.QuoteClosingReasonCode and Tenant = Quotes.Tenant )
+      
+    ]]>
+  </Sql>
+</Script>
+

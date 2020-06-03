@@ -230,6 +230,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     }
                 }
 
+                entityPM.QuoteClosingReasonId = null;
                 entityPM.QuoteClosingReasonCode = null;
                 entityPM.IsAutomaticallyClosed = false;
                 entityPM.AutomaticallyCloseDate = null;
@@ -241,10 +242,10 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                 if (entityPM.ActionType == "Accept")
                 {
                     string traceEventNotes = entityPM.EventNote;
-                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonCode))
+                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonCode);
+                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
                         if (myQuoteClosingReason != null)
                         {
                             traceEventNotes = myQuoteClosingReason.Name;
@@ -282,10 +283,10 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                 else if (entityPM.ActionType == "Decline")
                 {
                     string traceEventNotes = entityPM.EventNote;
-                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonCode))
+                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonCode);
+                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
                         if (myQuoteClosingReason != null)
                         {
                             traceEventNotes = myQuoteClosingReason.Name;

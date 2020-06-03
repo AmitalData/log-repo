@@ -6152,7 +6152,7 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.AdditionalServices = new List<AdditionalServicesDataList>();
 
             CustomerAdditionalServiceRepository serviceRep = new CustomerAdditionalServiceRepository(tenant);
-            IQueryable<CustomerAdditionalService> allServices = serviceRep.GetAdditionalServicesByTenant(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser.Contact").Include("AdditionalService");
+            IQueryable<CustomerAdditionalService> allServices = serviceRep.GetAdditionalServicesByTenant(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser.Contact").Include("AdditionalService").Include("Customer.CustomerStatus");
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -6297,6 +6297,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Potential_InUse = service.Potential ? "Potential" : "In Use",
                     NumberOfShipments = Convert.ToInt32(service.Customer.Field1),
                     NumberOfShipmentsLabel = tenant == 341 ? "Number of Users" : "Number of Shipments",
+                    CustomerStatus = service.Customer.CustomerStatus != null ? service.Customer.CustomerStatus.Name : null,
                 });
             }
 

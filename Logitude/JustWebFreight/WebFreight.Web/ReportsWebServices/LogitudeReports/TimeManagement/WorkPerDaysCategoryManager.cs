@@ -33,6 +33,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private List<WorkDaysPerGategoryData> iWorkDaysPerGategoryDataList = null; 
 
         private List<TMProjectCategory> AllCategories = null;
+        private List<TMBudget> AllBudgets = null;
         private WorkDaysPerCategoryDataProvider iDataProvider;
         public WorkPerDaysCategoryManager(byte[] xmlFilters, int tenant)
         {
@@ -173,6 +174,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             this.iDataProvider = new WorkDaysPerCategoryDataProvider() { GategoryRecordList = new List<WorkDaysPerGategoryData>(), };
             this.iContext = TimeManagementContext.GetContext(tenant);
             this.AllCategories = (from d in iContext.TMProjectCategories where d.Tenant == tenant select d).ToList();
+            this.AllBudgets = (from d in iContext.TMBudgets where d.Tenant == tenant select d).ToList();
             this.BuildReportHeader();
             if (this.fromDate != null && this.toDate != null)
             {
@@ -241,7 +243,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private WorkDaysPerGategoryData itemRecord = null;
         private void BuildReportData()
         {
-
             var iQueryable_List = (
                                    (from EmployeeTimes in iQueryable_EmployeeTimes
                                     join Projects in iQueryable_Projects on EmployeeTimes.ProjectId equals Projects.Id
@@ -262,6 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                         Projects.OwnerId,
                                         Projects.CategoryId,
                                         ProjectDescription = Projects.Description,
+                                        Projects.BudgetId,
                                     } into g
 
                                     select new
@@ -282,6 +284,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                         OwnerId = g.Key.OwnerId,
                                         CategoryId = g.Key.CategoryId,
                                         ProjectDescription = g.Key.ProjectDescription,
+                                        BudgetId = g.Key.BudgetId,
                                     })
 
                                    .Union
@@ -316,12 +319,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                         OwnerId = "",
                                         CategoryId = "",
                                         ProjectDescription = "",
+                                        BudgetId = "",
                                     })
                                     ).ToList();
 
             iWorkDaysPerGategoryDataList = new List<WorkDaysPerGategoryData>();
             List<WorkDaysPerGategoryData> dataGroups = (from x in iQueryable_List
-                                                        group x by new { x.CategoryId, x.ProjectId, x.OwnerId, x.ProjectNumber } into g
+                                                        group x by new { x.CategoryId, x.ProjectId, x.OwnerId, x.ProjectNumber, x.BudgetId } into g
                                                         select new WorkDaysPerGategoryData()
                                                         {
                                                             CategoryId = g.Key.CategoryId,
@@ -329,6 +333,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                                             ProjectNumber = g.Key.ProjectNumber,
                                                             OwnerId = g.Key.OwnerId,
                                                             TotalMinutes = g.Sum(a => a.FullDuration),
+                                                            BudgetId = g.Key.BudgetId,
                                                         }).ToList();
 
             foreach (var item in dataGroups)
@@ -341,18 +346,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     OwnerId = item.OwnerId,
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
                     IsVisisble = true,
+                    BudgetId = item.BudgetId,
                 };
                 this.CalculateCategoryTotals(item, gategoryLines);
                 this.FillProjectData(item);
                 this.FillCategoryData(item);
                 this.FillOwnerData(item);
+                this.FillBudgetData(item);
                 iWorkDaysPerGategoryDataList.Add(itemRecord);
             }
+
             this.iDataProvider.GategoryRecordList = iWorkDaysPerGategoryDataList.Where(a=>a.IsVisisble).OrderBy(a => a.CategoryName).ToList();
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
                 this.CalculateAllTotalsOfCategoryFields();
-
             }
         }
 
@@ -364,6 +371,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             this.iDataProvider.Total_TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(iTotalDaysIncludingInnerDouble);
             this.iDataProvider.Total_TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(iTotalDaysWithoutIncludingInnerDouble);
             this.iDataProvider.Total_TotalGategoryDays = this.GetDaysFormatFromMinutes(iTotalGategoryDaysDouble);
+        }
+
+        private void FillBudgetData(WorkDaysPerGategoryData item)
+        {
+            if (string.IsNullOrEmpty(itemRecord.BudgetName))
+            {
+                if (!string.IsNullOrEmpty(item.BudgetId))
+                {
+                    TMBudget iBudget = AllBudgets.Where(d => d.Id == item.BudgetId).FirstOrDefault();
+                    if (iBudget != null)
+                    {
+                        itemRecord.BudgetName = iBudget.Name;
+                    }
+                }
+            }
         }
 
         private void FillOwnerData(WorkDaysPerGategoryData item)
@@ -456,14 +478,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             if (minutes != 0)
             {
+                double result = Math.Round(minutes / 525, 2);
+
+                iResult = result.ToString();
+            }
+
+            return iResult;
+        }
+
+        private string GetDaysFormatFromMinutes00(double minutes)
+        {
+            string iResult = "";
+
+            if (minutes != 0)
+            {
                 TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(minutes));
 
 
                 double TotalHours = minutes / 60;
 
-                int iDays = (int)(TotalHours / 9);
-                double Hours = TotalHours % 9;
-                double iHours = Math.Round(Hours / 9, 2);
+                int iDays = (int)(TotalHours / 8.75);
+                double Hours = TotalHours % 8.75;
+                double iHours = Math.Round(Hours / 8.75, 2);
 
                 iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
 
@@ -475,6 +511,5 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             return iResult;
         }
-
     }
 }

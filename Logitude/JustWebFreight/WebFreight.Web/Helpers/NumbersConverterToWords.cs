@@ -1238,7 +1238,7 @@ namespace WebFreight.Web.Helpers
                    
                    break;
                 }
-            return s.Substring(j, s.Length-1);
+            return s.Substring(j, s.Length);
         }
         private string RTrim(string s)
         {

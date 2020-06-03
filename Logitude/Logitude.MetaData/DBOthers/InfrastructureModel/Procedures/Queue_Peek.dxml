@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="Queue_Peek"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript><![CDATA[
+CREATE procedure [dbo].[Queue_Peek]
+(@MessageId  bigint output,
+@MessageBody  varchar(1000) output,
+@RetryNumber int output,
+@QueueDefinitionCode varchar(255)) as 
+
+begin
+
+--DECLARE @NextId INTEGER
+Declare @frequency INTEGER
+set @frequency = 60
+
+-- Find next available item available where the status is enabled
+SET @MessageId = (SELECT TOP 1 [Id]
+FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK) WHERE [NextRunDateTime] <= getdate() and [Status] = 0 and QueueDefinitionCode = @QueueDefinitionCode ORDER BY [NextRunDateTime] ASC)
+
+
+--If found, flag it to prevent being picked up again
+IF (@MessageId IS NOT NULL)
+BEGIN
+
+Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
+Set @RetryNumber = (Select RetryNumber from [dbo].[QueueMessages] where [Id] = @MessageId)
+Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
+
+UPDATE [dbo].[QueueMessages]
+SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
+WHERE [Id] = @MessageId
+
+UPDATE [dbo].[QueueMessageMoreDetails]
+SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
+WHERE [Id] = @MessageId
+
+END
+
+
+-- return queue data
+--IF (@NextId IS NOT NULL)
+--select [QueueID],[QueueDateTime],[Title],[Status],[TextData],[NextRunTime],[ProcessingTime]
+--from [dbo].[TasksQueue]
+--where [QueueID] = @NextId
+
+ 
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -139,7 +139,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         if (this.HasConsolidationFeature) {
             itemsParams.push({ Code: 'CON', Name: "Consolidation" });
         }
-        if (this.HasInterestFeature) {
+        if (SessionLocator.TenantPM.AccountingActivated) {
             itemsParams.push({ Code: 'IT', Name: "Interest Invoice" });
             itemsParams.push({ Code: 'IC', Name: "Interest Credit" });
         }

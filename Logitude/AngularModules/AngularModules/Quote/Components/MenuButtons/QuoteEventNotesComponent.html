@@ -5,12 +5,12 @@
             <table>
                 <tr>
                     <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.O.DeclineReason'" [HideColumns]="true"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.O.DeclineReason'" [HideColumns]="true"></LogLabel>
                     </td>
 
                     <td style="width: 250px;">
-                        <LogLov [ObjectFieldName]="'QuoteClosingReasonCode'"
-                                [SelectedValue]="QuoteClosingReasonCode"
+                        <LogLov [ObjectFieldName]="'QuoteClosingReasonId'"
+                                [SelectedValue]="QuoteClosingReasonId"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'QuoteClosingReason'">

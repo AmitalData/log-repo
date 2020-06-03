@@ -87,7 +87,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 myResult.DeliveredNotReturned = (from myPackage in MyContext.ShipmentPackages
                                                  join db_Shipments in MyContext.Shipments on myPackage.ShipmentId equals db_Shipments.Id into PackagesShipments
                                                  from myShipment in PackagesShipments
-                                                 where myPackage.Tenant == tenant && myShipment.Tenant == tenant                                                                                                 
+                                                 where myPackage.Tenant == tenant && myShipment.Tenant == tenant
                                                  && myShipment.IsCancelled == false
                                                  && (myPackage.IsDeliveryFU && myPackage.DeliveryATA != null)
                                                  && (myPackage.IsEmptyContainerReturnFU && myPackage.EmptyContainerReturnATA == null)

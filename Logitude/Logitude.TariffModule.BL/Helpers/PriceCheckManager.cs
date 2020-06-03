@@ -522,7 +522,6 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
 
-                    string chargeCode = null;
                     string sellerName = "";
                     string documentId = null;
                     AirlinePM airline = null;
@@ -532,13 +531,11 @@ namespace Logitude.TariffModule.BL.Helpers
                         airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
                         sellerName = airline != null && airline.Card != null ? airline.Card.EnglishName : "";
                         documentId = airline.ImageDetailId;
-                        chargeCode = "AFT";
                     }
                     else if (tariffType == "OLC")
                     {
                         shippingLine = shippingLineQuery.GetSinglePM(result.SellerId, tenant);
                         sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
-                        chargeCode = "OFT";
                     }
 
                     if (CurrentSurcharge != null)
@@ -703,7 +700,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
 
-                    var airChrageType = chargesTypes.Where(p => p.Code == chargeCode).Select(p => p).FirstOrDefault();
+                    var airChrageType = chargesTypes.Where(p => p.Id == result.FreightChargeId).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
@@ -811,7 +808,6 @@ namespace Logitude.TariffModule.BL.Helpers
                     this.FillSurchargeData(args, trariff, tariffLine);
 
                     string documentId = null;
-                    string chargeCode = "OFT";
 
                     tariffsSummary.SellerName = sellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
@@ -841,7 +837,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.TariffId = tariffLine.TariffId;
                     tariffsSummary.TariffNumber = trariff.TariffNumber;
                     tariffsSummary.TransitTime = tariffLine.TransitTime;
-                    var airChrageType = chargesTypes.Where(p => p.Code == chargeCode).Select(p => p).FirstOrDefault();
+                    var airChrageType = chargesTypes.Where(p => p.Id == trariff.FreightChargeId).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";

@@ -67,48 +67,13 @@ export class BookingWizardComponent implements AfterViewInit {
     SetWindowArgs(windowArgs: BookingWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
-        this.RunComponent();
     }
 
     private isViewInited = false;
     ngAfterViewInit() {
-        //this.isViewInited = true;
-        //this.InitializeComponent();
-    }
-
-    RunComponent() {
-
-
+        this.isViewInited = true;
+        this.InitializeComponent();
         ServiceLocator.SendTotangoUserActivity("Booking", "Booking Wizard");
-        if (this.AllLocations) {
-
-            if (this.AllLocations.toArray().length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isViewInited = true;
-                this.InitializeComponent();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
     }
 
     private InitializeWizard() {

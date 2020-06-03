@@ -685,6 +685,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 AutomationHelper automationHelper = new AutomationHelper();
                 automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes.Values.ToList());
 
+                QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
+                QuoteTemplateCopyDetails quoteTemplateCopyDetails = new QuoteTemplateCopyDetails
+                {
+                    Tenant = tenant,
+                    UpdateFromTenantData = true
+                };
+                quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(quoteTemplateCopyDetails);
+
                 if (!LogitudeSettings.IsCostomsDeploy)
                 // what do u think ?? ok i suppose
                 // but ihab yesterday said : if we can ..we shold do it ?!?!?

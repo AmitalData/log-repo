@@ -371,7 +371,8 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
       else {
         this.EntityPM.AutomaticallyCloseDays = null;
         this.EntityPM.AutomaticallyCloseDate = null;
-        this.EntityPM.QuoteClosingReasonCode = null;
+          this.EntityPM.QuoteClosingReasonCode = null;
+          this.EntityPM.QuoteClosingReasonId = null;
       }
 
       this.SetUIProperties_AutomaticallyClosed();

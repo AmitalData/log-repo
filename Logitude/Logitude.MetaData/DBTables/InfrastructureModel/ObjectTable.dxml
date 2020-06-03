@@ -414,7 +414,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AllowedInQueues"
+    Name="AllowedInTicket"
+    OldNames="AllowedInQueues"
     Type="bit">
     <Constraints
       Nullable="false" />

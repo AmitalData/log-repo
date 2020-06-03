@@ -59,5 +59,6 @@
     ForeignKeyColumn="CommunicationLogId"
     ReferencedTable="CommunicationLogs"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true"/>
 </Table>

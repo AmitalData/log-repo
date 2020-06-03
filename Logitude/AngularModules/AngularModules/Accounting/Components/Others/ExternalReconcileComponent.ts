@@ -534,6 +534,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     TransactiononDataLoaded() {
 
         //this.TransactionsCheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+        this.TransactionMarkIsChecked.emit({SelectedLines:this.TransactionSelectedLines});
 
     }
     TransactionDataSource = {
@@ -575,7 +576,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetAll = true;
         filters.GetCount = true;
 
-        
+
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
@@ -607,8 +608,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     OnSortInvoked(event){
-        this.TransactionSelectedLines = new ObservableCollection([]);
-        this.ExtPageSelectedLines = new ObservableCollection([]);
+        // this.TransactionSelectedLines = new ObservableCollection([]);
+        // this.ExtPageSelectedLines = new ObservableCollection([]);
     }
 
     // selectedTransferTransactionsCount: number = 0;
@@ -706,8 +707,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     ReloadScreen() {
         this.TransactiononQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-        this.TransactionSelectedLines.Clear();
+       // this.TransactionSelectedLines.Clear();
         this.CalculateTotals();
+    }
+    ExtPageReloadScreen() {
+        this.ExtPageonQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+       /// this.ExtPageSelectedLines.Clear();
+        this.CalculateExtPageTotals();
+
     }
     //#endregion
 
@@ -816,6 +823,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ExtPageonDataLoaded() {
 
         //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+        this.ExtPageMarkIsChecked.emit({SelectedLines:this.ExtPageSelectedLines});
 
     }
     ExtPageDataSource = {
@@ -926,11 +934,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.ExtPagePopLine(Row.PageLinePM.Id);
     }
 
-    ExtPageReloadScreen() {
-        this.ExtPageonQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-        this.ExtPageSelectedLines.Clear();
-        this.CalculateExtPageTotals();
-    }
+
     //#endregion
 
     //#region Totals Work

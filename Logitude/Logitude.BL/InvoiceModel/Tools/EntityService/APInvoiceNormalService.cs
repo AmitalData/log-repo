@@ -41,26 +41,28 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InvoiceModel.Tools.Initializers;
+using Simplog.Server.Infrastructure.Interfaces;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class APInvoiceNormalService
     {
         private int tenant;
-        private bool isNewEntity;
+        //private bool isNewEntity;
         private bool isInvoiceLinesChanged;
         public APInvoice invoice { get; set; }
         private APInvoicePM entityPM;
-        private string loggedContactId;
-        private IInvoiceContext objectContext;
-        private ICommonDataContext myCommonContext;
-        private APInvoiceRepository invoiceRepository;
+        //private string loggedContactId;
+        //private IInvoiceContext objectContext;
+        //private ICommonDataContext myCommonContext;
+        //private APInvoiceRepository invoiceRepository;
         private APInvoiceLineRepository invoiceLineRepository;
-        private APInvoiceTotalVATRepository invoiceTotalVatRepository;
+        //private APInvoiceTotalVATRepository invoiceTotalVatRepository;
         private APInvoiceEntityRepository invoiceEntityRepository;
         private APInvoicePaymentRepository invoicePaymentRepository;
         private APPaymentRepository paymentRepository;
-        private VatTypeRepository vatTypeRepository;
+        //private VatTypeRepository vatTypeRepository;
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
         private Shipment MainShipment;
@@ -73,31 +75,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
 
+        private APInvoiceServiceInitializer initializer;
+
         public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
+            this.initializer = new APInvoiceServiceInitializer(objectContext, entityPM);
+            this.initializer.Initialize();
+
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            this.isInvoiceLinesChanged = false;
-            this.objectContext = objectContext;
-            this.myCommonContext = CommonDataContext.GetContext(tenant);
+            //this.isInvoiceLinesChanged = false;
+            //this.objectContext = objectContext;
+            //this.myCommonContext = CommonDataContext.GetContext(tenant);
 
-            this.invoiceRepository = new APInvoiceRepository(objectContext);
+            //this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
-            this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
+            //this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
 
-            this.vatTypeRepository = new VatTypeRepository(myCommonContext);
-            this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
-            this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
+            //this.vatTypeRepository = new VatTypeRepository(myCommonContext);
+            this.accountingSettingRepository = new AccountingSettingRepository(initializer.CommonContext);
+            this.accountingSystemRepository = new AccountingSystemRepository(initializer.CommonContext);
 
             allShipments = new List<Shipment>();
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(tenant);
             shipmentPayableRepository = new ShipmentPayableRepository(tenant);
 
-            this.GetLoggedContact();
+            //this.GetLoggedContact();
             this.GetAccountingSystem();
         }
         public APInvoiceNormalService(MockInvoiceContext objectContext, APInvoicePM entityPM)
@@ -108,13 +115,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
             this.isInvoiceLinesChanged = false;
-            this.invoiceRepository = new APInvoiceRepository(objectContext);
+            //this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
-            this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
+            //this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
-            this.vatTypeRepository = new VatTypeRepository(commonMockContext);
+            //this.vatTypeRepository = new VatTypeRepository(commonMockContext);
             this.accountingSettingRepository = new AccountingSettingRepository(commonMockContext);
             this.accountingSystemRepository = new AccountingSystemRepository(commonMockContext);
 
@@ -123,36 +130,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             shipmentRepository = new ShipmentRepository(shipmentMockContext);
             shipmentPayableRepository = new ShipmentPayableRepository(shipmentMockContext);
 
-            this.GetLoggedContact();
+            //this.GetLoggedContact();
             this.GetAccountingSystem();
         }
 
-        private void GetLoggedContact()
-        {
-            if (entityPM.CreatedFromAPI)
-            {
-                this.loggedContactId = entityPM.CreatedByUserId;
-            }
+        //private void GetLoggedContact()
+        //{
+        //    if (entityPM.CreatedFromAPI)
+        //    {
+        //        this.loggedContactId = entityPM.CreatedByUserId;
+        //    }
 
-            else
-            {
-                ContactRepository contactRepository = new ContactRepository(tenant);
+        //    else
+        //    {
+        //        ContactRepository contactRepository = new ContactRepository(tenant);
 
-                string email = HttpContext.Current.User.Identity.Name;
+        //        string email = HttpContext.Current.User.Identity.Name;
 
-                if (email != null)
-                {
-                    Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-                    this.loggedContactId = loggedContact.Id;
-                }
+        //        if (email != null)
+        //        {
+        //            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+        //            this.loggedContactId = loggedContact.Id;
+        //        }
 
-                else
-                {
-                    ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
-                    this.loggedContactId = loggedContact.Id;
-                }
-            }
-        }
+        //        else
+        //        {
+        //            ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+        //            this.loggedContactId = loggedContact.Id;
+        //        }
+        //    }
+        //}
 
         private bool isJournal;
         private bool isExternal;
@@ -189,28 +196,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ValidateInvoiceCreated()
         {
-            if (isNewEntity)
-            {
-                List<string> allPayablesIds = (from d in entityPM.InvoiceLines group d by d.EntityPayableId into g select g.Key).ToList();
+            //if (isNewEntity)
+            //{
+            //    List<string> allPayablesIds = (from d in entityPM.InvoiceLines group d by d.EntityPayableId into g select g.Key).ToList();
 
-                bool isAlreadyConnected = (from d in invoiceEntityRepository.context.APInvoiceLines
-                                           where d.Tenant == tenant
-                                           && d.EntityId == entityPM.MainEntityId
-                                           && allPayablesIds.Contains(d.EntityPayableId)
-                                           select d).Any();
+            //    bool isAlreadyConnected = (from d in invoiceEntityRepository.context.APInvoiceLines
+            //                               where d.Tenant == tenant
+            //                               && d.EntityId == entityPM.MainEntityId
+            //                               && allPayablesIds.Contains(d.EntityPayableId)
+            //                               select d).Any();
 
-                if (isAlreadyConnected)
-                {
-                    //throw new ApplicationException("This invoice is already created");
-                }
-            }
+            //    if (isAlreadyConnected)
+            //    {
+            //        //throw new ApplicationException("This invoice is already created");
+            //    }
+            //}
         }
 
         private List<APInvoiceLinePM> invoiceLinesChangeSet;
         private List<APInvoicePaymentPM> invoicePaymentsChangeSet;
-        private bool IsSetVoided = false;
-        private bool IsSetApproved = false;
-        private bool IsAlreadyVoided = false;
+        //private bool IsSetVoided = false;
+        //private bool IsSetApproved = false;
+        //private bool IsAlreadyVoided = false;
         public void SetChangeSets(List<APInvoiceLinePM> invoiceLinesChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
         {
             this.invoiceLinesChangeSet = invoiceLinesChangeSet;
@@ -219,17 +226,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void Create()
         {
-            this.isNewEntity = true;
-            this.invoice = new APInvoice();
+            //this.isNewEntity = true;
+            this.invoice = initializer.EntityPOCO;
 
-            this.IsSetApproved = entityPM.SetApproved;
+            //this.IsSetApproved = entityPM.SetApproved;
 
-            this.ValidateInvoiceCreated();
+            //this.ValidateInvoiceCreated();
+
+            this.initializer.HandleBehaviours();
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext, this.MainShipmentConcurrencyGUID);
-            APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
+            APInvoiceValidator.Validate(entityPM, invoice, initializer.IsNewEntity, initializer.Context, initializer.CommonContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceTracing.Trace(entityPM, invoice, initializer.IsNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -241,7 +250,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 else
                 {
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
-                    if (isNewEntity)
+                    if (initializer.IsNewEntity)
                     {
                         lines = entityPM.InvoiceLines.ToList();
                     }
@@ -257,17 +266,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateInvoiceLines();
-            this.UpdateTotalVats();
+            //this.UpdateTotalVats();
             this.BuildSearchFields();
 
             var setApproved = entityPM.SetApproved;
             var setVoided = entityPM.SetVoided;
 
             APInvoiceHelper helper = new APInvoiceHelper();
-            helper.APInvoiceQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
-            APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
-            invoiceRepository.Add(invoice);
-            invoiceRepository.SubmitChanges();
+            helper.APInvoiceQuickbooksValidating(entityPM, setApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
+            APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
+           initializer.Repository.Add(invoice);
+            initializer.Repository.SubmitChanges();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -500,20 +509,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.invoicePaymentsChangeSet = entityPM.InvoicePayments;
             }
 
-            this.isNewEntity = false;
+            //this.isNewEntity = false;
 
-            this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
+            this.invoice = initializer.EntityPOCO;
 
-            this.IsSetVoided = entityPM.SetVoided;
-            this.IsSetApproved = entityPM.SetApproved;
-            this.IsAlreadyVoided = this.invoice.StatusCode == "VD" ? true : false;
+            //this.IsSetVoided = entityPM.SetVoided;
+            //this.IsSetApproved = entityPM.SetApproved;
+            //this.IsAlreadyVoided = this.invoice.StatusCode == "VD" ? true : false;
 
             this.ValidateHigherStatus();
 
+            this.initializer.HandleBehaviours();
+
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext, this.MainShipmentConcurrencyGUID);
-            APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
+            APInvoiceValidator.Validate(entityPM, invoice, initializer.IsNewEntity, initializer.Context, initializer.CommonContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceTracing.Trace(entityPM, invoice, initializer.IsNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -524,7 +535,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateInvoiceLines();
-            this.UpdateTotalVats();
+            //this.UpdateTotalVats();
 
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, entityPM.SetApproved);
@@ -533,23 +544,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceHelper helper = new APInvoiceHelper();
             if (entityPM.SetReSendQBO)
             {
-                helper.APInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+                helper.APInvoiceQuickbooksValidating(entityPM, true, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
 
             }
             else
             {
-                helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+                helper.APInvoiceQuickbooksValidating(entityPM, initializer.IsSetApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
             }
 
 
 
-            APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
+            APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
 
             // DropBox
-            this.CreateAPInvoiceMessage(IsSetApproved);
+            this.CreateAPInvoiceMessage(initializer.IsSetApproved);
 
-            invoiceRepository.Update(invoice);
-            invoiceRepository.SubmitChanges();
+            initializer.Repository.Update(invoice);
+            initializer.Repository.SubmitChanges();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -560,8 +571,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceAmountDue();
             this.BuildSearchFields();
 
-            invoiceRepository.Update(invoice);
-            invoiceRepository.SubmitChanges();
+            initializer.Repository.Update(invoice);
+            initializer.Repository.SubmitChanges();
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
@@ -574,7 +585,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     APPaymentRepository repository = new APPaymentRepository(tenant);
                     APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
 
-                    service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                    service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, initializer.Context, initializer.CommonContext, false, false);
                 }
             }
 
@@ -588,7 +599,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ValidateHigherStatus()
         {
-            if (!isNewEntity)
+            if (!initializer.IsNewEntity)
             {
                 if (this.invoice.StatusCode == "AD")
                 {
@@ -639,7 +650,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
                         bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
 
-                        this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
+                        this.invoice = initializer.Repository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
                         List<APInvoice> entities = new List<APInvoice>();
                         entities.Add(this.invoice);
 
@@ -655,30 +666,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         DateTime? todayDateTime = null;
         private void InitializeComponent()
         {
-            todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            //todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
-            if (this.isNewEntity)
-            {
-                entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
-                entityPM.CreateDate = todayDateTime;
-            }
+            //if (initializer.IsNewEntity)
+            //{
+            //    entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
+            //    entityPM.CreateDate = todayDateTime;
+            //}
 
-            entityPM.UpdateDate = todayDateTime;
+            //entityPM.UpdateDate = todayDateTime;
 
-            if (entityPM.DueDate != null)
-            {
-                entityPM.DueDate = entityPM.DueDate.Value.Date;
-            }
+            //if (entityPM.DueDate != null)
+            //{
+            //    entityPM.DueDate = entityPM.DueDate.Value.Date;
+            //}
 
-            if (entityPM.InvoiceDate != null)
-            {
-                entityPM.InvoiceDate = entityPM.InvoiceDate.Value.Date;
-            }
+            //if (entityPM.InvoiceDate != null)
+            //{
+            //    entityPM.InvoiceDate = entityPM.InvoiceDate.Value.Date;
+            //}
 
-            if (string.IsNullOrEmpty(entityPM.InternalNumber))
-            {
-                entityPM.InternalNumber = TableCounter.GetNumber(entityPM.Tenant, "APIC", "IN", null);
-            }
+            //if (string.IsNullOrEmpty(entityPM.InternalNumber))
+            //{
+            //    entityPM.InternalNumber = TableCounter.GetNumber(entityPM.Tenant, "APIC", "IN", null);
+            //}
 
             if (!string.IsNullOrEmpty(this.entityPM.MainEntityId))
             {
@@ -694,7 +705,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.StatusCode = "AD";
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityPM.ApprovedByUserId = loggedContactId;
+                entityPM.ApprovedByUserId = initializer.LoggedContactId; //loggedContactId;
 
                 if (string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
                 {
@@ -758,15 +769,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeAmountDueFields();
         }
 
-        private List<VatType> allVatTypes = new List<VatType>();
-        private List<VatTypePercentagePM> allVatPercentages = new List<VatTypePercentagePM>();
+        //private List<VatType> allVatTypes = new List<VatType>();
+        //private List<VatTypePercentagePM> allVatPercentages = new List<VatTypePercentagePM>();
         private void InitializeVATs()
         {
-            this.allVatTypes = this.vatTypeRepository.GetVatTypes(this.tenant).ToList();
+            //this.allVatTypes = this.vatTypeRepository.GetVatTypes(this.tenant).ToList();
 
-            VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
-            VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
-            this.allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+            //VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
+            //VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+            //this.allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
         }
 
         private void InitializeAmountDueFields()
@@ -786,7 +797,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
 
-                    if (isNewEntity)
+                    if (initializer.IsNewEntity)
                     {
                         lines = entityPM.InvoiceLines.ToList();
                     }
@@ -930,7 +941,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
 
-                if (isNewEntity)
+                if (initializer.IsNewEntity)
                 {
                     lines = entityPM.InvoiceLines.ToList();
                 }
@@ -969,7 +980,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
 
-                    if (!isNewEntity)
+                    if (!initializer.IsNewEntity)
                     {
                         if (line.ChangeSetOp == ChangeSetOperation.None)
                         {
@@ -980,6 +991,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #endregion
 
                 #region VATs
+
+                APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(initializer.Context);
+
                 List<APInvoiceTotalVAT> myTotalVATs = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, tenant).ToList();
                 foreach (APInvoiceTotalVAT itemVAT in myTotalVATs)
                 {
@@ -1095,7 +1109,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 List<APInvoiceLinePM> myLines = new List<APInvoiceLinePM>();
-                if (isNewEntity)
+                if (initializer.IsNewEntity)
                 {
                     myLines = entityPM.InvoiceLines.ToList();
                 }
@@ -1142,7 +1156,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
-                            VatType lineVatType = this.allVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
+                            VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
                             var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
                             isReady = false;
                             vatError = lineVatTypeName + " VAT External Id is missing";
@@ -1195,7 +1209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 List<APInvoiceLinePM> newLines = new List<APInvoiceLinePM>();
 
-                if (isNewEntity)
+                if (initializer.IsNewEntity)
                 {
                     newLines = lines.Where(d => d.EntityPayableId != null).ToList();
                 }
@@ -1232,7 +1246,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentRepository.Update(shipment);
                 shipmentRepository.SubmitChanges();
 
-                if (this.isNewEntity)
+                if (initializer.IsNewEntity)
                 {
                     ShipmentDataView f = shipmentRepository.GetSingleShipmentDataView(shipment.Id, tenant);
 
@@ -1372,7 +1386,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildUnexpectedPayables(List<APInvoiceLinePM> lines)
         {
-            if (!this.IsAlreadyVoided)
+            if (!initializer.IsAlreadyVoided)
             {
                 if (lines.Where(d => d.EntityPayableId == null).Any())
                 {
@@ -1429,7 +1443,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
-            if (!this.IsAlreadyVoided)
+            if (!initializer.IsAlreadyVoided)
             {
                 if (allPayables.Count > 0)
                 {
@@ -1466,7 +1480,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void SetStatusCode(ShipmentPayable entity)
         {
-            if (!this.IsAlreadyVoided)
+            if (!initializer.IsAlreadyVoided)
             {
                 if (entity.ShipmentPayableAmountTypeCode == "NEXP")
                 {
@@ -1540,7 +1554,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
 
-                if (isNewEntity)
+                if (initializer.IsNewEntity)
                 {
                     this.CreateInvoiceEntities();
                 }
@@ -1577,395 +1591,395 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region TotalVats
-        private List<InvoiceTotalsClass> group_Source;
-        private List<InvoiceTotalsClass> group_TotalVATs;
-        private List<VATTypesGroup> allVATTypesGroup;
-        private void UpdateTotalVats()
-        {
-            this.group_Source = new List<InvoiceTotalsClass>();
-            this.group_TotalVATs = new List<InvoiceTotalsClass>();
-            this.allVATTypesGroup = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
+        //private List<InvoiceTotalsClass> group_Source;
+        //private List<InvoiceTotalsClass> group_TotalVATs;
+        //private List<VATTypesGroup> allVATTypesGroup;
+        //private void UpdateTotalVats()
+        //{
+        //    this.group_Source = new List<InvoiceTotalsClass>();
+        //    this.group_TotalVATs = new List<InvoiceTotalsClass>();
+        //    this.allVATTypesGroup = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
 
-            this.CalculateSubTotals();
-            this.CalculateTotalVATs();
-            this.CalculateInvoiceAmounts();
-            this.InitializeAmountDueFields();
-        }
+        //    this.CalculateSubTotals();
+        //    this.CalculateTotalVATs();
+        //    this.CalculateInvoiceAmounts();
+        //    this.InitializeAmountDueFields();
+        //}
 
-        private void CalculateSubTotals()
-        {
-            double? subTotal = 0;
-            double? subTotal_Local = 0;
-            List<APInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+        //private void CalculateSubTotals()
+        //{
+        //    double? subTotal = 0;
+        //    double? subTotal_Local = 0;
+        //    List<APInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-            if (myDataLines.Count > 0)
-            {
-                subTotal = MethodHelper.Round(myDataLines.Sum(s => s.InvoiceCurrencyAmount), 2);
-                subTotal_Local = MethodHelper.Round(myDataLines.Sum(s => s.LocalCurrencyAmount), 2);
-            }
+        //    if (myDataLines.Count > 0)
+        //    {
+        //        subTotal = MethodHelper.Round(myDataLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+        //        subTotal_Local = MethodHelper.Round(myDataLines.Sum(s => s.LocalCurrencyAmount), 2);
+        //    }
 
-            entityPM.SubTotalInInvoiceCurrency = subTotal;
-            entityPM.SubTotalInLocalCurrency = subTotal_Local;
-        }
-        private void CalculateTotalVATs()
-        {
-            this.BuildTotalVATsDataSource();
-            this.BuildTotalVATsDataGroups();
-            this.GenerateTotalVATs();
-        }
-        private void CalculateInvoiceAmounts()
-        {
-            double? sumOfVATsAmounts = group_TotalVATs.Sum(s=>s.InvoiceCurrencyVATAmount);
-            double? sumOfVATsAmounts_Local = group_TotalVATs.Sum(s => s.LocalCurrencyVATAmount);
-            double? sumOfVATsAmounts_Profit = group_TotalVATs.Sum(s => s.ProfitCurrencyVATAmount);
-            double? Amount = MethodHelper.Round(entityPM.SubTotalInInvoiceCurrency + sumOfVATsAmounts, 2);
-            double? Amount_Local = MethodHelper.Round(entityPM.SubTotalInLocalCurrency + sumOfVATsAmounts_Local, 2);
-            double? Amount_Profit = 0;
+        //    entityPM.SubTotalInInvoiceCurrency = subTotal;
+        //    entityPM.SubTotalInLocalCurrency = subTotal_Local;
+        //}
+        //private void CalculateTotalVATs()
+        //{
+        //    this.BuildTotalVATsDataSource();
+        //    this.BuildTotalVATsDataGroups();
+        //    this.GenerateTotalVATs();
+        //}
+        //private void CalculateInvoiceAmounts()
+        //{
+        //    double? sumOfVATsAmounts = group_TotalVATs.Sum(s=>s.InvoiceCurrencyVATAmount);
+        //    double? sumOfVATsAmounts_Local = group_TotalVATs.Sum(s => s.LocalCurrencyVATAmount);
+        //    double? sumOfVATsAmounts_Profit = group_TotalVATs.Sum(s => s.ProfitCurrencyVATAmount);
+        //    double? Amount = MethodHelper.Round(entityPM.SubTotalInInvoiceCurrency + sumOfVATsAmounts, 2);
+        //    double? Amount_Local = MethodHelper.Round(entityPM.SubTotalInLocalCurrency + sumOfVATsAmounts_Local, 2);
+        //    double? Amount_Profit = 0;
 
-            if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
-            {
-                Amount_Profit = Amount;
-            }
+        //    if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+        //    {
+        //        Amount_Profit = Amount;
+        //    }
 
-            else
-            {
-                Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
-            }
+        //    else
+        //    {
+        //        Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
+        //    }
 
-            entityPM.AmountInInvoiceCurrency = Amount;
-            entityPM.AmountInLocalCurrency = Amount_Local;
-            entityPM.AmountInProfitCurrency = Amount_Profit;
-        }
-        private void BuildTotalVATsDataSource()
-        {
-            if (entityPM.TotalVATOnly)
-            {
-                this.BuildTotalVATsFromVATsOnly();
-            }
+        //    entityPM.AmountInInvoiceCurrency = Amount;
+        //    entityPM.AmountInLocalCurrency = Amount_Local;
+        //    entityPM.AmountInProfitCurrency = Amount_Profit;
+        //}
+        //private void BuildTotalVATsDataSource()
+        //{
+        //    if (entityPM.TotalVATOnly)
+        //    {
+        //        this.BuildTotalVATsFromVATsOnly();
+        //    }
 
-            else
-            {
-                if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
-                {
-                    this.BuildTotalVATsFromLines();
-                }
+        //    else
+        //    {
+        //        if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
+        //        {
+        //            this.BuildTotalVATsFromLines();
+        //        }
 
-                else if (isInvoiceLinesChanged)
-                {
-                    this.BuildTotalVATsFromLines();
-                }
-            }
-        }
-        private void BuildTotalVATsFromVATsOnly()
-        {
-            List<APInvoiceTotalVATPM> items = entityPM.TotalVATs.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+        //        else if (isInvoiceLinesChanged)
+        //        {
+        //            this.BuildTotalVATsFromLines();
+        //        }
+        //    }
+        //}
+        //private void BuildTotalVATsFromVATsOnly()
+        //{
+        //    List<APInvoiceTotalVATPM> items = entityPM.TotalVATs.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-            if(items.Count > 0)
-            {
-                foreach (APInvoiceTotalVATPM item in items)
-                {
-                    VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-                    {
-                        if (lineVatType != null)
-                        {
-                            if (!lineVatType.IsMultiPercentage)
-                            {
-                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                {
-                                    Id = item.VatTypeId,
-                                    VatTypeId = item.VatTypeId,
-                                    VatTypePercentage = MethodHelper.GetValue(item.VatPercent),
-                                    LocalCurrencyAmount = item.LocalVatableAmount,
-                                    InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
-                                    ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
-                                    ExternalVatCard = item.ExternalVATCard,
-                                    ExternalTAXItemId = lineVatType.ExternalTAXItemId,
-                                };
+        //    if(items.Count > 0)
+        //    {
+        //        foreach (APInvoiceTotalVATPM item in items)
+        //        {
+        //            VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+        //            {
+        //                if (lineVatType != null)
+        //                {
+        //                    if (!lineVatType.IsMultiPercentage)
+        //                    {
+        //                        InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+        //                        {
+        //                            Id = item.VatTypeId,
+        //                            VatTypeId = item.VatTypeId,
+        //                            VatTypePercentage = MethodHelper.GetValue(item.VatPercent),
+        //                            LocalCurrencyAmount = item.LocalVatableAmount,
+        //                            InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
+        //                            ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
+        //                            ExternalVatCard = item.ExternalVATCard,
+        //                            ExternalTAXItemId = lineVatType.ExternalTAXItemId,
+        //                        };
 
-                                if (string.IsNullOrEmpty(newItem.ExternalVatCard))
-                                {
-                                    if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                                    {
-                                        newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                    }
-                                    else
-                                    {
-                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
-                                    }
-                                }
+        //                        if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+        //                        {
+        //                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+        //                            {
+        //                                newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                            }
+        //                            else
+        //                            {
+        //                                newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
+        //                            }
+        //                        }
 
-                                group_Source.Add(newItem);
-                            }
+        //                        group_Source.Add(newItem);
+        //                    }
 
-                            else
-                            {
-                                List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
+        //                    else
+        //                    {
+        //                        List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
 
-                                foreach (VATTypesGroup itemGroup in vatTypesGroup)
-                                {
-                                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                    {
-                                        Id = itemGroup.SingleVATTypeId,
-                                        VatTypeId = itemGroup.SingleVATTypeId,
-                                        LocalCurrencyAmount = item.LocalVatableAmount,
-                                        InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
-                                        ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
-                                    };
+        //                        foreach (VATTypesGroup itemGroup in vatTypesGroup)
+        //                        {
+        //                            InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+        //                            {
+        //                                Id = itemGroup.SingleVATTypeId,
+        //                                VatTypeId = itemGroup.SingleVATTypeId,
+        //                                LocalCurrencyAmount = item.LocalVatableAmount,
+        //                                InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
+        //                                ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
+        //                            };
 
-                                    VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                    if (vatType != null)
-                                    {
-                                        newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                    }
+        //                            VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+        //                            if (vatType != null)
+        //                            {
+        //                                newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+        //                            }
 
-                                    if (this.accountingSetting != null)
-                                    {
-                                        newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                    }
+        //                            if (this.accountingSetting != null)
+        //                            {
+        //                                newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                            }
 
-                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                    if (myPercentagePM != null)
-                                    {
-                                        newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
-                                    }
+        //                            VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+        //                            if (myPercentagePM != null)
+        //                            {
+        //                                newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+        //                            }
 
-                                    if (string.IsNullOrEmpty(newItem.ExternalVatCard))
-                                    {
-                                        if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                                        {
-                                            newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                        }
-                                        else if (vatType != null)
-                                        {
-                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
-                                        }
-                                    }
+        //                            if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+        //                            {
+        //                                if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+        //                                {
+        //                                    newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                                }
+        //                                else if (vatType != null)
+        //                                {
+        //                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+        //                                }
+        //                            }
 
-                                    group_Source.Add(newItem);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void BuildTotalVATsFromLines()
-        {
-            List<APInvoiceLinePM> items = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+        //                            group_Source.Add(newItem);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //private void BuildTotalVATsFromLines()
+        //{
+        //    List<APInvoiceLinePM> items = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-            if (items.Count > 0)
-            {
-                foreach (APInvoiceLinePM item in items)
-                {
-                    VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+        //    if (items.Count > 0)
+        //    {
+        //        foreach (APInvoiceLinePM item in items)
+        //        {
+        //            VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
 
-                    if (lineVatType != null)
-                    {
-                        if (!lineVatType.IsMultiPercentage)
-                        {
-                            InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                            {
-                                Id = item.VatTypeId,
-                                VatTypeId = item.VatTypeId,
-                                VatTypePercentage = MethodHelper.GetValue(item.VatPercentage),
-                                LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
-                                InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
-                                ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
-                                ExternalVatCard = item.ExternalVATCard,
-                                ExternalTAXItemId = lineVatType.ExternalTAXItemId,
-                            };
+        //            if (lineVatType != null)
+        //            {
+        //                if (!lineVatType.IsMultiPercentage)
+        //                {
+        //                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+        //                    {
+        //                        Id = item.VatTypeId,
+        //                        VatTypeId = item.VatTypeId,
+        //                        VatTypePercentage = MethodHelper.GetValue(item.VatPercentage),
+        //                        LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+        //                        InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+        //                        ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
+        //                        ExternalVatCard = item.ExternalVATCard,
+        //                        ExternalTAXItemId = lineVatType.ExternalTAXItemId,
+        //                    };
 
-                            if (string.IsNullOrEmpty(newItem.ExternalVatCard))
-                            {
-                                if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                                {
-                                    newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                }
-                                else
-                                {
-                                    newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
-                                }
-                            }
+        //                    if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+        //                    {
+        //                        if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+        //                        {
+        //                            newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                        }
+        //                        else
+        //                        {
+        //                            newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
+        //                        }
+        //                    }
 
-                            group_Source.Add(newItem);
-                        }
+        //                    group_Source.Add(newItem);
+        //                }
 
-                        else
-                        {
-                            List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
+        //                else
+        //                {
+        //                    List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
 
-                            foreach (VATTypesGroup itemGroup in vatTypesGroup)
-                            {
-                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                {
-                                    Id = itemGroup.SingleVATTypeId,
-                                    VatTypeId = itemGroup.SingleVATTypeId,
-                                    LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
-                                    InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
-                                    ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
-                                };
+        //                    foreach (VATTypesGroup itemGroup in vatTypesGroup)
+        //                    {
+        //                        InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+        //                        {
+        //                            Id = itemGroup.SingleVATTypeId,
+        //                            VatTypeId = itemGroup.SingleVATTypeId,
+        //                            LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+        //                            InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+        //                            ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
+        //                        };
 
-                                VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                if (vatType != null)
-                                {
-                                    newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                }
+        //                        VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+        //                        if (vatType != null)
+        //                        {
+        //                            newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+        //                        }
 
-                                if (this.accountingSetting != null)
-                                {
-                                    newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                }
+        //                        if (this.accountingSetting != null)
+        //                        {
+        //                            newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                        }
 
-                                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                if (myPercentagePM != null)
-                                {
-                                    newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
-                                }
+        //                        VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+        //                        if (myPercentagePM != null)
+        //                        {
+        //                            newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+        //                        }
 
-                                if (string.IsNullOrEmpty(newItem.ExternalVatCard))
-                                {
-                                    if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
-                                    {
-                                        newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
-                                    }
-                                    else if (vatType != null)
-                                    {
-                                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
-                                    }
-                                }
+        //                        if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+        //                        {
+        //                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+        //                            {
+        //                                newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+        //                            }
+        //                            else if (vatType != null)
+        //                            {
+        //                                newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+        //                            }
+        //                        }
 
-                                group_Source.Add(newItem);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void BuildTotalVATsDataGroups()
-        {
-            if (this.group_Source.Count > 0)
-            {
-                this.group_TotalVATs = (from items in group_Source
-                                        group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.VatRecognizedPercentage } into g
-                                        select new InvoiceTotalsClass()
-                                        {
-                                            Id = g.Key.VatTypeId,
-                                            VatTypeId = g.Key.VatTypeId,
-                                            VatTypePercentage = g.Key.VatTypePercentage,
-                                            LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                                            InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                                            ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                                            ExternalVatCard = g.Key.ExternalVatCard,
-                                            ExternalTAXItemId = g.Key.ExternalTAXItemId,
-                                            VatRecognizedPercentage = g.Key.VatRecognizedPercentage
-                                        }).ToList();
+        //                        group_Source.Add(newItem);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //private void BuildTotalVATsDataGroups()
+        //{
+        //    if (this.group_Source.Count > 0)
+        //    {
+        //        this.group_TotalVATs = (from items in group_Source
+        //                                group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.VatRecognizedPercentage } into g
+        //                                select new InvoiceTotalsClass()
+        //                                {
+        //                                    Id = g.Key.VatTypeId,
+        //                                    VatTypeId = g.Key.VatTypeId,
+        //                                    VatTypePercentage = g.Key.VatTypePercentage,
+        //                                    LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+        //                                    InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+        //                                    ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+        //                                    ExternalVatCard = g.Key.ExternalVatCard,
+        //                                    ExternalTAXItemId = g.Key.ExternalTAXItemId,
+        //                                    VatRecognizedPercentage = g.Key.VatRecognizedPercentage
+        //                                }).ToList();
 
-                foreach (InvoiceTotalsClass item in group_TotalVATs)
-                {
-                    item.VatTypePercentage = MethodHelper.Roundd(item.VatTypePercentage, 3);
-                    item.LocalCurrencyAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2);
-                    item.ProfitCurrencyAmount = MethodHelper.Roundd(item.ProfitCurrencyAmount, 2);
-                    item.InvoiceCurrencyAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2);
-                    item.LocalCurrencyVATAmount = MethodHelper.Roundd((item.LocalCurrencyAmount * item.VatTypePercentage / 100), 2);
-                    item.ProfitCurrencyVATAmount = MethodHelper.Roundd((item.ProfitCurrencyAmount * item.VatTypePercentage / 100), 2);
-                    item.InvoiceCurrencyVATAmount = MethodHelper.Roundd((item.InvoiceCurrencyAmount * item.VatTypePercentage / 100), 2);
-                }
-            }
-        }
-        private void GenerateTotalVATs()
-        {
-            bool isGeneratingVATs = this.CheckIfGeneratingVATs();
+        //        foreach (InvoiceTotalsClass item in group_TotalVATs)
+        //        {
+        //            item.VatTypePercentage = MethodHelper.Roundd(item.VatTypePercentage, 3);
+        //            item.LocalCurrencyAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2);
+        //            item.ProfitCurrencyAmount = MethodHelper.Roundd(item.ProfitCurrencyAmount, 2);
+        //            item.InvoiceCurrencyAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2);
+        //            item.LocalCurrencyVATAmount = MethodHelper.Roundd((item.LocalCurrencyAmount * item.VatTypePercentage / 100), 2);
+        //            item.ProfitCurrencyVATAmount = MethodHelper.Roundd((item.ProfitCurrencyAmount * item.VatTypePercentage / 100), 2);
+        //            item.InvoiceCurrencyVATAmount = MethodHelper.Roundd((item.InvoiceCurrencyAmount * item.VatTypePercentage / 100), 2);
+        //        }
+        //    }
+        //}
+        //private void GenerateTotalVATs()
+        //{
+        //    bool isGeneratingVATs = this.CheckIfGeneratingVATs();
 
-            if (isGeneratingVATs)
-            {
-                List<APInvoiceTotalVAT> dbTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, entityPM.Tenant).ToList();
+        //    if (isGeneratingVATs)
+        //    {
+        //        List<APInvoiceTotalVAT> dbTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, entityPM.Tenant).ToList();
 
-                foreach (APInvoiceTotalVAT item in dbTotalVats)
-                {
-                    invoiceTotalVatRepository.Remove(item);
-                }
+        //        foreach (APInvoiceTotalVAT item in dbTotalVats)
+        //        {
+        //            invoiceTotalVatRepository.Remove(item);
+        //        }
 
-                foreach (InvoiceTotalsClass item in group_TotalVATs)
-                {
-                    APInvoiceTotalVAT itemPOCO = new APInvoiceTotalVAT()
-                    {
-                        Id = IdCounter.GetNumber("APInvoiceTotalVAT", entityPM.Tenant).ToString(),
-                        Tenant = entityPM.Tenant,
-                        APInvoiceId = entityPM.Id,
-                        VatTypeId = item.Id,
-                        ExternalVATCard = item.ExternalVatCard,
-                        ExternalTAXItemId = item.ExternalTAXItemId,
-                        VatPercent = MethodHelper.GetValue(item.VatTypePercentage),
-                        LocalVatableAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
-                        InvoiceCurrencyVatableAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
-                        ProfitVatableAmount = item.ProfitCurrencyAmount,
-                        LocalVATAmount = item.LocalCurrencyVATAmount,
-                        ProfitCurrencyVATAmount = item.ProfitCurrencyVATAmount,
-                        InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount,
-                    };
+        //        foreach (InvoiceTotalsClass item in group_TotalVATs)
+        //        {
+        //            APInvoiceTotalVAT itemPOCO = new APInvoiceTotalVAT()
+        //            {
+        //                Id = IdCounter.GetNumber("APInvoiceTotalVAT", entityPM.Tenant).ToString(),
+        //                Tenant = entityPM.Tenant,
+        //                APInvoiceId = entityPM.Id,
+        //                VatTypeId = item.Id,
+        //                ExternalVATCard = item.ExternalVatCard,
+        //                ExternalTAXItemId = item.ExternalTAXItemId,
+        //                VatPercent = MethodHelper.GetValue(item.VatTypePercentage),
+        //                LocalVatableAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+        //                InvoiceCurrencyVatableAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+        //                ProfitVatableAmount = item.ProfitCurrencyAmount,
+        //                LocalVATAmount = item.LocalCurrencyVATAmount,
+        //                ProfitCurrencyVATAmount = item.ProfitCurrencyVATAmount,
+        //                InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount,
+        //            };
 
-                    invoiceTotalVatRepository.Add(itemPOCO);
-                }
-            }
-        }
-        private bool CheckIfGeneratingVATs()
-        {
-            bool output = false;
+        //            invoiceTotalVatRepository.Add(itemPOCO);
+        //        }
+        //    }
+        //}
+        //private bool CheckIfGeneratingVATs()
+        //{
+        //    bool output = false;
 
-            if (this.isNewEntity)
-            {
-                output = true;
-            }
+        //    if (this.isNewEntity)
+        //    {
+        //        output = true;
+        //    }
 
-            else if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
-            {
-                output = true;
-            }
+        //    else if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
+        //    {
+        //        output = true;
+        //    }
 
-            else if (entityPM.TotalVATOnly)
-            {
-                if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
-                {
-                    output = true;
-                }
+        //    else if (entityPM.TotalVATOnly)
+        //    {
+        //        if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+        //        {
+        //            output = true;
+        //        }
 
-                else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
-                {
-                    output = true;
-                }
+        //        else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
+        //        {
+        //            output = true;
+        //        }
 
-                else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
-                {
-                    output = true;
-                }
-            }
+        //        else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
+        //        {
+        //            output = true;
+        //        }
+        //    }
 
-            else
-            {
-                if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
-                {
-                    output = true;
-                }
+        //    else
+        //    {
+        //        if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+        //        {
+        //            output = true;
+        //        }
 
-                else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
-                {
-                    output = true;
-                }
+        //        else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
+        //        {
+        //            output = true;
+        //        }
 
-                else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
-                {
-                    output = true;
-                }
-            }
+        //        else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
+        //        {
+        //            output = true;
+        //        }
+        //    }
 
-            return output;
-        }
+        //    return output;
+        //}
         #endregion
 
         #region InvoiceLines
         private void UpdateInvoiceLines()
         {
-            if (isNewEntity)
+            if (initializer.IsNewEntity)
             {
                 int lineNumber = 0;
                 foreach (APInvoiceLinePM item in entityPM.InvoiceLines)
@@ -2129,7 +2143,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Tenant = tenant,
                 EventTypeCode = "COIN",
-                UserId = loggedContactId,
+                UserId = initializer.LoggedContactId,
                 EntityId = itemPM.APInvoiceId,
                 ObjectTableName = "APInvoice",
                 Notes = "Connected with Payment: " + myPaymentNumber + " with Amount Due equals to: " + invoice.AmountDue,
@@ -2173,7 +2187,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Tenant = tenant,
                 EventTypeCode = "APID",
-                UserId = loggedContactId,
+                UserId = initializer.LoggedContactId,
                 EntityId = itemPM.APInvoiceId,
                 ObjectTableName = "APInvoice",
                 Notes = "Disconnected from Payment: " + myPaymentNumber,
@@ -2259,7 +2273,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     double? Amount = MethodHelper.Roundd(payment.AmountInPaymentCurrency, 2);
                     double? ExternalAmount = MethodHelper.Roundd(payment.ExternalPaymentAmount, 2);
-                    double? PaidAmount = (from a in objectContext.APInvoicePayments where a.APPaymentId == itemPM.APPaymentId && a.Tenant == tenant select a).Sum(s => s.PaymentAmount);
+                    double? PaidAmount = (from a in initializer.Context.APInvoicePayments where a.APPaymentId == itemPM.APPaymentId && a.Tenant == tenant select a).Sum(s => s.PaymentAmount);
 
                     if (PaidAmount == null)
                     {
@@ -2342,7 +2356,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #region Entity References
 
             List<APInvoiceLinePM> myLines = new List<APInvoiceLinePM>();
-            if (isNewEntity)
+            if (initializer.IsNewEntity)
             {
                 myLines = entityPM.InvoiceLines.ToList();
             }
@@ -2413,14 +2427,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceTransferStatus t_status = aPInvoiceTransferStatusRepository.GetSingleAPInvoiceTransferStatus(invoice.TransferStatusCode);
             entityPM.TransferStatusName = t_status.Name;
 
-            if (isNewEntity)
+            if (initializer.IsNewEntity)
             {
                 APInvoiceEntityQuery apInvoiceEntityQuery = new APInvoiceEntityQuery(invoiceEntityRepository);
                 entityPM.InvoiceEntities = apInvoiceEntityQuery.GetInvoiceEntitiesPMForInvoice(invoice.Id, tenant);
             }
 
             //Full Accounting 
-            TenantRepository tenantRepository = new TenantRepository(myCommonContext);
+            TenantRepository tenantRepository = new TenantRepository(initializer.CommonContext);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {

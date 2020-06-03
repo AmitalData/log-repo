@@ -814,7 +814,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
     }
 
+    FirstRowSelectedTimerToken: any;
     OnFirstRowSelected(event) {
+        if (this.FirstRowSelectedTimerToken) {
+            clearTimeout(this.FirstRowSelectedTimerToken);
+        }
+        this.FirstRowSelectedTimerToken = setTimeout(() => this.FirstShipmentSelectedEvent(event), 500);
+    }
+
+    FirstShipmentSelectedEvent(event) {
         this.SelectedRow = event.SelectedRow;
         this.SelectedRowIndex = event.index;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);

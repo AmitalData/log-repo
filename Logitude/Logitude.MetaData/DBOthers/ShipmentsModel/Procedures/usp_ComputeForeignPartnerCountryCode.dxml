@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_ComputeForeignPartnerCountryCode"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript><![CDATA[
+Create PROCEDURE [dbo].[usp_ComputeForeignPartnerCountryCode]
+(
+	@ShipmentId varchar(15)
+)
+AS
+
+
+
+
+declare @MasterShipmentDataId as varchar(15)
+declare @ShipmentLevelCode as varchar(1)
+declare @DirectionId as varchar(15)
+declare @ShipperId as varchar(15)
+declare @ConsigneeId as varchar(15)
+declare @FromPortId as varchar(15)
+declare @ToPortId as varchar(15)
+
+
+declare @MasterFromPortId as varchar(15)
+declare @MasterToPortId as varchar(15)
+declare @CountryId as varchar(15)
+declare @ForeignPartnerCountryCode as varchar(2)
+
+declare @ShipperName as varchar(70)
+
+declare @ConsigneeName as varchar(70)
+
+select
+@MasterShipmentDataId = MasterShipmentDataId,
+@ShipmentLevelCode= ShipmentLevelCode,
+@DirectionId = DirectionId,
+@ConsigneeId = ConsigneeId,
+@ShipperId = ShipperId,
+@FromPortId =FromPortId,
+@ToPortId = ToPortId,
+@ConsigneeName = ConsigneeName,
+@ShipperName =ShipperName
+from Shipments
+where Id = @ShipmentId
+
+
+if(@DirectionId ='I' or @DirectionId ='C')
+
+	begin 
+	         select @ForeignPartnerCountryCode = CountryCode,@ShipperName= EnglishName from Cards where Id = @ShipperId
+			if(@ForeignPartnerCountryCode is null)
+	             begin 
+
+	                   if(@ShipmentLevelCode = 'H' and @MasterShipmentDataId is null)
+
+	                          begin 
+
+	                                   set @CountryId = (select CountryId from Ports where Id = @FromPortId )
+	                                   set @ForeignPartnerCountryCode = (select Code from Countries where Id = @CountryId )
+						      end
+
+				    	else		  
+
+							  begin 
+							  	       
+										    set @MasterFromPortId = (select MainCarriageFromPortId from ShipmentMasterDatas where Id = @MasterShipmentDataId )
+									        set @CountryId = (select CountryId from Ports where Id = @MasterFromPortId )
+                                            set @ForeignPartnerCountryCode = (select Code from Countries where Id = @CountryId )
+
+	                           end 
+                    End
+
+     end
+
+
+	 else
+
+	 Begin 
+
+		  select @ForeignPartnerCountryCode = CountryCode,@ConsigneeName= EnglishName from Cards where Id = @ConsigneeId
+	     if(@ForeignPartnerCountryCode is null)
+	             begin 
+
+					 if(@MasterShipmentDataId is not null)
+					         begin 
+				                   
+								 --    set @MasterFromPortId = (select FromPortId from ShipmentMasterDatas where Id = @MasterShipmentDataId )
+								 
+								    set @MasterToPortId = (select MainCarriageFinalDestinationPortId from ShipmentMasterDatas where Id = @MasterShipmentDataId )
+						            set @CountryId = (select CountryId from Ports where Id = @MasterToPortId )
+                                    set @ForeignPartnerCountryCode = (select Code from Countries where Id = @CountryId )
+						     end
+
+	                        if(@ForeignPartnerCountryCode is null)
+
+	                           begin 
+
+	                                   set @CountryId = (select CountryId from Ports where Id = @ToPortId )
+	                                   set @ForeignPartnerCountryCode = (select Code from Countries where Id = @CountryId )
+						        end
+ 
+
+	              end 
+
+
+	  End
+
+	
+update Shipments set ForeignPartnerCountryCode = @ForeignPartnerCountryCode ,ConsigneeName = @ConsigneeName  , ShipperName =@ShipperName where Id = @ShipmentId
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

@@ -204,6 +204,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual TariffProduct Product { get; set; }
         [Column("LastUsedDate")]
 	    public DateTime? LastUsedDate { get; set; }
+        [ForeignKey("ChargesType")]
+        [Column("FreightChargeId")]
+	    public string FreightChargeId { get; set; }
+	      
+        public virtual ChargesType ChargesType { get; set; }
     }
 }
 	 

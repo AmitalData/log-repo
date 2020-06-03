@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityInputArgs, InviteeArgs} from '../../../../CRM/Args'
@@ -37,7 +37,7 @@ declare var window: any;
     templateUrl: './ActivityInputTemplate.html',
 })
 
-export class ActivityInputTemplate extends BaseComponent implements OnInit {
+export class ActivityInputTemplate extends BaseComponent implements AfterViewInit {
     public entityPM: ActivityPM;
     public ObjectTableName = "Activity";
     public DataContext: ActivityInputTemplate = this;
@@ -51,6 +51,11 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         this.entityPM = new ActivityPM();
         //ActivityPMInitService.InitValues(this.entityPM, true);
         this.CallTypesList = [];
+    }
+
+    ngAfterViewInit() {
+        this.FillCallTypeList();
+        this.LoadChildComponent();
     }
 
     public TypeCode = "";
@@ -261,10 +266,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
     }
 
     // Additional Feilds
-    ngOnInit() {
-        this.RunComponent();
-        this.FillCallTypeList();
-    }
+    
     FillCallTypeList() {
         var myService: CallTypeListService = new CallTypeListService();
         myService.getAllFromCache().subscribe((resp: any) => {
@@ -278,30 +280,9 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
             }
         });
     }
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    private Retries: number = 0;
-    private timerToken: any;
+    
     private GeneratedComponent: any;
 
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {

@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityPMService} from '../../../../CRM/Services/StandardPMs/ActivityPMService';
 import {ActivityValidator} from '../../../../CRM/Validators/ActivityValidator';
@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
     templateUrl: './NewTaskComponent.html',
 })
 
-export class NewTaskComponent extends BaseComponent implements OnInit {
+export class NewTaskComponent extends BaseComponent implements AfterViewInit {
     public ObjectTableName: string = "Activity";
     public DataContext: NewTaskComponent = this;
     public EntityPM: ActivityPM;    
@@ -33,33 +33,10 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
         this.EntityPM = this.myActivityPMService.GetNewEntityPM();        
     }
 
-    ngOnInit() {
-        this.RunComponent();
+    ngAfterViewInit() {
+        this.LoadChildComponent();
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {

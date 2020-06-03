@@ -89,7 +89,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
           if (this.timer) {
               clearTimeout(this.timer);
           }
-          this.timer = setTimeout(() => this.HandleRange(range), 200);
+          this.timer = setTimeout(() => this.HandleRange(range), 400);
    /*range.valueChanges
         .pipe(
           

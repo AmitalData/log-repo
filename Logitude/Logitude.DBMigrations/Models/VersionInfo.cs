@@ -12,6 +12,6 @@ namespace Logitude.DBMigrations.Models
     public class VersionInfo
     {
         [XmlAttribute()]
-        public int VersionNumber { get; set; }
+        public string Version { get; set; }
     }
 }

@@ -565,9 +565,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     private ComputeGrossWeight_PerStorageDays() {
         var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
-        var grossWeightPerStorageDays = this.EntityPM.GrossWeightPerTon * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
-        this.GrossWeightPerStorageDays = grossWeightPerStorageDays < 0 ? 0 : grossWeightPerStorageDays;
-        //ShipmentTool.OnShipmentQuantitiesChanged(this.EntityPM);
+        var weightPerStorageDays;
+        if (this.EntityPM.TransportModeId != "A") {
+            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+        }
+        else {
+            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+        }
+        this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
+
         ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
     }
 }

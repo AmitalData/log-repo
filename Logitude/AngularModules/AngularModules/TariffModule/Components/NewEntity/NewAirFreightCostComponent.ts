@@ -19,6 +19,7 @@ import { CommonDomainService } from '../../../Common/Services/CommonDomainServic
 import { TariffVersionPM } from '../../EntityPMs/TariffVersionPM';
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { TariffVersionAllInChargePM } from '../../EntityPMs/TariffVersionAllInChargePM';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'NewAirFreightCostComponent',
@@ -36,6 +37,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public VisibleFCLFreightArea: boolean = false;
     public VisibleContainerTypeAreaInOFS: boolean = false;
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    public FreightChargeTypesQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
     private packageTypeListService: PackageTypeListService;
     private IdProps: string[] = [];
@@ -48,19 +50,38 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public SellerDependancy: string = "AL";
     public HasAContainerTypeUOM: boolean = false;
     private firstVersion: TariffVersionPM;
+
     constructor() {
         super();
         this.myService = new TariffPMService();
         this.chargesTypePMService = new ChargesTypeListService();
         this.packageTypeListService = new PackageTypeListService();
         this.EntityPM = this.myService.GetNewEntityPM();
+       
         this.FillChargesIDsAndUOMS();
         this.FillContainerTypeIds();
+     
     }
 
     ngOnInit() {
         this.GetTenantTariffSetting();
         this.GetBCNTMeasurementId();
+    }
+
+    private SetDefaultFreightChargeId() {
+        var chargeCode = 'OFT';
+        if (this.EntityPM.TypeCode == 'AFC') {
+            chargeCode = 'AFT';
+        }
+
+        this.chargesTypePMService.getAllFromCache().subscribe(p => {
+            var chargeType: ChargesTypeList = p.Result.filter(p => p.Code == chargeCode)[0];
+            if (chargeType != null) {
+                this.FreightChargeId = chargeType.Id;
+
+            }
+        });
+
     }
 
     private BCNTmeasurementId: string;
@@ -97,8 +118,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
-
+        this.SetDefaultFreightChargeId();
         this.BuildQueryFilters();
+        this.BuildFreightChargesQueryFilters();
         this.SetUIProperties();
         this.CreateFirstVersion();
     }
@@ -138,6 +160,17 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.TypeCode == 'AFC') {
             this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
         }
+
+        this.SetUIProperties_FreightCharges();
+    }
+
+    private SetUIProperties_FreightCharges() {
+        var isFreightChargeVisible: boolean = false;
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+            isFreightChargeVisible = true;
+            this.UIProperties.SetRequired("FreightChargeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FreightChargeId));
+        }
+        this.UIProperties.SetVisibility("FreightChargeId", this.ObjectTableName, isFreightChargeVisible);
     }
 
     FillChargesIDsAndUOMS() {
@@ -165,6 +198,16 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
         this.Validate(true);
         this.SetContainerTypeUIProperties(true);
+    }
+
+    BuildFreightChargesQueryFilters() {
+        this.FreightChargeTypesQueryFilters = new ApiQueryFilters();
+        var EntityType: string = "IsAir";
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+            EntityType = "IsOcean";
+        }
+        this.FreightChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.FreightChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
     }
 
     get Name() {
@@ -526,6 +569,16 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
     }
+    get FreightChargeId() {
+        return this.EntityPM.FreightChargeId;
+    }
+    set FreightChargeId(value: string) {
+        if (this.EntityPM.FreightChargeId != value) {
+            this.EntityPM.FreightChargeId = value;
+            this.SetUIProperties();
+        }
+    }
+
     Validate(initial: boolean = false) {
         for (var index = 1; index <= 10; index++) {
             if (initial) {
@@ -804,7 +857,16 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
+
         if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+
+            if (AppTool.IsNullOrEmpty(this.FreightChargeId)) {
+                var fieldName: string = TextCodeTranslator.Translate('Tariff.F.FreightChargeId');
+                var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+                var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+                this.ValidationErrorsList.push(fieldError);
+            }
+
             if (this.StartDate == null) {
                 this.ValidationErrorsList.push("Start Date Field is Required");
             }

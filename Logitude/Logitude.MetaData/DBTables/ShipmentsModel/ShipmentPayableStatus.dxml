@@ -5,12 +5,11 @@
   DBType="Main"
   Module="Shipment">
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="4">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Name"
@@ -20,10 +19,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="Code"
+    Type="varchar"
+    Size="4">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
 </Table>

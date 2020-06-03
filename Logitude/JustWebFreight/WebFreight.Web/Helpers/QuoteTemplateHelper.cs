@@ -1,10 +1,12 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.EntityLists;
+using Logitude.BL.QuoteModel.EntityOtherServices;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -72,7 +74,8 @@ namespace WebFreight.Web.Helpers
         QuoteTemplateSetting quoteTemplateSetting = null;
         List<QuoteTemplateTextCodePM> QuoteTemplateTextCodeLists = new List<QuoteTemplateTextCodePM>();
         List<QuoteTemplateSectionPM> QuoteTemplateSectionLists = new List<QuoteTemplateSectionPM>();
-        QuoteTemplateWebService quoteTemplateWebService = null;
+        QuoteTemplateEntityService quoteTemplateEntityService = null;
+        QuoteTemplateReportHelper quoteTemplateReportHelper = null;
 
         int Tenant = 0;
         string QuoteTemplateId = String.Empty;
@@ -85,7 +88,7 @@ namespace WebFreight.Web.Helpers
             if (quoteTemplatePM != null)
             {
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", quoteTemplatePM.Tenant);
-                quoteTemplateWebService = new QuoteTemplateWebService();
+                quoteTemplateEntityService = new QuoteTemplateEntityService();
 
                 Tenant = quoteTemplatePM.Tenant;
                 CreateQuoteTemplateTextDesign();
@@ -572,7 +575,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (templatedata != null)
                 {
-                    quoteTemplateSection.SectionDocId = quoteTemplateWebService.UploadQuoteTemplateSectionDataFile(templatedata, null, quoteTemplateSection.Tenant);
+                    quoteTemplateSection.SectionDocId = quoteTemplateEntityService.UploadQuoteTemplateSectionDataFile(templatedata, null, quoteTemplateSection.Tenant);
                 }
             }
 
@@ -589,7 +592,7 @@ namespace WebFreight.Web.Helpers
         {
             this.Tenant = tenant;
             SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", tenant);
-            quoteTemplateWebService = new QuoteTemplateWebService();
+            quoteTemplateEntityService = new QuoteTemplateEntityService();
             QuoteTemplatePM newQuoteTemplateCopy = null;
 
             QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
@@ -832,13 +835,13 @@ namespace WebFreight.Web.Helpers
 
         private string CopyImageDetailId(string imageDetailId , int orginalTenant)
         {
+            if (quoteTemplateReportHelper == null) quoteTemplateReportHelper = new QuoteTemplateReportHelper();
             string result = null;
             ImageDetailRepository imageDetailRepository = new ImageDetailRepository(orginalTenant);
             ImageDetail orginalImageDetail = imageDetailRepository.GetSingleImageDetail(imageDetailId, orginalTenant);
             if (orginalImageDetail != null)
             {
-                QuoteTemplateReportHelper helper = new QuoteTemplateReportHelper();
-                byte[] fileData = helper.GetFile(orginalImageDetail.Id, orginalImageDetail.Extension, "images", orginalImageDetail.Tenant);
+                byte[] fileData = quoteTemplateReportHelper.GetFile(orginalImageDetail.Id, orginalImageDetail.Extension, "images", orginalImageDetail.Tenant);
 
                 if (fileData != null)
                 {
@@ -879,27 +882,27 @@ namespace WebFreight.Web.Helpers
 
         private void CreateCopyFromQuoteTemplatePM(QuoteTemplatePM newQuoteTemplatePM, QuoteTemplatePM orignalQuoteTemplatePM)
         {
-
-            if (quoteTemplateWebService == null)
+            if(quoteTemplateReportHelper == null) quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+            if (quoteTemplateEntityService == null)
             {
-                quoteTemplateWebService = new QuoteTemplateWebService();
+                quoteTemplateEntityService = new QuoteTemplateEntityService();
             }
 
             if (!string.IsNullOrEmpty(orignalQuoteTemplatePM.HeaderDocId))
             {
-                byte[] headerTemplatedata = quoteTemplateWebService.DownloadQuoteTemplateSectionDataFile(orignalQuoteTemplatePM.HeaderDocId, orignalQuoteTemplatePM.Tenant);
+                byte[] headerTemplatedata = quoteTemplateReportHelper.DownloadQuoteTemplateSectionDataFile(orignalQuoteTemplatePM.HeaderDocId, orignalQuoteTemplatePM.Tenant);
                 if (headerTemplatedata != null){
-                    newQuoteTemplatePM.HeaderDocId = quoteTemplateWebService.UploadQuoteTemplateSectionDataFile(headerTemplatedata, null, newQuoteTemplatePM.Tenant);
+                    newQuoteTemplatePM.HeaderDocId = quoteTemplateEntityService.UploadQuoteTemplateSectionDataFile(headerTemplatedata, null, newQuoteTemplatePM.Tenant);
                 }
                
             }
 
             if (!string.IsNullOrEmpty(orignalQuoteTemplatePM.FooterDocId))
             {
-                byte[] footerTemplatedata = quoteTemplateWebService.DownloadQuoteTemplateSectionDataFile(orignalQuoteTemplatePM.FooterDocId, orignalQuoteTemplatePM.Tenant);
+                byte[] footerTemplatedata = quoteTemplateReportHelper.DownloadQuoteTemplateSectionDataFile(orignalQuoteTemplatePM.FooterDocId, orignalQuoteTemplatePM.Tenant);
                 if (footerTemplatedata != null)
                 {
-                    newQuoteTemplatePM.FooterDocId = quoteTemplateWebService.UploadQuoteTemplateSectionDataFile(footerTemplatedata, null, newQuoteTemplatePM.Tenant);
+                    newQuoteTemplatePM.FooterDocId = quoteTemplateEntityService.UploadQuoteTemplateSectionDataFile(footerTemplatedata, null, newQuoteTemplatePM.Tenant);
                 }
                    
             }
@@ -907,7 +910,6 @@ namespace WebFreight.Web.Helpers
             IQuotesContext objectContext = QuotesContext.GetContext(Tenant);
             QuoteTemplateService quoteTemplateService = new QuoteTemplateService(objectContext, Tenant);
             quoteTemplateService.Create(newQuoteTemplatePM);
-
             CopyQuoteTemplateTextCodes(newQuoteTemplatePM.Id, orignalQuoteTemplatePM.Id , orignalQuoteTemplatePM.Tenant);
             CopyQuoteTemplateHeaderFields(newQuoteTemplatePM.Id, orignalQuoteTemplatePM.Id, orignalQuoteTemplatePM.Tenant);
             CopyQuoteTemplateDetailsFields(newQuoteTemplatePM.Id, orignalQuoteTemplatePM.Id, orignalQuoteTemplatePM.Tenant);
@@ -919,14 +921,13 @@ namespace WebFreight.Web.Helpers
         private void CopyQuoteTemplateSection(string copyQuoteTemplateId ,string orginalQuoteTempalteId, int? orignalTenant = null)
         {
             if (orignalTenant == null) orignalTenant = Tenant;
-            if (quoteTemplateWebService == null)
+            if (quoteTemplateEntityService == null)
             {
-                quoteTemplateWebService = new QuoteTemplateWebService();
+                quoteTemplateEntityService = new QuoteTemplateEntityService();
             }
 
-
             QuoteTemplateSectionRepository quoteTemplateSectionRepository = new QuoteTemplateSectionRepository(Tenant);
-            IQueryable<QuoteTemplateSection> quoteTemplateSectionLists = quoteTemplateSectionRepository.GetQuoteTemplateSectionByQuoteTemplateId(orginalQuoteTempalteId, (int)orignalTenant);
+            List<QuoteTemplateSection> quoteTemplateSectionLists = quoteTemplateSectionRepository.GetQuoteTemplateSectionByQuoteTemplateId(orginalQuoteTempalteId, (int)orignalTenant).ToList();
 
             if (quoteTemplateSectionLists.Count() > 0)
             {
@@ -948,9 +949,9 @@ namespace WebFreight.Web.Helpers
 
                         if (!string.IsNullOrEmpty(section.SectionDocId))
                         {
-                            byte[] templatedata = quoteTemplateWebService.DownloadQuoteTemplateSectionDataFile(section.SectionDocId, section.Tenant);
+                            byte[] templatedata = quoteTemplateReportHelper.DownloadQuoteTemplateSectionDataFile(section.SectionDocId, section.Tenant);
                             if (templatedata != null) {
-                                copyquoteTemplateSection.SectionDocId = quoteTemplateWebService.UploadQuoteTemplateSectionDataFile(templatedata, null, copyquoteTemplateSection.Tenant);
+                                copyquoteTemplateSection.SectionDocId = quoteTemplateEntityService.UploadQuoteTemplateSectionDataFile(templatedata, null, copyquoteTemplateSection.Tenant);
                             }
                            
                         }
@@ -967,7 +968,6 @@ namespace WebFreight.Web.Helpers
 
 
         }
-
 
         // QuoteTemplateTableDesign
         private string CopyQuoteTemplateTableDesignPM(string TableDesignId  , int? orginalTenant = null)
@@ -1033,7 +1033,7 @@ namespace WebFreight.Web.Helpers
         {
             if (orignalTenant == null) orignalTenant = Tenant;
             QuoteTemplateTextCodeRepository quoteTemplateTextCodeRepository = new QuoteTemplateTextCodeRepository((int)orignalTenant);
-            IQueryable<QuoteTemplateTextCode> quoteTemplateTextCodeLists = quoteTemplateTextCodeRepository.GetQuoteTemplateTextCodeByQuoteTemplateId(orginalQuoteTempalteId, (int)orignalTenant);
+            List<QuoteTemplateTextCode> quoteTemplateTextCodeLists = quoteTemplateTextCodeRepository.GetQuoteTemplateTextCodeByQuoteTemplateId(orginalQuoteTempalteId, (int)orignalTenant).ToList();
 
             if (quoteTemplateTextCodeLists.Count() > 0)
             {
@@ -1170,47 +1170,48 @@ namespace WebFreight.Web.Helpers
 
         #region CopyQuoteTemplateFromTenantZero
 
-        public string CopyQuoteTemplateFromTenantZero(int tenant , string quoteTemplateId = null, string userId = null)
+        public string CopyQuoteTemplateFromTenantZero(QuoteTemplateCopyDetails quoteTemplateCopyDetails)
         {
-            QuoteTemplateQuery quoteTemplateRepository = new QuoteTemplateQuery(tenant);
-            this.Tenant = tenant;
+            QuoteTemplateQuery quoteTemplateRepository = new QuoteTemplateQuery(quoteTemplateCopyDetails.Tenant);
+            this.Tenant = quoteTemplateCopyDetails.Tenant;
             List<QuoteTemplatePM> QuoteTemplateLists = new List<QuoteTemplatePM>();
             string result = "";
-            if (string.IsNullOrEmpty(quoteTemplateId))
+            if (string.IsNullOrEmpty(quoteTemplateCopyDetails.QuoteTemplateId))
             {
-                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).Where(d => d.IsCopiedAtSignup == true).ToList();
+                QuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(0).ToList();
             }
             else
             {
-                QuoteTemplateLists.Add(quoteTemplateRepository.GetSinglePM(quoteTemplateId,0));
+                QuoteTemplateLists.Add(quoteTemplateRepository.GetSinglePM(quoteTemplateCopyDetails.QuoteTemplateId,0));
             }
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(quoteTemplateCopyDetails.UserId))
             {
                 ContactRepository contactRepository = new ContactRepository(0);
-                userId = contactRepository.GetConactIdByemail("system@tenant" + tenant.ToString() + ".com", tenant);
+                quoteTemplateCopyDetails.UserId = contactRepository.GetConactIdByemail("system@tenant" + quoteTemplateCopyDetails.Tenant.ToString() + ".com", quoteTemplateCopyDetails.Tenant);
             }
-
+            if (quoteTemplateCopyDetails.UpdateFromTenantData)
+            {
+                RemoveExisitingQuoteTemplates(quoteTemplateCopyDetails.Tenant, quoteTemplateRepository, QuoteTemplateLists);
+            }
             foreach (QuoteTemplatePM item in QuoteTemplateLists)
             {
-                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(item.QuoteTemplateSettingId, tenant , 0);
+                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(item.QuoteTemplateSettingId, quoteTemplateCopyDetails.Tenant, 0);
                 if (copySetting != null)
                 {
                     QuoteTemplatePM newQuoteTemplateCopy = new QuoteTemplatePM()
                     {
-                        Tenant = tenant,
+                        Tenant = quoteTemplateCopyDetails.Tenant,
                         Name = item.Name,
-                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        CreatedByUserId = userId,
+                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(quoteTemplateCopyDetails.Tenant),
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(quoteTemplateCopyDetails.Tenant),
+                        CreatedByUserId = quoteTemplateCopyDetails.UserId,
                         QuoteTemplateSettingId = copySetting.Id,
                         TemplateTypeCode = item.TemplateTypeCode,
                         IsTemplate = true,
-                        OriginalQuoteTemplateId = item.Id,
-                        
-
+                        OriginalQuoteTemplateId = item.Id
                     };
                     CreateCopyFromQuoteTemplatePM(newQuoteTemplateCopy, item);
-                    result = !string.IsNullOrEmpty(quoteTemplateId) ? newQuoteTemplateCopy.Id : "";
+                    result = !string.IsNullOrEmpty(quoteTemplateCopyDetails.QuoteTemplateId) ? newQuoteTemplateCopy.Id : "";
 
                 }
 
@@ -1219,7 +1220,30 @@ namespace WebFreight.Web.Helpers
 
             return result;
         }
+
+        private static void RemoveExisitingQuoteTemplates(int tenant, QuoteTemplateQuery quoteTemplateRepository, List<QuoteTemplatePM> QuoteTemplateLists)
+        {
+            List<QuoteTemplatePM> CurrentTenantQuoteTemplateLists = new List<QuoteTemplatePM>();
+            CurrentTenantQuoteTemplateLists = quoteTemplateRepository.GetQuoteTemplatePMsByTenant(tenant).ToList();
+
+            foreach (QuoteTemplatePM item in CurrentTenantQuoteTemplateLists)
+            {
+                QuoteTemplatePM quoteTemplate = QuoteTemplateLists.SingleOrDefault(i => i.Id == item.OriginalQuoteTemplateId);
+                if (quoteTemplate != null)
+                {
+                    QuoteTemplateLists.Remove(quoteTemplate);
+                }
+            }
+        }
         #endregion
 
+    }
+
+    public class QuoteTemplateCopyDetails
+    {
+        public int Tenant;
+        public string QuoteTemplateId;
+        public string UserId;
+        public bool UpdateFromTenantData;
     }
 }

@@ -330,7 +330,15 @@
 
         $("#DocumentsPageBusyIndicator").show();
 
-        var url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        var url = null;
+
+        if ($.IsExternalURL) {
+            url = "../api/DocumentsData?securitykey=" + $.CurrentEntityKey + "&entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        }
+
+        else {
+            url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        }
 
         $.ajax({
             url: url,
@@ -596,6 +604,7 @@
 
     $(document).ready(function () {
         $("#TAB_MON").hide();
+        $("#DownloadAll").hide();
 
         $.ResizePage(210);
         $.SetTabsEnabled(false);
@@ -637,6 +646,8 @@
         }
 
         else {
+
+            $("#DownloadAll").show();
 
             $.CurrentEntityId = linkParameters[0];
             $.CurrentCardId = linkParameters[1];

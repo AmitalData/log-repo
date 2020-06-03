@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
                     Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService gLAccoutQueryService = new EntityQueryServices.GLAccountQueryService(Tenant);
-                    if(item.CreditControlAccount != null)
+                    if(!string.IsNullOrEmpty( item.CreditControlAccount))
                     {
                         GLAccountPM CreditControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditControlAccount, Tenant);
 
@@ -64,13 +64,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                             temp.CreditControlAccountId = CreditControlAccount.Id;
                         }
                     }
-                    if (item.CreditAccount != null)
+                    if (!string.IsNullOrEmpty(item.CreditAccount) )
                     {
                         GLAccountPM CreditAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditAccount, Tenant);
 
                         if (CreditAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
+                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditAccount + " doesn't exist");
 
                         }
                         else
@@ -80,13 +80,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     }
 
 
-                    if (item.DebitControlAccount != null)
+                    if (!string.IsNullOrEmpty( item.DebitControlAccount))
                     {
                         GLAccountPM DebitControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitControlAccount, Tenant);
 
                         if (DebitControlAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
+                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.DebitControlAccount + " doesn't exist");
 
                         }
                         else
@@ -97,7 +97,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     }
 
 
-                    if (item.DebitAccount != null)
+                    if (!string.IsNullOrEmpty(item.DebitAccount))
                     {
                         GLAccountPM DebitAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitAccount, Tenant);
 

@@ -930,7 +930,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 38;
+            this.TotalNumberOfLoads = 39;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;

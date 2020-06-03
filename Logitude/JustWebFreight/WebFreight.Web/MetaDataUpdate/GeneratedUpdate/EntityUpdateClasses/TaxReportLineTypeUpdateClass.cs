@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable TaxReportLineTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReportLineType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TaxReportLineTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxReportLineType").ToList();
+		   //List<ObjectField> TaxReportLineTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxReportLineType").ToList();
 		       
 	      
 

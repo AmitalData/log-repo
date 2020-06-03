@@ -1,4 +1,4 @@
-import {Component, OnInit,ViewChild,ViewContainerRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -27,7 +27,7 @@ import {ContactListService} from '../../../../Common/Services/StandardLists/Cont
     templateUrl: './OpportunityGeneralTabComponent.html',
 })
 
-export class OpportunityGeneralTabComponent extends BaseComponent implements OnInit {
+export class OpportunityGeneralTabComponent extends BaseComponent implements OnInit, AfterViewInit {
     public ObjectTableName: string = "Opportunity";
     public DataContext: OpportunityGeneralTabComponent = this;
     public EntityPM: OpportunityPM = new OpportunityPM();
@@ -46,6 +46,25 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM.OwnerId != null)
             return this.EntityPM.OwnerId;
 
+    }
+
+    constructor(private _entityResourceService: EntityResourceService, private entityArgs: EntityArgs) {
+        super();
+        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response: any) => {
+        });
+        this.EntityPM = entityArgs.EntityPM;
+        this.Listen();
+    }
+
+
+    ngOnInit() {
+        this.SetFieldsEnabled();
+        this.SetUIProperties();
+
+    }
+
+    ngAfterViewInit() {
+        this.LoadChildComponent();
     }
 
     private Listen() {
@@ -381,17 +400,6 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     public get ForeignClientId() { return this.EntityPM.ForeignClientId; }
     public set ForeignClientId(value: string) { if (this.EntityPM.ForeignClientId != value) this.EntityPM.ForeignClientId = value; }
 
-
-    constructor(private _entityResourceService: EntityResourceService, private entityArgs: EntityArgs) {
-        super();
-        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response:any) => {
-        });
-        this.EntityPM = entityArgs.EntityPM;
-        this.Listen();
-        this.RunComponent();
-
-    }
-
     SetClosingReasonFields() {
 
         this.UIProperties.SetEnabled("ClosingReasonId","Opportunity", false);
@@ -415,40 +423,13 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }
+
+    private GeneratedComponent: any;
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
             this.GeneratedComponent.SetEnabled(this.OtherFieldsChild);
         }
     }
 
-    private Retries: number = 0;
-    private timerToken: any;
-    private GeneratedComponent: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    ngOnInit() {
-        this.SetFieldsEnabled();
-        this.SetUIProperties();
-
-    }
+    
 }

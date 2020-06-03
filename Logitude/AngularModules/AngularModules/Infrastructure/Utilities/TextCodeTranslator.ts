@@ -104,7 +104,10 @@ export class TextCodeTranslator {
             }
             else {
                 if (this.ShowAlertMessage(value)) {
-                    alert("This Code '" + value + "' Not Found!");
+ 
+                       alert("This Code '" + value + "' Not Found!");
+ 
+    
                 }
             }
         }

@@ -1,4 +1,4 @@
-import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, QueryList, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -26,7 +26,7 @@ import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/Shipm
     templateUrl: './AddEditDeliveryComponent.html',
 })
 
-export class AddEditDeliveryComponent implements OnDestroy {
+export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
   public SelectedTab: any;
 
     public EntityPM: ShipmentDeliveryPM;
@@ -85,10 +85,15 @@ export class AddEditDeliveryComponent implements OnDestroy {
             this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((res2: any) => {
                 this.IsResourcesReady = true;
                 this.BuildTabs();
-                this.RunComponent();
                 this.Listen();
             });
         });
+    }
+
+    private isViewInited = false;
+    ngAfterViewInit() {
+        this.isViewInited = true;
+        this.InitializeComponent();
     }
 
     private SaveCompletedEvent: any = null;
@@ -120,39 +125,6 @@ export class AddEditDeliveryComponent implements OnDestroy {
         this.TabsItemsSource.push(new TabItem("DCSO", "ShipmentPickUpDelivery.TH.DocsOut", this.IsNewEntity));
         this.TabsItemsSource.push(new TabItem("DCSI", "ShipmentPickUpDelivery.TH.DocsIn", this.IsNewEntity));
         this.selectedTabCode = "MAIN";
-    }
-
-    private isViewInited = false;
-    RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.toArray().length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isViewInited = true;
-                this.InitializeComponent();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
     }
 
     InitializeComponent() {

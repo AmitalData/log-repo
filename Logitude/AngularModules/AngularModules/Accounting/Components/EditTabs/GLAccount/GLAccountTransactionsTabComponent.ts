@@ -27,7 +27,7 @@ import {RatesTableListService} from '../../../../Infrastructure/Services/Standar
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+
     templateUrl: './GLAccountTransactionsTabComponent.html',
     providers: [LedgerTransactionListService, LedgerTransactionExtendedListService, GLAccountExtendedListService]
 })
@@ -714,8 +714,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     LoadData() {
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
 
-            var _fromDate = DateTool.GetDate(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
-            var _toDate = DateTool.GetDate(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
+            var _fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
+            var _toDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
             this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
             console.log(">> Date Filter: ", _fromDate, _toDate);
 

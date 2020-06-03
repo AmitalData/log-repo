@@ -110,6 +110,7 @@ export class QuoteList {
 		LastQuoteActivityTypeName: string;
 		LastActivityByUserName: string;
 		LastQuoteActivityDate: Date;
+		QuoteClosingReasonId: string;
 		QuoteClosingReasonCode: string;
 		QuoteClosingReasonName: string;
 		SentDate: Date;

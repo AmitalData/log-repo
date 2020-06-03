@@ -13,9 +13,13 @@ namespace Simplog.Data.QuoteModel.Mapping
         public QuoteClosingReasonMap()
         {
             // Primary Key
-            this.HasKey(t => t.Code);
+            this.HasKey(t => t. Id);
 
             // Properties
+            this.Property(t => t.Id)
+                .IsRequired()
+                .HasMaxLength(15);
+
             this.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(2)
@@ -30,11 +34,31 @@ namespace Simplog.Data.QuoteModel.Mapping
                 .HasMaxLength(1000)
                 .IsUnicode(true);
 
+            this.Property(t => t.CreatedByUserId)
+                .IsRequired()
+                .HasMaxLength(60)
+                .IsUnicode(false);
+
+            this.Property(t => t.UpdatedByUserId)
+                .IsRequired()
+                .HasMaxLength(60)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("QuoteClosingReasons");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
+            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
+            this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
+            this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
         }
     }
 }

@@ -1197,14 +1197,14 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Quote Closing Reason
-            QuoteClosingReasonRepository quoteClosingReasonRep = new QuoteClosingReasonRepository(quotesContext);
-            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "EQ", Name = "Expensive Quote" }, quoteClosingReasonRep);
-            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "GS", Name = "Given directly to the Shipping Line" }, quoteClosingReasonRep);
-            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LC", Name = "Lost to Competitor" }, quoteClosingReasonRep);
-            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LS", Name = "Lack of Service in the Last Shipment" }, quoteClosingReasonRep);
-            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "XQ", Name = "Expired Quote" }, quoteClosingReasonRep);
+            //QuoteClosingReasonRepository quoteClosingReasonRep = new QuoteClosingReasonRepository(quotesContext);
+            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "EQ", Name = "Expensive Quote" }, quoteClosingReasonRep);
+            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "GS", Name = "Given directly to the Shipping Line" }, quoteClosingReasonRep);
+            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LC", Name = "Lost to Competitor" }, quoteClosingReasonRep);
+            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LS", Name = "Lack of Service in the Last Shipment" }, quoteClosingReasonRep);
+            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "XQ", Name = "Expired Quote" }, quoteClosingReasonRep);
 
-            quoteClosingReasonRep.SubmitChanges();
+            //quoteClosingReasonRep.SubmitChanges();
             #endregion
 
             //-------------Customer Status---------------

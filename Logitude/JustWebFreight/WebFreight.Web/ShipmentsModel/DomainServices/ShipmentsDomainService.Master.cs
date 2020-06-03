@@ -161,7 +161,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetMasterReceivablesForProfit(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+          //  SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> result = new List<ShipmentReceivablePM>();
             shipmentQuery = new ShipmentQuery(tenant);

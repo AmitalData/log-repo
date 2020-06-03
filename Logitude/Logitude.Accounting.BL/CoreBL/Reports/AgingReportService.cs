@@ -494,8 +494,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          //),
 
                          TotalOpenShipments = custOFiles != null ? custOFiles.TotalOpenFilesAmount : 0,
-                         TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
-                         TotalOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
+                         TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
+                         TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
 
                          AccountEnglishName = acc.EnglishName,
                          AccountLocalName = acc.LocalName,

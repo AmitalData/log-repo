@@ -58,7 +58,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.CodeField = objectTablePM.CodeField;
             objectTable.NameField = objectTablePM.NameField;
             objectTable.DisableSearchBox = objectTablePM.DisableSearchBox;
-            objectTable.AllowedInQueues = objectTablePM.AllowedInQueues;
+            objectTable.AllowedInTicket = objectTablePM.AllowedInTicket;
             objectTable.IsTabsHidden = objectTablePM.IsTabsHidden;
             objectTable.DescriptionTextCodeCode = objectTablePM.DescriptionTextCodeCode;
             objectTable.NewButtonTextCodeCode = objectTablePM.NewButtonTextCodeCode;

@@ -71,7 +71,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         //ReportRunViewWorkerRole
         //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
         //if (featureToggle) {
-        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;
+        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;//
         //}
 
     }
@@ -337,7 +337,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this.IsUsedReportsRunUsingWR = false;
             this.IsRunReportSucceeded = true;
             this.SetReportData();
-       
+
         }
     }
 
@@ -523,7 +523,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
-                                   
+
                                     // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
                                     //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
                                     // }

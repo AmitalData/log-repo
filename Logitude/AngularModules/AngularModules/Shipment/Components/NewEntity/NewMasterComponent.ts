@@ -1572,8 +1572,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             confirmWindow.Width = 450;
             confirmWindow.Height = 190;
             confirmWindow.ShowCancelButton = false;
+            confirmWindow.YesButtonText = "Don't Save";
+            confirmWindow.NoButtonText = "Cancel";
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show("You are about to cancel Shipment and all data will be lost - Are you sure ?");
+            confirmWindow.Show("You are about to cancel Shipment and all data will be lost");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.CloseWizardWindow();

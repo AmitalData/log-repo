@@ -153,21 +153,12 @@
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
                                 <div class="TextTrimming" style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.InvoiceCurrencyVatableAmount | NumbersPipe:'N2'}}
+                                    {{item.InvoiceCurrencyVATAmount | NumbersPipe:'N2'}}
                                 </div>
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceCurrencyVatableAmount'" [DataContext]="item" [Text]="item.InvoiceCurrencyVatableAmount" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceCurrencyVATAmount'" [DataContext]="item" [Text]="item.InvoiceCurrencyVATAmount" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-
-                    <!-- VAT Amount -->
-                    <log-column [header]="'VAT Amount'" [width]="'100'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                {{item.EntityPM.InvoiceCurrencyVATAmount | NumbersPipe:'N2'}}
                             </log-cell-template>
                         </ng-template>
                     </log-column>

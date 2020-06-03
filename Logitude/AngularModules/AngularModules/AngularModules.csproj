@@ -1178,6 +1178,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\material-module.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\FollowUpPMExtendedService.ts" />
@@ -3778,11 +3779,13 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
+    <TypeScriptCompile Include="Quote\EntityPMs\QuoteClosingReasonPM.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateDetailsFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateHeaderFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\QuoteDashboard\DashboardService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardLists\QuoteFollowUpListService.ts" />
+    <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteClosingReasonPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSectionPMService.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\TasksOfNoProjectsFilterComponent.ts" />

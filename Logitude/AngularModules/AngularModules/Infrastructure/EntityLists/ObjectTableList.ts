@@ -54,7 +54,7 @@ export class ObjectTableList {
 		CodeField: string;
 		NameField: string;
 		DisableSearchBox: boolean;
-		AllowedInQueues: boolean;
+		AllowedInTicket: boolean;
 		LovDisplayMemberPath: string;
 		LovDisplayMemberPathLocal: string;
 		IsTabsHidden: boolean;

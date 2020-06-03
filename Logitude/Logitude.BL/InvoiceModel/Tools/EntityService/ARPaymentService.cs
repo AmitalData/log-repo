@@ -2167,7 +2167,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void CheckLinesAmountToReconcileTotal(ARPaymentPM _payment)
         {
-
+            if(_payment.IsClosed && _payment.IsExternalEntity)
+                return;
+            
             ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
             bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 

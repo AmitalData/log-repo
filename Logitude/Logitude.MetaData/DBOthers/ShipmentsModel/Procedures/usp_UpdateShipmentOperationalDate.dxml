@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_UpdateShipmentOperationalDate"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+Create PROCEDURE [dbo].[usp_UpdateShipmentOperationalDate]
+(
+	@ShipmentId varchar(15)
+)
+AS
+
+declare @Tenant as int
+declare @DirectionId as varchar(1)
+declare @CreateDateTime as datetime
+declare @ShipmentLevelCode as varchar(1)
+declare @MasterShipmentDataId as varchar(15)
+declare @MasterCreateDateTime as datetime
+declare @MasterOperationalDate as datetime
+declare @HouseId as varchar(15)
+declare @MainCarriageETA as datetime
+declare @Transshipment1ETA as datetime
+declare @Transshipment2ETA as datetime
+declare @Transshipment3ETA as datetime
+declare @MainCarriageATA as datetime
+declare @Transshipment1ATA as datetime
+declare @Transshipment2ATA as datetime
+declare @Transshipment3ATA as datetime
+declare @MainCarriageETD as datetime
+declare @Transshipment1ETD as datetime
+declare @Transshipment2ETD as datetime
+declare @Transshipment3ETD as datetime
+declare @MainCarriageATD as datetime
+declare @Transshipment1ATD as datetime
+declare @Transshipment2ATD as datetime
+declare @Transshipment3ATD as datetime
+declare @OperationalDate as datetime
+
+
+BEGIN
+	SELECT
+	@Tenant = Tenant,
+	@DirectionId = DirectionId,
+	@CreateDateTime = CreateDateTime,
+	@ShipmentLevelCode = ShipmentLevelCode,
+	@MasterShipmentDataId = MasterShipmentDataId
+	from Shipments where Id = @ShipmentId
+
+		set @OperationalDate = null
+
+		if(@ShipmentLevelCode = 'H')
+		BEGIN
+			if(@MasterShipmentDataId is null)
+			begin
+				set @OperationalDate = @CreateDateTime
+			end
+
+			else
+			begin
+				select 
+				@MasterCreateDateTime = CreateDateTime,				 
+				@MasterOperationalDate = OperationalDate
+				from Shipments where Tenant = @Tenant AND Id = @MasterShipmentDataId
+
+				if(@MasterOperationalDate is not null AND @MasterOperationalDate != @MasterCreateDateTime)
+				set @OperationalDate = @MasterOperationalDate
+
+				else
+				set @OperationalDate = @CreateDateTime
+			end
+		END
+
+		else
+		BEGIN
+			if(@DirectionId = 'I')
+			begin
+				SELECT 
+				@MainCarriageETA = MainCarriageETA,
+				@Transshipment1ETA = Transshipment1ETA,
+				@Transshipment2ETA = Transshipment2ETA,
+				@Transshipment3ETA = Transshipment3ETA,
+				@MainCarriageATA = MainCarriageATA,
+				@Transshipment1ATA = Transshipment1ATA,
+				@Transshipment2ATA = Transshipment2ATA,
+				@Transshipment3ATA = Transshipment3ATA
+				from ShipmentMasterDatas where Id = @ShipmentId AND Tenant = @Tenant
+
+				-- Actual Arrival
+				if (@Transshipment3ATA is not null)
+				set @OperationalDate = @Transshipment3ATA;
+                
+				else if (@Transshipment2ATA is not null)
+				set @OperationalDate = @Transshipment2ATA;
+                
+				else if (@Transshipment1ATA is not null)
+				set @OperationalDate = @Transshipment1ATA;
+
+				else if (@MainCarriageATA is not null)
+				set @OperationalDate = @MainCarriageATA;
+
+				-- Expected Arrival
+				else if (@Transshipment3ETA is not null)
+				set @OperationalDate = @Transshipment3ETA;
+
+				else if (@Transshipment2ETA is not null)
+				set @OperationalDate = @Transshipment2ETA;
+
+				else if (@Transshipment1ETA is not null)
+				set @OperationalDate = @Transshipment1ETA;
+
+				else if (@MainCarriageETA is not null)
+				set @OperationalDate = @MainCarriageETA;
+
+				else
+				set @OperationalDate = @CreateDateTime;
+			end
+
+			else
+			begin
+				SELECT 
+				@MainCarriageETD = MainCarriageETD,
+				@Transshipment1ETD = Transshipment1ETD,
+				@Transshipment2ETD = Transshipment2ETD,
+				@Transshipment3ETD = Transshipment3ETD,
+				@MainCarriageATD = MainCarriageATD,
+				@Transshipment1ATD = Transshipment1ATD,
+				@Transshipment2ATD = Transshipment2ATD,
+				@Transshipment3ATD = Transshipment3ATD
+				from ShipmentMasterDatas where Id = @ShipmentId AND Tenant = @Tenant
+
+				-- Actual Departure
+				if (@MainCarriageATD is not null)
+				set @OperationalDate = @MainCarriageATD;
+
+				else if (@Transshipment1ATD is not null)
+				set @OperationalDate = @Transshipment1ATD;
+
+				else if (@Transshipment2ATD is not null)
+				set @OperationalDate = @Transshipment2ATD;
+
+				else if (@Transshipment3ATD is not null)
+				set @OperationalDate = @Transshipment3ATD;
+
+				-- Expected Departure
+				else if (@MainCarriageETD is not null)
+				set @OperationalDate = @MainCarriageETD;
+
+				else if (@Transshipment1ETD is not null)
+				set @OperationalDate = @Transshipment1ETD;
+
+				else if (@Transshipment2ETD is not null)
+				set @OperationalDate = @Transshipment2ETD;
+
+				else if (@Transshipment3ETD is not null)
+				set @OperationalDate = @Transshipment3ETD;
+
+				else
+				set @OperationalDate = @CreateDateTime;
+			end
+		END
+
+		update Shipments set OperationalDate = @OperationalDate where Id = @ShipmentId AND Tenant = @Tenant
+
+			if(@ShipmentLevelCode = 'C')
+			BEGIN
+				DECLARE HousesCursor CURSOR READ_ONLY
+				FOR
+				SELECT Id
+				FROM Shipments
+				where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId AND Tenant = @Tenant
+				OPEN HousesCursor FETCH NEXT FROM HousesCursor INTO @HouseId
+				WHILE @@FETCH_STATUS = 0
+				BEGIN
+				EXECUTE [usp_UpdateShipmentOperationalDate] @HouseId
+				FETCH NEXT FROM HousesCursor INTO @HouseId
+				END
+				CLOSE HousesCursor
+				DEALLOCATE HousesCursor
+			END
+END
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

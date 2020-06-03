@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="DeleteOldAuthenticationTokens"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript><![CDATA[
+Create procedure [dbo].[DeleteOldAuthenticationTokens]
+as 
+
+begin
+
+delete from [dbo].[AuthenticationTokens] where [ExpirationDate] < GETDATE() - 14 and ClientType = 'DocumentDownload'
+ 
+end
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

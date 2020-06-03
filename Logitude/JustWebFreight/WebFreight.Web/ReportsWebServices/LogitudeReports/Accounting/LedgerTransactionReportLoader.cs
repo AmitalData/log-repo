@@ -394,9 +394,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
 
             };
+            SetReportCategoryParameters(cardIndexParameters);
+
             return cardIndexParameters;
         }
 
+        private void SetReportCategoryParameters(CardIndexReportParams reportParameters)
+        {
+            string category1Id = null;
+            string category2Id = null;
+            string category3Id = null;
+            string category4Id = null;
+            string category5Id = null;
+
+            string categoryIndex = GetFilterValue<string>("CategoryIndex");
+            string categoryValue = GetFilterValue<string>("CategoryValue");
+
+            if (!string.IsNullOrEmpty(categoryIndex))
+            {
+
+                switch (categoryIndex)
+                {
+                    case "Category1": { category1Id = categoryValue; break; }
+                    case "Category2": { category2Id = categoryValue; break; }
+                    case "Category3": { category3Id = categoryValue; break; }
+                    case "Category4": { category4Id = categoryValue; break; }
+                    case "Category5": { category5Id = categoryValue; break; }
+                }
+            }
+
+            reportParameters.Category1Id = category1Id;
+            reportParameters.Category2Id = category2Id;
+            reportParameters.Category3Id = category3Id;
+            reportParameters.Category4Id = category4Id;
+            reportParameters.Category5Id = category5Id;
+        }
         private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
             MemoryStream memorystream = new MemoryStream(xmlFilters);

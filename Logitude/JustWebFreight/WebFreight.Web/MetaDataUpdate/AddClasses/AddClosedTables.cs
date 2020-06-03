@@ -1478,23 +1478,23 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static void AddQuoteClosingReason(QuoteClosingReasonDetails quoteClosingReasonDetails, QuoteClosingReasonRepository quoteClosingReasonRepository)
-        {
-            Dictionary<string, QuoteClosingReason> tenantQuoteClosingReason = quoteClosingReasonRepository.GetQuoteClosingReasons().ToDictionary(d => d.Code, a => a);
+        //public static void AddQuoteClosingReason(QuoteClosingReasonDetails quoteClosingReasonDetails, QuoteClosingReasonRepository quoteClosingReasonRepository)
+        //{
+        //    Dictionary<string, QuoteClosingReason> tenantQuoteClosingReason = quoteClosingReasonRepository.GetQuoteClosingReasons().ToDictionary(d => d.Code, a => a);
 
-            if (tenantQuoteClosingReason.Keys.Contains(quoteClosingReasonDetails.Code))
-            {
-                QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(quoteClosingReasonDetails.Code);
-                quoteClosingReason.Name = quoteClosingReasonDetails.Name;
-                quoteClosingReason.SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name;
-                quoteClosingReasonRepository.Update(quoteClosingReason);
-            }
-            else
-            {
-                QuoteClosingReason newQuoteClosingReason = new QuoteClosingReason() { Code = quoteClosingReasonDetails.Code, Name = quoteClosingReasonDetails.Name, SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name };
-                quoteClosingReasonRepository.Add(newQuoteClosingReason);
-            }
-        }
+        //    if (tenantQuoteClosingReason.Keys.Contains(quoteClosingReasonDetails.Code))
+        //    {
+        //        QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(quoteClosingReasonDetails.Code);
+        //        quoteClosingReason.Name = quoteClosingReasonDetails.Name;
+        //        quoteClosingReason.SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name;
+        //        quoteClosingReasonRepository.Update(quoteClosingReason);
+        //    }
+        //    else
+        //    {
+        //        QuoteClosingReason newQuoteClosingReason = new QuoteClosingReason() { Code = quoteClosingReasonDetails.Code, Name = quoteClosingReasonDetails.Name, SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name };
+        //        quoteClosingReasonRepository.Add(newQuoteClosingReason);
+        //    }
+        //}
 
         public static void AddCustomerStatus(CustomerStatusDetails CustomerStatusDetails, CustomerStatusRepository CustomerStatusRepository)
         {

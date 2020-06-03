@@ -1,7 +1,7 @@
 
 
 declare var window: any;
-import { Component, OnInit, ViewChildren, QueryList} from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -72,7 +72,7 @@ import {CitySelectionArgs} from '../../../Common/Args';
     providers: [SharedAgentManifestService, AgentSharedManifestPMService,EntityPMService],
 })
 
-export class SharedManifestAdditionalComponent extends BaseComponent implements OnInit {
+export class SharedManifestAdditionalComponent extends BaseComponent implements OnInit, AfterViewInit {
     public ObjectTableName: string = "Shipment";
     public DataContext = this;
     private myAddressListService: AddressListService;
@@ -221,16 +221,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     OurSideShipmentPickUp: ShipmentPickUpDeliverySL;
     OurSideShipmentDelivery: ShipmentPickUpDeliverySL;
 
-
-
-
-
-
-
-
-
-
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
@@ -253,6 +243,9 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     }
 
+    ngAfterViewInit() {
+        this.LoadChildComponent();
+    }
 
     //  Properites
 
@@ -1405,7 +1398,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         if (this.ManifestSL && this.CurrentEntity) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
-            this.RunComponent();
             this.FullShipmentProperites();
             this.BuildAgentSide();
             this.BuildAgentShipmentPickUpDelivey();
@@ -4043,27 +4035,9 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private timerToken: any;
-    private Retries: number = 0;
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;   
     private GeneratedComponent: any;
 
-    RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.LoadChildComponent();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
     
     LoadChildComponent() {
         if (this.IsLoadAdditionalScreen) {
@@ -4098,19 +4072,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             }
         }
     }
-
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
 
     StopBusyIndicator() {
 

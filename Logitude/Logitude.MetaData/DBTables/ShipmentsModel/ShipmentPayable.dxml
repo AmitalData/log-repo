@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentPayables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"

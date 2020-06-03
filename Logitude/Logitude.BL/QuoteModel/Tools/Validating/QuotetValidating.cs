@@ -443,8 +443,26 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         }
         private static void ValidateQuoteCharges(QuotePM entityPM)
         {
+            string freightLineCostCurrencyId = null;
+            QuoteChargePM freightCharge = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ChargesGroupCode == "FRT").FirstOrDefault();
+            if (freightCharge != null)
+            {
+                freightLineCostCurrencyId = freightCharge.CostCurrencyId;
+            }
+
             foreach (QuoteChargePM item in entityPM.QuoteCharges)
             {
+                if (!string.IsNullOrEmpty(item.CostMeasurementCode))
+                {
+                    if (item.CostMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.CostCurrencyId) && !string.IsNullOrEmpty(freightLineCostCurrencyId))
+                    {
+                        if (item.CostCurrencyId != freightLineCostCurrencyId)
+                        {
+                            throw new ApplicationException("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+                        }
+                    }
+                }
+
                 switch (item.ChangeSetOp)
                 {
                     case Simplog.Server.Infrastructure.ChangeSetOperation.Insert:
@@ -462,7 +480,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                                     throw new ApplicationException("Tenant other Charges currency is required");
                                 }
                             }
-
+                            
                             break;
                         }
                 }

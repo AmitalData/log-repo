@@ -42,7 +42,7 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  AllowedInQueues="false"
+  
   IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">

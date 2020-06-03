@@ -166,8 +166,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             IQueryable<Opportunity> iQueryable_Opportunities =
                 (from a in opportunityRepository.GetAllForReport(tenant)
                  where a.IsCancelled == false
-                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= fromDate
-                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) < toDate
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate)
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
                  select a);
 
             if (!string.IsNullOrEmpty(opportunityTypeCode))

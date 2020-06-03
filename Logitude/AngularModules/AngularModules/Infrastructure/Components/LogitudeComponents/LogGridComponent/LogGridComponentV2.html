@@ -202,10 +202,10 @@
         <div >
           <!-- [ngStyle]="row.styles" [class.HLine]="row.rowData.ShowLineOverRow == true" || row.rowData.IsSelected == true  [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"-->
           <!--(mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"-->
-            <cdk-virtual-scroll-viewport [id]="LogGridRowsId" [itemSize]="rowHeight" [minBufferPx]="viewportSize * rowHeight" [maxBufferPx]="viewportSize * 2 * rowHeight" class="GeneratedGridBody">
+            <cdk-virtual-scroll-viewport autosize [id]="LogGridRowsId" class="GeneratedGridBody" [minBufferPx]="778" [maxBufferPx]="778 * 3">
                 <!--(scrolledIndexChange)="onScroll($event)"-->
-                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="rowHeight">
-                    <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="rowHeight"
+                <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
+                    <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
                          [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row"
                          (ondblclick)="onRowSelected(1, 1, row.myData, row.rowIndex)"
                          (click)="onRowSelected(1, 1, row.myData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row)"
@@ -245,8 +245,8 @@
                             <div [style.textAlign]="RTL == true ? 'right' : 'left'" style="padding:5px;white-space: pre-wrap;word-wrap:break-word;">{{row[ToolTipBinding]}}</div>
                         </div>
                     </div>
-                    <div *ngIf="row && row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.height.px]="SpotLightHeight" style="position:absolute;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
-                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
+                    <div *ngIf="row && row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.top.px]="rowHeight" [style.height.px]="SpotLightHeight" style="position:relative;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
+                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row.myData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>

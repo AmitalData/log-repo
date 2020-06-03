@@ -14,6 +14,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,18 +35,35 @@ namespace MeatadataGeneratorTool
 
         public static List<string> LXMLFilesPaths { get; set; }
         public static List<string> DXMLFilesPaths { get; set; }
-        public string CurrentVersion = "1.0";
+        public string CurrentVersion = "0.0";
+
+        private string GetAssemplyVersion()
+        {
+            Assembly currentAssembly = Assembly.GetExecutingAssembly();
+            CustomAttributeData AssemblyVersion = currentAssembly.CustomAttributes.Where(a => a.AttributeType.Name == "AssemblyFileVersionAttribute").FirstOrDefault();
+            if (AssemblyVersion != null)
+            {
+                return (string)AssemblyVersion.ConstructorArguments[0].Value;
+            }
+            return "0.0";
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
+            CurrentVersion = GetAssemplyVersion();
             if (e.Args != null && e.Args.Length > 0)
             {
                 try
                 {
-                    string workingDirectory = Directory.GetCurrentDirectory(); 
-                    string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName; 
+                    string workingDirectory = Directory.GetCurrentDirectory();
+                    string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                    //MessageBox.Show(projectDirectory);
                     if (projectDirectory.EndsWith(@"Logitude"))
                     {
                         projectDirectory = projectDirectory + @"\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\ToolVersion";
+                    }
+                    else
+                    {
+                        projectDirectory = projectDirectory.Replace(@"\Logitude.MetaData", "") + @"\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\ToolVersion"; 
                     }
                     string[] DirectoryFiles = Directory.GetFiles(projectDirectory, "Version.vxml", SearchOption.AllDirectories);//, "Version.vxml", SearchOption.AllDirectories);
                     string verisonFilePath = DirectoryFiles[0];//.Where(a => a.Contains("Version.vxml")).FirstOrDefault(); 
@@ -53,8 +71,8 @@ namespace MeatadataGeneratorTool
                     VersionInfo versionInfo = verisonFileString.ParseXML<VersionInfo>();
                     if (versionInfo == null || versionInfo.VersionNo != CurrentVersion)
                     {
-                        MessageBox.Show("You don't have the latest version of the tool, Please rebuild the tool to use the latest version.");
-                        base.OnStartup(e); 
+                        MessageBox.Show("You don't have the latest version of the tool, Please rebuild the tool to use the latest version. ( " + versionInfo.VersionNo +" )");
+                        base.OnStartup(e);
                         Environment.Exit(0);
                         return;
                     }
@@ -166,7 +184,7 @@ namespace MeatadataGeneratorTool
                     DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Error While Loading Files: " + exception.Message);
             }

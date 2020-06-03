@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Reflection;
 
 namespace Logitude.DBMigrations.Models
 {
     public class MigrationTool
     {
-        private readonly int ToolVersion = 1;
-
         private readonly string DatabaseType;
         private readonly string[] Arguments;
         private readonly string ScriptSemicolonCode = "|(;)|";
@@ -28,11 +27,13 @@ namespace Logitude.DBMigrations.Models
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
-            ValidateToolVersion();
-            ValidateAppSettings();
-
             Arguments = arguments;
             RunSettings = runSettings;
+
+            ValidateToolVersion();
+            ValidateToolSettings();
+            DisplayToolSettings();
+
             DatabaseType = ConfigurationManager.AppSettings["DatabaseType"];
         }
 
@@ -374,23 +375,34 @@ namespace Logitude.DBMigrations.Models
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
+            string generatedScriptDirPath = Path.Combine(projectDirectory, @"GeneratedScript");
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
-            if (File.Exists(globalScriptFilePath))
-            {
-                File.WriteAllText(globalScriptFilePath, globalScript);
-            }
-
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
-            if (File.Exists(mainScriptFilePath))
+            string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
+
+            if (!Directory.Exists(generatedScriptDirPath))
             {
-                File.WriteAllText(mainScriptFilePath, mainScript);
+                Directory.CreateDirectory(generatedScriptDirPath);
             }
 
-            string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
-            if (File.Exists(systemLogsScriptFilePath))
+            if (!File.Exists(globalScriptFilePath))
             {
-                File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
+                File.Create(globalScriptFilePath).Dispose();
             }
+
+            if (!File.Exists(mainScriptFilePath))
+            {
+                File.Create(mainScriptFilePath).Dispose();
+            }
+
+            if (!File.Exists(systemLogsScriptFilePath))
+            {
+                File.Create(systemLogsScriptFilePath).Dispose();
+            }
+
+            File.WriteAllText(globalScriptFilePath, globalScript);
+            File.WriteAllText(mainScriptFilePath, mainScript);
+            File.WriteAllText(systemLogsScriptFilePath, systemLogsScript);
 
             if (IsGeneratedScriptsEmpty(generatedScript))
             {
@@ -1347,11 +1359,11 @@ namespace Logitude.DBMigrations.Models
                         {
                             if (IncludedModules.Include)
                             {
-                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                             else
                             {
-                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                         }
                         else
@@ -1475,11 +1487,11 @@ namespace Logitude.DBMigrations.Models
                         {
                             if (IncludedModules.Include)
                             {
-                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                             else
                             {
-                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower());
+                                includeScriptDefinition = !IncludedModules.Modules.Contains(scriptDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(scriptDefinition.Module);
                             }
                         }
                         else
@@ -1825,18 +1837,18 @@ namespace Logitude.DBMigrations.Models
             {
                 if (IncludedModules.Include)
                 {
-                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower())).ToList();
+                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TableDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ViewDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ProcedureDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TriggerDefinition.Module)).ToList();
                     return dxmlDefinitions;
                 }
                 else
                 {
-                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => !IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => !IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => !IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower())).ToList();
-                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => !IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower())).ToList();
+                    dxmlDefinitions.DXMLTables = dxmlDefinitions.DXMLTables.Where(d => !IncludedModules.Modules.Contains(d.TableDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TableDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLViews = dxmlDefinitions.DXMLViews.Where(d => !IncludedModules.Modules.Contains(d.ViewDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ViewDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLProcedures = dxmlDefinitions.DXMLProcedures.Where(d => !IncludedModules.Modules.Contains(d.ProcedureDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.ProcedureDefinition.Module)).ToList();
+                    dxmlDefinitions.DXMLTriggers = dxmlDefinitions.DXMLTriggers.Where(d => !IncludedModules.Modules.Contains(d.TriggerDefinition.Module?.ToLower()) && !String.IsNullOrEmpty(d.TriggerDefinition.Module)).ToList();
                     return dxmlDefinitions;
                 }
             }
@@ -1859,7 +1871,34 @@ namespace Logitude.DBMigrations.Models
             return toolDxmlFilesNames;
         }
 
-        private void ValidateAppSettings()
+        private void ValidateToolVersion()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            if (File.Exists(versionInfoFilePath))
+            {
+                try
+                {
+                    string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
+                    VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
+                    string toolVersion = GetAssemplyVersion();
+                    if (toolVersion != versionInfo.Version)
+                    {
+                        ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
+                    }
+                }
+                catch (Exception)
+                {
+                    ExitTool("Error: Cannot Read Version Info File");
+                }
+            }
+            else
+            {
+                ExitTool("Error: Cannot Find File " + versionInfoFilePath);
+            }
+        }
+
+        private void ValidateToolSettings()
         {
             string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
             string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
@@ -1870,7 +1909,7 @@ namespace Logitude.DBMigrations.Models
             {
                 ExitTool("Error: Cannot Find DatabaseType in Configuration File");
             }
-            if(databaseType != "msql" && databaseType != "oracle")
+            if (databaseType != "msql" && databaseType != "oracle")
             {
                 ExitTool("Error: Invalid DatabaseType in Configuration File, DatabaseType should be msql or oracle");
             }
@@ -1888,23 +1927,73 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void ValidateToolVersion()
+        private void DisplayToolSettings()
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
-            if (File.Exists(versionInfoFilePath))
+            string databaseType = ConfigurationManager.AppSettings["DatabaseType"];
+            string globalConnectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
+            string mainConnectionString = ConfigurationManager.AppSettings["MainConnectionString"];
+            string systemLogsConnectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
+            string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
+
+            if (databaseType.ToLower() == "oracle")
             {
-                string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
-                VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
-                if(ToolVersion != versionInfo.VersionNumber)
-                {
-                    ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
-                }
+                OracleConnectionStringBuilder globalConnectionStringBuilder = new OracleConnectionStringBuilder(globalConnectionString);
+                OracleConnectionStringBuilder mainConnectionStringBuilder = new OracleConnectionStringBuilder(mainConnectionString);
+                OracleConnectionStringBuilder systemLogsConnectionStringBuilder = new OracleConnectionStringBuilder(systemLogsConnectionString);
+                globalDB = globalConnectionStringBuilder.UserID;
+                globalSource = globalConnectionStringBuilder.DataSource;
+                mainDB = mainConnectionStringBuilder.UserID;
+                mainSource = mainConnectionStringBuilder.DataSource;
+                systemLogsDB = systemLogsConnectionStringBuilder.UserID;
+                systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
+                databaseTypeMessage = "Oracle";
+                databaseNameMessage = "User ID";
             }
             else
             {
-                ExitTool("Error: Cannot Find File " + versionInfoFilePath);
+                SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
+                SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
+                SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
+                globalDB = globalConnectionStringBuilder.InitialCatalog;
+                globalSource = globalConnectionStringBuilder.DataSource;
+                mainDB = mainConnectionStringBuilder.InitialCatalog;
+                mainSource = mainConnectionStringBuilder.DataSource;
+                systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
+                systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
+                databaseTypeMessage = "MSQL";
+                databaseNameMessage = "Initial Catalog";
             }
+
+            string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
+                                        "Applying Migrations On The Following Databases:\n" +
+                                        "Global Database: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
+                                        "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
+                                        "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
+
+            Console.WriteLine(appSettingsMessage);
+
+            if (!IsArgumentProvided("-ignoresettingscheck"))
+            {
+                Console.WriteLine("Are You To Continue ? y/n");
+                string userInput = Console.ReadLine().Trim().ToLower();
+                if (userInput != "y")
+                {
+                    ExitTool("");
+                }
+
+                Console.Write("\n");
+            }
+        }
+
+        private string GetAssemplyVersion()
+        {
+            Assembly currentAssembly = Assembly.GetExecutingAssembly();
+            CustomAttributeData AssemblyVersion = currentAssembly.CustomAttributes.Where(a => a.AttributeType.Name == "AssemblyFileVersionAttribute").FirstOrDefault();
+            if (AssemblyVersion != null)
+            {
+                return (string)AssemblyVersion.ConstructorArguments[0].Value;
+            }
+            return "0.0";
         }
 
         private void ExitTool(string message)
