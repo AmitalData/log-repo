@@ -17,8 +17,8 @@ context('Actions', () => {
 	  //cy.get('#Password').type('!P123t456') 
       cy.get('#cmdLogin').click();
       cy.server();
-      cy.route('/api/ObjectTableLastUpdate/GetLastTableUpdateDate/*').as('DataLoaded')
-      cy.wait('@DataLoaded') 
+      cy.route('/api/ObjectTableLastUpdate/GetLastTableUpdateDate/*').as('ChachedDataLoaded')
+      cy.wait('@ChachedDataLoaded') 
     })
 
     it('Moving to Shipment Succeeded', () => {
@@ -29,7 +29,8 @@ context('Actions', () => {
     it('Create Shipment', () => {
       
         cy.get('#HelperNotes_0_0').click()
-        cy.get('#NEWDIRECT').click({ force: true })
+        cy.get('#NEWDIRECT').click({ force: true }) 
+
     })
      
 
