@@ -32,7 +32,7 @@ export class AddEditEventComponent {
 
     CancelButtonClicked() {
         this.EntityPM.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CurrentWindow.Close("Cancel");
     }
 
     OkButtonClicked() {

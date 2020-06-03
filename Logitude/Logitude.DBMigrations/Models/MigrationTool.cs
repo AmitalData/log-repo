@@ -1881,7 +1881,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     string versionInfoXmlString = File.ReadAllText(versionInfoFilePath);
                     VersionInfo versionInfo = versionInfoXmlString.ParseXML<VersionInfo>();
-                    string toolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    string toolVersion = GetAssemplyVersion();
                     if (toolVersion != versionInfo.Version)
                     {
                         ExitTool("Error: Invalid Tool Version, You Should Build The Tool After Get Latest Updates");
@@ -1965,15 +1965,16 @@ namespace Logitude.DBMigrations.Models
             }
 
             string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
-                                        "Connected Global DB: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
-                                        "Connected Main DB: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
-                                        "Connected SystemLogs DB: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
+                                        "Applying Migrations On The Following Databases:\n" +
+                                        "Global Database: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
+                                        "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
+                                        "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
 
             Console.WriteLine(appSettingsMessage);
 
             if (!IsArgumentProvided("-ignoresettingscheck"))
             {
-                Console.WriteLine("Are You Sure Tool Settings And The Connected Databases ? y/n");
+                Console.WriteLine("Are You To Continue ? y/n");
                 string userInput = Console.ReadLine().Trim().ToLower();
                 if (userInput != "y")
                 {
@@ -1982,6 +1983,17 @@ namespace Logitude.DBMigrations.Models
 
                 Console.Write("\n");
             }
+        }
+
+        private string GetAssemplyVersion()
+        {
+            Assembly currentAssembly = Assembly.GetExecutingAssembly();
+            CustomAttributeData AssemblyVersion = currentAssembly.CustomAttributes.Where(a => a.AttributeType.Name == "AssemblyFileVersionAttribute").FirstOrDefault();
+            if (AssemblyVersion != null)
+            {
+                return (string)AssemblyVersion.ConstructorArguments[0].Value;
+            }
+            return "0.0";
         }
 
         private void ExitTool(string message)

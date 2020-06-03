@@ -71,7 +71,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         //ReportRunViewWorkerRole
         //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
         //if (featureToggle) {
-        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;
+        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;//
         //}
 
     }

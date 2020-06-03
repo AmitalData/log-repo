@@ -290,6 +290,7 @@
     <Compile Include="Helpers\TotangoActivityLogger.cs" />
     <Compile Include="Helpers\TraceEventResponse.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
+    <Compile Include="Helpers\UpdateEventCustomFieldService.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
     <Compile Include="EntityValidateService.cs" />
     <Compile Include="Interfaces\IIdCounterUtil.cs" />
