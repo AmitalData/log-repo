@@ -276,6 +276,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
+            SetSatStatus();
+
+            ARInvoiceAutomationService arInvoiceAutomationService = new ARInvoiceAutomationService(entityPM, invoice);
+            arInvoiceAutomationService.RunAutomation("OnCreate");
+
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -301,7 +306,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        private void SetSatStatus()
+        {
+            if (string.IsNullOrEmpty(entityPM.SATTransferStatusCode)) entityPM.SATTransferStatusCode = "NT";
+            if (string.IsNullOrEmpty(entityPM.SATInvoiceStatusCode)) entityPM.SATInvoiceStatusCode = "NO";
 
+
+        }
 
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
@@ -502,6 +513,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
+
+                ARInvoiceAutomationService arInvoiceAutomationService = new ARInvoiceAutomationService(entityPM, invoice);
+                arInvoiceAutomationService.RunAutomation("OnUpdate");
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);

@@ -54,23 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.IsConstituentInvoice = entityPM.IsConstituentInvoice;
                 entity.IsConsolidationInvoice = entityPM.IsConsolidationInvoice;
 
-                if (string.IsNullOrEmpty(entityPM.SATTransferStatusCode))
-                {
-                    entity.SATTransferStatusCode = "NT";
-                }
-                else
-                {
-                    entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
-                }
-
-                if (string.IsNullOrEmpty(entityPM.SATInvoiceStatusCode))
-                {
-                    entity.SATInvoiceStatusCode = "NO";
-                }
-                else
-                {
-                    entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
-                }
+             
             }
 
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
