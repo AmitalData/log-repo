@@ -2387,6 +2387,10 @@
     <Compile Include="Migrations\202005171337237_TaxReportLineTaxReportDateMigration.Designer.cs">
       <DependentUpon>202005171337237_TaxReportLineTaxReportDateMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.cs" />
+    <Compile Include="Migrations\202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.Designer.cs">
+      <DependentUpon>202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
     <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
@@ -4317,6 +4321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005171337237_TaxReportLineTaxReportDateMigration.resx">
       <DependentUpon>202005171337237_TaxReportLineTaxReportDateMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.resx">
+      <DependentUpon>202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
