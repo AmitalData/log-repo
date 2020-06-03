@@ -242,6 +242,21 @@ namespace Logitude.DBMigrations.Models
             List<DXMLProcedure> dxmlProcedures = dxmlDefinitions.DXMLProcedures;
             List<DXMLTrigger> dxmlTriggers = dxmlDefinitions.DXMLTriggers;
 
+            GenerateScriptsFromDXMLTables(ref generatedScript, ref relationsScript, dxmlTables);
+
+            generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
+
+            GenerateScriptsFromDXMLViews(ref generatedScript, dxmlViews);
+
+            GenerateScriptsFromDXMLProcedures(ref generatedScript, dxmlProcedures);
+
+            GenerateScriptsFromDXMLTriggers(ref generatedScript, dxmlTriggers);
+
+            return generatedScript;
+        }
+
+        private void GenerateScriptsFromDXMLTables(ref GeneratedScript generatedScript, ref RelationsScript relationsScript, List<DXMLTable> dxmlTables)
+        {
             foreach (var dxmlTable in dxmlTables)
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
@@ -262,30 +277,15 @@ namespace Logitude.DBMigrations.Models
                         string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
                         string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
-                        if (!String.IsNullOrEmpty(tableScript))
-                        {
-                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
-                        }
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
 
-                        if (!String.IsNullOrEmpty(tableIndexesScript))
-                        {
-                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
-                        }
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
 
-                        if (!String.IsNullOrEmpty(tableMissingIndexesWarnings))
-                        {
-                            MissingIndexesWarnings += tableMissingIndexesWarnings;
-                        }
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
 
-                        if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
-                        {
-                            generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
-                        }
+                        relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
 
-                        if (!String.IsNullOrEmpty(tableRelationsScript))
-                        {
-                            relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
-                        }
+                        MissingIndexesWarnings += tableMissingIndexesWarnings;
                     }
                 }
                 else
@@ -298,83 +298,64 @@ namespace Logitude.DBMigrations.Models
                     string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
                     string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
 
-                    if (!String.IsNullOrEmpty(tableScript))
-                    {
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
-                    }
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
 
-                    if (!String.IsNullOrEmpty(tableIndexesScript))
-                    {
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
-                    }
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
 
-                    if (!String.IsNullOrEmpty(tableMissingIndexesWarnings))
-                    {
-                        MissingIndexesWarnings += tableMissingIndexesWarnings;
-                    }
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
 
-                    if (!String.IsNullOrEmpty(tableUniqueConstraintsScript))
-                    {
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
-                    }
+                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
 
-                    if (!String.IsNullOrEmpty(tableRelationsScript))
-                    {
-                        relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
-                    }
+                    MissingIndexesWarnings += tableMissingIndexesWarnings;
                 }
             }
+        }
 
-            generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
-
+        private void GenerateScriptsFromDXMLViews(ref GeneratedScript generatedScript, List<DXMLView> dxmlViews)
+        {
             foreach (var dxmlView in dxmlViews)
             {
                 Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
 
                 string viewScript = GetScriptFromViewDefinition(dxmlView.ViewDefinition, dxmlView.DXMLFileName);
 
-                if (!String.IsNullOrEmpty(viewScript))
-                {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
-                }
+                generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
             }
+        }
 
+        private void GenerateScriptsFromDXMLProcedures(ref GeneratedScript generatedScript, List<DXMLProcedure> dxmlProcedures)
+        {
             foreach (var dxmlProcedure in dxmlProcedures)
             {
                 Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
 
                 string procedureScript = GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition, dxmlProcedure.DXMLFileName);
 
-                if (!String.IsNullOrEmpty(procedureScript))
-                {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
-                }
+                generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
             }
+        }
 
+        private void GenerateScriptsFromDXMLTriggers(ref GeneratedScript generatedScript, List<DXMLTrigger> dxmlTriggers)
+        {
             foreach (var dxmlTrigger in dxmlTriggers)
             {
                 Console.WriteLine("Generating Script For " + dxmlTrigger.DXMLFileName + " ...");
 
                 string triggerScript = GetScriptFromTriggerDefinition(dxmlTrigger.TriggerDefinition, dxmlTrigger.DXMLFileName);
 
-                if (!String.IsNullOrEmpty(triggerScript))
-                {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
-                }
+                generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
             }
-
-            return generatedScript;
         }
 
         private void SaveScript(GeneratedScript generatedScript)
         {
+            Console.WriteLine("Saving The Generated Scripts ...");
+
             string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
             string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
             string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
 
-            Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-
             string generatedScriptDirPath = Path.Combine(projectDirectory, @"GeneratedScript");
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
@@ -383,21 +364,6 @@ namespace Logitude.DBMigrations.Models
             if (!Directory.Exists(generatedScriptDirPath))
             {
                 Directory.CreateDirectory(generatedScriptDirPath);
-            }
-
-            if (!File.Exists(globalScriptFilePath))
-            {
-                File.Create(globalScriptFilePath).Dispose();
-            }
-
-            if (!File.Exists(mainScriptFilePath))
-            {
-                File.Create(mainScriptFilePath).Dispose();
-            }
-
-            if (!File.Exists(systemLogsScriptFilePath))
-            {
-                File.Create(systemLogsScriptFilePath).Dispose();
             }
 
             File.WriteAllText(globalScriptFilePath, globalScript);
@@ -525,11 +491,15 @@ namespace Logitude.DBMigrations.Models
         {
             string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string warningsDirectoryPath = Path.Combine(projectDirectory, @"Warnings");
             string missingIndexesWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingIndexesWarnings.txt");
-            if (File.Exists(missingIndexesWarningsFilePath))
+
+            if (!Directory.Exists(warningsDirectoryPath))
             {
-                File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
+                Directory.CreateDirectory(warningsDirectoryPath);
             }
+
+            File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
         }
 
         private string GetConnectionString(string dbType)
@@ -558,49 +528,61 @@ namespace Logitude.DBMigrations.Models
 
         private GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string script)
         {
-            if (dbType == "Global")
+            if (!String.IsNullOrEmpty(script))
             {
-                generatedScript.GlobalScript += script;
-                generatedScript.GlobalScript += "\n";
-                return generatedScript;
+                if (dbType == "Global")
+                {
+                    generatedScript.GlobalScript += script;
+                    generatedScript.GlobalScript += "\n";
+                    return generatedScript;
+                }
+                else if (dbType == "Main")
+                {
+                    generatedScript.MainScript += script;
+                    generatedScript.MainScript += "\n";
+                    return generatedScript;
+                }
+                else if (dbType == "SystemLogs")
+                {
+                    generatedScript.SystemLogsScript += script;
+                    generatedScript.SystemLogsScript += "\n";
+                    return generatedScript;
+                }
+                else
+                {
+                    return generatedScript;
+                }
             }
-            else if (dbType == "Main")
-            {
-                generatedScript.MainScript += script;
-                generatedScript.MainScript += "\n";
-                return generatedScript;
-            }
-            else if (dbType == "SystemLogs")
-            {
-                generatedScript.SystemLogsScript += script;
-                generatedScript.SystemLogsScript += "\n";
-                return generatedScript;
-            }
-            else
-            {
-                return generatedScript;
-            }
+
+            return generatedScript;
         }
 
         private RelationsScript AppendToRelationsScript(RelationsScript relationsScript, string dbType, string tableRelationsScript)
         {
-            if (dbType == "Global")
+            if (!String.IsNullOrEmpty(tableRelationsScript))
             {
-                relationsScript.GlobalScript += tableRelationsScript;
-                relationsScript.GlobalScript += "\n";
-                return relationsScript;
-            }
-            else if (dbType == "Main")
-            {
-                relationsScript.MainScript += tableRelationsScript;
-                relationsScript.MainScript += "\n";
-                return relationsScript;
-            }
-            else if (dbType == "SystemLogs")
-            {
-                relationsScript.SystemLogsScript += tableRelationsScript;
-                relationsScript.SystemLogsScript += "\n";
-                return relationsScript;
+                if (dbType == "Global")
+                {
+                    relationsScript.GlobalScript += tableRelationsScript;
+                    relationsScript.GlobalScript += "\n";
+                    return relationsScript;
+                }
+                else if (dbType == "Main")
+                {
+                    relationsScript.MainScript += tableRelationsScript;
+                    relationsScript.MainScript += "\n";
+                    return relationsScript;
+                }
+                else if (dbType == "SystemLogs")
+                {
+                    relationsScript.SystemLogsScript += tableRelationsScript;
+                    relationsScript.SystemLogsScript += "\n";
+                    return relationsScript;
+                }
+                else
+                {
+                    return relationsScript;
+                }
             }
             else
             {
@@ -1011,6 +993,11 @@ namespace Logitude.DBMigrations.Models
 
         private string ReplaceScriptSemicolon(string script)
         {
+            if (String.IsNullOrEmpty(script))
+            {
+                return null;
+            }
+
             int lastIndex = script.LastIndexOf(';');
             if (lastIndex > 0)
             {
@@ -1974,7 +1961,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!IsArgumentProvided("-ignoresettingscheck"))
             {
-                Console.WriteLine("Are You To Continue ? y/n");
+                Console.WriteLine("Are You Sure To Continue ? y/n");
                 string userInput = Console.ReadLine().Trim().ToLower();
                 if (userInput != "y")
                 {
