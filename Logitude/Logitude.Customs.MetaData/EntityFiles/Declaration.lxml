@@ -16319,6 +16319,13 @@
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationWithoutRelease&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16391,6 +16398,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationInConstraint&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16462,6 +16476,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidDeclaration&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16541,6 +16562,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationAmendments&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16606,6 +16634,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Declarations&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
