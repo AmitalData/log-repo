@@ -127,7 +127,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DispayInScreen = true, DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true, FieldsDBName = "ARInvoiceId,ReceivableId" });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), FieldsDBName = (("ToPortId,FromPortId") + GetCustomFieldAsDBFieldOnTable(40)), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true });
-
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayableStatus", IsCloseTable = true, DBTableName = "ShipmentPayableStatus", Dw_TableName = "dw_ShipmentPayableStatuses", KeyName = "Code", FieldsDBName = "Name", HasConstraint = true, HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivableStatus", IsCloseTable = true, DBTableName = "ShipmentReceivableStatus", Dw_TableName = "dw_ShipmentReceivableStatuses", KeyName = "Code", FieldsDBName = "Name", HasConstraint = true, HasNotSpecifiedValue = true });
 
 
             //Dimension  Table

@@ -237,6 +237,18 @@ namespace WarehouseData.Service
 
                     break;
 
+                case "ShipmentReceivableStatus":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Code DEFAULT -1 FOR Code";
+
+                    break;
+
+                case "ShipmentPayableStatus":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Code DEFAULT -1 FOR Code";
+
+                    break;
+
                 default:
                     cmd = string.Empty;
                     break;
@@ -275,6 +287,14 @@ namespace WarehouseData.Service
             else if (table.DBTableName == "DWHSettings")
             {
                 cmd = "INSERT INTO " + table.Dw_TableName + " (Tenant,ParentTenant, AutomaticLastUpdateDate)values(-1 ,-1, GETDATE());";
+            }
+            else if (table.DBTableName == "ShipmentReceivableStatus")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Code,Name, AutomaticLastUpdateDate)values(-1 ,'', GETDATE());";
+            }
+            else if (table.DBTableName == "ShipmentPayableStatus")
+            {
+                cmd = "INSERT INTO " + table.Dw_TableName + " (Code,Name, AutomaticLastUpdateDate)values(-1 ,'', GETDATE());";
             }
 
             generalDataWarehouseService.ExecuteSql(cmd, connectionString);

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="Trigger_AutomaticLastUpdateDateShipmentPayableStatus"
+  Schema="dbo"
+  Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentPayableStatus ON ShipmentPayableStatus AFTER UPDATE  AS  BEGIN UPDATE ShipmentPayableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted) END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>
