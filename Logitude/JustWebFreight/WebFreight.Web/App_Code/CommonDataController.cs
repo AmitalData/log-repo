@@ -41,6 +41,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web
 {
@@ -184,6 +185,8 @@ namespace WebFreight.Web
 
         public List<TraceEventPM> GetEntityEvents(string entityId, string objectTableName, string partnerType, int tenant)
         {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             List<TraceEventPM> result = new List<TraceEventPM>();
            
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -212,6 +215,39 @@ namespace WebFreight.Web
             return result.OrderByDescending(s => s.EventDateTime).ToList();
         }
 
+        public List<TraceEventPM> GetShipmentEvents(string securitykey, string entityId, string objectTableName, string partnerType, int tenant)
+        {
+   
+            List<TraceEventPM> result = new List<TraceEventPM>();
+
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            if (objectTable != null)
+            {
+                string objectTableId = objectTable.Id;
+
+                TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
+                TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
+
+                var traceEvents = traceEventQuery.GetTraceEventPMsByTenantAndEntityId_WithSecurityKey(tenant, entityId, objectTableId, securitykey);
+                if (traceEvents != null)
+                {
+                    List<TraceEventPM> traceEventsList = traceEvents.ToList();
+                    if (partnerType == "AG")
+                    {
+                        result = traceEventsList.Where(d => d.IsAgentView).ToList();
+                    }
+
+                    else
+                    {
+                        result = traceEventsList.Where(d => d.IsCustomerView).ToList();
+                    }
+
+                }
+            }
+
+            return result.OrderByDescending(s => s.EventDateTime).ToList();
+        }
         public SharedLogisticLoggedData GetLoggingData(string email, int tenant, string cardId)
         {
             SharedLogisticLoggedData myResult = new SharedLogisticLoggedData();
