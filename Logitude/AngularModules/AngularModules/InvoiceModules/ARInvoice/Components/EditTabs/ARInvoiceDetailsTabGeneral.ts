@@ -40,7 +40,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+
     templateUrl: './ARInvoiceDetailsTabGeneral.html',
 })
 
@@ -54,6 +54,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsManifest: boolean = false;
     public IsCustomsInvoice: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
+    public IsDatesFieldEnabledWhileCrediting: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
@@ -66,6 +67,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+
+
+
+
         this.InitializeServices();
         this.InitializeComponent();
         this.SetUIProperties();
@@ -75,6 +80,9 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+
+
+
     }
 
     private SaveCompletedEvent: any = null;
@@ -190,6 +198,11 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowManualInvoiceNumber: boolean = false;
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
+
+        this.IsDatesFieldEnabledWhileCrediting
+            = FeatureLocator.HasFeaturePermession("ARInvoice", "DatesFieldEnabledWhileCrediting")
+            && this.EntityPM.IsAutoCredit && this.EntityPM.StatusCode == 'AC' && !this.EntityPM.ApprovedDate;
+
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
 
         if (!AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -200,7 +213,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
 
         // Generated General Tab
@@ -333,7 +346,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             AllowManuallyDueDate = false;
         }
 
-        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
+        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || AllowManuallyDueDate);
     }
 
     // Bill To
@@ -1457,7 +1470,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                     var list: CurrencyList = myResponse.Result;
                     if (list != null) {
                         this.ForiegnCurrencyCode = list.Code;
-                       
+
                         this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.ForiegnCurrencyCode);
                     }
                 }
@@ -1491,7 +1504,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     set ForiegnCurrencyCode(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyCode != newValue) {
             this.EntityPM.ForiegnCurrencyCode = newValue;
-          
+
         }
     }
 
@@ -1798,9 +1811,9 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
-    
- 
- 
+
+
+
     ReCalculateTotals() {
         if (this.Exists) {
             this.fatherComponent.ComputeTotals();
