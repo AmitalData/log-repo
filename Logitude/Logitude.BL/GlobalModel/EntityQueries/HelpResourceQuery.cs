@@ -89,7 +89,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             {
                 case "TUT":
                     {
-                        result = "Tutorial";
+                        result = "Tutorials";
                         break;
                     }
 

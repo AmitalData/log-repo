@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class HelpResourceUpdateClass
    {  		
-		public const string HashString = "ae05f2345908da97e3ec6457d3b2d5f4";
+		public const string HashString = "d056b34df375ebf715c33803908efa9d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,16 +93,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  true,
+			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
-			      				    IsRestrictable =  true,
+			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
@@ -591,7 +591,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VideoURL",
-					  						DefaultText =  "VideoURL",
+					  						DefaultText =  "Video URL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -704,7 +704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FileName",
-					  						DefaultText =  "FileName",
+					  						DefaultText =  "File Name",
 					  						ListFieldLable =  "FileNameListLable",
 					  						ListLableDefaultText =  "FileName",
 					  						IsMaxLength =  false,
@@ -822,7 +822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsNew",
-					  						DefaultText =  "IsNew",
+					  						DefaultText =  "Is New",
 					  						ListFieldLable =  "IsNewListLable",
 					  						ListLableDefaultText =  "IsNew",
 					  						IsMaxLength =  false,
@@ -880,7 +880,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FeatureCode",
-					  						DefaultText =  "FeatureCode",
+					  						DefaultText =  "Feature Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1121,6 +1121,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable HelpResourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HelpResource" && d.Tenant == 0).FirstOrDefault(); 
 
+		   Feature HelpResourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HelpResourceObjectTable);
+		   Feature HelpResourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HelpResourceObjectTable);
+		   Feature HelpResourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HelpResourceObjectTable);
+		   Feature HelpResourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HelpResourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HelpResource.Features.PackageFeature", NameTextCodeDefaultText = "HelpResource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HelpResourceObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 

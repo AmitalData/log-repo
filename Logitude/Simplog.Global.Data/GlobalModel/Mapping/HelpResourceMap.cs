@@ -27,14 +27,17 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Language)
+                .IsRequired()
                 .HasMaxLength(2)
                 .IsUnicode(false);
 
             this.Property(t => t.Type)
+                .IsRequired()
                 .HasMaxLength(3)
                 .IsUnicode(false);
 
             this.Property(t => t.Category)
+                .IsRequired()
                 .HasMaxLength(3)
                 .IsUnicode(false);
 

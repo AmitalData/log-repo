@@ -23,13 +23,13 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Language"

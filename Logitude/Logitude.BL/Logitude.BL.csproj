@@ -395,7 +395,9 @@
     <Compile Include="GlobalModel\EntityQueries\BluesnapTransactionQuery.cs" />
     <Compile Include="GlobalModel\EntityQueries\HelpResourceQuery.cs" />
     <Compile Include="GlobalModel\Tools\DataMapping\BluesnapTransactionMapping.cs" />
+    <Compile Include="GlobalModel\Tools\DataMapping\HelpResourceMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\HelpResourceService.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\HelpResourceTracing.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EventTypeCategoryDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SharedLogisticsInvitationStatusDetails.Generated.cs" />
