@@ -17745,5 +17745,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DatesFieldEnabledWhileCrediting&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ARInvoice.Features.DatesFieldEnabledWhileCrediting&quot;"
+      FeatureDefaultText="&quot;Enable dates while crediting&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
