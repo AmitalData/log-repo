@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Logitude.ShipmentHeaders
+namespace CargoTracking.Forms
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Logitude.ShipmentHeaders
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ShipmentHeaders());
+            Application.Run(new CargoTrackingForm());
         }
     }
 }

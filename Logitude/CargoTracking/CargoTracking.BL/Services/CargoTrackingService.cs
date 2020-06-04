@@ -1,4 +1,4 @@
-﻿using Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses;
+﻿using CargoTracking.CargoTracking.BL.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
+namespace CargoTracking.CargoTracking.BL.Services
 {
-    public class ShipmentHeaderService
+    public class CargoTrackingService
     {
         public static long timeOut = 10000000000000000;
      
@@ -39,6 +39,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
 
 
                     SqlDataReader reader = commandSourceData.ExecuteReader();
+
                     if (reader.HasRows)
                     {
                         dataTable = new DataTable();
@@ -81,7 +82,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
 
                                         bulkCopy.EnableStreaming = true;
                                         bulkCopy.BatchSize = 100000;
-                                        AutoMapColumns(bulkCopy, dataTable);
+                                        AutoMapColumns(bulkCopy, dataTable, table.DBTableName);
                                         bulkCopy.WriteToServer(dataTable);
 
                                     }
@@ -138,47 +139,38 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
         }
 
 
-        private static List<DataTable> SplitTable(DataTable originalTable, int batchSize)
+ 
+
+        public   void AutoMapColumns(SqlBulkCopy sbc, DataTable dt,string TableName)
         {
-            List<DataTable> tables = new List<DataTable>();
-            int i = 0;
-            int j = 1;
-            DataTable newDt = originalTable.Clone();
-            newDt.TableName = "Table_" + j;
-            newDt.Clear();
-            foreach (DataRow row in originalTable.Rows)
+            List<string> MappingMatching = new List<string>();
+            if (TableName== "Shipments")
             {
-                DataRow newRow = newDt.NewRow();
-                newRow.ItemArray = row.ItemArray;
-                newDt.Rows.Add(newRow);
-                i++;
-                if (i == batchSize)
-                {
-                    tables.Add(newDt);
-                    j++;
-                    newDt = originalTable.Clone();
-                    newDt.TableName = "Table_" + j;
-                    newDt.Clear();
-                    i = 0;
-                }
-
-
+                MappingMatching = AutoMapCargoShipments();
+            }
+            else if (TableName == "Cards")
+            {
+                MappingMatching = AutoMapCargoTrackingCards();
 
             }
-            if (newDt.Rows.Count > 0)
+            else if (TableName == "Ports")
             {
-                tables.Add(newDt);
-                j++;
-                newDt = originalTable.Clone();
-                newDt.TableName = "Table_" + j;
-                newDt.Clear();
+                MappingMatching = AutoMapCargoTrackingPorts();
 
             }
-            return tables;
+
+
+
+            foreach (string columns in  MappingMatching)
+            {
+                string [] Cols = columns.Split(',');
+                string col1 = Cols[0];
+                string col2 = Cols[1];
+                sbc.ColumnMappings.Add(col1, col2);
+            }
         }
 
-
-        public static void AutoMapColumns(SqlBulkCopy sbc, DataTable dt)
+        public List<string> AutoMapCargoShipments()
         {
             List<string> MappingMatching = new List<string>();
             MappingMatching.Add("Id,Id");
@@ -197,13 +189,32 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
             MappingMatching.Add("CustomConnectToShipment,PickupDone");
             MappingMatching.Add("FirstPickupETA,PickupDate");
 
-            foreach (string columns in  MappingMatching)
-            {
-                string [] Cols = columns.Split(',');
-                string col1 = Cols[0];
-                string col2 = Cols[1];
-                sbc.ColumnMappings.Add(col1, col2);
-            }
+            return MappingMatching;
+
+        }
+        public List<string> AutoMapCargoTrackingPorts()
+        {
+            List<string> MappingMatching = new List<string>();
+            MappingMatching.Add("Id,Id");
+            MappingMatching.Add("Code,Code");
+            MappingMatching.Add("EnglishName,EnglishName");
+            MappingMatching.Add("CountryId,CountryId");
+  
+
+            return MappingMatching;
+
+        }
+        public List<string> AutoMapCargoTrackingCards()
+        {
+            List<string> MappingMatching = new List<string>();
+            MappingMatching.Add("Id,Id");
+            MappingMatching.Add("Code,Code");
+            MappingMatching.Add("EnglishName,EnglishName");
+            MappingMatching.Add("LocalName,LocalName");
+    
+
+            return MappingMatching;
+
         }
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
@@ -274,7 +285,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
             SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
-"select MAX(AutomaticLastUpdateDate) AutomaticLastUpdateDate " +
+"select MIN(AutomaticLastUpdateDate) -1 AutomaticLastUpdateDate " +
 "FROM dbo." + tableName + " ;", con);
 
             try

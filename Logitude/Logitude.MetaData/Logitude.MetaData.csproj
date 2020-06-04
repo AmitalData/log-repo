@@ -205,7 +205,9 @@
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
-    <None Include="DBTables\CommonDataModel\ShipmentHeader.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
+    <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />

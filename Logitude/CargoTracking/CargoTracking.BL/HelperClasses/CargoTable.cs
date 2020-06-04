@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses
+namespace CargoTracking.CargoTracking.BL.HelperClasses
 {
     public class CargoTable
     {
@@ -32,5 +33,6 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses
         public string RefreshIds { get; set; }
         public string ParentKeyName { get; set; }
         public string AdditionalIndexes { get; set; }
+        public List<Label> Labels { get; set; }
     }
 }
