@@ -133,6 +133,7 @@
     <None Include="DBScripts\Pre\202005261025_CreateSpellCheckedTextCodesTable.sxml" />
     <None Include="DBScripts\Pre\202006031027_AddReferantException901.sxml" />
     <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
+    <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -874,7 +875,7 @@
     <None Include="EntityFiles\CourierStatus.lxml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DBScripts\Pre\202006031905_default0Isdiamond.sxml" />
+    <None Include="DBScripts\Pre\202006040612_RefIsClosedForFollowUp.sxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
