@@ -230,11 +230,9 @@ namespace Logitude.DBMigrations.Models
         private GeneratedScript GenerateScriptsFromDXMLFiles(string[] dxmlFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
-            RelationsScript relationsScript = new RelationsScript();
 
             DXMLTablesDefinitions = GetDXMLTablesDefinitions(dxmlFiles);
             DXMLDefinitions dxmlDefinitions = GetDXMLDefinitions(dxmlFiles);
-
             dxmlDefinitions = FilterDXMLDefinitions(dxmlDefinitions);
 
             List<DXMLTable> dxmlTables = dxmlDefinitions.DXMLTables;
@@ -242,21 +240,27 @@ namespace Logitude.DBMigrations.Models
             List<DXMLProcedure> dxmlProcedures = dxmlDefinitions.DXMLProcedures;
             List<DXMLTrigger> dxmlTriggers = dxmlDefinitions.DXMLTriggers;
 
-            GenerateScriptsFromDXMLTables(ref generatedScript, ref relationsScript, dxmlTables);
+            TablesGeneratedScript tablesGeneratedScript = GenerateScriptsFromDXMLTables(dxmlTables);
+            generatedScript = AddToGeneratedScript(generatedScript, tablesGeneratedScript.GeneratedScript);
+            generatedScript = AddToGeneratedScript(generatedScript, tablesGeneratedScript.RelationsScript);
 
-            generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
+            GeneratedScript generatedScriptFromDXMLViews = GenerateScriptsFromDXMLViews(dxmlViews);
+            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLViews);
 
-            GenerateScriptsFromDXMLViews(ref generatedScript, dxmlViews);
+            GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
+            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
 
-            GenerateScriptsFromDXMLProcedures(ref generatedScript, dxmlProcedures);
-
-            GenerateScriptsFromDXMLTriggers(ref generatedScript, dxmlTriggers);
+            GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
+            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
 
             return generatedScript;
         }
 
-        private void GenerateScriptsFromDXMLTables(ref GeneratedScript generatedScript, ref RelationsScript relationsScript, List<DXMLTable> dxmlTables)
+        private TablesGeneratedScript GenerateScriptsFromDXMLTables(List<DXMLTable> dxmlTables)
         {
+            GeneratedScript generatedScript = new GeneratedScript();
+            GeneratedScript relationsScript = new GeneratedScript();
+
             foreach (var dxmlTable in dxmlTables)
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
@@ -283,7 +287,7 @@ namespace Logitude.DBMigrations.Models
 
                         generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
 
-                        relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
+                        relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
 
                         MissingIndexesWarnings += tableMissingIndexesWarnings;
                     }
@@ -304,15 +308,23 @@ namespace Logitude.DBMigrations.Models
 
                     generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
 
-                    relationsScript = AppendToRelationsScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
+                    relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
 
                     MissingIndexesWarnings += tableMissingIndexesWarnings;
                 }
             }
+
+            return new TablesGeneratedScript
+            {
+                GeneratedScript = generatedScript,
+                RelationsScript = relationsScript
+            };
         }
 
-        private void GenerateScriptsFromDXMLViews(ref GeneratedScript generatedScript, List<DXMLView> dxmlViews)
+        private GeneratedScript GenerateScriptsFromDXMLViews(List<DXMLView> dxmlViews)
         {
+            GeneratedScript generatedScript = new GeneratedScript();
+
             foreach (var dxmlView in dxmlViews)
             {
                 Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
@@ -321,10 +333,14 @@ namespace Logitude.DBMigrations.Models
 
                 generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
             }
+
+            return generatedScript;
         }
 
-        private void GenerateScriptsFromDXMLProcedures(ref GeneratedScript generatedScript, List<DXMLProcedure> dxmlProcedures)
+        private GeneratedScript GenerateScriptsFromDXMLProcedures(List<DXMLProcedure> dxmlProcedures)
         {
+            GeneratedScript generatedScript = new GeneratedScript();
+
             foreach (var dxmlProcedure in dxmlProcedures)
             {
                 Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
@@ -333,10 +349,14 @@ namespace Logitude.DBMigrations.Models
 
                 generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
             }
+
+            return generatedScript;
         }
 
-        private void GenerateScriptsFromDXMLTriggers(ref GeneratedScript generatedScript, List<DXMLTrigger> dxmlTriggers)
+        private GeneratedScript GenerateScriptsFromDXMLTriggers(List<DXMLTrigger> dxmlTriggers)
         {
+            GeneratedScript generatedScript = new GeneratedScript();
+
             foreach (var dxmlTrigger in dxmlTriggers)
             {
                 Console.WriteLine("Generating Script For " + dxmlTrigger.DXMLFileName + " ...");
@@ -345,6 +365,8 @@ namespace Logitude.DBMigrations.Models
 
                 generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
             }
+
+            return generatedScript;
         }
 
         private void SaveScript(GeneratedScript generatedScript)
@@ -557,45 +579,12 @@ namespace Logitude.DBMigrations.Models
             return generatedScript;
         }
 
-        private RelationsScript AppendToRelationsScript(RelationsScript relationsScript, string dbType, string tableRelationsScript)
+        private GeneratedScript AddToGeneratedScript(GeneratedScript targetGeneratedScript, GeneratedScript sourceGeneratedScript)
         {
-            if (!String.IsNullOrEmpty(tableRelationsScript))
-            {
-                if (dbType == "Global")
-                {
-                    relationsScript.GlobalScript += tableRelationsScript;
-                    relationsScript.GlobalScript += "\n";
-                    return relationsScript;
-                }
-                else if (dbType == "Main")
-                {
-                    relationsScript.MainScript += tableRelationsScript;
-                    relationsScript.MainScript += "\n";
-                    return relationsScript;
-                }
-                else if (dbType == "SystemLogs")
-                {
-                    relationsScript.SystemLogsScript += tableRelationsScript;
-                    relationsScript.SystemLogsScript += "\n";
-                    return relationsScript;
-                }
-                else
-                {
-                    return relationsScript;
-                }
-            }
-            else
-            {
-                return relationsScript;
-            }
-        }
-
-        private GeneratedScript AppendRelationsScriptToGeneratedScript(GeneratedScript generatedScript, RelationsScript relationsScript)
-        {
-            generatedScript.GlobalScript += relationsScript.GlobalScript;
-            generatedScript.MainScript += relationsScript.MainScript;
-            generatedScript.SystemLogsScript += relationsScript.SystemLogsScript;
-            return generatedScript;
+            targetGeneratedScript.GlobalScript += sourceGeneratedScript.GlobalScript;
+            targetGeneratedScript.MainScript += sourceGeneratedScript.MainScript;
+            targetGeneratedScript.SystemLogsScript += sourceGeneratedScript.SystemLogsScript;
+            return targetGeneratedScript;
         }
 
         private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)

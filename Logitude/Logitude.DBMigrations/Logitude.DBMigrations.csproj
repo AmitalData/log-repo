@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DefinitionModels\ColumnDefinition.cs" />
+    <Compile Include="Models\GeneralModels\TablesGeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ColumnMigration.cs" />
     <Compile Include="Models\DefinitionModels\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\DefinitionModels\ConstraintsDefinition.cs" />
