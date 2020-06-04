@@ -380,16 +380,7 @@ namespace Logitude.Accounting.BL.CoreBL
             referenceGroup = null;
             if (Reference != null)
             {
-                if (Reference.Contains("-"))
-                {
-
-                    Reference = Reference.Replace("-", "");
-                }
-                if (Reference.Length > 9)
-                {
-                    Reference = Reference.Substring(Reference.Length -9);
-                }
-            
+                Reference = RemoveSomeChars(Reference);               
                 Regex isMatche = new Regex("([A-Za-z])");
                 bool letters = isMatche.IsMatch(Reference);
                 if (letters)
@@ -422,6 +413,19 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 referenceGroup = "0000";
             }
+        }
+        private static string RemoveSomeChars(string reference)
+        {
+            char[] charsToRemove = { '-', '/', '.', '*', '\\' };
+            foreach (char c in charsToRemove)
+            {
+                reference = reference.Replace(c.ToString(), String.Empty);
+            }
+            if (reference.Length > 9)
+            {
+                reference = reference.Substring(reference.Length - 9);
+            }
+            return reference;
         }
         private static void SetVatNumber(Simplog.Data.CommonDataModel.EntityPOCOs.Card card)
         {
