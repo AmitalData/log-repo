@@ -30,7 +30,12 @@ context('Actions', () => {
       
         cy.get('#HelperNotes_0_0').click()
         cy.get('#NEWDIRECT').click({ force: true }) 
+        cy.get('#DirectionRadio_Div_0E').click({ force: true });
+        cy.get('#DirectionRadio_0E').click({ force: true });
 
+
+        cy.get('#TransportModeRadio_Div_0A').click({ force: true });
+        cy.get('#TransportModeRadio_0A').click({ force: true });
     })
      
 
