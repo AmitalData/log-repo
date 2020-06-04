@@ -73,6 +73,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             string Id = IdCounter.GetNumber("InboundEmail", tenant).ToString();
             entityPM.Id = Id;
             entityPM.Uniquekey = Id;
+            entityPM.AnalyzeQueueId = Id;
             this.Poco = new InboundEmail();
 
             this.Poco.Id = entityPM.Id;
