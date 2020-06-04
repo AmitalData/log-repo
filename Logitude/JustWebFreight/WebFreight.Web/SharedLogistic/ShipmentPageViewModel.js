@@ -386,8 +386,14 @@
     jQuery.GetShipmentEvents = (function () {
 
         $("#EventsPageBusyIndicator").show();
+        var url = null;
+        if ($.IsExternalURL) {
+            url = "../api/CommonData?securitykey=" + $.CurrentEntityKey + "&entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        }
 
-        var url = "../api/CommonData?entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        else {
+            url = "../api/CommonData?entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+        }
 
         $.ajax({
             url: url,
