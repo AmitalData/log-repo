@@ -36,7 +36,7 @@ export class MainMenuAutomationComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("Ticket", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Tickets", "Ticket", "Ticket"));
 
         if (FeatureLocator.HasFeaturePermession("LogitudeMessagesTransmissionLog", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Transmission Logs", "LogitudeMessagesTransmissionLog","Transmission Log"));
-        if (FeatureLocator.HasFeaturePermession("ARInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AR Invoices", "ARInvoice", "ARInvoice", "Receivables Invoices"));
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AR Invoices", "ARInvoice", "AR Invoice", "Receivables Invoices"));
 
        
 
