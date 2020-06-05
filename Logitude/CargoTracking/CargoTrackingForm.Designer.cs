@@ -39,13 +39,20 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.DestinationConnectionlTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.button1.Font = new System.Drawing.Font("Constantia", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(31, 71);
+            this.button1.Location = new System.Drawing.Point(31, 144);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(216, 64);
             this.button1.TabIndex = 0;
@@ -58,11 +65,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
-            this.label1.Location = new System.Drawing.Point(27, 20);
+            this.label1.Location = new System.Drawing.Point(77, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 20);
+            this.label1.Size = new System.Drawing.Size(100, 20);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Connection Strings";
+            this.label1.Text = "Copy From:";
             // 
             // SourceConnectionlTextBox
             // 
@@ -76,7 +83,7 @@
             // Checking
             // 
             this.Checking.AutoSize = true;
-            this.Checking.Location = new System.Drawing.Point(375, 98);
+            this.Checking.Location = new System.Drawing.Point(343, 171);
             this.Checking.Name = "Checking";
             this.Checking.Size = new System.Drawing.Size(16, 13);
             this.Checking.TabIndex = 4;
@@ -96,17 +103,17 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(31, 153);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(31, 224);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 26);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(453, 27);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // CheckLabel
             // 
             this.CheckLabel.AutoSize = true;
-            this.CheckLabel.Location = new System.Drawing.Point(253, 98);
+            this.CheckLabel.Location = new System.Drawing.Point(253, 171);
             this.CheckLabel.Name = "CheckLabel";
             this.CheckLabel.Size = new System.Drawing.Size(16, 13);
             this.CheckLabel.TabIndex = 10;
@@ -116,7 +123,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(232, 48);
+            this.radioButton1.Location = new System.Drawing.Point(0, 3);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(71, 17);
             this.radioButton1.TabIndex = 11;
@@ -128,11 +135,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(313, 48);
+            this.radioButton2.Location = new System.Drawing.Point(81, 3);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(46, 17);
             this.radioButton2.TabIndex = 12;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Test";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
@@ -140,24 +146,91 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(368, 48);
+            this.radioButton3.Location = new System.Drawing.Point(136, 3);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(60, 17);
             this.radioButton3.TabIndex = 13;
-            this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Custom";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // DestinationConnectionlTextBox
+            // 
+            this.DestinationConnectionlTextBox.Enabled = false;
+            this.DestinationConnectionlTextBox.Location = new System.Drawing.Point(232, 87);
+            this.DestinationConnectionlTextBox.Name = "DestinationConnectionlTextBox";
+            this.DestinationConnectionlTextBox.Size = new System.Drawing.Size(221, 20);
+            this.DestinationConnectionlTextBox.TabIndex = 14;
+            this.DestinationConnectionlTextBox.TextChanged += new System.EventHandler(this.DestinationConnectionlTextBox_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(44)))), ((int)(((byte)(115)))));
+            this.label2.Location = new System.Drawing.Point(87, 87);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 20);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Copy To:";
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Checked = true;
+            this.radioButton4.Location = new System.Drawing.Point(232, 114);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(71, 17);
+            this.radioButton4.TabIndex = 16;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "Localhost";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(313, 114);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(46, 17);
+            this.radioButton5.TabIndex = 17;
+            this.radioButton5.Text = "Test";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(368, 114);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(60, 17);
+            this.radioButton6.TabIndex = 18;
+            this.radioButton6.Text = "Custom";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.radioButton3);
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButton1);
+            this.panel1.Location = new System.Drawing.Point(232, 46);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(221, 21);
+            this.panel1.TabIndex = 20;
             // 
             // CargoTrackingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(510, 149);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.ClientSize = new System.Drawing.Size(510, 218);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.radioButton6);
+            this.Controls.Add(this.radioButton5);
+            this.Controls.Add(this.radioButton4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.DestinationConnectionlTextBox);
             this.Controls.Add(this.CheckLabel);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.Checking);
@@ -170,6 +243,8 @@
             this.Name = "CargoTrackingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CargoTracking";
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +261,12 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.TextBox DestinationConnectionlTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

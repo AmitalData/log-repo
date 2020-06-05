@@ -18,8 +18,10 @@ namespace CargoTracking.Forms
 {
     public partial class CargoTrackingForm : Form
     {
-        private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
-        //string dbDestinationConnection = "Logitude2-5_Main,sa,Saas256,.";//"Logitude2-5_Global,sa,Saas256,.";
+        private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
+        private string TestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        private string dbSourceConnection  ;//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        private string dbDestinationConnection;
         private CargoTrackingService shipmentHeaderService;
         private int NumberOfCoulmnUpdated = 0;
         private int Table_X = 0;
@@ -32,8 +34,11 @@ namespace CargoTracking.Forms
         public CargoTrackingForm()
         {
             InitializeComponent();
+            dbSourceConnection = LocalConectionstring;
+            dbDestinationConnection = LocalConectionstring;
             shipmentHeaderService = new CargoTrackingService();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
+            this.DestinationConnectionlTextBox.Text = dbDestinationConnection;
             syncEvent = new ManualResetEvent(false);
             //    this.BuildConnectionStrings();
         }
@@ -89,7 +94,7 @@ namespace CargoTracking.Forms
             this.Table_X = 0;
             tableLayoutPanel1.RowCount = 0;
             AddLabelToGrid("Table Name", 1, 0);
-            AddLabelToGrid("Row Updated #", 1, 0);
+            AddLabelToGrid("# Of Updated Records", 1, 0);
             AddLabelToGrid("Statues", 1, 0);
             this.Table_X = 0;
             this.Table_Y = 1;
@@ -138,24 +143,34 @@ namespace CargoTracking.Forms
 
             //dbSourceConnection  string[] destinationConnectionArray = dbSourceConnection.Split(',');
             this.dbSourceConnection = this.SourceConnectionlTextBox.Text;
+            this.dbDestinationConnection = this.DestinationConnectionlTextBox.Text;
 
             //if (!dbSourceConnection.Contains("Data Source"))
             //{
-                string[] sourceConnectionArray = dbSourceConnection.Split(',');
-                if (sourceConnectionArray.Length != 4 || sourceConnectionArray.Length != 4)
+            string[] sourceConnectionArray = dbSourceConnection.Split(',');
+                string[] destinationConnectionArray = dbDestinationConnection.Split(',');
+
+               if (sourceConnectionArray.Length != 4 || sourceConnectionArray.Length != 4)
                 {
-                    MessageBox.Show("connection not valid");
+                    MessageBox.Show("Source connection not valid");
                     return;
                 }
 
-                dbSourceConnection = shipmentHeaderService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            if (destinationConnectionArray.Length != 4 || destinationConnectionArray.Length != 4)
+            {
+                MessageBox.Show("Destination connection not valid");
+                return;
+            }
+
+            dbSourceConnection = shipmentHeaderService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            dbDestinationConnection = shipmentHeaderService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+
             //}
-            //   dbSourceConnection = shipmentHeaderService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
 
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            NumberOfCoulmnUpdated=shipmentHeaderService.UpdateDWDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbSourceConnection });
+            NumberOfCoulmnUpdated=shipmentHeaderService.UpdateDWDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
         }
 
 
@@ -434,19 +449,47 @@ namespace CargoTracking.Forms
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SourceConnectionlTextBox.Enabled = false;
-            this.SourceConnectionlTextBox.Text = "Logitude2-5_Main,sa,Saas256,.";
+            this.SourceConnectionlTextBox.Text = LocalConectionstring;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SourceConnectionlTextBox.Enabled = false;
-            this.SourceConnectionlTextBox.Text = "LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+            this.SourceConnectionlTextBox.Text = TestConectionstring;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SourceConnectionlTextBox.Enabled = true;
 
+        }
+
+        private void DestinationConnectionlTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textbox = sender as TextBox;
+
+            if (textbox != null)
+            {
+                this.dbDestinationConnection = textbox.Text;
+            }
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            DestinationConnectionlTextBox.Enabled = false;
+            this.DestinationConnectionlTextBox.Text = LocalConectionstring;
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            DestinationConnectionlTextBox.Enabled = false;
+            this.DestinationConnectionlTextBox.Text = TestConectionstring;
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            DestinationConnectionlTextBox.Enabled = true;
         }
     }
 }
