@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.BL.EntityPMs;
+﻿using Logitude.BL.DataContracts;
+using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
@@ -34,7 +35,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
             EraseTenantDataArgs parameterArgs = serializer.Deserialize(stringReader) as EraseTenantDataArgs;
 
             string procedureName = this.GetProcedureName(parameterArgs.Type);
-            this.RunProcedure(parameterArgs, procedureName, BatchTaskExecution.Id);
+
+            RunStoredProcedureClass.RunEreaseTenantData(parameterArgs.EntityId, procedureName);
+
+            //this.RunProcedure(parameterArgs, procedureName, BatchTaskExecution.Id);
         }
 
         private string GetProcedureName(string type)
@@ -69,66 +73,66 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return procedureName;
         }
-        private void RunProcedure(EraseTenantDataArgs parameterArgs, string procedureName, string batchTaskId)
-        {
-            if (!string.IsNullOrEmpty(procedureName))
-            {
-                string strConnString = this.GetConnection(parameterArgs.EntityId);
-                SqlConnection sqlConnection = new SqlConnection(strConnString);
-                SqlCommand cmd = new SqlCommand(procedureName, sqlConnection);
-                cmd.CommandType = CommandType.StoredProcedure;
+        //private void RunProcedure(EraseTenantDataArgs parameterArgs, string procedureName, string batchTaskId)
+        //{
+        //    if (!string.IsNullOrEmpty(procedureName))
+        //    {
+        //        string strConnString = this.GetConnection(parameterArgs.EntityId);
+        //        SqlConnection sqlConnection = new SqlConnection(strConnString);
+        //        SqlCommand cmd = new SqlCommand(procedureName, sqlConnection);
+        //        cmd.CommandType = CommandType.StoredProcedure;
 
-                try
-                {
-                    SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
-                    param1.Direction = ParameterDirection.Input;
-                    param1.Value = parameterArgs.EntityId;
-                    cmd.Parameters.Add(param1);
+        //        try
+        //        {
+        //            SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+        //            param1.Direction = ParameterDirection.Input;
+        //            param1.Value = parameterArgs.EntityId;
+        //            cmd.Parameters.Add(param1);
 
-                    sqlConnection.Open();
-                    cmd.ExecuteNonQuery();
-                }
+        //            sqlConnection.Open();
+        //            cmd.ExecuteNonQuery();
+        //        }
 
-                catch (SqlException ex)
-                {
-                    StringBuilder errorMessages = new StringBuilder();
+        //        catch (SqlException ex)
+        //        {
+        //            StringBuilder errorMessages = new StringBuilder();
 
-                    for (int i = 0; i < ex.Errors.Count; i++)
-                    {
-                        errorMessages.Append("Index #" + i + "\n" +
-                            "Message: " + ex.Errors[i].Message + "\n" +
-                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
-                            "Source: " + ex.Errors[i].Source + "\n" +
-                            "Procedure: " + ex.Errors[i].Procedure + "\n");                        
-                    }
+        //            for (int i = 0; i < ex.Errors.Count; i++)
+        //            {
+        //                errorMessages.Append("Index #" + i + "\n" +
+        //                    "Message: " + ex.Errors[i].Message + "\n" +
+        //                    "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+        //                    "Source: " + ex.Errors[i].Source + "\n" +
+        //                    "Procedure: " + ex.Errors[i].Procedure + "\n");
+        //            }
 
-                    throw new Exception(errorMessages.ToString());
-                }
+        //            throw new Exception(errorMessages.ToString());
+        //        }
 
-                finally
-                {
-                    sqlConnection.Dispose();
-                }
-            }
-        }
-        
-        public string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
+        //        finally
+        //        {
+        //            sqlConnection.Dispose();
+        //        }
+        //    }
+        //}
 
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+        //public string GetConnection(int tenant)
+        //{
+        //    GlobalDB currentDb;
+        //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+        //    {
+        //        currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+        //        scope.Complete();
+        //    }
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
+        //    string dbConnectionInfo = currentDb.DBConnection;
+        //    string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            return context.Database.Connection.ConnectionString;
-        }
+        //    DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+        //    WebFreightContext context = new WebFreightContext(connection);
+
+        //    return context.Database.Connection.ConnectionString;
+        //}
     }
 
     public class EraseTenantDataArgs

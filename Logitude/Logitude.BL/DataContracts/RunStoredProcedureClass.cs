@@ -63,10 +63,7 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
-
-
-
-
+        
         public static void DeleteQBOTranslations(int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -374,6 +371,39 @@ namespace Logitude.BL.DataContracts
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
+
+        public static void RunEreaseTenantData(int tenant, string procedureName)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string strConnString = GetConnection(tenant);
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+                        SqlCommand cmd = new SqlCommand(procedureName, cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
+                        param1.Direction = ParameterDirection.Input;
+                        param1.Value = tenant;
+                        cmd.Parameters.Add(param1);
+                        cmd.CommandTimeout = 6000;
+
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                    }
+
+                    scope.Complete();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                
+            }
         }
     }
 }
