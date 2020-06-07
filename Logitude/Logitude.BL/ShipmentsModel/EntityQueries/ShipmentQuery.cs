@@ -1807,6 +1807,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.HasContainerException = shipment.HasContainerException;
             shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
+            shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
+            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
+            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
+            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
+            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
+            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
+            shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
 
             if (shipment.MoveTypeId != null)
             {
@@ -3431,6 +3438,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
+            shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
+            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
+            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
+            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
+            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
+            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
+            shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
+
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -3442,6 +3457,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MainCarriageATA = masterData.MainCarriageATA;
                 shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId != null ? masterData.Transshipment3ToPortId : masterData.Transshipment2ToPortId != null ? masterData.Transshipment2ToPortId : masterData.Transshipment1ToPortId != null ? masterData.Transshipment1ToPortId : masterData.MainCarriageToPortId;
                 shipmentPM.CutoffDate = masterData.CutoffDate;
+                shipmentPM.DocumentsClosingDate = masterData.DocumentsClosingDate;
             }
 
             shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
