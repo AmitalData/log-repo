@@ -44,8 +44,8 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
+using Logitude.BL.ExternalService;
 
- 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARInvoiceService
@@ -276,6 +276,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
+            SetSatStatus();
+
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , ChangeTrackingPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
+            entityAutomationService.RunAutomation();
+
+
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -301,7 +307,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        private void SetSatStatus()
+        {
+            if (string.IsNullOrEmpty(entityPM.SATTransferStatusCode)) entityPM.SATTransferStatusCode = "NT";
+            if (string.IsNullOrEmpty(entityPM.SATInvoiceStatusCode)) entityPM.SATInvoiceStatusCode = "NO";
 
+
+        }
 
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
@@ -502,6 +514,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, ChangeTrackingPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
+                entityAutomationService.RunAutomation();
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
