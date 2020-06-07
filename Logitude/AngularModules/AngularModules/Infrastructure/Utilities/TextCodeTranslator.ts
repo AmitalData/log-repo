@@ -6,6 +6,25 @@ import { ObjectsLocator } from '../Locators/ObjectsLocator';
 
 export class TextCodeTranslator {
 
+
+
+    static BIReportTranslate(value: string) {
+        var translation = "";
+        var translationObject = window.TextCodes.filter(d => d.Code == value)[0];
+        if (translationObject) {
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
+            if (codeTranslation) {
+                translation = codeTranslation.TranslatedText;
+            }
+        }
+
+        return translation;
+    }
+
+
+
+
+
     static Translate(value: string, Fix: boolean = true): string {
         if (SessionLocator.UseCachedData) {
 
