@@ -1,12 +1,11 @@
-﻿using Logitude.BL.Helpers;
+﻿
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -15,27 +14,32 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InvoiceModel.Tools.EntityService
+namespace Logitude.BL.ExternalService
 {
-    public class ARInvoiceAutomationService
+
+
+    public  class EntityAutomationService
     {
-        private ARInvoicePM entityPM = null;
-        private ARInvoice poco = null;
+        private object entityPM = null;
+        private object poco = null;
         private string objectTableName = string.Empty;
         private List<ObjectFieldPM> automationObjectFields = null;
         private int tenant;
-
-        public ARInvoiceAutomationService(ARInvoicePM entityPM, ARInvoice poco)
+        private string automationType = string.Empty;
+        private object changeTrackingPM = null;
+        public EntityAutomationService(EntityAutomationArgs args)
         {
-            this.entityPM = entityPM;
-            this.poco = poco;
-            this.tenant = entityPM.Tenant;
-            this.objectTableName = "ARInvoice";
+            this.entityPM = args.EntityPM;
+            this.poco = args.Poco;
+            this.tenant = args.Tenant;
+            this.objectTableName = args.ObjectTableName;
+            this.automationType = args.AutomationType;
+            this.changeTrackingPM = args.ChangeTrackingPM;
             this.automationObjectFields = GetObjectFieldsUsedInAutomation();
         }
 
 
-        public void RunAutomation(string automationType)
+        public void RunAutomation()
         {
             EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
             if (automationType == "OnCreate")
@@ -44,8 +48,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                ARInvoiceChangeTracking aRInvoiceChangeTracking = BuildARInvoiceChangeTracking();
-                entityChangeHelper.AddEntityChange(entityPM, aRInvoiceChangeTracking.ChangeTrackingPM, automationType, aRInvoiceChangeTracking.EntityChangeFieldXml, objectTableName, DateTime.Now);
+                EntityChangeTracking entityChangeTracking = BuildEntityChangeTracking();
+                entityChangeHelper.AddEntityChange(entityPM, entityChangeTracking.ChangeTrackingPM, automationType, entityChangeTracking.EntityChangeFieldXml, objectTableName, DateTime.Now);
             }
         }
 
@@ -67,30 +71,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return objectFieldLists;
         }
 
-        private ARInvoiceChangeTracking BuildARInvoiceChangeTracking()
+        public EntityChangeTracking BuildEntityChangeTracking()
         {
-            ARInvoiceChangeTracking arInvoiceChangeTracking = new ARInvoiceChangeTracking() { ChangeTrackingPM = new ARInvoicePM() };
-            MapARInvoiceToARInvoicePMForAutomation(arInvoiceChangeTracking.ChangeTrackingPM, poco);
-            arInvoiceChangeTracking.NotifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, arInvoiceChangeTracking.ChangeTrackingPM);
-            arInvoiceChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(arInvoiceChangeTracking.NotifyPropertyChangeValuesLists);
-            return arInvoiceChangeTracking;
+            EntityChangeTracking entityChangeTracking = new EntityChangeTracking() { ChangeTrackingPM = GetChangeTrackingPM(poco)};
+            entityChangeTracking.NotifyPropertyChangeValuesLists = BuildChangedProperties(entityPM, entityChangeTracking.ChangeTrackingPM);
+            entityChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(entityChangeTracking.NotifyPropertyChangeValuesLists);
+            return entityChangeTracking;
         }
 
-        private void MapARInvoiceToARInvoicePMForAutomation(ARInvoicePM changeTrackingPM, ARInvoice poco)
+
+        private object GetChangeTrackingPM( object poco)
         {
+            object result = this.changeTrackingPM;
             if (automationObjectFields != null)
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
                 {
-                    if (objectFieldPM.FieldName == "BillToId")
+                    if (objectFieldPM.FieldName == "Field2")
                     {
 
                     }
                     object value = GetPropertyValue(poco, objectFieldPM.FieldName);
-                    PropertyInfo propInfo = changeTrackingPM.GetType().GetProperty(objectFieldPM.FieldName);
-                    propInfo.SetValue(changeTrackingPM, value, null);
+                    if (objectFieldPM.IsCustom)
+                    {
+                        value = new CustomFieldClass(objectFieldPM.FieldName, objectTableName, value!=null ? value.ToString():"");
+                    }
+                    PropertyInfo propInfo = result.GetType().GetProperty(objectFieldPM.FieldName);
+                    propInfo.SetValue(result, value, null);
                 }
             }
+
+
+            return result;
 
         }
 
@@ -106,15 +118,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return value;
         }
 
-        public List<NotifyPropertyChangeValues> BuildChangedProperties(ARInvoicePM entityPM, ARInvoicePM changeTrackingPM)
+        public List<NotifyPropertyChangeValues> BuildChangedProperties(object entityPM, object changeTrackingPM)
         {
             List<NotifyPropertyChangeValues> notifyPropertyChangeValuesLists = new List<NotifyPropertyChangeValues>();
             if (automationObjectFields != null)
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
                 {
-
-                    if(objectFieldPM.FieldName == "BillToId")
+                    if (objectFieldPM.FieldName == "Field2")
                     {
 
                     }
@@ -128,7 +139,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-
         private NotifyPropertyChangeValues GetNotifyPropertyChangeValues(NotifyPropertyChangeArgs args)
         {
             NotifyPropertyChangeValues notifyPropertyChangeValues = null;
@@ -136,7 +146,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             string newValue = GetValueFromObject(args.NewValue, args.IsCustom);
             if (oldValue != newValue)
             {
-                notifyPropertyChangeValues = new NotifyPropertyChangeValues() { PropertyName = args.PropertyName, OldValue = args.OldValue, NewValue = args.NewValue, PropertyType =args.IsCustom ? "CustomFieldClass" : args.PropertyType };
+                notifyPropertyChangeValues = new NotifyPropertyChangeValues() { PropertyName = args.PropertyName, OldValue = oldValue, NewValue = newValue, PropertyType = args.IsCustom ? "CustomFieldClass" : args.PropertyType };
             }
             return notifyPropertyChangeValues;
         }
@@ -149,7 +159,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 object objectValue = isCustom ? GetPropertyValue(value, "Value") : value;
                 if (objectValue != null)
                 {
-                    result = value.ToString();
+                    result = objectValue.ToString();
                 }
             }
             return result;
@@ -157,12 +167,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
     }
 
-    public class ARInvoiceChangeTracking
+
+    public class EntityChangeTracking
     {
-        public ARInvoicePM ChangeTrackingPM { get; set; }
+        public object ChangeTrackingPM { get; set; }
         public string EntityChangeFieldXml { get; set; }
         public List<NotifyPropertyChangeValues> NotifyPropertyChangeValuesLists { get; set; }
     }
+
 
     public class NotifyPropertyChangeArgs
     {
@@ -171,10 +183,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public object NewValue { get; set; }
         public bool IsCustom { get; set; }
         public string PropertyType { get; set; }
+    }
 
-        
+    public class EntityAutomationArgs
+    {
+        public object EntityPM { get; set; }
+        public object ChangeTrackingPM { get; set; }
+
+        public object Poco { get; set; }
+
+        public string AutomationType { get; set; }
+        public string ObjectTableName { get; set; }
+        public int Tenant { get; set; }
+
 
 
     }
 
+
 }
+

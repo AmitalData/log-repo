@@ -44,8 +44,8 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
+using Logitude.BL.ExternalService;
 
- 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARInvoiceService
@@ -278,8 +278,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             SetSatStatus();
 
-            ARInvoiceAutomationService arInvoiceAutomationService = new ARInvoiceAutomationService(entityPM, invoice);
-            arInvoiceAutomationService.RunAutomation("OnCreate");
+            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice  , EntityPM = entityPM , ChangeTrackingPM = new ARInvoicePM(),  AutomationType = "OnCreate", ObjectTableName = "ARInvoice" ,  Tenant =entityPM.Tenant});
+            entityAutomationService.RunAutomation();
+
 
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
@@ -513,9 +514,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
-
-                ARInvoiceAutomationService arInvoiceAutomationService = new ARInvoiceAutomationService(entityPM, invoice);
-                arInvoiceAutomationService.RunAutomation("OnUpdate");
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, ChangeTrackingPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant });
+                entityAutomationService.RunAutomation();
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);

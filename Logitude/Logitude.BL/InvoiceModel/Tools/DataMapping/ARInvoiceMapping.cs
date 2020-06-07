@@ -53,8 +53,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Description = entityPM.Description;
                 entity.IsConstituentInvoice = entityPM.IsConstituentInvoice;
                 entity.IsConsolidationInvoice = entityPM.IsConsolidationInvoice;
+                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
 
-             
+
+
             }
 
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;

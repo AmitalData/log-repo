@@ -437,7 +437,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceLinesBehavior.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceTotalVatsBehavior.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\ARInvoiceAutomationService.cs" />
+    <Compile Include="ExternalService\EntityAutomationService.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
     <Compile Include="QuoteModel\APIDataContract\QueryService\QuotePriceStepsQueryService.Generated.cs" />
