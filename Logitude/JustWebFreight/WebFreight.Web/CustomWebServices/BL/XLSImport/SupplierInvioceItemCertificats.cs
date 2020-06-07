@@ -43,10 +43,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             foreach (CertificateFromFile item in fromFile)
             {
                 foreach (ModelCodeAndConfirmatioNCode model in item.ModelCodeAndConfirmatioNCodeList) {
-                    if(model.ConfirmationCode=="")
-                    {
-                        AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
-                    }
                     var list = supplierInvoiceRepository.GetDeclarationIdfromInvoiceNumber(item.SupplierItemInvoice, tenant);
                     var decList = delcarationRepository.GetDeclarationsByIdAndClientID(list,clientID);
                     if (decList.Count == 0)
@@ -60,6 +56,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                         var invoiceItems = supplierInvoiceItemRepository.GetSupplierInvoiceItemByInvoiceNumber(tenant,dec.Id, model.ModelCode);
                         foreach(SupplierInvoiceItemPM invoiceItem in invoiceItems)
                         {
+                            if (model.ConfirmationCode == "")
+                            {
+                                AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
+                            }
                             foundInvoiceItem = true;
                             if (dec.PaymentDate != null)
                             {
@@ -80,7 +80,12 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                     if (!foundInvoiceItem)
                     {
                         AddErrors("",model.RowNumber,"", item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
+                        if (model.ConfirmationCode == "")
+                        {
+                            AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
+                        }
                     }
+
                 }
             }
             
