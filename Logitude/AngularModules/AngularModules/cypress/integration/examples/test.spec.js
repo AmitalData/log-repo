@@ -37,6 +37,13 @@ context('Actions', () => {
         cy.get('#TransportModeRadio_Div_0A').click({ force: true });
         cy.get('#TransportModeRadio_0A').click({ force: true });
     })
+it('fill shipment fields',()=>{
+//cy.get('Shipment_CustomerId').clear()
+cy.get('Shipment_CustomerId').click({force:true})
+cy.get('Shipment_CustomerId').type('razan')
+
+
+})
      
 
 })
