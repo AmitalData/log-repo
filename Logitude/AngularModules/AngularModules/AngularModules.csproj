@@ -595,6 +595,7 @@
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
     <TypeScriptCompile Include="Common\EntityLists\AccountingPartnerList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\AddressTypeList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CarrierAreaList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CarrierAreasPortList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CheckDigitControlAlgorithmList.ts" />
@@ -620,6 +621,7 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\AddressTypeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CarrierAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ChargesExternalAccountsByProductListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />

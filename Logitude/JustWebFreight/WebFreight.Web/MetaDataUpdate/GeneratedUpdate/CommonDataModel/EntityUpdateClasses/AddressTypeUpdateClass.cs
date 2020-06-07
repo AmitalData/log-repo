@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AddressTypeUpdateClass
    {  		
-		public const string HashString = "df6bdeac87c58b50f4512eb8d245f685";
+		public const string HashString = "9bfb3fcc262b51d87ec328c8cfca77c2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -87,7 +87,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNew =  false,
 			      				    DBTableName =  "AddressTypes",
 			      				    ObjectTableSingular =  "Address Type",
-			      				    ObjectTablePlural =  "AddressTypes",
+			      				    ObjectTablePlural =  "Address Types",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -95,8 +95,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Id",
-			      				    KeyPropertyPath =  "Code",
+			      				    LookUp1 =  "Name",
+			      				    DependencyFilter1 =  "Id",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
 			      				    CacheOnClient =  true,
@@ -104,9 +105,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -116,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address Type",
-			      				    Code =  "5496",
+			      				    Code =  "1d20",
 			      				    Name =  "QuoteType",
 			      				    CloseTableCode =  "Id",
 			      				    CloseTableName =  "Name",
@@ -221,7 +223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,

@@ -330,6 +330,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AddressTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreasPortList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreaList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerOpenFilesAmountList.cs" />
