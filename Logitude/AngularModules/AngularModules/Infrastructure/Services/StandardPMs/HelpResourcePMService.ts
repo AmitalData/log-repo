@@ -21,6 +21,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {HelpResourcePM} from '../../EntityPMs/HelpResourcePM';
 
+import {HelpResourceValidator} from '../../Validators/HelpResourceValidator';
 
 @Injectable()
 
@@ -71,6 +72,12 @@ export class HelpResourcePMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("HelpResource", entityPM);
 
+			var customValidator :HelpResourceValidator = new HelpResourceValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
@@ -113,6 +120,12 @@ export class HelpResourcePMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("HelpResource", entityPM);
 
+			var customValidator :HelpResourceValidator = new HelpResourceValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 

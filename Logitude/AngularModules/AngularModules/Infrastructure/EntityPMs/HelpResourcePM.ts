@@ -95,6 +95,11 @@ export class HelpResourcePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private file: string;
+    public get File() { return this.file; }
+    public set File(newValue: string) { if (this.file != newValue) { this.file = newValue; this.MarkAsDirty("File"); } }
+       
+	 
 
     public OldEntityPM: HelpResourcePM;
 		

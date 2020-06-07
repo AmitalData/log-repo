@@ -43,18 +43,35 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
+            if(entityPM.File != null)
+            {
+                this.UploadFile();
+            }
+
             HelpResourceTracing.Trace(entityPM, entityPoco, isNewEntity);
             HelpResourceMapping.MapEntity(entityPM, entityPoco, isNewEntity);
             entityRepository.Add(entityPoco);
             entityRepository.SubmitChanges();
         }
-        
+
+        private void UploadFile()
+        {
+            //Uploader uploaderService = new Uploader();
+
+            byte[] FileData = Convert.FromBase64String(entityPM.File);
+        }
+
         public void Update(HelpResourcePM entity)
         {
             this.isNewEntity = false;
             this.entityPM = entity;
             this.entityPoco = entityRepository.GetSingleHelpResource(entityPM.Code, entityPM.Tenant);
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+            if (entityPM.File != null)
+            {
+
+            }
 
             HelpResourceTracing.Trace(entityPM, entityPoco, isNewEntity);
             HelpResourceMapping.MapEntity(entityPM, entityPoco, isNewEntity);

@@ -321,6 +321,7 @@ export class NewHelpResouceComponent extends BaseComponent {
             }
 
             viewmodel.UploadBodyData = window.btoa(binary);
+            viewmodel.EntityPM.File = viewmodel.UploadBodyData;
         };
 
         reader.onerror = function (e) {
