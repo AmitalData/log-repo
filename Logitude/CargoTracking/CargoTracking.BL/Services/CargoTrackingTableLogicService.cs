@@ -16,16 +16,50 @@ namespace CargoTracking.CargoTracking.BL.Services
         {
             if (TableName == "CargoTrackingPorts")
             {
-                if ( TableRow["Id"].Equals("1-100"))
+                if ( TableRow["Code"].Equals("MUT"))
                 {
-                    TableRow.SetField("EnglishName", "Mutaz");
+                    TableRow.SetField("EnglishName", "Cargo_Test");
                 }
+
             }
-           
+
+            if (TableName == "CargoTrackingShipments")
+            {
+                TableRow.SetField("Master", TableRow["MasterShipmentDataId"]);
+                TableRow.SetField("PickupDate", TableRow["FirstPickupETA"]);
+                CompareNullabelFirstPickupETADateTime(TableRow);
+            }
 
         }
+
+
+
+        public static void CompareNullabelFirstPickupETADateTime(DataRow TableRow)
+        {
+            var FirstPickupETA = TableRow["FirstPickupETA"].GetType();
+            if (FirstPickupETA.FullName == "System.DBNull")
+            {
+                TableRow.SetField("PickupDone", false);
+            }
+            else
+            {
+                DateTime? lastPostDate = (DateTime?)(TableRow["FirstPickupETA"]);
+                DateTime? todayDate = DateTime.Today.Date;
+
+                if (FirstPickupETA != null && lastPostDate.Value.Date < todayDate.Value.Date)
+                {
+                    TableRow.SetField("PickupDone", true);
+                }
+                else
+                {
+                    TableRow.SetField("PickupDone", false);
+
+                }
+            }
           
-      
+        }
+
+
     }
  
 }

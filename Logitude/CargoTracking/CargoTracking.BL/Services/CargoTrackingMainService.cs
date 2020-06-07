@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace CargoTracking.CargoTracking.BL.Services
 {
-    public class CargoTrackingService
+    public class CargoTrackingMainService
     {
         public static long timeOut = 10000000000000000;
      
 
-        public int UpdateDWDataBase(CargoArgs buildCargoArgs)
+        public int UpdateCTDataBase(CargoArgs buildCargoArgs)
         {
             CargoTable table = buildCargoArgs.Table;
             string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
@@ -51,12 +51,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                                          .ToList();
 
                         
-                        foreach (DataRow dr in dataTable.Rows) // search whole table
-                        {
-                            dr.SetField("EnglishName", "3");
-                            CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
-
-                        }
+                    
 
                         if (columns.Count < 1000)
                         {
@@ -87,10 +82,15 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                                     try
                                     {
+                                        AutoMapColumns(bulkCopy, dataTable, table);
+
+                                        foreach (DataRow dr in dataTable.Rows)  
+                                        {
+                                            CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                        }
 
                                         bulkCopy.EnableStreaming = true;
                                         bulkCopy.BatchSize = 100000;
-                                        AutoMapColumns(bulkCopy, dataTable, table);
                                         bulkCopy.WriteToServer(dataTable);
 
                                     }
@@ -196,8 +196,11 @@ namespace CargoTracking.CargoTracking.BL.Services
         public   void AutoMapColumns(SqlBulkCopy sbc, DataTable dt, CargoTable Table)
         {
             List<string> MappingMatching = new List<string>();
+            List<string> MappingDeference = new List<string>();
+
             string[] DB_Cols = Table.FieldsDBName.Split(',');
             string[] CTDB_Cols = Table.CT_FieldsDBName.Split(',');
+            string CompareDB = "";
             foreach (string CTDB_columns in CTDB_Cols)
             {
                 foreach (string DB_columns in DB_Cols)
@@ -205,13 +208,18 @@ namespace CargoTracking.CargoTracking.BL.Services
                     if (CTDB_columns.Equals(DB_columns))
                     {
                         MappingMatching.Add(DB_columns + ","+ CTDB_columns);
+                        CompareDB += CTDB_columns + ",";
                     }
                 }
               
             }
-
-            CargoTrackingCustomMappingService.MappingDB_CTDB(dt, Table);
-
+            foreach (string DB_columns in CTDB_Cols)
+            {
+                if (!CompareDB.Contains(DB_columns))
+                {
+                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns);
+                }
+            }
 
             foreach (string columns in  MappingMatching)
             {
@@ -221,53 +229,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                 sbc.ColumnMappings.Add(col1, col2);
             }
         }
-
-        public List<string> AutoMapCargoShipments()
-        {
-            List<string> MappingMatching = new List<string>();
-            MappingMatching.Add("Id,Id");
-            MappingMatching.Add("Tenant,Tenant");
-            MappingMatching.Add("CustomerId,CustomerId");
-            MappingMatching.Add("TransportModeId,TransportModeId");
-            MappingMatching.Add("MasterShipmentDataId,Master");
-            MappingMatching.Add("House,House");
-            MappingMatching.Add("FromPortId,FromPortId");
-            MappingMatching.Add("ToPortId,ToPortId");
-            MappingMatching.Add("ShipmentNumber,ShipmentNumber");
-            MappingMatching.Add("ShipperId,ShipperId");
-            MappingMatching.Add("ConsigneeId,ConsigneeId");
-            MappingMatching.Add("GrossWeight,GrossWeight");
-            MappingMatching.Add("Volume,Volume");
-            MappingMatching.Add("CustomConnectToShipment,PickupDone");
-            MappingMatching.Add("FirstPickupETA,PickupDate");
-
-            return MappingMatching;
-
-        }
-        public List<string> AutoMapCargoTrackingPorts()
-        {
-            List<string> MappingMatching = new List<string>();
-            MappingMatching.Add("Id,Id");
-            MappingMatching.Add("Code,Code");
-            MappingMatching.Add("EnglishName,EnglishName");
-            MappingMatching.Add("CountryId,CountryId");
-  
-
-            return MappingMatching;
-
-        }
-        public List<string> AutoMapCargoTrackingCards()
-        {
-            List<string> MappingMatching = new List<string>();
-            MappingMatching.Add("Id,Id");
-            MappingMatching.Add("Code,Code");
-            MappingMatching.Add("EnglishName,EnglishName");
-            MappingMatching.Add("LocalName,LocalName");
-    
-
-            return MappingMatching;
-
-        }
+ 
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
@@ -337,8 +299,8 @@ namespace CargoTracking.CargoTracking.BL.Services
             SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
-"select MIN(AutomaticLastUpdateDate) -1 AutomaticLastUpdateDate " +
-"FROM dbo." + tableName + " ;", con);
+               "select MIN(AutomaticLastUpdateDate) -1 AutomaticLastUpdateDate " +
+               "FROM dbo." + tableName + " ;", con);
 
             try
             {
@@ -371,14 +333,5 @@ namespace CargoTracking.CargoTracking.BL.Services
             return result;
         }
     }
-
-
-    public class CargoTrackingPorts
-    {
-        public string Id { get; set; }
-        public string Code { get; set; }
-        public string EnglishName { get; set; }
-        public string LocalName { get; set; }
-
-    }
+ 
 }

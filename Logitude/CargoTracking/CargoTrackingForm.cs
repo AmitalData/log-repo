@@ -20,9 +20,9 @@ namespace CargoTracking.Forms
     {
         private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
         private string TestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
-        private string dbSourceConnection  ;//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        private string dbSourceConnection  ; 
         private string dbDestinationConnection;
-        private CargoTrackingService cargoTrackingService;
+        private CargoTrackingMainService cargoTrackingService;
         private int NumberOfCoulmnUpdated = 0;
         private int Table_X = 0;
         private int Table_Y = 1;
@@ -30,24 +30,24 @@ namespace CargoTracking.Forms
         private int TotalIncreasing = 0;
         private bool FirstInit = true;
         private ManualResetEvent syncEvent;
-        //bool FirstChecking = true;
         public CargoTrackingForm()
         {
             InitializeComponent();
             dbSourceConnection = LocalConectionstring;
             dbDestinationConnection = LocalConectionstring;
-            cargoTrackingService = new CargoTrackingService();
+            cargoTrackingService = new CargoTrackingMainService();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
             this.DestinationConnectionlTextBox.Text = dbDestinationConnection;
             syncEvent = new ManualResetEvent(false);
-            //    this.BuildConnectionStrings();
-        }
+         }
         private List<CargoTable> FillCargoTableList()
         {
             List<CargoTable> CargoTableLists = new List<CargoTable>();
-            CargoTableLists.Add(new CargoTable() { TableName = "Port", FieldsDBName = "Id,Code,CountryId,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Ports", CT_TableName = "CargoTrackingPorts" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Card", FieldsDBName = "Id,Code,LocalName,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Cards", CT_TableName = "CargoTrackingCards" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Shipment", FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,FromPortId,ToPortId,ShipmentNumber,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,FirstPickupETA,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Shipments", CT_TableName = "CargoTrackingShipments" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Port", FieldsDBName = "Id,Code,CountryId,EnglishName,AutomaticLastUpdateDate",CT_FieldsDBName = "Id,Code,EnglishName,CountryId", KeyName = "Id", DBTableName = "Ports", CT_TableName = "CargoTrackingPorts" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Card", FieldsDBName = "Id,Code,LocalName,EnglishName,AutomaticLastUpdateDate", KeyName = "Id", CT_FieldsDBName = "Id,Code,EnglishName,LocalName", DBTableName = "Cards", CT_TableName = "CargoTrackingCards" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Shipment", FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,FirstPickupETA,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA",
+                                                   KeyName = "Id", DBTableName = "Shipments", CT_TableName = "CargoTrackingShipments" ,CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate"
+            });
         
             return CargoTableLists;
 
@@ -61,10 +61,7 @@ namespace CargoTracking.Forms
                 FirstInit = false;
             }
             
-
-            //Thread thread = new Thread(delegate () { BuildData(); });
-            //thread.IsBackground = true;
-            //thread.Start();
+ 
             BuildData();
 
         }
@@ -72,12 +69,7 @@ namespace CargoTracking.Forms
         private void BuildData() {
             BuildConnectionStrings();
             this.SetFormHight();
-
-            //Thread thread = new Thread(() => { BuildModule("CheckAndUpdateWaterMark", Checking, "Checking WaterMark ..."); syncEvent.Set();});
-            //thread.IsBackground = true;
-            //thread.Start();
-
-
+ 
             UpdateCargoTables();
         }
 
@@ -141,12 +133,9 @@ namespace CargoTracking.Forms
         private void BuildConnectionStrings()
         {
 
-            //dbSourceConnection  string[] destinationConnectionArray = dbSourceConnection.Split(',');
             this.dbSourceConnection = this.SourceConnectionlTextBox.Text;
             this.dbDestinationConnection = this.DestinationConnectionlTextBox.Text;
-
-            //if (!dbSourceConnection.Contains("Data Source"))
-            //{
+ 
             string[] sourceConnectionArray = dbSourceConnection.Split(',');
                 string[] destinationConnectionArray = dbDestinationConnection.Split(',');
 
@@ -164,13 +153,11 @@ namespace CargoTracking.Forms
 
             dbSourceConnection = cargoTrackingService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
             dbDestinationConnection = cargoTrackingService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
-
-            //}
-
+ 
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            NumberOfCoulmnUpdated= cargoTrackingService.UpdateDWDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
+            NumberOfCoulmnUpdated= cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
         }
 
 
@@ -197,7 +184,7 @@ namespace CargoTracking.Forms
             {
                 table.Labels.Add(Label);
             }
-/// هتا
+ 
              SetLabelStyleOnGRID(Label, AccessLevel);
              tableLayoutPanel.Controls.Add(Label, x, y);
    
@@ -244,7 +231,6 @@ namespace CargoTracking.Forms
         {
             this.Height = this.Height + TableCellMrginHight;
             this.TotalIncreasing += TableCellMrginHight;
-            //tableLayoutPanel1.RowCount++;
             tableLayoutPanel1.Size = new Size(tableLayoutPanel1.Size.Width, tableLayoutPanel1.Size.Height + TableCellMrginHight);
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 0.5f));
             AddLabelToTable( tableLayoutPanel1,  Dw_TableName, Table_X, Table_Y, AccessLevel, table);
@@ -297,10 +283,7 @@ namespace CargoTracking.Forms
             timer1.Enabled = true;
             timer1.Start();
             UpdateCargoDataBase(table);
-
-            //SetControlPropertyValue(table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-            //SetControlPropertyValue(table.Labels[1], "Text", "Records Updated: ");
-            //SetControlPropertyValue(table.Labels[1], "ForeColor", Color.Red);
+ 
             SetControlPropertyValue(table.Labels[1], "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
             SetControlPropertyValue(table.Labels[1], "Text", "( " + NumberOfCoulmnUpdated + " )");
             SetControlPropertyValue(table.Labels[1], "ForeColor", Color.Red);
@@ -317,11 +300,9 @@ namespace CargoTracking.Forms
 
         private void InitFirstChecking()
         {
-            //if ( FirstChecking == true)
-            //{
+             
                 BuildModule("CheckAndUpdateWaterMark", Checking, "Checking WaterMark ...");
-            //    FirstChecking = false;
-            //}
+          
         }
 
         Stopwatch globalStopwatch;
@@ -342,11 +323,7 @@ namespace CargoTracking.Forms
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-
-            // for timer
-            //if (generalLabel != null) SetControlPropertyValue(generalLabel, "Text", TextStarting);
-                                 
-
+ 
 
             globalStopwatch = stopWatch;
             generalLabel = lable;
@@ -361,14 +338,7 @@ namespace CargoTracking.Forms
             {
 
                 UpdateCargoTables();
-
-
-                //SetControlPropertyValue(RecordsUpdated, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-                //SetControlPropertyValue(RecordsUpdated, "Text", "Records Updated: ");
-                //SetControlPropertyValue(RecordsUpdated, "ForeColor", Color.Red);
-                //SetControlPropertyValue(RecordsNumbers, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
-                //SetControlPropertyValue(RecordsNumbers, "Text", "( "+NumberOfCoulmnUpdated+" )");
-                //SetControlPropertyValue(RecordsNumbers, "ForeColor", Color.Black);
+ 
             }
                
 
@@ -421,7 +391,6 @@ namespace CargoTracking.Forms
 
             if (textbox != null)
             {
-               // this.dbDestinationConnection = textbox.Text;
             }
         }
  

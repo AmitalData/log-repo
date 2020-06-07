@@ -12,15 +12,17 @@ namespace CargoTracking.CargoTracking.BL.Services
     public class CargoTrackingCustomMappingService
     {
 
-        public static  void MappingDB_CTDB(DataTable dataTable, CargoTable Table)
+        public static void MappingDB_CTDB(DataTable dataTable, SqlBulkCopy sbc, string CoulmnName)
         {
-            if (Table.CT_TableName== "CargoTrackingPorts")
-            {
-                dataTable.Columns.Add("EnglishName");
-            }
+             AddCustomColumn(dataTable, sbc, CoulmnName);
         }
-
+        private static void AddCustomColumn(DataTable dataTable, SqlBulkCopy sbc, string ColumnName)
+        {
+            dataTable.Columns.Add(ColumnName);
+            sbc.ColumnMappings.Add(ColumnName, ColumnName);
+        }
+ 
 
     }
- 
+
 }
