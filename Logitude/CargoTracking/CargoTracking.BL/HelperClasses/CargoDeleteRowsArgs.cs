@@ -12,6 +12,7 @@ namespace CargoTracking.CargoTracking.BL.HelperClasses
         public string KeyName { get; set; }
         public string ConnectionString { get; set; }
         public List<string> IdsList { get; set; }
+        public string SingleId { get; set; }
         public bool ReturnDeleteIdsAsString { get; set; }
     }
 }

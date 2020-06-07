@@ -39,7 +39,7 @@ namespace CargoTracking.CargoTracking.BL.Services
 
 
                     SqlDataReader reader = commandSourceData.ExecuteReader();
-
+                 
                     if (reader.HasRows)
                     {
                         dataTable = new DataTable();
@@ -50,6 +50,14 @@ namespace CargoTracking.CargoTracking.BL.Services
                                          .Select(r => (string)r[table.KeyName].ToString())
                                          .ToList();
 
+                        
+                        foreach (DataRow dr in dataTable.Rows) // search whole table
+                        {
+                            dr.SetField("EnglishName", "3");
+                            CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+
+                        }
+
                         if (columns.Count < 1000)
                         {
                             CompleatedUpdate = true;
@@ -59,7 +67,7 @@ namespace CargoTracking.CargoTracking.BL.Services
 
 
                         table.UpdatedCount = columns != null ? columns.Count() : 0;
-                        table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.Dw_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildCargoArgs.SourceConnectionString, ReturnDeleteIdsAsString = true });
+                        table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
 
                         if (!string.IsNullOrEmpty(table.RefreshIds))
                         {
@@ -73,7 +81,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                                            new SqlBulkCopy(destinationConnection))
                                 {
                                     bulkCopy.DestinationTableName =
-                                        "dbo." + table.Dw_TableName;
+                                        "dbo." + table.CT_TableName;
 
                                     bulkCopy.BulkCopyTimeout = (int)timeOut;
 
@@ -82,7 +90,7 @@ namespace CargoTracking.CargoTracking.BL.Services
 
                                         bulkCopy.EnableStreaming = true;
                                         bulkCopy.BatchSize = 100000;
-                                        AutoMapColumns(bulkCopy, dataTable, table.DBTableName);
+                                        AutoMapColumns(bulkCopy, dataTable, table);
                                         bulkCopy.WriteToServer(dataTable);
 
                                     }
@@ -139,26 +147,70 @@ namespace CargoTracking.CargoTracking.BL.Services
         }
 
 
+        public int Memo(CargoArgs buildCargoArgs)
+        {
+            CargoTable table = buildCargoArgs.Table;
+            string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
+            string condition = GetUpdateDataBaseCondition(buildCargoArgs);
  
+            int NumberOfCoulmnsUpdated = 0;
+            using (SqlConnection sourceConnection =
+                       new SqlConnection(buildCargoArgs.SourceConnectionString))
+            {
+                sourceConnection.Open();
+        
+              
 
-        public   void AutoMapColumns(SqlBulkCopy sbc, DataTable dt,string TableName)
+                    SqlCommand commandSourceData = new SqlCommand(
+                   "SELECT "+ fieldName +" "+
+                   "FROM dbo." + table.DBTableName + condition , sourceConnection);
+
+                    SqlDataReader reader = commandSourceData.ExecuteReader();
+                    List<object[]> dataList = new List<object[]>();
+                 
+                    while (reader.Read())
+                    {
+                        object[] tempRow = new object[reader.FieldCount];
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+
+                        string g = reader.GetName(i);
+
+                        if (reader.GetName(i) == "") {
+
+                        } 
+                           tempRow[i] = reader[i];
+                        }
+                        dataList.Add(tempRow);
+             
+                    }
+            
+            }
+
+            return NumberOfCoulmnsUpdated;
+
+        }
+
+
+
+        public   void AutoMapColumns(SqlBulkCopy sbc, DataTable dt, CargoTable Table)
         {
             List<string> MappingMatching = new List<string>();
-            if (TableName== "Shipments")
+            string[] DB_Cols = Table.FieldsDBName.Split(',');
+            string[] CTDB_Cols = Table.CT_FieldsDBName.Split(',');
+            foreach (string CTDB_columns in CTDB_Cols)
             {
-                MappingMatching = AutoMapCargoShipments();
-            }
-            else if (TableName == "Cards")
-            {
-                MappingMatching = AutoMapCargoTrackingCards();
-
-            }
-            else if (TableName == "Ports")
-            {
-                MappingMatching = AutoMapCargoTrackingPorts();
-
+                foreach (string DB_columns in DB_Cols)
+                {
+                    if (CTDB_columns.Equals(DB_columns))
+                    {
+                        MappingMatching.Add(DB_columns + ","+ CTDB_columns);
+                    }
+                }
+              
             }
 
+            CargoTrackingCustomMappingService.MappingDB_CTDB(dt, Table);
 
 
             foreach (string columns in  MappingMatching)
@@ -219,13 +271,13 @@ namespace CargoTracking.CargoTracking.BL.Services
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
-            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.Dw_TableName + "'";
+            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.CT_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
         }
         public void AddWaterMarksRecord(CargoTable table, string date, string connectionString)
         {
-            string cmd =  "insert into WaterMarks  values('" + table.Dw_TableName + "' , '" + date + "')" ;
+            string cmd =  "insert into WaterMarks  values('" + table.CT_TableName + "' , '" + date + "')" ;
             ExecuteSql(cmd, connectionString);
         }
             public void ExecuteSql(string sqlString, string connectionString)
@@ -274,7 +326,7 @@ namespace CargoTracking.CargoTracking.BL.Services
         private  string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs)
         {
  
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.Dw_TableName + "')";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
             return condition;
         }
 
@@ -318,5 +370,15 @@ namespace CargoTracking.CargoTracking.BL.Services
             }
             return result;
         }
+    }
+
+
+    public class CargoTrackingPorts
+    {
+        public string Id { get; set; }
+        public string Code { get; set; }
+        public string EnglishName { get; set; }
+        public string LocalName { get; set; }
+
     }
 }

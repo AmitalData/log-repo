@@ -22,7 +22,7 @@ namespace CargoTracking.Forms
         private string TestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
         private string dbSourceConnection  ;//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
         private string dbDestinationConnection;
-        private CargoTrackingService shipmentHeaderService;
+        private CargoTrackingService cargoTrackingService;
         private int NumberOfCoulmnUpdated = 0;
         private int Table_X = 0;
         private int Table_Y = 1;
@@ -36,7 +36,7 @@ namespace CargoTracking.Forms
             InitializeComponent();
             dbSourceConnection = LocalConectionstring;
             dbDestinationConnection = LocalConectionstring;
-            shipmentHeaderService = new CargoTrackingService();
+            cargoTrackingService = new CargoTrackingService();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
             this.DestinationConnectionlTextBox.Text = dbDestinationConnection;
             syncEvent = new ManualResetEvent(false);
@@ -45,9 +45,9 @@ namespace CargoTracking.Forms
         private List<CargoTable> FillCargoTableList()
         {
             List<CargoTable> CargoTableLists = new List<CargoTable>();
-            CargoTableLists.Add(new CargoTable() { TableName = "Port", FieldsDBName = "Id,Code,EnglishName,CountryId,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Ports", Dw_TableName = "CargoTrackingPorts" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Card", FieldsDBName = "Id,Code,EnglishName,LocalName,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Cards", Dw_TableName = "CargoTrackingCards" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Shipment", FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,FromPortId,ToPortId,ShipmentNumber,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,FirstPickupETA,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "CargoTrackingShipments" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Port", FieldsDBName = "Id,Code,CountryId,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Ports", CT_TableName = "CargoTrackingPorts" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Card", FieldsDBName = "Id,Code,LocalName,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Cards", CT_TableName = "CargoTrackingCards" });
+            CargoTableLists.Add(new CargoTable() { TableName = "Shipment", FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,FromPortId,ToPortId,ShipmentNumber,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,FirstPickupETA,AutomaticLastUpdateDate", KeyName = "Id", DBTableName = "Shipments", CT_TableName = "CargoTrackingShipments" });
         
             return CargoTableLists;
 
@@ -110,26 +110,26 @@ namespace CargoTracking.Forms
             {
                 if (table.DBTableName != "WaterMarks")
                 {
-                    using (SqlConnection DestinationConnection =
+                    using (SqlConnection SourceConnection =
                          new SqlConnection(dbSourceConnection))
                     {
-                        DestinationConnection.Open();
+                        SourceConnection.Open();
 
                         SqlCommand commandSourceData = new SqlCommand(
                        "SELECT  TableName" +
-                       " FROM dbo.WaterMarks WHERE TableName = '" + table .Dw_TableName+ "'", DestinationConnection);
+                       " FROM dbo.WaterMarks WHERE TableName = '" + table .CT_TableName + "'", SourceConnection);
 
                         SqlDataReader reader = commandSourceData.ExecuteReader();
                         if (!reader.HasRows)
                         {
-                            string lastUpdateDate = shipmentHeaderService.GetAutomaticLastUpdateDate(table.DBTableName, dbSourceConnection);
+                            string lastUpdateDate = cargoTrackingService.GetAutomaticLastUpdateDate(table.DBTableName, dbSourceConnection);
                             if (string.IsNullOrEmpty(lastUpdateDate)) lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                            shipmentHeaderService.AddWaterMarksRecord(table, lastUpdateDate, dbSourceConnection);
+                            cargoTrackingService.AddWaterMarksRecord(table, lastUpdateDate, dbSourceConnection);
 
                         }
                         else
                         {
-                            DestinationConnection.Close();
+                            SourceConnection.Close();
 
                         }
                     }
@@ -162,15 +162,15 @@ namespace CargoTracking.Forms
                 return;
             }
 
-            dbSourceConnection = shipmentHeaderService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
-            dbDestinationConnection = shipmentHeaderService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
+            dbSourceConnection = cargoTrackingService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+            dbDestinationConnection = cargoTrackingService.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
 
             //}
 
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            NumberOfCoulmnUpdated=shipmentHeaderService.UpdateDWDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
+            NumberOfCoulmnUpdated= cargoTrackingService.UpdateDWDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
         }
 
 
@@ -262,7 +262,7 @@ namespace CargoTracking.Forms
             foreach (CargoTable table in CargoTableLists)
             {
                 table.Labels = new List<Label>();
-                AddLabelToGrid(table.Dw_TableName, 1, 0, 1, table);
+                AddLabelToGrid(table.CT_TableName, 1, 0, 1, table);
                 AddLabelToGrid( "In Progress...", 1, 0, 2, table);
                 AddLabelToGrid( "Remaining ...", 0, 1, 3, table);
                 this.Table_X = 0;
@@ -490,6 +490,11 @@ namespace CargoTracking.Forms
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
             DestinationConnectionlTextBox.Enabled = true;
+        }
+
+        private void CargoTrackingForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
