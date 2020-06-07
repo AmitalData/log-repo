@@ -1339,7 +1339,7 @@
     HasGeneralFeature="false" />
   <EventTypes>
     <EventType
-      Code="&quot;CREV&quot;"
+      Code="&quot;CRHR&quot;"
       ObjectTableName="&quot;HelpResource&quot;"
       EnglishName="&quot;Created&quot;"
       LocalName="&quot;Created&quot;"
@@ -1352,12 +1352,12 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
-      Code="&quot;UPEV&quot;"
+      Code="&quot;UPHR&quot;"
       ObjectTableName="&quot;HelpResource&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
-      ShortView="false"
+      ShortView="true"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"

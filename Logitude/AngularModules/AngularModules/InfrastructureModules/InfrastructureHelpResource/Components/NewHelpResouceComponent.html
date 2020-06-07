@@ -75,7 +75,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox (LostFocus)="VideoURLKeyUpMethod($event)" [ObjectFieldName]="'VideoURL'" [Text]="VideoURL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'VideoURL'" [Text]="VideoURL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -89,7 +89,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox (LostFocus)="DurationKeyUpMethod($event)" [ObjectFieldName]="'Duration'" [Text]="Duration" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Duration'" [Text]="Duration" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -118,6 +118,21 @@
 
                                     <td>
                                         <LogCheckBox [ObjectFieldName]="'IsNew'" [Checked]="IsNew" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 32px;">
+                                    <td>
+                                       <div></div>
+                                    </td>
+
+                                    <td>
+                                        <button class="Button" (click)="UploadButtonClicked()">Upload</button>
+                                        <input [attr.id]="DocumentFileId" type="file" (change)="UpLoadFileMethod($event)" style="display:none" class="upload" />
                                     </td>
 
                                     <td>

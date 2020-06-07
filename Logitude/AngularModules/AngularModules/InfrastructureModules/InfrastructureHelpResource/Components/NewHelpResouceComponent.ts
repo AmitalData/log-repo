@@ -7,7 +7,12 @@ import { HelpResourcePM } from '../../../Infrastructure/EntityPMs/HelpResourcePM
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { HelpResourcePMService } from '../../../Infrastructure/Services/StandardPMs/HelpResourcePMService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { UIProperty, UIPropertyArgs } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { UploadFileArgs, GlobalDomainService } from '../../../Common/Services/GlobalDomainService'
+declare var querySelection, resultToUnitArray, ResultAsArray: any;
 
 @Component({
     templateUrl: './NewHelpResouceComponent.html',
@@ -207,33 +212,33 @@ export class NewHelpResouceComponent extends BaseComponent {
         }
     }
 
-    VideoURLKeyUpMethod(url: string) {        
-        if (!AppTool.IsNullOrEmpty(url)) {
-            url = url.trim();
+    //VideoURLKeyUpMethod(url: string) {        
+    //    if (!AppTool.IsNullOrEmpty(url)) {
+    //        url = url.trim();
 
-            var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-            var isOk = true;
+    //        var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    //        var isOk = true;
 
-            if (!regex.test(url)) {
-                isOk = false;
-                this.UIProperties.SetValidity("VideoURL", this.ObjectTableName, isOk, url + " has invalid format");                
-            }
-        }
-    }
+    //        if (!regex.test(url)) {
+    //            isOk = false;
+    //            this.UIProperties.SetValidity("VideoURL", this.ObjectTableName, isOk, url + " has invalid format");                
+    //        }
+    //    }
+    //}
 
-    DurationKeyUpMethod(duration: string) {
-        if (!AppTool.IsNullOrEmpty(duration)) {
-            duration = duration.trim();
+    //DurationKeyUpMethod(duration: string) {
+    //    if (!AppTool.IsNullOrEmpty(duration)) {
+    //        duration = duration.trim();
 
-            var regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-            var isOk = true;
+    //        var regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    //        var isOk = true;
 
-            if (!regex.test(duration)) {
-                isOk = false;
-                this.UIProperties.SetValidity("Duration", this.ObjectTableName, isOk, duration + " has invalid format");
-            }
-        }
-    }
+    //        if (!regex.test(duration)) {
+    //            isOk = false;
+    //            this.UIProperties.SetValidity("Duration", this.ObjectTableName, isOk, duration + " has invalid format");
+    //        }
+    //    }
+    //}
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -250,25 +255,25 @@ export class NewHelpResouceComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Video URL is required");
             }
 
-            else {
-                var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+            //else {
+            //    var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
                 
-                if (!regex.test(this.VideoURL)) {
-                    this.ValidationErrorsList.push("Video URL has invalid format");
-                }
-            }
+            //    if (!regex.test(this.VideoURL)) {
+            //        this.ValidationErrorsList.push("Video URL has invalid format");
+            //    }
+            //}
 
             if (AppTool.IsNullOrEmpty(this.Duration)) {
                 this.ValidationErrorsList.push("Duration URL is required");
             }
 
-            else {
-                var regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+            //else {
+            //    var regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
 
-                if (!regex.test(this.Duration)) {
-                    this.ValidationErrorsList.push("Duration has invalid format");
-                }
-            }
+            //    if (!regex.test(this.Duration)) {
+            //        this.ValidationErrorsList.push("Duration has invalid format");
+            //    }
+            //}
         }
 
         if (this.ValidationErrorsList.length == 0) {
@@ -290,4 +295,103 @@ export class NewHelpResouceComponent extends BaseComponent {
             });
         }
     }
+
+    DocumentFileId: string = Guid.NewRandomString();
+    UploadBodyData: any;
+    UploadButtonClicked() {
+        document.getElementById(this.DocumentFileId).click();
+    }
+    UpLoadFileMethod(event: any) {
+        var file = querySelection(this.DocumentFileId);
+
+        if (file) {
+            this.ArrayBufferToBase64(file, this);
+        }
+    }
+    ArrayBufferToBase64(file: any, viewmodel: any) {
+
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(resultToUnitArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            viewmodel.UploadBodyData = window.btoa(binary);
+        };
+
+        reader.onerror = function (e) {
+
+        };
+
+        reader.readAsArrayBuffer(file);
+    }
+
+    //OnFileChanged(fileEvent) {
+    //    var file = fileEvent.target.files[0];
+
+    //    if (file) {
+    //        var extension: string = file.name.split('.')[1];
+    //        this.Upload(file);           
+    //    }
+    //}
+    //Upload(file: any) {
+    //    if (!AppTool.IsNullOrEmpty(file.name)) {
+    //        var name = file.name.split('.');
+    //        if (name.length == 2) {
+    //            this.FileName = name[0];
+    //        }
+    //    }
+    //    if (file && file.size > 0) {
+    //        var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService;
+    //        documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+    //            if (!response.HasError) {
+    //                var myResult = response.Result;
+    //                if (myResult) {
+    //                    this.StartUploadingFile(file);
+    //                }
+    //            }
+    //        });
+    //    }
+    //}
+    //StartUploadingFile(file: any) {
+    //    if (file && file.size > 0) {
+    //        var filebuffer = file.slice(0, file.size);
+    //        this.ConvertArrayBufferToBase64(filebuffer, this);
+    //    }
+    //}
+    //ConvertArrayBufferToBase64(file: any, context: any) {
+    //    var reader: FileReader = new FileReader();
+    //    var reader = new FileReader();
+    //    reader.onload = function (e) {
+    //        var binary = '';
+    //        var bytes = new Uint8Array(ResultAsArray(e));
+    //        var len = bytes.byteLength;
+    //        for (var i = 0; i < len; i++) {
+    //            binary += String.fromCharCode(bytes[i]);
+    //        }
+
+    //        var filter = new UploadFileArgs();
+    //        filter.FileData = window.btoa(binary);           
+    //        filter.FileName = context.FileName;
+    //        context.SendExcelToServer(filter);
+    //    };
+
+    //    reader.onerror = function (e) {
+    //        console.log(e);
+    //    };
+    //    reader.readAsArrayBuffer(file);
+    //    context.EntityPM.FileUploadedName = this.FileName;
+    //}
+    //SendExcelToServer(filter: UploadFileArgs) {
+    //    var service: GlobalDomainService = new GlobalDomainService();
+    //    service.PostUploadFile(filter).subscribe((response: ServiceResponse) => {
+    //        if (!response.HasError) {
+                
+    //        }
+    //    });
+    //}
 }

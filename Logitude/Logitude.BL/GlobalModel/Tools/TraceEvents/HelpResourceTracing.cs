@@ -33,7 +33,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         Tenant = 0,
-                        EventTypeCode = "CREV",
+                        EventTypeCode = "CRHR",
                         UserId = loggedContact.Id,
                         EntityId = entityPM.Code,
                         ObjectTableName = "HelpResource",
@@ -45,7 +45,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         Tenant = 0,
-                        EventTypeCode = "UPEV",
+                        EventTypeCode = "UPHR",
                         UserId = loggedContact.Id,
                         EntityId = entityPM.Code,
                         ObjectTableName = "HelpResource",

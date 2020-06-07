@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class HelpResourceUpdateClass
    {  		
-		public const string HashString = "d056b34df375ebf715c33803908efa9d";
+		public const string HashString = "24344810cfcb75d8722f795ebb576e93";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1271,7 +1271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			ObjectTable HelpResourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HelpResource" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "CREV",
+                Code =  "CRHR",
                 EnglishName =  "Created",
                 LocalName =  "Created",
                 IsManualEntry =  false,
@@ -1289,11 +1289,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "UPEV",
+                Code =  "UPHR",
                 EnglishName =  "Updated",
                 LocalName =  "Updated",
                 IsManualEntry =  false,
-                ShortView =  false,
+                ShortView =  true,
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
