@@ -75,5 +75,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public IQueryable<AddressType> GetAll()
+        {
+            return context.AddressTypes;
+        }
+
     }
 }

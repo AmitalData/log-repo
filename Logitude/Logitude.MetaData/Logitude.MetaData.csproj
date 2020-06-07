@@ -839,6 +839,7 @@
     <None Include="DBTables\SystemLogsModel\ErrorLog.dxml" />
     <None Include="DBTables\SystemLogsModel\FailedLoginLog.dxml" />
     <None Include="DBTables\SystemLogsModel\FailedTokenLog.dxml" />
+    <None Include="EntityFiles\CommonDataModel\AddressType.lxml" />
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>

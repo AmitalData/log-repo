@@ -355,6 +355,7 @@ export class AddressItemClass extends BaseComponent {
     }
 
     // Properties
+
     get AddressTypeId() { return this.EntityPM.AddressTypeId; }
     set AddressTypeId(newValue: string) {
         if (this.EntityPM.AddressTypeId != newValue) {
