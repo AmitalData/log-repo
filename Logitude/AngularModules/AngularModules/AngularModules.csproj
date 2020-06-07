@@ -419,6 +419,7 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\Communications\CommunicationsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureHelpResource\Components\HelpResouceGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.html" />
@@ -1090,6 +1091,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\HelpResouceGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleInfrastructureHelpResource.ts" />
