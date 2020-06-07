@@ -659,6 +659,7 @@ namespace Logitude.DBMigrations.Models
                         foreach (var command in commands)
                         {
                             sqlCommand.CommandText = command;
+                            sqlCommand.CommandTimeout = 3600;
                             currentCommandText = sqlCommand.CommandText;
                             sqlCommand.ExecuteNonQuery();
                         }
@@ -1293,6 +1294,7 @@ namespace Logitude.DBMigrations.Models
                         try
                         {
                             SqlCommand sqlCommand = new SqlCommand(script, sqlConnection, sqlTransaction);
+                            sqlCommand.CommandTimeout = 3600;
                             sqlCommand.ExecuteNonQuery();
                             sqlTransaction.Commit();
                             return null;
