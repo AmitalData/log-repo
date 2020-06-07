@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -186,14 +186,17 @@ export class ReceiptCertificateFromFileComponent
         });
 
     }
+
+    @ViewChild('myInput')
+    myInputVariable: ElementRef;
     DeleteFileButtonClicked() {
+        this.myInputVariable.nativeElement.value = "";
         this.filterImageParameter = null;
         this.IsShowProgressBar = false;
         this.UploadButtonIsEnabled = true;
         this.FileName = "";
         this.ProgressBarPercentText = "";
         this.ErrorsResultList.Clear();
-        debugger;
         this.UploadSuccessLabel = false;
         this.ExportAsExcelButtonIsEnabled = false;
     }
