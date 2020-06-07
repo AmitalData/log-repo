@@ -34,7 +34,7 @@ namespace CargoTracking.CargoTracking.BL.Services
 
 
 
-        public static void CompareNullabelFirstPickupETADateTime(DataRow TableRow)
+        private static void CompareNullabelFirstPickupETADateTime(DataRow TableRow)
         {
             var FirstPickupETA = TableRow["FirstPickupETA"].GetType();
             if (FirstPickupETA.FullName == "System.DBNull")
