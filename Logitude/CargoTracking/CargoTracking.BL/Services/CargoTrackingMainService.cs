@@ -1,4 +1,4 @@
-﻿using Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses;
+﻿using CargoTracking.CargoTracking.BL.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
+namespace CargoTracking.CargoTracking.BL.Services
 {
-    public class ShipmentHeaderService
+    public class CargoTrackingMainService
     {
         public static long timeOut = 10000000000000000;
      
 
-        public int UpdateDWDataBase(CargoArgs buildCargoArgs)
+        public int UpdateCTDataBase(CargoArgs buildCargoArgs)
         {
             CargoTable table = buildCargoArgs.Table;
             string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
@@ -39,6 +39,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
 
 
                     SqlDataReader reader = commandSourceData.ExecuteReader();
+                 
                     if (reader.HasRows)
                     {
                         dataTable = new DataTable();
@@ -49,6 +50,9 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
                                          .Select(r => (string)r[table.KeyName].ToString())
                                          .ToList();
 
+                        
+                    
+
                         if (columns.Count < 1000)
                         {
                             CompleatedUpdate = true;
@@ -58,7 +62,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
 
 
                         table.UpdatedCount = columns != null ? columns.Count() : 0;
-                        table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.Dw_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildCargoArgs.SourceConnectionString, ReturnDeleteIdsAsString = true });
+                        table.RefreshIds = DeleteRowsFromCargoTables(new CargoDeleteRowsArgs() { TableName = table.CT_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildCargoArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
 
                         if (!string.IsNullOrEmpty(table.RefreshIds))
                         {
@@ -72,16 +76,21 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
                                            new SqlBulkCopy(destinationConnection))
                                 {
                                     bulkCopy.DestinationTableName =
-                                        "dbo." + table.Dw_TableName;
+                                        "dbo." + table.CT_TableName;
 
                                     bulkCopy.BulkCopyTimeout = (int)timeOut;
 
                                     try
                                     {
+                                        AutoMapColumns(bulkCopy, dataTable, table);
+
+                                        foreach (DataRow dr in dataTable.Rows)  
+                                        {
+                                            CargoTrackingTableLogicService.SetTableLogic(dr, buildCargoArgs.Table.CT_TableName);
+                                        }
 
                                         bulkCopy.EnableStreaming = true;
                                         bulkCopy.BatchSize = 100000;
-                                        AutoMapColumns(bulkCopy, dataTable);
                                         bulkCopy.WriteToServer(dataTable);
 
                                     }
@@ -138,64 +147,79 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
         }
 
 
-        private static List<DataTable> SplitTable(DataTable originalTable, int batchSize)
+        public int Memo(CargoArgs buildCargoArgs)
         {
-            List<DataTable> tables = new List<DataTable>();
-            int i = 0;
-            int j = 1;
-            DataTable newDt = originalTable.Clone();
-            newDt.TableName = "Table_" + j;
-            newDt.Clear();
-            foreach (DataRow row in originalTable.Rows)
+            CargoTable table = buildCargoArgs.Table;
+            string fieldName = !string.IsNullOrEmpty(buildCargoArgs.Table.FieldsDBName) ? buildCargoArgs.Table.FieldsDBName : "*";
+            string condition = GetUpdateDataBaseCondition(buildCargoArgs);
+ 
+            int NumberOfCoulmnsUpdated = 0;
+            using (SqlConnection sourceConnection =
+                       new SqlConnection(buildCargoArgs.SourceConnectionString))
             {
-                DataRow newRow = newDt.NewRow();
-                newRow.ItemArray = row.ItemArray;
-                newDt.Rows.Add(newRow);
-                i++;
-                if (i == batchSize)
-                {
-                    tables.Add(newDt);
-                    j++;
-                    newDt = originalTable.Clone();
-                    newDt.TableName = "Table_" + j;
-                    newDt.Clear();
-                    i = 0;
-                }
+                sourceConnection.Open();
+        
+              
 
+                    SqlCommand commandSourceData = new SqlCommand(
+                   "SELECT "+ fieldName +" "+
+                   "FROM dbo." + table.DBTableName + condition , sourceConnection);
 
+                    SqlDataReader reader = commandSourceData.ExecuteReader();
+                    List<object[]> dataList = new List<object[]>();
+                 
+                    while (reader.Read())
+                    {
+                        object[] tempRow = new object[reader.FieldCount];
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
 
+                        string g = reader.GetName(i);
+
+                        if (reader.GetName(i) == "") {
+
+                        } 
+                           tempRow[i] = reader[i];
+                        }
+                        dataList.Add(tempRow);
+             
+                    }
+            
             }
-            if (newDt.Rows.Count > 0)
-            {
-                tables.Add(newDt);
-                j++;
-                newDt = originalTable.Clone();
-                newDt.TableName = "Table_" + j;
-                newDt.Clear();
 
-            }
-            return tables;
+            return NumberOfCoulmnsUpdated;
+
         }
 
 
-        public static void AutoMapColumns(SqlBulkCopy sbc, DataTable dt)
+
+        public   void AutoMapColumns(SqlBulkCopy sbc, DataTable dt, CargoTable Table)
         {
             List<string> MappingMatching = new List<string>();
-            MappingMatching.Add("Id,Id");
-            MappingMatching.Add("Tenant,Tenant");
-            MappingMatching.Add("CustomerId,CustomerId");
-            MappingMatching.Add("TransportModeId,TransportModeId");
-            MappingMatching.Add("MasterShipmentDataId,Master");
-            MappingMatching.Add("House,House");
-            MappingMatching.Add("FromPortId,FromPortId");
-            MappingMatching.Add("ToPortId,ToPortId");
-            MappingMatching.Add("ShipmentNumber,ShipmentNumber");
-            MappingMatching.Add("ShipperId,ShipperId");
-            MappingMatching.Add("ConsigneeId,ConsigneeId");
-            MappingMatching.Add("GrossWeight,GrossWeight");
-            MappingMatching.Add("Volume,Volume");
-            MappingMatching.Add("CustomConnectToShipment,PickupDone");
-            MappingMatching.Add("FirstPickupETA,PickupDate");
+            List<string> MappingDeference = new List<string>();
+
+            string[] DB_Cols = Table.FieldsDBName.Split(',');
+            string[] CTDB_Cols = Table.CT_FieldsDBName.Split(',');
+            string CompareDB = "";
+            foreach (string CTDB_columns in CTDB_Cols)
+            {
+                foreach (string DB_columns in DB_Cols)
+                {
+                    if (CTDB_columns.Equals(DB_columns))
+                    {
+                        MappingMatching.Add(DB_columns + ","+ CTDB_columns);
+                        CompareDB += CTDB_columns + ",";
+                    }
+                }
+              
+            }
+            foreach (string DB_columns in CTDB_Cols)
+            {
+                if (!CompareDB.Contains(DB_columns))
+                {
+                    CargoTrackingCustomMappingService.MappingDB_CTDB(dt, sbc, DB_columns);
+                }
+            }
 
             foreach (string columns in  MappingMatching)
             {
@@ -205,16 +229,17 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
                 sbc.ColumnMappings.Add(col1, col2);
             }
         }
+ 
 
         public void UpdateWaterMarksTable(CargoTable table, string date, string connectionString)
         {
-            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.Dw_TableName + "'";
+            string cmd = "update  WaterMarks set LastUpdateDate = '" + date + "' where tableName = '" + table.CT_TableName + "'";
             ExecuteSql(cmd, connectionString);
 
         }
         public void AddWaterMarksRecord(CargoTable table, string date, string connectionString)
         {
-            string cmd =  "insert into WaterMarks  values('" + table.Dw_TableName + "' , '" + date + "')" ;
+            string cmd =  "insert into WaterMarks  values('" + table.CT_TableName + "' , '" + date + "')" ;
             ExecuteSql(cmd, connectionString);
         }
             public void ExecuteSql(string sqlString, string connectionString)
@@ -263,7 +288,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
         private  string GetUpdateDataBaseCondition(CargoArgs buildCargoArgs)
         {
  
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.Dw_TableName + "')";
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildCargoArgs.Table.CT_TableName + "')";
             return condition;
         }
 
@@ -274,8 +299,8 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
             SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
-"select MAX(AutomaticLastUpdateDate) AutomaticLastUpdateDate " +
-"FROM dbo." + tableName + " ;", con);
+               "select MIN(AutomaticLastUpdateDate) -1 AutomaticLastUpdateDate " +
+               "FROM dbo." + tableName + " ;", con);
 
             try
             {
@@ -308,4 +333,5 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.Services
             return result;
         }
     }
+ 
 }
