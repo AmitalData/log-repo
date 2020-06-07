@@ -2511,6 +2511,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "CreateDateTime", changeTrackingPM.CreateDateTime, pm.CreateDateTime, "CreateDateTime", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "WarehouseStorageFreeDays", changeTrackingPM.WarehouseStorageFreeDays, pm.WarehouseStorageFreeDays, "WarehouseStorageFreeDays", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "OrderIsDangerouseGoods", changeTrackingPM.OrderIsDangerouseGoods, pm.OrderIsDangerouseGoods, "OrderIsDangerouseGoods", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FirstPickupETA", changeTrackingPM.FirstPickupETA, pm.FirstPickupETA, "FirstPickupETA", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "FirstPickupETD", changeTrackingPM.FirstPickupETD, pm.FirstPickupETD, "FirstPickupETD", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "PreCarriageETA", changeTrackingPM.PreCarriageETA, pm.PreCarriageETA, "PreCarriageETA", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "PreCarriageETD", changeTrackingPM.PreCarriageETD, pm.PreCarriageETD, "PreCarriageETD", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "OnCarriageETA", changeTrackingPM.OnCarriageETA, pm.OnCarriageETA, "OnCarriageETA", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "OnCarriageETD", changeTrackingPM.OnCarriageETD, pm.OnCarriageETD, "OnCarriageETD", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "DocumentsClosingDate", changeTrackingPM.DocumentsClosingDate, pm.DocumentsClosingDate, "DocumentsClosingDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "WarehouseLegLastFreeDate", changeTrackingPM.WarehouseLegLastFreeDate, pm.WarehouseLegLastFreeDate, "WarehouseLegLastFreeDate", notifyPropertyChangeValuesList);
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -2624,6 +2632,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CreateDateTime = houseShipment.CreateDateTime;
             shipmentPM.WarehouseStorageFreeDays = houseShipment.WarehouseStorageFreeDays;
             shipmentPM.OrderIsDangerouseGoods = houseShipment.OrderIsDangerouseGoods;
+            shipmentPM.FirstPickupETA = houseShipment.FirstPickupETA;
+            shipmentPM.FirstPickupETD = houseShipment.FirstPickupETD;
+            shipmentPM.PreCarriageETA = houseShipment.PreCarriageETA;
+            shipmentPM.PreCarriageETD = houseShipment.PreCarriageETD;
+            shipmentPM.OnCarriageETA = houseShipment.OnCarriageETA;
+            shipmentPM.OnCarriageETD = houseShipment.OnCarriageETD;
+            shipmentPM.DocumentsClosingDate = houseShipment.DocumentsClosingDate;
+            shipmentPM.WarehouseLegLastFreeDate = houseShipment.WarehouseLegLastFreeDate;
+
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
