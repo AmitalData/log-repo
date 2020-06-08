@@ -1983,7 +1983,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0034_ReferantNewFileDefault.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0033_RefIsClosedForFollowUp.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0032_ReferantNewFile.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0037_ReferantNewFile.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0031_AddControllerUserId.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0030_ReferantAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
