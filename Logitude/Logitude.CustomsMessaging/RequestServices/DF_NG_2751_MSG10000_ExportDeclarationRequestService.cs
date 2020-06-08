@@ -941,10 +941,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 declarationExporterList.Add(GetDeclarationImporterRole5(declarationPM));
             }
-            if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId) || !String.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
-            {
-                declarationExporterList.Add(GetDeclarationImporterRole6(declarationPM));
-            }
+            //if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId) || !String.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
+            //{
+            //    declarationExporterList.Add(GetDeclarationImporterRole6(declarationPM));
+            //}
 
             return declarationExporterList.ToArray();
         }
@@ -2166,7 +2166,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             { 
                 RoleCode = new DeclarationExporterDMExtensionsRoleCode()
                 {
-                    Value = "5"
+                    Value = "12"
                 }
             };
             if (declarationPM.TransferImporterTypeCode == "2" || declarationPM.TransferImporterTypeCode == "3")
@@ -2221,7 +2221,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //},
                 RoleCode = new DeclarationExporterDMExtensionsRoleCode()
                 {
-                    Value = "4"
+                    Value = "7"
                 }
             };
             if (declarationPM.ImporterTypeCode == "2" || declarationPM.ImporterTypeCode == "3")
