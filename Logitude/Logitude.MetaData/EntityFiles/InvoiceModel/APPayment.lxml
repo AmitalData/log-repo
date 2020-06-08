@@ -1150,7 +1150,7 @@
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="true"
@@ -8588,6 +8588,42 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;APPayment.Features.APPaymentDissconectInvoices&quot;"
       FeatureDefaultText="&quot;Disconnect AP invoices&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DETAILS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.Details&quot;"
+      FeatureDefaultText="&quot;Details&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DOCSOUT&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.DocsOut&quot;"
+      FeatureDefaultText="&quot;Docs Out&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DOCSIN&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.DocsIn&quot;"
+      FeatureDefaultText="&quot;Docs In&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EVENTS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;"
       IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
