@@ -16875,22 +16875,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Taxes&quot;"
-    TabLocalName="&quot;מסים&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DETX&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
-    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
-    IsPackagable="false"
-    IndexOrder="5"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
-    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
-    FeatureCode="&quot;TAXES&quot;"
-    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
-    FeatureDefaultText="&quot;Taxes&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Customs Reply&quot;"
     TabLocalName="&quot;תשובה לתיק&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -16904,6 +16888,22 @@
     FeatureCode="&quot;CUSTOMSANSWERS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CustomsAnswers&quot;"
     FeatureDefaultText="&quot;Customs Answers&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Taxes&quot;"
+    TabLocalName="&quot;מסים&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DETX&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
+    IsPackagable="false"
+    IndexOrder="5"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
+    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
+    FeatureCode="&quot;TAXES&quot;"
+    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
+    FeatureDefaultText="&quot;Taxes&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
