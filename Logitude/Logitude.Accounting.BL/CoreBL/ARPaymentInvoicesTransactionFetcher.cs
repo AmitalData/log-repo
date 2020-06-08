@@ -217,7 +217,8 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
 
             if (paymentCreditTransaction == null)
-                throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                paymentId = null; 
+            //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
 
             return paymentCreditTransaction;
         }
