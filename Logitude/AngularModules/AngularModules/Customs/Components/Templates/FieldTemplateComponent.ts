@@ -13,6 +13,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefernatDataList';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
 @Component({
     
     templateUrl: './FieldTemplateComponent.html',
@@ -124,9 +125,20 @@ export class FieldTemplateComponent {
                          
                     }
                 }
-                });
+                }); 
             //});
         //});
+
+    }
+    private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
+    EditFavorite() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        debugger;
+        var x = this.Entity.SortedColumns;
+        this.Entity.Favorite = !this.Entity.Favorite;
+        this._declarationReferantDataPMService.update(this.Entity).subscribe((response: any) => {
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+        });
 
     }
     OpenClassificationRemarks() {
@@ -138,7 +150,6 @@ export class FieldTemplateComponent {
         logitudeWindow.Height = 525;
         logitudeWindow.Width = 750;
         logitudeWindow.ShowCloseButton = true;
-
         if (this.Entity.IsClassificationRemarks) {
             _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                 .subscribe((response: any) => {
@@ -150,7 +161,7 @@ export class FieldTemplateComponent {
                 });
         }
     }
-    OpenControllerRemarks() {
+    OpenControllerRemarks() { 
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
