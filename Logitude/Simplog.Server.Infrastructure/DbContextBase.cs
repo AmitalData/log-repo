@@ -51,6 +51,7 @@ namespace Simplog.Server.Infrastructure
         }
         public override int SaveChanges()
         {
+            bool suppressThrow = false; 
             var saveChangeLogger = CreateLogger();
             var commandTimeout = this.Database.CommandTimeout;
             try
@@ -78,6 +79,10 @@ namespace Simplog.Server.Infrastructure
             {
                 var e1 = ExceptionFormatDbEntityUtil.GetFormated(myDbEntityValidationException);
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
+                if (suppressThrow)
+                {
+                    return - 999;
+                }
                 throw e1;
             }
             catch (DbUpdateException dbu)
@@ -92,6 +97,11 @@ namespace Simplog.Server.Infrastructure
                     }
                 }
                 //AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error); 
+                if (suppressThrow)
+                {
+                    return -999;
+                }
+
                 throw dbu;
             }
             catch (Exception e)
@@ -105,6 +115,11 @@ namespace Simplog.Server.Infrastructure
                 {
                     AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
                 }
+                if (suppressThrow)
+                {
+                    return -999;
+                }
+
                 throw;
             }
 
