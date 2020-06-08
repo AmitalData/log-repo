@@ -1887,6 +1887,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0009_AmendmentType.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0017_CargoSealID.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0034_ReferantNewFileDefault.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0033_RefIsClosedForFollowUp.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0032_ReferantNewFile.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0031_AddControllerUserId.cs" />

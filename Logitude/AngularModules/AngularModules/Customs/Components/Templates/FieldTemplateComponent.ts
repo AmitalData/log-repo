@@ -136,7 +136,6 @@ export class FieldTemplateComponent {
         logitudeWindow.Height = 525;
         logitudeWindow.Width = 750;
         logitudeWindow.ShowCloseButton = true;
-
         if (this.Entity.IsClassificationRemarks) {
             _declarationRemarksService.GetSVCOrSRVStatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                 .subscribe((response: any) => {
@@ -148,7 +147,7 @@ export class FieldTemplateComponent {
                 });
         }
     }
-    OpenControllerRemarks() {
+    OpenControllerRemarks() { 
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};

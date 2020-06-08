@@ -74,6 +74,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ReferentUserId = d.ReferentUserId,
                                                                  DepartmentId = d.DepartmentId,
                                                                  AvailabilityDate = d.AvailabilityDate,
+                                                                 NewFile=a.NewFile,
+                                                                 Favorite=a.Favorite,
 
                                                              });
             return query;

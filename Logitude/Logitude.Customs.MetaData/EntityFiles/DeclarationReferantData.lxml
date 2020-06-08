@@ -33,7 +33,7 @@
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
@@ -2833,6 +2833,7 @@
     IsPackagable="true"
     DefaultSortName="&quot;ArrivalDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
+    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -2951,6 +2952,7 @@
     IsPackagable="true"
     DefaultSortName="&quot;ArrivalDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
+    SpotlightDataTemplate="&quot;ReferantSpotlightDataTemplate&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
