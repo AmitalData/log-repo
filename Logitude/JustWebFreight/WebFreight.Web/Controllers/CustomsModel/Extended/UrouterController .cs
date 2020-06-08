@@ -80,5 +80,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+
+        public HttpResponseMessage GetInvoiceList()
+        {
+            try
+            {
+
+                var UserverGetInvoiceList = new UnifreightQInvoiceList();
+                string ErrMessage = "";
+                var Invoicelist = UserverGetInvoiceList.GetInvoiceList();
+                return Request.CreateResponse(HttpStatusCode.OK, new { Invoicelist = Invoicelist, ErrMessage = ErrMessage });
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

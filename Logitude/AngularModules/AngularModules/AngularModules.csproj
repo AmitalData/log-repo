@@ -281,6 +281,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
+    <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueue.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
@@ -910,6 +911,9 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPaymentOrder\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleCustomsVendor.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\Components\InvoiceQueue.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleInvoiceQueue.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\ModuleDeclarationOthers.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\ModuleDeclarations.ts" />
@@ -1061,6 +1065,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />

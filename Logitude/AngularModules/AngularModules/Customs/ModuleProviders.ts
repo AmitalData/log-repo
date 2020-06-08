@@ -329,6 +329,8 @@ import { QuantityTypeMessageService } from './Services/WebServices/QuantityTypeM
 import { TapagMessagesService } from './Services/WebServices/TapagMessagesService';
 import { VendorMessagesService } from './Services/WebServices/VendorMessagesService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
+import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
+
 //#endregion
 
 // Others
@@ -686,7 +688,8 @@ export class ModuleProviders {
             case "TapagMessagesService": { myResult = new TapagMessagesService(); break; }
             case "VendorMessagesService": { myResult = new VendorMessagesService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
-                
+            case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
+    
             //#endregion
 
             //Others
