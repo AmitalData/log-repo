@@ -29,7 +29,7 @@
                     <td style="width:1%;"></td>
                     <td style="width:60px;text-align:left">
                         <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
-                        <input accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                        <input #myInput  accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                     </td>
                     <td style="width:150px; background-color:white">
                         <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
