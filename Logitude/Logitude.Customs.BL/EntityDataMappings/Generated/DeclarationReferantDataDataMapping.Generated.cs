@@ -42,7 +42,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExceptionReasonsList, 
 	         ClassifiedUserId, 
 	         ControllerUserId, 
-	         CollectorUserId,
+	         CollectorUserId, 
+	         NewFile, 
+	         Favorite,
 	      }
 
 
@@ -69,7 +71,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExceptionReasonsList, 
 	         ClassifiedUserId, 
 	         ControllerUserId, 
-	         CollectorUserId,
+	         CollectorUserId, 
+	         NewFile, 
+	         Favorite,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -176,6 +180,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorUserId))
             {
 				entityPOCO.CollectorUserId = entityPM.CollectorUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NewFile))
+            {
+				entityPOCO.NewFile = entityPM.NewFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Favorite))
+            {
+				entityPOCO.Favorite = entityPM.Favorite;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -289,6 +303,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CollectorUserId = entityPOCO.CollectorUserId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NewFile))
+            {
+					entityPM.NewFile = entityPOCO.NewFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Favorite))
+            {
+					entityPM.Favorite = entityPOCO.Favorite;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -393,6 +417,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorUserId))
             {
                 oldEntityPM.CollectorUserId = entityPM.CollectorUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NewFile))
+            {
+                oldEntityPM.NewFile = entityPM.NewFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Favorite))
+            {
+                oldEntityPM.Favorite = entityPM.Favorite;
             }
 			
 		}

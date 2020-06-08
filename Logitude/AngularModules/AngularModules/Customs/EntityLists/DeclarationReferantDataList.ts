@@ -42,6 +42,9 @@ export class DeclarationReferantDataList {
 	ClassifiedUserId: string;
 	ControllerUserId: string;
 	CollectorUserId: string;
+	NewFile: boolean;
+	Favorite: boolean;
+	SortedColumns: number;
 	
 }
  
