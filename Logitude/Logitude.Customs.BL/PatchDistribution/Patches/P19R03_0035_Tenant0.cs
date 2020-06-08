@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0033_Tenant0 : PatchDistributionBase
+    class P19R03_0035_Tenant0 : PatchDistributionBase
     {
-        public P19R03_0033_Tenant0()
+        public P19R03_0035_Tenant0()
             : base("Create Package TENANT0 ", new DateTime(2020, 06, 03))
         {
 
