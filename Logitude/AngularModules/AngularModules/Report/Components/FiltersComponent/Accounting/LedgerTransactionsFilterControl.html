@@ -330,13 +330,13 @@
                 </tr>
 
                 <!-- Row 4 -->
-                <tr>
+                <tr class="FieldRow">
                     <!-- Category -->
                     <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'Category'"
+                        <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'" [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe"
                                 [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td >
+                    <td style="padding-top: 5px;">
                         <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
 
                         <div style="display: inline-block; width: 117px;padding: 0 5px;" [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
