@@ -13,7 +13,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefernatDataList';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
-import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
 @Component({
     moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
