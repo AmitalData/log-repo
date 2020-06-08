@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0032_DBMIGRATIONSETTINGS : PatchDistributionBase
+    class P19R03_0034_DBMIGRATIONSETTINGS : PatchDistributionBase
     {
-        public P19R03_0032_DBMIGRATIONSETTINGS()
+        public P19R03_0034_DBMIGRATIONSETTINGS()
             : base("DBMIGRATIONSETTINGS", new DateTime(2020, 05, 07))
         {
 
