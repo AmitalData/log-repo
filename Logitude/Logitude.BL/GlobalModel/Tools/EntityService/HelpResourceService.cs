@@ -1,12 +1,16 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +47,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            if(entityPM.File != null)
+            if(entityPM.File != null && entityPM.FileExtension != null)
             {
                 this.UploadFile();
             }
@@ -56,9 +60,28 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         private void UploadFile()
         {
-            //Uploader uploaderService = new Uploader();
+            byte[] fileData = Convert.FromBase64String(entityPM.File);
+            byte[] buffer = fileData;
+            int sentSize = fileData.Length;
+            int fileSize = fileData.Length;            
+            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+            string filelocation = "how-to";
+            string fileName = this.entityPM.FileName;
+            string filePath = "tenant" + tenant.ToString() + "/";
 
-            byte[] FileData = Convert.FromBase64String(entityPM.File);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            MemoryStream memorystream = new MemoryStream(buffer);
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = fileName,
+                FolderName = filelocation,
+                Extension = entityPM.FileExtension,
+                Tenant = tenant,
+                FileSize = fileSize,
+            };
+
+            storageservice.WriteBlock(buffer, sentSize, blockIdlist, 0, fileInfo);
         }
 
         public void Update(HelpResourcePM entity)

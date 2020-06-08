@@ -100,6 +100,11 @@ export class HelpResourcePM {
     public set File(newValue: string) { if (this.file != newValue) { this.file = newValue; this.MarkAsDirty("File"); } }
        
 	 
+    private fileExtension: string;
+    public get FileExtension() { return this.fileExtension; }
+    public set FileExtension(newValue: string) { if (this.fileExtension != newValue) { this.fileExtension = newValue; this.MarkAsDirty("FileExtension"); } }
+       
+	 
 
     public OldEntityPM: HelpResourcePM;
 		

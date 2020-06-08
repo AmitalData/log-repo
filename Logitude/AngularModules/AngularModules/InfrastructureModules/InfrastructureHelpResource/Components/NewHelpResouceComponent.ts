@@ -311,7 +311,19 @@ export class NewHelpResouceComponent extends BaseComponent {
     ArrayBufferToBase64(file: any, viewmodel: any) {
 
         var reader: FileReader = new FileReader();
-        var reader = new FileReader();
+
+        var extension: string = "";
+        var fileInfo = file.name.split('.');
+
+        if (fileInfo.length > 1) {
+            extension = fileInfo[fileInfo.length - 1];
+        }
+        else extension = fileInfo[1];
+
+        if (extension) {
+            extension = extension.toLowerCase();
+        }
+
         reader.onload = function (e) {
             var binary = '';
             var bytes = new Uint8Array(resultToUnitArray(e));
@@ -322,6 +334,7 @@ export class NewHelpResouceComponent extends BaseComponent {
 
             viewmodel.UploadBodyData = window.btoa(binary);
             viewmodel.EntityPM.File = viewmodel.UploadBodyData;
+            viewmodel.EntityPM.FileExtension = extension;
         };
 
         reader.onerror = function (e) {

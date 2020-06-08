@@ -25,5 +25,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string FeatureCode { get; set; }
         public int Tenant { get; set; }
         public string File { get; set; }
+        public string FileExtension { get; set; }
     }
 }
