@@ -7,94 +7,80 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TarrifHeaderPM} from './TarrifHeaderPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+
+//import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { Output, EventEmitter } from '@angular/core';
+import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class TarrifFromToPM {
+export class FilingInboxAttachmentPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
-      }
+    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+    public UIProperties: UIProperties;
+    constructor() {
+        this.UIProperties = new UIProperties(this);
+        this.IsDirty = false;
+    }
 
-	 
-    
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
-    private tarrifHeaderId: string;
-    public get TarrifHeaderId() { return this.tarrifHeaderId; }
-    public set TarrifHeaderId(newValue: string) { if (this.tarrifHeaderId != newValue) { this.tarrifHeaderId = newValue; this.MarkAsDirty("TarrifHeaderId"); } }
-       
-	 
-    private portId: string;
-    public get PortId() { return this.portId; }
-    public set PortId(newValue: string) { if (this.portId != newValue) { this.portId = newValue; this.MarkAsDirty("PortId"); } }
-       
-	 
-    private countryId: string;
-    public get CountryId() { return this.countryId; }
-    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
-       
-	 
-    private tarrifFromToTypeCode: string;
-    public get TarrifFromToTypeCode() { return this.tarrifFromToTypeCode; }
-    public set TarrifFromToTypeCode(newValue: string) { if (this.tarrifFromToTypeCode != newValue) { this.tarrifFromToTypeCode = newValue; this.MarkAsDirty("TarrifFromToTypeCode"); } }
-       
-	 
-    private portCode: string;
-    public get PortCode() { return this.portCode; }
-    public set PortCode(newValue: string) { if (this.portCode != newValue) { this.portCode = newValue; this.MarkAsDirty("PortCode"); } }
-       
-	 
-    private countryCode: string;
-    public get CountryCode() { return this.countryCode; }
-    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
-       
-	 
-    private changeOp: string;
-    public get ChangeOp() { return this.changeOp; }
-    public set ChangeOp(newValue: string) { if (this.changeOp != newValue) { this.changeOp = newValue; this.MarkAsDirty("ChangeOp"); } }
-       
-	 
 
-    public OldEntityPM: TarrifFromToPM;
-	    
-	private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
-    public UniqueKey: string;
-	 	
+    private fileName: string;
+    public get FileName() { return this.fileName; }
+    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
+
+
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
+
+
+    private filingInboxId: string;
+    public get FilingInboxId() { return this.filingInboxId; }
+    public set FilingInboxId(newValue: string) { if (this.filingInboxId != newValue) { this.filingInboxId = newValue; this.MarkAsDirty("FilingInboxId"); } }
+
+
+
+    //private attachLogs: FilingInboxAttachToolTip[];
+    //   get  AttachLogs() {
+    //       if (this.attachLogs == null) {
+    //           this.attachLogs = [];
+    //       }
+
+    //       return this.attachLogs;
+    //   }
+    //   set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
+    //       if (this.attachLogs != newValue) {
+    //           this.attachLogs = newValue;
+    //       }
+    //   }
+    public AttachLogs: Array<any> = [];
+
+    public OldEntityPM: FilingInboxAttachmentPM;
+
     public IsDirty: boolean;
-    MarkAsDirty(propertyName:string = null) {
+    MarkAsDirty(propertyName: string = null) {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+
         if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TarrifFromTo");
-           
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInboxAttachment");
+
         }
     }
-    private MyClone: TarrifFromToPM;
+    private MyClone: FilingInboxAttachmentPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
@@ -104,4 +90,4 @@ export class TarrifFromToPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

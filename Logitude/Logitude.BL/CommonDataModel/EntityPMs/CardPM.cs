@@ -198,5 +198,30 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsDisconnectedFromGLAccount { get; set; }
         public string CreatedByPartner { get; set; }
         public int? StorageFreeDays { get; set; }
+
+        private List<CardCurrenciesAccountingPM> cardCurrenciesAccountings;
+        [Include]
+        [Association("CardCurrenciesAccountingCard", "Id", "CardId")]
+        [Composition]
+        public virtual List<CardCurrenciesAccountingPM> CardCurrenciesAccountings
+        {
+            get
+            {
+                if (this.cardCurrenciesAccountings == null)
+                {
+                    cardCurrenciesAccountings = new List<CardCurrenciesAccountingPM>();
+                }
+
+                return this.cardCurrenciesAccountings;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    cardCurrenciesAccountings = value;
+                }
+            }
+        }
     }
 }

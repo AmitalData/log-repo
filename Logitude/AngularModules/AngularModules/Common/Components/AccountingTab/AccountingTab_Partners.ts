@@ -4,6 +4,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { CardCurrenciesAccountingPM } from '../../EntityPMs/CardCurrenciesAccountingPM';
 
 @Component({
     
@@ -15,6 +16,8 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     public ObjectTableName: string;
     public DataContext = this;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ItemsSource: CardCurrenciesAccountingTab[] = [];
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -65,6 +68,42 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    get AccountingVATSplit() { return this.EntityPM.AccountingVATSplit; }
+    set AccountingVATSplit(value: boolean) {
+        if (this.EntityPM.AccountingVATSplit != value) {
+            this.EntityPM.AccountingVATSplit = value;
+            this.SetUIProperties();
+        }
+    }
+
+    SetUIProperties() {
+
+        var isVATSplitEnabled: boolean = true;
+        var isPayableFieldEnabled: boolean = false;
+        var isReceivableFieldEnabled: boolean = false;
+
+        if (SessionLocator.Tenant == 65) {
+            if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
+                isVATSplitEnabled = false;
+            }
+        }
+
+        if (isVATSplitEnabled) {
+            isPayableFieldEnabled = this.EntityPM.IsPayable && !this.AccountingVATSplit ? true : false;
+            isReceivableFieldEnabled = this.EntityPM.IsReceivable && !this.AccountingVATSplit ? true : false;
+        }
+
+
+        this.UIProperties.SetEnabled("AccountingVATSplit", this.ObjectTableName, isVATSplitEnabled);
+        this.UIProperties.SetEnabled("ReceivablesAccountingCard", this.ObjectTableName, isPayableFieldEnabled);
+        this.UIProperties.SetEnabled("PayablesAccountingCard", this.ObjectTableName, isReceivableFieldEnabled);
+
+        this.ItemsSource.forEach(item => {
+            item.SetUIProperties();
+        });
+
+    }
+
     get ReceivablesAccountingCard() { return this.EntityPM.ReceivablesAccountingCard; }
     set ReceivablesAccountingCard(value: string) {
         if (this.EntityPM.ReceivablesAccountingCard != value) {
@@ -79,20 +118,6 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         }
     }
 
-    //get ExternalId2() { return this.EntityPM.ExternalId2; }
-    //set ExternalId2(value: string) {
-    //    if (this.EntityPM.ExternalId2 != value) {
-    //        this.EntityPM.ExternalId2 = value;
-    //    }
-    //}
-
-    //get ExternalAccountingBusinessArea() { return this.EntityPM.ExternalAccountingBusinessArea; }
-    //set ExternalAccountingBusinessArea(value: string) {
-    //    if (this.EntityPM.ExternalAccountingBusinessArea != value) {
-    //        this.EntityPM.ExternalAccountingBusinessArea = value;
-    //    }
-    //}
-
     public IsExternalByProductsVisible: boolean = false;
     private isExternalByProductsRequestd: boolean = false;
     ExternalByProductsClicked() {
@@ -106,5 +131,103 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         logWindow.Title = "Accounting advanced";
         logWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
         logWindow.Show('./Common/Components/Partners/AddEdit/ExternalAccountsByProductsComponent');
+    }
+}
+export class CardCurrenciesAccountingTab extends BaseComponent {
+    public EntityPM: CardCurrenciesAccountingPM;
+    public ObjectTableName: string = "CardCurrenciesAccounting";
+    public DataContext = this;
+    public IsAccountingActivated = false;
+
+    constructor(entityPM: CardCurrenciesAccountingPM, private father: AccountingTab_Partners) {
+        super();
+        this.EntityPM = entityPM;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.SetUIProperties();
+    }
+
+    get CardId() { return this.EntityPM.CardId; }
+    //get CurrencyName() { return this.EntityPM.CurrencyName; }
+    get CurrencyId() { return this.EntityPM.CurrencyId; }
+  
+
+    SetUIProperties() {
+        var isPayableFieldEnabled: boolean = false;
+        var isReceivableFieldEnabled: boolean = false;
+
+        if (this.father.AccountingVATSplit) {
+            if (SessionLocator.Tenant == 65) {
+                if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    isPayableFieldEnabled = this.father.EntityPM.IsPayable ? true : false;
+                    isReceivableFieldEnabled = this.father.EntityPM.IsReceivable ? true : false;
+                }
+            }
+
+            else {
+                isPayableFieldEnabled = this.father.EntityPM.IsPayable ? true : false;
+                isReceivableFieldEnabled = this.father.EntityPM.IsReceivable ? true : false;
+            }
+        }
+
+        if (this.IsAccountingActivated) {
+            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, isPayableFieldEnabled);
+            this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, isReceivableFieldEnabled);
+        }
+        else {
+            this.UIProperties.SetEnabled("PayableDebitAccount", this.ObjectTableName, isPayableFieldEnabled);
+            this.UIProperties.SetEnabled("ReceivableCreditAccount", this.ObjectTableName, isReceivableFieldEnabled);
+        }
+    }
+
+    get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
+    set PayableDebitAccount(value: string) {
+        if (this.EntityPM.PayableDebitAccount != value) {
+            this.EntityPM.PayableDebitAccount = value;
+            this.OnDataInput();
+        }
+    }
+
+    get PayableDebitGLAcountId() { return this.EntityPM.PayableDebitGLAcountId; }
+    set PayableDebitGLAcountId(value: string) {
+        if (this.EntityPM.PayableDebitGLAcountId != value) {
+            this.EntityPM.PayableDebitGLAcountId = value;
+            this.OnDataInput();
+        }
+    }
+
+    get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
+    set ReceivableCreditAccount(value: string) {
+        if (this.EntityPM.ReceivableCreditAccount != value) {
+            this.EntityPM.ReceivableCreditAccount = value;
+            this.OnDataInput();
+        }
+    }
+
+    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
+    set ReceivableCreditGLAccountId(value: string) {
+        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
+            this.EntityPM.ReceivableCreditGLAccountId = value;
+            this.OnDataInput();
+        }
+    }
+
+    OnDataInput() {
+        if (this.IsAccountingActivated) {
+
+            if (AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId) && AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId)) {
+                this.father.EntityPM.RemoveChargeTypeAccountingPM(this.EntityPM);
+            }
+            else {
+                this.father.EntityPM.AddChargeTypeAccountingPM(this.EntityPM);
+            }
+        }
+        else {
+            if (AppTool.IsNullOrEmpty(this.PayableDebitAccount) && AppTool.IsNullOrEmpty(this.ReceivableCreditAccount)) {
+                this.father.EntityPM.RemoveChargeTypeAccountingPM(this.EntityPM);
+            }
+            else {
+                this.father.EntityPM.AddChargeTypeAccountingPM(this.EntityPM);
+            }
+        }
     }
 }
