@@ -89,10 +89,9 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         }
 
         if (isVATSplitEnabled) {
-            isPayableFieldEnabled = this.EntityPM.IsPayable && !this.AccountingVATSplit ? true : false;
-            isReceivableFieldEnabled = this.EntityPM.IsReceivable && !this.AccountingVATSplit ? true : false;
+            isPayableFieldEnabled = !this.AccountingVATSplit ? true : false;
+            isReceivableFieldEnabled = !this.AccountingVATSplit ? true : false;
         }
-
 
         this.UIProperties.SetEnabled("AccountingVATSplit", this.ObjectTableName, isVATSplitEnabled);
         this.UIProperties.SetEnabled("ReceivablesAccountingCard", this.ObjectTableName, isPayableFieldEnabled);
@@ -149,7 +148,7 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
     get CardId() { return this.EntityPM.CardId; }
     //get CurrencyName() { return this.EntityPM.CurrencyName; }
     get CurrencyId() { return this.EntityPM.CurrencyId; }
-  
+
 
     SetUIProperties() {
         var isPayableFieldEnabled: boolean = false;
@@ -187,14 +186,6 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
         }
     }
 
-    get PayableDebitGLAcountId() { return this.EntityPM.PayableDebitGLAcountId; }
-    set PayableDebitGLAcountId(value: string) {
-        if (this.EntityPM.PayableDebitGLAcountId != value) {
-            this.EntityPM.PayableDebitGLAcountId = value;
-            this.OnDataInput();
-        }
-    }
-
     get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
     set ReceivableCreditAccount(value: string) {
         if (this.EntityPM.ReceivableCreditAccount != value) {
@@ -203,30 +194,17 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
         }
     }
 
-    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
-    set ReceivableCreditGLAccountId(value: string) {
-        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
-            this.EntityPM.ReceivableCreditGLAccountId = value;
-            this.OnDataInput();
-        }
-    }
-
     OnDataInput() {
         if (this.IsAccountingActivated) {
 
-            if (AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId) && AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId)) {
-                this.father.EntityPM.RemoveChargeTypeAccountingPM(this.EntityPM);
-            }
-            else {
-                this.father.EntityPM.AddChargeTypeAccountingPM(this.EntityPM);
-            }
+            this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
         }
         else {
             if (AppTool.IsNullOrEmpty(this.PayableDebitAccount) && AppTool.IsNullOrEmpty(this.ReceivableCreditAccount)) {
-                this.father.EntityPM.RemoveChargeTypeAccountingPM(this.EntityPM);
+                this.father.EntityPM.RemoveCardCurrenciesAccountingPM(this.EntityPM);
             }
             else {
-                this.father.EntityPM.AddChargeTypeAccountingPM(this.EntityPM);
+                this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
             }
         }
     }
