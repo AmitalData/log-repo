@@ -436,7 +436,11 @@ namespace Logitude.BL.Helpers
                             
                             if (insideMethodInfo == null)
                             {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                                // insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+
+
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethods().Where(d => d.Name == "GetSinglePM").FirstOrDefault();
+
                             }
                             if (insideMethodInfo == null)
                             {
