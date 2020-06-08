@@ -70,6 +70,10 @@
 
         private string tenantField;
 
+        private string classifiedUserIdField;
+
+        private string controllerUserIdField;
+
         /// <remarks/>
         public string Id
         {
@@ -171,6 +175,32 @@
             set
             {
                 this.tenantField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ClassifiedUserId
+        {
+            get
+            {
+                return this.classifiedUserIdField;
+            }
+            set
+            {
+                this.classifiedUserIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ControllerUserId
+        {
+            get
+            {
+                return this.controllerUserIdField;
+            }
+            set
+            {
+                this.controllerUserIdField = value;
             }
         }
     }

@@ -611,6 +611,14 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
                     where a.DeclarationId == declarationId && a.InvoiceCounterKey==invoiceCounterKey&&a.LineNumber==invoiceItemLineNum && a.Tenant == tenant
                     select a).Max(d => (int?)d.ItemCertificateCounterKey) ?? 0;
         }
+        public bool IsExist(string declarationId, int invoiceCounterKey, int invoiceItemLineNum, int tenant,string reqCode,string certificNumber,string approvNumber)
+        {
+            var result = (from a in context.SupplierInvioceItemCertificats
+                          where a.DeclarationId == declarationId && a.InvoiceCounterKey == invoiceCounterKey && a.LineNumber == invoiceItemLineNum && a.Tenant == tenant
+                          && a.ReqConfirmationTypeCode == reqCode && a.CertificateNumber == certificNumber && a.ApprovalRequestNumber == approvNumber
+                          select a).ToList();
+            return result.Count!=0 ?true:false;
+        }
 
     }
 

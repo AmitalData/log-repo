@@ -277,7 +277,12 @@ namespace Logitude.Customs.Data.Repsitories
             return (from a in context.SupplierInvoiceItems
                     where a.DeclarationId == declarationId && invoicesCounterKeys.Contains(a.CounterKey) && a.Tenant == tenant && a.ItemHash == null && a.IsParent != true
                     select a).Count();
-
+        }
+        public List<SupplierInvoiceItem> GetSupplierInvoiceItemByInvoiceNumber(int tenant,string declarationId,string ItemCode)
+        {
+            return (from a in context.SupplierInvoiceItems
+                    where a.DeclarationId == declarationId && a.Tenant==tenant && a.ItemCode== ItemCode
+                    select a).ToList();
         }
     }
 
