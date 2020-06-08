@@ -76,6 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  AvailabilityDate = d.AvailabilityDate,
                                                                  NewFile=a.NewFile,
                                                                  Favorite=a.Favorite,
+                                                                 SortedColumns= (a.NewFile && a.Favorite ? 1 : ( a.NewFile ? 2 : ( a.Favorite ? 3 : 4 ))),
 
                                                              });
             return query;

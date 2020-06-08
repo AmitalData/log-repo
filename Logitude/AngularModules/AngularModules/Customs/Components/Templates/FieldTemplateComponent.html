@@ -271,8 +271,17 @@
 
                     </div>
                 </div>
+                <div *ngIf="FieldName == 'Favorite'" style="position:relative;width:100%; height: 100%;" (click)="EditFavorite()">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
+                        <div *ngIf="Entity['Favorite']==true">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
+                        </div>
+                        <div *ngIf="Entity['Favorite']==false">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/in_progress@2x.png" />
+                        </div>
+                    </div>
+                </div>
                 <div *ngIf="FieldName == 'CollectionOfMoneyStatus'" style="position:relative;width:100%; height: 100%;">
-
                     <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
                         <div *ngIf="Entity['CollectionOfMoneyStatus']=='V'">
                             <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Successful_process@2x.png" />
