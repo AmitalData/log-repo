@@ -1305,8 +1305,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             this._MySupplierInvoicePM.Tenant = ResolvedTenant();
             this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
-            this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
-
+            //this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
+            if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
+            {
+                this._MySupplierInvoicePM.Tenant = ResolvedTenant();
+                this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
+            }
             return;
 
         }
