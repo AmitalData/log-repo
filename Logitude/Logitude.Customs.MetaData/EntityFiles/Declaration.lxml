@@ -15522,84 +15522,6 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;21d865f9-4100-4ff6-8041-dfc56e69748c&quot;"
-    FieldName="&quot;DeclarationTypeCode&quot;"
-    OldNames="DeclarationTypeCode"
-    IsNew="true"
-    IsChecked="true"
-    IsDeleted="false"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;Customs.LeadDocumentType&quot;"
-    MinLength="0"
-    MaxLength="3"
-    IsRequired="false"
-    CopyToDW="false"
-    DisplayOnLookUp="false"
-    DisplayOnLookUpLocal="false"
-    CanFilter="true"
-    DisplayOnly="false"
-    SystemRequired="false"
-    ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
-    DisplayInList="true"
-    IsCustomFilter="false"
-    Operator="&quot;Equals&quot;"
-    MultiLine="false"
-    IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;DeclarationTypeCode&quot;"
-    ListPropertyPath="&quot;DeclarationTypeCode&quot;"
-    DisplayInLookUpIndex="0"
-    AutomaticField="false"
-    UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
-    IsMulti="false"
-    DependencyFilter1IsList="false"
-    DependencyFilter2IsList="false"
-    DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;Customs.Declaration&quot;"
-    IsRestrictable="false"
-    DisplayInEntityVariables="false"
-    AllowedInCustomerFieldsSettings="false"
-    DisplayInSearchWindowFilters="false"
-    DisplayInSearchWindowFiltersIndex="0"
-    DisplayInDocumentReferences="false"
-    InActive="false"
-    DisplayLongName="false"
-    FullFieldLable="&quot;DeclarationTypeCode&quot;"
-    DefaultText="&quot;Declaration Type &quot;"
-    FullLocalDefaultText="&quot;סוג הצהרה&quot;"
-    ListFieldLable="&quot;DeclarationTypeCodeListLable&quot;"
-    ListLableDefaultText="&quot;Declaration Type &quot;"
-    ListLocalDefaultText="&quot;סוג הצהרה&quot;"
-    IsNullable="true"
-    IsForeignKey="true"
-    ForeignEntity="LeadDocumentType"
-    DontBuildRelationOnDB="false"
-    NavigationPropertyName="LeadDocumentType"
-    IsPrimaryKey="false"
-    HasDataBaseField="true"
-    HasPMField="true"
-    IsComposition="false"
-    IsMaxLength="false"
-    NoMetaDataField="false"
-    GenerateInList="false"
-    IsFixedLength="false"
-    EnableAutoFill="false"
-    IncludeInSearchField="false"
-    AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
-    CanAutomateSetValue="false"
-    DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
-    IsCustom="false"
-    IsSpellCheckedFullFieldLable="false"
-    IsSpellCheckedHelpLocalDefaultText="false"
-    IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
-  <field
     Id="&quot;107e037f-f265-45f9-8d6b-714a7dc20acd&quot;"
     FieldName="&quot;DestinationCountryCode&quot;"
     OldNames="DestinationCountryCode"
@@ -16397,6 +16319,13 @@
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationWithoutRelease&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16469,6 +16398,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationInConstraint&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16540,6 +16476,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidDeclaration&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16619,6 +16562,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationAmendments&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16685,6 +16635,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Declarations&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16744,7 +16701,7 @@
       <QueryFilter
         QueryCode="&quot;ExportDeclaration&quot;"
         PredefinedValue="&quot;2&quot;"
-        ObjectFieldName="&quot;DeclarationTypeCode&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
@@ -16918,22 +16875,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Taxes&quot;"
-    TabLocalName="&quot;מסים&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DETX&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
-    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
-    IsPackagable="false"
-    IndexOrder="5"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
-    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
-    FeatureCode="&quot;TAXES&quot;"
-    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
-    FeatureDefaultText="&quot;Taxes&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Customs Reply&quot;"
     TabLocalName="&quot;תשובה לתיק&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -16947,6 +16888,22 @@
     FeatureCode="&quot;CUSTOMSANSWERS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CustomsAnswers&quot;"
     FeatureDefaultText="&quot;Customs Answers&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Taxes&quot;"
+    TabLocalName="&quot;מסים&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DETX&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
+    IsPackagable="false"
+    IndexOrder="5"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
+    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
+    FeatureCode="&quot;TAXES&quot;"
+    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
+    FeatureDefaultText="&quot;Taxes&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab

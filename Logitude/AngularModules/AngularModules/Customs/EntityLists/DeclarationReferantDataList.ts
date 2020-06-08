@@ -35,13 +35,16 @@ export class DeclarationReferantDataList {
 	ATAOrETA: string;
 	SearchFields: string;
 	ExceptionReasonsList: string;
-	Actions: string;
 	DepartmentId: string;
 	ReferentUserId: string;
+	Actions: string;
 	AvailabilityDate: Date;
 	ClassifiedUserId: string;
 	ControllerUserId: string;
 	CollectorUserId: string;
+	NewFile: boolean;
+	Favorite: boolean;
+	SortedColumns: number;
 	
 }
  

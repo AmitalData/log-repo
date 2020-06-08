@@ -73,6 +73,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CollectorUserId { get; set; }
 	      
         public virtual User CollectorUser { get; set; }
+        [Column("NewFile")]
+	    public bool NewFile { get; set; }
+        [Column("Favorite")]
+	    public bool Favorite { get; set; }
     }
 }
 	 

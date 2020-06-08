@@ -208,7 +208,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             throw new Exception("סוג הובלה - שדה חובה ");
 
                         }
-                        if (string.IsNullOrEmpty(declarationPM.DeclarationTypeCode))
+                        if (string.IsNullOrEmpty(declarationPM.DeclarationDocumentTypeCode))
                         {
                             throw new Exception("סוג הצהרה - שדה חובה ");
 
@@ -1104,6 +1104,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     
                 }
                 
+            }
+            //  -------- Declaration Referant Data 
+            if(entityPM.ProcedureCurrentCode!= null)
+            {
+                ICustomContext context = MainContext as CustomContext;
+                if (entityPM.ProcedureCurrentCode.Length > 3)
+                {
+                    string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
+                    if (ProcedureCurrentCode == "407")
+                    {
+                        DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+                        DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+                        if (referant != null)
+                        {
+                            if (referant.ClassificationStatus == null)
+                            {
+                                referant.ClassificationStatus = "N";
+                                referant.ChangeSetOp = ChangeSetOperation.Update;
+                                DeclarationReferantDataUpdateService service=new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                service.Update(referant, true);
+                            }
+                        }
+                    }
+                }
             }
         }
 

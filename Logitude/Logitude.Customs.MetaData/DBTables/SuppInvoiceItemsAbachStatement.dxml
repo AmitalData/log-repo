@@ -41,18 +41,19 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="StatementType"
+    Name="StatementTypeCode"
+    OldNames="StatementType"
     Type="varchar"
     Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="StatementInd"
-    Type="nvarchar"
-    Size="1">
+    Name="IsStatementInd"
+    OldNames="StatementInd"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
@@ -60,7 +61,7 @@
     ReferencedColumn="DeclarationId,CounterKey,LineNumber"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="StatementType"
+    ForeignKeyColumn="StatementTypeCode"
     ReferencedTable="NbcDeclarationTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />

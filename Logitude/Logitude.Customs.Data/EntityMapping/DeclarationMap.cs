@@ -271,8 +271,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExportFile).HasColumnName("ExportFile").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
-
             this.Property(t => t.DestinationCountryCode).HasColumnName("DestinationCountryCode").HasMaxLength(2).IsUnicode(false);
         }
     }

@@ -88,7 +88,8 @@
   <Column
     Name="IsClosedForFollowUp"
     Type="varchar"
-    Size="1">
+    Size="1"
+    DefaultValue="'0'">
     <Constraints
       Nullable="true" />
   </Column>
@@ -145,6 +146,20 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="NewFile"
+    Type="bit"
+    DefaultValue="'1'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Favorite"
+    Type="bit"
+    DefaultValue="'0'">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="VendorId"

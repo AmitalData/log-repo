@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SuppInvoiceItemsAbachStatementUpdateClass
    {  		
-		public const string HashString = "d6a8f372ebba127b71d48b573f3147a7";
+		public const string HashString = "68fba7ac9c4952ce0864ecc5e6dcc442";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Supplier Invoice Items Abach Statement (Export)",
-			      				    Code =  "9cb2",
+			      				    Code =  "1fea",
 			      				    Name =  "Customs.SupplierInvoiceItemVehicle Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -421,7 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "StatementType",
+					 						FieldName =  "StatementTypeCode",
 					  						ObjectTableName =  "Customs.SuppInvoiceItemsAbachStatement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.NbcDeclarationType",
@@ -440,8 +440,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatementType",
-					  						ListPropertyPath =  "StatementType",
+					  						PMPropertyPath =  "StatementTypeCode",
+					  						ListPropertyPath =  "StatementTypeCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -458,7 +458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatementType",
+					  						FullFieldLable =  "StatementTypeCode",
 					  						DefaultText =  "Statement Type",
 					  						FullLocalDefaultText =  "סוג הצהרת אב'כ",
 					  						IsMaxLength =  false,
@@ -479,9 +479,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "StatementInd",
+					 						FieldName =  "IsStatementInd",
 					  						ObjectTableName =  "Customs.SuppInvoiceItemsAbachStatement",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
@@ -497,8 +497,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatementInd",
-					  						ListPropertyPath =  "StatementInd",
+					  						PMPropertyPath =  "IsStatementInd",
+					  						ListPropertyPath =  "IsStatementInd",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -515,7 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatementInd",
+					  						FullFieldLable =  "IsStatementInd",
 					  						DefaultText =  "Statement Ind",
 					  						FullLocalDefaultText =  "אינדיקצית קיום הצהרה",
 					  						IsMaxLength =  false,

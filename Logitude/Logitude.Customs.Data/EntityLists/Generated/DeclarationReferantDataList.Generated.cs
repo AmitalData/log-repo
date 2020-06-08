@@ -69,11 +69,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExceptionReasonsList  { get; set; }
        [DataMember]
-       public string Actions  { get; set; }
-       [DataMember]
        public string DepartmentId  { get; set; }
        [DataMember]
        public string ReferentUserId  { get; set; }
+       [DataMember]
+       public string Actions  { get; set; }
        [DataMember]
        public DateTime? AvailabilityDate  { get; set; }
        [DataMember]
@@ -82,6 +82,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string ControllerUserId  { get; set; }
        [DataMember]
        public string CollectorUserId  { get; set; }
+       [DataMember]
+       public bool NewFile  { get; set; }
+       [DataMember]
+       public bool Favorite  { get; set; }
+       [DataMember]
+       public int SortedColumns  { get; set; }
    }
 
 }

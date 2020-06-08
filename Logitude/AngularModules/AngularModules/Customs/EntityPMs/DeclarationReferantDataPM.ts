@@ -129,6 +129,16 @@ export class DeclarationReferantDataPM {
     public set CollectorUserId(newValue: string) { if (this.collectorUserId != newValue) { this.collectorUserId = newValue; this.MarkAsDirty("CollectorUserId"); } }
        
 	 
+    private newFile: boolean;
+    public get NewFile() { return this.newFile; }
+    public set NewFile(newValue: boolean) { if (this.newFile != newValue) { this.newFile = newValue; this.MarkAsDirty("NewFile"); } }
+       
+	 
+    private favorite: boolean;
+    public get Favorite() { return this.favorite; }
+    public set Favorite(newValue: boolean) { if (this.favorite != newValue) { this.favorite = newValue; this.MarkAsDirty("Favorite"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

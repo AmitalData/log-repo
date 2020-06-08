@@ -23,8 +23,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                       {
                                                                                           DeclarationId = a.DeclarationId,
                                                                                           InvoiceItemLineNumber = a.InvoiceItemLineNumber,
-                                                                                          StatementInd = a.StatementInd,
-                                                                                          StatementType = a.StatementType,
+                                                                                          IsStatementInd = a.IsStatementInd,
+                                                                                          StatementTypeCode = a.StatementTypeCode,
                                                                                           InvoiceCounterKey = a.InvoiceCounterKey,
                                                                                           SequenceNumeric=a.SequenceNumeric,
                                                                                           Tenant = a.Tenant,

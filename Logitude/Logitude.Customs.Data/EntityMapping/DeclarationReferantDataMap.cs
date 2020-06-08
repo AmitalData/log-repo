@@ -64,6 +64,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ControllerUserId).HasColumnName("ControllerUserId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CollectorUserId).HasColumnName("CollectorUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.NewFile).HasColumnName("NewFile");
+
+            this.Property(t => t.Favorite).HasColumnName("Favorite");
         }
     }
 }

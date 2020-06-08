@@ -31,9 +31,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string StatementType  { get; set; }
+       public string StatementTypeCode  { get; set; }
        [DataMember]
-       public string StatementInd  { get; set; }
+       public bool IsStatementInd  { get; set; }
    }
 
 }
