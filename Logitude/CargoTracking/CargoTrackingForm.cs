@@ -19,7 +19,7 @@ namespace CargoTracking.Forms
     public partial class CargoTrackingForm : Form
     {
         private string LocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
-        private string TestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        private string TestConectionstring =  "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         private string dbSourceConnection  ; 
         private string dbDestinationConnection;
         private CargoTrackingMainService cargoTrackingService;
@@ -29,7 +29,6 @@ namespace CargoTracking.Forms
         private int TableCellMrginHight = 10;
         private int TotalIncreasing = 0;
         private bool FirstInit = true;
-        private ManualResetEvent syncEvent;
         public CargoTrackingForm()
         {
             InitializeComponent();
@@ -38,20 +37,8 @@ namespace CargoTracking.Forms
             cargoTrackingService = new CargoTrackingMainService();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
             this.DestinationConnectionlTextBox.Text = dbDestinationConnection;
-            syncEvent = new ManualResetEvent(false);
          }
-        private List<CargoTable> FillCargoTableList()
-        {
-            List<CargoTable> CargoTableLists = new List<CargoTable>();
-            CargoTableLists.Add(new CargoTable() { TableName = "Port", FieldsDBName = "Id,Code,CountryId,EnglishName,AutomaticLastUpdateDate",CT_FieldsDBName = "Id,Code,EnglishName,CountryId", KeyName = "Id", DBTableName = "Ports", CT_TableName = "CargoTrackingPorts" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Card", FieldsDBName = "Id,Code,LocalName,EnglishName,AutomaticLastUpdateDate", KeyName = "Id", CT_FieldsDBName = "Id,Code,EnglishName,LocalName", DBTableName = "Cards", CT_TableName = "CargoTrackingCards" });
-            CargoTableLists.Add(new CargoTable() { TableName = "Shipment", FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,MasterShipmentDataId,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,CustomConnectToShipment,FirstPickupETA,AutomaticLastUpdateDate,ShipmentPickUpIndex,FirstPickupETA",
-                                                   KeyName = "Id", DBTableName = "Shipments", CT_TableName = "CargoTrackingShipments" ,CT_FieldsDBName = "Id,Tenant,CustomerId,TransportModeId,Master,House,ShipmentNumber,FromPortId,ToPortId,ShipperId,ConsigneeId,GrossWeight,Volume,PickupDone,PickupDate"
-            });
-        
-            return CargoTableLists;
-
-        }
+  
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -94,42 +81,7 @@ namespace CargoTracking.Forms
 
         }
 
-        private void CheckAndUpdateWaterMark()
-        {
-
-            List<CargoTable> CargoTableLists = FillCargoTableList();
-            foreach (CargoTable table in CargoTableLists)
-            {
-                if (table.DBTableName != "WaterMarks")
-                {
-                    using (SqlConnection SourceConnection =
-                         new SqlConnection(dbSourceConnection))
-                    {
-                        SourceConnection.Open();
-
-                        SqlCommand commandSourceData = new SqlCommand(
-                       "SELECT  TableName" +
-                       " FROM dbo.WaterMarks WHERE TableName = '" + table .CT_TableName + "'", SourceConnection);
-
-                        SqlDataReader reader = commandSourceData.ExecuteReader();
-                        if (!reader.HasRows)
-                        {
-                            string lastUpdateDate = cargoTrackingService.GetAutomaticLastUpdateDate(table.DBTableName, dbSourceConnection);
-                            if (string.IsNullOrEmpty(lastUpdateDate)) lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                            cargoTrackingService.AddWaterMarksRecord(table, lastUpdateDate, dbSourceConnection);
-
-                        }
-                        else
-                        {
-                            SourceConnection.Close();
-
-                        }
-                    }
-                }
-            }
-
-        }
-
+      
         private void BuildConnectionStrings()
         {
 
@@ -157,19 +109,22 @@ namespace CargoTracking.Forms
         }
         private void UpdateCargoDataBase(CargoTable table)
         {
-            NumberOfCoulmnUpdated= cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
+            if (checkBox1.Checked == false)
+            {
+                NumberOfCoulmnUpdated = cargoTrackingService.UpdateCTDataBase(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
+            }
+            else
+            {
+                NumberOfCoulmnUpdated = cargoTrackingService.UpdateLineByLine(new CargoArgs() { Table = table, SourceConnectionString = dbSourceConnection, DestinationConnectionString = dbDestinationConnection });
+
+            }
         }
 
 
 
         private void AddLabelToTable( TableLayoutPanel tableLayoutPanel, string Dw_TableName, int x, int y,int AccessLevel=0, CargoTable table=null)
         {
-
-            // AccessLevel = 0 For Main Coulmn ("Table Name" , "Row Updated #" ,"Statues" ) 
-            // AccessLevel = 1 For Record in Coulmn ("Table Name") 
-            // AccessLevel = 2 For Record in Coulmn ("Row Updated #" ) 
-            // AccessLevel = 3 For Record in Coulmn ("Statues" ) 
-
+ 
 
             Label Label = new Label
             {
@@ -244,7 +199,7 @@ namespace CargoTracking.Forms
         private void UpdateCargoTables()
         {
 
-            List<CargoTable> CargoTableLists = FillCargoTableList();
+            List<CargoTable> CargoTableLists = cargoTrackingService.FillCargoTableList();
             foreach (CargoTable table in CargoTableLists)
             {
                 table.Labels = new List<Label>();
@@ -333,7 +288,7 @@ namespace CargoTracking.Forms
        
 
             if (name == "CheckAndUpdateWaterMark")
-                CheckAndUpdateWaterMark();
+                cargoTrackingService.CheckAndUpdateWaterMark(dbSourceConnection);
             if (name == "UpdateCargoTables")
             {
 
@@ -462,6 +417,11 @@ namespace CargoTracking.Forms
         }
 
         private void CargoTrackingForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }
