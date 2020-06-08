@@ -231,8 +231,11 @@ namespace CommunicationWorkerRole
 
         public override bool OnStart()
         {
-            
 
+            //if (setting.WorkEnvironment == "customs")
+            //{
+            //    return;
+            //}
             if (_OnStartDone) return true;
             _OnStartDone = true;
 

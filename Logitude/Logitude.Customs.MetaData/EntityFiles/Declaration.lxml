@@ -16319,6 +16319,13 @@
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationWithoutRelease&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16391,6 +16398,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationInConstraint&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16462,6 +16476,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PaidDeclaration&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16541,6 +16562,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationAmendments&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16606,6 +16634,13 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Declarations&quot;"
+        PredefinedValue="&quot;2&quot;"
+        ObjectFieldName="&quot;DeclarationDocumentTypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16840,22 +16875,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Taxes&quot;"
-    TabLocalName="&quot;מסים&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DETX&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
-    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
-    IsPackagable="false"
-    IndexOrder="5"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
-    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
-    FeatureCode="&quot;TAXES&quot;"
-    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
-    FeatureDefaultText="&quot;Taxes&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Customs Reply&quot;"
     TabLocalName="&quot;תשובה לתיק&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -16869,6 +16888,22 @@
     FeatureCode="&quot;CUSTOMSANSWERS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.CustomsAnswers&quot;"
     FeatureDefaultText="&quot;Customs Answers&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Taxes&quot;"
+    TabLocalName="&quot;מסים&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DETX&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.Taxes&quot;"
+    IsPackagable="false"
+    IndexOrder="5"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent&quot;"
+    HtmlComponentName="&quot;DeclarationTaxesTabComponent&quot;"
+    FeatureCode="&quot;TAXES&quot;"
+    FeatureTextCodeCode="&quot;Customs.Declaration.Features.Taxes&quot;"
+    FeatureDefaultText="&quot;Taxes&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab

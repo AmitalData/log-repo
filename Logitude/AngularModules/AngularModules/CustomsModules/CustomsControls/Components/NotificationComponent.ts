@@ -242,7 +242,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         this.columns.push({
             FieldName: 'AssigneToNotificationTypeCode',
             DataTypeCode: 'String',
-            Display: 'מספר חשבון',
+            Display: TextCodeTranslator.Translate('Customs.Notification.F.AssigneToNotificationTypeCode'),
             Styles: { width: '70px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'NotificationListTemplate',

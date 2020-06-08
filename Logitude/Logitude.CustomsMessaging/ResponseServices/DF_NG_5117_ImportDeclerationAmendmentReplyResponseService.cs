@@ -78,6 +78,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 bool fromMehes = false;
 
+                if(customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception!= null && customResponse.ResponseContentHeader.Exception.Count()>0)
+                {
+                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.Succeeded = true;
+                    this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
+                    this.MyResponseData.HasException = false;
+
+                    return;
+
+                }
+             
                 //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
                 string functionalReferenceID = "";
                 if (customResponse.Response.FunctionalReferenceID != null)
