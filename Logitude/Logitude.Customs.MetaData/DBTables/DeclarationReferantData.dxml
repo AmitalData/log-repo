@@ -149,13 +149,15 @@
   </Column>
   <Column
     Name="NewFile"
-    Type="bit">
+    Type="bit"
+    DefaultValue="'1'">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Favorite"
-    Type="bit">
+    Type="bit"
+    DefaultValue="'0'">
     <Constraints
       Nullable="false" />
   </Column>

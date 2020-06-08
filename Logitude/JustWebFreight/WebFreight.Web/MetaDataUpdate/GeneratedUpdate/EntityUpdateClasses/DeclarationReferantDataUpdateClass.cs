@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,10 +58,25 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
-   {  
+   {  		
+		public const string HashString = "a2901f383523db83a7e0b31c16f40974";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,21 +128,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "fa77",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  DeclarationReferantDataUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -135,9 +148,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationId",
 					  						OldFieldName =  "DeclarationId",
-					  						IsNew =  false,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -189,13 +199,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.DeclarationReferantData",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -203,9 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "OrderNumber",
 					  						OldFieldName =  "OrderNumber",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -258,13 +320,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -272,9 +330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "VendorId",
 					  						OldFieldName =  "VendorId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsVendor",
@@ -328,13 +383,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -342,9 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ArrivalDate",
 					  						OldFieldName =  "ArrivalDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -399,13 +447,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -413,9 +457,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalDate",
 					  						OldFieldName =  "EstimatedArrivalDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -469,13 +510,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -483,9 +520,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Weight",
 					  						OldFieldName =  "Weight",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -540,13 +574,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -554,9 +584,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ClassificationStatus",
 					  						OldFieldName =  "ClassificationStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -609,13 +636,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -623,9 +646,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ControllerStatus",
 					  						OldFieldName =  "ControllerStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -678,13 +698,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -692,9 +708,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CollectionOfMoneyStatus",
 					  						OldFieldName =  "CollectionOfMoneyStatus",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -747,13 +760,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -761,9 +770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "FollowUpDate",
 					  						OldFieldName =  "FollowUpDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -817,13 +823,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -831,9 +833,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WithPaper",
 					  						OldFieldName =  "IsManualProcess",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -885,13 +884,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -899,9 +894,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClosedForFollowUp",
 					  						OldFieldName =  "IsClosedForFollowUp",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -953,13 +945,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -967,9 +955,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsClassificationRemarks",
 					  						OldFieldName =  "IsClassificationRemarks",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1021,13 +1006,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1035,9 +1016,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsControllerRemarks",
 					  						OldFieldName =  "IsControllerRemarks",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1089,13 +1067,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1103,9 +1077,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PreClassification",
 					  						OldFieldName =  "PreClassification",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1157,13 +1128,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1171,9 +1138,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomFileNo",
 					  						OldFieldName =  "CustomFileNo",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1225,13 +1189,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1239,9 +1199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomerName",
 					  						OldFieldName =  "CustomerName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1293,13 +1250,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1307,9 +1260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TransportModeId",
 					  						OldFieldName =  "TransportModeId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsTransportMode",
@@ -1362,13 +1312,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1376,9 +1322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationOfficeCode",
 					  						OldFieldName =  "DeclarationOfficeCode",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsHouseType",
@@ -1431,13 +1374,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1445,9 +1384,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "VendorName",
 					  						OldFieldName =  "VendorName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1499,13 +1435,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1513,9 +1445,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationStatusTypeName",
 					  						OldFieldName =  "DeclarationStatusTypeName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1567,13 +1496,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1581,9 +1506,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationOfficeName",
 					  						OldFieldName =  "DeclarationOfficeName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1635,13 +1557,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1649,9 +1567,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DeclarationStatusTypeCode",
 					  						OldFieldName =  "DeclarationStatusTypeCode",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeclarationStatusType",
@@ -1703,13 +1618,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1717,9 +1628,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ATAOrETA",
 					  						OldFieldName =  "ATAOrETA",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1771,13 +1679,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1785,9 +1689,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1841,13 +1742,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1855,9 +1752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ExceptionReasonsList",
 					  						OldFieldName =  "ExceptionReasonsList",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1909,13 +1803,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1923,9 +1813,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DepartmentId",
 					  						OldFieldName =  "DepartmentId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
@@ -1978,13 +1865,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1992,9 +1875,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ReferentUserId",
 					  						OldFieldName =  "ReferentUserId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -2048,13 +1928,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2062,9 +1938,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Actions",
 					  						OldFieldName =  "Actions",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2116,13 +1989,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2130,9 +1999,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AvailabilityDate",
 					  						OldFieldName =  "AvailabilityDate",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2185,13 +2051,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2199,9 +2061,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ClassifiedUserId",
 					  						OldFieldName =  "ClassifiedUserId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -2254,13 +2113,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2268,9 +2123,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ControllerUserId",
 					  						OldFieldName =  "CollectorUserId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -2324,13 +2176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2338,9 +2186,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CollectorUserId",
 					  						OldFieldName =  "CollectorUserId",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -2394,13 +2239,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2408,9 +2249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "NewFile",
 					  						OldFieldName =  "NewFile",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2462,13 +2300,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2476,9 +2310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Favorite",
 					  						OldFieldName =  "Favorite",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2530,13 +2361,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2544,9 +2371,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SortedColumns",
 					  						OldFieldName =  "SortedColumns",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2596,178 +2420,191 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DeclarationReferantDataQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5277", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup DeclarationReferantDataQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5277", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DeclarationReferantDataQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fa77", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable DeclarationReferantDataObjectTable = objectTables.ContainsKey("Customs.DeclarationReferantData") ? objectTables["Customs.DeclarationReferantData"] : null;
+            if (DeclarationReferantDataObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-	        ObjectTable DeclarationReferantDataObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> DeclarationReferantDataObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationReferantData").ToList();   
+                DeclarationReferantDataObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault();
+            }
 
-			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", DefaultText = "Files In Process",LocalDefaultText = "תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeclarationReferantDataFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.FilesInProcess", NameTextCodeDefaultText = "FilesInProcess", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", DefaultText = @"Files In Process",LocalDefaultText = "תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationReferantDataFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInProcess", NameTextCodeDefaultText = "FilesInProcess", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.TrackingCases", DefaultText = "TrackingCases",LocalDefaultText = "תיקים במעקב", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeclarationReferantDataFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.TrackingCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.TrackingCases", NameTextCodeDefaultText = "TrackingCases", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DeclarationReferantDataTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.TrackingCases", DefaultText = @"TrackingCases",LocalDefaultText = "תיקים במעקב", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationReferantDataFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.TrackingCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.TrackingCases", NameTextCodeDefaultText = "TrackingCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.AllCases", DefaultText = "AllCases",LocalDefaultText = "כל התיקים ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeclarationReferantDataFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.AllCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.AllCases", NameTextCodeDefaultText = "AllCases", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DeclarationReferantDataTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.AllCases", DefaultText = @"AllCases",LocalDefaultText = "כל התיקים ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeclarationReferantDataFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.AllCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.AllCases", NameTextCodeDefaultText = "AllCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query FilesInProcessQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_0.Id, Code = "FilesInProcess",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_0.Id, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query FilesInProcessQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_0.Id, NameTextCodeCode = DeclarationReferantDataTextCode_0.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "FilesInProcess",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_0.Id,FeatureUniqeCode= DeclarationReferantDataFeature_0.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn FilesInProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Favorite" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 87 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 79 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 255 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 55 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 44 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "AvailabilityDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ExceptionReasonsList" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 34 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 18, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "NewFile" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id, IndexOrder = 19, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns);
 
-             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "IsClosedForFollowUp" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = FilesInProcessQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsClosedForFollowUp", PredefinedValue = "0",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
-			  Query TrackingCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_1.Id, Code = "TrackingCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_1.Id, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query TrackingCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_1.Id, NameTextCodeCode = DeclarationReferantDataTextCode_1.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "TrackingCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_1.Id,FeatureUniqeCode= DeclarationReferantDataFeature_1.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TrackingCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Favorite" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 87 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 79 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 255 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 55 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 44 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "AvailabilityDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ExceptionReasonsList" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 34 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 18, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "NewFile" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn TrackingCasesQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id, IndexOrder = 19, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrackingCasesQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns);
 
-             AdvancedQueryFilter TrackingCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "Today", QueryId = TrackingCasesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TrackingCasesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TrackingCasesQuery.Id,QueryCode = TrackingCasesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_2.Id, Code = "AllCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_2.Id, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+			  Query AllCasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_2.Id, NameTextCodeCode = DeclarationReferantDataTextCode_2.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "AllCases",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationReferantDataFeature_2.Id,FeatureUniqeCode= DeclarationReferantDataFeature_2.FeatureUniqeCode, DefaultSortName = "SortedColumns", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Favorite" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.Favorite" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 1, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 92 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 2, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 146 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 146 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 3, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "OrderNumber" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 87 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 87 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 4, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 5, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationOfficeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 157 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 6, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 124 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 7, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ArrivalDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 79 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 79 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 8, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Weight" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 75 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 75 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 9, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 255 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 255 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 10, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "PreClassification" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 58 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 58 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 11, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ClassificationStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 55 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 55 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 12, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ControllerStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 44 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 44 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 13, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "CollectionOfMoneyStatus" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 14, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 15, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "AvailabilityDate" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 108 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.AvailabilityDate" , ColumnWidth = 108 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 16, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "ExceptionReasonsList" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 34 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 34 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 17, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "WithPaper" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 18, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "NewFile" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 69 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCasesQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Customs.DeclarationReferantData.NewFile" , ColumnWidth = 69 }, addedQueryColumns);
 
-			 QueryColumn AllCasesQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id, IndexOrder = 19, ObjectFieldId = DeclarationReferantDataObjectFields.Where(d => d.FieldName == "Actions" && d.ObjectTableId == DeclarationReferantDataObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 68 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCasesQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCasesQuery.Id,QueryCode = AllCasesQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2782,39 +2619,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable DeclarationReferantDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature DeclarationReferantDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeclarationReferantDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationReferantData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature DeclarationReferantDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);
+		   Feature DeclarationReferantDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);
+		   Feature DeclarationReferantDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);
+		   Feature DeclarationReferantDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantData.Features.PackageFeature", NameTextCodeDefaultText = "DeclarationReferantData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable DeclarationReferantDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationReferantDataObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = DeclarationReferantDataObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -2822,7 +2670,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     
