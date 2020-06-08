@@ -16,6 +16,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StockTypeCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AutoArchiveOnInvoice).IsRequired();
             this.Property(t => t.CustomerTenantShareImportFile).IsRequired();
+            this.Property(t => t.ShowTaxAmountWarning).IsRequired();
 
 
 
