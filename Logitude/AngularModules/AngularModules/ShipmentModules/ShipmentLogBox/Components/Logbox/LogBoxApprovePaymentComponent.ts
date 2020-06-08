@@ -218,10 +218,10 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
-                if (this.AdditionalData.MainTaxesDetails) {
+                if (SessionLocator.PrivateLableSettings && SessionLocator.TenantPM.ShowTaxAmountWarning) {
                     var warningCode: string;
-                    if (this.AdditionalData.MainTaxesDetails) {
-                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.MainTaxesDetails);
+                    if (this.AdditionalData.TaxesMoreDetails) {
+                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
                     }
                     if (warningCode && warningCode != '') {
                         var warningWindow = new LogitudeWindow();
@@ -230,7 +230,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                         warningWindow.RTL = this.RTL;
                         //warningWindow.Title
                         var windowArgs: any = {};
-                        var warningCode: string = this.GetWarningCodeBeforeApproval(this.AdditionalData.MainTaxesDetails);
+                        var warningCode: string = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
                         windowArgs.WarningCode = warningCode;
                         windowArgs.RTL = this.RTL;
                         warningWindow.WindowArgs = windowArgs;

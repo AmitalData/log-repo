@@ -57,16 +57,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 ShipmentAdditionalCloudCustomData CustomData = new ShipmentAdditionalCloudCustomData();
                 CustomData.IsPaymentRequired = data.IsPaymentRequired;
                 CustomData.PaymentDateTime = data.PaymentDateTime;
-                TaxesMoreDetails m2Tax = new TaxesMoreDetails();
-                m2Tax.TaxAmount = "10";
-                m2Tax.TaxTypeCode = "1";
-                m2Tax.TaxTypeName = "asd";
-                TaxesMoreDetails m3Tax = new TaxesMoreDetails();
-                m3Tax.TaxAmount = "95";
-                m3Tax.TaxTypeCode = "16";
-                m3Tax.TaxTypeName = "asddk";
-                CustomData.TaxesMoreDetails.Add(m2Tax);
-                CustomData.TaxesMoreDetails.Add(m3Tax);
                 if (data != null && !string.IsNullOrEmpty(data.DeclarationXmlData))
                 {
                     //byte[] myByteArray = Convert.FromBase64String(data.DeclarationXmlData);
@@ -259,7 +249,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                                 }
                                 else if (childNodes[j].Name == "tax_details-tax_amount")
                                 {
-                                    taxesMoreDetails.TaxAmount = childNodes[i].InnerText;
+                                    taxesMoreDetails.TaxAmount = childNodes[j].InnerText;
                                 }
                             
                         }

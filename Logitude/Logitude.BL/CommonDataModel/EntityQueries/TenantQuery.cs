@@ -160,6 +160,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
                                                 DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
                                                 LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
+                                                ShowTaxAmountWarning = a.LogBoxTenantSetting.ShowTaxAmountWarning,
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                             });
@@ -487,6 +488,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                     LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                    ShowTaxAmountWarning = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                     HideFCLAllIn = tt.HideFCLAllIn,
                     DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                 };
@@ -914,6 +916,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                                DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                                LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                               ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                                DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            }).FirstOrDefault();
 
@@ -1064,6 +1067,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                            DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                            LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                           ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        }).FirstOrDefault();
 
@@ -1202,6 +1206,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                        DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                        LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                       ShowTaxAmountWarning = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1358,6 +1363,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.DocumentShareAsDefault:false,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                    ShowTaxAmountWarning = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.ShowTaxAmountWarning : false,
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
                     DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                 };

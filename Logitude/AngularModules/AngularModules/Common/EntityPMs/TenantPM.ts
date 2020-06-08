@@ -675,6 +675,11 @@ export class TenantPM {
     public set DisplayDocumentsAndEvents(newValue: boolean) { if (this.displayDocumentsAndEvents != newValue) { this.displayDocumentsAndEvents = newValue; this.MarkAsDirty("DisplayDocumentsAndEvents"); } }
        
 	 
+    private showTaxAmountWarning: boolean;
+    public get ShowTaxAmountWarning() { return this.showTaxAmountWarning; }
+    public set ShowTaxAmountWarning(newValue: boolean) { if (this.showTaxAmountWarning != newValue) { this.showTaxAmountWarning = newValue; this.MarkAsDirty("ShowTaxAmountWarning"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

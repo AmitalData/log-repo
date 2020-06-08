@@ -387,5 +387,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AllowCustomersInAgentsLOV { get; set; }
 
         public bool DisplayDocumentsAndEvents { get; set; }
+        public bool ShowTaxAmountWarning { get; set; }
     }
 }

@@ -25,13 +25,13 @@ export class WarningApprovePaymentComponent {
 
     SetWarningMessage(WarningCode: string) {
         switch (WarningCode) {
-            case '17':
+            case '1':
                 this.WarningMessage = '"נדרש אישור לתשלום על סעיף מכס בסך <br/>(tax_details-tax_amount) ש"ח, האם אתה מאשר?';
                 break;
             case '16':
                 this.WarningMessage = '"נדרש אישור לתשלום על סעיף מס קניה בסך <br/>(tax_details - tax_amount) ש"ח, האם אתה מאשר?';
                 break;
-            case '1':
+            case '17':
                 this.WarningMessage = 'נדרש אישור לתשלום(tax_details-tax_amount) <br/>ש”ח בגין סעיף מכס וכן מס קניה(tax_details - tax_amount)<br/>ש"ח, האם אתה מאשר?';
                 break;
             default:
@@ -40,8 +40,7 @@ export class WarningApprovePaymentComponent {
     }
 
     ApproveButtonClicked() {
-        this.CurrentSession.FireEvent("Approved");
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("Approved");
     }
 
     DennyButtonClicked() {
