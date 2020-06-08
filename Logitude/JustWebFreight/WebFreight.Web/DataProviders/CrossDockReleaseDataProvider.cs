@@ -86,6 +86,8 @@ namespace WebFreight.Web.DataProviders
         
         public string ImportManifest { get; set; }
         public string MasterImportManifest { get; set; }
+        public string ConnectedShipmentTransportMode { get; set; }
+        public string Trailer { get; set; }
     }
     
 

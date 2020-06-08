@@ -2,8 +2,7 @@
 <Table
   Name="InboundEmailLines"
   Schema="dbo"
-  DBType="Main"
-  Module="Infrastructure">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -15,6 +14,55 @@
   <Column
     Name="Tenant"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FullBody"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HTMLFullBody"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Bcc"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InternalUsers"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityLineId"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InboundEmailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -40,31 +88,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Body"
-    Type="nvarchar"
-    Size="-1">
+    Name="Direction"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="FullBody"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HTMLFullBody"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="CCs"
@@ -74,45 +102,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Bcc"
-    Type="varchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InternalUsers"
-    Type="varchar"
-    Size="4000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Direction"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="EntityLineId"
-    Type="varchar"
-    Size="15"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InboundEmailId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CommunicationLogId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Body"
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -125,5 +124,6 @@
     ForeignKeyColumn="CommunicationLogId"
     ReferencedTable="CommunicationLogs"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

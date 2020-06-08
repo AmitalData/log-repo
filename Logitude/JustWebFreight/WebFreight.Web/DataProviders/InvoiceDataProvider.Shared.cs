@@ -667,8 +667,7 @@ namespace WebFreight.Web.DataProviders
         public string VATDescription { get; set; }
         public string VATLocalDescription { get; set; }
         public bool IsRegionalTax { get; set; }
-
- 
+        public string ChargeTypeDescription { get; set; }
     }
 
     public class TotalVat

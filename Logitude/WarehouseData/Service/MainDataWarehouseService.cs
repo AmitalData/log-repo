@@ -142,6 +142,8 @@ namespace WarehouseData.Helper
                     this.dWDataWarehouseService.InitializationDWTable(table, sourceConnectionString, destinationConnectionString);
                     this.dWDataWarehouseService.CreateIndex(table, table.KeyName, destinationConnectionString);
                     this.dWDataWarehouseService.CreateIndex(table, "AutomaticLastUpdateDate", destinationConnectionString);
+                    if (!string.IsNullOrEmpty(table.AdditionalIndexes)) dWDataWarehouseService.CreateAdditionalIndexes(table, destinationConnectionString);
+
                     if (table.HasConstraint) this.dWDataWarehouseService.AddConstraint(table, destinationConnectionString);
                     if (table.HasNotSpecifiedValue) this.dWDataWarehouseService.InSertNotSpecifiedValueToDW(table, destinationConnectionString, privateTenant);
                 }

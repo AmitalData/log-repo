@@ -26,12 +26,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LastSendDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SentByUserId"
     Type="varchar"
     Size="15">
@@ -42,6 +36,12 @@
     Name="CommunicationLogId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastSendDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -80,7 +80,8 @@
     ForeignKeyColumn="CommunicationLogId"
     ReferencedTable="CommunicationLogs"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="MessageCode"
     ReferencedTable="ShipmentCustomsMessageTypes"

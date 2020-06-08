@@ -451,7 +451,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(' ', 50);
             }
             myStringBuilder.Append(a);
-            myStringBuilder.Append("בדיקה");
+            myStringBuilder.Append("הקידב");
             myStringBuilder.Append(a);
             myStringBuilder.Append(' ', 6);
             myStringBuilder.Append(a);

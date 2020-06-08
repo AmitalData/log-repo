@@ -294,7 +294,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                         {
                             string key = parts[0].Trim(new char[] { '?', ' ' });
                             string val = parts[1].Trim();
-                            queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                            if (!queryParameters.ContainsKey(key))
+                            {
+                                queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                            }
                         }
                     }
                 }

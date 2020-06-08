@@ -140,6 +140,65 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return traceEvents;
         }
 
+        public IQueryable<TraceEventPM> GetTraceEventPMsByTenantAndEntityId_WithSecurityKey(int tenant, string entityId, string objectTableId, string securitykey)
+        {
+            ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
+            bool isShipment = objectTableRep.IsObjectTableShipment(objectTableId);
+            string masterId = null;
+            IQueryable<TraceEventPM> traceEvents = null;
+
+            if (isShipment)
+            {
+                ShipmentRepository shipmentRep = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRep.GetSingleShipmentwithOutIncludes(entityId, tenant);
+                if (shipment != null)
+                {
+                    if (shipment.SecurityKey != null && securitykey != null)
+                    {
+                        if (shipment.SecurityKey.ToLower() == securitykey.ToLower())
+                        {
+                            if (shipment.ShipmentLevelCode == "H") masterId = shipment.MasterShipmentDataId;
+
+                            traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact").Include("EventType.EventTypeCategory")
+                                                                   where a.Tenant == tenant && (a.EntityId == entityId || a.EntityId == masterId) && a.ObjectTableId == objectTableId && !a.Deleted
+                                                                   orderby a.LogDateTime descending
+                                                                   select new TraceEventPM()
+                                                                   {
+                                                                       EntityId = a.EntityId,
+                                                                       EventDateTime = a.EventDateTime,
+                                                                       EventTypeId = a.EventTypeId,
+                                                                       Id = a.Id,
+                                                                       LogDateTime = a.LogDateTime,
+                                                                       Notes = a.Notes,
+                                                                       ObjectTableId = a.ObjectTableId,
+                                                                       Tenant = a.Tenant,
+                                                                       UserId = a.UserId,
+                                                                       Deleted = a.Deleted,
+                                                                       ShortView = a.EventType.ShortView,
+                                                                       EventTypeEnglishName = a.EventType.EnglishName,
+                                                                       EventTypeLocalName = a.EventType.LocalName,
+                                                                       EventTypeCode = a.EventType.Code,
+                                                                       ContactEnglishFirstName = a.User.Contact.EnglishName,
+                                                                       IsManualEntry = a.EventType.IsManualEntry,
+                                                                       EventTypeCategoryCode = a.EventType.EventTypeCategory != null ? a.EventType.EventTypeCategory.Code : null,
+                                                                       IsAgentView = a.EventType.IsAgentView,
+                                                                       IsCustomerView = a.EventType.IsCustomerView,
+                                                                       ExternalId = a.ExternalId,
+                                                                       IsAddedManually = a.IsAddedManually,
+                                                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
+                                                                       Location = a.Location,
+                                                                       PartnerName = a.PartnerName,
+
+                                                                   };
+
+                        }
+                    }
+                }
+            }
+
+            return traceEvents;
+        }
+
         public IQueryable<TraceEventPM> GetTraceEventPMsByTenant(int tenant)
         {
             IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType")

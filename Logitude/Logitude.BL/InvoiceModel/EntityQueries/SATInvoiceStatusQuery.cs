@@ -43,6 +43,22 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+
+        public SATInvoiceStatusPM GetSinglePM(string code)
+        {
+            return (from a in repository.context.SATInvoiceStatus
+                    where a.Code == code
+                    select new SATInvoiceStatusPM()
+                    {
+                        Code = a.Code,
+                        Name = a.Name,
+
+                    }).FirstOrDefault();
+        }
+
+
+
+
         public IQueryable<SATInvoiceStatusPM> GetSATInvoiceStatusPMs()
         {
             return (from a in repository.context.SATInvoiceStatus

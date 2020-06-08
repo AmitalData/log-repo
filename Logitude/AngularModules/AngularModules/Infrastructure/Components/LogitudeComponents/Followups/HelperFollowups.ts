@@ -33,7 +33,6 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     public Width: number = 350;
     public Height: number = 130;
     public QuotePM: QuotePM = null;
-    public ShipmentPM: ShipmentPM = null;
     public DataContext = this;
     public AddDataContext: AddDataContext;
     public EditDataContext: EditDataContext;
@@ -65,19 +64,36 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
         if (this.entityArgs) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    if (this.QuotePM) {
-                        this.QuotePM = this.entityArgs.EditComponent.EntityPM;
-                    }
-
-                    else {
-                        this.ShipmentPM = this.entityArgs.EditComponent.EntityPM;
-                    }
-
                     this.BuildItemsSource();
                 }
             });
         }
     }
+
+
+    RefreshEntity() {
+        if (this.entityArgs.EditComponent && this.entityArgs.EditComponent.EntityPM) {
+            if (this.QuotePM) {
+                this.QuotePM = this.entityArgs.EditComponent.EntityPM;
+            }
+
+            else {
+                this.ShipmentPM = this.entityArgs.EditComponent.EntityPM;
+            }
+        }
+    }
+
+
+    private shipmentPM: ShipmentPM = null;
+    get ShipmentPM() {
+        return this.shipmentPM;
+    }
+    set ShipmentPM(value: ShipmentPM) {
+        this.shipmentPM = value;
+    }
+
+
+
 
     ngOnInit() {
         if (this.QuotePM != null) {
@@ -307,6 +323,8 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     }
 
     BuildItemsSource() {
+        this.RefreshEntity();
+
         this.ItemsSource = [];
 
         if (this.QuotePM) {

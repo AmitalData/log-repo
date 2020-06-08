@@ -54,6 +54,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.ValueofGoodsCurrency = GetValueofGoodsCurrencyCodeById(shipmentDataView.ValueOfGoodsCurrencyId, shipmentDataView.Tenant);
             crossDockReleaseDataProvider.IncotermCode = shipmentDataView.IncotermCode;
             crossDockReleaseDataProvider.IncotermName = GetIncotermNameById(shipmentDataView.IncotermId, shipmentDataView.Tenant);
+            crossDockReleaseDataProvider.ConnectedShipmentTransportMode = shipmentDataView.TransportModeName;
+            crossDockReleaseDataProvider.Trailer = shipmentDataView.TrailerNumber;
         }
 
 

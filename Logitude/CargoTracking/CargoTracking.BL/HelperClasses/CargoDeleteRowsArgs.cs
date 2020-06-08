@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses
+namespace CargoTracking.CargoTracking.BL.HelperClasses
 {
     public class CargoDeleteRowsArgs
     {
@@ -12,6 +12,7 @@ namespace Logitude.ShipmentHeaders.Logitude.ShipmentHeaders.BL.HelperClasses
         public string KeyName { get; set; }
         public string ConnectionString { get; set; }
         public List<string> IdsList { get; set; }
+        public string SingleId { get; set; }
         public bool ReturnDeleteIdsAsString { get; set; }
     }
 }

@@ -88,7 +88,7 @@ namespace WarehouseDataService.Helper
                         isBuildStart = true;
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", true, sourceConnectionString);
                         mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString);
-                        mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
+                    //    mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", false, sourceConnectionString);
                         warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                     }
