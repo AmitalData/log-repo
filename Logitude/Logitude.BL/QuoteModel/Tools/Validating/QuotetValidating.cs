@@ -458,7 +458,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                     {
                         if (item.CostCurrencyId != freightLineCostCurrencyId)
                         {
-                            throw new ApplicationException("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+                            throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
                         }
                     }
                 }
