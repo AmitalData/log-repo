@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,7 +13,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefernatDataList';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
-import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
 @Component({
     
     templateUrl: './FieldTemplateComponent.html',
