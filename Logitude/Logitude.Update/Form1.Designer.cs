@@ -176,6 +176,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
             this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
@@ -194,7 +195,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
+            this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -403,6 +404,7 @@
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -531,6 +533,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -568,7 +571,8 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.conStrLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 608);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(751, 22);
@@ -1721,6 +1725,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // uploadMexicoCitiesBtn
+            // 
+            this.uploadMexicoCitiesBtn.Location = new System.Drawing.Point(10, 400);
+            this.uploadMexicoCitiesBtn.Name = "uploadMexicoCitiesBtn";
+            this.uploadMexicoCitiesBtn.Size = new System.Drawing.Size(182, 23);
+            this.uploadMexicoCitiesBtn.TabIndex = 98;
+            this.uploadMexicoCitiesBtn.Text = "Upload Mexico Cities";
+            this.uploadMexicoCitiesBtn.UseVisualStyleBackColor = true;
+            this.uploadMexicoCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
+            // 
             // button47
             // 
             this.button47.Location = new System.Drawing.Point(522, 278);
@@ -1896,15 +1910,10 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // uploadMexicoCitiesBtn
+            // conStrLabel
             // 
-            this.uploadMexicoCitiesBtn.Location = new System.Drawing.Point(10, 400);
-            this.uploadMexicoCitiesBtn.Name = "uploadMexicoCitiesBtn";
-            this.uploadMexicoCitiesBtn.Size = new System.Drawing.Size(182, 23);
-            this.uploadMexicoCitiesBtn.TabIndex = 98;
-            this.uploadMexicoCitiesBtn.Text = "Upload Mexico Cities";
-            this.uploadMexicoCitiesBtn.UseVisualStyleBackColor = true;
-            this.uploadMexicoCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
+            this.conStrLabel.Name = "conStrLabel";
+            this.conStrLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
@@ -2120,6 +2129,7 @@
         private System.Windows.Forms.Button button49;
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
         private System.Windows.Forms.Button uploadMexicoCitiesBtn;
+        private System.Windows.Forms.ToolStripStatusLabel conStrLabel;
     }
 }
 
