@@ -7,8 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-
-import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -17,7 +15,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class FilingInboxAttachmentPM {
+export class CardCurrenciesAccountingPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -37,38 +35,38 @@ export class FilingInboxAttachmentPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private fileName: string;
-    public get FileName() { return this.fileName; }
-    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
+    private cardId: string;
+    public get CardId() { return this.cardId; }
+    public set CardId(newValue: string) { if (this.cardId != newValue) { this.cardId = newValue; this.MarkAsDirty("CardId"); } }
        
 	 
-    private documentId: string;
-    public get DocumentId() { return this.documentId; }
-    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
        
 	 
-    private filingInboxId: string;
-    public get FilingInboxId() { return this.filingInboxId; }
-    public set FilingInboxId(newValue: string) { if (this.filingInboxId != newValue) { this.filingInboxId = newValue; this.MarkAsDirty("FilingInboxId"); } }
+    private receivableCreditAccount: string;
+    public get ReceivableCreditAccount() { return this.receivableCreditAccount; }
+    public set ReceivableCreditAccount(newValue: string) { if (this.receivableCreditAccount != newValue) { this.receivableCreditAccount = newValue; this.MarkAsDirty("ReceivableCreditAccount"); } }
        
 	 
-     
-	private attachLogs: FilingInboxAttachToolTip[];
-    get  AttachLogs() {
-        if (this.attachLogs == null) {
-            this.attachLogs = [];
-        }
+    private payableDebitAccount: string;
+    public get PayableDebitAccount() { return this.payableDebitAccount; }
+    public set PayableDebitAccount(newValue: string) { if (this.payableDebitAccount != newValue) { this.payableDebitAccount = newValue; this.MarkAsDirty("PayableDebitAccount"); } }
+       
+	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
+    private changeSetCode: string;
+    public get ChangeSetCode() { return this.changeSetCode; }
+    public set ChangeSetCode(newValue: string) { if (this.changeSetCode != newValue) { this.changeSetCode = newValue; this.MarkAsDirty("ChangeSetCode"); } }
+       
+	 
 
-        return this.attachLogs;
-    }
-    set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
-        if (this.attachLogs != newValue) {
-            this.attachLogs = newValue;
-        }
-    }
-    //public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
- 
-    public OldEntityPM: FilingInboxAttachmentPM;
+    public OldEntityPM: CardCurrenciesAccountingPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -76,11 +74,11 @@ export class FilingInboxAttachmentPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInboxAttachment");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CardCurrenciesAccounting");
            
         }
     }
-    private MyClone: FilingInboxAttachmentPM;
+    private MyClone: CardCurrenciesAccountingPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

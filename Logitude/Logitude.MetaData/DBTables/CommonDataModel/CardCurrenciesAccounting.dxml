@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="ChargeTypeAccountings"
+  Name="CardCurrenciesAccountings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,18 +19,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="VatTypeId"
+    Name="CardId"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="ChargeTypeId"
+    Name="CurrencyId"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="PayableDebitAccount"
@@ -45,28 +46,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="PayableDebitGLAcountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ReceivableCreditGLAccountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
-    ForeignKeyColumn="VatTypeId"
-    ReferencedTable="VatTypes"
+    ForeignKeyColumn="CardId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ChargeTypeId"
-    ReferencedTable="ChargesTypes"
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

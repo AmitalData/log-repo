@@ -1,162 +1,35 @@
--- Procedure Script From DeleteOldCommunicationLogs.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[DeleteOldCommunicationLogs]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[DeleteOldCommunicationLogs] END');
-EXEC('create procedure [dbo].[DeleteOldCommunicationLogs]
-as
-begin
-IF OBJECT_ID(''dbo.TempDeletedCommunicationLogs'') IS NOT NULL
-DROP TABLE TempDeletedCommunicationLogs
-SELECT * INTO TempDeletedCommunicationLogs
-FROM (SELECT top(1000) Id,DocumentId
-FROM CommunicationLogs
-WHERE CreateDate < GETDATE() - 120) AS t
-DELETE FROM CommunicationLogs WHERE Id IN (SELECT Id FROM TempDeletedCommunicationLogs)
-UPDATE Documents SET MarkForDelete = 1 WHERE Id IN (SELECT DocumentId FROM TempDeletedCommunicationLogs)
-end');
+-- Create New Table With Name CardCurrenciesAccountings
+CREATE TABLE [dbo].[CardCurrenciesAccountings](
+[Id] VARCHAR(15) NOT NULL,
+[Tenant] INT NOT NULL,
+[CardId] VARCHAR(15) NULL,
+[CurrencyId] VARCHAR(15) NULL,
+[PayableDebitAccount] VARCHAR(15) NULL,
+[ReceivableCreditAccount] VARCHAR(15) NULL,
+CONSTRAINT [PK_CardCurrenciesAccountings] PRIMARY KEY([Id])
+);
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7eafcebf-eac4-473f-8922-ba2eb173ad88', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CardCurrenciesAccountingsCREATE TABLE [dbo].[CardCurrenciesAccountings]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NOT NULL,[CardId] VARCHAR(15) NULL,[CurrencyId] VARCHAR(15) NULL,[PayableDebitAccount] VARCHAR(15) NULL,[ReceivableCreditAccount] VARCHAR(15) NULL,CONSTRAINT [PK_CardCurrenciesAccountings] PRIMARY KEY([Id]));');
 
 
--- General Script From 202006011347_FillQuoteClosingReasonTable.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-declare @Tenant as int
-declare @TenantString as varchar(50)
-declare @EntityId as varchar(15)
-declare @UserId as varchar(15)
-declare @UserEmail as varchar(150)
-BEGIN
-DECLARE TenantsCursor CURSOR READ_ONLY
-FOR
-SELECT Id
-FROM Tenants
-OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @TenantString = CONVERT(varchar(50), @Tenant)
-set @UserEmail = 'system@tenant'+ @TenantString + '.com'
-set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
-if (@UserId is not null)
-begin
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'EQ')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('EQ', 'Expensive Quote', 'EQ,Expensive Quote', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'GS')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('GS', 'Given directly to the Shipping Line', 'GS,Given directly to the Shipping Line', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'LC')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('LC', 'Lost to Competitor', 'LC,Lost to Competitor', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'LS')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('LS', 'Lack of Service in the Last Shipment', 'LS,Lack of Service in the Last Shipment', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'XQ')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('XQ', 'Expired Quote', 'XQ,Expired Quote', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'BM')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('BM', 'Benchmarking', 'BM,Benchmarking', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'LT')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('LT', 'Long Term Project', 'LT,Long Term Project', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-end
-FETCH NEXT FROM TenantsCursor INTO @Tenant
-END
-CLOSE TenantsCursor
-DEALLOCATE TenantsCursor
-END
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006011347_FillQuoteClosingReasonTable.sxml', GETDATE(), 'declare @Tenant as int
-declare @TenantString as varchar(50)
-declare @EntityId as varchar(15)
-declare @UserId as varchar(15)
-declare @UserEmail as varchar(150)
-BEGIN
-DECLARE TenantsCursor CURSOR READ_ONLY
-FOR
-SELECT Id
-FROM Tenants
-OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @TenantString = CONVERT(varchar(50), @Tenant)
-set @UserEmail = ''system@tenant''+ @TenantString + ''.com''
-set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
-if (@UserId is not null)
-begin
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''EQ'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''EQ'', ''Expensive Quote'', ''EQ,Expensive Quote'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''GS'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''GS'', ''Given directly to the Shipping Line'', ''GS,Given directly to the Shipping Line'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''LC'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''LC'', ''Lost to Competitor'', ''LC,Lost to Competitor'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''LS'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''LS'', ''Lack of Service in the Last Shipment'', ''LS,Lack of Service in the Last Shipment'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''XQ'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''XQ'', ''Expired Quote'', ''XQ,Expired Quote'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''BM'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''BM'', ''Benchmarking'', ''BM,Benchmarking'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''LT'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''LT'', ''Long Term Project'', ''LT,Long Term Project'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-end
-FETCH NEXT FROM TenantsCursor INTO @Tenant
-END
-CLOSE TenantsCursor
-DEALLOCATE TenantsCursor
-END', DATEDIFF(MS,@StartTime,@EndTime), 'b3800375557abb11d50a6e90fda81c7c', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+-- Add Foreign Key Constraint For Column CardId In Table CardCurrenciesAccountings As Reference To Column Id In Table Cards
+EXEC('ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Cards_CardId] FOREIGN KEY([CardId]) REFERENCES [dbo].[Cards]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c99af11a-6ae9-4470-9496-4750f802abd1', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CardId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CardId In Table CardCurrenciesAccountings As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Cards_CardId] FOREIGN KEY([CardId]) REFERENCES [dbo].[Cards]([Id])'');');
+
+-- Create Index On CardCurrenciesAccountings Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CardId] ON [dbo].[CardCurrenciesAccountings]([CardId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4854937a-4269-44b7-a18a-98ca9eb8749d', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CardId', 'Create Index', GETDATE(), '-- Create Index On CardCurrenciesAccountings TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CardId] ON [dbo].[CardCurrenciesAccountings]([CardId])'');');
+
+-- Add Foreign Key Constraint For Column CurrencyId In Table CardCurrenciesAccountings As Reference To Column Id In Table Currencies
+EXEC('ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Currencies_CurrencyId] FOREIGN KEY([CurrencyId]) REFERENCES [dbo].[Currencies]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d4ab79e9-455a-4a54-b7a1-724172930192', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CurrencyId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CurrencyId In Table CardCurrenciesAccountings As Reference To Column Id In Table CurrenciesEXEC(''ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Currencies_CurrencyId] FOREIGN KEY([CurrencyId]) REFERENCES [dbo].[Currencies]([Id])'');');
+
+-- Create Index On CardCurrenciesAccountings Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CurrencyId] ON [dbo].[CardCurrenciesAccountings]([CurrencyId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d35ffc53-d240-42b4-9634-8175ba76a18a', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CurrencyId', 'Create Index', GETDATE(), '-- Create Index On CardCurrenciesAccountings TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CurrencyId] ON [dbo].[CardCurrenciesAccountings]([CurrencyId])'');');
+
 

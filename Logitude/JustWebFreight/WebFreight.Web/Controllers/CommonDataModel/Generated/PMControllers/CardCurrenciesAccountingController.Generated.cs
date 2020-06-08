@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class CardsController : ApiController
+    public partial class CardCurrenciesAccountingsController : ApiController
     {
 	  
        
@@ -56,12 +56,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                CardQuery cardQuery = new CardQuery(authToken.Tenant);
-                CardPM cardPM = cardQuery.GetSinglePM(id, authToken.Tenant);
+                CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(authToken.Tenant);
+                CardCurrenciesAccountingPM cardCurrenciesAccountingPM = cardCurrenciesAccountingQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, cardPM);
+                return Request.CreateResponse(HttpStatusCode.OK, cardCurrenciesAccountingPM);
 			 
 			}
             catch (Exception ex)
@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(CardPM entityPM)
+        public HttpResponseMessage Post(CardCurrenciesAccountingPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -88,11 +88,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        CardService service = new CardService(MyContext, entityPM.Tenant);
+                        CardCurrenciesAccountingService service = new CardCurrenciesAccountingService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Card", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CardCurrenciesAccounting", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -120,7 +120,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(CardPM entityPM)
+        public HttpResponseMessage Put(CardCurrenciesAccountingPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -133,8 +133,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "Card" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "CardCurrenciesAccounting" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "CardCurrenciesAccountingPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -145,11 +145,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         }
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        CardService service = new CardService(MyContext, entityPM.Tenant);
-                        service.Update(entityPM, true);
+                        CardCurrenciesAccountingService service = new CardCurrenciesAccountingService(MyContext, entityPM.Tenant);
+ 
+                        service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Card", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CardCurrenciesAccounting", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
