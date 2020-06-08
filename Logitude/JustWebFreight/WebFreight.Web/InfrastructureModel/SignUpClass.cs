@@ -320,7 +320,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
                 // globalTenantRepository = new GlobalTenantRepository();
-                TariffSetting zeroTariffSetting;
+                TariffSetting zeroTariffSetting=null;
                 AccountingSetting zeroAccountingSettings;
                 SATInterfaceSetting tenantZeroSATInterfaceSetting;
                 CustomsInterfaceSetting zeroCustomsInterfaceSetting;
@@ -349,7 +349,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<OpportunityType> tenantZeroOpportunityTypes;
                 List<CustomsRequiredField> tenantZeroCustomsRequiredFields = null;
                 List<DocumentsMetaDataType> tenantZeroDocumentsMetaDataType = null;
-                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
+                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods=null;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
                 List<QuoteClosingReason> tenantZeroQuoteClosingReasons;
@@ -384,7 +384,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
                     ITariffModuleContext iTariffContext= TariffModuleContext.GetContext(0);
-                    zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
+                    if (setting.WorkEnvironment != "customs") zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
 
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
                     zeroCustomsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(0, 0);
@@ -399,7 +399,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroQuoteStages = quoteStageRepository.GetQuoteStagesForSignup(0).ToList();
                     tenantZeroOpportunityTypes = opportunityTypeRepository.GetAll(0).ToList();
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
-                    tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
                     tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
                     tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
 
@@ -410,7 +410,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                     //SLA 
                     tenantZeroBusinessHours = businessHourRepository.GetBusinessHours(0).ToList();
-                    tenantZeroSLAHeaders = slaHeaderRepository.GetAll(0).ToList();
+                    if (setting.WorkEnvironment != "customs") tenantZeroSLAHeaders = slaHeaderRepository.GetAll(0).ToList();
                     tenantZeroSLALines = slaLineRepository.GetAll(0).ToList();
                     tenantZeroWithholdingTaxDeductionType = withholdingTaxDeductionTypeRepository.GetAll(0).ToList();
                     tenantZeroSATInterfaceSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(0);
@@ -427,8 +427,8 @@ namespace WebFreight.Web.InfrastructureModel
                 tenant = CreateTenant(signUpInfo);
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
-                AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-                AddDefaultTariffProducts(tenant);
+                if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
+                if (setting.WorkEnvironment != "customs") AddDefaultTariffProducts(tenant);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -484,14 +484,13 @@ namespace WebFreight.Web.InfrastructureModel
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
                 AddDocumentsMetaDataTypes(tenant, documentsMetaDataTypeRepository, tenantZeroDocumentsMetaDataType);
-                AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
-
+                if (setting.WorkEnvironment != "customs")  AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
                 AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
-                AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
+                if (setting.WorkEnvironment != "customs") AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
                 //AddSLALines(tenant, slaLineRepository, tenantZeroSLALines);
                 AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
@@ -518,7 +517,7 @@ namespace WebFreight.Web.InfrastructureModel
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
 
-                AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
+                if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
                 AddReportFromTenantZero(tenant);
 
