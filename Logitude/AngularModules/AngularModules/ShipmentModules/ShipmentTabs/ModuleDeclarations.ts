@@ -5,7 +5,6 @@ import {OrdersTabComponent} from './Components/Orders/OrdersTabComponent';
 import {AddEditOrderPackageComponent} from './Components/Orders/AddEditOrderPackageComponent';
 import {PartnersTabComponent} from './Components/Partners/PartnersTabComponent';
 import {AddEditPartnerComponent} from './Components/Partners/AddEditPartnerComponent';
-import {AddEditAddressComponent} from './Components/Partners/AddEditAddressComponent';
 import {ShipmentsTabComponent} from './Components/Shipments/ShipmentsTabComponent';
 import {MasterTabComponent} from './Components/Master/MasterTabComponent';
 import {CustomsFileTabComponent} from './Components/CustomsFile/CustomsFileTabComponent';
@@ -43,7 +42,6 @@ export const Components =
         AddEditOrderPackageComponent,
         PartnersTabComponent,
         AddEditPartnerComponent,
-        AddEditAddressComponent,
         ReceivablesTabComponent,
         AddEditReceivableComponent,
         PayablesTabComponent,
@@ -71,7 +69,6 @@ export class ModuleDeclarations {
             case "AddEditOrderPackageComponent": { myResult = AddEditOrderPackageComponent; break; }
             case "PartnersTabComponent": { myResult = PartnersTabComponent; break; }
             case "AddEditPartnerComponent": { myResult = AddEditPartnerComponent; break; }
-            case "AddEditAddressComponent": { myResult = AddEditAddressComponent; break; }
             case "ShipmentsTabComponent": { myResult = ShipmentsTabComponent; break; }
             case "MasterTabComponent": { myResult = MasterTabComponent; break; }
             case "CustomsFileTabComponent": { myResult = CustomsFileTabComponent; break; }

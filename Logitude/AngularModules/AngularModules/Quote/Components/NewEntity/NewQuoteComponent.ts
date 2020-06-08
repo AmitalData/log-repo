@@ -1863,8 +1863,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId, CardId: myPartnerId };
-            logeWindow.Show("./Quote/Components/NewEntity/NewQuoteAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1918,7 +1918,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = this.ShipperId;
                     }
                 }
@@ -1933,7 +1933,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = this.ConsigneeId;
                     }
                 }
@@ -1947,8 +1947,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM, CardId: myPartnerId };
-            logeWindow.Show("./Quote/Components/NewEntity/NewQuoteAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

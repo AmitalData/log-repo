@@ -1,20 +1,45 @@
-﻿
+
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
     <tr>
         <td>
             <table>
-                <tr class="FormFieldRow" *ngIf="AddressTypeId == 'O'">
+
+                <!-- AddressTypeId -->
+                <tr class="FormFieldRow">
+                    <td style="width: 90px;">
+                        <LogLabel [ObjectFieldName]="'AddressTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 336px;">
+                        <LogLov [ObjectFieldName]="'AddressTypeId'"
+                                [SelectedValue]="DataContext.AddressTypeId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AddressType'"
+                                [DependencyFilter1Value]="AddressTypeDependencyProperty1"
+                                [DependencyFilter1IsList]="true"
+                                (SelectedItemChanged)="DataContext.AddressTypeList = $event">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Description -->
+                <tr class="FormFieldRow">
                     <td style="width: 90px;">
                         <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="width: 310px;">
+                    <td style="width: 336px;">
                         <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                     </td>
 
@@ -23,12 +48,13 @@
                     </td>
                 </tr>
 
+                <!-- Name -->
                 <tr class="FormFieldRow">
                     <td style="width: 90px;">
                         <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="width: 310px;">
+                    <td style="width: 336px;">
                         <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                     </td>
 
@@ -37,6 +63,7 @@
                     </td>
                 </tr>
 
+                <!-- Address1 -->
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -51,6 +78,7 @@
                     </td>
                 </tr>
 
+                <!-- Address2 -->
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -65,6 +93,7 @@
                     </td>
                 </tr>
 
+                <!-- ZipCode -->
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -91,6 +120,8 @@
                             <tr>
                                 <td>
                                     <table>
+
+                                        <!-- City -->
                                         <tr class="FormFieldRow">
                                             <td style="width: 90px;">
                                                 <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -108,13 +139,14 @@
                                                         </td>
 
                                                         <td>
-                                                            <span class="hyperlink" (click)="SelectCityCommand()">{{'Quote.S.NewQuote.SelectFields' | TextCodeTranslationPipe}}</span>
+                                                            <span class="hyperlink" (click)="SelectCityCommand()">{{'General.B.Select' | TextCodeTranslationPipe}}</span>
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
 
+                                        <!-- CountryId -->
                                         <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -141,6 +173,7 @@
                                             </td>
                                         </tr>
 
+                                        <!-- StateId -->
                                         <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -168,7 +201,8 @@
                                             </td>
                                         </tr>
 
-                                        <tr class="FormFieldRow" *ngIf="AddressTypeId == 'O'">
+                                        <!-- InActive -->
+                                        <tr class="FormFieldRow" *ngIf="AddressTypeId == 'O' && IsNewEntity == false">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -198,6 +232,8 @@
 
                                 <td style="width: 260px;">
                                     <table>
+
+                                        <!-- PhoneNumber -->
                                         <tr class="FormFieldRow">
                                             <td style="width: 80px;">
                                                 <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -208,6 +244,7 @@
                                             </td>
                                         </tr>
 
+                                        <!-- FaxNumber -->
                                         <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -218,6 +255,7 @@
                                             </td>
                                         </tr>
 
+                                        <!-- ATTN -->
                                         <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'ATTN'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -258,7 +296,7 @@
                     </td>
 
                     <td style="width: 1px;" *ngIf="AddressTypeId != 'M'">
-                        <span class="Label" style="padding-left: 5px">{{'Quote.S.NewQuote.IsLocalLanguage' | TextCodeTranslationPipe}}</span>
+                        <span class="Label" style="padding-left: 5px">Is Local Langugae</span>
                     </td>
 
                     <td>

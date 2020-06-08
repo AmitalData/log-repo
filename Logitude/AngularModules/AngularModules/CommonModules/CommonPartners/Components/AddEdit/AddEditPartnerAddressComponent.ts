@@ -1,89 +1,154 @@
-import {Component} from '@angular/core';
-import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
-import {AddressPMService} from '../../../../Common/Services/StandardPMs/AddressPMService';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {CitySelectionArgs} from '../../../../Common/Args';
-import {StateList} from '../../../../Common/EntityLists/StateList';
-import {CountryList} from '../../../../Common/EntityLists/CountryList';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { Component } from '@angular/core';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { AddressPM } from '../../../../Common/EntityPMs/AddressPM';
+import { AddressPMService } from '../../../../Common/Services/StandardPMs/AddressPMService';
+import { CitySelectionArgs } from '../../../../Common/Args';
+import { StateList } from '../../../../Common/EntityLists/StateList';
+import { CountryList } from '../../../../Common/EntityLists/CountryList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { AddressTypeList } from '../../../../Common/EntityLists/AddressTypeList';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
-    templateUrl: './AddEditAddressComponent.html',
+    templateUrl: './AddEditPartnerAddressComponent.html',
 })
 
-export class AddEditAddressComponent extends BaseComponent {
+export class AddEditPartnerAddressComponent extends BaseComponent {
     public EntityPM: AddressPM;
     public DataContext = this;
     public ObjectTableName: string = "Address";
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public IsNewEntity: boolean = false;
+    public IsCustomer: boolean = false;
+    public CardId: string = null;
     public PartnerTypeId: string = null;
-    private myService: AddressPMService;
-    private IsCustomer: boolean;
+    public AddressTypeDependencyProperty1: string = "O";
     private CurrentSession = SessionLocator.SelectedSession;
+    private entityPMService: AddressPMService;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
-        this.myService = new AddressPMService();
+        this.entityPMService = new AddressPMService();
     }
 
     SetWindowArgs(args: any) {
         var entityId = args['EntityId'];
         var entityPM = args['EntityPM'];
-        this.PartnerTypeId = args['PartnerTypeId'];
-        this.IsCustomer = args['IsCustomer'];
 
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.IsResourcesReady = true;
 
-            if (!AppTool.IsNullOrEmpty(entityId)) {
+            this.CurrentSession.StartBusyIndicatorLoading();
 
-                this.CurrentSession.StartBusyIndicatorLoading();
+            if (entityPM) {
+                this.IsNewEntity = true;
+                this.EntityPM = entityPM;
+                this.CardId = this.EntityPM.CardId;
+                this.AddressTypeDependencyProperty1 = "O";
+                this.LoadCard();
+            }
 
-                this.myService.get(entityId).subscribe((myResponse: ServiceResponse) => {
+            else if (entityId) {
+                this.IsNewEntity = false;
+
+                this.entityPMService.get(entityId).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
                         this.EntityPM = myResponse.Result;
+                        this.CardId = this.EntityPM.CardId;
+                        this.AddressTypeDependencyProperty1 = this.EntityPM.AddressTypeId;
+                        this.LoadCard();
                     }
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.SetUIProperties();
                 });
-            }
-
-            else if (entityPM != null) {                
-                this.IsNewEntity = true;
-                this.EntityPM = entityPM;
-
-                if (!this.EntityPM.InActive) {
-                    this.EntityPM.InActive = false;
-                }
-
-                this.SetUIProperties();
             }
         });
     }
+    LoadCard() {
+        var listService = new CardListService();
 
-    public SetUIProperties() {
+        listService.getSingle(this.CardId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+
+            else {
+                var list: CardList = myResponse.Result;
+                this.IsCustomer = list.IsCustomer;
+                this.PartnerTypeId = list.PartnerTypeId;
+
+                if (this.IsNewEntity) {
+                    if (this.AddressTypeId == "M" && list.MainAddressId) {
+                        this.AddressTypeId = "O";
+                    }
+
+                    else if (this.AddressTypeId == "B" && list.BillingAddressId) {
+                        this.AddressTypeId = "O";
+                    }
+
+                    else if (this.AddressTypeId == "P" && list.PickAddressId) {
+                        this.AddressTypeId = "O";
+                    }
+
+                    if (!list.BillingAddressId) {
+                        this.AddressTypeDependencyProperty1 += ",B";
+                    }
+
+                    if (!list.PickAddressId) {
+                        this.AddressTypeDependencyProperty1 += ",P";
+                    }
+                }
+            }
+
+            this.SetUIProperties();
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    SetUIProperties() {
+        this.SetUIProperties_PartnerType();
+        this.SetUIProperties_Description();
+
         this.SetUIProperties_State();
         this.SetUIProperties_TelFax();
     }
-    private SetUIProperties_State() {
+    SetUIProperties_PartnerType() {
+        var isEnabled = false;
+
+        if (this.IsNewEntity) {
+            isEnabled = true;
+        }
+
+        this.UIProperties.SetEnabled("AddressTypeId", this.ObjectTableName, isEnabled);
+    }
+    SetUIProperties_Description() {
+        var IsEditingEnabled = true;
+        var isDescriptionEnabled = false;
+
+        if (IsEditingEnabled) {
+            if (this.AddressTypeId == "O") {
+                isDescriptionEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, isDescriptionEnabled);
+    }
+    SetUIProperties_State() {
         this.SetUIProperties_StateEnabled();
         this.SetUIProperties_StateRequired();
     }
-    private SetUIProperties_StateEnabled() {
+    SetUIProperties_StateEnabled() {
         var isEnabled = false;
 
         if (this.Country != null) {
@@ -94,7 +159,7 @@ export class AddEditAddressComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("StateId", this.ObjectTableName, isEnabled);
     }
-    private SetUIProperties_StateRequired() {
+    SetUIProperties_StateRequired() {
         var isRequired = false;
 
         if (this.Country != null) {
@@ -107,7 +172,7 @@ export class AddEditAddressComponent extends BaseComponent {
 
         this.UIProperties.SetRequired("StateId", this.ObjectTableName, isRequired);
     }
-    private SetUIProperties_TelFax() {
+    SetUIProperties_TelFax() {
         var isTelRequired = false;
         var isFaxRequired = false;
 
@@ -143,6 +208,29 @@ export class AddEditAddressComponent extends BaseComponent {
 
         this.UIProperties.SetRequired("PhoneNumber", this.ObjectTableName, isTelRequired);
         this.UIProperties.SetRequired("FaxNumber", this.ObjectTableName, isFaxRequired);
+    }
+
+    private addressTypeList: AddressTypeList = null;
+    get AddressTypeList() { return this.addressTypeList; }
+    set AddressTypeList(value: AddressTypeList) {
+        if (this.addressTypeList != value) {
+            this.addressTypeList = value;
+
+            this.Description = null;
+
+            if (value) {
+                this.Description = value.Name;
+            }
+        }
+    }
+
+    get AddressTypeId() { return this.EntityPM.AddressTypeId; }
+    set AddressTypeId(newValue: string) {
+        if (this.EntityPM.AddressTypeId != newValue) {
+            this.EntityPM.AddressTypeId = newValue;
+
+            this.SetUIProperties_Description();
+        }
     }
 
     get Description() { return this.EntityPM.Description; }
@@ -322,8 +410,6 @@ export class AddEditAddressComponent extends BaseComponent {
         }
     }
 
-    get AddressTypeId() { return this.EntityPM.AddressTypeId; }
-
     private OnCountryChanged(list: CountryList) {
         if (list == null) {
             this.CountryCode = null;
@@ -373,11 +459,9 @@ export class AddEditAddressComponent extends BaseComponent {
             }
         });
     }
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
@@ -419,10 +503,7 @@ export class AddEditAddressComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.IsNewEntity) {
-                this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-                    this.CurrentSession.StopBusyIndicator();
-
+                this.entityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -430,14 +511,13 @@ export class AddEditAddressComponent extends BaseComponent {
                     else {
                         this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
+
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-
-                    this.CurrentSession.StopBusyIndicator();
-
+                this.entityPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -445,6 +525,8 @@ export class AddEditAddressComponent extends BaseComponent {
                     else {
                         this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
+
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         }

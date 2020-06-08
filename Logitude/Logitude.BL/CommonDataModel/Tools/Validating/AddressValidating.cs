@@ -7,6 +7,7 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -14,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(AddressPM entityPM)
         {
+            ValidateAddressType(entityPM);
+
             CountryRepository countryRepository = new CountryRepository(entityPM.Tenant);
             Country myCountry = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
 
@@ -25,11 +28,6 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                     {
                         throw new ApplicationException("State is Required");
                     }
-                }
-
-                if (!string.IsNullOrEmpty(entityPM.CardId) && entityPM.AddressTypeId == "M" )
-                {
-                    ValidateIfCardHaveMoreThanOneMainAddress(entityPM);
                 }
 
                 if (myCountry.HasCitiesList && !entityPM.IsHybrid)
@@ -50,17 +48,51 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                     }
                 }
             }
-
-
         }
 
-        private static void ValidateIfCardHaveMoreThanOneMainAddress(AddressPM entityPM)
+        private static void ValidateAddressType(AddressPM entityPM)
         {
-            AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-            bool isHaveMainAddress = addressRepository.CheckIfCardHaveMainAddressByAddressIdAndCardId(entityPM.Id, entityPM.CardId, entityPM.Tenant);
-            if (isHaveMainAddress)
+            if (entityPM.CardId != null)
             {
-                throw new ApplicationException("Partner must have one main address");
+                switch (entityPM.AddressTypeId)
+                {
+                    case "M":
+                    case "B":
+                    case "P":
+                        {
+                            ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
+                            bool isExists = (from d in context.Addresses where d.CardId == entityPM.CardId && d.AddressTypeId == entityPM.AddressTypeId select d).Any();
+                            if (isExists)
+                            {
+                                string msg = "";
+
+                                switch (entityPM.AddressTypeId)
+                                {
+                                    case "M":
+                                        {
+                                            msg = "Partner must have one main address";
+                                            break;
+                                        }
+
+                                    case "B":
+                                        {
+                                            msg = "Partner must have one billing address";
+                                            break;
+                                        }
+
+                                    case "P":
+                                        {
+                                            msg = "Partner must have one pickup delivery address";
+                                            break;
+                                        }
+                                }
+
+                                throw new ApplicationException(msg);
+                            }
+
+                            break;
+                        }
+                }
             }
         }
 

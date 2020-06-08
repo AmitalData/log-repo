@@ -385,8 +385,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
-            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -440,8 +440,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
-            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

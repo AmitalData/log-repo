@@ -307,8 +307,8 @@ export class InlandDomesticRoutingsComponent extends BaseComponent implements On
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId, CardId: myPartnerId };
-            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -363,8 +363,8 @@ export class InlandDomesticRoutingsComponent extends BaseComponent implements On
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM, CardId: myPartnerId };
-            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

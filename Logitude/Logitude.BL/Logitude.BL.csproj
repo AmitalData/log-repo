@@ -353,6 +353,7 @@
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AddressTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
