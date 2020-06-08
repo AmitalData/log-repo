@@ -1445,12 +1445,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     }
 
-
+   // BIReportTranslate
     public ComputeDisplayName(DWObjectField: any) {
         var displayname: string = DWObjectField.DisplayName;
         if (!DWObjectField.IsCustom) {
-            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode) : "";
-            var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) : "";
+            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
+            var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
 
             displayname = (translateText ? translateText : DWObjectField.Name);
 
@@ -1542,8 +1542,15 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public set Name(newValue: string) { this.name = newValue; }
 
     private displayname: string;
-    public get DisplayName() { return this.displayname; }
-    public set DisplayName(newValue: string) { this.displayname = newValue; }
+    public get DisplayName() {
+
+        return this.displayname;
+
+    }
+    public set DisplayName(newValue: string) {
+
+        this.displayname = newValue;
+    }
 
     private dimensionTableDisplayName: string;
     public get DimensionTableDisplayName() { return this.dimensionTableDisplayName; }
@@ -1916,19 +1923,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;
                                 }
+
                                 var dwObjectFieldName: string = DWObjectField.DisplayName;
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
-                                    view.DisplayName = '[' + (dwObjectFieldName.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
-                                    view.DimensionTableDisplayName = DWObjectField.Name.replace('[', '').replace(']', '');
+                                    view.DisplayName = (dwObjectFieldName + ' ' + view.DisplayName);
+                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
                                 }
                                 else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
                                     view.DisplayName = dwObjectFieldName;
-                                    view.DimensionTableDisplayName = DWObjectField.Name;
+                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
                                 }
                                 else {
-                                    view.DisplayName = '[' + (dwObjectFieldName + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
-                                    view.DimensionTableDisplayName = DWObjectField.Name;
+                                    view.DisplayName = (dwObjectFieldName + ' ' + view.DisplayName);
+                                    view.DimensionTableDisplayName = DWObjectField.DisplayName;
 
                                 }
                                 view.ParentCode = DWObjectField.Code;
