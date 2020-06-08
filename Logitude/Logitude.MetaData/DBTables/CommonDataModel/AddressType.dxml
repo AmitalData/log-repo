@@ -9,7 +9,7 @@
     Name="Id"
     OldNames="Code"
     Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
