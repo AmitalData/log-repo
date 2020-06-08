@@ -43,7 +43,7 @@ namespace Logitude.BL.DataContracts
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-           
+
         }
         public static void UpdateShipmentOperationalDate(string shipmentId, int tenant)
         {
@@ -63,7 +63,7 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
-        
+
         public static void DeleteQBOTranslations(int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -136,29 +136,29 @@ namespace Logitude.BL.DataContracts
         }
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
-             try
+            try
             {
-               
-                    var tenantQuery = new TenantQuery(tenant);
-                    var tenantPM = tenantQuery.GetSinglePM(tenant);
-                    var ShipmentQuery = new ShipmentQuery(tenant);
-                    var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
-                    if (entityPM != null && tenantPM != null)
-                    {
-                        if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
-                        {
-                            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                            CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                            if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
-                            {
-                                var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                                IQueueService queueservice = new DbQueueService();
-                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
-                            }
-                        }  
-                    } 
+                var tenantQuery = new TenantQuery(tenant);
+                var tenantPM = tenantQuery.GetSinglePM(tenant);
+                var ShipmentQuery = new ShipmentQuery(tenant);
+                var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
+                if (entityPM != null && tenantPM != null)
+                {
+                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
+                    {
+                        CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
+
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                        {
+                            var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
+                            IQueueService queueservice = new DbQueueService();
+                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -367,7 +367,7 @@ namespace Logitude.BL.DataContracts
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
@@ -375,34 +375,26 @@ namespace Logitude.BL.DataContracts
 
         public static void RunEreaseTenantData(int tenant, string procedureName)
         {
-            try
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                string strConnString = GetConnection(tenant);
+                using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string strConnString = GetConnection(tenant);
-                    using (SqlConnection cn = new SqlConnection(strConnString))
-                    {
-                        SqlCommand cmd = new SqlCommand(procedureName, cn);
-                        cmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand cmd = new SqlCommand(procedureName, cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                        SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
-                        param1.Direction = ParameterDirection.Input;
-                        param1.Value = tenant;
-                        cmd.Parameters.Add(param1);
-                        cmd.CommandTimeout = 6000;
+                    SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    param1.Direction = ParameterDirection.Input;
+                    param1.Value = tenant;
+                    cmd.Parameters.Add(param1);
+                    cmd.CommandTimeout = 6000;
 
-                        cn.Open();
-                        cmd.ExecuteNonQuery();
-                        cn.Close();
-                    }
-
-                    scope.Complete();
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
                 }
-            }
 
-            catch (Exception ex)
-            {
-                
+                scope.Complete();
             }
         }
     }
