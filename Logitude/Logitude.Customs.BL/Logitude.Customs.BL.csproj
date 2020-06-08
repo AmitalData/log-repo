@@ -1983,7 +1983,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0016_CurrencyTypeTenant.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0034_ReferantNewFileDefault.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0033_RefIsClosedForFollowUp.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0032_ReferantNewFile.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0037_ReferantNewFile.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0031_AddControllerUserId.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0030_ReferantAddOn.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0018_SealBAndAddOn.cs" />
@@ -1997,12 +1997,15 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0029_RefernatChanges.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0028_AvailabilityDate.cs" />
 
+
     <Compile Include="PatchDistribution\Patches\P19R03_0026_ExceptionReason.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0025_ReferantData.cs" />
 
     
-    <Compile Include="PatchDistribution\Patches\P19R03_0034_DBMIGRATIONSETTINGS.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0033_Tenant0.cs" />
+    
+    <Compile Include="PatchDistribution\Patches\P19R03_0036_DBMIGRATIONSETTINGS.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0035_Tenant0.cs" />
+
 
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
