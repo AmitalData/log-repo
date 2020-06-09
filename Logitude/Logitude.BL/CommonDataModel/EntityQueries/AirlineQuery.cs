@@ -332,6 +332,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             airline.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(airline.Id, airline.Tenant);
 
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            airline.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(airline.Id, airline.Tenant).ToList();
+
+
             if (airline != null)
             {
                 airline.IsExternal = false;

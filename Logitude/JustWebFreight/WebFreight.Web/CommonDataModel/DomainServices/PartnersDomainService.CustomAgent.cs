@@ -280,9 +280,32 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            this.UpdateCardCurrenciesAccountings_CustomAgent(currentEntity);
+
             CustomAgentService service = new CustomAgentService(objectContext, currentEntity.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_CustomAgent);
             service.Update(currentEntity);
+        }
+
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_CustomAgent;
+        private void UpdateCardCurrenciesAccountings_CustomAgent(CustomAgentPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_CustomAgent = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_CustomAgent)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
         }
 
         public void UpdateCustomAgentList(CustomAgentList currentEntity)

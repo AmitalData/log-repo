@@ -243,7 +243,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.Create(entityPm);
         }
 
-        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Agent;
         public void UpdateAgent(AgentPM currentEntity)
         {
             SecurityUtility.AuthenticationOnTenant(currentEntity.Tenant);
@@ -276,6 +275,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Agent);
             service.Update(currentEntity);
         }
+
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Agent;
 
         private void UpdateCardCurrenciesAccountings_Agent(AgentPM currentEntity)
         {

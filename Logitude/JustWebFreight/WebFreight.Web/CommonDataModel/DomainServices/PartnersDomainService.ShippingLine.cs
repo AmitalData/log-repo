@@ -323,6 +323,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            this.UpdateCardCurrenciesAccountings_ShippingLine(currentShippingLine);
+
+
             CardPM c = cardQuery.GetSinglePM(currentShippingLine.Id, currentShippingLine.Tenant);
 
             bool exist = (from a in shippingLineRepository.GetShippinngLines(currentShippingLine.Tenant)
@@ -333,7 +336,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (!exist)
             {
                 ShippingLineService service = new ShippingLineService(objectContext, currentShippingLine.Tenant);
-                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_ShippingLine);
                 service.Update(currentShippingLine);
             }
 
@@ -345,6 +348,26 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
         }
 
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_ShippingLine;
+        private void UpdateCardCurrenciesAccountings_ShippingLine(ShippingLinePM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_ShippingLine = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_ShippingLine)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+        }
         public void DeleteShippingLine(ShippingLine shippingLine)
         {
             if (objectContext == null)

@@ -63,6 +63,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
         }
 
@@ -327,38 +328,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateCardCurrenciesAccountingCollection()
-        {
-             if (cardCurrenciesAccountingChangeSet != null)
-            {
-                foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateCardCurrenciesAccounting(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateCardCurrenciesAccounting(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteCardCurrenciesAccounting(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-        }
-
+      
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -397,6 +367,37 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void UpdateCardCurrenciesAccountingCollection()
+        {
+            if (cardCurrenciesAccountingChangeSet != null)
+            {
+                foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
 
         private void CreateCardCurrenciesAccounting(CardCurrenciesAccountingPM itemPM)
         {

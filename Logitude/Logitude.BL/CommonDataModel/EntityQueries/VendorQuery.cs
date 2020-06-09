@@ -87,6 +87,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             vendor.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(vendor.Id, vendor.Tenant);
 
+
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            vendor.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(vendor.Id, vendor.Tenant).ToList();
+
             if (vendor != null)
             {
                 vendor.IsExternal = false;
@@ -160,6 +165,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             vendor.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(vendor.Id, vendor.Tenant);
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            vendor.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(vendor.Id, vendor.Tenant).ToList();
+
 
             if (vendor != null)
             {
@@ -234,7 +243,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             vendor.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(vendor.Id, vendor.Tenant);
-            
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            vendor.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(vendor.Id, vendor.Tenant).ToList();
+
+
             if (vendor != null)
             {
                 vendor.IsExternal = false;
@@ -474,6 +487,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             vendor.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(vendor.Id, vendor.Tenant);
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            vendor.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(vendor.Id, vendor.Tenant).ToList();
+
 
             if (vendor != null)
             {

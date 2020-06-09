@@ -318,7 +318,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             UpdateCardCurrenciesAccountings_Airline(currentAirline);
             AirlineService service = new AirlineService(objectContext, currentAirline.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Airline);
             service.Update(currentAirline);
         }
         List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Airline;

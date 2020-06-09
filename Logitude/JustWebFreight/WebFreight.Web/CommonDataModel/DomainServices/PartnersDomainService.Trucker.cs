@@ -314,6 +314,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            this.UpdateCardCurrenciesAccountings_Trucker(currentTrucker);
 
             CardPM c = cardQuery.GetSinglePM(currentTrucker.Id, currentTrucker.Tenant);
 
@@ -325,7 +326,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
 
                 TruckerService service = new TruckerService(objectContext, currentTrucker.Tenant);
-                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Trucker);
                 service.Update(currentTrucker);
             }
 
@@ -336,7 +337,27 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 throw new Exception(msg);
             }
         }
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Trucker;
 
+        private void UpdateCardCurrenciesAccountings_Trucker(TruckerPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_Agent = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Agent)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+        }
         public void DeleteTrucker(TruckerPM trucker)
         {
             if (objectContext == null)
