@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class InternationalSitesController : ApiController
+    public partial class CustomerRoleTypesController : ApiController
     {
 	  
        
@@ -59,16 +59,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.InternationalSite", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomerRoleType", "READ", authToken.Tenant);
 	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                InternationalSiteQueryService internationalSiteQuery = new InternationalSiteQueryService(MyContext);
-				internationalSiteQuery.InitializeSettings();
-                InternationalSitePM internationalSitePM = internationalSiteQuery.GetSingle(code,true,false);
+                CustomerRoleTypeQueryService customerRoleTypeQuery = new CustomerRoleTypeQueryService(MyContext);
+				customerRoleTypeQuery.InitializeSettings();
+                CustomerRoleTypePM customerRoleTypePM = customerRoleTypeQuery.GetSingle(code,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, internationalSitePM);
+                return Request.CreateResponse(HttpStatusCode.OK, customerRoleTypePM);
 			 }
             catch (Exception ex)
             {

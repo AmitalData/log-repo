@@ -32,7 +32,7 @@
   InActive="false"
   IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
@@ -593,6 +593,7 @@
   <Query
     Code="&quot;InternationalSite&quot;"
     TextCode="&quot;InternationalSiteQuery&quot;"
+    LocalTextCode="&quot;אתר בנלאומי&quot;"
     QueryGroupCode="&quot;7902&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.InternationalSite&quot;"

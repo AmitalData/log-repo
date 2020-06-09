@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InternationalSiteUpdateClass
    {  		
-		public const string HashString = "917398070864e91605553abc2be18316";
+		public const string HashString = "7eee7a847c3804e2fa5dc19ef3e766a4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -598,7 +598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode InternationalSiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InternationalSite.Q.InternationalSite", DefaultText = @"InternationalSiteQuery",LocalDefaultText = null, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode InternationalSiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InternationalSite.Q.InternationalSite", DefaultText = @"InternationalSiteQuery",LocalDefaultText = "אתר בנלאומי", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature InternationalSiteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Q.InternationalSite", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.InternationalSite", NameTextCodeDefaultText = "InternationalSite", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InternationalSiteObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
