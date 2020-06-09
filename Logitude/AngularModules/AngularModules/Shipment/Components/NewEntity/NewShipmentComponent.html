@@ -108,8 +108,8 @@
                                         <div style="margin: 10px;">
                                             <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.DirectionId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
-                                                <div class="RadioButton" *ngFor="let item of DirectionsList">
-                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" [disabled]="!IsDirectionListEnabled" />
+                                                <div class="RadioButton" *ngFor="let item of DirectionsList"  [attr.id]="'DirectionRadio_Div_' + SessionIndex + item.Code" >
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code"  [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" [disabled]="!IsDirectionListEnabled" />
                                                     <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
                                                         {{item.Name}}
@@ -122,7 +122,7 @@
                                         <div style="margin: 10px;">
                                             <div style="font-size: 13px; color: #6E7172">{{'Shipment.F.TransportModeId.Short' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
-                                                <div class="RadioButton" *ngFor="let item of TransportModesList">
+                                                <div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
                                                     <input [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" [disabled]="!IsTransportModesListEnabled" />
                                                     <label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
@@ -136,7 +136,7 @@
                                         <div style="margin: 10px;" *ngIf="DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')">
                                             <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentTypeId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
-                                                <div class="RadioButton" *ngFor="let item of ShipmentTypesList">
+                                                <div class="RadioButton" *ngFor="let item of ShipmentTypesList"  [attr.id]="'ShipmentTypeRadio_Div_' + SessionIndex + item.Code" >
                                                     <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" [disabled]="!IsShipmentTypesListEnabled" />
                                                     <label [attr.for]="'ShipmentTypeRadio_' + SessionIndex + item.Code" style="text-indent: 45px; font-size: 12px" [ngStyle]="{color: ShipmentTypeId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.SRC" />
