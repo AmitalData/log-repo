@@ -8718,7 +8718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature ARInvoiceFeature_DatesFieldEnabledWhileCrediting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DatesFieldEnabledWhileCrediting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.DatesFieldEnabledWhileCrediting", NameTextCodeDefaultText = @"Enable dates while crediting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
-		   Feature ARInvoiceFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
+		   //Feature ARInvoiceFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
    
 	    

@@ -70,6 +70,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
 	
+            modelBuilder.Configurations.Add(new BIFoldersPermissionMap());
+	
             modelBuilder.Configurations.Add(new BIReportMap());
 	
             modelBuilder.Configurations.Add(new BIReportFolderMap());
@@ -385,6 +387,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIFoldersPermission> BIFoldersPermissions 
 	 {
 	      get; set;
 	 
