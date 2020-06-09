@@ -31,7 +31,6 @@ namespace Logitude.Accounting.BL.CoreBL
         private FullAccountingSettingPM _FullAccountingSettingPM;
         private IAccountingContext accountingContext;
         public  FlatFileLoadResult MyFlatFileLoadResult = new FlatFileLoadResult();
-        private IQueryable<CardGLAccountDataView> _AllVendorGLAccountCards;
         private ContactRepository _contactRep;
         private string _resolveLoggingUserId;
         private Contact _contact;
@@ -76,7 +75,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                 TaxReportQueryService taxReportQueryService = new TaxReportQueryService(MyContext);
-                taxReportQueryService.GetComposition(new TaxReportKeys() { Id = taxReportId }, MyTaxReportPM);
+                taxReportQueryService.GetSingle(taxReportId, true, false);
                 if (MyTaxReportPM == null)
                 {
                     string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotFound", 0, useLocal);
