@@ -930,6 +930,8 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="FileNotFound.aspx.cs">

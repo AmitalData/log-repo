@@ -472,3 +472,9 @@ export class GlobalDomainService {
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 }
+
+export class UploadFileArgs {
+    Tenant: number;
+    FileData: string;    
+    FileName: string;
+}
