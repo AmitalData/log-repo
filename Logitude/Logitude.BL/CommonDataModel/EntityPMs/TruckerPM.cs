@@ -293,5 +293,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 }
             }
         }
+
+        public bool AccountingVATSplit { get; set; }
     }
 }

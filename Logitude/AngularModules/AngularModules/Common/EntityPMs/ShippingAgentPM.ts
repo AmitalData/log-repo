@@ -410,7 +410,12 @@ export class ShippingAgentPM {
         }
     }
 	    //public CardCurrenciesAccountings: Array<CardCurrenciesAccountingPMPM>= [];
- 
+     private accountingVATSplit: boolean;
+    public get AccountingVATSplit() { return this.accountingVATSplit; }
+    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
+       
+	 
+
     public OldEntityPM: ShippingAgentPM;
 		
     public IsDirty: boolean;
