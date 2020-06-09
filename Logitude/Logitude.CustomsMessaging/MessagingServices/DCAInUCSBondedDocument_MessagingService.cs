@@ -15,6 +15,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -281,6 +282,26 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     return;
                 }
+                var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
+                var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
+                if (ENDOC == null)
+                {
+                    LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsMetaDataType", false, "SendBondedCustomDocument", stopLogAt);
+                    Debug.WriteLine("_DocumentsFilingPM == null");
+                    return;
+
+                }
+                var myDocumentsFilingMetaDataValue = _DocumentsFilingPM.DocumentsFilingMetaDataValues
+                    .FirstOrDefault(r => r.DocumentsMetaDataTypeCode == "ENDOC" || r.DocumentsMetaDataTypeId == ENDOC.Id);
+                if (myDocumentsFilingMetaDataValue == null)
+                {
+                    LogitudeSettings.HandleLogMe("ENDOC not exist in DocumentsFilingMetaDataValues", false, "SendBondedCustomDocument", stopLogAt);
+                    Debug.WriteLine("ENDOC not exist in DocumentsFilingMetaDataValues");
+                    return;
+
+                }
+
+                var myDocumentsFilingMetaDataValueReferenceAsDocType = myDocumentsFilingMetaDataValue.MetaDataValue;// <MetaDataValue>380</MetaDataValue>
 
                 CustomsDocumentPM customsDocumentPM;
                 if (!IscustomsDocumentSent(stopLogAt, out customsDocumentPM))
@@ -288,7 +309,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
                 DocumentTypeCustomsDataPM myDocumentTypeCustomsData;
-                if (!HaveTransDocumentTypeCode(stopLogAt, out myDocumentTypeCustomsData))
+                if (!HaveTransDocumentTypeCode(myDocumentsFilingMetaDataValueReferenceAsDocType,stopLogAt))
                 {
                     return;
                 }
@@ -305,7 +326,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     (new Send2715Bonded()).Send(
                         _DocumentsFilingPM.Tenant,
                         _DocumentsFilingPM.Id, customsDocumentPM,
-                        myDocumentTypeCustomsData.CustomsDoucumentTypeCode);
+                        myDocumentsFilingMetaDataValueReferenceAsDocType);
                 }
                 else
                 {
@@ -320,7 +341,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             _DocumentsFilingPM.Tenant, 
                             loggingUserId,
                             _DocumentsFilingPM,
-                            myDocumentTypeCustomsData.CustomsDoucumentTypeCode);
+                            myDocumentsFilingMetaDataValueReferenceAsDocType);
                         logData = LogMessagingUtil.Instance.ToString();
                         LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
@@ -342,18 +363,34 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
        
-        private bool HaveTransDocumentTypeCode(DateTime stopLogAt, out DocumentTypeCustomsDataPM myDocumentTypeCustomsData)
+        private bool HaveTransDocumentTypeCode(string myDocumentsFilingMetaDataValueReferenceAsDocType ,DateTime stopLogAt)
         {
-            var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-            myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._DocumentsFilingPM.DocumentTypeCode, true, true);
-            if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
+
+                var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingle(myDocumentsFilingMetaDataValueReferenceAsDocType, true, true);
+            if (myCustomDocumentTypePM == null)
             {
-
-
-                LogitudeSettings.HandleLogMe("HaveTransDocumentTypeCode():DocumentTypeCustomsData  " + this._DocumentsFilingPM.DocumentTypeCode + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+                LogitudeSettings.HandleLogMe("myDocumentsFilingMetaDataValueReferenceAsDocType " + myDocumentsFilingMetaDataValueReferenceAsDocType + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+                //return;
                 return false;
+
             }
-            return true;
+            else
+            {
+                
+                return true;
+            }
+            
+            //var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+            //CustomsDoucumentTypeCode = myDocumentTypeCustomsDataQueryService.GetSingle(this._DocumentsFilingPM.DocumentTypeCode, true, true);
+            //if (CustomsDoucumentTypeCode == null || String.IsNullOrWhiteSpace(CustomsDoucumentTypeCode.CustomsDoucumentTypeCode))
+            //{
+
+
+            //    LogitudeSettings.HandleLogMe("HaveTransDocumentTypeCode():DocumentTypeCustomsData  " + this._DocumentsFilingPM.DocumentTypeCode + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+            //    return false;
+            //}
+            //return true;
         }
 
         private bool IscustomsDocumentSent(DateTime stopLogAt, out CustomsDocumentPM customsDocumentPM)
