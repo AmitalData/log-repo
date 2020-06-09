@@ -174,12 +174,12 @@
                                                         <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="GatepassRequestMethod()" [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
                                                         <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
+                                                        <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                         <button *ngIf="isAllowAccounting" style="text-align:right" (click)="IsReadyForInvoiceClick()" [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" /></button>
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==false" (click)="CancelFlight()">{{'Customs.CourierMaster.O.CancelFlight' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
                                                       
-                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצם לםקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
+                                                        <button style="text-align:right" (click)="Export2Excel()" [disabled]="IsDisplayOnly">{{'יצא לאקסל' }}<img class="CenterCenter" title="Export To Excel" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/excelicon.png" /></button>
                                                     </div>
 
                                                 </div>
@@ -192,7 +192,7 @@
                                                     <tr>
                                                         <!--<td style="width: 48px; font-weight:bold; font-size:16px; color: black;">{{'Customs.CourierMaster.O.TotalFilter' | TextCodeTranslationPipe }}</td>-->
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">{{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
-                                                        <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתםימים לחיתוך'}}</td>
+                                                        <td *ngIf="IsFiltered || SearchFilter != null" style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
 
