@@ -1727,7 +1727,7 @@
 
             }
 
-            document.location.href = angularUrl;
+            document.location.href = document.location.href.replace("login.aspx", "") + angularUrl;
 
             $("#loginBusyindicator").hide();
           
