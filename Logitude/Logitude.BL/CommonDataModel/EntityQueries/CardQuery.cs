@@ -62,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  LocalName = card.LocalName,
                                                  ReceivablesAccountingCard = card.ReceivablesAccountingCard,
                                                  PayablesAccountingCard = card.PayablesAccountingCard,
+                                                 AccountingVATSplit = card.AccountingVATSplit,
                                                  InActive = card.InActive,
                                                  Notes = card.Notes,
                                                  Id = card.Id,
@@ -158,6 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   select new CardPM()
                                   {
                                       ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                      AccountingVATSplit = a.AccountingVATSplit,
                                       PayablesAccountingCard = a.PayablesAccountingCard,
                                       EnglishName = a.EnglishName,
                                       Id = a.Id,
@@ -256,6 +258,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               select new CardPM()
                               {
                                   ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                  AccountingVATSplit = a.AccountingVATSplit,
                                   PayablesAccountingCard = a.PayablesAccountingCard,
                                   EnglishName = a.EnglishName,
                                   Id = a.Id,
@@ -417,6 +420,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -484,6 +488,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -571,6 +576,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       select new CardPM()
                                       {
                                           ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                          AccountingVATSplit = a.AccountingVATSplit,
                                           PayablesAccountingCard = a.PayablesAccountingCard,
                                           EnglishName = a.EnglishName,
                                           Id = a.Id,
@@ -655,6 +661,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   select new CardPM()
                                   {
                                       ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                      AccountingVATSplit = a.AccountingVATSplit,
                                       PayablesAccountingCard = a.PayablesAccountingCard,
                                       EnglishName = a.EnglishName,
                                       Id = a.Id,
@@ -729,6 +736,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               select new CardPM()
                               {
                                   ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                  AccountingVATSplit = a.AccountingVATSplit,
                                   PayablesAccountingCard = a.PayablesAccountingCard,
                                   EnglishName = a.EnglishName,
                                   Id = a.Id,
@@ -815,6 +823,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnglishName = entityPOCO.EnglishName,
                     LocalName = entityPOCO.LocalName,
                     ReceivablesAccountingCard = entityPOCO.ReceivablesAccountingCard,
+                    AccountingVATSplit = entityPOCO.AccountingVATSplit,
                     PayablesAccountingCard = entityPOCO.PayablesAccountingCard,
                     InActive = entityPOCO.InActive,
                     Notes = entityPOCO.Notes,
@@ -1023,6 +1032,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EnglishName = card.EnglishName,
                                                 LocalName = card.LocalName,
                                                 ReceivablesAccountingCard = card.ReceivablesAccountingCard,
+                                                AccountingVATSplit = card.AccountingVATSplit,
                                                 PayablesAccountingCard = card.PayablesAccountingCard,
                                                 InActive = card.InActive,
                                                 Notes = card.Notes,
@@ -1101,6 +1111,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -1231,6 +1242,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnglishName = newTenantCard.EnglishName,
                     LocalName = newTenantCard.LocalName,
                     ReceivablesAccountingCard = newTenantCard.ReceivablesAccountingCard,
+                    AccountingVATSplit = newTenantCard.AccountingVATSplit,
                     PayablesAccountingCard = newTenantCard.PayablesAccountingCard,
                     InActive = newTenantCard.InActive,
                     Notes = newTenantCard.Notes,
@@ -1825,6 +1837,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 EnglishName = newTenantCard.EnglishName,
                 LocalName = newTenantCard.LocalName,
                 ReceivablesAccountingCard = newTenantCard.ReceivablesAccountingCard,
+                AccountingVATSplit = newTenantCard.AccountingVATSplit,
                 PayablesAccountingCard = newTenantCard.PayablesAccountingCard,
                 InActive = newTenantCard.InActive,
                 Notes = newTenantCard.Notes,
@@ -1966,6 +1979,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    select new CardList()
                                    {
                                        ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                       AccountingVATSplit = a.AccountingVATSplit,
                                        PayablesAccountingCard = a.PayablesAccountingCard,
                                        EnglishName = a.EnglishName,
                                        Id = a.Id,
@@ -2115,6 +2129,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PartnerTypeId = a.PartnerTypeId,
                                              PayablesAccountingCard = a.PayablesAccountingCard,
                                              ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             AccountingVATSplit = a.AccountingVATSplit,
                                              GLAccountId = a.GLAccountId,
                                          };
 
@@ -2157,6 +2172,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PartnerTypeId = a.PartnerTypeId,
                                              PayablesAccountingCard = a.PayablesAccountingCard,
                                              ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             AccountingVATSplit = a.AccountingVATSplit,
                                              GLAccountId = a.GLAccountId,
                                          };
 
@@ -2176,6 +2192,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PartnerTypeId = a.PartnerTypeId,
                                              PayablesAccountingCard = a.PayablesAccountingCard,
                                              ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             AccountingVATSplit = a.AccountingVATSplit,
                                              GLAccountId = a.GLAccountId,
                                              PrimaryContactId = a.PrimaryContactId,
                                              BusinessPhone = a.PrimaryContact.BusinessPhone,
