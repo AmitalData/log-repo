@@ -46,7 +46,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TransportModeId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.PreCarriageTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.PreCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreCarriageToPortId).HasMaxLength(15).IsUnicode(false);
