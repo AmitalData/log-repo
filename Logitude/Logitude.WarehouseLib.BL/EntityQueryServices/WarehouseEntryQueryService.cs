@@ -259,6 +259,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             entityPM.StatusName = "Cancelled";
             entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             service.Update(entityPM, true);
+            PutInstockPackagesToZero(entityPM);
             //WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
             //WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;
             //List<string> warehousePackagesReleaseIds = null;
@@ -273,6 +274,27 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             //EmptyconnectedWarehouseReleasePackages(warehousePackagesReleaseIds, entityPM.Tenant);
             //SubmitEntryPackagesChanges(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
         }
+
+        private void PutInstockPackagesToZero(WarehouseEntryPM entityPM)
+        {
+            WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
+            List<string> entryPackageIds = entityPM.WarehouseEntryPackages.Select(d => d.Id).ToList();
+            List<WarehouseEntryPackage> warehouseEntryPackages = warehouseEntryPackageRepository.GetWarehouseEntryPackageByIds(entryPackageIds, entityPM.Tenant);
+
+            foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
+            {
+                WarehouseEntryPackage warehouseEntryPackage = warehouseEntryPackages.Where(d => d.Id == item.Id).FirstOrDefault();
+                if (warehouseEntryPackage != null)
+                {
+                    item.Instock = 0;
+                    warehouseEntryPackage.Instock = 0;
+                }
+
+                warehouseEntryPackageRepository.Update(warehouseEntryPackage);
+            }
+            warehouseEntryPackageRepository.SubmitChanges();
+        }
+
 
         private List<string> CanceledPackagesEntryAndGetPackagesReleaseIds(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
         {

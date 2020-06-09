@@ -392,6 +392,16 @@ namespace Logitude.BL.Helpers
                             insideEntityType = blAssembly.GetType(insideTypePath);
                         }
 
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.InvoiceModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+
+
+
+
                         bool isGeneratedQuery = false;
                         if (insideEntityType == null)
                         {
@@ -426,7 +436,11 @@ namespace Logitude.BL.Helpers
                             
                             if (insideMethodInfo == null)
                             {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                                // insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+
+
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethods().Where(d => d.Name == "GetSinglePM").FirstOrDefault();
+
                             }
                             if (insideMethodInfo == null)
                             {

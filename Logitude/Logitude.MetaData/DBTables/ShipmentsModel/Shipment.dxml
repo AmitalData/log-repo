@@ -826,7 +826,7 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="varchar"
+    Type="nvarchar"
     Size="2000">
     <Constraints
       Nullable="true" />

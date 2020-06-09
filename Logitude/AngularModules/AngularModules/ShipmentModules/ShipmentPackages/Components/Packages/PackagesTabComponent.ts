@@ -978,7 +978,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("General", "CROSSDOCKS")) {
             if (this.IsGenerateButtonVisible && this.IsEditingEnabled) {
-                if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+                if ((this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") && this.EntityPM.DirectionId !="I") {
                     this.GenerateCrossDockReleasesButtonLabel = "Generate from Cross Dock Releases Packages";
                     this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = true;
                     //var count: number = 0;

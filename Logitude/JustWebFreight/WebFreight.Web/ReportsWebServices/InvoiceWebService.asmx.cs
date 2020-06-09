@@ -1881,8 +1881,8 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeType = chargetype.EnglishName != null ? chargetype.EnglishName : "";
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
-
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
+                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -2059,6 +2059,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
+                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3025,6 +3026,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
+                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3183,6 +3185,7 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
+                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)

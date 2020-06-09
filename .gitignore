@@ -411,4 +411,4 @@ __pycache__/
 /Logitude/Logitude.Update/performancelog.csv
 /Logitude/AngularModules/AngularModules/cypress/videos/examples
 /Logitude/AngularModules/AngularModules/cypress/screenshots/examples/test.spec.js
-
+/Logitude/Logitude.DBMigrations/GeneratedScript

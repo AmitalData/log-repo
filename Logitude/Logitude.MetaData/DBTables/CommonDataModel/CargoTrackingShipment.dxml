@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CargoTrackingShipments"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+   Name="TransportModeId"
+   Type="char"
+   Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Master"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="House"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="ShipmentNumber"
+  Type="varchar"
+  Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+   Name="ToPortId"
+   Type="varchar"
+   Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="ShipperId"
+  Type="varchar"
+  Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+Name="ConsigneeId"
+Type="varchar"
+Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="GrossWeight"
+  Type="float"
+   >
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+Name="Volume"
+Type="float"
+ >
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Column
+    Name="PickupDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Column
+    Name="PickupDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Relation
+    ForeignKeyColumn="CustomerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipperId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+   ForeignKeyColumn="ConsigneeId"
+   ReferencedTable="Cards"
+   ReferencedColumn="Id"
+   ReferencedTableSchema="dbo" />
+  <Relation
+  ForeignKeyColumn="FromPortId"
+  ReferencedTable="Ports"
+  ReferencedColumn="Id"
+  ReferencedTableSchema="dbo" />
+  <Relation
+ ForeignKeyColumn="ToPortId"
+ ReferencedTable="Ports"
+ ReferencedColumn="Id"
+ ReferencedTableSchema="dbo" />
+  <Relation
+   ForeignKeyColumn="TransportModeId"
+   ReferencedTable="TransportModes"
+   ReferencedColumn="Id"
+   ReferencedTableSchema="dbo" />
+</Table>

@@ -1277,6 +1277,7 @@
     <Content Include="InvoiceModules\APPayment\Components\Other\ExternalPaymentComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
+    <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceAuditTabComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabGeneral.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabNormal.html" />
@@ -2161,6 +2162,7 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceAuditTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabGeneral.ts" />
