@@ -44,6 +44,7 @@ export class DeclarationReferantDataList {
 	CollectorUserId: string;
 	NewFile: boolean;
 	Favorite: boolean;
+	SortedColumns: number;
 	
 }
  

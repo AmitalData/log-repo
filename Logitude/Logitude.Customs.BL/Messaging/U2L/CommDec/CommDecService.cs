@@ -385,7 +385,36 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
+            if(!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.SiteCode) && this._MyDeclarationPM.Consignments != null && this._MyDeclarationPM.Consignments.Count() > 0 && (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions == null || (this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count() < 1)))
+            {
+                var internalBorderSiteType = new InternalBorderSiteTypeRepository(ResolvedTenant());
+                var myinternalBorderSiteType = internalBorderSiteType.GetSingle(_LogitudeCommDecFile.SiteCode);
+                string PackageTypeCode = "";
+                if (myinternalBorderSiteType == null)
+                {
+                    PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
+                }
+                else
+                {
+                    PackageTypeCode = myinternalBorderSiteType.Code.ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(PackageTypeCode))
+                {
 
+                    ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
+                    {
+                        ConsignmentNumber = this._MyDeclarationPM.Consignments[0].ConsignmentNumber,
+                        DeclarationId = this._MyDeclarationPM.Consignments[0].DeclarationId,
+                        LineNumber = 1,
+                        Tenant = this._MyDeclarationPM.Consignments[0].Tenant,
+                        SiteCode = PackageTypeCode,
+
+                        ChangeSetOp = ChangeSetOperation.Insert,
+
+                    };
+                    this._MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Add(transitionPM);
+                }
+            }
 
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
@@ -1305,8 +1334,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             this._MySupplierInvoicePM.Tenant = ResolvedTenant();
             this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
-            this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
-
+            //this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
+            if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
+            {
+                this._MySupplierInvoicePM.Tenant = ResolvedTenant();
+                this._MyDeclarationPM.SupplierInvoices.Add(this._MySupplierInvoicePM);
+            }
             return;
 
         }

@@ -86,6 +86,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool NewFile  { get; set; }
        [DataMember]
        public bool Favorite  { get; set; }
+       [DataMember]
+       public int SortedColumns  { get; set; }
    }
 
 }
