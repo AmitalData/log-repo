@@ -120,7 +120,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //_MyDeclarationPM.IsAmendment = true;
                     }
 
-                    else
+                    else if(customResponse.Response.Declaration!= null)
                     {
 
                         string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
 
                     List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                    if (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
+                    if (customResponse.Response.Declaration != null && currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
                     {
 
                         var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
