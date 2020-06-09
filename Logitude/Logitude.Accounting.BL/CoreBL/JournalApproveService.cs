@@ -1002,7 +1002,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                     {
-                        if (DateTime.Now < new DateTime(2020, 06, 01))
+                        if (DateTime.Now < new DateTime(2021, 06, 01))
                         {
                             CreateBatchAccountingIntegrityCheck();
                         }
