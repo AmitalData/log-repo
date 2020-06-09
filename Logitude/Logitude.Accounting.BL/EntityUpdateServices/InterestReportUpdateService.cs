@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             MapInterestReport(entityPM);
             CreateBatchTaskExecution(entityPM);
+            CreateEvent("IRCD", entityPM);
         }
 
 
@@ -55,7 +56,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool showLocals = !contactLocal.DontShowLocal;
  
         }
-         private void CreateEvent(string eventCode, InterestReportPM interestReport)
+         private void CreateEvent(string eventCode, InterestReportPM interestReport,string Notes = null)
         {
             Contact contact = GetLoggedContact(interestReport);
             EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -66,6 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ObjectTableName = "InterestReport",
                 IsAddedManually = false,
                 EventTypeCode = eventCode,
+                Notes = Notes,
             });
         }
 
@@ -83,7 +85,46 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CancelInterestReport(entityPOCO,  entityPM);
             }
+            CreateEventByStatusCode(entityPM, entityPOCO);
+        }
 
+        private void CreateEventByStatusCode(InterestReportPM entityPM, InterestReport entityPOCO)
+        {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
+            {
+                switch (entityPM.InterestReportStatusCode)
+                {
+                    case "4":
+                        {
+                            CreateEvent("IRCW", entityPM);
+                            break;
+                        }
+                    case "6":
+                        {
+                            CreateEvent("IRFD", entityPM);
+                            break;
+                        }
+                    case "2":
+                        {
+                            CreateEvent("IRIN", entityPM, TextCodesTranslator.TranslateText("InterestReport.F.ARInvoiceNumber", entityPM.Tenant, showLocals)+": "+ entityPM.ARInvoiceNumber);
+                            break;
+                        }
+                    case "3":
+                        {
+                            CreateEvent("IRCN", entityPM);
+                            break;
+                        }
+                    case "7":
+                        {
+                            CreateEvent("IRIF", entityPM);
+                            break;
+                        }
+
+                }
+
+            }
         }
         private void CancelInterestReport(InterestReport entityPoco, InterestReportPM entityPM)
         {
@@ -96,7 +137,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CreateautoCreditInvoice(EntityPOCO);
                 }                
             }
-            CreateEvent("IRCN", entityPM);
         }
         private void GetAndUpdateRelatedInterestTransactions(InterestReport interestReport)
         {
