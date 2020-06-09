@@ -354,7 +354,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 UpdateUnifreightEvent("MID", requestParams.LoggingUserId);
                                 userMessage = userMessage + "חסר תצהיר יבואן";
-                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
+                                if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode))
+                                {
+                                    _MyDeclarationPM.DepositionStatusCode = "R";
+
+                                    ReferantExceptionPM referantExceptionPM = new ReferantExceptionPM();
+                                    ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                    ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(context);
+                                    var referantExceptionPMs =  referantExceptionQueryService.GetByDecId(_MyDeclarationPM.Id);
+                                    if(referantExceptionPMs.FirstOrDefault(x=>x.ExceptionReasonsCode =="901") ==null)
+                                    {
+                                        referantExceptionPM.ExceptionReasonsCode = "901";
+                                        referantExceptionPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                        referantExceptionPM.DeclarationId = _MyDeclarationPM.Id;
+                                        referantExceptionPM.Tenant = _MyDeclarationPM.Tenant;
+                                        referantExceptionPM.Status = "A";
+                                        referantExceptionUpdateService.Update(referantExceptionPM, true);
+                                    }
+                                } 
                                 break;
                             }
                         case 2244:
@@ -723,7 +740,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            UpdateDepositionStatusCode();
+            UpdateDepositionStatusCode(context);
 
             if (!String.IsNullOrWhiteSpace("itzik and yaron move to herer from DeclarationWebService.asmx"))
             {
@@ -1028,7 +1045,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        private void UpdateDepositionStatusCode()
+        private void UpdateDepositionStatusCode(IContext context)
         {
             if (_MyDeclarationError != null && _MyDeclarationError.Entitites != null && _MyDeclarationError.Entitites.Count > 0)
             {
@@ -1047,13 +1064,42 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (fieldList.Count > 0)
                             {
                                 if (string.IsNullOrWhiteSpace(_MyDeclarationPM.DepositionStatusCode)) _MyDeclarationPM.DepositionStatusCode = "R";
+                                ReferantExceptionPM referantExceptionPM = new ReferantExceptionPM();
+                                ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(_MyDeclarationPM.Tenant);
+                                var referantExceptionPMs = referantExceptionQueryService.GetByDecId(_MyDeclarationPM.Id);
+                                if (referantExceptionPMs.FirstOrDefault(x => x.ExceptionReasonsCode == "901") == null)
+                                {
+                                    referantExceptionPM.ExceptionReasonsCode = "901";
+                                    referantExceptionPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                    referantExceptionPM.DeclarationId = _MyDeclarationPM.Id;
+                                    referantExceptionPM.Tenant = _MyDeclarationPM.Tenant;
+                                    referantExceptionPM.Status = "A";
+                                    referantExceptionUpdateService.Update(referantExceptionPM, true);
+                                }
                                 return;
                             }
                         }
                     }
                 }
             }
-            if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
+            if (_MyDeclarationPM.DepositionStatusCode == "R")
+            {
+                _MyDeclarationPM.DepositionStatusCode = null;
+                ReferantExceptionPM referantExceptionPM = new ReferantExceptionPM();
+                ReferantExceptionUpdateService referantExceptionUpdateService = new ReferantExceptionUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                ReferantExceptionQueryService referantExceptionQueryService = new ReferantExceptionQueryService(_MyDeclarationPM.Tenant);
+                var referantExceptionPMs = referantExceptionQueryService.GetByDecId(_MyDeclarationPM.Id);
+                referantExceptionPM = referantExceptionPMs.FirstOrDefault(x => x.ExceptionReasonsCode == "901");
+                if (referantExceptionPM != null)
+                {
+                    referantExceptionPM.Status = "S";
+                    referantExceptionPM.ChangeSetOp = ChangeSetOperation.Update;
+                    referantExceptionUpdateService.Update(referantExceptionPM, true);
+                }
+            }
+
+
         }
 
         public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005
