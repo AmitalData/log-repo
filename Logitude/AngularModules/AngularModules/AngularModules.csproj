@@ -2442,6 +2442,7 @@
     <Content Include="styles.css" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\ChooseCountryComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLSurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.html" />
@@ -6832,6 +6833,7 @@
     <TypeScriptCompile Include="TariffModule\Args.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChooseCountryComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLSurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.ts" />
