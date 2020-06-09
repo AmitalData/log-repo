@@ -8,12 +8,14 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
@@ -57,33 +59,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityRepository.Add(entityPoco);
             entityRepository.SubmitChanges();
         }
-
-        private void UploadFile()
-        {
-            byte[] fileData = Convert.FromBase64String(entityPM.File);
-            byte[] buffer = fileData;
-            int sentSize = fileData.Length;
-            int fileSize = fileData.Length;            
-            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-            string filelocation = "how-to";
-            string fileName = this.entityPM.FileName;
-            string filePath = "tenant" + tenant.ToString() + "/";
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            MemoryStream memorystream = new MemoryStream(buffer);
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = fileName,
-                FolderName = filelocation,
-                Extension = entityPM.FileExtension,
-                Tenant = tenant,
-                FileSize = fileSize,
-            };
-
-            storageservice.WriteBlock(buffer, sentSize, blockIdlist, 0, fileInfo);
-        }
-
+        
         public void Update(HelpResourcePM entity)
         {
             this.isNewEntity = false;
@@ -91,9 +67,9 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.entityPoco = entityRepository.GetSingleHelpResource(entityPM.Code, entityPM.Tenant);
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            if (entityPM.File != null)
+            if (entityPM.File != null && entityPM.FileExtension != null)
             {
-
+                this.UploadFile();
             }
 
             HelpResourceTracing.Trace(entityPM, entityPoco, isNewEntity);
@@ -148,6 +124,34 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             }
 
             return code;
+        }
+
+        private void UploadFile()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                byte[] fileData = Convert.FromBase64String(entityPM.File);
+                byte[] buffer = fileData;
+                int sentSize = fileData.Length;
+                int fileSize = fileData.Length;
+                string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                string filelocation = "how-to";
+                string fileName = this.entityPM.FileName;
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = filelocation,
+                    Extension = entityPM.FileExtension,
+                    Tenant = tenant,
+                    FileSize = fileSize,
+                };
+
+                storageservice.WriteBlock(buffer, sentSize, blockIdlist, 0, fileInfo);
+                scope.Complete();
+            }
         }
     }
 }

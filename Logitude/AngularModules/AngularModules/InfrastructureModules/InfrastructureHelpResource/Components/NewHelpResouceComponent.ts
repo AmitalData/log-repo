@@ -9,10 +9,7 @@ import { HelpResourcePMService } from '../../../Infrastructure/Services/Standard
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { UploadFileArgs, GlobalDomainService } from '../../../Common/Services/GlobalDomainService'
-declare var querySelection, resultToUnitArray, ResultAsArray: any;
+declare var querySelection, resultToUnitArray: any;
 
 @Component({
     templateUrl: './NewHelpResouceComponent.html',
@@ -343,69 +340,4 @@ export class NewHelpResouceComponent extends BaseComponent {
 
         reader.readAsArrayBuffer(file);
     }
-
-    //OnFileChanged(fileEvent) {
-    //    var file = fileEvent.target.files[0];
-
-    //    if (file) {
-    //        var extension: string = file.name.split('.')[1];
-    //        this.Upload(file);           
-    //    }
-    //}
-    //Upload(file: any) {
-    //    if (!AppTool.IsNullOrEmpty(file.name)) {
-    //        var name = file.name.split('.');
-    //        if (name.length == 2) {
-    //            this.FileName = name[0];
-    //        }
-    //    }
-    //    if (file && file.size > 0) {
-    //        var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService;
-    //        documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-    //            if (!response.HasError) {
-    //                var myResult = response.Result;
-    //                if (myResult) {
-    //                    this.StartUploadingFile(file);
-    //                }
-    //            }
-    //        });
-    //    }
-    //}
-    //StartUploadingFile(file: any) {
-    //    if (file && file.size > 0) {
-    //        var filebuffer = file.slice(0, file.size);
-    //        this.ConvertArrayBufferToBase64(filebuffer, this);
-    //    }
-    //}
-    //ConvertArrayBufferToBase64(file: any, context: any) {
-    //    var reader: FileReader = new FileReader();
-    //    var reader = new FileReader();
-    //    reader.onload = function (e) {
-    //        var binary = '';
-    //        var bytes = new Uint8Array(ResultAsArray(e));
-    //        var len = bytes.byteLength;
-    //        for (var i = 0; i < len; i++) {
-    //            binary += String.fromCharCode(bytes[i]);
-    //        }
-
-    //        var filter = new UploadFileArgs();
-    //        filter.FileData = window.btoa(binary);           
-    //        filter.FileName = context.FileName;
-    //        context.SendExcelToServer(filter);
-    //    };
-
-    //    reader.onerror = function (e) {
-    //        console.log(e);
-    //    };
-    //    reader.readAsArrayBuffer(file);
-    //    context.EntityPM.FileUploadedName = this.FileName;
-    //}
-    //SendExcelToServer(filter: UploadFileArgs) {
-    //    var service: GlobalDomainService = new GlobalDomainService();
-    //    service.PostUploadFile(filter).subscribe((response: ServiceResponse) => {
-    //        if (!response.HasError) {
-                
-    //        }
-    //    });
-    //}
 }

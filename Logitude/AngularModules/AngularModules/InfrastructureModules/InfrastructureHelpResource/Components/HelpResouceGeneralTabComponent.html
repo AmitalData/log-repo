@@ -142,6 +142,7 @@
 
                                             <td>
                                                 <button class="Button" (click)="UploadButtonClicked()">Upload</button>
+                                                <input [attr.id]="DocumentFileId" type="file" (change)="UpLoadFileMethod($event)" style="display:none" class="upload" />
                                             </td>
 
                                             <td>

@@ -7,6 +7,8 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { HelpResourcePM } from '../../../Infrastructure/EntityPMs/HelpResourcePM';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+declare var querySelection, resultToUnitArray: any;
 
 @Component({
     templateUrl: './HelpResouceGeneralTabComponent.html',
@@ -206,6 +208,54 @@ export class HelpResouceGeneralTabComponent extends BaseComponent implements OnI
         if (this.EntityPM.IsNew != value) {
             this.EntityPM.IsNew = value;
         }
+    }
+
+    DocumentFileId: string = Guid.NewRandomString();
+    UploadBodyData: any;
+    UploadButtonClicked() {
+        document.getElementById(this.DocumentFileId).click();
+    }
+    UpLoadFileMethod(event: any) {
+        var file = querySelection(this.DocumentFileId);
+
+        if (file) {
+            this.ArrayBufferToBase64(file, this);
+        }
+    }
+    ArrayBufferToBase64(file: any, viewmodel: any) {
+
+        var reader: FileReader = new FileReader();
+
+        var extension: string = "";
+        var fileInfo = file.name.split('.');
+
+        if (fileInfo.length > 1) {
+            extension = fileInfo[fileInfo.length - 1];
+        }
+        else extension = fileInfo[1];
+
+        if (extension) {
+            extension = extension.toLowerCase();
+        }
+
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(resultToUnitArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            viewmodel.UploadBodyData = window.btoa(binary);
+            viewmodel.EntityPM.File = viewmodel.UploadBodyData;
+            viewmodel.EntityPM.FileExtension = extension;
+        };
+
+        reader.onerror = function (e) {
+
+        };
+
+        reader.readAsArrayBuffer(file);
     }
 }
 
