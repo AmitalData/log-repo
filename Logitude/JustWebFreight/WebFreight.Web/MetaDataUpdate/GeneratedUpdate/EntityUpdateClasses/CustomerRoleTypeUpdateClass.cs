@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomerRoleTypeUpdateClass
    {  		
-		public const string HashString = "7e474837d797b9669272b84c5dd7b6ce";
+		public const string HashString = "011b84d26671843aa5dd4ac222e50107";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג תפקיד לקוחות",
 			      				    DefaultText =  "Customer Role Type",
-			      				    Code =  "839a",
+			      				    Code =  "5e88",
 			      				    Name =  "Customs.CustomerRoleType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -447,7 +447,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup CustomerRoleTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5e88", Name = "Customs.CustomerRoleType Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomerRoleTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9c01", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CustomerRoleTypeObjectTable = objectTables.ContainsKey("Customs.CustomerRoleType") ? objectTables["Customs.CustomerRoleType"] : null;
+            if (CustomerRoleTypeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                CustomerRoleTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerRoleType" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode CustomerRoleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerRoleType.Q.CUSTOMERROLETYPE", DefaultText = @"CustomerRoleType",LocalDefaultText = "Customer Role Types", ObjectTableId = CustomerRoleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerRoleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerRoleType.Q.CUSTOMERROLETYPE", ObjectTableId = CustomerRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerRoleTypeFeatures.CUSTOMERROLETYPE", NameTextCodeDefaultText = "CUSTOMERROLETYPE", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerRoleTypeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query CUSTOMERROLETYPEQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerRoleTypeTextCode_0.Id, NameTextCodeCode = CustomerRoleTypeTextCode_0.Code, ObjectTableName = "Customs.CustomerRoleType", Code = "CUSTOMERROLETYPE",  QueryGroupCode = "5e88", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerRoleTypeObjectTable.Id, QuerySection = "Customs.CustomerRoleType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerRoleTypeFeature_0.Id,FeatureUniqeCode= CustomerRoleTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CUSTOMERROLETYPEQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CUSTOMERROLETYPEQuery.Id,QueryCode = CUSTOMERROLETYPEQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomerRoleType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CUSTOMERROLETYPEQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CUSTOMERROLETYPEQuery.Id,QueryCode = CUSTOMERROLETYPEQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomerRoleType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CUSTOMERROLETYPEQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CUSTOMERROLETYPEQuery.Id,QueryCode = CUSTOMERROLETYPEQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomerRoleType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CUSTOMERROLETYPEQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CUSTOMERROLETYPEQuery.Id,QueryCode = CUSTOMERROLETYPEQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomerRoleType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
