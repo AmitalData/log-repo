@@ -50,7 +50,7 @@
                 </tr>
 
                 <!-- Share With -->
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="IsShareFolderAvailable">
                     <td style="padding-left:10px;"><label>Share with:</label></td>
                     <td style="width:150px;">
                         <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
@@ -63,12 +63,62 @@
                     </td>
                 </tr>
 
+                <tr style="height:10px;" *ngIf="IsShareFolderAvailable">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:250px;" *ngIf="IsShareFolderAvailable">
+                    <td>
+                        <div class="MediaFill">
+                            <div class="SimpleGridView" style="width:450px;" *ngIf="IsChooseUsersVisible">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center">Email</td>
+                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Name</td>
+                                            <td class="LastChild">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of SharedWithUsersItemsSource">
+                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                {{item.Email}}
+                                            </td>
+
+                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                {{item.Name}}
+                                            </td>
+
+                                            <td class="CellTools">
+                                                <span class="CellSeparator"></span>
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteUser(item)"></IconButton>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
                 <tr>
                     <td colspan="3">
                         <div></div>
                     </td>
                 </tr>
-
             </table>
         </td>
     </tr>

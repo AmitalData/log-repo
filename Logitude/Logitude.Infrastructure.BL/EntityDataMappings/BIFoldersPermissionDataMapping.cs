@@ -19,7 +19,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
         public void CustomPMToPOCO(BIFoldersPermissionPM entityPM, BIFoldersPermission entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.FolderId);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.UserId);
+
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Tenant = entityPM.Tenant;
+            entityPOCO.FolderId = entityPM.FolderId;
+            entityPOCO.UserId = entityPM.UserId;
+
         }
 
         public void CustomPOCOToPM(BIFoldersPermissionPM entityPM, BIFoldersPermission entityPOCO)

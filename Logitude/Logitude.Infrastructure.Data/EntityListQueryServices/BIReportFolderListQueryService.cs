@@ -32,6 +32,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                         Name = a.Name,
                                                         Description = a.Description,
                                                         Index = a.Index,
+                                                        PermissionForAll = a.PermissionForAll,
+                                                        PermittedByUserId = a.PermittedByUserId
                                                     });
             return query;
         }

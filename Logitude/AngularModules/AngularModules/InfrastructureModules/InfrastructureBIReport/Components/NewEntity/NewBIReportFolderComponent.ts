@@ -11,6 +11,8 @@ import { UserList } from '../../../../Common/EntityLists/UserList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { BIFoldersPermissionPM } from '../../../../Infrastructure/EntityPMs/BIFoldersPermissionPM';
+import { ChooseUserArgs } from './ChooseSpecificUserComponent';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -24,6 +26,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
     public DataContext: NewBIReportFolderComponent = this;
     public ObjectTableName: string = "BIReportFolder";
     public IsNewQuery = true;
+    public IsShareFolderAvailable = false;
     public IsReady:boolean = false;
     private IsNew: boolean = true;
     private FolderId: string;
@@ -32,15 +35,18 @@ export class NewBIReportFolderComponent extends BaseComponent {
         super();        
         this.myService = new BIReportFolderPMService();
         this.SetUIProperties();
-        this.LoadUsers();
-        this.FillShareValuesList();
-        this.SetSelectedSharedValue();
     }
 
     SetWindowArgs(args: any) {
         this.IsNew = args.IsNew;
         this.FolderId = args.FolderId;
         this.SetEntityPM();
+        if (FeatureLocator.HasFeaturePermession("BIReportFolder", "UPDATE")) {
+            this.IsShareFolderAvailable = true;
+            this.LoadUsers();
+            this.FillShareValuesList();
+            this.SetSelectedSharedValue();
+        }
     }
 
     SetEntityPM() {
@@ -52,9 +58,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
             this.IsReady = true;
         }
         else {
-            this.CurrentSession.StartBusyIndicator("Loading...");
             this.myService.get(this.FolderId).subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
@@ -81,7 +85,9 @@ export class NewBIReportFolderComponent extends BaseComponent {
         filters.Tenant = SessionLocator.Tenant;
 
         var userService: UserListService = new UserListService();
+        this.CurrentSession.StartBusyIndicator('Loading...');
         userService.getByFilters(filters).subscribe((res: any) => {
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myUsersList = pmResponse.Result;
@@ -156,7 +162,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
     public SharedByUserName: string;
     public SharedByUserEmail: string;
     ChooseUsers() {
-        var args;//= new ChooseUserArgs();
+        var args = new ChooseUserArgs();
         args.MyFolder = this.EntityPM;
         args.AllUsers = this.myUsersList;
 
@@ -165,7 +171,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
         logWindow.Width = 725;
         logWindow.Height = 520;
         logWindow.WindowArgs = args;
-        logWindow.Show("./Infrastructure/Components/NewViewComponent/ChooseUserComponent");
+        logWindow.Show("./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/ChooseSpecificUserComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.ShareWithUsersCount = this.EntityPM.PermittedBIFolders.length;
             this.FillSharedWithUsersItemsSource();
@@ -190,7 +196,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
 
         var index = this.EntityPM.PermittedBIFolders.indexOf(user.myEnity);
         if (index > -1) {
-            this.EntityPM.RemoveBIFoldersPermissions(user.myEnity);
+            this.EntityPM.RemoveBIFoldersPermission(user.myEnity);
         }
 
         this.ShareWithUsersCount = this.EntityPM.PermittedBIFolders.length;
@@ -226,6 +232,30 @@ export class NewBIReportFolderComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
+
+            if (this.ShareValueSelectedItem) {
+                switch (this.ShareValueSelectedItem.Code) {
+                    case "ALL": {
+                        this.EntityPM.PermissionForAll = true;
+                        this.EntityPM.PermittedByUserId = SessionLocator.LoggedUserId;
+
+                        if (this.EntityPM.PermittedBIFolders != null && this.EntityPM.PermittedBIFolders.length > 0) {
+                            for (var i = this.EntityPM.PermittedBIFolders.length - 1; i >= 0; i--) {
+                                var item = this.EntityPM.PermittedBIFolders[i];
+                                this.EntityPM.RemoveBIFoldersPermission(item);
+                            }
+                        }
+                        break;
+                    }
+
+                    case "SPF": {
+                        this.EntityPM.PermissionForAll = false;
+                        this.EntityPM.PermittedByUserId = SessionLocator.LoggedUserId;
+                        break;
+                    }
+                }
+            }
+
             if (this.IsNew) {
                 this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
                 this.EntityPM.UpdateDate = DateTool.GetCurrentDateAsUtc();

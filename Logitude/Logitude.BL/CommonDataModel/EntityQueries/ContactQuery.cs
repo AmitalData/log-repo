@@ -735,6 +735,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
+        public string GetContactIdByLoggedEmail(int tenant)
+        {
+            string email = HttpContext.Current.User.Identity.Name;
+
+            return repository.GetConactIdByemail(email, tenant);
+        }
+
         public ContactPM GetContactById(string id, int tenant)
         {
             id = id.ToLower();

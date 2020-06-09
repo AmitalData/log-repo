@@ -39,7 +39,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
 		private IQueryable<BIFoldersPermission> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<BIFoldersPermission> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 				private IQueryable<BIFoldersPermission> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<BIFoldersPermission> iQueryable, int tenant)
         {

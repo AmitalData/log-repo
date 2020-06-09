@@ -362,6 +362,7 @@
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
+    <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\ChooseSpecificUserComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\BIReportPreviewComponent.html" />
@@ -1069,6 +1070,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\ChooseSpecificUserComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReport.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\NewBIReportFolderComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\TemplateRenderer\AGGridCustomHeader.ts" />
@@ -1178,6 +1180,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\FollowUpPMExtendedService.ts" />

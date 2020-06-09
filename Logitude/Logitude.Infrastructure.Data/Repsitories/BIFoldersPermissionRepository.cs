@@ -17,11 +17,17 @@ namespace Logitude.Infrastructure.Data.Repsitories
         
 		public List<BIFoldersPermission> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            BIReportFolderKeys myEntityKeys = entityKeys as BIReportFolderKeys;
+            return (from a in context.BIFoldersPermissions where a.FolderId == myEntityKeys.Id select a).ToList();
         }
 
-   }
+        public List<string> GetFoldersIdsByPermittedUserId(string permittedUserId)
+        {
+            List<string> foldersIds = (from a in context.BIFoldersPermissions where a.UserId == permittedUserId select a.FolderId).ToList();
+            return foldersIds;
+        }
+
+    }
 
 }
    

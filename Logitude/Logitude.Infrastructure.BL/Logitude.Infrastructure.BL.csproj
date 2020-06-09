@@ -115,6 +115,7 @@
     <Compile Include="EntityPMs\Generated\TeamMemberBusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TogglePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\BIFoldersPermissionQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="EntityQueryServices\Generated\TeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ToggleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\LBPTeamMemberQueryService.cs" />
+    <Compile Include="EntityQueryServices\BIReportFolderQueryService.cs" />
     <Compile Include="EntityQueryServices\TeamQueryService.cs" />
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="EntityUpdateServices\Generated\TeamMemberBusinessRoleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ToggleUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\BIFoldersPermissionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\LBPTeamMemberUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PriceStepUpdateClass.cs" />
     <Compile Include="EntityUpdateServices\TeamMemberBusinessRoleUpdateService.cs" />
