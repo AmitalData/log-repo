@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג תפקיד לקוחות&quot;"
   DefaultText="&quot;Customer Role Type&quot;"
-  Code="&quot;839a&quot;"
+  Code="&quot;5e88&quot;"
   Name="&quot;Customs.CustomerRoleType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -433,6 +433,44 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;CUSTOMERROLETYPE&quot;"
+    TextCode="&quot;CustomerRoleType&quot;"
+    LocalTextCode="&quot;Customer Role Types&quot;"
+    QueryGroupCode="&quot;5e88&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CustomerRoleType&quot;"
+    QuerySection="&quot;Customs.CustomerRoleType&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;Code&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CUSTOMERROLETYPE&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CUSTOMERROLETYPE&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CUSTOMERROLETYPE&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CUSTOMERROLETYPE&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.CustomerRoleTypeHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.CustomerRoleType&quot;"
