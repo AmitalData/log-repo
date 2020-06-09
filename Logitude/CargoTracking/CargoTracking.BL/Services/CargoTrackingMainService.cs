@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CargoTracking.CargoTracking.BL.Services
 {
@@ -395,28 +396,37 @@ namespace CargoTracking.CargoTracking.BL.Services
         {
             using (SqlConnection cn = new SqlConnection(ConnectionString))
             {
-
-                SqlCommand cmd = new SqlCommand(@"insert into " + TableName + " (" + Excecute_CoulmnNames + ")   VALUES(" + Excecute_CoulmnNames_Par + ")", cn);
-                cmd.CommandTimeout = (int)timeOut;
-                cn.Open();
-
-                List<string> Excecute_CoulmnNames_Par_List = Excecute_CoulmnNames_Par.Split(',').ToList();
-
-                for (int i = 0; i < Excecute_CoulmnNames_Par_List.Count; i++)
+                try
                 {
-                    if (Excecute_CoumnValues_List[i] == null)
-                    {
-                        cmd.Parameters.AddWithValue(Excecute_CoulmnNames_Par_List[i], DBNull.Value);
+                    SqlCommand cmd = new SqlCommand(@"insert into " + TableName + " (" + Excecute_CoulmnNames + ")   VALUES(" + Excecute_CoulmnNames_Par + ")", cn);
+                    cmd.CommandTimeout = (int)timeOut;
+                    cn.Open();
 
+                    List<string> Excecute_CoulmnNames_Par_List = Excecute_CoulmnNames_Par.Split(',').ToList();
+
+                    for (int i = 0; i < Excecute_CoulmnNames_Par_List.Count; i++)
+                    {
+                        if (Excecute_CoumnValues_List[i] == null)
+                        {
+                            cmd.Parameters.AddWithValue(Excecute_CoulmnNames_Par_List[i], DBNull.Value);
+
+                        }
+
+                        else
+                        {
+                            cmd.Parameters.AddWithValue(Excecute_CoulmnNames_Par_List[i], Excecute_CoumnValues_List[i]);
+
+                        }
                     }
 
-                    else
-                    {
-                        cmd.Parameters.AddWithValue(Excecute_CoulmnNames_Par_List[i], Excecute_CoumnValues_List[i]);
+                    cmd.ExecuteNonQuery();
 
-                    }
                 }
-                cmd.ExecuteNonQuery();
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message+"\n"+ e.StackTrace);
+
+                }
                 cn.Close();
             }
         }
@@ -430,15 +440,7 @@ namespace CargoTracking.CargoTracking.BL.Services
                     SqlCommand sqlCommand = new SqlCommand(sqlString, cn);
                     sqlCommand.CommandTimeout = (int)timeOut;
                     cn.Open();
-                    try
-                    {
-                        sqlCommand.ExecuteNonQuery();
-
-                    }
-                    catch (Exception E)
-                    {
-                        string MM = "";
-                    }
+                    sqlCommand.ExecuteNonQuery();
                     cn.Close();
                 }
             }
