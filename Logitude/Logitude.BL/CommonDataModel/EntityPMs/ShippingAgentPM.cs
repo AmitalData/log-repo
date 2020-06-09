@@ -276,6 +276,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("CardCurrenciesAccountingCard", "Id", "CardId")]
         [Composition]
+        [DataMember]
         public virtual List<CardCurrenciesAccountingPM> CardCurrenciesAccountings
         {
             get
