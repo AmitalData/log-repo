@@ -20,7 +20,7 @@ export class InvoiceQueueWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Urouter';
     }
 
-    GetInvoiceList() {
+    GetInvoice() {
         return Observable.defer(() => {
 
             var authHeader = new Headers();
@@ -30,7 +30,7 @@ export class InvoiceQueueWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetInvoiceList", {
+            return this._http.get(this._apiUrl + "/GetInvoice", {
                 headers: authHeader
             }).map(response => {
 

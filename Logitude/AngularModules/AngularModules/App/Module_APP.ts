@@ -115,6 +115,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests' },
             { loadChildren: 'CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests' },
             { loadChildren: 'CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor'},
+            { loadChildren: 'CustomsModules/InvoiceQueue/ModuleInvoiceQueue#ModuleInvoiceQueue' },
 
         ])
     ],

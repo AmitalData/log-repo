@@ -1,9 +1,9 @@
-import { InvoiceQueue } from "./Components/InvoiceQueue";
+import { InvoiceQueueComponent } from "./Components/InvoiceQueueComponent";
  
 
 export const Components =
     [
-        InvoiceQueue,
+        InvoiceQueueComponent,
      ];
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -11,7 +11,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
-            case "InvoiceQueue": { myResult = InvoiceQueue; break; }
+            case "InvoiceQueueComponent": { myResult = InvoiceQueueComponent; break; }
          }
         return myResult;
     }

@@ -281,7 +281,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
-    <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueue.html" />
+    <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
@@ -911,7 +911,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPaymentOrder\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleCustomsVendor.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleDeclarations.ts" />
-    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\Components\InvoiceQueue.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleInvoiceQueue.ts" />
     <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" />
@@ -991,6 +991,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationReferantDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />

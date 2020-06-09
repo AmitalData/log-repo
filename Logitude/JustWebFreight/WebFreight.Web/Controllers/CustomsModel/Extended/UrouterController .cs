@@ -83,15 +83,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage GetInvoiceList()
+        public HttpResponseMessage GetInvoice()
         {
             try
             {
 
                 var UserverGetInvoiceList = new UnifreightQInvoiceList();
                 string ErrMessage = "";
-                var Invoicelist = UserverGetInvoiceList.GetInvoiceList();
-                return Request.CreateResponse(HttpStatusCode.OK, new { Invoicelist = Invoicelist, ErrMessage = ErrMessage });
+                var Invoice = UserverGetInvoiceList.GetInvoice();
+                return Request.CreateResponse(HttpStatusCode.OK, new { Invoice = Invoice, ErrMessage = ErrMessage });
             }
 
             catch (Exception ex)
