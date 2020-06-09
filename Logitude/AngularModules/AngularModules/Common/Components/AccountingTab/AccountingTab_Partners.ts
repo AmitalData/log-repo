@@ -5,6 +5,9 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { CardCurrenciesAccountingPM } from '../../EntityPMs/CardCurrenciesAccountingPM';
+import { CurrencyList } from '../../EntityLists/CurrencyList';
+import { CurrencyListService } from '../../Services/StandardLists/CurrencyListService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -17,12 +20,14 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     public DataContext = this;
     private CurrentSession = SessionLocator.SelectedSession;
     public ItemsSource: CardCurrenciesAccountingTab[] = [];
+    public IsPayablesAccountingCardVisible = true;
+    private AllCurrencies: CurrencyList[] = [];
 
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
-
+        this.InitializeComponent();
         if (SessionLocator.AccountingSystemPM) {
             if (SessionLocator.AccountingSystemPM.Code == "GI" || SessionLocator.AccountingSystemPM.Code == "AI") {
                 this.IsExternalByProductsVisible = true;
@@ -31,9 +36,43 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
 
         if (this.ObjectTableName == "Customer") {
             this.UIProperties.SetVisibility("PayablesAccountingCard", this.ObjectTableName, false);
+            this.IsPayablesAccountingCardVisible = false;
         }
 
         this.Listen();
+    }
+
+    InitializeComponent() {
+        var myService = new CurrencyListService();
+        myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllCurrencies = myResponse.Result;
+            }
+            this.BuildItemsSource();
+        });
+    }
+
+    BuildItemsSource() {
+        this.ItemsSource = [];
+
+        this.EntityPM.CardCurrenciesAccountings.forEach(item => {
+            this.ItemsSource.push(new CardCurrenciesAccountingTab(item, this));
+        });
+
+        this.AllCurrencies.forEach(list => {
+            var existingItem: CardCurrenciesAccountingTab = this.ItemsSource.filter(f => f.CurrencyId == list.Id)[0];
+            if (existingItem == null) {
+                var newItemPM = new CardCurrenciesAccountingPM(null);
+                newItemPM.Tenant = SessionLocator.Tenant;
+                newItemPM.CurrencyId = list.Id;
+                newItemPM.CurrencyName = list.EnglishName;
+                newItemPM.CurrencyCode = list.Code;
+                newItemPM.CardId = this.EntityPM.Id;
+                newItemPM.CardName = this.EntityPM.EnglishName;
+
+                this.ItemsSource.push(new CardCurrenciesAccountingTab(newItemPM, this));
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -44,7 +83,7 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
+                        this.BuildItemsSource();
                         if (this.isExternalByProductsRequestd) {
                             this.ApplyExternalByProducts();
                         }
@@ -58,6 +97,7 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.BuildItemsSource();
                     }
                 });
             }
@@ -77,7 +117,6 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     }
 
     SetUIProperties() {
-
         var isVATSplitEnabled: boolean = true;
         var isPayableFieldEnabled: boolean = false;
         var isReceivableFieldEnabled: boolean = false;
@@ -100,7 +139,6 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         this.ItemsSource.forEach(item => {
             item.SetUIProperties();
         });
-
     }
 
     get ReceivablesAccountingCard() { return this.EntityPM.ReceivablesAccountingCard; }
@@ -132,23 +170,23 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         logWindow.Show('./Common/Components/Partners/AddEdit/ExternalAccountsByProductsComponent');
     }
 }
+
 export class CardCurrenciesAccountingTab extends BaseComponent {
     public EntityPM: CardCurrenciesAccountingPM;
     public ObjectTableName: string = "CardCurrenciesAccounting";
     public DataContext = this;
-    public IsAccountingActivated = false;
 
     constructor(entityPM: CardCurrenciesAccountingPM, private father: AccountingTab_Partners) {
         super();
         this.EntityPM = entityPM;
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
     }
 
     get CardId() { return this.EntityPM.CardId; }
-    //get CurrencyName() { return this.EntityPM.CurrencyName; }
     get CurrencyId() { return this.EntityPM.CurrencyId; }
-
+    get CardName() { return this.EntityPM.CardName; }
+    get CurrencyName() { return this.EntityPM.CurrencyName; }
+    get CurrencyCode() { return this.EntityPM.CurrencyCode; }
 
     SetUIProperties() {
         var isPayableFieldEnabled: boolean = false;
@@ -157,25 +195,17 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
         if (this.father.AccountingVATSplit) {
             if (SessionLocator.Tenant == 65) {
                 if (SessionLocator.LoggedUserPM.IsCustomerCare) {
-                    isPayableFieldEnabled = this.father.EntityPM.IsPayable ? true : false;
-                    isReceivableFieldEnabled = this.father.EntityPM.IsReceivable ? true : false;
+                    isPayableFieldEnabled = isReceivableFieldEnabled = true;
                 }
             }
 
             else {
-                isPayableFieldEnabled = this.father.EntityPM.IsPayable ? true : false;
-                isReceivableFieldEnabled = this.father.EntityPM.IsReceivable ? true : false;
+                isPayableFieldEnabled = isReceivableFieldEnabled = true;
             }
         }
 
-        if (this.IsAccountingActivated) {
-            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, isPayableFieldEnabled);
-            this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, isReceivableFieldEnabled);
-        }
-        else {
-            this.UIProperties.SetEnabled("PayableDebitAccount", this.ObjectTableName, isPayableFieldEnabled);
-            this.UIProperties.SetEnabled("ReceivableCreditAccount", this.ObjectTableName, isReceivableFieldEnabled);
-        }
+        this.UIProperties.SetEnabled("PayableDebitAccount", this.ObjectTableName, isPayableFieldEnabled);
+        this.UIProperties.SetEnabled("ReceivableCreditAccount", this.ObjectTableName, isReceivableFieldEnabled);
     }
 
     get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
@@ -195,17 +225,11 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
     }
 
     OnDataInput() {
-        if (this.IsAccountingActivated) {
-
-            this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
+        if (AppTool.IsNullOrEmpty(this.PayableDebitAccount) && AppTool.IsNullOrEmpty(this.ReceivableCreditAccount)) {
+            this.father.EntityPM.RemoveCardCurrenciesAccountingPM(this.EntityPM);
         }
         else {
-            if (AppTool.IsNullOrEmpty(this.PayableDebitAccount) && AppTool.IsNullOrEmpty(this.ReceivableCreditAccount)) {
-                this.father.EntityPM.RemoveCardCurrenciesAccountingPM(this.EntityPM);
-            }
-            else {
-                this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
-            }
+            this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
         }
     }
 }

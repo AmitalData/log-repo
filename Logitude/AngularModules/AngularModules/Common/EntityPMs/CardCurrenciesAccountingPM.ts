@@ -68,6 +68,21 @@ export class CardCurrenciesAccountingPM {
     public set ChangeSetCode(newValue: string) { if (this.changeSetCode != newValue) { this.changeSetCode = newValue; this.MarkAsDirty("ChangeSetCode"); } }
        
 	 
+    private cardName: string;
+    public get CardName() { return this.cardName; }
+    public set CardName(newValue: string) { if (this.cardName != newValue) { this.cardName = newValue; this.MarkAsDirty("CardName"); } }
+       
+	 
+    private currencyName: string;
+    public get CurrencyName() { return this.currencyName; }
+    public set CurrencyName(newValue: string) { if (this.currencyName != newValue) { this.currencyName = newValue; this.MarkAsDirty("CurrencyName"); } }
+       
+	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
 
     public OldEntityPM: CardCurrenciesAccountingPM;
 	    

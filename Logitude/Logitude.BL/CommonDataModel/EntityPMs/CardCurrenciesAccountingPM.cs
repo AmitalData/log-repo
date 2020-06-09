@@ -29,5 +29,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public ChangeSetOperation ChangeSetOp { get; set; }
         public string ChangeSetCode { get; set; }
+
+        public string CardName { get; set; }
+        public string CurrencyName { get; set; }
+        public string CurrencyCode { get; set; }
+
     }
 }

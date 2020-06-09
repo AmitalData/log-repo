@@ -66,19 +66,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             BuildSearchFields(entityPM, entityPOCO);
         }
 
-        internal static void MapCardCurrenciesAccounting(CardCurrenciesAccountingPM itemPM, CardCurrenciesAccounting itemPoco, bool isNewEntity)
-        {
-            if (isNewEntity)
-            {
-                itemPoco.Id = itemPM.Id;
-                itemPoco.Tenant = itemPM.Tenant;
-                itemPoco.CardId = itemPM.CardId;
-            }
-            itemPoco.CurrencyId = itemPM.CurrencyId;
-            itemPoco.PayableDebitAccount = itemPM.PayableDebitAccount;
-            itemPoco.ReceivableCreditAccount = itemPM.ReceivableCreditAccount;
-        }
-
         private static void BuildSearchFields(CardPM entityPM, Card entityPOCO)
         {
             string mySearchFields = "";

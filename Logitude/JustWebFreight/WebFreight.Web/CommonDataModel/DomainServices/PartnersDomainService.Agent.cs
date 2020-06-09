@@ -25,6 +25,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using CWXSD;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -242,6 +243,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.Create(entityPm);
         }
 
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Agent;
         public void UpdateAgent(AgentPM currentEntity)
         {
             SecurityUtility.AuthenticationOnTenant(currentEntity.Tenant);
@@ -251,7 +253,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
                 objectContext = CommonDataContext.GetContext(currentEntity.Tenant);
             }
-
+            AgentService service = new AgentService(objectContext, currentEntity.Tenant);
             List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrenciesChangeSet = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardExternalCodeByCurrencies).Cast<CardExternalCodeByCurrencyPM>().ToList();
             foreach (CardExternalCodeByCurrencyPM itemPM in cardExternalCodeByCurrenciesChangeSet)
             {
@@ -269,10 +271,30 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
                 }
             }
-
-            AgentService service = new AgentService(objectContext, currentEntity.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            this.UpdateCardCurrenciesAccountings_Agent(currentEntity);
+          
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Agent);
             service.Update(currentEntity);
+        }
+
+        private void UpdateCardCurrenciesAccountings_Agent(AgentPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_Agent = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Agent)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
         }
 
         public void UpdateAgentList(AgentList currentEntity)

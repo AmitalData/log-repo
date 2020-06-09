@@ -43,6 +43,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       CardId = d.CardId,
                                                       ReceivableCreditAccount = d.ReceivableCreditAccount,
                                                       PayableDebitAccount = d.PayableDebitAccount,
+                                                      CurrencyName = d.Currency != null ? d.Currency.EnglishName : null,
+                                                      CurrencyCode = d.Currency != null ? d.Currency.Code : null,
+                                                      CardName = d.Card != null ? d.Card.EnglishName : null,
 
                                                   }).FirstOrDefault();
 
@@ -63,7 +66,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                  CardId = d.CardId,
                                                                  ReceivableCreditAccount = d.ReceivableCreditAccount,
                                                                  PayableDebitAccount = d.PayableDebitAccount,
-                                                             });
+                                                                 CurrencyName = d.Currency != null ? d.Currency.EnglishName : null,
+                                                                 CardName = d.Card != null ? d.Card.EnglishName : null,
+                                                                 CurrencyCode = d.Currency != null ? d.Currency.Code : null,
+                                                             }) ;
 
             return result;
         }

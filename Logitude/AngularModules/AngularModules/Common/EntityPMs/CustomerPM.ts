@@ -35,6 +35,8 @@ import {CustomerForwarderByProductPM} from './CustomerForwarderByProductPM';
 import {CustomerMediatorByProductPM} from './CustomerMediatorByProductPM';
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
+
+import {CardCurrenciesAccountingPM} from './CardCurrenciesAccountingPM';
 import {CustomerPMCustomCode} from '../EntityPMCustomCode/CustomerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -1350,7 +1352,43 @@ export class CustomerPM {
     public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
+     
+	private cardCurrenciesAccountings: CardCurrenciesAccountingPM[];
+    get  CardCurrenciesAccountings() {
+        if (this.cardCurrenciesAccountings == null) {
+            this.cardCurrenciesAccountings = [];
+        }
 
+        return this.cardCurrenciesAccountings;
+    }
+    set  CardCurrenciesAccountings(newValue: CardCurrenciesAccountingPM[]) {
+        if (this.cardCurrenciesAccountings != newValue) {
+            this.cardCurrenciesAccountings = newValue;
+        }
+    }
+    public AddCardCurrenciesAccountingPM(item: CardCurrenciesAccountingPM) {
+        if (item != null) {
+            var index = this.CardCurrenciesAccountings.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. CardCurrenciesAccountings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCardCurrenciesAccountingPM(item: CardCurrenciesAccountingPM) {
+        if (item != null) {
+            var index = this.CardCurrenciesAccountings.indexOf(item);
+            if (index > -1) {
+                this. CardCurrenciesAccountings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public CardCurrenciesAccountings: Array<CardCurrenciesAccountingPMPM>= [];
+ 
     public OldEntityPM: CustomerPM;
 		
     public IsDirty: boolean;
