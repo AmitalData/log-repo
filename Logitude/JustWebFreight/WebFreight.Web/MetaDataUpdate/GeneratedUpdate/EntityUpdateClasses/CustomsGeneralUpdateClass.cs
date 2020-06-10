@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "ac0ce86bb9e0b95a1ba1f78c177b9980";
+		public const string HashString = "2066221783aba82ce77cb4cd409e455d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "43db",
+			      				    Code =  "9e9f",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1990,6 +1990,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_GeneralMCCustomsRecallClientsForCutoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.RecallClientsForCutoms", DefaultText = "Update Importers Data",LocalDefaultText = @"עדכון נתוני יבואנים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsInterfaceManagementOTenantDefinitions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InterfaceManagement.O.TenantDefinitions", DefaultText = "Tenant Definitions",LocalDefaultText = @"הגדרות סביבה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralONotConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.NotConnectedDeclarations", DefaultText = "Not Connected Declarations",LocalDefaultText = @"הצהרות לא מקושרות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

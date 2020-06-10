@@ -225,6 +225,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+
+            if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
+            {
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
+                this.MyResponseData.HasException = false;
+
+                return;
+
+            }
             if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
                 LogMessagingUtil.Instance.AppendLine("Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value);

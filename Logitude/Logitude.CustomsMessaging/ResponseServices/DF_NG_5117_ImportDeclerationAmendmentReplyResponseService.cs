@@ -120,12 +120,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //_MyDeclarationPM.IsAmendment = true;
                     }
 
-                    else
+                    else if(customResponse.Response.Declaration!= null)
                     {
 
                         string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, true);
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
                         fromMehes = true;
                     }
 
@@ -140,7 +140,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
-                    return;
+                     return;
                 }
 
 
@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
 
                     List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                    if (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
+                    if (customResponse.Response.Declaration != null && currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
                     {
 
                         var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
