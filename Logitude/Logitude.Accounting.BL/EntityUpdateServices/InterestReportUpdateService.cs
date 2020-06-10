@@ -85,10 +85,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CancelInterestReport(entityPOCO,  entityPM);
             }
-            CreateEventByStatusCode(entityPM, entityPOCO);
         }
 
-        private void CreateEventByStatusCode(InterestReportPM entityPM, InterestReport entityPOCO)
+        protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
         {
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
@@ -108,7 +107,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
                     case "2":
                         {
-                            CreateEvent("IRIN", entityPM, TextCodesTranslator.TranslateText("InterestReport.F.ARInvoiceNumber", entityPM.Tenant, showLocals)+": "+ entityPM.ARInvoiceNumber);
+                            CreateEvent("IRIN", entityPM, TextCodesTranslator.TranslateText("InterestReport.F.ARInvoiceNumber", entityPM.Tenant, showLocals) + ": " + entityPM.ARInvoiceNumber);
                             break;
                         }
                     case "3":
@@ -125,7 +124,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+            base.Trace(entityPM, entityPOCO, changesXml);
         }
+ 
         private void CancelInterestReport(InterestReport entityPoco, InterestReportPM entityPM)
         {
           
