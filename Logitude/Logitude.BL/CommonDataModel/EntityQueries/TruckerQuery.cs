@@ -39,6 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            {
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                               AccountingVATSplit = a.Card.AccountingVATSplit,
                                AddedManually = a.AddedManually,
                                Id = a.Id,
                                Remark = a.Card.Notes,
@@ -118,6 +119,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              {
                                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                 AccountingVATSplit = a.Card.AccountingVATSplit,
                                                  AddedManually = a.AddedManually,
                                                  Id = a.Id,
                                                  Remark = a.Card.Notes,
@@ -166,6 +168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          {
                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                             AccountingVATSplit = a.Card.AccountingVATSplit,
                              AddedManually = a.AddedManually,
                              Id = a.Id,
                              Remark = a.Card.Notes,
@@ -275,6 +278,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 {
                                     ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                     PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                    AccountingVATSplit = a.Card.AccountingVATSplit,
                                     AddedManually = a.AddedManually,
                                     Id = a.Id,
                                     Remark = a.Card.Notes,

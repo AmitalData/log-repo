@@ -271,6 +271,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string SATForeignRFC { get; set; }
 
+        [DataMember]
+        public bool AccountingVATSplit { get; set; }
+
         private List<CardCurrenciesAccountingPM> cardCurrenciesAccountings;
         [Include]
         [Association("CardCurrenciesAccountingCard", "Id", "CardId")]
@@ -297,7 +300,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
-        public bool AccountingVATSplit { get; set; }
-
+        
     }
 }

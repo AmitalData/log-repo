@@ -76,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -187,6 +188,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                       GLAccountId = a.Card.GLAccountId,
                                   },
 
@@ -231,6 +233,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -339,6 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   GLAccountId = a.Card.GLAccountId,
                               },
 
@@ -602,6 +606,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -691,6 +696,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                   },
 
                               }).FirstOrDefault();
@@ -732,6 +738,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -821,6 +828,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                               },
 
                           }).FirstOrDefault();
@@ -1082,6 +1090,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CardPMId = a.Id,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                       CreateDate = a.Card.CreateDate,
                                       UpdateDate = a.Card.UpdateDate,
                                       CreatedByUserId = a.Card.CreatedByUserId,
@@ -1175,6 +1184,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           PrimaryContactId = a.Card.PrimaryContactId,
                                           ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                           PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                          AccountingVATSplit = a.Card.AccountingVATSplit,
                                       },
                                   }).FirstOrDefault();
 
@@ -1213,6 +1223,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -1306,6 +1317,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                   },
 
                               }).FirstOrDefault();
@@ -1336,6 +1348,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -1424,6 +1437,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                               },
 
                           }).FirstOrDefault();
@@ -1536,6 +1550,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CardPMId = a.Id,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                       CreateDate = a.Card.CreateDate,
                                       UpdateDate = a.Card.UpdateDate,
                                       CreatedByUserId = a.Card.CreatedByUserId,
@@ -1629,6 +1644,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           PrimaryContactId = a.Card.PrimaryContactId,
                                           ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                           PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                          AccountingVATSplit = a.Card.AccountingVATSplit,
                                       },
                                   }).FirstOrDefault();
 
@@ -1667,6 +1683,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -1760,6 +1777,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                   },
 
                               }).FirstOrDefault();
@@ -1790,6 +1808,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -1883,6 +1902,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                               },
                           }).FirstOrDefault();
 
@@ -1992,6 +2012,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CardPMId = a.Id,
                                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                   AccountingVATSplit = a.Card.AccountingVATSplit,
                                                    CreateDate = a.Card.CreateDate,
                                                    UpdateDate = a.Card.UpdateDate,
                                                    CreatedByUserId = a.Card.CreatedByUserId,
@@ -2118,6 +2139,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             CardPMId = a.Id,
                             ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                             PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                            AccountingVATSplit = a.Card.AccountingVATSplit,
                             CreateDate = a.Card.CreateDate,
                             UpdateDate = a.Card.UpdateDate,
                             CreatedByUserId = a.Card.CreatedByUserId,
@@ -2590,6 +2612,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 customerList.ReceivablesAccountingCard = customer.Card.ReceivablesAccountingCard;
                 customerList.PayablesAccountingCard = customer.Card.PayablesAccountingCard;
+
             }
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
@@ -3571,6 +3594,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -3673,6 +3697,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                   },
 
                               }).FirstOrDefault();
@@ -3716,6 +3741,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -3815,6 +3841,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                               },
 
                           }).FirstOrDefault();
@@ -4068,6 +4095,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      CardPMId = a.Id,
                                      ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                      PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                     AccountingVATSplit = a.Card.AccountingVATSplit,
                                      CreateDate = a.Card.CreateDate,
                                      UpdateDate = a.Card.UpdateDate,
                                      CreatedByUserId = a.Card.CreatedByUserId,
@@ -4156,6 +4184,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          PrimaryContactId = a.Card.PrimaryContactId,
                                          ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                          PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                         AccountingVATSplit = a.Card.AccountingVATSplit,
                                      },
 
                                  }).FirstOrDefault();
@@ -4269,6 +4298,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CardPMId = a.Id,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                                   CreateDate = a.Card.CreateDate,
                                   UpdateDate = a.Card.UpdateDate,
                                   CreatedByUserId = a.Card.CreatedByUserId,
@@ -4380,6 +4410,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      AccountingVATSplit = a.Card.AccountingVATSplit,
                                       GLAccountId = a.Card.GLAccountId,
                                   },
 
@@ -4416,6 +4447,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CardPMId = a.Id,
                               ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                               PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                              AccountingVATSplit = a.Card.AccountingVATSplit,
                               CreateDate = a.Card.CreateDate,
                               UpdateDate = a.Card.UpdateDate,
                               CreatedByUserId = a.Card.CreatedByUserId,
@@ -4525,6 +4557,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
                                   GLAccountId = a.Card.GLAccountId,
+                                  AccountingVATSplit = a.Card.AccountingVATSplit,
                               },
 
                           }).FirstOrDefault();
