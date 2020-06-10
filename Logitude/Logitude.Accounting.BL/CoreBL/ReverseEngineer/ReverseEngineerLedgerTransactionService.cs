@@ -291,6 +291,7 @@ and JournalActionTypes.Code =4
         public List<Data.Repositories.GLAccountTotalByMonthsDTO> GLAccountTotalByMonthsList { get; set; }
 
         public List<GLAccountBalanceDTO> GLAccountBalanceList { get; set; }
+        public List<GLAccountBalanceDTO> TotalOpenReconciliation { get; set; }
     }
     
 }

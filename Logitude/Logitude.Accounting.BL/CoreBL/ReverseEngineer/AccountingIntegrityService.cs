@@ -305,6 +305,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult = myAccountingIntegrityResult.BalanceInLocalCurrencyResult ?? new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList);
                     badRows = ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList.Count();
+
+                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.TotalOpenReconciliation);
+
                 }
                 catch (Exception ee)
                 {
@@ -521,6 +524,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public List<DueLocalBalanceDiffM> DueLocalBalance { get; set; }
         public bool ShouldFix { get;  set; }
         public List<LedgerOpenAmountRecoDiffM> LedgerOpenAmount { get; set; }
+        public List<GLAccountBalanceDTO> TotalOpenReconciliationResult { get;  set; }
     }
 
     public class AccountingIntegrityStep
