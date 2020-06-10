@@ -96,13 +96,15 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("CannotFilter", fieldViewModel.CannotFilter.ToString().ToLower(), fieldElement);
                 SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
                 SetAttribute("IsCustom", fieldViewModel.IsCustom.ToString().ToLower(), fieldElement);
+                SetAttribute("OriginalObjectFieldCode", GetStringValue(fieldViewModel.OriginalObjectFieldCode), fieldElement);
 
+                
 
             }
 
         }
 
-
+   
 
         public static DWObjectTableViewModel GetDWViewModelFromFile()
         {
@@ -140,7 +142,7 @@ namespace DW_Editor_Tool.Helpers
                                 }
                             }
                         }
-
+                
                         tableViewModel.BuildObsList(fieldsList);
                     }
                     else
@@ -189,7 +191,7 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.CannotFilter = GetAttributeBoolValue(fieldNode.Attributes["CannotFilter"]);
             fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
             fieldViewModel.IsCustom = GetAttributeBoolValue(fieldNode.Attributes["IsCustom"]);
-
+            fieldViewModel.OriginalObjectFieldCode = GetAttributeStringValue(fieldNode.Attributes["OriginalObjectFieldCode"]);
 
             return fieldViewModel;
         }
