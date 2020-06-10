@@ -1,6 +1,8 @@
 ﻿using Logitude.Customs.BL.CloseTables;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,22 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             requestParamsData.InterfaceTypeCode = requestParamsData.TestCase.Code;
             requestParamsData.MainInterfaceCode = requestParamsData.TestCase.Code;
             var messagingService =MessagingServiceFactoryHelper.GetMessagingService(sincroTestCaseDetail.MainInterfaceCode, "FAKFAKE");
-            string result=messagingService.CreateFakeDCA(requestParamsData);
+            string result="";
+            dynamic params1 = JObject.Parse(requestParamsData.TestCase.Param1);
+            if (Convert.ToString(params1.IsCourier) == "true")
+            {
+                FAKE_CourierMasterDeclarations fAKE_CourierMasterDeclarations = new FAKE_CourierMasterDeclarations();
+                var decList = fAKE_CourierMasterDeclarations.GetCourierMasterDeclarations(requestParamsData.AppicationId,requestParamsData.Tenant);
+                foreach(string dec in decList)
+                {
+                    requestParamsData.AppicationId = dec;
+                    result = messagingService.CreateFakeDCA(requestParamsData);
+                }
+            }
+            else
+            {
+                result = messagingService.CreateFakeDCA(requestParamsData);
+            }
             return result;
         }
     }

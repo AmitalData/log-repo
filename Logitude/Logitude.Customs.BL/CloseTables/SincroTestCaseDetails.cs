@@ -108,7 +108,7 @@ MainInterfaceCode ="2892"
                     Name = "מסר התרת ",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{}",
+                    Param1= @"{""IsCourier"":""true""}",
                     Param2= @"{}",
                     MainInterfaceCode="2470",
                 },
