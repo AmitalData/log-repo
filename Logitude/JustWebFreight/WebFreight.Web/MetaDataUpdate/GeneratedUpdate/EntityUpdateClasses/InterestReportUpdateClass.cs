@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "7e98ad7e4d7a78656b1a98c22f9f07ed";
+		public const string HashString = "b09496cf91df8372966b34ed12bbfae0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2256,6 +2256,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOSelectAtLeastOnLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectAtLeastOnLine", DefaultText = "Please select at least one line",LocalDefaultText = @"אנא בחר שורה אחת לפחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOShowInvoicingInProgressReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ShowInvoicingInProgressReports", DefaultText = "Show Invoicing In Progress Reports",LocalDefaultText = @"הצג דוחות בתהליך הפקת חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOReportIsBeingInvoiced = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportIsBeingInvoiced", DefaultText = "The Report is being Invoiced, Can't Cancel until it Finishes",LocalDefaultText = @" הדוח בתהליך הפקת חשבונית , ניתן יהיה לבטל בסיום", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

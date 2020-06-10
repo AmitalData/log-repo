@@ -170,7 +170,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     OpenConfirmWindow() {
         var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
-        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6") {
+      if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6" || this.EntityPM.InterestReportStatusCode == "9") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
         } else if (this.EntityPM.InterestReportStatusCode == "2") {
@@ -179,7 +179,9 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         else if (this.EntityPM.InterestReportStatusCode == "5") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
         }
-       
+      else if (this.EntityPM.InterestReportStatusCode == "8") {
+        confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ReportIsBeingInvoiced");
+      }
         confirmWindow.Width = 400;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
         confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
