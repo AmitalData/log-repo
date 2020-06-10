@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -31,7 +32,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             try
             {
                 interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
-                interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestReportPM.GLAccountId, interestReportPM.InterestCalculationDate, tenant);
+                DateTime? interestCalculationStartDate = GetInterestCalculationStartDate();
+                InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId, interestCalculationStartDate);
+                interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     CreateInterestReportLines();
@@ -50,6 +53,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 SetInterestReportStatusFailed();
                 throw;
             }
+        }
+
+        private DateTime? GetInterestCalculationStartDate()
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            DateTime? interestCalculationStartDate = gLAccountQueryService.GetInterestCalculationStartDate(interestReportPM.GLAccountId, tenant);
+            return interestCalculationStartDate;
         }
 
         private decimal? GetInterestReportTotalAmount(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs)

@@ -1,1191 +1,214 @@
--- Drop Foreign Key Constraint For Column BankId In Table BankAccounts That Reference To Column Id In Table BankCodes
-EXEC('IF (OBJECT_ID(''[dbo].[FK_BankAccounts_BankCodes_BankId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[BankAccounts] DROP CONSTRAINT [FK_BankAccounts_BankCodes_BankId] END');
+-- General Script From AddColumnsToCloisingReason.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+alter table QuoteClosingReasons add Id varchar(15) null;
+alter table QuoteClosingReasons add Tenant int null;
+alter table QuoteClosingReasons add Inactive bit not null default 0;
+alter table QuoteClosingReasons add CreateDate datetime null;
+alter table QuoteClosingReasons add UpdateDate datetime null;
+alter table QuoteClosingReasons add CreatedByUserId varchar(15) null;
+alter table QuoteClosingReasons add UpdatedByUserId varchar(15) null;
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('AddColumnsToCloisingReason.sxml', GETDATE(), 'alter table QuoteClosingReasons add Id varchar(15) null;
+alter table QuoteClosingReasons add Tenant int null;
+alter table QuoteClosingReasons add Inactive bit not null default 0;
+alter table QuoteClosingReasons add CreateDate datetime null;
+alter table QuoteClosingReasons add UpdateDate datetime null;
+alter table QuoteClosingReasons add CreatedByUserId varchar(15) null;
+alter table QuoteClosingReasons add UpdatedByUserId varchar(15) null;', DATEDIFF(MS,@StartTime,@EndTime), '8715bddca98d6998413492e5b92634ac', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From FillQuoteClosingReasonForTenant0Values.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @EntityId as varchar(15)
+declare @UserId as varchar(15)
+set @UserId = (select Id from Contacts where Email = 'system@tenant0.com' and Tenant = 0)
+update QuoteClosingReasons
+set
+Tenant = 0,
+CreateDate = GETDATE(),
+UpdateDate = GETDATE(),
+CreatedByUserId = @UserId,
+UpdatedByUserId = @UserId,
+Inactive = 0
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+update QuoteClosingReasons set Id = @EntityId where Code = 'EQ'
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+update QuoteClosingReasons set Id = @EntityId where Code = 'GS'
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+update QuoteClosingReasons set Id = @EntityId where Code = 'LC'
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+update QuoteClosingReasons set Id = @EntityId where Code = 'LS'
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
+update QuoteClosingReasons set Id = @EntityId where Code = 'XQ'
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('FillQuoteClosingReasonForTenant0Values.sxml', GETDATE(), 'declare @EntityId as varchar(15)
+declare @UserId as varchar(15)
+set @UserId = (select Id from Contacts where Email = ''system@tenant0.com'' and Tenant = 0)
+update QuoteClosingReasons
+set
+Tenant = 0,
+CreateDate = GETDATE(),
+UpdateDate = GETDATE(),
+CreatedByUserId = @UserId,
+UpdatedByUserId = @UserId,
+Inactive = 0
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
+update QuoteClosingReasons set Id = @EntityId where Code = ''EQ''
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
+update QuoteClosingReasons set Id = @EntityId where Code = ''GS''
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
+update QuoteClosingReasons set Id = @EntityId where Code = ''LC''
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
+update QuoteClosingReasons set Id = @EntityId where Code = ''LS''
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
+update QuoteClosingReasons set Id = @EntityId where Code = ''XQ''', DATEDIFF(MS,@StartTime,@EndTime), 'ec3186decff9423a1743f807d94b9a9a', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- Rename Column From AllowedInQueues To AllowedInTicket
+EXEC SP_RENAME 'dbo.ObjectTables.AllowedInQueues', 'AllowedInTicket', 'COLUMN';
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('02f4f22f-ece5-4e1a-8c5c-a02e3476cfb9', 'ObjectTable.dxml', 'ObjectTables', 'AllowedInQueues', 'Rename Column', GETDATE(), '-- Rename Column From AllowedInQueues To AllowedInTicketEXEC SP_RENAME ''dbo.ObjectTables.AllowedInQueues'', ''AllowedInTicket'', ''COLUMN'';');
+
+
+-- Add New Column With Name Tenant
+ALTER TABLE [dbo].[QueueMessages] ADD [Tenant] INT DEFAULT(-1) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('fdb1f592-3071-4039-8ab5-4b0844e50c81', 'QueueMessage.dxml', 'QueueMessages', 'Tenant', 'Add Column', GETDATE(), '-- Add New Column With Name TenantALTER TABLE [dbo].[QueueMessages] ADD [Tenant] INT DEFAULT(-1) NOT NULL;');
+
+
+-- Add New Column With Name Tenant
+ALTER TABLE [dbo].[QueueMessageMoreDetails] ADD [Tenant] INT DEFAULT(-1) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('cc2b6818-3261-4b04-9bed-012f2b777747', 'QueueMessageMoreDetails.dxml', 'QueueMessageMoreDetails', 'Tenant', 'Add Column', GETDATE(), '-- Add New Column With Name TenantALTER TABLE [dbo].[QueueMessageMoreDetails] ADD [Tenant] INT DEFAULT(-1) NOT NULL;');
+
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('40474bab-5efc-4009-874e-f351ad598b9f', 'BankAccount.dxml', 'BankAccounts', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column BankId In Table BankAccounts That Reference To Column Id In Table BankCodesEXEC(''IF (OBJECT_ID(''''[dbo].[FK_BankAccounts_BankCodes_BankId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[BankAccounts] DROP CONSTRAINT [FK_BankAccounts_BankCodes_BankId] END'');');
+-- Add New Column With Name QuoteClosingReasonId
+ALTER TABLE [dbo].[Quotes] ADD [QuoteClosingReasonId] VARCHAR(15) NULL;
 
--- Drop Index IX_BankAccounts_BankId From Table BankAccounts
-EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_BankAccounts_BankId'' AND object_id = OBJECT_ID(''[dbo].[BankAccounts]'', ''U'')) BEGIN DROP INDEX [IX_BankAccounts_BankId] ON [dbo].[BankAccounts] END');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c99a2092-81d9-4fd0-be0a-8a33ee8c1248', 'Quote.dxml', 'Quotes', 'QuoteClosingReasonId', 'Add Column', GETDATE(), '-- Add New Column With Name QuoteClosingReasonIdALTER TABLE [dbo].[Quotes] ADD [QuoteClosingReasonId] VARCHAR(15) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a70b1231-457f-49db-8c75-f5414d84bd27', 'BankAccount.dxml', 'BankAccounts', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_BankAccounts_BankId From Table BankAccountsEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_BankAccounts_BankId'''' AND object_id = OBJECT_ID(''''[dbo].[BankAccounts]'''', ''''U'''')) BEGIN DROP INDEX [IX_BankAccounts_BankId] ON [dbo].[BankAccounts] END'');');
 
--- Unset Nullable For Column BankId
-ALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [BankId] VARCHAR(15) NOT NULL;
+-- Unset Nullable For Column Id
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [Id] VARCHAR(15) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('cd99de26-69ab-414f-bfb1-ee017a98f073', 'BankAccount.dxml', 'BankAccounts', 'BankId', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column BankIdALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [BankId] VARCHAR(15) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('52d5e63c-d06e-45cf-aa94-d5e7695256f2', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'Id', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column IdALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [Id] VARCHAR(15) NOT NULL;');
 
--- Unset Nullable For Column BranchNumber
-ALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [BranchNumber] VARCHAR(15) NOT NULL;
+-- Unset Nullable For Column Tenant
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [Tenant] INT NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('1ca08d46-afd1-4dfe-bf1b-b2cbc12eeebc', 'BankAccount.dxml', 'BankAccounts', 'BranchNumber', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column BranchNumberALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [BranchNumber] VARCHAR(15) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('dfb9699a-aab8-473b-8426-7c8125685e7f', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'Tenant', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column TenantALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [Tenant] INT NOT NULL;');
 
--- Unset Nullable For Column AccountNumber
-ALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [AccountNumber] VARCHAR(15) NOT NULL;
+-- Unset Nullable For Column CreateDate
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [CreateDate] DATETIME NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('29adf13a-be80-4ea9-a666-9580d85b025a', 'BankAccount.dxml', 'BankAccounts', 'AccountNumber', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column AccountNumberALTER TABLE [dbo].[BankAccounts] ALTER COLUMN [AccountNumber] VARCHAR(15) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('67ef3e1f-120b-4902-907d-98ed13f99361', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreateDate', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CreateDateALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [CreateDate] DATETIME NOT NULL;');
 
+-- Unset Nullable For Column UpdateDate
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [UpdateDate] DATETIME NOT NULL;
 
--- Unset Nullable For Column EnglishName
-ALTER TABLE [dbo].[BankCodes] ALTER COLUMN [EnglishName] VARCHAR(60) NOT NULL;
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9cc50aa6-06bb-4eea-a66d-02b23464d117', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdateDate', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column UpdateDateALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [UpdateDate] DATETIME NOT NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('61165015-dc47-4950-8429-d0d69c9d0b74', 'BankCode.dxml', 'BankCodes', 'EnglishName', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column EnglishNameALTER TABLE [dbo].[BankCodes] ALTER COLUMN [EnglishName] VARCHAR(60) NOT NULL;');
+-- Unset Nullable For Column CreatedByUserId
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [CreatedByUserId] VARCHAR(15) NOT NULL;
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('817d1673-a7c0-4571-8fbf-8c39c3ded523', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreatedByUserId', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CreatedByUserIdALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [CreatedByUserId] VARCHAR(15) NOT NULL;');
 
--- Unset Nullable For Column ForeignAmountDebit
-ALTER TABLE [dbo].[GLAccountTotalByMonths] ALTER COLUMN [ForeignAmountDebit] DECIMAL(16, 2) NOT NULL;
+-- Unset Nullable For Column UpdatedByUserId
+ALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [UpdatedByUserId] VARCHAR(15) NOT NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a6aff768-71f7-427d-bb67-2e51fe0ce640', 'GLAccountTotalByMonth.dxml', 'GLAccountTotalByMonths', 'ForeignAmountDebit', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column ForeignAmountDebitALTER TABLE [dbo].[GLAccountTotalByMonths] ALTER COLUMN [ForeignAmountDebit] DECIMAL(16, 2) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('943fa2ca-22d2-4706-b481-07cdfc6f4df8', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdatedByUserId', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column UpdatedByUserIdALTER TABLE [dbo].[QuoteClosingReasons] ALTER COLUMN [UpdatedByUserId] VARCHAR(15) NOT NULL;');
 
--- Unset Nullable For Column ForeignAmountCredit
-ALTER TABLE [dbo].[GLAccountTotalByMonths] ALTER COLUMN [ForeignAmountCredit] DECIMAL(16, 2) NOT NULL;
+-- Drop Foreign Key Constraint For Column QuoteClosingReasonCode In Table Quotes That Reference To Column Code In Table QuoteClosingReasons
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4f85d5d1-034a-42f8-8a0d-4eaaac182d39', 'GLAccountTotalByMonth.dxml', 'GLAccountTotalByMonths', 'ForeignAmountCredit', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column ForeignAmountCreditALTER TABLE [dbo].[GLAccountTotalByMonths] ALTER COLUMN [ForeignAmountCredit] DECIMAL(16, 2) NOT NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3f0f22a0-ca8d-4b0e-93cc-6ce5e41fda3f', 'QuoteClosingReason.dxml', 'Quotes', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column QuoteClosingReasonCode In Table Quotes That Reference To Column Code In Table QuoteClosingReasonsEXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode] END'');');
 
+-- Drop Primary Key Constraint
+EXEC('IF (OBJECT_ID(''[dbo].[PK_dbo.QuoteClosingReasons]'', ''PK'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QuoteClosingReasons] DROP CONSTRAINT [PK_dbo.QuoteClosingReasons] END');
 
--- Unset Nullable For Column Name
-ALTER TABLE [dbo].[BookingLevels] ALTER COLUMN [Name] VARCHAR(40) NOT NULL;
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('905e978b-2be2-4dce-ae46-2bbb3fdc8de3', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', NULL, 'Drop Primary Key Constraint', GETDATE(), '-- Drop Primary Key ConstraintEXEC(''IF (OBJECT_ID(''''[dbo].[PK_dbo.QuoteClosingReasons]'''', ''''PK'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[QuoteClosingReasons] DROP CONSTRAINT [PK_dbo.QuoteClosingReasons] END'');');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('721e01cf-8f77-4be3-b1ab-5c559b360a45', 'BookingLevel.dxml', 'BookingLevels', 'Name', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column NameALTER TABLE [dbo].[BookingLevels] ALTER COLUMN [Name] VARCHAR(40) NOT NULL;');
+-- Add Primary Key Constraint
+EXEC('ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [PK_dbo.QuoteClosingReasons] PRIMARY KEY ([Id])');
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f2bc793a-e480-4278-9c75-bd87dabdf55d', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'Id', 'Add Primary Key Constraint', GETDATE(), '-- Add Primary Key ConstraintEXEC(''ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [PK_dbo.QuoteClosingReasons] PRIMARY KEY ([Id])'');');
 
--- Create New Table With Name CargoTrackingCards
-CREATE TABLE [dbo].[CargoTrackingCards](
-[Id] VARCHAR(15) NOT NULL,
-[Code] VARCHAR(15) NOT NULL,
-[EnglishName] VARCHAR(70) NOT NULL,
-[LocalName] NVARCHAR(100) NULL,
-CONSTRAINT [PK_CargoTrackingCards] PRIMARY KEY([Id])
-);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9e904cf9-b0a7-4621-b034-2ba40993cbe5', 'CargoTrackingCard.dxml', 'CargoTrackingCards', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CargoTrackingCardsCREATE TABLE [dbo].[CargoTrackingCards]([Id] VARCHAR(15) NOT NULL,[Code] VARCHAR(15) NOT NULL,[EnglishName] VARCHAR(70) NOT NULL,[LocalName] NVARCHAR(100) NULL,CONSTRAINT [PK_CargoTrackingCards] PRIMARY KEY([Id]));');
+-- Add New Column With Name FreightChargeId
+ALTER TABLE [dbo].[Tariffs] ADD [FreightChargeId] VARCHAR(15) NULL;
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8a23a272-f9f8-4e7b-9e03-f72dac7222e1', 'Tariff.dxml', 'Tariffs', 'FreightChargeId', 'Add Column', GETDATE(), '-- Add New Column With Name FreightChargeIdALTER TABLE [dbo].[Tariffs] ADD [FreightChargeId] VARCHAR(15) NULL;');
 
--- Create New Table With Name CargoTrackingPorts
-CREATE TABLE [dbo].[CargoTrackingPorts](
-[Id] VARCHAR(15) NOT NULL,
-[Code] CHAR(3) NOT NULL,
-[EnglishName] VARCHAR(40) NOT NULL,
-[CountryId] VARCHAR(15) NOT NULL,
-CONSTRAINT [PK_CargoTrackingPorts] PRIMARY KEY([Id])
-);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b034a53d-685b-4054-9b58-4426f2f9fa7b', 'CargoTrackingPort.dxml', 'CargoTrackingPorts', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CargoTrackingPortsCREATE TABLE [dbo].[CargoTrackingPorts]([Id] VARCHAR(15) NOT NULL,[Code] CHAR(3) NOT NULL,[EnglishName] VARCHAR(40) NOT NULL,[CountryId] VARCHAR(15) NOT NULL,CONSTRAINT [PK_CargoTrackingPorts] PRIMARY KEY([Id]));');
+-- Drop Foreign Key Constraint For Column QuoteClosingReasonCode In Table Quotes That Reference To Column Code In Table QuoteClosingReasons
+EXEC('IF (OBJECT_ID(''[dbo].[FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode] END');
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0612300b-7f3c-47b8-b819-3f814a984bd5', 'Quote.dxml', 'Quotes', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column QuoteClosingReasonCode In Table Quotes That Reference To Column Code In Table QuoteClosingReasonsEXEC(''IF (OBJECT_ID(''''[dbo].[FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_dbo.Quotes_dbo.QuoteClosingReasons_QuoteClosingReasonCode] END'');');
 
--- Create New Table With Name CargoTrackingShipments
-CREATE TABLE [dbo].[CargoTrackingShipments](
-[Id] VARCHAR(15) NOT NULL,
-[Tenant] INT NULL,
-[CustomerId] VARCHAR(15) NULL,
-[TransportModeId] CHAR(1) NULL,
-[Master] VARCHAR(20) NULL,
-[House] VARCHAR(20) NULL,
-[ShipmentNumber] VARCHAR(20) NULL,
-[FromPortId] VARCHAR(15) NULL,
-[ToPortId] VARCHAR(15) NULL,
-[ShipperId] VARCHAR(15) NULL,
-[ConsigneeId] VARCHAR(15) NULL,
-[GrossWeight] FLOAT NULL,
-[Volume] FLOAT NULL,
-[PickupDone] BIT NULL,
-[PickupDate] DATETIME NULL,
-CONSTRAINT [PK_CargoTrackingShipments] PRIMARY KEY([Id])
-);
+-- Drop Index IX_QuoteClosingReasonCode From Table Quotes
+EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_QuoteClosingReasonCode'' AND object_id = OBJECT_ID(''[dbo].[Quotes]'', ''U'')) BEGIN DROP INDEX [IX_QuoteClosingReasonCode] ON [dbo].[Quotes] END');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2ed4eaf7-ac4b-4525-88df-6dfce0bc25c0', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CargoTrackingShipmentsCREATE TABLE [dbo].[CargoTrackingShipments]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NULL,[CustomerId] VARCHAR(15) NULL,[TransportModeId] CHAR(1) NULL,[Master] VARCHAR(20) NULL,[House] VARCHAR(20) NULL,[ShipmentNumber] VARCHAR(20) NULL,[FromPortId] VARCHAR(15) NULL,[ToPortId] VARCHAR(15) NULL,[ShipperId] VARCHAR(15) NULL,[ConsigneeId] VARCHAR(15) NULL,[GrossWeight] FLOAT NULL,[Volume] FLOAT NULL,[PickupDone] BIT NULL,[PickupDate] DATETIME NULL,CONSTRAINT [PK_CargoTrackingShipments] PRIMARY KEY([Id]));');
-
-
--- Create New Table With Name QuoteClosingReasons
-CREATE TABLE [dbo].[QuoteClosingReasons](
-[Code] VARCHAR(2) NOT NULL,
-[Name] VARCHAR(60) NOT NULL,
-[SearchFields] NVARCHAR(1000) NULL,
-[Id] VARCHAR(15) NOT NULL,
-[Tenant] INT NOT NULL,
-[CreateDate] DATETIME NOT NULL,
-[UpdateDate] DATETIME NOT NULL,
-[CreatedByUserId] VARCHAR(15) NOT NULL,
-[UpdatedByUserId] VARCHAR(15) NOT NULL,
-[Inactive] BIT DEFAULT(0) NOT NULL,
-CONSTRAINT [PK_QuoteClosingReasons] PRIMARY KEY([Id])
-);
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('20e95c53-6e2d-453d-86fc-60e6c16e8bd8', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name QuoteClosingReasonsCREATE TABLE [dbo].[QuoteClosingReasons]([Code] VARCHAR(2) NOT NULL,[Name] VARCHAR(60) NOT NULL,[SearchFields] NVARCHAR(1000) NULL,[Id] VARCHAR(15) NOT NULL,[Tenant] INT NOT NULL,[CreateDate] DATETIME NOT NULL,[UpdateDate] DATETIME NOT NULL,[CreatedByUserId] VARCHAR(15) NOT NULL,[UpdatedByUserId] VARCHAR(15) NOT NULL,[Inactive] BIT DEFAULT(0) NOT NULL,CONSTRAINT [PK_QuoteClosingReasons] PRIMARY KEY([Id]));');
-
-
--- Unset Nullable For Column Quantity
-ALTER TABLE [dbo].[QuotePackages] ALTER COLUMN [Quantity] INT NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('84dbc346-752a-4dcd-b14e-63a3c81a4c0d', 'QuotePackage.dxml', 'QuotePackages', 'Quantity', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column QuantityALTER TABLE [dbo].[QuotePackages] ALTER COLUMN [Quantity] INT NOT NULL;');
-
-
--- Change Type From varchar To nvarchar For Column DescriptionOfGoods
-ALTER TABLE [dbo].[Shipments] ALTER COLUMN [DescriptionOfGoods] NVARCHAR(2000);
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8acc8654-03fc-46bb-a20e-8ddc76a00e81', 'Shipment.dxml', 'Shipments', 'DescriptionOfGoods', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column DescriptionOfGoodsALTER TABLE [dbo].[Shipments] ALTER COLUMN [DescriptionOfGoods] NVARCHAR(2000);');
-
-
--- Add New Column With Name AutomaticLastUpdateDate
-ALTER TABLE [dbo].[ShipmentPayableStatus] ADD [AutomaticLastUpdateDate] DATETIME DEFAULT(GETDATE()) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('259f1ace-db1c-4e0d-8974-4d30e3cdec25', 'ShipmentPayableStatus.dxml', 'ShipmentPayableStatus', 'AutomaticLastUpdateDate', 'Add Column', GETDATE(), '-- Add New Column With Name AutomaticLastUpdateDateALTER TABLE [dbo].[ShipmentPayableStatus] ADD [AutomaticLastUpdateDate] DATETIME DEFAULT(GETDATE()) NOT NULL;');
-
-
--- Create Index On ShipmentPayableStatus Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentPayableStatus_AutomaticLastUpdateDate] ON [dbo].[ShipmentPayableStatus]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('5d1b8286-d3d9-4530-a863-df4b4c38c9cb', 'ShipmentPayableStatus.dxml', 'ShipmentPayableStatus', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ShipmentPayableStatus TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentPayableStatus_AutomaticLastUpdateDate] ON [dbo].[ShipmentPayableStatus]([AutomaticLastUpdateDate])'');');
-
-
--- Add New Column With Name AutomaticLastUpdateDate
-ALTER TABLE [dbo].[ShipmentReceivableStatus] ADD [AutomaticLastUpdateDate] DATETIME DEFAULT(GETDATE()) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9b2f8d9c-1eec-41fb-87d3-3f8202f3ddff', 'ShipmentReceivableStatus.dxml', 'ShipmentReceivableStatus', 'AutomaticLastUpdateDate', 'Add Column', GETDATE(), '-- Add New Column With Name AutomaticLastUpdateDateALTER TABLE [dbo].[ShipmentReceivableStatus] ADD [AutomaticLastUpdateDate] DATETIME DEFAULT(GETDATE()) NOT NULL;');
-
-
--- Create Index On ShipmentReceivableStatus Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentReceivableStatus_AutomaticLastUpdateDate] ON [dbo].[ShipmentReceivableStatus]([AutomaticLastUpdateDate])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('29b152ce-3424-4e9d-8d53-28865f8ebe4d', 'ShipmentReceivableStatus.dxml', 'ShipmentReceivableStatus', 'AutomaticLastUpdateDate', 'Create Index', GETDATE(), '-- Create Index On ShipmentReceivableStatus TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentReceivableStatus_AutomaticLastUpdateDate] ON [dbo].[ShipmentReceivableStatus]([AutomaticLastUpdateDate])'');');
-
-
--- Change Type From varchar To nvarchar For Column EnglishName
-ALTER TABLE [dbo].[SpecialServicesTypes] ALTER COLUMN [EnglishName] NVARCHAR(100) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('31f4ac45-329f-4aa0-b35a-68a1ce95b70e', 'SpecialServicesType.dxml', 'SpecialServicesTypes', 'EnglishName', 'Alter Column Type', GETDATE(), '-- Change Type From varchar To nvarchar For Column EnglishNameALTER TABLE [dbo].[SpecialServicesTypes] ALTER COLUMN [EnglishName] NVARCHAR(100) NOT NULL;');
-
-
--- Add Foreign Key Constraint For Column BankId In Table BankAccounts As Reference To Column Id In Table BankCodes
-EXEC('ALTER TABLE [dbo].[BankAccounts] ADD CONSTRAINT [FK_BankAccounts_BankCodes_BankId] FOREIGN KEY([BankId]) REFERENCES [dbo].[BankCodes]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('6c48179e-9225-48d1-abd7-634925762da3', 'BankAccount.dxml', 'BankAccounts', 'BankId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column BankId In Table BankAccounts As Reference To Column Id In Table BankCodesEXEC(''ALTER TABLE [dbo].[BankAccounts] ADD CONSTRAINT [FK_BankAccounts_BankCodes_BankId] FOREIGN KEY([BankId]) REFERENCES [dbo].[BankCodes]([Id])'');');
-
--- Create Index On BankAccounts Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_BankAccounts_BankId] ON [dbo].[BankAccounts]([BankId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7299e10d-1555-4843-b81c-7bbb5bc185cf', 'BankAccount.dxml', 'BankAccounts', 'BankId', 'Create Index', GETDATE(), '-- Create Index On BankAccounts TableEXEC(''CREATE NONCLUSTERED INDEX [IX_BankAccounts_BankId] ON [dbo].[BankAccounts]([BankId])'');');
-
-
--- Add Foreign Key Constraint For Column CountryId In Table CargoTrackingPorts As Reference To Column Id In Table Countries
-EXEC('ALTER TABLE [dbo].[CargoTrackingPorts] ADD CONSTRAINT [FK_CargoTrackingPorts_Countries_CountryId] FOREIGN KEY([CountryId]) REFERENCES [dbo].[Countries]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d0c9eb1d-cf54-45cc-b04b-6911e7f3182d', 'CargoTrackingPort.dxml', 'CargoTrackingPorts', 'CountryId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CountryId In Table CargoTrackingPorts As Reference To Column Id In Table CountriesEXEC(''ALTER TABLE [dbo].[CargoTrackingPorts] ADD CONSTRAINT [FK_CargoTrackingPorts_Countries_CountryId] FOREIGN KEY([CountryId]) REFERENCES [dbo].[Countries]([Id])'');');
-
--- Create Index On CargoTrackingPorts Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingPorts_CountryId] ON [dbo].[CargoTrackingPorts]([CountryId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('64f3ef9c-8337-4596-b787-586e45f655bf', 'CargoTrackingPort.dxml', 'CargoTrackingPorts', 'CountryId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingPorts TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingPorts_CountryId] ON [dbo].[CargoTrackingPorts]([CountryId])'');');
-
-
--- Add Foreign Key Constraint For Column CustomerId In Table CargoTrackingShipments As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_CustomerId] FOREIGN KEY([CustomerId]) REFERENCES [dbo].[Cards]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a5b6662a-cc1c-4c6c-8ad1-980e8251c7fb', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'CustomerId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CustomerId In Table CargoTrackingShipments As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_CustomerId] FOREIGN KEY([CustomerId]) REFERENCES [dbo].[Cards]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_CustomerId] ON [dbo].[CargoTrackingShipments]([CustomerId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('89c974e5-05aa-413f-a622-08cdd09258e4', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'CustomerId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_CustomerId] ON [dbo].[CargoTrackingShipments]([CustomerId])'');');
-
--- Add Foreign Key Constraint For Column ShipperId In Table CargoTrackingShipments As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_ShipperId] FOREIGN KEY([ShipperId]) REFERENCES [dbo].[Cards]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e5f14a60-95d7-4a01-9bbd-d827dbe3198b', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ShipperId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ShipperId In Table CargoTrackingShipments As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_ShipperId] FOREIGN KEY([ShipperId]) REFERENCES [dbo].[Cards]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ShipperId] ON [dbo].[CargoTrackingShipments]([ShipperId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9844d052-06b4-403a-b1e6-5cbab534d5c6', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ShipperId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ShipperId] ON [dbo].[CargoTrackingShipments]([ShipperId])'');');
-
--- Add Foreign Key Constraint For Column ConsigneeId In Table CargoTrackingShipments As Reference To Column Id In Table Cards
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_ConsigneeId] FOREIGN KEY([ConsigneeId]) REFERENCES [dbo].[Cards]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c8582cd6-08fe-47a3-aa4f-e5f6b836a6af', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ConsigneeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ConsigneeId In Table CargoTrackingShipments As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Cards_ConsigneeId] FOREIGN KEY([ConsigneeId]) REFERENCES [dbo].[Cards]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ConsigneeId] ON [dbo].[CargoTrackingShipments]([ConsigneeId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('059923bd-dfa9-4066-9d20-9ac7499de83b', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ConsigneeId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ConsigneeId] ON [dbo].[CargoTrackingShipments]([ConsigneeId])'');');
-
--- Add Foreign Key Constraint For Column FromPortId In Table CargoTrackingShipments As Reference To Column Id In Table Ports
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Ports_FromPortId] FOREIGN KEY([FromPortId]) REFERENCES [dbo].[Ports]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('52399c22-794f-49db-921c-c22cf697aa82', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'FromPortId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column FromPortId In Table CargoTrackingShipments As Reference To Column Id In Table PortsEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Ports_FromPortId] FOREIGN KEY([FromPortId]) REFERENCES [dbo].[Ports]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_FromPortId] ON [dbo].[CargoTrackingShipments]([FromPortId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3592e606-5421-4050-a500-61f2c97e6a8a', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'FromPortId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_FromPortId] ON [dbo].[CargoTrackingShipments]([FromPortId])'');');
-
--- Add Foreign Key Constraint For Column ToPortId In Table CargoTrackingShipments As Reference To Column Id In Table Ports
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Ports_ToPortId] FOREIGN KEY([ToPortId]) REFERENCES [dbo].[Ports]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('289a1bbc-5f9d-4ccf-adbb-2cae025e09e0', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ToPortId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ToPortId In Table CargoTrackingShipments As Reference To Column Id In Table PortsEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_Ports_ToPortId] FOREIGN KEY([ToPortId]) REFERENCES [dbo].[Ports]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ToPortId] ON [dbo].[CargoTrackingShipments]([ToPortId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('01736ef3-af2f-42c9-90d2-d866e728c49d', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'ToPortId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_ToPortId] ON [dbo].[CargoTrackingShipments]([ToPortId])'');');
-
--- Add Foreign Key Constraint For Column TransportModeId In Table CargoTrackingShipments As Reference To Column Id In Table TransportModes
-EXEC('ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_TransportModes_TransportModeId] FOREIGN KEY([TransportModeId]) REFERENCES [dbo].[TransportModes]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('aff88e4e-307e-4633-bfa8-e27dfea515b2', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'TransportModeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column TransportModeId In Table CargoTrackingShipments As Reference To Column Id In Table TransportModesEXEC(''ALTER TABLE [dbo].[CargoTrackingShipments] ADD CONSTRAINT [FK_CargoTrackingShipments_TransportModes_TransportModeId] FOREIGN KEY([TransportModeId]) REFERENCES [dbo].[TransportModes]([Id])'');');
-
--- Create Index On CargoTrackingShipments Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_TransportModeId] ON [dbo].[CargoTrackingShipments]([TransportModeId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3a2420eb-0c6d-45cf-81d3-1e9134770d4a', 'CargoTrackingShipment.dxml', 'CargoTrackingShipments', 'TransportModeId', 'Create Index', GETDATE(), '-- Create Index On CargoTrackingShipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_TransportModeId] ON [dbo].[CargoTrackingShipments]([TransportModeId])'');');
-
-
--- Add Foreign Key Constraint For Column ObjectTableId In Table CommunicationLogs As Reference To Column Id In Table ObjectTables
-EXEC('ALTER TABLE [dbo].[CommunicationLogs] ADD CONSTRAINT [FK_CommunicationLogs_ObjectTables_ObjectTableId] FOREIGN KEY([ObjectTableId]) REFERENCES [dbo].[ObjectTables]([Id])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9fa4ee6b-9b08-42d5-a828-eb583ed24325', 'CommunicationLog.dxml', 'CommunicationLogs', 'ObjectTableId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ObjectTableId In Table CommunicationLogs As Reference To Column Id In Table ObjectTablesEXEC(''ALTER TABLE [dbo].[CommunicationLogs] ADD CONSTRAINT [FK_CommunicationLogs_ObjectTables_ObjectTableId] FOREIGN KEY([ObjectTableId]) REFERENCES [dbo].[ObjectTables]([Id])'');');
-
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('9d228b3d-db86-49d2-bd66-e4b51584dd39', 'Quote.dxml', 'Quotes', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_QuoteClosingReasonCode From Table QuotesEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_QuoteClosingReasonCode'''' AND object_id = OBJECT_ID(''''[dbo].[Quotes]'''', ''''U'''')) BEGIN DROP INDEX [IX_QuoteClosingReasonCode] ON [dbo].[Quotes] END'');');
 
 -- Add Foreign Key Constraint For Column QuoteClosingReasonId In Table Quotes As Reference To Column Id In Table QuoteClosingReasons
 EXEC('ALTER TABLE [dbo].[Quotes] ADD CONSTRAINT [FK_Quotes_QuoteClosingReasons_QuoteClosingReasonId] FOREIGN KEY([QuoteClosingReasonId]) REFERENCES [dbo].[QuoteClosingReasons]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('6968897f-f58f-4f2a-b564-555311e1574b', 'Quote.dxml', 'Quotes', 'QuoteClosingReasonId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column QuoteClosingReasonId In Table Quotes As Reference To Column Id In Table QuoteClosingReasonsEXEC(''ALTER TABLE [dbo].[Quotes] ADD CONSTRAINT [FK_Quotes_QuoteClosingReasons_QuoteClosingReasonId] FOREIGN KEY([QuoteClosingReasonId]) REFERENCES [dbo].[QuoteClosingReasons]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ee024c76-16d7-433a-a00c-084407c455c8', 'Quote.dxml', 'Quotes', 'QuoteClosingReasonId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column QuoteClosingReasonId In Table Quotes As Reference To Column Id In Table QuoteClosingReasonsEXEC(''ALTER TABLE [dbo].[Quotes] ADD CONSTRAINT [FK_Quotes_QuoteClosingReasons_QuoteClosingReasonId] FOREIGN KEY([QuoteClosingReasonId]) REFERENCES [dbo].[QuoteClosingReasons]([Id])'');');
 
 -- Create Index On Quotes Table
 EXEC('CREATE NONCLUSTERED INDEX [IX_Quotes_QuoteClosingReasonId] ON [dbo].[Quotes]([QuoteClosingReasonId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7182980f-3b75-4cfc-906b-e2e51a40156d', 'Quote.dxml', 'Quotes', 'QuoteClosingReasonId', 'Create Index', GETDATE(), '-- Create Index On Quotes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Quotes_QuoteClosingReasonId] ON [dbo].[Quotes]([QuoteClosingReasonId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('00f14025-752a-4c1b-9c51-75b36dec2ea0', 'Quote.dxml', 'Quotes', 'QuoteClosingReasonId', 'Create Index', GETDATE(), '-- Create Index On Quotes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Quotes_QuoteClosingReasonId] ON [dbo].[Quotes]([QuoteClosingReasonId])'');');
 
 
 -- Add Foreign Key Constraint For Column CreatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table Users
 EXEC('ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_CreatedByUserId] FOREIGN KEY([CreatedByUserId]) REFERENCES [dbo].[Users]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8a1dc9cd-e719-4860-9816-e20c62f01d40', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CreatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_CreatedByUserId] FOREIGN KEY([CreatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('67db4e5d-0c50-4565-82b2-71dd259097dc', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CreatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_CreatedByUserId] FOREIGN KEY([CreatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
 
 -- Create Index On QuoteClosingReasons Table
 EXEC('CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_CreatedByUserId] ON [dbo].[QuoteClosingReasons]([CreatedByUserId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c0eeba81-e977-4ef5-9df4-9167758274bc', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreatedByUserId', 'Create Index', GETDATE(), '-- Create Index On QuoteClosingReasons TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_CreatedByUserId] ON [dbo].[QuoteClosingReasons]([CreatedByUserId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0bdfdc9d-30c7-46ca-960e-b004c9810fad', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'CreatedByUserId', 'Create Index', GETDATE(), '-- Create Index On QuoteClosingReasons TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_CreatedByUserId] ON [dbo].[QuoteClosingReasons]([CreatedByUserId])'');');
 
 -- Add Foreign Key Constraint For Column UpdatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table Users
 EXEC('ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_UpdatedByUserId] FOREIGN KEY([UpdatedByUserId]) REFERENCES [dbo].[Users]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4f760b0a-3ec8-4f83-87c7-8cd1ce95dbe9', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column UpdatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_UpdatedByUserId] FOREIGN KEY([UpdatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4106c7ed-1baf-4059-a3c2-020c02155740', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column UpdatedByUserId In Table QuoteClosingReasons As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[QuoteClosingReasons] ADD CONSTRAINT [FK_QuoteClosingReasons_Users_UpdatedByUserId] FOREIGN KEY([UpdatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
 
 -- Create Index On QuoteClosingReasons Table
 EXEC('CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_UpdatedByUserId] ON [dbo].[QuoteClosingReasons]([UpdatedByUserId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4be801a5-7edf-4dc2-90ae-2da22df4752f', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdatedByUserId', 'Create Index', GETDATE(), '-- Create Index On QuoteClosingReasons TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_UpdatedByUserId] ON [dbo].[QuoteClosingReasons]([UpdatedByUserId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('83a9f954-06db-4b78-abf7-dac7c0fb7f2d', 'QuoteClosingReason.dxml', 'QuoteClosingReasons', 'UpdatedByUserId', 'Create Index', GETDATE(), '-- Create Index On QuoteClosingReasons TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteClosingReasons_UpdatedByUserId] ON [dbo].[QuoteClosingReasons]([UpdatedByUserId])'');');
 
 
--- DataView Script From CardGLAccountDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[CardGLAccountDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[CardGLAccountDataView] END');
-EXEC('CREATE VIEW [dbo].[CardGLAccountDataView]
-AS SELECT
-dbo.Cards.EnglishName AS CardEnglishName, dbo.Cards.GLAccountId AS CardGLAccountId, dbo.GLAccounts.EnglishName AS GLAccountEnglishName,
-dbo.Cards.SalesmanUserId, SalesMan.EnglishName AS SalesManEnglishName, dbo.Cards.CollectorId, Collectors.EnglishName AS CollectorEnglishName,
-dbo.GLAccounts.Id, dbo.GLAccounts.Tenant, dbo.GLAccounts.InternalNumber, dbo.GLAccounts.AccountTypeCode, dbo.GLAccounts.DisplayNumber,
-dbo.GLAccounts.LocalName AS GLAccountLocalName, dbo.GLAccounts.SearchFields, dbo.GLAccounts.IsMultiCurrency, dbo.GLAccounts.CurrencyId,
-dbo.GLAccounts.RevenueExpenseType, dbo.GLAccounts.IsControlAccount, dbo.GLAccounts.ChartOfAccountsId, dbo.GLAccounts.Inactive,
-dbo.GLAccounts.ChartOfAccountsTypeCode, dbo.GLAccounts.ReconcileMethodCode, dbo.GLAccounts.ControlAccountId, dbo.GLAccounts.AutomaticReconcileId,
-dbo.GLAccounts.PreviousEnglishName, dbo.GLAccounts.PreviousEnglishNameChangeDate, dbo.GLAccounts.PreviousLocalName,
-dbo.GLAccounts.PreviousLocalNameChangeDate, dbo.GLAccounts.PreviousNumber, dbo.GLAccounts.PreviousNumberChangeDate,
-dbo.GLAccounts.PreviousChartOfAccountsId, dbo.GLAccounts.PreviousChartOfAccountsChangeDate, MOREDATA.BalanceInLocalCurrency,
-dbo.GLAccounts.RevaluationEnabled, dbo.GLAccounts.ParentAccountId, dbo.GLAccounts.Category2Id, dbo.GLAccounts.Category3Id, dbo.GLAccounts.Category4Id,
-dbo.GLAccounts.Category5Id, dbo.GLAccounts.Category1Id, dbo.GLAccounts.IsVATExempt, dbo.GLAccounts.CustomerGLAccountId, dbo.Cards.VatNumber,
-MOREDATA.LocalBalanceInDue, MOREDATA.NextDueDate,
-dbo.Cards.LocalName AS CardLocalName, SalesMan.LocalName AS SalesManLocalName, Collectors.LocalName AS CollectorLocalName, dbo.Cards.VatTypeId,
-dbo.Cards.CountryId, dbo.Cards.CountryCode, dbo.Cards.CityName, dbo.Cards.CountryName, dbo.Cards.PaymentTermId,
-dbo.ChartOfAccounts.LocalName AS ChartOfAccountsLocalName, dbo.ChartOfAccounts.EnglishName AS ChartOfAccountsEnglishName,
-dbo.ChartOfAccounts.Code AS ChartOfAccountsCode
-FROM dbo.Cards
-LEFT OUTER JOIN
-dbo.Contacts
-AS Collectors
-ON dbo.Cards.CollectorId = Collectors.Id
-LEFT OUTER JOIN
-dbo.Contacts
-AS SalesMan
-ON dbo.Cards.SalesmanUserId = SalesMan.Id
-RIGHT OUTER JOIN
-dbo.GLAccounts
-ON dbo.Cards.GLAccountId = dbo.GLAccounts.Id
-LEFT OUTER JOIN
-dbo.ChartOfAccounts
-ON dbo.GLAccounts.ChartOfAccountsId = dbo.ChartOfAccounts.Id
-INNER JOIN dbo.GLAccountMoreDatas
-AS MOREDATA
-ON dbo.GLAccounts.Id = MOREDATA.AccountId');
+-- Add Foreign Key Constraint For Column FreightChargeId In Table Tariffs As Reference To Column Id In Table ChargesTypes
+EXEC('ALTER TABLE [dbo].[Tariffs] ADD CONSTRAINT [FK_Tariffs_ChargesTypes_FreightChargeId] FOREIGN KEY([FreightChargeId]) REFERENCES [dbo].[ChargesTypes]([Id])');
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('518468da-29c9-47fa-b9a6-4044fc18efac', 'Tariff.dxml', 'Tariffs', 'FreightChargeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column FreightChargeId In Table Tariffs As Reference To Column Id In Table ChargesTypesEXEC(''ALTER TABLE [dbo].[Tariffs] ADD CONSTRAINT [FK_Tariffs_ChargesTypes_FreightChargeId] FOREIGN KEY([FreightChargeId]) REFERENCES [dbo].[ChargesTypes]([Id])'');');
 
--- DataView Script From CustomersDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[CustomersDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[CustomersDataView] END');
-EXEC('CREATE VIEW [dbo].[CustomersDataView]
-AS
-SELECT
-dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,dbo.cards.Address1,dbo.cards.Address2,dbo.cards.Phone,dbo.Cards.LocalName,dbo.Cards.ReceivablesAccountingCard, dbo.Cards.PayablesAccountingCard, dbo.Cards.ExternalId2,dbo.Cards.InActive,dbo.Cards.EnableConsolidationInvoices, dbo.Cards.ExternalAccountingBusinessArea, dbo.Cards.SATPaymentMethodCode,dbo.Cards.SATForeignRFC,dbo.Cards.MetodoPagoCode,dbo.Cards.UsoCFDICode
-,dbo.Cards.Notes,dbo.Customers.BillToId,dbo.Cards.Website,dbo.Customers.SalesmanUserId,dbo.Cards.PaymentTermId,dbo.Cards.CreateDate,dbo.Cards.UpdateDate,dbo.Cards.CreatedByUserId,dbo.Cards.UpdatedByUserId
-,dbo.Cards.VatNumber,dbo.Cards.SearchFields,dbo.PaymentTerms.EnglishName as PaymentTermEnglishName,dbo.Cards.InvoiceCurrencyId,dbo.Customers.LastShipmentDate,dbo.Customers.StartWorkingDate,dbo.Customers.StartWorkingManuallySet
-,AccountManagerUserContacts.EnglishName as AccountManagerUserEnglishName,SalesmanUserContacts.EnglishName as SalesmanUserEnglishName,CollectorContacts.EnglishName as CollectorName,ClassifierContacts.EnglishName as ClassifierName
-,dbo.Cards.CityName ,dbo.Cards.VatTypeId,BillToCards.EnglishName as BillToName,dbo.Customers.Field1,dbo.Customers.Field2,dbo.Customers.Field3,dbo.Customers.Field4,dbo.Customers.Field5,dbo.Customers.Field6,dbo.Customers.Field7,dbo.Customers.Field8
-,dbo.Customers.Field9,dbo.Customers.Field10,dbo.Ranks.Code as RankCode,dbo.Ranks.Name as RankName
-,dbo.Cards.SharedLogisticsInvitationStatusCode, dbo.Customers.ActivityWatch
-,dbo.SharedLogisticsInvitationStatus.Name as SharedLogisticsInvitationStatusName
-,dbo.cards.LastLoginDate,dbo.cards.InvitationDate,dbo.Industries.Name as IndustryName
-,dbo.customers.LeadDescription,dbo.customers.ClassifierId ,dbo.Cards.IsCustomer,dbo.Customers.CollectorId,dbo.customers.FreelancerId,FreelancerContacts.EnglishName as FreelancerName,dbo.customers.ForwarderId,ForwarderCards.EnglishName as ForwarderName
-,dbo.Customers.CustomsAgentId,CustomsAgentCards.EnglishName as CustomsAgentName,dbo.customers.MediatorId,MediatorCards.EnglishName as MediatorName,dbo.customers.BeforeDeactiveStatusCode,dbo.Customers.ReadyForActivationDate,CreatedByUserContacts.EnglishName as UpdatedByUserName
-,PrimaryContacts.EnglishName as PrimaryContactName
-,PrimaryContacts.Email as PrimaryContactEmail
-,dbo.cards.PrimaryContactId,dbo.customers.RegionId,dbo.regions.Name as RegionName, dbo.customers.CustomerStatusCode,dbo.CustomerStatus.Name as CustomerStatusName
-,dbo.Customers.RankId, dbo.Customers.LeadSourceId, LeadSources.Name as LeadSourceName, dbo.Customers.IndustryId
-,dbo.cards.CountryId ,dbo.cards.CountryCode, dbo.cards.CountryName
-,dbo.customers.AccountManagerUserId,CreatedByUserContacts.EnglishName as CreatedByUserName,dbo.cards.code,customers.FirstShipmentDate,dbo.cards.IsActiveForMobile as  IsActiveForMobile
-,SalesmanUsers.BusinessUnitId as SalesmanBusinessUnitId,dbo.customers.FirstInvoiceDate,customers.LastOpportunityDate,customers.LastOpportunitySubject,customers.LastOpportunityStatus, customers.LastMeetingDate,customers.LastCallDate,customers.LastQuoteDate,customers.LastInteractionDate
-,InvoiceCurrency.Code as InvoiceCurrencyCode
-,dbo.Customers.KnownConsignor, dbo.Customers.KCExpirationDate,
-dbo.Cards.PartnerTypeId, dbo.customers.CustomerSizeId, CustomerSizes.Name as CustomerSizeName, dbo.Cards.SupportNotes,
-dbo.Customers.IsCreditLimitEnabled, dbo.Customers.CreditLimitAmount, dbo.Customers.CreditLimitOpenBalance, dbo.Customers.CreditLimitWarningPercentage,
-dbo.Customers.BlockNewInvoiceCreation, dbo.Customers.BlockNewShipmentCreation,dbo.Customers.CompetitorFields,
-dbo.Customers.ActivatedByUserId, dbo.Customers.ActivationRequestedByUserId, dbo.Customers.SetAsInactiveByUserId,
-ActivatedByUserContacts.EnglishName as ActivatedByUserName, SetAsInactiveByUserContacts.EnglishName as SetAsInactiveByName,
-ActivationRequestedByUserContacts.EnglishName as ActivationRequestedByUserName, dbo.Customers.ActivationDate, dbo.Customers.InactiveDate, dbo.Customers.ActivationRequestDate,dbo.cards.CreatedByPartner, dbo.cards.StateName
-FROM            dbo.Customers Inner join
-dbo.Cards ON  dbo.Customers.Id = dbo.Cards.Id LEFT OUTER JOIN
-dbo.PaymentTerms ON dbo.Cards.PaymentTermId = dbo.PaymentTerms.Id LEFT OUTER JOIN
-dbo.Contacts AS AccountManagerUserContacts ON dbo.Customers.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS SalesmanUserContacts ON dbo.Customers.SalesmanUserId = SalesmanUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS CollectorContacts ON dbo.Customers.CollectorId = CollectorContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS ClassifierContacts ON dbo.Customers.ClassifierId = ClassifierContacts.Id LEFT OUTER JOIN
-dbo.Cards AS BillToCards ON dbo.Customers.BillToId = BillToCards.Id LEFT OUTER JOIN
-dbo.Ranks  ON dbo.Customers.RankId = dbo.Ranks.Id LEFT OUTER JOIN
-dbo.SharedLogisticsInvitationStatus ON dbo.Cards.SharedLogisticsInvitationStatusCode = dbo.SharedLogisticsInvitationStatus.Code LEFT OUTER JOIN
-dbo.Industries ON dbo.Customers.IndustryId = dbo.Industries.Id LEFT OUTER JOIN
-dbo.Contacts AS FreelancerContacts ON dbo.Customers.FreelancerId = FreelancerContacts.Id LEFT OUTER JOIN
-dbo.Cards AS ForwarderCards ON dbo.Customers.ForwarderId = ForwarderCards.Id LEFT OUTER JOIN
-dbo.Cards AS CustomsAgentCards ON dbo.Customers.CustomsAgentId = CustomsAgentCards.Id LEFT OUTER JOIN
-dbo.Cards AS MediatorCards ON dbo.Customers.MediatorId = MediatorCards.Id LEFT OUTER JOIN
-dbo.Contacts AS CreatedByUserContacts ON dbo.Cards.CreatedByUserId = CreatedByUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS UpdatedByUserContacts ON dbo.Cards.UpdatedByUserId = UpdatedByUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS PrimaryContacts ON dbo.Cards.PrimaryContactId = PrimaryContacts.Id LEFT OUTER JOIN
-dbo.Regions ON dbo.Customers.RegionId = dbo.Regions.Id LEFT OUTER JOIN
-dbo.CustomerStatus ON dbo.Customers.CustomerStatusCode = dbo.CustomerStatus.Code LEFT OUTER JOIN
-dbo.Users as SalesmanUsers on dbo.customers.SalesmanUserId = SalesmanUsers.Id LEFT OUTER JOIN
-dbo.Countries as MainAddressCountries on dbo.Cards.CountryId = MainAddressCountries.Id LEFT OUTER JOIN
-dbo.CustomerSizes ON dbo.Customers.CustomerSizeId = CustomerSizes.Id LEFT OUTER JOIN
-dbo.LeadSources ON dbo.Customers.LeadSourceId = LeadSources.Id LEFT OUTER JOIN
-dbo.Currencies as InvoiceCurrency on dbo.Cards.InvoiceCurrencyId = InvoiceCurrency.Id LEFT OUTER JOIN
-dbo.Contacts AS ActivatedByUserContacts ON dbo.Customers.ActivatedByUserId = ActivatedByUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
-where dbo.Cards.PartnerTypeId <> ''AC''');
+-- Create Index On Tariffs Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_Tariffs_FreightChargeId] ON [dbo].[Tariffs]([FreightChargeId])');
 
-
--- DataView Script From AgingReportInvoiceDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[AgingReportInvoiceDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[AgingReportInvoiceDataView] END');
-EXEC('CREATE VIEW [dbo].[AgingReportInvoiceDataView]
-AS
-SELECT        Id, Tenant, InvoiceNumber, GETDATE() AS CurrentDate, DueDate, CONVERT(varchar(40), CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE())
-- DueDate) < 30) THEN ''1-30'' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60) THEN ''31-60'' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90)
-THEN ''61-90'' ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN ''+90'' ELSE '''' END) END) END) END) ELSE ''Current'' END) AS DateRange,
-AmountDueInLocalCurrency, AmountDueInProfitCurrency, CONVERT(int, CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE()) - DueDate) < 30)
-THEN 4 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60) THEN 3 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90) THEN 2 ELSE (CASE WHEN (((GETDATE())
-- DueDate) > 90) THEN 1 ELSE '''' END) END) END) END) ELSE 5 END) AS IndexOrder, StatusCode, BillToId,BranchId
-FROM            dbo.ARInvoices
-where IsClosed=0 and IsAutoCredit=0 and IsCancelled=0');
-
-
--- DataView Script From APInvoiceAgingReportDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[APAgingReportDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[APAgingReportDataView] END');
-EXEC('CREATE VIEW [dbo].[APAgingReportDataView]
-AS
-SELECT        Id, Tenant, InvoiceNumber, GETDATE() AS CurrentDate, DueDate, CONVERT(varchar(40), CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE())
-- DueDate) < 30) THEN ''1-30'' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60) THEN ''31-60'' ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90)
-THEN ''61-90'' ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN ''+90'' ELSE '''' END) END) END) END) ELSE ''Current'' END) AS DateRange, AmountDueInLocalCurrency, AmountDueInProfitCurrency ,
-CONVERT(int, CASE WHEN DueDate < GETDATE() THEN (CASE WHEN (((GETDATE()) - DueDate) < 30) THEN 4 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 60)
-THEN 3 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90) THEN 2 ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN 1 ELSE '''' END) END) END) END)
-ELSE 5 END) AS IndexOrder, StatusCode,BranchId
-FROM            dbo.APInvoices
-where IsClosed=0');
-
-
--- DataView Script From QuoteFollowUpDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[QuoteFollowUpDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[QuoteFollowUpDataView] END');
-EXEC('CREATE VIEW [dbo].[QuoteFollowUpDataView]
-AS
-SELECT        dbo.Quotes.Id, dbo.Quotes.Tenant, dbo.Quotes.QuoteNumber, dbo.Quotes.ShipperReference1, dbo.Quotes.ShipperReference2, dbo.Quotes.ConsigneeReference1,
-dbo.Quotes.ConsigneeReference2, dbo.Quotes.OpenDate, dbo.Quotes.Notes, dbo.Quotes.DescriptionOfGoods, dbo.Quotes.IsClosed, dbo.Quotes.ChargeableWeight,
-dbo.Quotes.GrossWeight, dbo.Quotes.GrossWeightInKG, dbo.Quotes.GrossWeightPerTon, dbo.Quotes.LastModified, dbo.Quotes.Field1, dbo.Quotes.Field2, dbo.Quotes.Field3, dbo.Quotes.Field4, dbo.Quotes.Field5,
-dbo.Quotes.Field6, dbo.Quotes.Field7, dbo.Quotes.Field8, dbo.Quotes.Field9, dbo.Quotes.Field10, dbo.Quotes.DimensionsUnitCode,
-dbo.Quotes.GrossWeightUnitCode, dbo.Quotes.Volume, dbo.Quotes.NumberOfContainers, dbo.Quotes.NumberOfPackages, dbo.Quotes.Ratio,
-dbo.Quotes.VolumeUnitCode, dbo.Quotes.ShipmentTypeId, dbo.Quotes.ShipperId, dbo.Quotes.ConsigneeId,
-dbo.Quotes.BusinessUnitId, dbo.Quotes.QuoteClosingReasonCode, dbo.Quotes.ValueOfGoods,
-dbo.Quotes.ShipperContactId, dbo.Quotes.ConsigneeContactId, dbo.Quotes.FromPortId, dbo.Quotes.ToPortId, dbo.Quotes.ProductCode,
-dbo.Quotes.IncotermId, dbo.Quotes.SalesmanUserId, dbo.Quotes.CreatedByUserId, dbo.Quotes.DirectionId, dbo.Quotes.TransportModeId, dbo.Quotes.IsDangerous,
-dbo.Quotes.ExpirationDays, dbo.Quotes.ExpirationDate, dbo.Quotes.VolumetricWeight, dbo.Quotes.StageId, dbo.Quotes.StageDueDate, dbo.Quotes.BranchId, dbo.Quotes.DepartmentId,
-dbo.Quotes.PackageType1Id, dbo.Quotes.PackageType2Id, dbo.Quotes.PackageType3Id, dbo.Quotes.PackageType4Id, dbo.Quotes.PackageType5Id,
-dbo.Quotes.PackageType1Quantity, dbo.Quotes.PackageType3Quantity, dbo.Quotes.PackageType2Quantity, dbo.Quotes.PackageType4Quantity,
-dbo.Quotes.PackageType5Quantity, dbo.Quotes.IsByKG, dbo.Quotes.IsByContainer, dbo.Quotes.QuoteTypeCode, dbo.Quotes.EstimateProfit,
-dbo.Quotes.EstimateProfitEdited, dbo.Quotes.MinimumFreightCost, dbo.Quotes.MinimumFreightSale, dbo.Quotes.MainCarriageCarrierId,
-dbo.Quotes.IsFreightBySteps, dbo.Quotes.IsCancelled, dbo.Quotes.CustomerId,
-dbo.Quotes.CustomerContactId, dbo.Quotes.CustomerReference1, dbo.Quotes.CustomerReference2, dbo.Quotes.QuoteCustomerTypeCode, dbo.Quotes.CustomerName,
-dbo.Quotes.SaleCurrencyId, dbo.Quotes.ExchangeRate, dbo.Quotes.ShipperName, dbo.Quotes.Subject, dbo.Quotes.IsSubjectEdited,
-dbo.Quotes.LastActivityDate, dbo.Quotes.LastActivitySubject, dbo.Quotes.LastActivityTypeCode,
-dbo.Quotes.NextActivityDate, dbo.Quotes.NextActivitySubject, dbo.Quotes.NextActivityTypeCode,
-dbo.Quotes.UpdateDate, dbo.Quotes.IsAutomaticallyClosed, dbo.Quotes.AutomaticallyCloseDate, dbo.Quotes.AutomaticallyCloseDays,
-dbo.Quotes.ConsigneeName, dbo.Quotes.PickUpAddress, dbo.Quotes.DeliveryAddress, dbo.Quotes.RatingCode, dbo.Quotes.OpportunityId,
-dbo.Quotes.IsFixedPrice, dbo.Quotes.SearchFields, dbo.Quotes.ChargeableWeightUnitCode, dbo.Quotes.NumberOfFollowUps,
-dbo.Quotes.ConcurrencyGUID, dbo.Quotes.FromPartnerId, dbo.Quotes.ToPartnerId, dbo.Quotes.FromPartnerAddressId, dbo.Quotes.ToPartnerAddressId,
-dbo.FollowUps.Id AS FollowUpId, dbo.FollowUps.Date AS FollowUpDate, dbo.FollowUps.Notes AS FollowUpNotes,
-dbo.FollowUps.OwnerUserId AS FollowUpOwnerUserId, ShipperCards.EnglishName AS Shipper, ConsigneeCards.EnglishName AS Consignee,
-FollowUpTypes.FollowUpEnglishName AS FollowUpType, FromPorts.Code AS FromPortCode, FromPorts.EnglishName AS FromPortName,
-FromPortCountries.EnglishName AS FromPortCountry, ToPorts.Code AS ToPortCode, ToPorts.EnglishName AS ToPortName,
-ToPortCountries.EnglishName AS ToPortCountry, dbo.Stages.Name AS StageName, CreateByContacts.EnglishName AS CreatedByUser,
-OwnerContacts.EnglishName AS FollowUpOwner, dbo.QuoteTypes.Name AS QuoteTypeName, FollowUpTypes.Id AS FollowUpTypeId,
-OwnerContacts.Id AS FollowUpOwnerId, MainCarriageCarriers.EnglishName AS MainCarriageCarrierName, dbo.ShipmentTypes.Name AS ShipmentTypeName,
-dbo.BusinessUnits.Name AS BusinessUnitName, dbo.QuoteClosingReasons.Name AS QuoteClosingReasonName,
-dbo.Incoterms.Code as IncotermCode
-FROM            dbo.Quotes INNER JOIN
-dbo.FollowUps ON dbo.Quotes.Id = dbo.FollowUps.QuoteId LEFT OUTER JOIN
-dbo.Cards AS ShipperCards ON dbo.Quotes.ShipperId = ShipperCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsigneeCards ON dbo.Quotes.ConsigneeId = ConsigneeCards.Id LEFT OUTER JOIN
-dbo.EventTypes AS FollowUpTypes ON dbo.FollowUps.EventTypeId = FollowUpTypes.Id LEFT OUTER JOIN
-dbo.Ports AS FromPorts ON dbo.Quotes.FromPortId = FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS ToPorts ON dbo.Quotes.ToPortId = ToPorts.Id LEFT OUTER JOIN
-dbo.Countries AS FromPortCountries ON FromPorts.CountryId = FromPortCountries.Id LEFT OUTER JOIN
-dbo.Countries AS ToPortCountries ON ToPorts.CountryId = ToPortCountries.Id LEFT OUTER JOIN
-dbo.Stages ON dbo.Quotes.StageId = dbo.Stages.Id LEFT OUTER JOIN
-dbo.Users AS CreateByUsers ON dbo.Quotes.CreatedByUserId = CreateByUsers.Id LEFT OUTER JOIN
-dbo.Users AS OwnerUsers ON dbo.FollowUps.OwnerUserId = OwnerUsers.Id LEFT OUTER JOIN
-dbo.Contacts AS CreateByContacts ON CreateByUsers.Id = CreateByContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS OwnerContacts ON OwnerUsers.Id = OwnerContacts.Id LEFT OUTER JOIN
-dbo.QuoteTypes ON dbo.Quotes.QuoteTypeCode = dbo.QuoteTypes.Code LEFT OUTER JOIN
-dbo.Cards AS MainCarriageCarriers ON dbo.Quotes.MainCarriageCarrierId = MainCarriageCarriers.Id LEFT OUTER JOIN
-dbo.ShipmentTypes ON dbo.Quotes.ShipmentTypeId = dbo.ShipmentTypes.Id LEFT OUTER JOIN
-dbo.BusinessUnits ON dbo.Quotes.BusinessUnitId = dbo.BusinessUnits.Id LEFT OUTER JOIN
-dbo.Incoterms ON dbo.Quotes.IncotermId = dbo.Incoterms.Id LEFT OUTER JOIN
-dbo.QuoteClosingReasons ON dbo.Quotes.QuoteClosingReasonCode = dbo.QuoteClosingReasons.Code');
-
-
--- DataView Script From MessagingStockDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[MessagingStockDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[MessagingStockDataView] END');
-EXEC('CREATE VIEW [dbo].[MessagingStockDataView]
-AS
-SELECT
-dbo.MessagingStocks.Id,
-dbo.MessagingStocks.TenantNumber,
-dbo.MessagingStocks.StartDate,
-dbo.MessagingStocks.EndDate,
-dbo.MessagingStocks.Amount,
-dbo.MessagingStocks.Remaining,
-dbo.MessagingStocks.IsCancelled,
-dbo.MessagingStocks.Notes,
-dbo.MessagingStocks.CreateDate,
-dbo.MessagingStocks.UpdateDate,
-dbo.MessagingStocks.CreatedByUserId,
-dbo.MessagingStocks.UpdatedByUserId,
-dbo.MessagingStocks.SearchFields,
-dbo.MessagingStocks.TotalPrice,
-dbo.MessagingStocks.StockType,
-dbo.Tenants.Company as TenantName
-FROM         dbo.MessagingStocks Inner join
-dbo.Tenants ON  dbo.MessagingStocks.TenantNumber = dbo.Tenants.Id');
-
-
--- DataView Script From ShipmentCountryDashboardView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentCountryDashboardView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentCountryDashboardView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentCountryDashboardView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId,
-dbo.Shipments.CountryForStatisticsId, dbo.Countries.Code AS CountryForStatisticsCode, dbo.Countries.EnglishName AS CountryForStatisticsName,
-dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.CustomerId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
-dbo.Shipments.ShipmentLevelCode, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency,dbo.Shipments.OpenReceivablesInProfitCurrency,
-dbo.Shipments.ProfitInProfitCurrency, dbo.Shipments.BranchId, dbo.Shipments.IsCancelled
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Countries
-ON dbo.Shipments.CountryForStatisticsId = dbo.Countries.Id');
-
-
--- DataView Script From ShipmentDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentDataView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentDataView]
-AS
-SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber,dbo.Shipments.DeclarationNumber,dbo.Shipments.IncludesCustoms,dbo.Shipments.CustomsClearanceDate,dbo.Shipments.DeclarationDate, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,dbo.Shipments.ValueOfGoods,
-dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId, dbo.shipments.SLAC,
-dbo.ShipmentMasterDatas.MainCarriageFromPortId, dbo.ShipmentMasterDatas.MainCarriageToPortId, dbo.Shipments.FirstARInvoiceApprovalDate,
-dbo.Shipments.LastFinalDestination, [dbo].[Shipments].[From], [dbo].[Shipments].[To], dbo.Shipments.Origin, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,
-dbo.Shipments.ExceptionDescription,dbo.Shipments.ValueOfGoodsCurrencyId,dbo.Shipments.ExceptionDate, dbo.Shipments.HasException, dbo.Shipments.IsManifestSentToAgent, dbo.Shipments.ManifestLastSharingDate,
-dbo.Shipments.AgentSharedManifestRef , dbo.Shipments.ExceptionResolvedDescription,dbo.Shipments.LastExceptionDescription, dbo.Shipments.OperationalDate, dbo.ShipmentMasterDatas.CutoffDate,
-dbo.Shipments.ComputedStatusId, dbo.Shipments.ComputedStatusDate, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
-dbo.Shipments.CustomConnectToShipment, dbo.Shipments.ForeignPartnerCountryCode, dbo.Shipments.IsNewARInvoiceBlocked,
-dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId,
-dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId,
-dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL,
-dbo.ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dbo.ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL,
-dbo.ShipmentMasterDatas.Transshipment3VesselId, dbo.ShipmentMasterDatas.Transshipment2VesselId, dbo.ShipmentMasterDatas.Transshipment1VesselId,
-dbo.ShipmentMasterDatas.MainCarriageVesselId, dbo.ShipmentMasterDatas.BookingConfirmedBy, dbo.ShipmentMasterDatas.BookingConfirmationNotes,
-dbo.ShipmentMasterDatas.BookingConfirmationNumber, dbo.ShipmentMasterDatas.MAWBOBLDate, dbo.ShipmentMasterDatas.Transshipment3CarrierNumber,
-dbo.ShipmentMasterDatas.Transshipment3ETA, dbo.ShipmentMasterDatas.Transshipment3ETD, dbo.ShipmentMasterDatas.Transshipment3ATA,
-dbo.ShipmentMasterDatas.Transshipment3ATD, dbo.ShipmentMasterDatas.Transshipment3ToPortId, dbo.ShipmentMasterDatas.Transshipment3FromPortId,
-dbo.ShipmentMasterDatas.Transshipment2CarrierNumber, dbo.ShipmentMasterDatas.Transshipment2ETA, dbo.ShipmentMasterDatas.Transshipment2ETD,
-dbo.ShipmentMasterDatas.Transshipment2ATA, dbo.ShipmentMasterDatas.Transshipment2ATD, dbo.ShipmentMasterDatas.Transshipment2ToPortId,
-dbo.ShipmentMasterDatas.Transshipment2FromPortId, dbo.ShipmentMasterDatas.Transshipment1CarrierNumber, dbo.ShipmentMasterDatas.Transshipment1ETA,
-dbo.ShipmentMasterDatas.Transshipment1ETD, dbo.ShipmentMasterDatas.Transshipment1ATA, dbo.ShipmentMasterDatas.Transshipment1ATD,
-dbo.ShipmentMasterDatas.Transshipment1ToPortId, dbo.ShipmentMasterDatas.Transshipment1FromPortId, dbo.ShipmentMasterDatas.Master,
-dbo.ShipmentMasterDatas.MainCarriageCarrierNumber, dbo.ShipmentMasterDatas.MainCarriageETD, dbo.ShipmentMasterDatas.MainCarriageETA, dbo.ShipmentMasterDatas.TrailerNumber,
-dbo.ShipmentMasterDatas.MainCarriageFromAddressId, dbo.ShipmentMasterDatas.MainCarriageToAddressId,
-dbo.ShipmentMasterDatas.MainCarriageATA, dbo.ShipmentMasterDatas.MainCarriageATD, dbo.Shipments.ShipperReference2,
-dbo.ShipmentMasterDatas.InterlineId, dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix,
-dbo.Shipments.MasterShipmentDataId, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.NextETA, dbo.Shipments.NextETD,
-dbo.Shipments.NumberOfInsidePackages, dbo.Shipments.NumberOfInsidePackagesDetails, dbo.Shipments.RegistryDate, dbo.Shipments.IsAssembly, dbo.Shipments.FirstOperationalCloseDate,
-dbo.Shipments.NextLegCode, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.FirstAccountingCloseDate,
-dbo.Shipments.ProfitInProfitCurrency, dbo.Shipments.EstimateProfitInProfitCurrency, dbo.Shipments.ProfitCurrencyId, dbo.Shipments.SCI,
-dbo.Shipments.AWBHandlingInformation, dbo.Shipments.AWBInsurrenceValue, dbo.Shipments.AWBAccountingInformation, dbo.Shipments.ProductCode,
-dbo.Shipments.AWBDeclaredValueForCustoms, dbo.Shipments.AWBDeclaredValueForCarriage, dbo.Shipments.AWBCarrierTarrifReference,
-dbo.Shipments.FreightForwarderContactId, dbo.Shipments.FreightForwarderAddressId, dbo.Shipments.CustomAgentExportContactId,
-dbo.Shipments.CustomAgentExportAddressId, dbo.Shipments.ShipmentCustomerTypeCode, dbo.Shipments.CustomerReference1, dbo.Shipments.CustomerReference2, dbo.Shipments.CustomerContactId,
-dbo.Shipments.CustomerAddressId, dbo.Shipments.CustomerId, dbo.Shipments.FreightForwarderReference, dbo.Shipments.FreightForwarderId,
-dbo.Shipments.CustomAgentExportReference, dbo.Shipments.CustomAgentExportId, dbo.Shipments.CustomAgentImportReference,
-dbo.Shipments.ConsigneeAddressOneTime, dbo.Shipments.ShipperAddressOneTime, dbo.Shipments.EstimateProfitInLocalCurrency, dbo.Shipments.AWBCurrencyId,
-dbo.Shipments.OrderChargeableWeight, dbo.Shipments.OnCarriageCarrierId, dbo.Shipments.PreCarriageCarrierId, dbo.Shipments.ProfitInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency, dbo.Shipments.LastUpdateDate,
-dbo.Shipments.UpdatedByUserId, dbo.Shipments.IsCancelled, dbo.Shipments.CancelledDate, dbo.Shipments.IsAccountingClosed, dbo.Shipments.ShipmentPayableStatusCode,
-dbo.Shipments.ShipmentReceivableStatusCode, dbo.Shipments.QuoteId, dbo.Shipments.ShipmentDeliveryIndex, dbo.Shipments.ShipmentPickUpIndex,
-dbo.Shipments.LTCWEdited, dbo.Shipments.OnCarriageVesselId, dbo.Shipments.PreCarriageVesselId, dbo.Shipments.DangerousMaterialDescription,
-dbo.Shipments.DangerousPackagingGroup, dbo.Shipments.DangerousClassNumber, dbo.Shipments.DangerousUnNumber, dbo.Shipments.DangerousIMDGCode,
-dbo.Shipments.DangerousFlashPoint, dbo.Shipments.AWBFreightAmountPrepaid, dbo.Shipments.AWBFreightAmountCollect, dbo.Shipments.IsDangerous,
-dbo.Shipments.MainHarmonize, dbo.Shipments.VolumeUnitCode, dbo.Shipments.ChargeableWeightEdited,
-dbo.Shipments.GrossWeightEdited, dbo.Shipments.Ratio, dbo.Shipments.PackagesQuantity, dbo.Shipments.ColoaderId,
-dbo.Shipments.NumberOfPackages, dbo.Shipments.NumberOfContainers, dbo.Shipments.VolumeInCBM, dbo.Shipments.NumberOfFollowUps,
-dbo.Shipments.DimensionsUnitCode, dbo.Shipments.AgentReference2, dbo.Shipments.AgentReference1, dbo.Shipments.ShipperNotExporterContactId,
-dbo.Shipments.ConsigneeNotImporterContactId, dbo.Shipments.ConsigneeNotImporterAddressId, dbo.Shipments.ShipperNotExporterAddressId,
-dbo.Shipments.ConsigneeNotImporterId, dbo.Shipments.ShipperNotExporterId, dbo.Shipments.OtherPrepaidCollectId, dbo.Shipments.FreightPrepaidCollectId,
-dbo.Shipments.OrderIsDangerouseGoods, dbo.Shipments.BookingNumberOfPackages, dbo.Shipments.BookingVolume, dbo.Shipments.OrderGrossWeight,
-dbo.Shipments.Field10, dbo.Shipments.Field9, dbo.Shipments.Field8, dbo.Shipments.Field7, dbo.Shipments.Field6, dbo.Shipments.Field5, dbo.Shipments.Field4,
-dbo.Shipments.Field3, dbo.Shipments.Field2, dbo.Shipments.Field1, dbo.Shipments.GrossWeight, dbo.Shipments.ChargeableWeight,
-dbo.Shipments.Field11, dbo.Shipments.Field12, dbo.Shipments.Field13, dbo.Shipments.Field14, dbo.Shipments.Field15,
-dbo.Shipments.Field16, dbo.Shipments.Field17, dbo.Shipments.Field18, dbo.Shipments.Field19, dbo.Shipments.Field20,
-dbo.Shipments.Field21, dbo.Shipments.Field22, dbo.Shipments.Field23, dbo.Shipments.Field24, dbo.Shipments.Field25,
-dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
-dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
-dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
-dbo.Shipments.IsOperationalClosed, dbo.Shipments.ConsigneeContactId, dbo.Shipments.AgentContactId, dbo.Shipments.AgentAddressId,
-dbo.Shipments.CustomAgentImportAddressId, dbo.Shipments.CustomAgentImportContactId, dbo.Shipments.ShipperContactId, dbo.Shipments.Notify2ContactId,
-dbo.Shipments.Notify1ContactId, dbo.Shipments.Notify2AddressId, dbo.Shipments.Notify1AddressId, dbo.Shipments.PreCarriageETD,
-dbo.Shipments.PreCarriageETA, dbo.Shipments.OnCarriageETA, dbo.Shipments.OnCarriageETD, dbo.Shipments.AgentId,dbo.Shipments.AgentComputed, dbo.Shipments.OnCarriageCarrierNumber,
-dbo.Shipments.OnCarriageATA, dbo.Shipments.OnCarriageATD, dbo.Shipments.OnCarriageToPortId, dbo.Shipments.OnCarriageFromPortId,
-dbo.Shipments.OnCarriageTransportModeId, dbo.Shipments.PreCarriageCarrierNumber, dbo.Shipments.PreCarriageATA, dbo.Shipments.PreCarriageATD,
-dbo.Shipments.PreCarriageToPortId, dbo.Shipments.PreCarriageFromPortId, dbo.Shipments.PreCarriageTransportModeId, dbo.Shipments.HAWBDate,
-dbo.Shipments.DescriptionOfGoods, dbo.Shipments.Notes, dbo.Shipments.DirectionId, dbo.Shipments.TransportModeId, dbo.Shipments.ConsigneeAddressId,
-dbo.Shipments.ShipperAddressId, dbo.Shipments.Notify2Id, dbo.Shipments.Notify1Id, dbo.Shipments.ConsigneeId, dbo.Shipments.CustomAgentImportId,
-dbo.Shipments.ShipperId, dbo.Shipments.ShipmentTypeId, dbo.Shipments.DepartmentId, dbo.Shipments.CreateDateTime, dbo.Shipments.SalesmanUserId,
-dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House, dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1,
-dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,
-dbo.Shipments.ARInvoices,
-dbo.Shipments.NotInvoicedReceivablesAmount,
-dbo.Shipments.ReleasingAgentId,
-dbo.Shipments.ContainerLastStatusDate,
-dbo.Shipments.Notify1Reference,
-dbo.Shipments.Notify2Reference,
-dbo.Shipments.ShipperNotExporterReference,
-dbo.Shipments.ConsigneeNotImporterReference,
-dbo.Shipments.ProjectNumber,
-dbo.Shipments.INTTRALastStatusDate,
-dbo.Shipments.INTTRASIError,
-dbo.Shipments.INTTRASIStatusCode,
-dbo.Shipments.INTTRASIStatusDate,
-dbo.Shipments.INTTRABookingError,
-dbo.Shipments.INTTRALastBookingResponse,
-dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
-dbo.Shipments.CreatedByPartner AS CreatedByPartner,
-dbo.Shipments.INTTRABookingStatusCode,
-dbo.INTTRABookingStatuses.Name AS INTTRABookingStatusName,
-dbo.Shipments.INTTRABookingTransStatusCode,
-dbo.INTTRABookingTransStatuses.Name AS INTTRABookingTransStatusName,
-dbo.Shipments.AccountManagerUserId,
-dbo.Shipments.CustomsDeclarationNumber,
-dbo.Shipments.ShipperName,dbo.Shipments.FBLIsFromStock,
-dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
-dbo.ShipmentMasterDatas.OBLTypeCode, dbo.ShipmentMasterDatas.DocumentsClosingDate,
-dbo.Shipments.ShipperName as Shipper, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate, dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,
-dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,
-WarehouseLegCard.EnglishName AS WarehouseLegTerminalName,
-dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,
-dbo.EventTypes.EnglishName as LastSharedEventName,
-WarehouseLegCard.CountryCode AS WarehouseLegAddressCountryCode,
-WarehouseLegCard.CountryName AS WarehouseLegAddressCountryName,
---ShipperCards.EnglishName AS ShipperName,
-MainCarriageFromPorts.Code AS MainCarriageFromPortCode, MainCarriageToPorts.Code AS MainCarriageToPortCode,
-Transshipment1FromPorts.Code AS Transshipment1FromPortCode, Transshipment1ToPorts.Code AS Transshipment1ToPortCode,
-Transshipment2FromPorts.Code AS Transshipment2FromPortCode, Transshipment2ToPorts.Code AS Transshipment2ToPortCode,
-Transshipment3FromPorts.Code AS Transshipment3FromPortCode, Transshipment3ToPorts.Code AS Transshipment3ToPortCode,
-PreCarriageFromPorts.Code AS PreCarriageFromPortCode, PreCarriageToPorts.Code AS PreCarriageToPortCode,
-OnCarriageFromPorts.Code AS OnCarriageFromPortCode, OnCarriageToPorts.Code AS OnCarriageToPortCode,
-MainCarriageToPorts.EnglishName AS MainCarriageToPortName, MainCarriageFromPorts.EnglishName AS MainCarriageFromPortName,
-Transshipment1FromPorts.EnglishName AS Transshipment1FromPortName, Transshipment1ToPorts.EnglishName AS Transshipment1ToPortName,
-Transshipment2ToPorts.EnglishName AS Transshipment2ToPortName, Transshipment2FromPorts.EnglishName AS Transshipment2FromPortName,
-PreCarriageFromPorts.EnglishName AS PreCarriageFromPortName, OnCarriageFromPorts.EnglishName AS OnCarriageFromPortName,
-PreCarriageToPorts.EnglishName AS PreCarriageToPortName, Transshipment3FromPorts.EnglishName AS Transshipment3FromPortName,
-Transshipment3ToPorts.EnglishName AS Transshipment3ToPortName, OnCarriageToPorts.EnglishName AS OnCarriageToPortName,
-CustomerCards.EnglishName AS CustomerName, CustomerCards.Notes AS CustomerNote,
-ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
-FreightForwarderCards.EnglishName AS FreightForwarderName,
-FreightForwarderCards.Notes AS FreightForwarderNote, ShipperCards.Notes AS ShipperNote, ReleasingAgentCards.EnglishName AS ReleasingAgentName,
-ConsigneeCards.EnglishName AS ConsigneeName,ConsigneeCards.EnglishName AS Consignee, ConsigneeCards.Notes AS ConsigneeNote, AgentComputedCards.EnglishName AS AgentName,
-AgentCards.Notes AS AgentNote, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote,
-CustomAgentImportCards.EnglishName AS CustomAgentImportName, CustomAgentImportCards.Notes AS CustomAgentImportNote,
-Notify1Cards.EnglishName AS Notify1Name, Notify1Cards.Notes AS Notify1Note, Notify2Cards.EnglishName AS Notify2Name, Notify2Cards.Notes AS Notify2Note,
-ShipperNotExporterCards.EnglishName AS ShipperNotExporterName, ShipperNotExporterCards.Notes AS ShipperNotExporterNote,
-ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName, ConsigneeNotImporterCards.Notes AS ConsigneeNotImporterNote,
-ToPorts.Code AS ToPortCode, FromPorts.Code AS FromPortCode,
-MainCarriageFromCountries.Code AS MainCarriageFromPortCountryCode, MainCarriageFromCountries.EnglishName AS MainCarriageFromPortCountryName,
-MainCarriageToCountries.Code AS MainCarriageToPortCountryCode, MainCarriageToCountries.EnglishName AS MainCarriageToPortCountryName,
-Transshipment1FromCountries.Code AS Transshipment1FromPortCountryCode,
-Transshipment1FromCountries.EnglishName AS Transshipment1FromPortCountryName,
-Transshipment2FromCountries.Code AS Transshipment2FromPortCountryCode,
-Transshipment2FromCountries.EnglishName AS Transshipment2FromPortCountryName,
-Transshipment3FromCountries.Code AS Transshipment3FromPortCountryCode,
-Transshipment3FromCountries.EnglishName AS Transshipment3FromPortCountryName, PreCarriageFromCountries.Code AS PreCarriageFromPortCountryCode,
-PreCarriageFromCountries.EnglishName AS PreCarriageFromPortCountryName, OnCarriageFromCountries.Code AS OnCarriageFromPortCountryCode,
-OnCarriageFromCountries.EnglishName AS OnCarriageFromPortCountryName, Transshipment1ToCountries.Code AS Transshipment1ToPortCountryCode,
-Transshipment1ToCountries.EnglishName AS Transshipment1ToPortCountryName, OnCarriageToCountries.Code AS OnCarriageToPortCountryCode,
-OnCarriageToCountries.EnglishName AS OnCarriageToPortCountryName, Transshipment2ToCountries.Code AS Transshipment2ToPortCountryCode,
-Transshipment2ToCountries.EnglishName AS Transshipment2ToPortCountryName, PreCarriageToCountries.Code AS PreCarriageToPortCountryCode,
-PreCarriageToCountries.EnglishName AS PreCarriageToPortCountryName, Transshipment3ToCountries.Code AS Transshipment3ToPortCountryCode,
-Transshipment3ToCountries.EnglishName AS Transshipment3ToPortCountryName, MainCarriageCarrierCards.EnglishName AS MainCarriageCarrierName,
-MainCarriageCarrierCards.Code AS MainCarriageCarrierCode, Transshipment1CarrierCards.EnglishName AS Transshipment1CarrierName,
-Transshipment1CarrierCards.Code AS Transshipment1CarrierCode, Transshipment2CarrierCards.EnglishName AS Transshipment2CarrierName,
-Transshipment2CarrierCards.Code AS Transshipment2CarrierCode, Transshipment3CarrierCards.EnglishName AS Transshipment3CarrierName,
-Transshipment3CarrierCards.Code AS Transshipment3CarrierCode, PreCarriageCarrierCards.EnglishName AS PreCarriageCarrierName,
-PreCarriageCarrierCards.Code AS PreCarriageCarrierCode, OnCarriageCarrierCards.EnglishName AS OnCarriageCarrierName,
-OnCarriageCarrierCards.Code AS OnCarriageCarrierCode, dbo.NextLegs.Name AS NextLegName, dbo.Directions.Name AS DirectionName,
-dbo.TransportModes.Name AS TransportModeName, dbo.ShipmentTypes.Name AS ShipmentTypeName,
-dbo.ShipmentReceivableStatus.Name AS ShipmentReceivableStatusName, dbo.ShipmentPayableStatus.Name AS ShipmentPayableStatusName,
-AWBCurrencies.Code AS AWBCurrencyCode, dbo.Branches.EnglishName AS BranchName,dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName ,
-dbo.ShipmentLevels.Name AS ShipmentLevelName,
-dbo.EntityStatus.Id AS ShipmentStatusId,
-dbo.EntityStatus.Name AS ShipmentStatusName,
-dbo.EntityStatus.StatusWeight AS ShipmentStatusWeight,
-dbo.Shipments.StatusDate as ShipmentStatusDate,
-dbo.Shipments.StatusLocation as ShipmentStatusLocation,
-ShipmentMasterDataEntityStatus.Id AS ShipmentMasterDataStatusId,
-ShipmentMasterDataEntityStatus.Name AS ShipmentMasterDataStatusName,
-ShipmentMasterDataEntityStatus.StatusWeight AS ShipmentMasterDataStatusWeight,
-dbo.ShipmentMasterDatas.StatusDate As ShipmentMasterDataStatusDate,
-dbo.ShipmentMasterDatas.StatusLocation as ShipmentMasterDataStatusLocation,
-MainCarriageFinalDestinationPorts.Code AS MainCarriageFinalDestinationPortCode,
-MainCarriageFinalDestinationPorts.EnglishName AS MainCarriageFinalDestinationPortName,
-FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,
-FinalDestinationCountries.EnglishName AS MainCarriageFinalDestinationCountryName,
-dbo.ShipmentMasterDatas.MasterShipmentNumber,
-dbo.ShipmentMasterDatas.CarrierTransportDocumentNumber,
-dbo.Shipments.SearchFields, MainCarriageAirline.Prefix AS MainCarriageAirlinePrefix, dbo.Shipments.CreatedByUserId,dbo.Shipments.OperationalClosedByUserId,
-dbo.Shipments.OpenPayablesInLocalCurrency, dbo.Shipments.AccountedPayablesInLocalCurrency, dbo.Shipments.OpenPayablesInProfitCurrency,
-dbo.Shipments.AccountedPayablesInProfitCurrency, dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.GrossWeightPerStorageDays,dbo.Shipments.GrossWeightPerTon,
-dbo.Shipments.GrossWeightUnitCode, dbo.Shipments.ChargeableWeightUnitCode, dbo.Shipments.OrderVolumetricWeight, dbo.Shipments.VolumetricWeight,
-dbo.Shipments.Volume, dbo.Shipments.IssuingCarrierAgentId, dbo.Incoterms.Code AS IncotermCode,
-dbo.FHLStatus.Code AS FHLStatusCode,
-dbo.FHLStatus.Name AS FHLStatusName,
-dbo.Shipments.FHLStatusDate,
-dbo.FWBStatus.Code AS FWBStatusCode,
-dbo.FWBStatus.Name AS FWBStatusName,
-dbo.ShipmentMasterDatas.FWBStatusDate,
-dbo.Shipments.LastSentByUserId,
-dbo.CustomsTransmissionsStatus.Code AS LocalCustomsTransmissionsStatusCode,
-dbo.CustomsTransmissionsStatus.Name AS LocalCustomsTransmissionsStatusName,
-dbo.shipments.LocalCustomsTransmissionsStatusError,
-dbo.Shipments.LocalCustomsTransmissionsStatusDate,
-dbo.Shipments.LocalCustomsSentByUserId,
-LocalCustomsSentByUser.EnglishName as LocalCustomsSentByUserName,
-CargonautFHLStatus.Code AS CargonautFHLStatusCode,
-CargonautFHLStatus.Name AS CargonautFHLStatusName,
-dbo.Shipments.CargonautFHLStatusDate,
-CargonautFWBStatus.Code AS CargonautFWBStatusCode,
-CargonautFWBStatus.Name AS CargonautFWBStatusName,
-dbo.ShipmentMasterDatas.CargonautFWBStatusDate,
-dbo.Shipments.AWBPrint, CarrierLastStatuses.Name AS CarrierLastStatusName, dbo.Shipments.FNAReason, dbo.Shipments.Routing, dbo.ShipmentMasterDatas.TruckNumber,
-dbo.Shipments.AsAgreedFreight, dbo.Shipments.AsAgreedOtherCharges, dbo.Shipments.AccountNumber,
-dbo.Shipments.CarrierLastStatusCode, dbo.Shipments.CarrierLastStatusDate, dbo.Shipments.LastFSRStatusRequestDate,
-dbo.Shipments.FinalArrivalDate, dbo.Shipments.EstimatedFinalArrivalDate, dbo.Shipments.ActualFinalArrivalDate, FromPortCountries.Code AS FromPortCountryCode,
-ToPortCountries.Code AS ToPortCountryCode, dbo.Shipments.TEU, MainCarriageFromAddresses.City AS MainCarriageFromCity,
-MainCarriageToAddresses.City AS MainCarriageToCity, MainCarriageFromAddressCountries.Code AS MainCarriageFromCountryCode,
-MainCarriageToAddressCountries.Code AS MainCarriageToCountryCode, dbo.Shipments.ProfitExchangeRate, dbo.Shipments.CASSCode, dbo.Shipments.AMSBL,
-dbo.Shipments.SpecialServicesTypeId, dbo.SpecialServicesTypes.Code AS SpecialServicesTypeCode,
-dbo.SpecialServicesTypes.EnglishName AS SpecialServicesTypeName, dbo.Shipments.CustomFileId, dbo.Shipments.CustomFileNumber,
-dbo.Shipments.NoFreightFile, ToPortCountries.EnglishName AS ToPortCountryName, FromPortCountries.EnglishName AS FromPortCountryName,
-dbo.Vessels.EnglishName AS MainCarriageVesselName,dbo.Shipments.LastStatusLogDate As LastStatusLogDate,
-AccountManagerUserContacts.EnglishName as AccountManagerUserName,
-SalesmanUserContact.EnglishName as SalesmanUserName,
-CreatedByUserContact.EnglishName as CreatedByUserName,
-LastSentByUserContact.EnglishName as LastSentByUserName,
-ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
-ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
-dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
-dbo.Shipments.CustomerShipmentNumber as CustomerShipmentNumber,
-ShipmentComputedFields.LastDocumentDateTime as LastDocumentDateTime,
-HybridPartner.SmallLogoId as PartnerLogoId,
-ShipmentComputedFields.MissingDocumentsCount as MissingDocumentsCount,
-ShipmentComputedFields.MissingDocumentsNames as MissingDocsNames,
-ShipmentComputedFields.RequestedDocumentsCount as RequestedDocumentsCount,
-ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
-ShipmentComputedFields.IsDigitalSignRequired as IsDigitalSignRequired,
-ShipmentComputedFields.IsDepositionRequired as IsDepositionRequired,
-ShipmentComputedFields.CreatedFromDigital as CreatedFromDigital,
-ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
-ShipmentComputedFields.NumberOfHouses as NumberOfHouses,
-ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData,
-ShipmentAdditionalCloudDatas.IsImporterApprovalRequried as IsImporterApprovalRequried,
-ShipmentAdditionalCloudDatas.ApprovedByUserName as ApprovedByUserName,
-ShipmentAdditionalCloudDatas.ApproveDateTime as ApproveDateTime,
-ShipmentAdditionalCloudDatas.VersionApproved as VersionApproved,
-HybridPartner.Name as PartnerName,
-HybridPartner.Id as ForwarderPartnerId,
-dbo.ShipmentMasterDatas.DepartureArrivalFromDate as DepartureArrivalFromDate,
-dbo.ShipmentMasterDatas.DepartureArrivalToDate as DepartureArrivalToDate,
-dbo.ShipmentMasterDatas.MainCarriageFinalDestinationETA as MainCarriageFinalDestinationETA,
-dbo.ShipmentMasterDatas.MainCarriageFinalDestinationATA as MainCarriageFinalDestinationATA,
-CASE WHEN ( NOT ((dbo.ShipmentTypes.Name IS NULL) OR ((LEN(dbo.ShipmentTypes.Name)) = 0))) THEN CASE WHEN (dbo.ShipmentTypes.Name IS NULL) THEN N'''' ELSE dbo.ShipmentTypes.Name END + N'' '' + CASE WHEN (dbo.ShipmentLevels.Name IS NULL) THEN N'''' ELSE dbo.ShipmentLevels.Name END ELSE dbo.ShipmentLevels.Name END AS ShipmentType,
-CASE WHEN ( NOT ((MainCarriageFromPortId IS NULL) OR ((LEN(MainCarriageFromPortId)) = 0))) THEN MainCarriageFromPortId ELSE dbo.Shipments.FromPortId END AS FromPortId,
-CASE WHEN ( NOT ((MainCarriageToPortId IS NULL) OR ((LEN(MainCarriageToPortId)) = 0))) THEN MainCarriageToPortId ELSE dbo.Shipments.ToPortId END AS ToPortId,
-CASE WHEN ( NOT ((MainCarriageFromPorts.Code IS NULL) OR ((LEN(MainCarriageFromPorts.Code)) = 0))) THEN MainCarriageFromPorts.Code ELSE FromPorts.Code END AS FromPort,
-CASE WHEN ( NOT ((MainCarriageFromPorts.EnglishName IS NULL) OR ((LEN(MainCarriageFromPorts.EnglishName)) = 0))) THEN MainCarriageFromPorts.EnglishName ELSE FromPorts.EnglishName END AS FromPortName,
-CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.Code IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.Code)) = 0))) THEN MainCarriageFinalDestinationPorts.Code ELSE ToPorts.Code END AS ToPort,
-CASE WHEN ( NOT ((MainCarriageFinalDestinationPorts.EnglishName IS NULL) OR ((LEN(MainCarriageFinalDestinationPorts.EnglishName)) = 0))) THEN MainCarriageFinalDestinationPorts.EnglishName ELSE ToPorts.EnglishName END AS ToPortName,
-CASE WHEN (''A'' = dbo.Shipments.TransportModeId) THEN CASE WHEN (MainCarriageCarrierCards.Code IS NULL) THEN N'''' ELSE MainCarriageCarrierCards.Code END + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'''' ELSE MainCarriageCarrierNumber END WHEN (''O'' = dbo.Shipments.TransportModeId) THEN CASE WHEN (dbo.Vessels.EnglishName IS NULL) THEN N'''' ELSE dbo.Vessels.EnglishName END + N''/'' + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'''' ELSE MainCarriageCarrierNumber END WHEN (''I'' = dbo.Shipments.TransportModeId) THEN MainCarriageCarrierNumber END AS CarrierNumber,
-CASE WHEN (MainCarriageATA IS NOT NULL) THEN MainCarriageATA ELSE MainCarriageETA END AS MainCarriageExpectedOrActual,
-CASE WHEN (MainCarriageATA IS NOT NULL) THEN N''ATA'' ELSE N''ETA'' END AS MainCarriageETAOrATA,
-CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END AS StatusId,
-CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusDate ELSE dbo.Shipments.StatusDate END ELSE dbo.Shipments.StatusDate END AS StatusDate,
-CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
-CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusLocation ELSE dbo.Shipments.StatusLocation END ELSE dbo.Shipments.StatusLocation END AS StatusLocation,
-CASE WHEN (''A'' = dbo.Shipments.TransportModeId) THEN CASE WHEN (( NOT ((AirlinePrefix IS NULL) OR ((LEN(AirlinePrefix)) = 0))) AND ( NOT ((Master IS NULL) OR ((LEN(Master)) = 0)))) THEN CASE WHEN (AirlinePrefix IS NULL) THEN N'''' ELSE AirlinePrefix END + N''-'' + CASE WHEN (Master IS NULL) THEN N'''' ELSE Master END ELSE N'''' END ELSE Master END AS LongMaster,
-CAST( MissingDocumentsCount AS nvarchar(max)) + N'' Missing'' AS MissingDocumentsCountWords,
-CASE WHEN (IsOperationalClosed = 1) THEN N''Archived'' ELSE N'''' END AS ArchivedText
---CASE WHEN (dbo.Shipments.TransportModeId = ''I'' AND dbo.Shipments.DirectionId = ''D'') THEN MainCarriageFromAddressesStates.EnglishName
---ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = ''H'' AND dbo.Shipments.MasterShipmentDataId is null) THEN FromPortsStates.EnglishName
---ELSE MainCarriageFromPortsStates.EnglishName END) END AS MainCarriageFromState,
---CASE WHEN (dbo.Shipments.TransportModeId = ''I'' AND dbo.Shipments.DirectionId = ''D'') THEN MainCarriageToAddressesStates.EnglishName
---ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = ''H'' AND dbo.Shipments.MasterShipmentDataId is null) THEN ToPortsStates.EnglishName
---ELSE MainCarriageFinalDestinationPortsStates.EnglishName END) END AS MainCarriageToState
-FROM            dbo.Shipments LEFT OUTER JOIN
-dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = dbo.Shipments.MasterShipmentDataId LEFT OUTER JOIN
-dbo.Ports AS MainCarriageFromPorts ON dbo.ShipmentMasterDatas.MainCarriageFromPortId = MainCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS MainCarriageToPorts ON dbo.ShipmentMasterDatas.MainCarriageToPortId = MainCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment1FromPorts ON dbo.ShipmentMasterDatas.Transshipment1FromPortId = Transshipment1FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment1ToPorts ON dbo.ShipmentMasterDatas.Transshipment1ToPortId = Transshipment1ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment2FromPorts ON dbo.ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment2ToPorts ON dbo.ShipmentMasterDatas.Transshipment2ToPortId = Transshipment2ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment3FromPorts ON dbo.ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment3ToPorts ON dbo.ShipmentMasterDatas.Transshipment3ToPortId = Transshipment3ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS MainCarriageFinalDestinationPorts ON dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPorts.Id LEFT OUTER JOIN
-dbo.Ports AS PreCarriageFromPorts ON dbo.Shipments.PreCarriageFromPortId = PreCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS PreCarriageToPorts ON dbo.Shipments.PreCarriageToPortId = PreCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS OnCarriageFromPorts ON dbo.Shipments.OnCarriageFromPortId = OnCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS OnCarriageToPorts ON dbo.Shipments.OnCarriageToPortId = OnCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS ToPorts ON dbo.Shipments.ToPortId = ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS FromPorts ON dbo.Shipments.FromPortId = FromPorts.Id LEFT OUTER JOIN
-dbo.Cards AS CustomerCards ON dbo.Shipments.CustomerId = CustomerCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsolidatorCards ON dbo.Shipments.ConsolidatorId = ConsolidatorCards.Id LEFT OUTER JOIN
-dbo.Cards AS FreightForwarderCards ON dbo.Shipments.FreightForwarderId = FreightForwarderCards.Id LEFT OUTER JOIN
-dbo.Cards AS ShipperCards ON dbo.Shipments.ShipperId = ShipperCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsigneeCards ON dbo.Shipments.ConsigneeId = ConsigneeCards.Id LEFT OUTER JOIN
-dbo.Cards AS AgentCards ON dbo.Shipments.AgentId = AgentCards.Id LEFT OUTER JOIN
-dbo.Cards AS ReleasingAgentCards ON dbo.Shipments.ReleasingAgentId = ReleasingAgentCards.Id LEFT OUTER JOIN
-dbo.Cards AS AgentComputedCards ON dbo.Shipments.AgentComputed = AgentComputedCards.Id LEFT OUTER JOIN
-dbo.Cards AS CustomAgentExportCards ON dbo.Shipments.CustomAgentExportId = CustomAgentExportCards.Id LEFT OUTER JOIN
-dbo.Cards AS CustomAgentImportCards ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id LEFT OUTER JOIN
-dbo.Cards AS Notify1Cards ON dbo.Shipments.Notify1Id = Notify1Cards.Id LEFT OUTER JOIN
-dbo.Cards AS Notify2Cards ON dbo.Shipments.Notify2Id = Notify2Cards.Id LEFT OUTER JOIN
-dbo.Cards AS ShipperNotExporterCards ON dbo.Shipments.ShipperNotExporterId = ShipperNotExporterCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsigneeNotImporterCards ON dbo.Shipments.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageFromCountries ON MainCarriageFromPorts.CountryId = MainCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageToCountries ON MainCarriageToPorts.CountryId = MainCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment1FromCountries ON Transshipment1FromPorts.CountryId = Transshipment1FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment2FromCountries ON Transshipment2FromPorts.CountryId = Transshipment2FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment3FromCountries ON Transshipment3FromPorts.CountryId = Transshipment3FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS PreCarriageFromCountries ON PreCarriageFromPorts.CountryId = PreCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS OnCarriageFromCountries ON OnCarriageFromPorts.CountryId = OnCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment1ToCountries ON Transshipment1ToPorts.CountryId = Transshipment1ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment2ToCountries ON Transshipment2ToPorts.CountryId = Transshipment2ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment3ToCountries ON Transshipment3ToPorts.CountryId = Transshipment3ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS PreCarriageToCountries ON PreCarriageToPorts.CountryId = PreCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS OnCarriageToCountries ON OnCarriageToPorts.CountryId = OnCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS FromPortCountries ON FromPorts.CountryId = FromPortCountries.Id LEFT OUTER JOIN
-dbo.Countries AS ToPortCountries ON ToPorts.CountryId = ToPortCountries.Id LEFT OUTER JOIN
-dbo.Countries AS FinalDestinationCountries ON MainCarriageFinalDestinationPorts.CountryId = FinalDestinationCountries.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageCarrierCards ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment1CarrierCards ON dbo.ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment2CarrierCards ON dbo.ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment3CarrierCards ON dbo.ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS PreCarriageCarrierCards ON dbo.Shipments.PreCarriageCarrierId = PreCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS OnCarriageCarrierCards ON dbo.Shipments.OnCarriageCarrierId = OnCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS WarehouseLegCard ON dbo.Shipments.WarehouseLegWarehouseId = WarehouseLegCard.Id LEFT OUTER JOIN
-dbo.NextLegs ON dbo.Shipments.NextLegCode = dbo.NextLegs.Code LEFT OUTER JOIN
-dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
-dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN
-dbo.ShipmentTypes ON dbo.Shipments.ShipmentTypeId = dbo.ShipmentTypes.Id LEFT OUTER JOIN
-dbo.ShipmentReceivableStatus ON dbo.Shipments.ShipmentReceivableStatusCode = dbo.ShipmentReceivableStatus.Code LEFT OUTER JOIN
-dbo.ShipmentPayableStatus ON dbo.Shipments.ShipmentPayableStatusCode = dbo.ShipmentPayableStatus.Code LEFT OUTER JOIN
-dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
-dbo.Currencies AS AWBCurrencies ON dbo.Shipments.AWBCurrencyId = AWBCurrencies.Id LEFT OUTER JOIN
-dbo.Branches ON dbo.Shipments.BranchId = dbo.Branches.Id LEFT OUTER JOIN
-dbo.MoveTypes ON dbo.Shipments.MoveTypeId = dbo.MoveTypes.Id LEFT OUTER JOIN
-dbo.ShipmentLevels ON dbo.Shipments.ShipmentLevelCode = dbo.ShipmentLevels.Code LEFT OUTER JOIN
-dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
-dbo.Airlines AS MainCarriageAirline ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageAirline.Id LEFT OUTER JOIN
-dbo.Incoterms ON dbo.Shipments.IncotermId = dbo.Incoterms.Id LEFT OUTER JOIN
-dbo.CustomsTransmissionsStatus ON dbo.Shipments.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code LEFT OUTER JOIN
-dbo.FHLStatus ON dbo.Shipments.FHLStatusCode = dbo.FHLStatus.Code LEFT OUTER JOIN
-dbo.FWBStatus ON dbo.ShipmentMasterDatas.FWBStatusCode = dbo.FWBStatus.Code LEFT OUTER JOIN
-dbo.FHLStatus AS CargonautFHLStatus ON dbo.Shipments.CargonautFHLStatusCode = CargonautFHLStatus.Code LEFT OUTER JOIN
-dbo.FWBStatus AS CargonautFWBStatus ON dbo.ShipmentMasterDatas.CargonautFWBStatusCode = CargonautFWBStatus.Code LEFT OUTER JOIN
-dbo.AWBStatus AS CarrierLastStatuses ON dbo.Shipments.CarrierLastStatusCode = CarrierLastStatuses.Code LEFT OUTER JOIN
-dbo.INTTRASIStatus ON dbo.Shipments.INTTRASIStatusCode = dbo.INTTRASIStatus.Code LEFT OUTER JOIN
-dbo.INTTRABookingTransStatuses ON dbo.Shipments.INTTRABookingTransStatusCode = dbo.INTTRABookingTransStatuses.Code LEFT OUTER JOIN
-dbo.INTTRABookingStatuses ON dbo.Shipments.INTTRABookingStatusCode = dbo.INTTRABookingStatuses.Code LEFT OUTER JOIN
-dbo.Addresses AS MainCarriageFromAddresses ON dbo.ShipmentMasterDatas.MainCarriageFromAddressId = MainCarriageFromAddresses.Id LEFT OUTER JOIN
-dbo.Addresses AS MainCarriageToAddresses ON dbo.ShipmentMasterDatas.MainCarriageToAddressId = MainCarriageToAddresses.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageToPartners ON dbo.ShipmentMasterDatas.MainCarriageToPartnerId = MainCarriageToPartners.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageFromPartners ON dbo.ShipmentMasterDatas.MainCarriageFromPartnerId = MainCarriageFromPartners.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageFromAddressCountries ON MainCarriageFromAddresses.CountryId = MainCarriageFromAddressCountries.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageToAddressCountries ON MainCarriageToAddresses.CountryId = MainCarriageToAddressCountries.Id LEFT OUTER JOIN
-dbo.SpecialServicesTypes ON dbo.Shipments.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id LEFT OUTER JOIN
-dbo.Vessels ON dbo.ShipmentMasterDatas.MainCarriageVesselId = dbo.Vessels.Id LEFT OUTER JOIN
-dbo.Contacts AS AccountManagerUserContacts ON dbo.Shipments.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
-dbo.Contacts AS SalesmanUserContact ON dbo.Shipments.SalesmanUserId = SalesmanUserContact.Id LEFT OUTER JOIN
-dbo.HybridPartners AS HybridPartner ON dbo.Shipments.ForwarderPartnerId = HybridPartner.Id LEFT OUTER JOIN
-dbo.EventTypes ON dbo.Shipments.LastSharedEventId = dbo.EventTypes.Id LEFT OUTER JOIN
-dbo.Contacts AS LastSentByUserContact ON dbo.Shipments.LastSentByUserId = LastSentByUserContact.Id LEFT OUTER JOIN
-dbo.Contacts AS LocalCustomsSentByUser ON dbo.Shipments.LocalCustomsSentByUserId = LocalCustomsSentByUser.Id LEFT OUTER JOIN
-dbo.Contacts AS CreatedByUserContact ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id INNER JOIN
-dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
-dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFromAddressesStates ON MainCarriageFromAddresses.StateId = MainCarriageFromAddressesStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageToAddressesStates ON MainCarriageToAddresses.StateId = MainCarriageToAddressesStates.Id LEFT OUTER JOIN
-dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OUTER JOIN
-dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id');
-
-
--- DataView Script From ShipmentDirectionTransmodeView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentDirectionTransmodeView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentDirectionTransmodeView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentDirectionTransmodeView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.CreateDateTime,dbo.Shipments.OperationalDate, dbo.Shipments.TransportModeId,
-dbo.Shipments.DirectionId, dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Shipments.OpenReceivablesInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.CustomerId, dbo.Shipments.ProfitInProfitCurrency,
-dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Directions.Name AS DirectionName,
-dbo.TransportModes.Name AS TransportModeName, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.IsCancelled, dbo.Shipments.BranchId
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Directions
-ON dbo.Shipments.DirectionId = dbo.Directions.Id
-INNER JOIN
-dbo.TransportModes
-ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id');
-
-
--- DataView Script From ShipmentFollowUpDataView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentFollowUpDataView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentFollowUpDataView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentFollowUpDataView]
-AS
-SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.ShipperReference1, dbo.Shipments.ARInvoiceIssued, dbo.Shipments.CreditNoteIssued,
-dbo.Shipments.DeclarationNumber, dbo.Shipments.DeclarationDate,
-dbo.ShipmentMasterDatas.Tenant AS ShipmentMasterDataTenant, dbo.ShipmentMasterDatas.Id AS ShipmentMasterDataId,
-dbo.ShipmentMasterDatas.MainCarriageFromPortId, dbo.ShipmentMasterDatas.MainCarriageToPortId,
-dbo.Shipments.LastFinalDestination, [dbo].[Shipments].[From], [dbo].[Shipments].[To], dbo.Shipments.Origin, dbo.Shipments.FirstPickupETA, dbo.Shipments.FirstPickupETD,
-dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId,
-dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId,
-dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL,
-dbo.ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dbo.ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL,
-dbo.ShipmentMasterDatas.Transshipment3VesselId, dbo.ShipmentMasterDatas.Transshipment2VesselId, dbo.ShipmentMasterDatas.Transshipment1VesselId,
-dbo.ShipmentMasterDatas.MainCarriageVesselId, dbo.ShipmentMasterDatas.BookingConfirmedBy, dbo.ShipmentMasterDatas.BookingConfirmationNotes,
-dbo.ShipmentMasterDatas.BookingConfirmationNumber, dbo.ShipmentMasterDatas.MAWBOBLDate, dbo.ShipmentMasterDatas.Transshipment3CarrierNumber,
-dbo.ShipmentMasterDatas.Transshipment3ETA, dbo.ShipmentMasterDatas.Transshipment3ETD, dbo.ShipmentMasterDatas.Transshipment3ATA,
-dbo.ShipmentMasterDatas.Transshipment3ATD, dbo.ShipmentMasterDatas.Transshipment3ToPortId, dbo.ShipmentMasterDatas.Transshipment3FromPortId,
-dbo.ShipmentMasterDatas.Transshipment2CarrierNumber, dbo.ShipmentMasterDatas.Transshipment2ETA, dbo.ShipmentMasterDatas.Transshipment2ETD,
-dbo.ShipmentMasterDatas.Transshipment2ATA, dbo.ShipmentMasterDatas.Transshipment2ATD, dbo.ShipmentMasterDatas.Transshipment2ToPortId,
-dbo.ShipmentMasterDatas.Transshipment2FromPortId, dbo.ShipmentMasterDatas.Transshipment1CarrierNumber, dbo.ShipmentMasterDatas.Transshipment1ETA,
-dbo.ShipmentMasterDatas.Transshipment1ETD, dbo.ShipmentMasterDatas.Transshipment1ATA, dbo.ShipmentMasterDatas.Transshipment1ATD,
-dbo.ShipmentMasterDatas.Transshipment1ToPortId, dbo.ShipmentMasterDatas.Transshipment1FromPortId, dbo.ShipmentMasterDatas.Master,
-dbo.ShipmentMasterDatas.MainCarriageCarrierNumber, dbo.ShipmentMasterDatas.MainCarriageETD, dbo.ShipmentMasterDatas.MainCarriageETA,
-dbo.ShipmentMasterDatas.MainCarriageATA, dbo.ShipmentMasterDatas.MainCarriageATD, dbo.Shipments.ShipperReference2, dbo.Shipments.ToPortId,
-dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
-dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName,
-dbo.Shipments.ARInvoices,
-dbo.Shipments.NotInvoicedReceivablesAmount,
-dbo.Shipments.ContainerLastStatusDate,
-dbo.Shipments.Notify1Reference,
-dbo.Shipments.Notify2Reference,
-dbo.Shipments.ShipperNotExporterReference,
-dbo.Shipments.ConsigneeNotImporterReference,
-dbo.Shipments.ProjectNumber,
-dbo.Shipments.INTTRALastStatusDate,
-dbo.Shipments.INTTRASIError,
-dbo.Shipments.INTTRASIStatusCode,
-dbo.Shipments.INTTRASIStatusDate,
-dbo.Shipments.INTTRABookingError,
-dbo.Shipments.INTTRALastBookingResponse,
-dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
-dbo.Shipments.CreatedByPartner AS CreatedByPartner,
-dbo.Shipments.FromPortId, dbo.Shipments.MasterShipmentDataId, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.NextETA, dbo.Shipments.NextETD,
-dbo.Shipments.NumberOfInsidePackages, dbo.Shipments.NumberOfInsidePackagesDetails, dbo.Shipments.OperationalDate, dbo.ShipmentMasterDatas.CutoffDate,
-dbo.Shipments.FinalArrivalDate, dbo.Shipments.EstimatedFinalArrivalDate, dbo.Shipments.ActualFinalArrivalDate, dbo.Shipments.NextLegCode, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.OpenReceivablesInProfitCurrency,
-dbo.Shipments.ProfitInProfitCurrency, dbo.Shipments.EstimateProfitInProfitCurrency, dbo.Shipments.ProfitCurrencyId, dbo.Shipments.SCI,
-dbo.Shipments.AWBHandlingInformation, dbo.Shipments.AWBInsurrenceValue, dbo.Shipments.AWBAccountingInformation,
-dbo.Shipments.AWBDeclaredValueForCustoms, dbo.Shipments.AWBDeclaredValueForCarriage, dbo.Shipments.AWBCarrierTarrifReference,
-dbo.Shipments.FreightForwarderContactId, dbo.Shipments.FreightForwarderAddressId, dbo.Shipments.CustomAgentExportContactId,
-dbo.Shipments.CustomAgentExportAddressId, dbo.Shipments.ShipmentCustomerTypeCode, dbo.Shipments.CustomerReference1, dbo.Shipments.CustomerReference2, dbo.Shipments.CustomerContactId,
-dbo.Shipments.CustomerAddressId, dbo.Shipments.CustomerId, dbo.Shipments.FreightForwarderReference, dbo.Shipments.FreightForwarderId,
-dbo.Shipments.CustomAgentExportReference, dbo.Shipments.CustomAgentExportId, dbo.Shipments.CustomAgentImportReference,
-dbo.Shipments.ConsigneeAddressOneTime, dbo.Shipments.ShipperAddressOneTime, dbo.Shipments.EstimateProfitInLocalCurrency, dbo.Shipments.AWBCurrencyId,
-dbo.Shipments.OrderChargeableWeight, dbo.Shipments.OnCarriageCarrierId, dbo.Shipments.PreCarriageCarrierId, dbo.Shipments.ProfitInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.OpenReceivablesInLocalCurrency, dbo.Shipments.LastUpdateDate,
-dbo.Shipments.UpdatedByUserId, dbo.Shipments.IsCancelled, dbo.Shipments.IsAccountingClosed, dbo.Shipments.ShipmentPayableStatusCode,
-dbo.Shipments.ShipmentReceivableStatusCode, dbo.Shipments.QuoteId, dbo.Shipments.ShipmentDeliveryIndex, dbo.Shipments.ShipmentPickUpIndex,
-dbo.Shipments.LTCWEdited, dbo.Shipments.OnCarriageVesselId, dbo.Shipments.PreCarriageVesselId, dbo.Shipments.DangerousMaterialDescription,
-dbo.Shipments.DangerousPackagingGroup, dbo.Shipments.DangerousClassNumber, dbo.Shipments.DangerousUnNumber, dbo.Shipments.DangerousIMDGCode,
-dbo.Shipments.DangerousFlashPoint, dbo.Shipments.AWBFreightAmountPrepaid, dbo.Shipments.AWBFreightAmountCollect, dbo.Shipments.IsDangerous,
-dbo.Shipments.MainHarmonize, dbo.Shipments.VolumeUnitCode, dbo.Shipments.ChargeableWeightEdited,
-dbo.Shipments.GrossWeightEdited, dbo.Shipments.Ratio, dbo.Shipments.PackagesQuantity, dbo.Shipments.RegistryDate, dbo.Shipments.IsAssembly, dbo.Shipments.FirstOperationalCloseDate,
-dbo.Shipments.NumberOfPackages, dbo.Shipments.NumberOfContainers, dbo.Shipments.VolumeInCBM, dbo.Shipments.NumberOfFollowUps, dbo.Shipments.FirstAccountingCloseDate,
-dbo.Shipments.DimensionsUnitCode, dbo.Shipments.AgentReference2, dbo.Shipments.ValueOfGoods,
-dbo.Shipments.AgentReference1, dbo.Shipments.ShipperNotExporterContactId, dbo.Shipments.ConsigneeNotImporterContactId,
-dbo.Shipments.ConsigneeNotImporterAddressId, dbo.Shipments.ShipperNotExporterAddressId, dbo.Shipments.ConsigneeNotImporterId,
-dbo.Shipments.ShipperNotExporterId, dbo.Shipments.OtherPrepaidCollectId, dbo.Shipments.FreightPrepaidCollectId, dbo.Shipments.OrderIsDangerouseGoods,
-dbo.Shipments.BookingNumberOfPackages, dbo.Shipments.BookingVolume, dbo.Shipments.OrderGrossWeight, dbo.Shipments.Field10, dbo.Shipments.Field9,
-dbo.Shipments.Field8, dbo.Shipments.Field7, dbo.Shipments.Field6, dbo.Shipments.Field5, dbo.Shipments.Field4, dbo.Shipments.Field3, dbo.Shipments.Field2,
-dbo.Shipments.Field1, dbo.Shipments.GrossWeight, dbo.Shipments.ChargeableWeight, dbo.Shipments.IsOperationalClosed, dbo.Shipments.ConsigneeContactId,
-dbo.Shipments.Field11, dbo.Shipments.Field12, dbo.Shipments.Field13, dbo.Shipments.Field14, dbo.Shipments.Field15,
-dbo.Shipments.Field16, dbo.Shipments.Field17, dbo.Shipments.Field18, dbo.Shipments.Field19, dbo.Shipments.Field20,
-dbo.Shipments.Field21, dbo.Shipments.Field22, dbo.Shipments.Field23, dbo.Shipments.Field24, dbo.Shipments.Field25,
-dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
-dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
-dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
-dbo.Shipments.AgentContactId, dbo.Shipments.AgentAddressId, dbo.Shipments.CustomAgentImportAddressId, dbo.Shipments.CustomAgentImportContactId,
-dbo.Shipments.ShipperContactId, dbo.Shipments.Notify2ContactId, dbo.Shipments.Notify1ContactId, dbo.Shipments.Notify2AddressId,
-dbo.Shipments.Notify1AddressId, dbo.Shipments.PreCarriageETD, dbo.Shipments.PreCarriageETA, dbo.Shipments.OnCarriageETA, dbo.Shipments.OnCarriageETD,
-dbo.Shipments.AgentId,dbo.Shipments.AgentComputed, dbo.Shipments.OnCarriageCarrierNumber, dbo.Shipments.OnCarriageATA, dbo.Shipments.OnCarriageATD,
-dbo.Shipments.OnCarriageToPortId, dbo.Shipments.OnCarriageFromPortId, dbo.Shipments.OnCarriageTransportModeId, dbo.Shipments.PreCarriageCarrierNumber,
-dbo.Shipments.PreCarriageATA, dbo.Shipments.PreCarriageATD, dbo.Shipments.PreCarriageToPortId, dbo.Shipments.PreCarriageFromPortId,
-dbo.Shipments.PreCarriageTransportModeId, dbo.Shipments.HAWBDate, dbo.Shipments.DescriptionOfGoods, dbo.Shipments.Notes, dbo.Shipments.DirectionId,
-dbo.Shipments.TransportModeId, dbo.Shipments.ConsigneeAddressId, dbo.Shipments.ShipperAddressId, dbo.Shipments.Notify2Id, dbo.Shipments.Notify1Id,
-dbo.Shipments.ConsigneeId, dbo.Shipments.CustomAgentImportId, dbo.Shipments.ShipperId, dbo.Shipments.ShipmentTypeId, dbo.Shipments.DepartmentId,
-dbo.Shipments.CreateDateTime, dbo.Shipments.SalesmanUserId, dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House,
-dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1, MainCarriageFromPorts.Code AS MainCarriageFromPortCode,
-dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,
-dbo.Shipments.CustomsDeclarationNumber,dbo.Shipments.FBLIsFromStock,
-dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
-dbo.ShipmentMasterDatas.OBLTypeCode, dbo.ShipmentMasterDatas.DocumentsClosingDate, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate,
-dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,
-dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,
-dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,
-dbo.EventTypes.EnglishName as LastSharedEventName,
-MainCarriageToPorts.Code AS MainCarriageToPortCode, Transshipment1FromPorts.Code AS Transshipment1FromPortCode,
-Transshipment1ToPorts.Code AS Transshipment1ToPortCode, Transshipment2FromPorts.Code AS Transshipment2FromPortCode,
-Transshipment2ToPorts.Code AS Transshipment2ToPortCode, Transshipment3FromPorts.Code AS Transshipment3FromPortCode,
-Transshipment3ToPorts.Code AS Transshipment3ToPortCode, PreCarriageFromPorts.Code AS PreCarriageFromPortCode,
-PreCarriageToPorts.Code AS PreCarriageToPortCode, OnCarriageFromPorts.Code AS OnCarriageFromPortCode, OnCarriageToPorts.Code AS OnCarriageToPortCode,
-MainCarriageToPorts.EnglishName AS MainCarriageToPortName, MainCarriageFromPorts.EnglishName AS MainCarriageFromPortName,
-Transshipment1FromPorts.EnglishName AS Transshipment1FromPortName, Transshipment1ToPorts.EnglishName AS Transshipment1ToPortName,
-Transshipment2ToPorts.EnglishName AS Transshipment2ToPortName, Transshipment2FromPorts.EnglishName AS Transshipment2FromPortName,
-PreCarriageFromPorts.EnglishName AS PreCarriageFromPortName, OnCarriageFromPorts.EnglishName AS OnCarriageFromPortName,
-PreCarriageToPorts.EnglishName AS PreCarriageToPortName, Transshipment3FromPorts.EnglishName AS Transshipment3FromPortName,
-Transshipment3ToPorts.EnglishName AS Transshipment3ToPortName, OnCarriageToPorts.EnglishName AS OnCarriageToPortName,
-CustomerCards.EnglishName AS CustomerName, CustomerCards.Notes AS CustomerNote,
-ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
-FreightForwarderCards.EnglishName AS FreightForwarderName,
-FreightForwarderCards.Notes AS FreightForwarderNote, ShipperCards.EnglishName AS ShipperName, ShipperCards.Notes AS ShipperNote,
-ConsigneeCards.EnglishName AS ConsigneeName, ConsigneeCards.Notes AS ConsigneeNote, AgentCards.EnglishName AS AgentName,
-AgentCards.Notes AS AgentNote, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote,
-CustomAgentImportCards.EnglishName AS CustomAgentImportName, CustomAgentImportCards.Notes AS CustomAgentImportNote,
-Notify1Cards.EnglishName AS Notify1Name, Notify1Cards.Notes AS Notify1Note, Notify2Cards.EnglishName AS Notify2Name, Notify2Cards.Notes AS Notify2Note,
-ShipperNotExporterCards.EnglishName AS ShipperNotExporterName, ShipperNotExporterCards.Notes AS ShipperNotExporterNote,
-ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName, ConsigneeNotImporterCards.Notes AS ConsigneeNotImporterNote,
-ToPorts.Code AS ToPortCode, ToPorts.EnglishName AS ToPortName, FromPorts.Code AS FromPortCode, FromPorts.EnglishName AS FromPortName,
-MainCarriageFromCountries.Code AS MainCarriageFromPortCountryCode, MainCarriageFromCountries.EnglishName AS MainCarriageFromPortCountryName,
-MainCarriageToCountries.Code AS MainCarriageToPortCountryCode, MainCarriageToCountries.EnglishName AS MainCarriageToPortCountryName,
-Transshipment1FromCountries.Code AS Transshipment1FromPortCountryCode,
-Transshipment1FromCountries.EnglishName AS Transshipment1FromPortCountryName,
-Transshipment2FromCountries.Code AS Transshipment2FromPortCountryCode,
-Transshipment2FromCountries.EnglishName AS Transshipment2FromPortCountryName,
-Transshipment3FromCountries.Code AS Transshipment3FromPortCountryCode,
-Transshipment3FromCountries.EnglishName AS Transshipment3FromPortCountryName, PreCarriageFromCountries.Code AS PreCarriageFromPortCountryCode,
-PreCarriageFromCountries.EnglishName AS PreCarriageFromPortCountryName, OnCarriageFromCountries.Code AS OnCarriageFromPortCountryCode,
-OnCarriageFromCountries.EnglishName AS OnCarriageFromPortCountryName, Transshipment1ToCountries.Code AS Transshipment1ToPortCountryCode,
-Transshipment1ToCountries.EnglishName AS Transshipment1ToPortCountryName, OnCarriageToCountries.Code AS OnCarriageToPortCountryCode,
-OnCarriageToCountries.EnglishName AS OnCarriageToPortCountryName, Transshipment2ToCountries.Code AS Transshipment2ToPortCountryCode,
-Transshipment2ToCountries.EnglishName AS Transshipment2ToPortCountryName, PreCarriageToCountries.Code AS PreCarriageToPortCountryCode,
-PreCarriageToCountries.EnglishName AS PreCarriageToPortCountryName, Transshipment3ToCountries.Code AS Transshipment3ToPortCountryCode,
-Transshipment3ToCountries.EnglishName AS Transshipment3ToPortCountryName, MainCarriageCarrierCards.EnglishName AS MainCarriageCarrierName,
-MainCarriageCarrierCards.Code AS MainCarriageCarrierCode, Transshipment1CarrierCards.EnglishName AS Transshipment1CarrierName,
-Transshipment1CarrierCards.Code AS Transshipment1CarrierCode, Transshipment2CarrierCards.EnglishName AS Transshipment2CarrierName,
-Transshipment2CarrierCards.Code AS Transshipment2CarrierCode, Transshipment3CarrierCards.EnglishName AS Transshipment3CarrierName,
-Transshipment3CarrierCards.Code AS Transshipment3CarrierCode, PreCarriageCarrierCards.EnglishName AS PreCarriageCarrierName,
-PreCarriageCarrierCards.Code AS PreCarriageCarrierCode, OnCarriageCarrierCards.EnglishName AS OnCarriageCarrierName,
-OnCarriageCarrierCards.Code AS OnCarriageCarrierCode, dbo.NextLegs.Name AS NextLegName, dbo.Directions.Name AS DirectionName,
-dbo.TransportModes.Name AS TransportModeName, dbo.ShipmentTypes.Name AS ShipmentTypeName,
-dbo.ShipmentReceivableStatus.Name AS ShipmentReceivableStatusName, dbo.ShipmentPayableStatus.Name AS ShipmentPayableStatusName,
-AWBCurrencies.Code AS AWBCurrencyCode, dbo.Branches.EnglishName AS BranchName,
-dbo.ShipmentLevels.Name AS ShipmentLevelName,
-dbo.Shipments.StatusId,
-dbo.EntityStatus.Id AS ShipmentStatusId,
-dbo.EntityStatus.Name AS ShipmentStatusName,
-dbo.EntityStatus.StatusWeight AS ShipmentStatusWeight,
-dbo.Shipments.StatusDate as ShipmentStatusDate,
-dbo.Shipments.StatusLocation as ShipmentStatusLocation,
-ShipmentMasterDataEntityStatus.Id AS ShipmentMasterDataStatusId,
-ShipmentMasterDataEntityStatus.Name AS ShipmentMasterDataStatusName,
-ShipmentMasterDataEntityStatus.StatusWeight AS ShipmentMasterDataStatusWeight,
-dbo.ShipmentMasterDatas.StatusDate As ShipmentMasterDataStatusDate,
-dbo.ShipmentMasterDatas.StatusLocation as ShipmentMasterDataStatusLocation,
-MainCarriageFinalDestinationPorts.Code AS MainCarriageFinalDestinationPortCode,
-MainCarriageFinalDestinationPorts.EnglishName AS MainCarriageFinalDestinationPortName, dbo.ShipmentMasterDatas.MasterShipmentNumber,
-dbo.Shipments.SearchFields, MainCarriageAirline.Prefix AS MainCarriageAirlinePrefix, dbo.Shipments.CreatedByUserId,
-dbo.Shipments.OpenPayablesInLocalCurrency, dbo.Shipments.AccountedPayablesInLocalCurrency, dbo.Shipments.OpenPayablesInProfitCurrency,
-dbo.Shipments.AccountedPayablesInProfitCurrency, dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG,  dbo.Shipments.GrossWeightPerStorageDays,dbo.Shipments.GrossWeightPerTon,
-dbo.Shipments.GrossWeightUnitCode, dbo.Shipments.ChargeableWeightUnitCode, dbo.Shipments.OrderVolumetricWeight, dbo.Shipments.VolumetricWeight,
-dbo.Shipments.Volume, dbo.Shipments.IssuingCarrierAgentId, dbo.Shipments.ProductCode,
-dbo.Incoterms.Code AS IncotermCode,
-dbo.FHLStatus.Code AS FHLStatusCode,
-dbo.FHLStatus.Name AS FHLStatusName,
-dbo.Shipments.FHLStatusDate,
-dbo.FWBStatus.Code AS FWBStatusCode,
-dbo.FWBStatus.Name AS FWBStatusName,
-dbo.ShipmentMasterDatas.FWBStatusDate,
-dbo.CustomsTransmissionsStatus.Code AS LocalCustomsTransmissionsStatusCode,
-dbo.CustomsTransmissionsStatus.Name AS LocalCustomsTransmissionsStatusName,
-dbo.shipments.LocalCustomsTransmissionsStatusError,
-dbo.Shipments.LocalCustomsTransmissionsStatusDate,
-CargonautFHLStatus.Code AS CargonautFHLStatusCode,
-CargonautFHLStatus.Name AS CargonautFHLStatusName,
-dbo.Shipments.CargonautFHLStatusDate,
-CargonautFWBStatus.Code AS CargonautFWBStatusCode,
-CargonautFWBStatus.Name AS CargonautFWBStatusName,
-dbo.ShipmentMasterDatas.CargonautFWBStatusDate,
-dbo.Shipments.AWBPrint, CarrierLastStatuses.Name AS CarrierLastStatusName, dbo.Shipments.FNAReason,
-dbo.Shipments.Routing, dbo.ShipmentMasterDatas.TruckNumber, dbo.Shipments.AsAgreedFreight, dbo.Shipments.AsAgreedOtherCharges,
-dbo.Shipments.AccountNumber, dbo.FollowUps.Id AS FollowUpId, dbo.FollowUps.Date AS FollowUpDate, dbo.FollowUps.Notes AS FollowUpNotes,
-dbo.FollowUps.EventTypeId AS FollowUpTypeId, dbo.FollowUps.OwnerUserId AS FollowUpOwnerId, FollowUpOwners.EnglishName AS FollowUpOwner,
-FollowUpTypes.FollowUpEnglishName AS FollowUpType, dbo.Shipments.CarrierLastStatusCode, dbo.Shipments.CarrierLastStatusDate,
-FromPortCountries.Code AS FromPortCountryCode,
-ToPortCountries.Code AS ToPortCountryCode, MainCarriageFromAddresses.City AS MainCarriageFromCity, MainCarriageToAddresses.City AS MainCarriageToCity,
-MainCarriageFromAddressCountries.Code AS MainCarriageFromCountryCode, MainCarriageToAddressCountries.Code AS MainCarriageToCountryCode,
-dbo.Shipments.CASSCode, dbo.Shipments.SpecialServicesTypeId, dbo.SpecialServicesTypes.Code AS SpecialServicesTypeCode,
-dbo.SpecialServicesTypes.EnglishName AS SpecialServicesTypeName,
-ShipmentComputedFields.NumberOfHouses as NumberOfHouses
---CASE WHEN (dbo.Shipments.TransportModeId = ''I'' AND dbo.Shipments.DirectionId = ''D'') THEN MainCarriageFromAddressesStates.EnglishName
---ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = ''H'' AND dbo.Shipments.MasterShipmentDataId is null) THEN FromPortsStates.EnglishName
---ELSE MainCarriageFromPortsStates.EnglishName END) END AS MainCarriageFromState,
---CASE WHEN (dbo.Shipments.TransportModeId = ''I'' AND dbo.Shipments.DirectionId = ''D'') THEN MainCarriageToAddressesStates.EnglishName
---ELSE (CASE WHEN (dbo.Shipments.ShipmentLevelCode = ''H'' AND dbo.Shipments.MasterShipmentDataId is null) THEN ToPortsStates.EnglishName
---ELSE MainCarriageFinalDestinationPortsStates.EnglishName END) END AS MainCarriageToState
-FROM            dbo.Shipments LEFT OUTER JOIN
-dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = dbo.Shipments.MasterShipmentDataId INNER JOIN
-dbo.FollowUps ON dbo.Shipments.Id = dbo.FollowUps.ShipmentId LEFT OUTER JOIN
-dbo.Ports AS MainCarriageFromPorts ON dbo.ShipmentMasterDatas.MainCarriageFromPortId = MainCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS MainCarriageToPorts ON dbo.ShipmentMasterDatas.MainCarriageToPortId = MainCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment1FromPorts ON dbo.ShipmentMasterDatas.Transshipment1FromPortId = Transshipment1FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment1ToPorts ON dbo.ShipmentMasterDatas.Transshipment1ToPortId = Transshipment1ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment2FromPorts ON dbo.ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment2ToPorts ON dbo.ShipmentMasterDatas.Transshipment2ToPortId = Transshipment2ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment3FromPorts ON dbo.ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS Transshipment3ToPorts ON dbo.ShipmentMasterDatas.Transshipment3ToPortId = Transshipment3ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS MainCarriageFinalDestinationPorts ON
-dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPorts.Id LEFT OUTER JOIN
-dbo.Ports AS PreCarriageFromPorts ON dbo.Shipments.PreCarriageFromPortId = PreCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS PreCarriageToPorts ON dbo.Shipments.PreCarriageToPortId = PreCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS OnCarriageFromPorts ON dbo.Shipments.OnCarriageFromPortId = OnCarriageFromPorts.Id LEFT OUTER JOIN
-dbo.Ports AS OnCarriageToPorts ON dbo.Shipments.OnCarriageToPortId = OnCarriageToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS ToPorts ON dbo.Shipments.ToPortId = ToPorts.Id LEFT OUTER JOIN
-dbo.Ports AS FromPorts ON dbo.Shipments.FromPortId = FromPorts.Id LEFT OUTER JOIN
-dbo.Cards AS CustomerCards ON dbo.Shipments.CustomerId = CustomerCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsolidatorCards ON dbo.Shipments.ConsolidatorId = ConsolidatorCards.Id LEFT OUTER JOIN
-dbo.Cards AS FreightForwarderCards ON dbo.Shipments.FreightForwarderId = FreightForwarderCards.Id LEFT OUTER JOIN
-dbo.Cards AS ShipperCards ON dbo.Shipments.ShipperId = ShipperCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsigneeCards ON dbo.Shipments.ConsigneeId = ConsigneeCards.Id LEFT OUTER JOIN
-dbo.Cards AS AgentCards ON dbo.Shipments.AgentId = AgentCards.Id LEFT OUTER JOIN
-dbo.Cards AS AgentComputedCards ON dbo.Shipments.AgentComputed = AgentComputedCards.Id LEFT OUTER JOIN
-dbo.Cards AS CustomAgentExportCards ON dbo.Shipments.CustomAgentExportId = CustomAgentExportCards.Id LEFT OUTER JOIN
-dbo.Cards AS CustomAgentImportCards ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id LEFT OUTER JOIN
-dbo.Cards AS Notify1Cards ON dbo.Shipments.Notify1Id = Notify1Cards.Id LEFT OUTER JOIN
-dbo.Cards AS Notify2Cards ON dbo.Shipments.Notify2Id = Notify2Cards.Id LEFT OUTER JOIN
-dbo.Cards AS ShipperNotExporterCards ON dbo.Shipments.ShipperNotExporterId = ShipperNotExporterCards.Id LEFT OUTER JOIN
-dbo.Cards AS ConsigneeNotImporterCards ON dbo.Shipments.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageFromCountries ON MainCarriageFromPorts.CountryId = MainCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageToCountries ON MainCarriageToPorts.CountryId = MainCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment1FromCountries ON Transshipment1FromPorts.CountryId = Transshipment1FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment2FromCountries ON Transshipment2FromPorts.CountryId = Transshipment2FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment3FromCountries ON Transshipment3FromPorts.CountryId = Transshipment3FromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS PreCarriageFromCountries ON PreCarriageFromPorts.CountryId = PreCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS OnCarriageFromCountries ON OnCarriageFromPorts.CountryId = OnCarriageFromCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment1ToCountries ON Transshipment1ToPorts.CountryId = Transshipment1ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment2ToCountries ON Transshipment2ToPorts.CountryId = Transshipment2ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS Transshipment3ToCountries ON Transshipment3ToPorts.CountryId = Transshipment3ToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS PreCarriageToCountries ON PreCarriageToPorts.CountryId = PreCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS OnCarriageToCountries ON OnCarriageToPorts.CountryId = OnCarriageToCountries.Id LEFT OUTER JOIN
-dbo.Countries AS FromPortCountries ON FromPorts.CountryId = FromPortCountries.Id LEFT OUTER JOIN
-dbo.Countries AS ToPortCountries ON ToPorts.CountryId = ToPortCountries.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageCarrierCards ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment1CarrierCards ON dbo.ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment2CarrierCards ON dbo.ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS Transshipment3CarrierCards ON dbo.ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3CarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS PreCarriageCarrierCards ON dbo.Shipments.PreCarriageCarrierId = PreCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.Cards AS OnCarriageCarrierCards ON dbo.Shipments.OnCarriageCarrierId = OnCarriageCarrierCards.Id LEFT OUTER JOIN
-dbo.NextLegs ON dbo.Shipments.NextLegCode = dbo.NextLegs.Code LEFT OUTER JOIN
-dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
-dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN
-dbo.ShipmentTypes ON dbo.Shipments.ShipmentTypeId = dbo.ShipmentTypes.Id LEFT OUTER JOIN
-dbo.ShipmentReceivableStatus ON dbo.Shipments.ShipmentReceivableStatusCode = dbo.ShipmentReceivableStatus.Code LEFT OUTER JOIN
-dbo.ShipmentPayableStatus ON dbo.Shipments.ShipmentPayableStatusCode = dbo.ShipmentPayableStatus.Code LEFT OUTER JOIN
-dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
-dbo.Currencies AS AWBCurrencies ON dbo.Shipments.AWBCurrencyId = AWBCurrencies.Id LEFT OUTER JOIN
-dbo.Branches ON dbo.Shipments.BranchId = dbo.Branches.Id LEFT OUTER JOIN
-dbo.MoveTypes ON dbo.Shipments.MoveTypeId = dbo.MoveTypes.Id LEFT OUTER JOIN
-dbo.ShipmentLevels ON dbo.Shipments.ShipmentLevelCode = dbo.ShipmentLevels.Code LEFT OUTER JOIN
-dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
-dbo.Airlines AS MainCarriageAirline ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageAirline.Id LEFT OUTER JOIN
-dbo.Incoterms ON dbo.Shipments.IncotermId = dbo.Incoterms.Id LEFT OUTER JOIN
-dbo.CustomsTransmissionsStatus ON dbo.Shipments.LocalCustomsTransmissionsStatusCode = dbo.CustomsTransmissionsStatus.Code LEFT OUTER JOIN
-dbo.FHLStatus ON dbo.Shipments.FHLStatusCode = dbo.FHLStatus.Code LEFT OUTER JOIN
-dbo.FWBStatus ON dbo.ShipmentMasterDatas.FWBStatusCode = dbo.FWBStatus.Code LEFT OUTER JOIN
-dbo.FHLStatus AS CargonautFHLStatus ON dbo.Shipments.CargonautFHLStatusCode = CargonautFHLStatus.Code LEFT OUTER JOIN
-dbo.FWBStatus AS CargonautFWBStatus ON dbo.ShipmentMasterDatas.CargonautFWBStatusCode = CargonautFWBStatus.Code LEFT OUTER JOIN
-dbo.EventTypes ON dbo.Shipments.LastSharedEventId = dbo.EventTypes.Id LEFT OUTER JOIN
-dbo.INTTRASIStatus ON dbo.Shipments.INTTRASIStatusCode = dbo.INTTRASIStatus.Code LEFT OUTER JOIN
-dbo.AWBStatus AS CarrierLastStatuses ON dbo.Shipments.CarrierLastStatusCode = CarrierLastStatuses.Code LEFT OUTER JOIN
-dbo.EventTypes AS FollowUpTypes ON dbo.FollowUps.EventTypeId = FollowUpTypes.Id LEFT OUTER JOIN
-dbo.Contacts AS FollowUpOwners ON dbo.FollowUps.OwnerUserId = FollowUpOwners.Id LEFT OUTER JOIN
-dbo.Addresses AS MainCarriageFromAddresses ON dbo.ShipmentMasterDatas.MainCarriageFromAddressId = MainCarriageFromAddresses.Id LEFT OUTER JOIN
-dbo.Addresses AS MainCarriageToAddresses ON dbo.ShipmentMasterDatas.MainCarriageToAddressId = MainCarriageToAddresses.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageToPartners ON dbo.ShipmentMasterDatas.MainCarriageToPartnerId = MainCarriageToPartners.Id LEFT OUTER JOIN
-dbo.Cards AS MainCarriageFromPartners ON dbo.ShipmentMasterDatas.MainCarriageFromPartnerId = MainCarriageFromPartners.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageFromAddressCountries ON MainCarriageFromAddresses.CountryId = MainCarriageFromAddressCountries.Id LEFT OUTER JOIN
-dbo.Countries AS MainCarriageToAddressCountries ON MainCarriageToAddresses.CountryId = MainCarriageToAddressCountries.Id LEFT OUTER JOIN
-dbo.SpecialServicesTypes ON dbo.Shipments.SpecialServicesTypeId = dbo.SpecialServicesTypes.Id INNER JOIN
-dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFromAddressesStates ON MainCarriageFromAddresses.StateId = MainCarriageFromAddressesStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageToAddressesStates ON MainCarriageToAddresses.StateId = MainCarriageToAddressesStates.Id LEFT OUTER JOIN
-dbo.States AS FromPortsStates ON FromPorts.StateId = FromPortsStates.Id  LEFT OUTER JOIN
-dbo.States AS ToPortsStates ON ToPorts.StateId = ToPortsStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = MainCarriageFromPortsStates.Id LEFT OUTER JOIN
-dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id');
-
-
--- DataView Script From ShipmentsCustomersDashboardView.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[ShipmentsCustomersDashboardView]'', ''V'') IS NOT NULL) BEGIN DROP VIEW [dbo].[ShipmentsCustomersDashboardView] END');
-EXEC('CREATE VIEW [dbo].[ShipmentsCustomersDashboardView]
-AS SELECT
-dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumber, dbo.Shipments.BranchId, dbo.Shipments.CreateDateTime, dbo.Shipments.OperationalDate,
-dbo.Shipments.TransportModeId, dbo.Shipments.DirectionId, dbo.Shipments.IsCancelled, dbo.Shipments.OpenReceivablesInLocalCurrency,
-dbo.Shipments.AccountedReceivablesInLocalCurrency, dbo.Shipments.ProfitInLocalCurrency, dbo.Shipments.CustomerId, dbo.Shipments.ProfitInProfitCurrency,
-dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.ShipmentLevelCode,
-dbo.Shipments.ChargeableWeightInKG, dbo.Shipments.GrossWeightInKG, dbo.Cards.EnglishName AS CustomerName
-FROM
-dbo.Shipments
-INNER JOIN
-dbo.Cards
-ON dbo.Shipments.CustomerId = dbo.Cards.Id');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2bc67193-15c5-4584-b9c2-b3e1ca8c9cd3', 'Tariff.dxml', 'Tariffs', 'FreightChargeId', 'Create Index', GETDATE(), '-- Create Index On Tariffs TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Tariffs_FreightChargeId] ON [dbo].[Tariffs]([FreightChargeId])'');');
 
 
 -- Procedure Script From usp_DeleteCRMRecords.dxml
@@ -1258,12 +281,13 @@ as
 begin
 IF OBJECT_ID(''dbo.TempDeletedCommunicationLogs'') IS NOT NULL
 DROP TABLE TempDeletedCommunicationLogs
-SELECT * INTO TempDeletedCommunicationLogs
-FROM (SELECT top(1000) Id,DocumentId
-FROM CommunicationLogs
-WHERE CreateDate < GETDATE() - 120) AS t
-DELETE FROM CommunicationLogs WHERE Id IN (SELECT Id FROM TempDeletedCommunicationLogs)
-UPDATE Documents SET MarkForDelete = 1 WHERE Id IN (SELECT DocumentId FROM TempDeletedCommunicationLogs)
+--Wait new devlopements of DB migratons to ignore all foreign keys
+--SELECT * INTO TempDeletedCommunicationLogs
+--FROM (SELECT Id,DocumentId
+--	FROM CommunicationLogs
+--	WHERE Id IN(SELECT TOP(1000)Id FROM CommunicationLogs WHERE CreateDate < GETDATE() - 120)) AS t
+--DELETE FROM CommunicationLogs WHERE Id IN (SELECT Id FROM TempDeletedCommunicationLogs)
+--UPDATE Documents SET MarkForDelete = 1 WHERE Id IN (SELECT DocumentId FROM TempDeletedDocument
 end');
 
 
@@ -3316,54 +2340,6 @@ JOIN sys.indexes AS b
 ON a.object_id = b.object_id AND a.index_id = b.index_id;');
 
 
--- Procedure Script From IdCounter GetIdRange Procedure.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_GetNextTableIdsRange]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_GetNextTableIdsRange] END');
-EXEC('Create PROCEDURE [dbo].[usp_GetNextTableIdsRange]
-(
-@pEndNumber   int OUTPUT,
-@pStartNumber int OutPUT,
-@DBStringNumber varchar(50) OutPUT,
-@pTableName    varchar(40),
-@pNumberOfIds int
-)
-AS
-DECLARE @COUNTERINIT AS INT
-SET @COUNTERINIT = @pNumberOfIds
-SET @pStartNumber = 1
-Declare @Current As Int
-Declare @DataBaseNumber As Int
---Declare @DBStringNumber As varchar(50)
-Declare @StartStrNumber As varchar(50)
-Declare @EndStrNumber As varchar(50)
-SELECT TOP 1 @DataBaseNumber = DataBaseNumber FROM DataBaseProperties
-Set @DBStringNumber = CONVERT(varchar(50) , @DataBaseNumber)
-IF NOT EXISTS (SELECT TableName
-FROM DBIdCounters (UPDLOCK) WHERE TableName =@pTableName)
-BEGIN;
-INSERT INTO DBIdCounters
-(
-TableName,
-LastIdNumber
-)
-VALUES
-(
-@pTableName,
-@COUNTERINIT
-)
-Set @Current = 1
-End
-Else
-BEGIN;
-Set @Current	= (SELECT  LastIdNumber
-FROM DBIdCounters with (UPDLOCK) WHERE  TableName =@pTableName)
-set @pEndNumber = @Current + @pNumberOfIds
-set @pStartNumber =  @Current + 1
-Update DBIdCounters
-set LastIdNumber = LastIdNumber + @pNumberOfIds
-Where TableName = @pTableName
-End;');
-
-
 -- Procedure Script From QueueEnQueueProcedure.dxml
 EXEC('IF (OBJECT_ID(''[dbo].[Queue_Enqueue]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[Queue_Enqueue] END');
 EXEC('CREATE procedure [dbo].[Queue_Enqueue]
@@ -3450,7 +2426,6 @@ EXEC('CREATE procedure [dbo].[Queue_Enqueue]
 (
 @QueueDefinitionCode varchar(255),
 @MessageBody varchar(1000),
-@Tenant int,
 @DelaySeconds int,
 @CustomerId varchar(15),
 @BatchNumber varchar(15),
@@ -3465,8 +2440,8 @@ set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
 else
 set @nextRunDateTime = @NextRunDTime
 --set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
-insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber)
-values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0)
+insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[NextRunDateTime],RetryNumber)
+values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@nextRunDateTime,0)
 declare @CId as varchar(15);
 declare @BNo as varchar(15);
 if @CustomerId = ''''
@@ -3477,8 +2452,8 @@ if @BatchNumber = ''''
 set @BNo = NULL
 else
 set @BNo = @BatchNumber
-insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,Field1,Field2)
-values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
+insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[NextRunDateTime],RetryNumber,Field1,Field2)
+values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,0,@MessageBody,@nextRunDateTime,0,@CId,@BNo)
 end');
 
 
@@ -8157,19 +7132,9 @@ EXEC('IF (OBJECT_ID(''[dbo].[Trigger_AutomaticLastUpdateDateShipmentPayables]'',
 EXEC('CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentPayables ON ShipmentPayables AFTER UPDATE  AS  BEGIN UPDATE ShipmentPayables SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;');
 
 
--- Trigger Script From Trigger_AutomaticLastUpdateDateShipmentPayableStatus.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[Trigger_AutomaticLastUpdateDateShipmentPayableStatus]'', ''TR'') IS NOT NULL) BEGIN DROP TRIGGER [dbo].[Trigger_AutomaticLastUpdateDateShipmentPayableStatus] END');
-EXEC('CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentPayableStatus ON ShipmentPayableStatus AFTER UPDATE  AS  BEGIN UPDATE ShipmentPayableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted) END;');
-
-
 -- Trigger Script From Trigger_AutomaticLastUpdateDateShipmentReceivables.dxml
 EXEC('IF (OBJECT_ID(''[dbo].[Trigger_AutomaticLastUpdateDateShipmentReceivables]'', ''TR'') IS NOT NULL) BEGIN DROP TRIGGER [dbo].[Trigger_AutomaticLastUpdateDateShipmentReceivables] END');
 EXEC('CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentReceivables ON ShipmentReceivables AFTER UPDATE  AS  BEGIN UPDATE ShipmentReceivables SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;');
-
-
--- Trigger Script From Trigger_AutomaticLastUpdateDateShipmentReceivableStatus.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[Trigger_AutomaticLastUpdateDateShipmentReceivableStatus]'', ''TR'') IS NOT NULL) BEGIN DROP TRIGGER [dbo].[Trigger_AutomaticLastUpdateDateShipmentReceivableStatus] END');
-EXEC('CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentReceivableStatus ON ShipmentReceivableStatus AFTER UPDATE  AS  BEGIN UPDATE ShipmentReceivableStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted) END;');
 
 
 -- Trigger Script From Trigger_AutomaticLastUpdateDateShipments.dxml
@@ -8203,7 +7168,7 @@ IF @@TRANCOUNT > 0
 ROLLBACK TRAN
 END CATCH;
 
--- General Script From 202006011347_FillQuoteClosingReasonTable.sxml File
+-- General Script From FillQuoteClosingReasonsDefaultValues.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
@@ -8225,7 +7190,6 @@ BEGIN
 set @TenantString = CONVERT(varchar(50), @Tenant)
 set @UserEmail = 'system@tenant'+ @TenantString + '.com'
 set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
-set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
 if (@UserId is not null)
 begin
 if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'EQ')
@@ -8258,18 +7222,6 @@ EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
 insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
 values('XQ', 'Expired Quote', 'XQ,Expired Quote', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
 end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'BM')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('BM', 'Benchmarking', 'BM,Benchmarking', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = 'LT')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'QuoteClosingReason'
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values('LT', 'Long Term Project', 'LT,Long Term Project', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
 end
 FETCH NEXT FROM TenantsCursor INTO @Tenant
 END
@@ -8277,7 +7229,7 @@ CLOSE TenantsCursor
 DEALLOCATE TenantsCursor
 END
 SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006011347_FillQuoteClosingReasonTable.sxml', GETDATE(), 'declare @Tenant as int
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('FillQuoteClosingReasonsDefaultValues.sxml', GETDATE(), 'declare @Tenant as int
 declare @TenantString as varchar(50)
 declare @EntityId as varchar(15)
 declare @UserId as varchar(15)
@@ -8293,7 +7245,6 @@ BEGIN
 set @TenantString = CONVERT(varchar(50), @Tenant)
 set @UserEmail = ''system@tenant''+ @TenantString + ''.com''
 set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
-set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
 if (@UserId is not null)
 begin
 if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''EQ'')
@@ -8326,24 +7277,12 @@ EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
 insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
 values(''XQ'', ''Expired Quote'', ''XQ,Expired Quote'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
 end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''BM'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''BM'', ''Benchmarking'', ''BM,Benchmarking'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
-if not exists (select Id from QuoteClosingReasons where Tenant = @Tenant and Code = ''LT'')
-begin
-EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''QuoteClosingReason''
-insert into QuoteClosingReasons(Code, Name, SearchFields, Id, Tenant, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive)
-values(''LT'', ''Long Term Project'', ''LT,Long Term Project'', @EntityId, @Tenant, GETDATE(), GETDATE(), @UserId, @UserId, 0)
-end
 end
 FETCH NEXT FROM TenantsCursor INTO @Tenant
 END
 CLOSE TenantsCursor
 DEALLOCATE TenantsCursor
-END', DATEDIFF(MS,@StartTime,@EndTime), 'bc55f0ba69355e9ce16622138e20ceb6', 2);
+END', DATEDIFF(MS,@StartTime,@EndTime), 'e35d4a338254247450f94f247ee0447c', 1);
 COMMIT TRAN
 END TRY
 BEGIN CATCH
@@ -8351,7 +7290,7 @@ IF @@TRANCOUNT > 0
 ROLLBACK TRAN
 END CATCH;
 
--- General Script From 202006011458_FillQuoteClosingReasonId.sxml File
+-- General Script From SetQuoteClosingReasonIdFromCode.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
@@ -8360,7 +7299,7 @@ SELECT @StartTime = GETDATE()
 update Quotes
 set QuoteClosingReasonId = (select Id from QuoteClosingReasons where Code = Quotes.QuoteClosingReasonCode and Tenant = Quotes.Tenant )
 SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006011458_FillQuoteClosingReasonId.sxml', GETDATE(), 'update Quotes
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('SetQuoteClosingReasonIdFromCode.sxml', GETDATE(), 'update Quotes
 set QuoteClosingReasonId = (select Id from QuoteClosingReasons where Code = Quotes.QuoteClosingReasonCode and Tenant = Quotes.Tenant )', DATEDIFF(MS,@StartTime,@EndTime), 'd67cf9428add3fdc7833ecd1c5ecc86a', 1);
 COMMIT TRAN
 END TRY
@@ -8369,7 +7308,7 @@ IF @@TRANCOUNT > 0
 ROLLBACK TRAN
 END CATCH;
 
--- General Script From 202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml File
+-- General Script From XMLAddClosingReasonEventTypes.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
@@ -8439,7 +7378,7 @@ CLOSE DataCursor
 DEALLOCATE DataCursor
 END
 SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml', GETDATE(), 'declare @Tenant as int
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('XMLAddClosingReasonEventTypes.sxml', GETDATE(), 'declare @Tenant as int
 declare @Code as varchar(10)
 declare @Name as varchar(100)
 declare @NewId as varchar(15)
@@ -8501,7 +7440,7 @@ FETCH NEXT FROM DataCursor INTO @Tenant
 END
 CLOSE DataCursor
 DEALLOCATE DataCursor
-END', DATEDIFF(MS,@StartTime,@EndTime), '378c9c4533e5cc2475120d6951d86fa2', 1);
+END', DATEDIFF(MS,@StartTime,@EndTime), '9e1c82c4d6fd3ea8f6c4dcfc898607a8', 1);
 COMMIT TRAN
 END TRY
 BEGIN CATCH
