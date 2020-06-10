@@ -27,14 +27,17 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Language)
+                .IsRequired()
                 .HasMaxLength(2)
                 .IsUnicode(false);
 
             this.Property(t => t.Type)
+                .IsRequired()
                 .HasMaxLength(3)
                 .IsUnicode(false);
 
             this.Property(t => t.Category)
+                .IsRequired()
                 .HasMaxLength(3)
                 .IsUnicode(false);
 
@@ -74,6 +77,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsNew).HasColumnName("IsNew");
             this.Property(t => t.FeatureCode).HasColumnName("FeatureCode");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
         }
     }
 }

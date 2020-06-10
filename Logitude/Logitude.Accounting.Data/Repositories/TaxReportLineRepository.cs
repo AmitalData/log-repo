@@ -1,18 +1,12 @@
- 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logitude.Accounting.Data.Repositories
 {
-   public partial class TaxReportLineRepository:IRepository<TaxReportLine>
+    public partial class TaxReportLineRepository:IRepository<TaxReportLine>
    {
 
         public List<TaxReportLine> GetMulti(EntityKeyFields entityKeys)
@@ -28,6 +22,15 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.TaxReportLines
                     where a.TaxReportId == reportId && a.Tenant == tenant
                     select a);
+        }
+        public IQueryable<TaxReportLine> GetAllExternalLines(int tenant, string taxReportId)
+        {
+            var q = (from a in context.TaxReportLines
+                     where a.Tenant == tenant
+                     && a.TaxReportId == taxReportId
+                     && a.IsExternalLine == true
+                     select a);
+            return q;
         }
 
     }

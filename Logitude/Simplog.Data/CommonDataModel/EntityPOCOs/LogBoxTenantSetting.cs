@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
        
         public string StockTypeCode { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
+        public bool ShowTaxAmountWarning { get; set; }
 
         public Tenant Tenant { get; set; }
     }

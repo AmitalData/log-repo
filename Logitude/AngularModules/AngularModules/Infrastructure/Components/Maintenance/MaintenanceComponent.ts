@@ -120,6 +120,14 @@ export class MaintenanceComponent {
                     //}
                 }
 
+                else if (item.Code == "MTHR") {
+                    if (SessionLocator.Tenant == 0) {
+                        if (FeatureLocator.HasFeaturePermession("HelpResource", "HelpResource.M.HelpResources")) {
+                            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                        }
+                    }
+                }
+
                 else {
                     if (item.Code != "MTHT") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -133,15 +141,6 @@ export class MaintenanceComponent {
                 }
             }
         });
-
-        //if (FeatureLocator.HasFeaturePermession("General", "General.Features.Automations")) {
-        //    var item = new MenusTablePM();
-        //    item.CategoryTypeCode = "BUP";
-        //    item.Icon = "Settings"
-        //    item.Code = "AUTO";
-        //    item.ObjectTableName = "Automations";
-        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        //}
 
         this.BuildPersonalSettings();
         this.BuildSystemSettings();
@@ -539,7 +538,7 @@ export class MaintenanceComponent {
             item.Code = "MTHP";
             item.ObjectTableName = "HybridPartner";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));            
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
@@ -581,28 +580,6 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-        //if (FeatureLocator.HasFeaturePermession("General", "PRICESTEPS")) {
-        //    var item = new MenusTablePM();
-        //    item.CategoryTypeCode = "OTH";
-        //    item.Icon = "List"
-        //    //item.Code = "MTPS";
-        //    item.ObjectTableName = "PriceStep";
-        //    //item.TextCode = "General.MC.Others.PriceSteps";
-        //    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
-        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        //}
-
-        //if (FeatureLocator.HasFeaturePermession("General", "TARIFFPRODUCTS")) {
-        //    var item = new MenusTablePM();
-        //    item.CategoryTypeCode = "OTH";
-        //    item.Icon = "List"
-        //    item.Code = "MTPR";
-        //    item.ObjectTableName = "TariffProduct";
-        //    item.TextCode = "General.MC.Others.TariffProducts";
-        //    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TariffProduct")[0].Id
-        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        //}
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();

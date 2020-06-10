@@ -68,7 +68,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="AutoGenerators\GlobalClassesGenerator.cs">
+    <Compile Include="AutoGenerators\GlobalClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GlobalClassesGenerator.tt</DependentUpon>
@@ -141,8 +141,8 @@
     </Content>
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
-      <LastOutputs>.\GlobalClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\GlobalClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>GlobalClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1122,7 +1122,9 @@
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\GlobalModel\HelpResource.lxml" />
+    <None Include="EntityFiles\GlobalModel\HelpResource.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
@@ -1306,7 +1308,9 @@
     <None Include="EntityFiles\QuoteModel\QuoteCharge.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\QuoteCostCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteCustomerType.lxml" />
     <None Include="EntityFiles\QuoteModel\QuotePackage.lxml" />

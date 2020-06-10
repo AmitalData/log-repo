@@ -6,9 +6,9 @@
             <td>
                 <table>
                     <tr>
-                      <td style="width: 1px;" class="BlueTitle">
-                        Version {{ VersionNumber}} ({{LinesCount}} lines)
-                      </td>
+                        <td style="width: 1px;" class="BlueTitle">
+                            Version {{ VersionNumber}} ({{LinesCount}} lines)
+                        </td>
 
                         <td>
                             <div></div>
@@ -66,7 +66,7 @@
                             <div></div>
                         </td>
 
-                        <td  *ngIf="!IsDraftVersion" style="width:70px;">
+                        <td *ngIf="!IsDraftVersion" style="width:70px;">
                             <div tabindex="0" class="ToggleButton">
                                 <label>Actions</label>
                                 <img src="./Images/ToggleIcon.png" />
@@ -246,6 +246,56 @@
                                 </row-template>
                             </ng-template>
                         </log-row-details>
+
+                        <!--Actions-->
+                        <log-column [width]="'60'" *ngIf="IsDraftVersion">
+                            <ng-template let-item>
+                                <log-header-template>
+                                    <div class="GridHeaderCellTemplate">
+                                        <table>
+                                            <tr>
+                                                <td style="width:14px;">
+                                                    <CheckBox [IsChecked]="IsAllSelected" (Checked)="IsAllSelected = $event"></CheckBox>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <ToggleButton [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="30" [Position]="'Left'" [IconButtonName]="'Actions'">
+                                                        <ToggleButtonItem [Text]="'Delete Lines'" (click)="DeleteLinesClicked()"></ToggleButtonItem>
+                                                    </ToggleButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </log-header-template>
+                            </ng-template>
+
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                    <div style="height: 100%; width: 100%; position:relative;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:3px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:14px;">
+                                                    <CheckBox [IsChecked]="item.IsLineSelected" (Checked)="item.IsLineSelected = $event"></CheckBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
 
                         <!--Error-->
                         <log-column [width]="'60'">

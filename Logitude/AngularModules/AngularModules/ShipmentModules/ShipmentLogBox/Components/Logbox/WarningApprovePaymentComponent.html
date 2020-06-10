@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        <td>
+            <div [innerHTML]="WarningMessage"></div>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <div style="margin-left:7px;margin-top:9px;" [style.float]="RTL ? 'left' : 'right'">
+                <button class="RedButton" (click)="DennyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Deny Declaration">{{'Shipment.O.DenyDeclaration' | TextCodeTranslationPipe}}</button>
+            </div>
+            <div style="margin-left:3px;margin-top:9px;" [style.float]="RTL ? 'left' : 'right'">
+                <button class="GreenButton" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Approve Declaration">{{'Shipment.O.ApproveDeclaration' | TextCodeTranslationPipe}}</button>
+            </div>
+        </td>
+    </tr>
+</table>

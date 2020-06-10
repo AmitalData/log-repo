@@ -779,106 +779,38 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         });
   }
 
-  //Pager
-  //public PageSize: number = 50;
-  //public PageIndex: number = 1;
-  //public TotalPagesCount: number = 1;
-  //InitializePager() {
-  //  this.PageIndex = 1;
+    private isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
 
-  //  this.TotalPagesCount = Math.ceil(this.ItemsCollection.length / this.PageSize);
+            this.ItemsCollection.forEach((item: OceanFCLFreightTariffLineData) => {
+                item.IsLineSelected = value;
+            });
+        }
+    }
 
-  //  if (this.TotalPagesCount == 0) {
-  //    this.TotalPagesCount = 1;
-  //  }
+    DeleteLinesClicked() {
+        if (this.ItemsCollection.filter(f => f.IsLineSelected).length == 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("Please select lines you would like to delete");
+        }
 
-  //  this.SetPagerButtonsStates();
-  //}
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Selected lines will be deleted");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: OceanFCLFreightTariffLineData) => {
+                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                    });
 
-  //FirstPageClick() {
-  //  this.PageIndex = 1;
-  //  this.SetPagerButtonsStates();
-  //  this.FillGridPagerItems();
-  //}
-  //PreviousPageClick() {
-  //  this.PageIndex = this.PageIndex - 1;
-  //  this.SetPagerButtonsStates();
-  //  this.FillGridPagerItems();
-  //}
-  //NextPageClick() {
-  //  this.PageIndex = this.PageIndex + 1;
-  //  this.SetPagerButtonsStates();
-  //  this.FillGridPagerItems();
-  //}
-  //LastPageClick() {
-  //  this.PageIndex = this.TotalPagesCount;
-  //  this.SetPagerButtonsStates();
-  //  this.FillGridPagerItems();
-  //}
-
-  //private isHitStateFirstButton: boolean = false;
-  //get IsHitState_FirstButton() {
-  //  return this.isHitStateFirstButton;
-  //}
-  //set IsHitState_FirstButton(value: boolean) {
-  //  this.isHitStateFirstButton = value;
-  //}
-
-  //private isHitStatePrevButton: boolean = false;
-  //get IsHitState_PrevButton() {
-  //  return this.isHitStatePrevButton;
-  //}
-  //set IsHitState_PrevButton(value: boolean) {
-  //  this.isHitStatePrevButton = value;
-  //}
-
-  //private isHitStateNextButton: boolean = false;
-  //get IsHitState_NextButton() {
-  //  return this.isHitStateNextButton;
-  //}
-  //set IsHitState_NextButton(value: boolean) {
-  //  this.isHitStateNextButton = value;
-  //}
-
-  //private isHitStateLastButton: boolean = false;
-  //get IsHitState_LastButton() {
-  //  return this.isHitStateLastButton;
-  //}
-  //set IsHitState_LastButton(value: boolean) {
-  //  this.isHitStateLastButton = value;
-  //}
-
-  // private SetPagerButtonsStates() {
-  //  if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
-  //    this.IsHitState_FirstButton = false;
-  //    this.IsHitState_PrevButton = false;
-  //    this.IsHitState_NextButton = false;
-  //    this.IsHitState_LastButton = false;
-  //  }
-
-  //  else if (this.PageIndex == 1 && this.PageIndex < this.TotalPagesCount) {
-  //    this.IsHitState_FirstButton = false;
-  //    this.IsHitState_PrevButton = false;
-
-  //    this.IsHitState_NextButton = true;
-  //    this.IsHitState_LastButton = true;
-  //  }
-
-  //  else if (this.PageIndex > 1 && this.PageIndex == this.TotalPagesCount) {
-  //    this.IsHitState_FirstButton = true;
-  //    this.IsHitState_PrevButton = true;
-
-  //    this.IsHitState_NextButton = false;
-  //    this.IsHitState_LastButton = false;
-  //  }
-
-  //  else if (this.PageIndex > 1 && this.PageIndex < this.TotalPagesCount) {
-  //    this.IsHitState_FirstButton = true;
-  //    this.IsHitState_PrevButton = true;
-  //    this.IsHitState_NextButton = true;
-  //    this.IsHitState_LastButton = true;
-  //  }
-  //}
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+            });
+        }
+    }
 }
 
 export class VersionClass {

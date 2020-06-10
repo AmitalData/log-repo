@@ -27,5 +27,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LogBoxAdminUserId { get; set; }
+        public bool ShowTaxAmountWarning { get; set; }
     }
 }

@@ -33,9 +33,5 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CountryId"
-    ReferencedTable="Countries"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+ 
 </Table>

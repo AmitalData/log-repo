@@ -728,6 +728,39 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
+
+    private isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
+
+            this.ItemsCollection.forEach((item: AirSurchargeTariffLineData) => {
+                item.IsLineSelected = value;
+            });
+        }
+    }
+
+    DeleteLinesClicked() {
+        if (this.ItemsCollection.filter(f => f.IsLineSelected).length == 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("Please select lines you would like to delete");
+        }
+
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Selected lines will be deleted");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: AirSurchargeTariffLineData) => {
+                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                    });
+
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+            });
+        }
+    }
 }
 
 export class VersionClass {
