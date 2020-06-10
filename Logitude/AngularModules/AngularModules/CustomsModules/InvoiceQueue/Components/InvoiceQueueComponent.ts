@@ -9,11 +9,17 @@ import { ObservableCollection } from "../../../Infrastructure/Utilities/Observab
 import { DateTool } from "../../../Infrastructure/Tools";
 import { InvoiceQueueWebService } from "../../../Customs/Services/WebServices/InvoiceQueueWebService";
 import { Invoices } from "../../../Customs/EntityPMs/Extended/InvoiceQueue";
+import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
+import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/DeclarationPMService";
+import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
+import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
 
 @Component({
     selector: 'InvoiceQueueComponent',
     moduleId: module.id,
     templateUrl: './InvoiceQueueComponent.html',
+    providers: [DeclarationPMService]
+
 })
 export class InvoiceQueueComponent
     extends BaseComponent{
@@ -21,37 +27,46 @@ export class InvoiceQueueComponent
     public InvoiceLineList: ObservableCollection;
     public IntegratedInvoiceList: ObservableCollection;
     public StatusList: ObservableCollection;
-
-     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
-    constructor() {
+    public declaration: DeclarationPM;
+    _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
+    constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
         this.InvoiceLineList = new ObservableCollection([]);
         this.IntegratedInvoiceList = new ObservableCollection([]);
         this.StatusList = new ObservableCollection([]);
 
-        this._invoiceQueueWebService.GetInvoice().subscribe(data => {
-            debugger;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
 
-             (data.Result.Invoice as Invoices).InvoiceLines.forEach(
-                x => {
-                     this.InvoiceLineList.Insert(x);
-                 });
+                this._invoiceQueueWebService.GetInvoice().subscribe(data => {
 
-            (data.Result.Invoice as Invoices).Statuses.forEach(
-                x => {
-                    this.StatusList.Insert(x);
-                });      
+                    (data.Result.Invoice as Invoices).InvoiceLines.forEach(
+                        x => {
+                            this.InvoiceLineList.Insert(x);
+                        });
 
-
-            (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(
-                x => {
-                    this.IntegratedInvoiceList.Insert(x);
-                });      
+                    (data.Result.Invoice as Invoices).Statuses.forEach(
+                        x => {
+                            this.StatusList.Insert(x);
+                        });
 
 
+                    (data.Result.Invoice as Invoices).IntegratedInvoices.forEach(
+                        x => {
+                            this.IntegratedInvoiceList.Insert(x);
+                        });
+
+
+                    this._declarationPMService.get("1-5352").subscribe(
+                        data => {
+                            this.declaration = data.Result;
+                        });
+                   
+
+                });
+
+            });
         });
-
-
     }
     SetWindowArgs(args: any) {
 

@@ -4,7 +4,7 @@ import { InvoiceQueueComponent } from "./Components/InvoiceQueueComponent";
 export const Components =
     [
         InvoiceQueueComponent,
-     ];
+      ];
 export class ModuleDeclarations {
     public static Get(name: string) {
 
@@ -12,6 +12,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "InvoiceQueueComponent": { myResult = InvoiceQueueComponent; break; }
+ 
          }
         return myResult;
     }
