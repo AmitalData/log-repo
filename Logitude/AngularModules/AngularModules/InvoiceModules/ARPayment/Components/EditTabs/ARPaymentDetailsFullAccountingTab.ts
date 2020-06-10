@@ -47,7 +47,7 @@ import { LineModel } from '../../../../Accounting/Components/Others/ReconcileCom
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
-    
+
     templateUrl: './ARPaymentDetailsFullAccountingTab.html',
     styleUrls: ['./ARPaymentDetailsFullAccountingTab.css']
 })
@@ -169,7 +169,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
    }
     }
     ReconcileAmountCurrency: string;
-  
+
     ngOnInit() {
         this.LoadPaymentMethods();
 
@@ -305,7 +305,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
 
 
-        
+
             this._LedgerTransactionExtendedListService.getTransactionsForARPayment(this.EntityPM.Id, this.EntityPM.GLAccountId, this.EntityPM.PaymentCurrencyId).subscribe((myResult: ServiceResponse) => {
 
                     this._loading = false;
@@ -409,7 +409,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 _linespaymentReconciledAmount += line.PaymentReconciledAmount;
             }
         });
-      
+
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
         //if (this.EntityPM.GLAccountRecoMethodCode == "1") {
@@ -660,8 +660,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
-            
-           
+
+
             if (!this.isFullAccounting) {
                 if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
                     if (this.EntityPM.PaymentInvoices.length > 0) {
@@ -679,7 +679,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     isEnabled = true;
                 }
             }
-        
+
 
         this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
@@ -1054,7 +1054,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                                 this.SetAmountCurrencyCode();
                                                 this.ComputeLocalAmount();
                                                 this.SetPaymentAmount();
-                                               
+
                                                 if (glaccount != null && !glaccount.IsMultiCurrency) {
                                                     this.PaymentCurrencyId = glaccount.CurrencyId;
                                                 }
@@ -1950,7 +1950,7 @@ export class TransactionLineModel extends BaseComponent {
         this.OriginalAmount = this.CalculateOriginalAmount();
         this.OriginalInvoiceAmount = this.SetOriginalInvoiceAmount();
         this.OriginalAmountCurrency = this.CalculatOriginalCurruncy();
-      
+
         this.CalculatedOpenAmount = this.CalculateOpenAmount();
         this.originalOpenAmount = this.CalculatedOpenAmount;
         this.Status = this.GetStatus();
@@ -2001,8 +2001,12 @@ export class TransactionLineModel extends BaseComponent {
 
         if (v) {
 
-            if(this.AmountToReconcile == null || this.AmountToReconcile == 0)
-                this.AmountToReconcile = this.OpenAmount;
+            if(this.AmountToReconcile == null || this.AmountToReconcile == 0){
+                if(this.OpenAmount <= this.parent.EntityPM.AmountInPaymentCurrency)
+                    this.AmountToReconcile = this.OpenAmount;
+                else if(this.OpenAmount > this.parent.EntityPM.AmountInPaymentCurrency)
+                    this.AmountToReconcile = this.parent.EntityPM.AmountInPaymentCurrency;
+            }
 
             this.parent.PushTransaction(this.ledgerTransaction);
         } else {
@@ -2249,12 +2253,12 @@ export class TransactionLineModel extends BaseComponent {
     }
      CalculateOpenAmount() {
          if (this.parent.EntityPM.GLAccountRecoMethodCode == "0" && this.parent.EntityPM.GLAccountCurrencyCode=="Multi") {
-            
+
             return this.OpenAmount //* this.parent.PaymentCurrencyExchangeRate;
-            
+
         } else { return this.OpenAmount; }
     }
-    
+
     CalculatOriginalCurruncy() {
         //
         // [i] copied from list template
