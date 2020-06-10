@@ -97,7 +97,7 @@
             <div *ngIf="EnableExpandCollapseAll == true" style="position: absolute;display: inline-block;min-width:25px;">
                 <div [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block;">
                     <div [style.lineHeight.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" [style.height.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" style="overflow: hidden; text-overflow: ellipsis;">
-                        <img *ngIf="ShowCollapseAllIcon == true" src="./Images/CustomTreeIcon2.png" (click)="OnCollapseAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Collapse All" />
+                        <img *ngIf="ShowCollapseAllIcon == true" src="./Images/CustomtreeIcon2.png" (click)="OnCollapseAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Collapse All" />
                         <img *ngIf="ShowCollapseAllIcon == false" src="./Images/CustomTreeIcon.png" (click)="OnExpandAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Expand All"/>
                     </div>
                 </div>

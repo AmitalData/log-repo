@@ -332,6 +332,7 @@
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\External.png" />
     <Content Include="Images\HideFilters.png" />
+    <Content Include="Images\Icons\ActionsGray.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
     <Content Include="Images\Icons\Folder_B.png" />
     <Content Include="Images\Icons\Folder_L.png" />

@@ -6,9 +6,9 @@
             <td>
                 <table>
                     <tr>
-                      <td style="width: 1px;" class="BlueTitle">
-                        Version {{ VersionNumber}} ({{LinesCount}} lines)
-                      </td>
+                        <td style="width: 1px;" class="BlueTitle">
+                            Version {{ VersionNumber}} ({{LinesCount}} lines)
+                        </td>
 
                         <td>
                             <div></div>
@@ -72,7 +72,7 @@
                                 <img src="./Images/ToggleIcon.png" />
 
                                 <div class="ToggleButtonMenu">
-                                    <button (click)="CopyVersionClicked()" >Copy into new Version</button>
+                                    <button (click)="CopyVersionClicked()">Copy into new Version</button>
                                 </div>
                             </div>
                         </td>
@@ -93,10 +93,60 @@
                 <div class="MediaFill">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
 
+                        <!--Actions-->
+                        <log-column [width]="'60'" *ngIf="IsDraftVersion">
+                            <ng-template let-item>
+                                <log-header-template>
+                                    <div class="GridHeaderCellTemplate">
+                                        <table>
+                                            <tr>
+                                                <td style="width:14px;">
+                                                    <CheckBox [IsChecked]="IsAllSelected" (Checked)="IsAllSelected = $event"></CheckBox>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <ToggleButton [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="30" [Position]="'Left'" [IconButtonName]="'Actions'">
+                                                        <ToggleButtonItem [Text]="'Delete Lines'" (click)="DeleteLinesClicked()"></ToggleButtonItem>
+                                                    </ToggleButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </log-header-template>
+                            </ng-template>
+
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                    <div style="height: 100%; width: 100%; position:relative;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:3px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:14px;">
+                                                    <CheckBox [IsChecked]="item.IsLineSelected" (Checked)="item.IsLineSelected = $event"></CheckBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
                         <!--Error-->
                         <log-column [width]="'60'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div style="height: 100%; width: 100%;">
                                         <table>
                                             <tr>
@@ -121,7 +171,7 @@
                         <!-- OriginPortId -->
                         <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                         <span *ngIf="!item.IsFromAllOtherPorts" [ngStyle]="{color: item.OriginPortColor}">{{item.OriginPortValue}}</span>
 
@@ -150,7 +200,7 @@
                         <!-- DestinationPortId -->
                         <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                         <span *ngIf="!item.IsToAllOtherPorts" [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
 
@@ -180,7 +230,7 @@
                         <!-- Currency -->
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                         <span>{{item.CurrencyCode}}</span>
                                     </div>
@@ -205,7 +255,7 @@
                         <!-- StartDate -->
                         <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                         <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
                                     </div>
@@ -220,7 +270,7 @@
                         <!-- Surcharge1MinPrice -->
                         <log-column *ngIf="Surcharge1MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge1MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -242,7 +292,7 @@
                         <!-- Surcharge1Price -->
                         <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -272,7 +322,7 @@
                         <!-- Surcharge2MinPrice -->
                         <log-column *ngIf="Surcharge2MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge2MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -294,7 +344,7 @@
                         <!-- Surcharge2Price -->
                         <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -323,7 +373,7 @@
                         <!-- Surcharge3MinPrice -->
                         <log-column *ngIf="Surcharge3MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge3MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -345,7 +395,7 @@
                         <!-- Surcharge3Price -->
                         <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -374,7 +424,7 @@
                         <!-- Surcharge4MinPrice -->
                         <log-column *ngIf="Surcharge4MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge4MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -396,7 +446,7 @@
                         <!-- Surcharge4Price -->
                         <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -425,7 +475,7 @@
                         <!-- Surcharge5MinPrice -->
                         <log-column *ngIf="Surcharge5MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge5MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -447,7 +497,7 @@
                         <!-- Surcharge5Price -->
                         <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -476,7 +526,7 @@
                         <!-- Surcharge6MinPrice -->
                         <log-column *ngIf="Surcharge6MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge6MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -498,7 +548,7 @@
                         <!-- Surcharge6Price -->
                         <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -527,7 +577,7 @@
                         <!-- Surcharge7MinPrice -->
                         <log-column *ngIf="Surcharge7MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge7MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -549,7 +599,7 @@
                         <!-- Surcharge7Price -->
                         <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -578,7 +628,7 @@
                         <!-- Surcharge8MinPrice -->
                         <log-column *ngIf="Surcharge8MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge8MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -600,7 +650,7 @@
                         <!-- Surcharge8Price -->
                         <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -629,7 +679,7 @@
                         <!-- Surcharge9MinPrice -->
                         <log-column *ngIf="Surcharge9MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge9MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -651,7 +701,7 @@
                         <!-- Surcharge9Price -->
                         <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -680,7 +730,7 @@
                         <!-- Surcharge10MinPrice -->
                         <log-column *ngIf="Surcharge10MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge10MinPriceLabel" [width]="'100'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -702,7 +752,7 @@
                         <!-- Surcharge10Price -->
                         <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                         <table>
                                             <tr>
@@ -731,7 +781,7 @@
                         <!-- Notes -->
                         <log-column [width]="'40'">
                             <ng-template let-item>
-                                <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div style="height: 100%; width: 100%; left:5px;">
                                         <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
                                         <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
@@ -743,7 +793,7 @@
                         <!-- Tools Button -->
                         <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
                             <ng-template let-item>
-                                <log-cell-template [IgnoreMods]="true"    #logcelltemplate>
+                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                     <div style="width: 100%; height: 100%; position: relative;">
                                         <div class="LeftCenter" style="height: 20px;">
                                             <table>

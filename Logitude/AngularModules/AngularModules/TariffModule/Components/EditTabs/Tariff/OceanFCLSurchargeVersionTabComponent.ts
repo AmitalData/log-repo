@@ -781,6 +781,46 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             item.IsRowHover = isRowHover;
         }
     }
+
+    private isAllSelected: boolean = false;
+    get IsAllSelected() { return this.isAllSelected; }
+    set IsAllSelected(value: boolean) {
+        if (this.isAllSelected != value) {
+            this.isAllSelected = value;
+
+            this.ItemsCollection.forEach((item: OceanFCLSurchargeTariffLineData) => {
+                item.IsLineSelected = value;
+            });
+        }
+    }
+
+    DeleteLinesClicked() {
+        if (this.ItemsCollection.filter(f => f.IsLineSelected).length == 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("Please select lines you would like to delete");
+        }
+
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Selected lines will be deleted");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: OceanFCLSurchargeTariffLineData) => {
+
+                        if (item.EntityPM.ContainersPrices != null) {
+                            item.EntityPM.ContainersPrices.forEach(containerItem => {
+                                item.EntityPM.RemoveTariffLinesContainersPrice(containerItem);
+                            });
+                        }
+
+                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                    });
+
+                    this.FillTariffLines(this.CurrentVersion.TariffLines);
+                }
+            });
+        }
+    }
 }
 
 export class OceanFCLSurchargeTariffLineData extends BaseComponent {
@@ -1487,6 +1527,14 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.FatherComponent.ReloadDetails.emit("");
 
         this.DoCompareContainerPrices(false);  
+    }
+
+    private isLineSelected: boolean = false;
+    get IsLineSelected() { return this.isLineSelected; }
+    set IsLineSelected(value: boolean) {
+        if (this.isLineSelected != value) {
+            this.isLineSelected = value;
+        }
     }
 }
 
