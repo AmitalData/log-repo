@@ -182,7 +182,20 @@
             </td>
 
 
-            <td style="width: 150px;">
+            <td>
+                <LogLabel [ObjectFieldName]="'ProcedureCurrentCode'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td>
+                <LogLov [ObjectFieldName]="'ProcedureCurrentCode'"
+                        [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext"
+                        [HideColumns]="true"
+                        [LookUpTableName]="'Customs.GovernmentProcedureType'"
+                        [ManipulateData]="true"
+                        [QueryFilterItems]="PreceduralFilterItems"
+                        [SelectedValue]="ProcedureCurrentCode">
+                </LogLov>
             </td>
 
             <!--(ValueChanged)="IsExporterConfirmationChecked($event)"-->

@@ -30,6 +30,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           Tenant = a.Tenant,
 
                                                                                       }).ToList();
+
+
             return supplierInvoiceItemsPricePMs;
 
         }

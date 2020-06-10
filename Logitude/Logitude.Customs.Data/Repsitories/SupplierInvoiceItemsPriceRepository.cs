@@ -24,10 +24,20 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplierInvoiceItemsPrice> GetSupplierInvoiceItemsPricesForDeclarationId(string declarationId, int invoiceCounterKey,  List<int> itemsLineNumbers, int tenant)
         {
-            return (from a in context.SupplierInvoiceItemsPrices 
-                   where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCounterKey== invoiceCounterKey && itemsLineNumbers.Contains(a.InvoiceItemLineNumber)
-                   select a).ToList();
+            var query = (from a in context.SupplierInvoiceItemsPrices
+                         where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCounterKey == invoiceCounterKey
+                         select a);//.ToList();
+
+
+            if (itemsLineNumbers != null)
+            {
+                query = query.Where(a=> itemsLineNumbers.Contains(a.InvoiceItemLineNumber));
+
+            }
+
+            return query.ToList();
         }
+ 
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {

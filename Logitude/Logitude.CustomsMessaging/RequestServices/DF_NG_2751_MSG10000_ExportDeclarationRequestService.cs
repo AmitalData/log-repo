@@ -732,20 +732,23 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
              customDeclaration.Agent = GetDeclarationAgent(declarationPM);
-            customDeclaration.Exporter = new DeclarationExporter[]
-            {
-                new DeclarationExporter()
-                {
-                    ID = SetIDTypeValue<ExporterIdentificationIDType>(declarationPM.ImporterCode),
-                DMExtensions = new DeclarationExporterDMExtensions()
-                {
-                    RoleCode = SetCodeTypeValue<DeclarationExporterDMExtensionsRoleCode>("7"),
+            customDeclaration.Exporter = GetImporter(declarationPM);
+
+
+            //new DeclarationExporter[]
+            //{
+            //    new DeclarationExporter()
+            //    {
+            //        ID = SetIDTypeValue<ExporterIdentificationIDType>(declarationPM.ImporterCode),
+            //       DMExtensions = new DeclarationExporterDMExtensions()
+            //    {
+            //        RoleCode = SetCodeTypeValue<DeclarationExporterDMExtensionsRoleCode>("7"),
                      
-                    IssueLocation =  new DeclarationExporterDMExtensionsIssueLocation() { Value ="IL"}
-                }
+            //        IssueLocation =  new DeclarationExporterDMExtensionsIssueLocation() { Value ="IL"}
+            //    }
                 
-                }
-            };
+            //    }
+            //};
 
             customDeclaration.Exporter[0].ID.schemeID= "1";
 
@@ -753,7 +756,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 customDeclaration.GovernmentProcedure = new DeclarationGovernmentProcedure()
                 {
-                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>("1000001") // declarationPM.ProcedureCurrentCodenew GovernmentProcedureCurrentCodeType()
+                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>("1000001") //  declarationPM.ProcedureCurrentCodenew GovernmentProcedureCurrentCodeType()
                 };
                 }
 
@@ -925,26 +928,26 @@ namespace Logitude.CustomsMessaging.RequestServices
         //    };
         //}
 
-        //private DeclarationImporter[] GetImporter(DeclarationPM declarationPM)
-        //{
-        //    var declarationImporterList = new List<DeclarationImporter>();
+        private DeclarationExporter[] GetImporter(DeclarationPM declarationPM)
+        {
+            var declarationExporterList = new List<DeclarationExporter>();
 
-        //    // if (!String.IsNullOrWhiteSpace(declarationPM.ImporterId))
-        //    //  {
-        //    declarationImporterList.Add(GetDeclarationImporterRole4(declarationPM));
-        //    //  }
-        //    // Task 6440 - add ImporterCode fields check
-        //    if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId) || !String.IsNullOrWhiteSpace(declarationPM.TransferImporterCode))
-        //    {
-        //        declarationImporterList.Add(GetDeclarationImporterRole5(declarationPM));
-        //    }
-        //    if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId) || !String.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
-        //    {
-        //        declarationImporterList.Add(GetDeclarationImporterRole6(declarationPM));
-        //    }
+            // if (!String.IsNullOrWhiteSpace(declarationPM.ImporterId))
+            //  {
+            declarationExporterList.Add(GetDeclarationImporterRole4(declarationPM));
+            //  }
+            // Task 6440 - add ImporterCode fields check
+            if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId) || !String.IsNullOrWhiteSpace(declarationPM.TransferImporterCode))
+            {
+                declarationExporterList.Add(GetDeclarationImporterRole5(declarationPM));
+            }
+            //if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId) || !String.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
+            //{
+            //    declarationExporterList.Add(GetDeclarationImporterRole6(declarationPM));
+            //}
 
-        //    return declarationImporterList.ToArray();
-        //}
+            return declarationExporterList.ToArray();
+        }
 
         private List<DeclarationDutyTaxFee> GetDeclarationDutyTaxFee(DeclarationPM declarationPM)
         {
@@ -1468,10 +1471,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.DangerousClassificationCode))
             {
-                if (supplierInvoiceItemPM.DangerousClassificationCode.Length == 11) // moran 1.9.14 - uncommented
-                {
-                    supplierInvoiceItemPM.DangerousClassificationCode = supplierInvoiceItemPM.DangerousClassificationCode.Insert(10, "/");
-                }
+                //if (supplierInvoiceItemPM.DangerousClassificationCode.Length == 11) // moran 1.9.14 - uncommented
+                //{
+                //    supplierInvoiceItemPM.DangerousClassificationCode = supplierInvoiceItemPM.DangerousClassificationCode.Insert(10, "/");
+                //}
                 myDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification()
                 {
                     ID = SetIDTypeValue<ClassificationIdentificationIDType>(supplierInvoiceItemPM.DangerousClassificationCode), // new ClassificationIdentificationIDType()
@@ -1501,10 +1504,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             //};
             if (!string.IsNullOrWhiteSpace(supplierInvoiceItemPM.ClassificationCode))
             {
-                if (supplierInvoiceItemPM.ClassificationCode.Length == 11) // moran 1.9.14 - uncommented
-                {
-                    supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemPM.ClassificationCode.Insert(10, "/");
-                }
+                //if (supplierInvoiceItemPM.ClassificationCode.Length == 11) // moran 1.9.14 - uncommented
+                //{
+                //    supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemPM.ClassificationCode.Insert(10, "/");
+                //}
 
                 declarationGoodsItemCommodity.Classification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification[]
                 {
@@ -1798,41 +1801,49 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationGoodsItemAmountList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsGoodsItemAmount>();
             string cur = supplierInvoicePM.InvoiceCurrencyTypeCode;
 
-            if (supplierInvoiceItemPM.ItemPrice.HasValue)
+            if(supplierInvoiceItemPM.SupplierInvoiceItemsPrices != null && supplierInvoiceItemPM.SupplierInvoiceItemsPrices.Count()>0)
             {
-                if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.ItemPriceCurrencyCode))
+                foreach (var price in supplierInvoiceItemPM.SupplierInvoiceItemsPrices)
                 {
-                    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.ItemPrice.Value, "1", supplierInvoiceItemPM.ItemPriceCurrencyCode));
-                }
-                else if (!String.IsNullOrWhiteSpace(cur))
-                {
-                    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.ItemPrice.Value, "1", cur));
+                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, supplierInvoiceItemPM.ItemPriceCurrencyCode));
+
                 }
             }
-            if (supplierInvoiceItemPM.NonCustomsItemPrice.HasValue && supplierInvoiceItemPM.NonCustomsItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.NonCustomsItemPriceCurCode))//17997
-            {
- 
-                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.NonCustomsItemPrice.Value, "11", supplierInvoiceItemPM.NonCustomsItemPriceCurCode));
- 
-            }
-            if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue && supplierInvoiceItemPM.WholeSaleItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode))//17997
-            {
- 
-                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.WholeSaleItemPrice.Value, "5", supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode));
-    
-            }
-            DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
+            //if (supplierInvoiceItemPM.ItemPrice.HasValue)
+            //{
+            //    if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.ItemPriceCurrencyCode))
+            //    {
+            //        declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.ItemPrice.Value, "1", supplierInvoiceItemPM.ItemPriceCurrencyCode));
+            //    }
+            //    else if (!String.IsNullOrWhiteSpace(cur))
+            //    {
+            //        declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.ItemPrice.Value, "1", cur));
+            //    }
+            //}
+            //if (supplierInvoiceItemPM.NonCustomsItemPrice.HasValue && supplierInvoiceItemPM.NonCustomsItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.NonCustomsItemPriceCurCode))//17997
+            //{
+
+                //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.NonCustomsItemPrice.Value, "11", supplierInvoiceItemPM.NonCustomsItemPriceCurCode));
+
+                //}
+                //if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue && supplierInvoiceItemPM.WholeSaleItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode))//17997
+                //{
+
+                //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.WholeSaleItemPrice.Value, "5", supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode));
+
+                //}
+                DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
            
             if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode))
             {
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
-                }
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
-                }
+                //if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
+                //{
+                //    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
+                //}
+                //if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
+                //{
+                //    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
+                //}
                  //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
             }
            
@@ -1993,7 +2004,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!String.IsNullOrWhiteSpace(consignmentPM.ReceiverWarehouseCode))
             {
                 seqnum++;
-                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "003", seqnum));
+                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "006", seqnum));
             }
             if (consignmentPM.ConsignmentInternalTransitions != null)
             {
@@ -2092,44 +2103,39 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        //private DeclarationImporter GetDeclarationImporterRole6(DeclarationPM declarationPM)
-        //{
+        private DeclarationExporter GetDeclarationImporterRole6(DeclarationPM declarationPM)
+        {
 
-        //    //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-        //    //var declarationImporter = new DeclarationImporter();
-        //    // Task 6440 - add ImporterCode fields check
-        //    //if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId))
-        //    //{
-        //    //   declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.EntitleImporterId), declarationPM.EntitleImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - add declarationPM.EntitleImporterTypeCode
-        //    //}
-        //    //else
-        //    //{
-        //    //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.EntitleImporterCode, declarationPM.EntitleImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.EntitleImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
-        //    //}
-        //    //TO:
-        //    var ImporterId = ImportersCheck("זכאי", declarationPM.EntitleImporterCode, declarationPM.EntitleImporterId, declarationPM.EntitleImporterTypeCode, declarationPM.EntitleImporterName, declarationPM.EntitleImporterAddress, declarationPM.EntitlePassportNumber, declarationPM.EntitleImporterCountryCode);
-        //    var declarationImporter = new DeclarationImporter();
-        //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.EntitleImporterTypeCode);
-        //    //Yuval Chalup 15.11.2016 TASK-24438 --->
-        //    declarationImporter.DMExtensions = new ()
-        //    {
-        //        Address = declarationPM.EntitleImporterAddress,
-        //        Name = declarationPM.EntitleImporterName,
-        //        EntitlementTypeCode = new EntitlementTypeCodeType()
-        //        {
-        //            Value = declarationPM.ImporterEntitlementTypeCode
-        //        },
-        //        RoleCode = 
-        //        {
-        //            Value = "6"
-        //        }
-        //    };
-        //    if (declarationPM.EntitleImporterTypeCode == "2" || declarationPM.EntitleImporterTypeCode == "3")
-        //    {
-        //        declarationImporter.DMExtensions.IssueLocation = new DeclarationImporterDMExtensionsIssueLocation() { Value = declarationPM.EntitleImporterCountryCode };
-        //    }
-        //    return declarationImporter;
-        //}
+            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
+            //var declarationImporter = new DeclarationImporter();
+            // Task 6440 - add ImporterCode fields check
+            //if (!String.IsNullOrWhiteSpace(declarationPM.EntitleImporterId))
+            //{
+            //   declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.EntitleImporterId), declarationPM.EntitleImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - add declarationPM.EntitleImporterTypeCode
+            //}
+            //else
+            //{
+            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.EntitleImporterCode, declarationPM.EntitleImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.EntitleImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
+            //}
+            //TO:
+            var ImporterId = ImportersCheck("זכאי", declarationPM.EntitleImporterCode, declarationPM.EntitleImporterId, declarationPM.EntitleImporterTypeCode, declarationPM.EntitleImporterName, declarationPM.EntitleImporterAddress, declarationPM.EntitlePassportNumber, declarationPM.EntitleImporterCountryCode);
+            var declarationImporter = new DeclarationExporter();
+            declarationImporter.ID = SetIDTypeValue<ExporterIdentificationIDType>(ImporterId, declarationPM.EntitleImporterTypeCode);
+            //Yuval Chalup 15.11.2016 TASK-24438 --->
+            declarationImporter.DMExtensions = new DeclarationExporterDMExtensions()
+            {
+                
+                RoleCode =
+                {
+                    Value = "6"
+                }
+            };
+            if (declarationPM.EntitleImporterTypeCode == "2" || declarationPM.EntitleImporterTypeCode == "3")
+            {
+                declarationImporter.DMExtensions.IssueLocation = new DeclarationExporterDMExtensionsIssueLocation() { Value = declarationPM.EntitleImporterCountryCode };
+            }
+            return declarationImporter;
+        }
 
         private object GetDeclarationImporter()
         {
@@ -2137,99 +2143,94 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        //private DeclarationImporter GetDeclarationImporterRole5(DeclarationPM declarationPM)
-        //{
-        //    //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-        //    //var declarationImporter = new DeclarationImporter();
-        //    // Task 6440 - add ImporterCode fields check
-        //    //if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId))
-        //    //{
-        //    //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.TransferImporterId), declarationPM.TransferImporterTypeCode); // new ImporterIdentificationIDType()  // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode
-        //    //}
-        //    // else
-        //    //{
-        //    //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.TransferImporterCode, declarationPM.TransferImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
-        //    //}
-        //    //TO:
-        //    var ImporterId = ImportersCheck("מעביר", declarationPM.TransferImporterCode, declarationPM.TransferImporterId, declarationPM.TransferImporterTypeCode, declarationPM.TransferImporterName, declarationPM.TransferImporterAddress, declarationPM.TransferPassportNumber, declarationPM.TransferImporterCountryCode);
-        //    var declarationImporter = new DeclarationImporter();
-        //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.TransferImporterTypeCode);
-        //    //Yuval Chalup 15.11.2016 TASK-24438 --->
+        private DeclarationExporter GetDeclarationImporterRole5(DeclarationPM declarationPM)
+        {
+            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
+            //var declarationImporter = new DeclarationImporter();
+            // Task 6440 - add ImporterCode fields check
+            //if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId))
+            //{
+            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.TransferImporterId), declarationPM.TransferImporterTypeCode); // new ImporterIdentificationIDType()  // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode
+            //}
+            // else
+            //{
+            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.TransferImporterCode, declarationPM.TransferImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
+            //}
+            //TO:
+            var ImporterId = ImportersCheck("מעביר", declarationPM.TransferImporterCode, declarationPM.TransferImporterId, declarationPM.TransferImporterTypeCode, declarationPM.TransferImporterName, declarationPM.TransferImporterAddress, declarationPM.TransferPassportNumber, declarationPM.TransferImporterCountryCode);
+            var declarationImporter = new DeclarationExporter();
+            declarationImporter.ID = SetIDTypeValue<ExporterIdentificationIDType>(ImporterId, declarationPM.TransferImporterTypeCode);
+            //Yuval Chalup 15.11.2016 TASK-24438 --->
 
-        //    declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
-        //    {
-        //        Address = declarationPM.TransferImporterAddress,
-        //        Name = declarationPM.TransferImporterName,
-        //        EntitlementTypeCode = new EntitlementTypeCodeType()
-        //        {
-        //            Value = declarationPM.TransImporterEntitleTypeCode
-        //        },
-        //        RoleCode = new DeclarationImporterDMExtensionsRoleCode()
-        //        {
-        //            Value = "5"
-        //        }
-        //    };
-        //    if (declarationPM.TransferImporterTypeCode == "2" || declarationPM.TransferImporterTypeCode == "3")
-        //    {
-        //        declarationImporter.DMExtensions.IssueLocation = new DeclarationImporterDMExtensionsIssueLocation() { Value = declarationPM.TransferImporterCountryCode };
-        //    }
-        //    return declarationImporter;
-        //}
+            declarationImporter.DMExtensions = new DeclarationExporterDMExtensions()
+            { 
+                RoleCode = new DeclarationExporterDMExtensionsRoleCode()
+                {
+                    Value = "12"
+                }
+            };
+            if (declarationPM.TransferImporterTypeCode == "2" || declarationPM.TransferImporterTypeCode == "3")
+            {
+                declarationImporter.DMExtensions.IssueLocation = new DeclarationExporterDMExtensionsIssueLocation() { Value = declarationPM.TransferImporterCountryCode };
+            }
+            return declarationImporter;
+        }
 
 
-        //private DeclarationImporter GetDeclarationImporterRole4(DeclarationPM declarationPM)
-        //{
-        //    //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-        //    //var ImporterId = GetImporterCode(declarationPM.ImporterId);
-        //    //if (String.IsNullOrWhiteSpace(ImporterId)) // Task 6440 - add ImporterCode fields check
-        //    //{
-        //    //    ImporterId = GetImporterCode(declarationPM.ImporterCode);
-        //    //}
-        //    //if (String.IsNullOrWhiteSpace(ImporterId))
-        //    //{
-        //    //    throw new BusinessErrorException("Importer is empty");
-        //    //}
-        //    //TO:
-        //    //ImporterId = GetImporterCode(declarationPM.ImporterId);
-        //    var ImporterId = ImportersCheck("", declarationPM.ImporterCode, declarationPM.ImporterId, declarationPM.ImporterTypeCode, declarationPM.ImporterName, declarationPM.ImporterAddress, declarationPM.ImporterPassportNumber, declarationPM.ImporterPassCountryCode);
-        //    //if (!string.IsNullOrWhiteSpace(errorMessage))
-        //    //{
-        //    //    throw new BusinessErrorException(errorMessage);
-        //    //}
-        //    //Yuval Chalup 15.11.2016 TASK-24438 --->
+        private DeclarationExporter GetDeclarationImporterRole4(DeclarationPM declarationPM)
+        {
+            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
+            //var ImporterId = GetImporterCode(declarationPM.ImporterId);
+            //if (String.IsNullOrWhiteSpace(ImporterId)) // Task 6440 - add ImporterCode fields check
+            //{
+            //    ImporterId = GetImporterCode(declarationPM.ImporterCode);
+            //}
+            //if (String.IsNullOrWhiteSpace(ImporterId))
+            //{
+            //    throw new BusinessErrorException("Importer is empty");
+            //}
+            //TO:
+            //ImporterId = GetImporterCode(declarationPM.ImporterId);
+            var ImporterId = ImportersCheck("", declarationPM.ImporterCode, declarationPM.ImporterId, declarationPM.ImporterTypeCode, declarationPM.ImporterName, declarationPM.ImporterAddress, declarationPM.ImporterPassportNumber, declarationPM.ImporterPassCountryCode);
+            //if (!string.IsNullOrWhiteSpace(errorMessage))
+            //{
+            //    throw new BusinessErrorException(errorMessage);
+            //}
+            //Yuval Chalup 15.11.2016 TASK-24438 --->
 
-        //    var declarationImporter = new DeclarationImporter();
-        //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
+            var declarationImporter = new DeclarationExporter();
+            declarationImporter.ID = SetIDTypeValue<ExporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
 
-        //    string importerAddress = null;
-        //    string importerName = null;
-        //    if (string.IsNullOrWhiteSpace(ImporterId))//task 45505
-        //    {
-        //        if (!string.IsNullOrWhiteSpace(declarationPM.ImporterAddress)) { importerAddress = declarationPM.ImporterAddress; }
-        //        if (!string.IsNullOrWhiteSpace(declarationPM.ImporterName)) { importerName = declarationPM.ImporterName; }
-        //    }
-        //    declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
-        //    {
-        //        //                Address = declarationPM.ImporterAddress,
-        //        //Name = declarationPM.ImporterName,
-        //        Address = importerAddress,//task 45505
-        //        Name = importerName,
-        //        EntitlementTypeCode = new EntitlementTypeCodeType()
-        //        {
-        //            Value = declarationPM.MainImporterEntitlemntTypeCode
-        //        },
-        //        RoleCode = new DeclarationImporterDMExtensionsRoleCode()
-        //        {
-        //            Value = "4"
-        //        }
-        //    };
-        //    if (declarationPM.ImporterTypeCode == "2" || declarationPM.ImporterTypeCode == "3")
-        //    {
-        //        declarationImporter.DMExtensions.IssueLocation = new DeclarationImporterDMExtensionsIssueLocation() { Value = declarationPM.ImporterPassCountryCode };
-        //    }
+            string importerAddress = null;
+            string importerName = null;
+            if (string.IsNullOrWhiteSpace(ImporterId))//task 45505
+            {
+                if (!string.IsNullOrWhiteSpace(declarationPM.ImporterAddress)) { importerAddress = declarationPM.ImporterAddress; }
+                if (!string.IsNullOrWhiteSpace(declarationPM.ImporterName)) { importerName = declarationPM.ImporterName; }
+            }
+            declarationImporter.DMExtensions = new DeclarationExporterDMExtensions()
+            {
+                //                Address = declarationPM.ImporterAddress,
+                //Name = declarationPM.ImporterName,
+                 
+                //Address = importerAddress,//task 45505
+                //Name = importerName,
+                //EntitlementTypeCode = new EntitlementTypeCodeType()
+                //{
+                //    Value = declarationPM.MainImporterEntitlemntTypeCode
+                //},
+                RoleCode = new DeclarationExporterDMExtensionsRoleCode()
+                {
+                    Value = "7"
+                }
+            };
+            if (declarationPM.ImporterTypeCode == "2" || declarationPM.ImporterTypeCode == "3")
+            {
+                declarationImporter.DMExtensions.IssueLocation = new DeclarationExporterDMExtensionsIssueLocation  () { Value = declarationPM.ImporterPassCountryCode };
+            }
 
-        //    return declarationImporter;
-        //}
+            return declarationImporter;
+        }
 
         public string ImportersCheck(string importerField, string importerCode, string importerId, string importerType,
     string importerName, string importerAddress, string importerPassportNumber, string importerPassCountryCode)
