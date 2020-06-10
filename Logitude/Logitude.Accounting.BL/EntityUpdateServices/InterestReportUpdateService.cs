@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             MapInterestReport(entityPM);
             CreateBatchTaskExecution(entityPM);
-            CreateEvent("IRCD", entityPM);
+          
         }
 
 
@@ -89,40 +89,47 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(InterestReportPM entityPM, InterestReport entityPOCO, string changesXml)
         {
-            ContactPM contact = GetLoggedContact(entityPM.Tenant);
-            bool showLocals = !contact.DontShowLocal;
-            if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                switch (entityPM.InterestReportStatusCode)
+                CreateEvent("IRCD", entityPM);
+            }
+            else
+            {
+                ContactPM contact = GetLoggedContact(entityPM.Tenant);
+                bool showLocals = !contact.DontShowLocal;
+                if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
                 {
-                    case "4":
-                        {
-                            CreateEvent("IRCW", entityPM);
-                            break;
-                        }
-                    case "6":
-                        {
-                            CreateEvent("IRFD", entityPM);
-                            break;
-                        }
-                    case "2":
-                        {
-                            CreateEvent("IRIN", entityPM, TextCodesTranslator.TranslateText("InterestReport.F.ARInvoiceNumber", entityPM.Tenant, showLocals) + ": " + entityPM.ARInvoiceNumber);
-                            break;
-                        }
-                    case "3":
-                        {
-                            CreateEvent("IRCN", entityPM);
-                            break;
-                        }
-                    case "7":
-                        {
-                            CreateEvent("IRIF", entityPM);
-                            break;
-                        }
+                    switch (entityPM.InterestReportStatusCode)
+                    {
+                        case "4":
+                            {
+                                CreateEvent("IRCW", entityPM);
+                                break;
+                            }
+                        case "6":
+                            {
+                                CreateEvent("IRFD", entityPM);
+                                break;
+                            }
+                        case "2":
+                            {
+                                CreateEvent("IRIN", entityPM, TextCodesTranslator.TranslateText("InterestReport.F.ARInvoiceNumber", entityPM.Tenant, showLocals) + ": " + entityPM.ARInvoiceNumber);
+                                break;
+                            }
+                        case "3":
+                            {
+                                CreateEvent("IRCN", entityPM);
+                                break;
+                            }
+                        case "7":
+                            {
+                                CreateEvent("IRIF", entityPM);
+                                break;
+                            }
+
+                    }
 
                 }
-
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
