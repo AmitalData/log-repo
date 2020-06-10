@@ -13,6 +13,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { CountryList } from '../../../../Common/EntityLists/CountryList';
 
 @Component({
     
@@ -311,6 +312,18 @@ export class UpdateSurchargesComponent extends BaseComponent {
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/ChoosePortComponent');
     }
 
+    AddCountry(type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 170;
+
+        var itemComponent = new DestinationClass(this, type, null, null);
+        logWindow.DataContext = itemComponent;
+
+        logWindow.Title = "Add " + type + " Country";
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/ChooseCountryComponent');
+    }
+
     DeleteDestination(item: DestinationClass, type: string) {
         if (type == "From") {
             var index = this.FromObsList.indexOf(item);
@@ -340,11 +353,11 @@ export class UpdateSurchargesComponent extends BaseComponent {
         var errors: string[] = [];
 
         if (this.FromObsList.length == 0) {
-            errors.push("You have to choose from ports/areas");
+            errors.push("You have to choose from ports/areas/countries");
         }
 
         if (this.ToObsList.length == 0) {
-            errors.push("You have to choose to ports/areas");
+            errors.push("You have to choose to ports/areas/countries");
         }
 
         if (this.StartDate == null || this.StartDate == undefined) {
@@ -549,6 +562,13 @@ export class DestinationClass extends BaseComponent{
             this.CombinedCode = Port.CombinedCode;
             this.Id = Port.Id;
         }
+
+        //if (Country != null) {
+        //    this.Indication = "Country";
+        //    this.DisplayText = Country.EnglishName;
+        //    this.Code = Country.Code;
+        //    this.Id = Country.Id;
+        //}
 
         if (carrierArea != null) {
             this.Indication = "Area";
