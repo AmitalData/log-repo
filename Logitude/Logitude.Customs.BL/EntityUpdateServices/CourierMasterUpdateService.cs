@@ -427,6 +427,11 @@ if (NotConnecteditems != null && NotConnecteditems.Length > 0)
 
             }
 
+            else
+            {
+                whereIn = declarations;
+            }
+
             if (dbms == "oracle")
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
