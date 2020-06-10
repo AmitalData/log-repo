@@ -27,12 +27,14 @@ export class BatchInvoicesComponent extends BaseComponent {
     private interestReportExtendedListService: InterestReportExtendedListService = new InterestReportExtendedListService();
     private CurrentSession = SessionLocator.SelectedSession;
   public SelectedItemsCountText: string = null;
+  public ValidationErrorsList: string[] = [];
   public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
   constructor() {
     super();
     this.ExcludedItems = new ObservableCollection([]);
     this.selectedItems = new ObservableCollection([]);
-  }
+    this.Listen();
+ }
   @Output() onQueryChangeEvent = new EventEmitter();
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -47,6 +49,21 @@ export class BatchInvoicesComponent extends BaseComponent {
       this.selectedItems.Clear();
     this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
+  }
+  Listen() {
+ this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
+            if (!AppTool.IsNullOrEmpty($event)) {
+                var row = $event.line;
+                var rowId = $event.line.Id;
+                var RowIndex = $event.RowIndex;
+                var isChecked = $event.isChecked;
+               
+                this.onCheckBoxChecked(isChecked, row, RowIndex );
+
+
+            }
+        });
+      
   }
   ngAfterViewInit() {
     var t = setTimeout(() => {
@@ -124,19 +141,7 @@ export class BatchInvoicesComponent extends BaseComponent {
             ,
            
         });
-        this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
-            if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-               
-                this.onCheckBoxChecked(isChecked, row, RowIndex );
-
-
-            }
-        });
-      
+       
     }
   public DataCount: number;
   private EnabledDataCount: number;
@@ -284,35 +289,49 @@ export class BatchInvoicesComponent extends BaseComponent {
         }
       if (this.SelectedItemsCount == 0) {
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount.toString();
-        this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
         this.AllSelected = false;
       }
 
-    } if (this.SelectedItemsCount > 0) { this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")"; }
-
+    } this.SetCreateInvoiceButtonText();
   }
   CreateInvoiceButtonClicked() {
-     var interestReportArgs: InterestReportArgs = new InterestReportArgs();
-      interestReportArgs.AllSelected = this.AllSelected;
-      interestReportArgs.FromDate = this.FromDate;
-      interestReportArgs.ToDate = this.ToDate;
-    interestReportArgs.SelectedIds = [];
-    interestReportArgs.ExcludedIds = [];
-       this.selectedItems.Collection.forEach((item) => {
-      interestReportArgs.SelectedIds.push(item.Id);
-    }); 
-        
-    interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
-       this.CurrentSession.StartBusyIndicator("");
+    this.ValidationErrorsList = [];
+    if (this.SelectedItemsCount == 0) {
+      this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+    } else {
+      var interestReportArgs: InterestReportArgs=  this.FillInterestReportArgs();  
+      this.CurrentSession.StartBusyIndicator("");
 
-    this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
-
-          this.ReloadData();
-          this.AllSelected = false;
-          this.CurrentSession.StopBusyIndicator();
+      this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
+        this.SelectedItemsCount=0;
+        this.SetCreateInvoiceButtonText();
+        this.ReloadData();
+        this.AllSelected = false;
+        this.CurrentSession.StopBusyIndicator();
       });
 
-
+    }
+  }
+SetCreateInvoiceButtonText(){
+if (this.SelectedItemsCount > 0) {
+this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";
+ }
+else{
+this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
+}
+}
+  FillInterestReportArgs() {
+    var interestReportArgs: InterestReportArgs = new InterestReportArgs();
+    interestReportArgs.AllSelected = this.AllSelected;
+    interestReportArgs.FromDate = this.FromDate;
+    interestReportArgs.ToDate = this.ToDate;
+    interestReportArgs.SelectedIds = [];
+    interestReportArgs.ExcludedIds = [];
+    this.selectedItems.Collection.forEach((item) => {
+      interestReportArgs.SelectedIds.push(item.Id);
+    });
+    interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+    return interestReportArgs;
   }
 CancelButtonClicked(){
     this.CurrentSession.CloseCurrentWindow();

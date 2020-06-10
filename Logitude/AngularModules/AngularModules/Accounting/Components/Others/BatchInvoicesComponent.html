@@ -16,6 +16,11 @@
 
 
 <table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="10">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
     <tr>
         <!--<td style="width: 35px;height:23px;">
             <div>
@@ -68,7 +73,7 @@
                                [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="Columns" [autoLoad]="true"
                                [QueryChangeEvent]="onQueryChangeEvent" [IsCustomTemplate]="true"
                                [PassAdditionalDataToTemplates]="true"
-                               (DataLoaded)="OnDataLoaded($event)"  >
+                               (DataLoaded)="OnDataLoaded($event)">
                 </logitude-grid>
             </div>
         </td>
