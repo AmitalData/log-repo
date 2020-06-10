@@ -495,4 +495,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+ <Column
+    Name="LogitudeDemoTenants"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

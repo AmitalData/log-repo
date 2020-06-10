@@ -74,7 +74,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.TMPersonalAccessToken).HasMaxLength(100).IsUnicode(false);
-
+            this.Property(t=>t.LogitudeDemoTenants).IsUnicode(false).HasColumnName("LogitudeDemoTenants");
 
             // Table & Column Mappings
             this.ToTable("Settings");
