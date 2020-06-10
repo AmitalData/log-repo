@@ -61,7 +61,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                     case "P":
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
-                            bool isExists = (from d in context.Addresses where d.CardId == entityPM.CardId && d.AddressTypeId == entityPM.AddressTypeId select d).Any();
+                            bool isExists = (from d in context.Addresses where d.CardId == entityPM.CardId && d.AddressTypeId == entityPM.AddressTypeId && d.Id != entityPM.Id select d).Any();
                             if (isExists)
                             {
                                 string msg = "";
