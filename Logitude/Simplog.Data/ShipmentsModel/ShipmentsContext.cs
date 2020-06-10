@@ -332,6 +332,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
             modelBuilder.Configurations.Add(new CustomsTransferLineMap());
             modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
+            modelBuilder.Configurations.Add(new ShipmentSubTypeMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -395,6 +396,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; set; }
         public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; set; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; set; }
+        public IDbSet<ShipmentSubType> ShipmentSubTypes { get; set; }
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

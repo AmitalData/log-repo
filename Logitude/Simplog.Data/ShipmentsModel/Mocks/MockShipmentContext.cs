@@ -903,5 +903,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<ShipmentSubType> ShipmentSubTypes => throw new NotImplementedException();
     }
 }
