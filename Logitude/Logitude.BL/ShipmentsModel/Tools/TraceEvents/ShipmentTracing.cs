@@ -1258,7 +1258,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         if (!string.IsNullOrEmpty(eventType.CustomField))
                         {
 
-                            UpdateEventCustomFieldService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = entityPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                            EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = entityPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
 
                         }
                     }
