@@ -1,4 +1,4 @@
-﻿
+﻿#if false
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,3 +41,6 @@ INSERT INTO "AMINETCST_MAIN"."DBMIGRATIONSETTINGS"("MODE", "MODULESLIST") VALUES
         }
     }
 }
+
+
+#endif
