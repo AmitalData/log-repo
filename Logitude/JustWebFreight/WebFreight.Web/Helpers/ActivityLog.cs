@@ -20,6 +20,8 @@ using Simplog.Server.Infrastructure;
 using System.Net;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Global.Data.GlobalModel.Repositories;
+
 namespace WebFreight.Web.Helpers
 {
     public class ActivityLog
@@ -61,6 +63,7 @@ namespace WebFreight.Web.Helpers
                 Contact loggedContact = null;
                 User loggedUser = null;
                 ICommonDataContext commonDataContext;
+                var isDemoTenant = false;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
                     commonDataContext = CommonDataContext.GetContext(0);
@@ -69,6 +72,9 @@ namespace WebFreight.Web.Helpers
                     {
                         loggedUser = commonDataContext.Users.Where(c => c.Id == loggedContact.Id && c.Tenant == 0).FirstOrDefault();
                     }
+
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
                     scope.Complete();
                 }
                 commonDataContext = CommonDataContext.GetContext(tenant);
@@ -84,7 +90,7 @@ namespace WebFreight.Web.Helpers
                 TotangoService service = new TotangoService();
                 string orgDisplayName = currentTenant.Company + (currentTenant.CountryName != null ? ("-" + currentTenant.CountryName.Trim()) : "");
                 string organizationId = tenant.ToString();
-                if (tenant == 65 || tenant == 153)
+                if (isDemoTenant || tenant == 153)
                 {
                     orgDisplayName = loggedUser.Notes;
                     organizationId = loggedUser.Id;

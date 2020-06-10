@@ -109,6 +109,9 @@ namespace Logitude.XSD.FSR
                     #region
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        SettingRepository mySettingRepository = new SettingRepository();
+                        var isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
+
                         string myTTY = null;
                         string myCCSMessageType = null;
 
@@ -136,7 +139,7 @@ namespace Logitude.XSD.FSR
                             myPrefix = string.Format("{0:d3}", myPrefix);
 
                             #region GetDemoTenantData
-                            if (tenant == 65)
+                            if (isDemoTenant)
                             {
                                 myResultClass.IsDemoTenant = true;
 

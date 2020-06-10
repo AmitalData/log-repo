@@ -181,6 +181,9 @@ namespace Logitude.XSD
                 {
                     TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                     TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    var isDemoTenant = mySettingRepository.IsDemoTenant(Tenant.ToString());
+
                     if (tenantManagement != null)
                     {
                         TTY = tenantManagement.TTY;
@@ -192,7 +195,7 @@ namespace Logitude.XSD
                         IsEAWBOnlyDemo = tenantManagement.IsEAWBOnlyDemo;
                     }
 
-                    if (Tenant == 65 || IsEAWBOnlyDemo)
+                    if (isDemoTenant || IsEAWBOnlyDemo)
                     {
                         this.IsDemoTenant = true;
                         this.Result.IsDemoTenant = true;

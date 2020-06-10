@@ -16,6 +16,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 using Logitude.Server.Tools.Counters;
 using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -52,7 +54,7 @@ namespace Logitude.Server.Tools.Helpers
                 ContactRepository contactrep = new ContactRepository(commonDataContext);
                 Contact loggedContact = contactrep.GetSingleContactByEmail(email, tenant);
                 User loggedUser = userRepository.GetSingleUser(loggedContact.Id, loggedContact.Tenant, true);
-                
+
                 //TenantRepository rep = new TenantRepository(commonDataContext);
                 Tenant currentTenant = TenantRepository.GetSingleTenant(tenant, true);
 
@@ -60,10 +62,19 @@ namespace Logitude.Server.Tools.Helpers
 
                 string orgDisplayName = currentTenant.Company + (CountryName != null ? ("-" + CountryName.Trim()) : "");
                 string organizationId = tenant.ToString();
-                if (tenant == 65 || tenant == 153)
+
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    orgDisplayName = loggedUser.Notes;
-                    organizationId = loggedUser.Id;
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    var isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
+
+                    if (tenant == 65 || tenant == 153)
+                    {
+                        orgDisplayName = loggedUser.Notes;
+                        organizationId = loggedUser.Id;
+                    }
+
+                    scope.Complete();
                 }
 
                 if (isSharedLogisticsContact)
@@ -79,6 +90,7 @@ namespace Logitude.Server.Tools.Helpers
             catch { }
         }
     }
+
     public interface IActivityLogger
     {
         void AddAcitivityLog(string entityId, string objectTableId, int tenant, string activityTypeCode, string userId);

@@ -449,6 +449,7 @@ namespace WebFreight.Web.BookingModel.DomainServices
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(myResultClass.Tenant);
+                SettingRepository mySettingRepository = new SettingRepository();
 
                 if (tenantManagement != null)
                 {
@@ -459,7 +460,7 @@ namespace WebFreight.Web.BookingModel.DomainServices
                     myResultClass.IsAWBStockPrepaid = tenantManagement.IsAWBStockPrepaid;
                 }
 
-                if (myResultClass.Tenant == 65 || myResultClass.IsEAWBOnlyDemo)
+                if (mySettingRepository.IsDemoTenant(myResultClass.Tenant.ToString()) || myResultClass.IsEAWBOnlyDemo)
                 {
                     myResultClass.IsDemoTenant = true;
                 }
