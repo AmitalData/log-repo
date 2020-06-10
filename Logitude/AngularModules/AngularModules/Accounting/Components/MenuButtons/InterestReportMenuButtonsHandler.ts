@@ -170,6 +170,11 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     OpenConfirmWindow() {
         var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
+
+
         if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
@@ -178,15 +183,20 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         }
         else if (this.EntityPM.InterestReportStatusCode == "5") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
+            confirmWindow.ShowNoButton=false;
         }
        
-        confirmWindow.Width = 400;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
-        
-        confirmWindow.WindowClosed.subscribe((event: any) => {
+      
+
+
+         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.UpdateReport();
+                if(this.EntityPM.InterestReportStatusCode == "5"){
+                    confirmWindow.Close();
+                }
+                else{
+                    this.UpdateReport();
+                }
             }
         });
         confirmWindow.Show(confirmMessage);
