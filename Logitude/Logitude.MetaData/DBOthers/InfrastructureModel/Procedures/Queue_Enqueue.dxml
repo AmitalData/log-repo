@@ -4,7 +4,8 @@
   Name="Queue_Enqueue"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript>
+    <![CDATA[
 CREATE procedure [dbo].[Queue_Enqueue]
 (
     @QueueDefinitionCode varchar(255),
@@ -14,7 +15,8 @@ CREATE procedure [dbo].[Queue_Enqueue]
 	@DelaySeconds int,
 	@CustomerId varchar(15),
 	@BatchNumber varchar(15),
-	@NextRunDTime datetime = null
+	@NextRunDTime datetime = null,
+  @WatingStatus int
 	
 )
  as begin
@@ -28,7 +30,7 @@ CREATE procedure [dbo].[Queue_Enqueue]
   --set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
 
  insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber)
-                             values(@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0)
+                             values(@currentdate,@QueueDefinitionCode,@WatingStatus,@MessageBody,@Tenant,@nextRunDateTime,0)
                              
                              declare @CId as varchar(15);
                              declare @BNo as varchar(15);
@@ -42,11 +44,91 @@ CREATE procedure [dbo].[Queue_Enqueue]
                              set @BNo = @BatchNumber
                              
  insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,Field1,Field2)
-                             values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,0,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
+                             values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,@WatingStatus,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
 
 
 end
 ]]></SqlScript>
   <OracleScript>
+    <![CDATA[
+    create or replace PROCEDURE Queue_Enqueue(
+    v_QueueDefinitionCode IN VARCHAR2,
+    v_MessageBody         IN VARCHAR2,
+    v_DelaySeconds        IN NUMBER,
+    v_CustomerId          IN VARCHAR2,
+    v_BatchNumber         IN VARCHAR2 ,
+    v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE,
+    v_HashCode         IN VARCHAR2,
+    v_WatingStatus        IN NUMBER,
+    )
+AS
+  v_currentdate     DATE;  
+  v_nextRunDateTime DATE;
+  v_CId             VARCHAR2(15);
+  v_BNo             VARCHAR2(15);
+BEGIN
+  v_currentdate     := SYSDATE ;
+  v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
+  INSERT
+  INTO QueueMessages
+    (
+      CreateDateTime,
+      QueueDefinitionCode,
+      Status,
+      MessageBody,
+      NextRunDateTime,
+      RetryNumber,
+      HashCode
+    )
+    VALUES
+    (
+      v_currentdate,
+      v_QueueDefinitionCode,
+      v_WatingStatus,
+      v_MessageBody,
+      v_nextRunDateTime,
+      0,
+      v_HashCode
+    );
+  IF v_CustomerId = ' ' THEN
+    v_CId        := NULL ;
+  ELSE
+    v_CId := v_CustomerId ;
+  END IF;
+  IF v_BatchNumber = ' ' THEN
+    v_BNo         := NULL ;
+  ELSE
+    v_BNo := v_BatchNumber ;
+  END IF;
+
+  v_QueueMessageId :=QUEUEMESSAGES_SEQ1.CURRVAL;
+
+  INSERT
+  INTO QueueMessageMoreDetails
+    (
+      Id,
+      CreateDateTime,
+      QueueDefinitionCode,
+      Status,
+      MessageBody,
+      NextRunDateTime,
+      RetryNumber,
+      Field1,
+      Field2
+    )
+    VALUES
+    (
+      v_QueueMessageId ---QUEUEMESSAGES_SEQ1.CURRVAL
+      ,
+      v_currentdate,
+      v_QueueDefinitionCode,
+      v_WatingStatus,
+      v_MessageBody,
+      v_nextRunDateTime,
+      0,
+      v_CId,
+      v_BNo
+    );
+END;]]>
 </OracleScript>
 </Procedure>

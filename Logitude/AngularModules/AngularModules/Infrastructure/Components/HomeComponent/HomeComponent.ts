@@ -193,7 +193,7 @@ export class HomeComponent implements OnDestroy{
             this.IfBlueSnapContracts = true;
         }
 
-        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage === "Dev" ) {
             this.IsSetWorkerRoleNameVisible = true;
         }
 

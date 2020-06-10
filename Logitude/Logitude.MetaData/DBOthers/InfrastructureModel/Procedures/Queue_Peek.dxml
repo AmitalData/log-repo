@@ -4,12 +4,15 @@
   Name="Queue_Peek"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
+  <SqlScript>
+  <![CDATA[
 CREATE procedure [dbo].[Queue_Peek]
 (@MessageId  bigint output,
 @MessageBody  varchar(1000) output,
 @RetryNumber int output,
-@QueueDefinitionCode varchar(255)) as 
+@QueueDefinitionCode varchar(255),
+@WatingStatus int)
+as 
 
 begin
 
@@ -19,7 +22,7 @@ set @frequency = 60
 
 -- Find next available item available where the status is enabled
 SET @MessageId = (SELECT TOP 1 [Id]
-FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK) WHERE [NextRunDateTime] <= getdate() and [Status] = 0 and QueueDefinitionCode = @QueueDefinitionCode ORDER BY [NextRunDateTime] ASC)
+FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK) WHERE [NextRunDateTime] <= getdate() and [Status] = @WatingStatus and QueueDefinitionCode = @QueueDefinitionCode ORDER BY [NextRunDateTime] ASC)
 
 
 --If found, flag it to prevent being picked up again
@@ -51,5 +54,71 @@ END
 end
 ]]></SqlScript>
   <OracleScript>
+    <![CDATA[
+    create or replace PROCEDURE Queue_Peek(
+    v_MessageId OUT NUMBER,
+    v_MessageBody OUT VARCHAR2,
+    v_RetryNumber OUT NUMBER,
+    v_MessageCreatedServerTime OUT QUEUEMESSAGES.CREATEDATETIME%TYPE ,
+    v_QueueDefinitionCode IN VARCHAR2 ,
+    v_NextRunDelayInSec IN NUMBER,
+    v_WatingStatus IN NUMBER)
+AS
+  --DECLARE @NextId INTEGER
+  v_frequency NUMBER(10,0);
+  v_row QueueMessages%rowtype;
+BEGIN
+  v_frequency := 60 ;
+  -- Find next available item available where the status is enabled
+
+ DECLARE
+  CURSOR c_1 IS  
+    SELECT /*+FIRST_ROWS_1*/  * --qt.Id
+    FROM QueueMessages qt
+    WHERE qt.NextRunDateTime <= SYSDATE
+     --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
+    AND qt.Status             = v_WatingStatus
+    AND QueueDefinitionCode = v_QueueDefinitionCode
+    ORDER BY qt.NextRunDateTime ASC
+    FOR UPDATE SKIP LOCKED;
+BEGIN
+  OPEN c_1;
+  FETCH c_1 into v_row; -- v_MessageId;
+  IF c_1%FOUND THEN
+     --If f
+  --If found, flag it to prevent being picked up again
+  IF ( v_row.Id IS NOT NULL ) THEN
+    BEGIN
+    v_MessageId := v_row.id;
+      --SELECT RetryNumber       INTO v_RetryNumber        FROM QueueMessages        WHERE Id = v_MessageId;
+      v_RetryNumber := v_row.RetryNumber;
+
+      --SELECT MessageBody      INTO v_MessageBody       FROM QueueMessages       WHERE Id = v_MessageId;
+      v_MessageBody := v_row.MessageBody;
+      v_MessageCreatedServerTime := v_row.CREATEDATETIME;
+
+
+      UPDATE QueueMessages
+      SET ProcessingDateTime = SYSDATE,
+        NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), ---(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),
+        RetryNumber          = (RetryNumber + 1)
+      WHERE Id               = v_MessageId;-- return queue data
+
+
+      UPDATE queuemessagemoredetails
+      SET ProcessingDateTime = SYSDATE,
+        NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), ---(SYSDATE + v_frequency/86400),----utils.dateadd('SECOND', v_frequency, SYSDATE),
+        RetryNumber          = (RetryNumber + 1)
+      WHERE Id               = v_MessageId;-- return queue data
+
+
+    END;
+   END IF; 
+  END IF;
+  CLOSE c_1;
+END;
+
+END;
+    ]]>
 </OracleScript>
 </Procedure>

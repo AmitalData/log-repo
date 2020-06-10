@@ -81,5 +81,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return context.WorkerRoleNames.Where(w => w.Name == name).FirstOrDefault();
         }
+
+        public WorkerRoleName GetLastAddedWorkerRoleName()
+        {
+            return context.WorkerRoleNames.OrderByDescending(d=>d.CreateDate).FirstOrDefault();
+        }
     }
 }
