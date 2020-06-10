@@ -23,7 +23,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             var messagingService =MessagingServiceFactoryHelper.GetMessagingService(sincroTestCaseDetail.MainInterfaceCode, "FAKFAKE");
             string result="";
             dynamic params1 = JObject.Parse(requestParamsData.TestCase.Param1);
-            if (Convert.ToString(params1.IsCourier) == "true")
+            if (Convert.ToString(params1.MasterLevel) == "true")
             {
                 FAKE_CourierMasterDeclarations fAKE_CourierMasterDeclarations = new FAKE_CourierMasterDeclarations();
                 var decList = fAKE_CourierMasterDeclarations.GetCourierMasterDeclarations(requestParamsData.AppicationId,requestParamsData.Tenant);
@@ -33,7 +33,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                     result = messagingService.CreateFakeDCA(requestParamsData);
                 }
             }
-            else
+            if (Convert.ToString(params1.CourierLevel) == "true")
             {
                 result = messagingService.CreateFakeDCA(requestParamsData);
             }

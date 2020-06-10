@@ -105,10 +105,10 @@ MainInterfaceCode ="2892"
                 new SincroTestCaseDetail()
                 {
                     Code = "2470",
-                    Name = "מסר התרת ",
+                    Name = "מסר התרה",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{""IsCourier"":""true""}",
+                    Param1= @"{""MasterLevel"":""true"",""CourierLevel"":""false""}",
                     Param2= @"{}",
                     MainInterfaceCode="2470",
                 },
