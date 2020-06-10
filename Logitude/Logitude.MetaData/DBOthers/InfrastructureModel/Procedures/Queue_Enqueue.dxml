@@ -6,7 +6,7 @@
   Module="Infrastructure">
   <SqlScript>
     <![CDATA[
-      CREATE procedure [dbo].[Queue_Enqueue]
+      CREATE procedure [dbo].[Queue_Enqueue] 
       (
       @QueueDefinitionCode varchar(255),
 

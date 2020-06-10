@@ -1,34 +1,36 @@
-<Procedure DBType="Main" Name="Queue_Enqueue" Schema="dbo" Module="Infrastructure">
+<Procedure DBType="Main" Name="RemoveDuplicatedQueueMessages" Schema="dbo" Module="Infrastructure">
   <SqlScript>
     <![CDATA[
  CREATE procedure [dbo].[RemoveDuplicatedQueueMessages]
      
       as begin
      
-	 update QueueMessages
-set Status = 2
-where id in (
-SELECT  id
-        FROM QueueMessages WITH (UPDLOCK,READPAST)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
-        WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
-              AND HashCode in (select hashcode 
-							from QueueMessages
-							where HashCode is not null
+	
+declare @HashCode as varchar(1000)
+declare duplicatedQueuesCursor Cursor read_only
+for
+ select hashcode
+ from QueueMessages WITH (UPDLOCK,READPAST)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
+  WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1 and HashCode is not null
 							group by HashCode
 							having count(*) > 1
-							)
+open duplicatedQueuesCursor
+fetch next from duplicatedQueuesCursor into @HashCode
 
-							and id not in (SELECT  top 1 id
-        FROM QueueMessages inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
-        WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1
-              AND HashCode in (select hashcode 
-							from QueueMessages
-							where HashCode is not null
-							group by HashCode
-							having count(*) > 1
-							) ORDER BY NextRunDateTime)
---ORDER BY NextRunDateTime
-)
+while @@FETCH_STATUS = 0
+begin
+
+--print @HashCode
+declare @TopQueueMessageId as varchar(1000)
+set @TopQueueMessageId = (select top 1 id from QueueMessages where hashcode = @HashCode order by CreateDateTime desc)
+--print 'top queue message id:' + @TopQueueMessageId
+update QueueMessages set Status = 2 where hashcode = @HashCode and Id <> @TopQueueMessageId
+
+fetch next from duplicatedQueuesCursor into @HashCode
+end
+close duplicatedQueuesCursor
+deallocate duplicatedQueuesCursor
+
       end;
 
 
