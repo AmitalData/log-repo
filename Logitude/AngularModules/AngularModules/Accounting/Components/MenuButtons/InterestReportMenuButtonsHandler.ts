@@ -304,7 +304,13 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
         //  }
         //  else{
-            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+            if(this.chargesTypeList){
+                _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+
+            }
+            else{
+                _ARInvoiceLinePM.VatTypeId = null; 
+            }
 
         //  }
          _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
