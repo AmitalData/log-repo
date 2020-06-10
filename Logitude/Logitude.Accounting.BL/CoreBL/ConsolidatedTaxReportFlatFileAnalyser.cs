@@ -75,10 +75,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                 TaxReportQueryService taxReportQueryService = new TaxReportQueryService(MyContext);
-                taxReportQueryService.GetSingle(taxReportId, true, false);
+                MyTaxReportPM = taxReportQueryService.GetSingle(taxReportId, true, false);
                 if (MyTaxReportPM == null)
                 {
                     string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.NotFound", 0, useLocal);
+                    string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxReportId", 0, useLocal);
+                    throw new Exception($"{text_2} {taxReportId} {text_44} ");
+                }
+                if (MyTaxReportPM.StatusCode != "D" && MyTaxReportPM.StatusCode != "E")
+                {
+                    string text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.StatusError", 0, useLocal);
                     string text_2 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxReportId", 0, useLocal);
                     throw new Exception($"{text_2} {taxReportId} {text_44} ");
                 }
@@ -113,6 +119,9 @@ namespace Logitude.Accounting.BL.CoreBL
                             TotalInvoiceAmount = taxLineDTO.VatableInvoiceAmount + taxLineDTO.VatAmount,
                             OutputOrInput = taxLineDTO.OutputOrInput,
                             ReferecneGroup = taxLineDTO.ReferenceGroup,
+                            UpdatedByUserId = _contact.Id,
+                          //  JournalId = "1-1027720",
+                            TransmitStatusCode = "1",
                         };
                         newLines.Add(taxReportLine);
                     } 
@@ -229,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
 
                     default:
-                        if (VendorLineDTO.RowType.Contains(rowtype))
+                        if (TaxReportLineDTO.RowType.Contains(rowtype))
                         {
                             if (!readingLines)
                             {
@@ -554,33 +563,42 @@ namespace Logitude.Accounting.BL.CoreBL
             rec.VatNumber = rawLine.Substring(2 - 1, 9);
 
             string txtDateTime = rawLine.Substring(11 - 1, 8);
-            string fieldname = "ReferenceDate";
-            string pos = "11 - 1, 8";
-            DateTime date = ConsolidatedTaxReportFlatFileAnalyser.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
-            rec.ReferenceDate = date;
+            string fieldname = "";
+            string pos = "";
+            DateTime date = DateTime.MinValue;
+            rec.ReferenceDateString = txtDateTime;
+            if (rec.ReferenceDateString != _EmptyDate)
+            {
+                fieldname = "ReferenceDate";
+                pos = "11 - 1, 8";
+                date = ConsolidatedTaxReportFlatFileAnalyser.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
+                rec.ReferenceDate = date;
+            }
 
-            rec.ReferenceGroup = rawLine.Substring(17 - 1, 4);
-            rec.Reference = rawLine.Substring(21 - 1, 9);
+
+
+            rec.ReferenceGroup = rawLine.Substring(19 - 1, 4);
+            rec.Reference = rawLine.Substring(23 - 1, 9);
             rec.VatAmount = 0M;
             try
             {
-                rec.VatAmount = decimal.Parse(rawLine.Substring(30 - 1, 9));
+                rec.VatAmount = decimal.Parse(rawLine.Substring(32 - 1, 9));
             }
             catch (Exception e)
             { }
 
-            rec.InvoiceAmountSign = rawLine.Substring(39 - 1, 1);
+            rec.InvoiceAmountSign = rawLine.Substring(41 - 1, 1);
             rec.VatableInvoiceAmount = 0M;
             try
             {
-                rec.VatableInvoiceAmount = decimal.Parse(rawLine.Substring(40 - 1, 10));
+                rec.VatableInvoiceAmount = decimal.Parse(rawLine.Substring(42 - 1, 10));
             }
             catch (Exception e)
             { }
 
             if (rec.InvoiceAmountSign == "-") rec.VatableInvoiceAmount = -rec.VatableInvoiceAmount;
 
-            rec.APS_Reference = rawLine.Substring(50 - 1, 9);
+            rec.APS_Reference = rawLine.Substring(52 - 1, 9);
 
             if (actualRowType == "S" || actualRowType == "L" || actualRowType == "M" || actualRowType == "Y" || actualRowType == "I")
             {
