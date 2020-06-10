@@ -172,6 +172,7 @@ export class SessionComponent {
 
 
 
+    @Output() InterestReportCheckBoxCheckedEvent: EventEmitter<any> = new EventEmitter();
 
     @Output() EndOfRowReachedEvent: EventEmitter<any> = new EventEmitter();
     @Output() PseventRowSelectEvent: EventEmitter<any> = new EventEmitter();

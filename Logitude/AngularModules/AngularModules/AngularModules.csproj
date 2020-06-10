@@ -65,6 +65,7 @@
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
     <Content Include="Accounting\Components\ListTemplates\CashBookLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\InterestReportLinesByDateListTemplate.html" />
+    <Content Include="Accounting\Components\ListTemplates\InterestReportListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ManageReconciliationListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
@@ -462,6 +463,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\CashBookLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\InterestReportLinesByDateListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ListTemplates\InterestReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\ReconciliationLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.ts" />
@@ -488,6 +490,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Main\MainPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\DataContracts\InterestReportArgs.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -505,6 +508,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\AccountingNoteExtendedListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedLists\InterestReportExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\InterestTransactionExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\AccountingEntegrityCheckExtendedPMService.ts" />
@@ -550,6 +554,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportLinePMService.ts" />
+    <TypeScriptCompile Include="Accounting\Utilities\InterestReportEventManager.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="App\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />

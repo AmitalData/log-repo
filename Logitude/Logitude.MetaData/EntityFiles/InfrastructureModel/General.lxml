@@ -3964,7 +3964,7 @@
     <TextCode
       Code="&quot;Accounting.O.FromDate&quot;"
       DefaultText="&quot;From Date&quot;"
-      LocalDefaultText="&quot;מתאריך&quot;"
+      LocalDefaultText="&quot;מתאריך:&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

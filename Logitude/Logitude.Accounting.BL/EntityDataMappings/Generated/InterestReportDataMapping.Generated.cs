@@ -73,7 +73,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomerId, 
 	         CustomerName, 
 	         GLAccountMinimumInterest, 
-	         CustomerLocalName,
+	         CustomerLocalName, 
+	         EnableInvoiceing,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

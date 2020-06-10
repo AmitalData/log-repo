@@ -68,18 +68,20 @@ export class InterestPageComponent implements AfterViewInit {
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewInterestReportComponent');
     }
-  RunBatchInvoicesWizard() {
-    var windowArgs: any = {};
-    windowArgs.IsNew = true;
-    var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
-    var logWindow = new LogitudeWindow();
-    logWindow.Width = 680;
-    logWindow.Height = 1000;
-    logWindow.WindowArgs = windowArgs;
-    logWindow.Title = windowTitle;
-    //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-    logWindow.Show('./Accounting/Components/Others/BatchInvoicesComponent');
+    RunBatchInvoicesWizard() {
+        this._entityResourceService.getEntityResourceByTableName("InterestReport", 0).subscribe((response: any) => {
 
+            var windowArgs: any = {};
+            windowArgs.IsNew = true;
+            var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchInvoice");
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 800;
+            logWindow.Height = 1000;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Title = windowTitle;
+            //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+            logWindow.Show('./Accounting/Components/Others/BatchInvoicesComponent');
+        });
 
     }
         ViewAccountingQuery(myQueryCode: string) {

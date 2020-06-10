@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "57e163a2a1150cf4ffba2dc1ee7f9ad7";
+		public const string HashString = "0eef583fb4b8b71a2bf5358037fa6779";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2032,7 +2032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingOLastyear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Lastyear", DefaultText = "Last year",LocalDefaultText = @"שנה אחרונה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOFromDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.FromDate", DefaultText = "From Date",LocalDefaultText = @"מתאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOFromDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.FromDate", DefaultText = "From Date",LocalDefaultText = @"מתאריך:", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingONoReconciliationFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NoReconciliationFound", DefaultText = "There is no reconciliation found",LocalDefaultText = @"לא נמצאו התאמות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
