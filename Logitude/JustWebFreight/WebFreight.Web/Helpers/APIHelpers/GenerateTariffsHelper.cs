@@ -9,10 +9,12 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -27,9 +29,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public override void RunCode()
         {
-            this.RunPartnersGenerator();
-            //this.RunTariffGenerator();
-           
+            using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
+            {
+                this.RunPartnersGenerator();
+                //this.RunTariffGenerator();
+                scope.Complete();
+            }
         }
 
         private void RunPartnersGenerator()
@@ -41,7 +46,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             int tenant = parameterArgs.Tenant;
             var LoggedUserEmail = parameterArgs.LoggedUserEmail;
             ContactRepository contactRep = new ContactRepository(tenant);
-            //string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
 
             Contact systemContact = contactRep.GetSingleContactByEmail(LoggedUserEmail, tenant);
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
@@ -81,9 +85,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 City = "city",
                 PhoneNumber = "phoneNumber",
                 ContactFax = "fax",
-                 
+
             };
-            ContactPM  contactPM = new ContactPM()
+            ContactPM contactPM = new ContactPM()
             {
                 Email = "contact@email.com",
                 EnglishName = "test contact",
@@ -111,6 +115,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
                 service.Create();
             }
+
             for (int i = 1; i <= 100; i++)
             {
                 AgentPM agent = new AgentPM()
@@ -127,6 +132,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 AgentService service = new AgentService(commonDataContext, agent, systemContact.Id);
                 service.Create(agent);
             }
+
             for (int i = 1; i <= 200; i++)
             {
                 TruckerPM trucker = new TruckerPM()
@@ -144,6 +150,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 TruckerService service = new TruckerService(commonDataContext, trucker, systemContact.Id);
                 service.Create(trucker);
             }
+
             for (int i = 1; i <= 200; i++)
             {
                 WarehousePM warehouse = new WarehousePM()
@@ -160,6 +167,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 WarehouseService service = new WarehouseService(commonDataContext, warehouse, systemContact.Id);
                 service.Create(warehouse);
             }
+
             for (int i = 1; i <= 200; i++)
             {
                 VendorPM vendor = new VendorPM()
@@ -176,6 +184,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VendorService service = new VendorService(commonDataContext, vendor, systemContact.Id);
                 service.Create(vendor);
             }
+
             for (int i = 1; i <= 100; i++)
             {
                 CustomAgentPM customAgent = new CustomAgentPM()
