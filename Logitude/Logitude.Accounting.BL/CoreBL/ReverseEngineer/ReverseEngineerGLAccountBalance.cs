@@ -154,15 +154,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (UnionreturnsDistinctvalues)
                 {
                     qThe = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff)
-                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency)
-                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); ;
+                        //.Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency)
+                        //.Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); 
+                        ;
                 }
+                var myTotalOpenReconciliation= (qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency
+                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign)).ToList(); 
                 var l = qThe.ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerGLAccountBalance",
                     //rows = res,
                     GLAccountBalanceList = l,
+                    TotalOpenReconciliation = myTotalOpenReconciliation,
                     Took = sw.Elapsed
                 };
             }
