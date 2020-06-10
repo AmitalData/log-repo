@@ -1902,8 +1902,11 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0028_AvailabilityDate.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0029_RefernatChanges.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0032_AddReferantException901.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0033_RefIsClosedForFollowUp.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0034_ReferantNewFileDefault.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0036_DBMIGRATIONSETTINGS.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0035_Tenant0.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0037_ReferantNewFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
