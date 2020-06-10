@@ -165,7 +165,7 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
                     {
-                        UpdateEventCustomFieldService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                        EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
                     }
 
                 }
