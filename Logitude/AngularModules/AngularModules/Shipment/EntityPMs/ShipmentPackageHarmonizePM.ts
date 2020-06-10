@@ -52,7 +52,10 @@ export class ShipmentPackageHarmonizePM {
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
-	 
+    private insidePackageId: string;
+    public get InsidePackageId() { return this.insidePackageId; }
+    public set InsidePackageId(newValue: string) { if (this.insidePackageId != newValue) { this.insidePackageId = newValue; this.MarkAsDirty("InsidePackageId"); } }
+
 
     public OldEntityPM: ShipmentPackageHarmonizePM;
 	    

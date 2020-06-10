@@ -24,7 +24,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Reference4).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
-
             this.Property(t => t.Make).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Model).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Year).HasMaxLength(100).IsUnicode(false);
@@ -32,6 +31,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Harmonize).HasMaxLength(60).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("InsideShipmentPackages");
@@ -46,8 +46,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Weight).HasColumnName("Weight");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.Volume).HasColumnName("Volume");
-            this.Property(t => t.OriginalShipmentPackageId).HasColumnName("OriginalShipmentPackageId");
-            
+            this.Property(t => t.OriginalShipmentPackageId).HasColumnName("OriginalShipmentPackageId");            
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
             this.Property(t => t.Reference1).HasColumnName("Reference1");
             this.Property(t => t.Reference2).HasColumnName("Reference2");
@@ -55,7 +54,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Reference4).HasColumnName("Reference4");
             this.Property(t => t.CommodityNumber).HasColumnName("CommodityNumber");
             this.Property(t => t.CommodityName).HasColumnName("CommodityName");
-
             this.Property(t => t.Make).HasColumnName("Make");
             this.Property(t => t.Model).HasColumnName("Model");
             this.Property(t => t.Year).HasColumnName("Year");
@@ -63,7 +61,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasColumnName("ChassisNumber");
             this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber");
             this.Property(t => t.CountryId).HasColumnName("CountryId");
-
+            this.Property(t => t.Harmonize).HasColumnName("Harmonize");
+            this.Property(t => t.IsMultiHarmonize).HasColumnName("IsMultiHarmonize");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

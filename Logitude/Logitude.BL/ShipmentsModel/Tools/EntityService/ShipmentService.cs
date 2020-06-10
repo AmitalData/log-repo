@@ -383,6 +383,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         itemPM.InsideShipmentPackagesChangeSet = itemPM.InsideShipmentPackages;
                         itemPM.ShipmentPackageItemsChangeSet = itemPM.ShipmentPackageItems;
                         itemPM.ShipmentPackageHarmonizesChangeSet = itemPM.ShipmentPackageHarmonizes;
+
+                        foreach (var item in itemPM.InsideShipmentPackages)
+                        {
+                            item.InsidePackageHarmonizesChangeSet = item.InsidePackageHarmonizes;
+                        }
                     }
 
                     foreach (var itemPM in this.entityPM.ShipmentPickUps)
@@ -5189,7 +5194,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
+            if (itemPM.ShipmentPackageHarmonizesChangeSet != null)
+            {
+                foreach (ShipmentPackageHarmonizePM harmonizeItemPM in itemPM.ShipmentPackageHarmonizesChangeSet)
+                {
+                    switch (harmonizeItemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentPackageHarmonize(harmonizeItemPM, itemPM.Id);
+                                break;
+                            }
 
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentPackageHarmonize(harmonizeItemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentPackageHarmonize(harmonizeItemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
 
             UpdateIsUsedPackagesFromWarehouseReleases();
             calculateProfit = true;
@@ -5260,6 +5292,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.MapInsideShipmentPackage(insideItemPM, insideItemPoco, true);
             insideShipmentPackageRepository.Add(insideItemPoco);
 
+            if (insideItemPM.InsidePackageHarmonizes != null)
+            {
+                foreach (ShipmentPackageHarmonizePM itemHarmonizePM in insideItemPM.InsidePackageHarmonizes)
+                {
+                    this.CreateInsidePackageHarmonize(itemHarmonizePM, shipmentPackageId, insideItemPM.Id);
+                }
+            }
+
             if (!string.IsNullOrEmpty(insideItemPM.OriginalShipmentPackageId))
             {
                 ShipmentPackage originPackage = shipmentPackageRepository.GetSingleShipmentPackage(insideItemPM.OriginalShipmentPackageId, tenant);
@@ -5278,10 +5318,47 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ShipmentMapping.MapInsideShipmentPackage(insideItemPM, insideItemPoco, true);
                 insideShipmentPackageRepository.Update(insideItemPoco);
             }
+
+            if (insideItemPM.InsidePackageHarmonizesChangeSet != null)
+            {
+                foreach (ShipmentPackageHarmonizePM itemHarmonizePM in insideItemPM.InsidePackageHarmonizesChangeSet)
+                {
+                    switch (itemHarmonizePM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateInsidePackageHarmonize(itemHarmonizePM, insideItemPM.ShipmentPackageId, insideItemPM.Id);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateInsidePackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteInsidePackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
         }
         private void DeleteInsideShipmentPackage(InsideShipmentPackagePM insideItemPM)
         {
             InsideShipmentPackage insideItemPoco = insideShipmentPackageRepository.GetSingleInsideShipmentPackage(insideItemPM.Id, tenant);
+
+            ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
+            List<ShipmentPackageHarmonizePM> packageHarmonize = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(insideItemPM.Id, tenant);
+            foreach (ShipmentPackageHarmonizePM harmonizeItemPM in packageHarmonize)
+            {
+                ShipmentPackageHarmonize harmonizeItem = shipmentPackageHarmonizeRepository.GetSingleShipmentPackageHarmonize(harmonizeItemPM.Id, tenant);
+                shipmentPackageHarmonizeRepository.Remove(harmonizeItem);
+            }
 
             if (insideItemPoco != null)
             {
@@ -5398,6 +5475,44 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (itemPoco != null)
             {
                 pickUpDeliveryPackageHarmonizeRepository.Remove(itemPoco);
+            }
+        }
+
+        private void CreateInsidePackageHarmonize(ShipmentPackageHarmonizePM itemPM, string shipmentPackageId, string insidePackageId)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentPackageHarmonize", tenant).ToString();
+            itemPM.PackageId = shipmentPackageId;
+            itemPM.InsidePackageId = insidePackageId;
+            itemPM.Tenant = tenant;
+
+            ShipmentPackageHarmonize itemPoco = new ShipmentPackageHarmonize()
+            {
+                Id = itemPM.Id,
+                Tenant = itemPM.Tenant,
+                PackageId = itemPM.PackageId,
+                InsidePackageId = itemPM.InsidePackageId,
+                Harmonize = itemPM.Harmonize,
+            };
+
+            shipmentPackageHarmonizeRepository.Add(itemPoco);
+        }
+        private void UpdateInsidePackageHarmonize(ShipmentPackageHarmonizePM itemPM)
+        {
+            ShipmentPackageHarmonize itemPoco = shipmentPackageHarmonizeRepository.GetSingleShipmentPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                itemPoco.Harmonize = itemPM.Harmonize;
+                shipmentPackageHarmonizeRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteInsidePackageHarmonize(ShipmentPackageHarmonizePM itemPM)
+        {
+            ShipmentPackageHarmonize itemPoco = shipmentPackageHarmonizeRepository.GetSingleShipmentPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                shipmentPackageHarmonizeRepository.Remove(itemPoco);
             }
         }
 
