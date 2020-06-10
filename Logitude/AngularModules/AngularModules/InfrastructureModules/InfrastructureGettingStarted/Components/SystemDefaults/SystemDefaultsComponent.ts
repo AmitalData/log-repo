@@ -15,6 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'SystemDefaultsComponent',
@@ -70,7 +71,7 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.UIProperties.SetVisibility("AgentId", "Tenant",  true);
         }
 
-        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             this.SetUIPropertiesHitVisible();
         }
     }
@@ -110,7 +111,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
     }
     SetUIProperties_DemoAgent() {
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             this.UIProperties.SetEnabled("AgentId", "Tenant", false);
         }
         else {
@@ -124,7 +125,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         var isEditingEnabled: boolean = true;
         var isFieldEnabled: boolean = false;
 
-        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             isEditingEnabled = false;
         }
 
@@ -168,7 +169,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     // region Tenant 65
     get DemoMessageVisibility() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

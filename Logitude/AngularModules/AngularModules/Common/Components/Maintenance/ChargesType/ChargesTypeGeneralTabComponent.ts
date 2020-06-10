@@ -11,7 +11,6 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AccountingSettingPM } from '../../../EntityPMs/AccountingSettingPM';
 import { AccountingSettingPMService } from '../../../Services/StandardPMs/AccountingSettingPMService';
 
-
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
     
@@ -46,8 +45,8 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public CustomsFieldsIsVisible: boolean = false;
     private SetUIProperties() {
         var fieldsEnabled = true;  
-        var awbFieldsEnabled = true;      
-        if (InfraSettings.TenantPM.Id == 65) {
+        var awbFieldsEnabled = true;
+        if (ObjectsLocator.IsDemoTenant(InfraSettings.TenantPM.Id.toString())) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 fieldsEnabled = false;
                 awbFieldsEnabled = false;

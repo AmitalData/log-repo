@@ -57,5 +57,13 @@ export class ObjectsLocator {
     public static UpdatePrivateLableSettings(value: any) {
         this.PrivateLableSettings = value;
     }
+    public static IsDemoTenant(value: any): boolean {
+        var isDemoTenant = false;
 
+        var demoTenants = this.GlobalSetting.LogitudeDemoTenants.split(",");
+        if (demoTenants && demoTenants.indexOf(value) !== -1) {
+            isDemoTenant = true;
+        }
+        return isDemoTenant;
+    }
 }

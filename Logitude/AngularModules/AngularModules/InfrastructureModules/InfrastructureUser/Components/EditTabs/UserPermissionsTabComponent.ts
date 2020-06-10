@@ -12,6 +12,7 @@ import {BranchListService} from '../../../../Common/Services/StandardLists/Branc
 import {ProductTypeListService} from '../../../../Common/Services/StandardLists/ProductTypeListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -69,7 +70,7 @@ export class UserPermissionsTabComponent extends BaseComponent implements OnDest
     public IsProductsVisible: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = true;
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isEditingEnabled = false;
             }

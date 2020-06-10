@@ -10,6 +10,7 @@ import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomai
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'SystemCurrenciesComponent',
@@ -58,7 +59,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
     GetDemoMessageVisibility() {
         var myResult = false;
 
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             myResult = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -74,7 +75,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
 
         var isFeildEnabled: boolean = true;
 
-        if (this.TenantPM.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
             isFeildEnabled = false;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

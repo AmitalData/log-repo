@@ -10,6 +10,7 @@ import {VatTypeListService} from '../../Services/StandardLists/VatTypeListServic
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -87,7 +88,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
         var isPayableFieldEnabled: boolean = false;
         var isReceivableFieldEnabled: boolean = false;
 
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isVATSplitEnabled = false;
             }

@@ -16,6 +16,7 @@ import { ObjectsUpdater } from '../../../../Infrastructure/Locators/ObjectsUpdat
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
 
@@ -169,7 +170,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         }
 
         var isDemoTenant = false;
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             isDemoTenant = true;
             if (SessionLocator.LoggedUserPM.Email) {
                 if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
