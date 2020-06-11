@@ -4,7 +4,7 @@
   ObjectTableName="&quot;InterestReportStatuse&quot;"
   IsNew="true"
   DBTableName="&quot;InterestReportStatuses&quot;"
-  OldDBTableName="&quot;InterestReportStatuses&quot;"
+  DBTableOldNames="InterestReportStatuses"
   ObjectTableSingular="&quot;InterestReportStatuse&quot;"
   ObjectTablePlural="&quot;InterestReportStatuses&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;eaff&quot;"
+  Code="&quot;4582&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -67,7 +67,7 @@
   <field
     Id="&quot;e65986d8-9cbc-49fb-afae-70c4038f03a0&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -116,6 +116,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -140,7 +141,7 @@
   <field
     Id="&quot;1073f383-1dc7-47e3-9593-28cea4e9574f&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -189,6 +190,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -213,7 +215,7 @@
   <field
     Id="&quot;7c8e4b02-ee7b-4177-b17c-a55f08a11264&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -260,6 +262,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -284,7 +287,7 @@
   <field
     Id="&quot;8a3d0347-cc95-4629-9e38-04bf58802ed5&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -333,6 +336,7 @@
     ListLocalDefaultText="&quot;שם באנגלית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -422,6 +426,16 @@
       LocalName="&quot;בתהליך&quot;"
       SearchFields="&quot;5,In Progress,בתהליך&quot;"
       EnglishName="&quot;In Progress&quot;" />
+    <Record
+      Code="&quot;8&quot;"
+      EnglishName="&quot;Invoicing In Progress&quot;"
+      LocalName="&quot;הפקת החשבונית בתהליך&quot;"
+      SearchFields="&quot;8,הפקת החשבונית בתהליך,Invoicing In Progress&quot;" />
+    <Record
+      Code="&quot;9&quot;"
+      EnglishName="&quot;Invoicing Failed&quot;"
+      LocalName="&quot;הפקת החשבונית נכשלה&quot;"
+      SearchFields="&quot;9,הפקת החשבונית נכשלה,Invoicing Failed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
