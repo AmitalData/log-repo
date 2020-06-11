@@ -1204,14 +1204,12 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ApiCredintialsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
-    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIFoldersPermissionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsInvitationStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsSettingListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\TeamListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BatchTaskExecutionPMService.ts" />
-    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BIFoldersPermissionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BIReportsExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BluesnapContractTypePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BusinessProcessQueuePMService.ts" />

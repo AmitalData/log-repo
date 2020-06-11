@@ -78,8 +78,6 @@ import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderServ
 import { BIReportFolderListService } from './Services/StandardLists/BIReportFolderListService';
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
-import { BIFoldersPermissionListService } from './Services/StandardLists/BIFoldersPermissionListService';
-import { BIFoldersPermissionPMService } from './Services/StandardPMs/BIFoldersPermissionPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
 import { BIReportExtendedListService } from './Services/ExtendedLists/BIReportExtendedListService';
 import { LastRunDetailExtendedPMService } from './Services/ExtendedPMs/LastRunDetailExtendedPMService';
@@ -110,8 +108,6 @@ export class ModuleProviders {
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "BIReportListService": { myResult = new BIReportListService(); break; }
             case "BIReportFolderListService": { myResult = new BIReportFolderListService(); break; }
-            case "BIFoldersPermissionPMService": { myResult = new BIFoldersPermissionPMService(); break; }
-            case "BIFoldersPermissionListService": { myResult = new BIFoldersPermissionListService(); break; }
             case "BusinessHoursHolidayListService": { myResult = new BusinessHoursHolidayListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
