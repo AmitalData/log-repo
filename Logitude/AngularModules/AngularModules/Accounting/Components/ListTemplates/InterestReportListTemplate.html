@@ -4,9 +4,12 @@
 
 
 </div>
-<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming">
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ReportNumber' ">
 
     <a href="javascript:;" (click)="OpenInterestReport(rowData['Id'])">
         {{ rowData['ReportNumber'] }}
     </a>
+</div>
+<div class="TextTrimming" *ngIf="fieldName == 'InterestReportStatusName' " style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" >
+    {{ showLocal ? rowData["InterestReportStatusLocalName"] : rowData["InterestReportStatusName"] }}
 </div>

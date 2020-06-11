@@ -90,7 +90,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           FieldName: 'ReportNumber',
             DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("InterestReport.F.ReportNumber"),
-            Styles: { width: '100px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'InterestReportListTemplate',
@@ -102,7 +102,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           FieldName: 'GLAccountLocalName',
             DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountLocalName"), // 'Source',
-            Styles: { width: '100px' },
+            Styles: { width: '130px' },
             IsCustomTemplate: true,
         });
 
@@ -119,7 +119,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           FieldName: 'GLAccountInterestCreditLimit',
             DataTypeCode: 'number',
           Display: TextCodeTranslator.Translate("InterestReport.F.GLAccountInterestCreditLimit"),
-            Styles: { width: '80px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
            
         });
@@ -127,7 +127,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           FieldName: 'TotalAmount',
             DataTypeCode: 'number',
           Display: TextCodeTranslator.Translate("InterestReport.F.TotalAmount"), 
-            Styles: { width: '80px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true
             ,
            
@@ -136,9 +136,11 @@ export class BatchInvoicesComponent extends BaseComponent {
           FieldName: 'InterestReportStatusName',
             DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("InterestReport.F.InterestReportStatusName"), 
-            Styles: { width: '80px' },
-            IsCustomTemplate: true
-            ,
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'InterestReportListTemplate',
+          HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
+        
            
         });
        
@@ -160,7 +162,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-          
+          this.ReloadData();
         }
     }
 
@@ -169,7 +171,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-            
+             this.ReloadData();
 
         }
   }
@@ -178,7 +180,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   public set ShowInProgressReports(value: boolean) {
     if (this.showInProgressReports != value) {
       this.showInProgressReports = value;
-     // this.ReloadData();
+      this.ReloadData();
 
     }
   }
@@ -221,9 +223,9 @@ export class BatchInvoicesComponent extends BaseComponent {
     var toDate = new Date(this.ToDate.getFullYear(), this.ToDate.getMonth(), this.ToDate.getDate(), 0, 0, 0);
     filters.addAdditionalFilter("InterestCalculationDate", fromDate, toDate, null, "Between", false, false, false, "DateTime"); 
     if (this.ShowInProgressReports) {
-      filters.addAdditionalFilter("InterestReportStatusCode", "8", null, null, "Equals", false, false, false, "string"); 
+      filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
-    else filters.addAdditionalFilter("InterestReportStatusCode", "1,8,9", null, null, "InList", false, false, false, "string"); 
+    else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string"); 
     
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
