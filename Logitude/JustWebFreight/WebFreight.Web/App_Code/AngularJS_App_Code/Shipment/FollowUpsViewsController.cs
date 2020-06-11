@@ -32,6 +32,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -433,8 +434,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             List<ShipmentList> listQuery = entityLists.ToList();
             response.Result = listQuery;
-            //CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-            //customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
             HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
             if (filters.GetCount)
             {
