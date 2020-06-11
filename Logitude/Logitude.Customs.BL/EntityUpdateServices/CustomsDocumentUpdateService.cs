@@ -696,6 +696,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         , false
                         );
                     send = true;
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {

@@ -12,16 +12,24 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class ReferantExceptionRepository:IRepository<ReferantException>
-   {
-        
-		public List<ReferantException> GetMulti(EntityKeyFields entityKeys)
-        {
-            
-			throw new NotImplementedException();
-        }
+    public partial class ReferantExceptionRepository : IRepository<ReferantException>
+    {
 
-   }
+        public List<ReferantException> GetMulti(EntityKeyFields entityKeys)
+        {
+
+            throw new NotImplementedException();
+        }
+        public List<ReferantException> GetByDecId(string decId)
+        {
+
+            List<ReferantException> selectedReferantException = (from ReferantException in context.ReferantExceptions
+                                                                 where ReferantException.DeclarationId == decId
+                                                                 select ReferantException).ToList();
+            return selectedReferantException;
+
+        }
+    }
 
 }
    

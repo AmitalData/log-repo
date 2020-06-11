@@ -17,7 +17,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {DeclarationReferantDataPM} from '../../EntityPMs/DeclarationRefernatDataPM';
+import {DeclarationReferantDataPM} from '../../EntityPMs/DeclarationReferantDataPM';
 
 
 @Injectable()

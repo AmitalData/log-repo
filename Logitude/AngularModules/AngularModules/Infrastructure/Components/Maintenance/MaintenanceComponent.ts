@@ -1193,7 +1193,16 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent');
                     break;
                 }
-            case "MTDD": {
+                case "MRCF": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Width = 700;
+                    logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/ReceiptCertificateFromFileComponent')
+                    break;
+                }
+                case "MTDD": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
                     logitudeWindow.ShowCloseButton = true;

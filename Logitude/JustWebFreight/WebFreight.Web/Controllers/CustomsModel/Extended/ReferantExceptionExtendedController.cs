@@ -76,5 +76,34 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+        public HttpResponseMessage GetByDecId(string declarationid)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        var queryService = new ReferantExceptionQueryService(MyContext);
+                        var entityListPM = queryService.GetByDecId(declarationid);
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityListPM);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
     }
 }

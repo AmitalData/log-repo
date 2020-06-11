@@ -2120,7 +2120,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (AppTool.IsNullOrEmpty($event) && AppTool.IsNullOrEmpty($event.BackFromEdit)) {
                     $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
                 } else {
-                    this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });
+                    if (AppTool.IsNullOrEmpty($event.rowIndex)) {
+                        console.warn('$event.rowIndex is null' + aa.Result)
+                    } else {
+                        this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });
+                    }
+                    
                 }
 
                 //this.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });

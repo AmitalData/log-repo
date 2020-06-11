@@ -434,6 +434,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string classifiedUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassifiedUserId  
+	   {
+	    
+	     get
+		{
+		   return classifiedUserId;
+		 }
+		 set
+		 {
+		   if(classifiedUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassifiedUserId",OldValue=classifiedUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classifiedUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string controllerUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ControllerUserId  
+	   {
+	    
+	     get
+		{
+		   return controllerUserId;
+		 }
+		 set
+		 {
+		   if(controllerUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ControllerUserId",OldValue=controllerUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   controllerUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string collectorUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CollectorUserId  
+	   {
+	    
+	     get
+		{
+		   return collectorUserId;
+		 }
+		 set
+		 {
+		   if(collectorUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollectorUserId",OldValue=collectorUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   collectorUserId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

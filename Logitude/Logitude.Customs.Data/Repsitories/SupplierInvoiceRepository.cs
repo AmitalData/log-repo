@@ -150,6 +150,12 @@ namespace Logitude.Customs.Data.Repsitories
                         where a.Tenant == tenant && a.TotalFreightInNIS == null && a.TotalFreightInFreightCurrency !=null && a.TotalFreightInFreightCurrency !=0
                         select a).ToList();
         }
+        public List<string> GetDeclarationIdfromInvoiceNumber(string invoicenumber,int tenant)
+        {
+            return (from a in context.SupplierInvoices
+                    where a.Tenant == tenant && a.InvoiceNumber == invoicenumber
+                    select a.DeclarationId).ToList();
+        }
     }
 }
    

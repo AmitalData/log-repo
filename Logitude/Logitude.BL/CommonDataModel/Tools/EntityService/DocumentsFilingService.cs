@@ -390,7 +390,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             myICreateUD2LTService.JustDoIt(extDocPM);
 
         }
+        private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        {
+            DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
+            var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant);
+            if (ENDOC != null)
+            {
+                if (extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC")
+                    ||
+                    extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeId == ENDOC.Id))
+                {
+                    this.HaveENDOC_DocumentsFilingMetaDataValues = true;
+                ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+                myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+            }
+            }
 
+        }
         private void AddDocumentBackupLog()
         {
             var OTName = ObjectTableRepository.GetSingleObjectTable(entityPM.ObjectTableId, tenant, false);
@@ -1101,6 +1117,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
 
             TryBuildUD2LT(extDocPM);
+            TrySendBondedCustomDocument(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
@@ -1110,11 +1127,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
             {
                 ObjectTable docTable = ObjectTableRepository.GetObjectTableById(extDocPM.ObjectTableId, extDocPM.Tenant);
-                if (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" ||
+                if (this.HaveENDOC_DocumentsFilingMetaDataValues ||
+                    
+                    (docTable != null && (docTable.Name == "Customer" || docTable.Name == "Shipment" ||
                     docTable.Name == "Customs.Declaration"
                     || docTable.Name == "Customs.Claim"
                     || docTable.Name == "Customs.PaymentOrder"
                     || docTable.Name == "Customs.Deficit"))
+                    )
                 {
 
                     if (!string.IsNullOrEmpty(extDocPM.DocumentId))
@@ -1322,6 +1342,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
+        private bool HaveENDOC_DocumentsFilingMetaDataValues=false;
+
         public void SetChangeSet(List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet)
         {
             this.documentsFilingMetaDataValueChangeSet = documentsFilingMetaDataValueChangeSet;

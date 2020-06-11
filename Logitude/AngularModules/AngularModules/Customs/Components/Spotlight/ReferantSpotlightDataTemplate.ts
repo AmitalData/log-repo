@@ -19,6 +19,8 @@ import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/
 import { ReferantExceptionExtendedPMService } from '../../Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange/SpotlightSharedDataService';
+import { ExceptionReasonPMService } from '../../Services/StandardPMs/ExceptionReasonPMService';
+import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -92,13 +94,15 @@ export class ReferantSpotlightDataTemplate
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
     getData(ExceptionsList: string[]) {
-        for (let exceptionReasonsCode of this.ExceptionsList) {
-            this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
+            this._referantExceptionExtendedPMService.GetByDecId(this.EntityPM.DeclarationId)
                 .subscribe((response: any) => {
-                    this.ReferantExceptionListPM.push = response.Result;
-                    this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this, this.spotlightSharedDataService));
+                    for (let item of response.Result) {
+                        this.ReferantExceptionListPM.push(item);
+                        this.ReferantExceptionItemsSource.Insert(new ExceptionReason(item, this, this.spotlightSharedDataService));
+
+                    }
                 });
-        }
+        
     }
     Add() {
         var item: ReferantExceptionPM = new ReferantExceptionPM();
@@ -125,7 +129,9 @@ export class ReferantSpotlightDataTemplate
     private BuildExceptionReasonsList() {
         var newValue: string="";
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-            newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            if (item.EntityPM.Status == "A") {
+                newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            }
         });
         this.EntityPM.ExceptionReasonsList = newValue;
     }
@@ -184,7 +190,8 @@ export class ReferantSpotlightDataTemplate
             this.CheckForDuplicate()
             if (this.errors.length != 0) {
                 this.ValidationErrorsList = this.errors;
-            } if (this.errors.length == 0) {
+            }
+            if (this.errors.length == 0) {
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
@@ -215,7 +222,7 @@ export class ReferantSpotlightDataTemplate
     }
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            var msg = "שורה זו תמחק, הםם להמשיך?" 
+            var msg = "שורה זו תמחק, האם להמשיך?" 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
@@ -243,6 +250,7 @@ export class ExceptionReason extends BaseComponent {
     public parent: ReferantSpotlightDataTemplate;
     public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
+    exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
         this.parent = Parent;
@@ -252,6 +260,9 @@ export class ExceptionReason extends BaseComponent {
         if (this.EntityPM.ExceptionReasonsCode == null) {
             this.ShowCode = false;
         }
+        this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
+            this.ExceptionReason = response.Result;
+        });
     }
     
     _SelectedItemStatus: KeyValuePair;
@@ -305,6 +316,15 @@ export class ExceptionReason extends BaseComponent {
 
     }
 
+    reasonName:any;
+    get ExceptionReasonName() {
+        return this.reasonName;
+    }
+    set ExceptionReasonName(value: string) {
+        if (this.reasonName != value) {
+            this.reasonName = value;
+        }
+    }
     SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this[fieldName] = entity.LocalName;
@@ -315,10 +335,14 @@ export class ExceptionReason extends BaseComponent {
     exceptionReason: ExceptionReasonPM;
     get ExceptionReason() { return this.exceptionReason; }
     set ExceptionReason(value: ExceptionReasonPM) {
-        if (this.ExceptionReason != value) {
-            this.ExceptionReason = value;
+        if (this.exceptionReason != value) {
+            this.exceptionReason = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.reasonName = value.LocalName;
         } else {
             this.ExceptionReasonsCode = null;
+            this.reasonName = null;
         }
     }
 

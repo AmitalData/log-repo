@@ -35,4 +35,34 @@ export class ReferantExceptionExtendedPMService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetByDecId(declarationId: string) {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            var _mappedListsArray: Array<ReferantExceptionPM> = [];
+            return this._http.get(this._apiUrl + '/GetByDecId/?' + '&declarationid=' + declarationId, { headers: authHeader }).map(response => {
+                var serviceResponse: ServiceResponse = response.json();
+                var _mappedListsArray: Array<ReferantExceptionPM> = [];
+                for (var key in serviceResponse) {
+                    var entity: ReferantExceptionPM;
+                    entity = this.MapJsonToEntityPM(serviceResponse[key]);
+                    _mappedListsArray.push(entity);
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapJsonToEntityPM(jsonPM: any) {
+        var entityPM: ReferantExceptionPM;
+        entityPM = new ReferantExceptionPM();
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+        return entityPM;
+    }
 }
