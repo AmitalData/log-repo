@@ -1,0 +1,11 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+    
+      insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+      values ('Air', 'Air', 'Air,Air', 'A', GETDATE())
+      
+    ]]>
+  </Sql>
+</Script>
+

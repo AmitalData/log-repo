@@ -349,6 +349,8 @@
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
     <None Include="DBScripts\QuoteModel\202006011458_FillQuoteClosingReasonId.sxml" />
     <None Include="DBScripts\QuoteModel\202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />

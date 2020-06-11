@@ -1159,11 +1159,11 @@
     </ScreenFields>
   </Screen>
   <Screen
-    Name="&quot;ShipmentSubTypeGeneralScreen&quot;"
+    Name="&quot;General Tab Screen&quot;"
     ObjectTableName="&quot;ShipmentSubType&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;ShipmentSubType.GeneralScreen&quot;"
+    Code="&quot;ShipmentSubType.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="4">
     <ScreenFields>
@@ -1171,24 +1171,44 @@
         Column="0"
         Row="0"
         ObjectFieldName="&quot;Code&quot;"
-        ScreenName="ShipmentSubTypeGeneralScreen" />
+        ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="1"
         ObjectFieldName="&quot;Name&quot;"
-        ScreenName="ShipmentSubTypeGeneralScreen" />
+        ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="2"
         ObjectFieldName="&quot;ShipmentTypeCode&quot;"
-        ScreenName="ShipmentSubTypeGeneralScreen" />
+        ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="3"
         ObjectFieldName="&quot;Inactive&quot;"
-        ScreenName="ShipmentSubTypeGeneralScreen" />
+        ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;ShipmentSubType&quot;"
+    Code="&quot;SBGN&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;ShipmentSubType.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;ShipmentSubType&quot;"
+    Code="&quot;SBEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;ShipmentSubType.TH.Events&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentSubTypeUpdateClass
    {  		
-		public const string HashString = "2b35f8901aed875c4bdb5eae3cd69e99";
+		public const string HashString = "1066ab2f8078a4d8a55e1fdb64acf475";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -923,21 +923,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	   		  
 	      
 
-	         Screen ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentSubType.GeneralScreen", Name = "ShipmentSubTypeGeneralScreen", ObjectTableId = ShipmentSubTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ShipmentSubTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentSubType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShipmentSubTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.ShipmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentSubTypeShipmentSubTypeGeneralScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Id,ScreenCode = ShipmentSubTypeShipmentSubTypeGeneralScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentSubTypeShipmentSubTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ShipmentSubTypeGeneralTabScreenScreen1.Id,ScreenCode = ShipmentSubTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "ShipmentSubType.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ShipmentSubTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentSubType" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ShipmentSubTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentSubType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ShipmentSubTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentSubTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentSubType.Tab.General", ObjectTableId = ShipmentSubTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentSubTypeFeatures.SBGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentSubTypeObjectTable);
+ 
+                 
+			   TextCode ShipmentSubTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentSubType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ShipmentSubTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ShipmentSubTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentSubType.Tab.Events", ObjectTableId = ShipmentSubTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentSubTypeFeatures.SBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShipmentSubTypeObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SBGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentSubTypeGeneralFeature_TH0.Id,FeatureUniqeCode = ShipmentSubTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShipmentSubTypeObjectTable.Id, TabNameTextCodeId = ShipmentSubTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShipmentSubTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShipmentSubTypeEventsFeature_TH1.Id,FeatureUniqeCode = ShipmentSubTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShipmentSubTypeObjectTable.Id, TabNameTextCodeId = ShipmentSubTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = ShipmentSubTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
