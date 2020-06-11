@@ -282,7 +282,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         public IQueryable<QuoteTemplateList> GetQuoteTemplateLists()
         {
-            IQueryable<QuoteTemplateList> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates
+            IQueryable<QuoteTemplateList> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates.Include("CurrentTenant")
                                                           where  a.InActive == false
                                                           select new QuoteTemplateList()
                                                           {
@@ -304,6 +304,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                               InActive = a.InActive,
                                                               IsEnabledForCustomers = a.IsEnabledForCustomers,
                                                               IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                                              TenantName = a.CurrentTenant != null ? a.CurrentTenant.Company : ""
                                                           };
             return qUoteTemplate;
         }

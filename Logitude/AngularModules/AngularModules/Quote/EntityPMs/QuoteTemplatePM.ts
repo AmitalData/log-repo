@@ -122,6 +122,11 @@ export class QuoteTemplatePM {
     public set IsEnabledForCustomers(newValue: boolean) { if (this.isEnabledForCustomers != newValue) { this.isEnabledForCustomers = newValue; this.MarkAsDirty("IsEnabledForCustomers"); } }
        
 	 
+    private tenantName: string;
+    public get TenantName() { return this.tenantName; }
+    public set TenantName(newValue: string) { if (this.tenantName != newValue) { this.tenantName = newValue; this.MarkAsDirty("TenantName"); } }
+       
+	 
      
 	private templateSections: QuoteTemplateSectionPM[];
     get  TemplateSections() {
