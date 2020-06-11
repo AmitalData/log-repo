@@ -20,6 +20,8 @@ export class BIReportFolderList {
 	Index: number;
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
+	PermissionForAll: boolean;
+	PermittedByUserId: string;
 	
 }
  

@@ -930,7 +930,12 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\HelpResourceViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIFoldersPermissionViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIFoldersPermissionController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
@@ -2706,6 +2711,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BankPageEntryTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIFoldersPermissionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportFolderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsTypeUpdateClass.cs" />

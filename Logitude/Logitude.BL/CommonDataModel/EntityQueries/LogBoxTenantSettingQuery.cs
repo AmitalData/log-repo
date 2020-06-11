@@ -72,6 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 DocumentShareAsDefault = tt.DocumentShareAsDefault,
                 AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
                 StockTypeCode = tt.StockTypeCode,
+                ShowTaxAmountWarning = tt.ShowTaxAmountWarning
             };
 
             return logBoxTenantSettingPM;

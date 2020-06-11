@@ -40,10 +40,10 @@ namespace WarehouseData.Service
                 reader.Close();
 
             }
-            generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable), destinationConnectionString);
+            generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.CopyToDwObjectFieldLists), destinationConnectionString);
         }
 
-        private string CreateTABLE(string tableName, DataTable table)
+        private string CreateTABLE(string tableName, DataTable table, List<DWObjectFieldDB> copyToDwObjectFieldLists)
         {
 
             string sqlsc;
@@ -83,7 +83,14 @@ namespace WarehouseData.Service
                         sqlsc += " float ";
                         break;
                     case "System.String":
-                        sqlsc += string.Format(" varchar({0}) ", table.Columns[i].MaxLength == -1 ? "max" : table.Columns[i].MaxLength.ToString());
+                        string dataTypeCode = "varchar";
+                        if (copyToDwObjectFieldLists != null)
+                        {
+                            var objectField = copyToDwObjectFieldLists.Where(d => d.FieldName == table.Columns[i].ColumnName).FirstOrDefault();
+                            if (objectField != null && objectField.DataTypeCode == "nText") dataTypeCode = "nvarchar";
+
+                        }
+                        sqlsc += string.Format( " "+(dataTypeCode + " ({0}) "), table.Columns[i].MaxLength == -1 ? "max" : table.Columns[i].MaxLength.ToString());
                         break;
 
                     default:

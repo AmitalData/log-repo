@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .LogitudeToggleButtonBody {
         position: fixed;
@@ -78,9 +78,10 @@
 
     <!-- Head -->
     <div class="MediaFillAbsolute">
-        <button [attr.id]="ComponentButtonId"
+        <button *ngIf="!IconButtonName"
+                [attr.id]="ComponentButtonId"
                 class="LogitudeToggleButton"
-                (click)="OnButtonClicked()"                
+                (click)="OnButtonClicked()"
                 (mouseover)="IsMouseOverButton = true;"
                 (mouseleave)="IsMouseOverButton = false;"
                 [disabled]="!IsEnabled">
@@ -107,6 +108,8 @@
                 </table>
             </div>
         </button>
+
+        <IconButton *ngIf="IconButtonName" [disabled]="!IsEnabled" [Name]="IconButtonName" [IsIconOnly]="true" (click)="OnButtonClicked()"></IconButton>
     </div>
 
     <!-- Body -->

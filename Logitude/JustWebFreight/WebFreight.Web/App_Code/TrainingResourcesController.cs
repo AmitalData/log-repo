@@ -65,7 +65,7 @@ namespace WebFreight.Web.App_Code
         public HelpResource GetSingleShipmentPM(string code)
         {
             HelpResourceRepository rep = new HelpResourceRepository();
-            HelpResource resource = rep.GetSingleHelpResource(code);
+            HelpResource resource = rep.GetSingleHelpResource(code, 0);
             
             return resource;
         }

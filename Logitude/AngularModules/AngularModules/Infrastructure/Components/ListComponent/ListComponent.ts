@@ -1570,6 +1570,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "HelpResource":
                         {
                             selectedEntityId = $event.rowData.Code;
                             break;

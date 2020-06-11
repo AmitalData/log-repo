@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             
         }
-        public virtual List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(string glaccountId, DateTime InterestReportCalculationDate,int tenant)
+        public virtual List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters)
         {
-            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(tenant);
-            return interestTransactionQueryService.GetInterestTransactionsForGlAccountAndInterestValueDate(glaccountId, InterestReportCalculationDate, tenant);
+            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestTransactionGetParameters.Tenant);
+            return interestTransactionQueryService.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
         }
         public virtual InterestReportPM GetInterestReportPM(string interestReportId,int tenant)
         {

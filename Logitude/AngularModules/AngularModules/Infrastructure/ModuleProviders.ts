@@ -83,6 +83,7 @@ import { BIReportExtendedListService } from './Services/ExtendedLists/BIReportEx
 import { LastRunDetailExtendedPMService } from './Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { DWObjectTableExtendedListService } from './Services/ExtendedLists/DWObjectTableExtendedListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
+import { BIReportFolderExtendedListService } from './Services/ExtendedLists/BIReportFolderExtendedListService';
 
 import { ToggleListService } from './Services/StandardLists/ToggleListService';
 import { FeatureToggleListService } from './Services/StandardLists/FeatureToggleListService';
@@ -93,6 +94,8 @@ import { TasksSchedulerListService } from './Services/StandardLists/TasksSchedul
 import { BluesnapTransactionListService } from './Services/StandardLists/BluesnapTransactionListService';
 import { PriceStepListService } from './Services/StandardLists/PriceStepListService';
 import { PriceStepPMService } from './Services/StandardPMs/PriceStepPMService';
+import { HelpResourceListService } from './Services/StandardLists/HelpResourceListService';
+import { HelpResourcePMService } from './Services/StandardPMs/HelpResourcePMService';
 
 export class ModuleProviders {
     
@@ -192,6 +195,9 @@ export class ModuleProviders {
             case "BluesnapTransactionListService": { myResult = new BluesnapTransactionListService(); break; }
             case "PriceStepListService": { myResult = new PriceStepListService(); break; }
             case "PriceStepPMService": { myResult = new PriceStepPMService(); break; }
+            case "HelpResourceListService": { myResult = new HelpResourceListService(); break; }
+            case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
+            case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
         }
 
         return myResult;

@@ -109,35 +109,5 @@ Type="float"
     <Constraints
       Nullable="true" />
   </Column>
-
-  <Relation
-    ForeignKeyColumn="CustomerId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ShipperId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-   ForeignKeyColumn="ConsigneeId"
-   ReferencedTable="Cards"
-   ReferencedColumn="Id"
-   ReferencedTableSchema="dbo" />
-  <Relation
-  ForeignKeyColumn="FromPortId"
-  ReferencedTable="Ports"
-  ReferencedColumn="Id"
-  ReferencedTableSchema="dbo" />
-  <Relation
- ForeignKeyColumn="ToPortId"
- ReferencedTable="Ports"
- ReferencedColumn="Id"
- ReferencedTableSchema="dbo" />
-  <Relation
-   ForeignKeyColumn="TransportModeId"
-   ReferencedTable="TransportModes"
-   ReferencedColumn="Id"
-   ReferencedTableSchema="dbo" />
+ 
 </Table>

@@ -68,7 +68,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="AutoGenerators\GlobalClassesGenerator.cs">
+    <Compile Include="AutoGenerators\GlobalClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GlobalClassesGenerator.tt</DependentUpon>
@@ -141,8 +141,8 @@
     </Content>
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
-      <LastOutputs>.\GlobalClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\GlobalClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>GlobalClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -248,7 +248,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateUsers.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\QueueEnQueueProcedure.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteDuplicatedQueueMessagesProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldErrorLog.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldQueueMessageMoreDetailsTask.dxml" />
@@ -352,6 +352,8 @@
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
+    <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
+    <None Include="DBTables\CommonDataModel\ShipmentHeader.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />
@@ -1122,7 +1124,9 @@
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\GlobalModel\HelpResource.lxml" />
+    <None Include="EntityFiles\GlobalModel\HelpResource.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
     <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
       <SubType>Designer</SubType>
@@ -1306,7 +1310,9 @@
     <None Include="EntityFiles\QuoteModel\QuoteCharge.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\QuoteCostCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteCustomerType.lxml" />
     <None Include="EntityFiles\QuoteModel\QuotePackage.lxml" />

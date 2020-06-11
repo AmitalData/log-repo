@@ -22,6 +22,7 @@ namespace Logitude.Server.Tools.QueueService
         protected int Tenant { get; set; }
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
+ 
         public DbQueueService()
         {
 
@@ -53,6 +54,8 @@ namespace Logitude.Server.Tools.QueueService
                 queueDefRep.Add(queueDefinition);
                 queueDefRep.SubmitChanges();
             }
+
+            
         }
 
         private static QueueDefinition GetQueueDefFromCache(string queueCode, QueueDefinitionRepository queueDefRep)
@@ -85,6 +88,8 @@ namespace Logitude.Server.Tools.QueueService
             {
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
                 string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
+                string bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
+                
                 QueueResponse response = new QueueResponse();
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
@@ -122,6 +127,7 @@ namespace Logitude.Server.Tools.QueueService
                         OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
                         OracleParameter customerId = new OracleParameter("CustomerId", OracleDbType.VarChar, 15);
                         OracleParameter batchNumber = new OracleParameter("BatchNumber", OracleDbType.VarChar, 15);
+                        OracleParameter hashCodePar = new OracleParameter("HashCode", OracleDbType.NVarChar, 1000);
                         //OracleParameter NextRunDateTime = new OracleParameter("NextRunDate", OracleDbType.Date);
 
                         OracleParameter queueMessageIdPar = new OracleParameter("v_QueueMessageId", OracleDbType.Number);
@@ -136,6 +142,7 @@ namespace Logitude.Server.Tools.QueueService
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
+                        hashCodePar.Direction = ParameterDirection.Input;
                         //NextRunDateTime.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
@@ -146,6 +153,7 @@ namespace Logitude.Server.Tools.QueueService
                         batchNumber.Value = BNo;
                         watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
                         //NextRunDateTime.Value = NextRunDate;
+                        hashCodePar.Value = bodyHashCode;
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
@@ -153,6 +161,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
+                        cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(queueMessageIdPar);
                         cmd.Parameters.Add(watingStatusPar);
 
@@ -199,6 +208,7 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter customerId = new SqlParameter("@CustomerId", SqlDbType.VarChar, 15);
                         SqlParameter batchNumber = new SqlParameter("@BatchNumber", SqlDbType.VarChar, 15);
                         SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
+                        SqlParameter hashCodePar = new SqlParameter("@HashCode", SqlDbType.NVarChar, 1000);
                         SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
                         queueCodePar.Direction = ParameterDirection.Input;
@@ -208,6 +218,7 @@ namespace Logitude.Server.Tools.QueueService
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
                         NextRunDateTime.Direction = ParameterDirection.Input;
+                        hashCodePar.Direction = ParameterDirection.Input;
                         watingStatusPar.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
@@ -217,6 +228,7 @@ namespace Logitude.Server.Tools.QueueService
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
                         NextRunDateTime.Value = NextRunDate;
+                        hashCodePar.Value = bodyHashCode;
                         watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
 
                         cmd.Parameters.Add(queueCodePar);
@@ -226,6 +238,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(NextRunDateTime);
+                        cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
 
                         cn.Open();

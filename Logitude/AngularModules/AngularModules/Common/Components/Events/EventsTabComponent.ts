@@ -49,7 +49,14 @@ export class EventsTabComponent implements OnDestroy {
     }
 
     InitTab() {
-        this.EntityId = this.entityArgs.EntityPM.Id;
+        if (this.entityArgs.ObjectTableName == "HelpResource") {
+            this.EntityId = this.entityArgs.EntityPM.Code;
+        }
+
+        else {
+            this.EntityId = this.entityArgs.EntityPM.Id;
+        }
+
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.ObjectTableId = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0].Id;
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;

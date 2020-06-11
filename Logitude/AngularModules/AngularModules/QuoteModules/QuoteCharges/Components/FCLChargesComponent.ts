@@ -32,6 +32,7 @@ import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { QuoteTool } from '../../../Quote/Tools';
 
 @Component({
     selector: 'FCLChargesComponent',
@@ -1388,6 +1389,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SetUIProperties();
         this.ReadVatTypeData();
         this.ComputeMarkUpString();
+        this.SetUIProperties_CellsColors();
         this.ComputeMarkUp1String();
         this.ComputeMarkUp2String();
         this.ComputeMarkUp3String();
@@ -1688,7 +1690,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price
         var myCostPrice: number = this.CostUnitPriceInSaleCurrency;
         var mySalePrice: number = this.SaleUnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice) || AppTool.IsNullOrEmpty(mySalePrice)) {
+
+        if (AppTool.IsNullOrEmpty(this.CellMarkupText) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice) && !AppTool.IsNullOrEmpty(mySalePrice) && (myCostPrice == mySalePrice)) {
+            this.SaleUnitPriceColor = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice) || AppTool.IsNullOrEmpty(mySalePrice)) {
             this.SaleUnitPriceColor = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -1699,7 +1706,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price1
         var myCostPrice1: number = this.CostUnitPrice1InSaleCurrency;
         var mySalePrice1: number = this.SaleContainerType1UnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice1) || AppTool.IsNullOrEmpty(mySalePrice1)) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkup1Text) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice1) && !AppTool.IsNullOrEmpty(mySalePrice1) && (myCostPrice1 == mySalePrice1)) {
+            this.SaleUnitPrice1Color = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice1) || AppTool.IsNullOrEmpty(mySalePrice1)) {
             this.SaleUnitPrice1Color = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -1710,7 +1721,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price2
         var myCostPrice2: number = this.CostUnitPrice2InSaleCurrency;
         var mySalePrice2: number = this.SaleContainerType2UnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice2) || AppTool.IsNullOrEmpty(mySalePrice2)) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkup2Text) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice2) && !AppTool.IsNullOrEmpty(mySalePrice2) && (myCostPrice2 == mySalePrice2)) {
+            this.SaleUnitPrice2Color = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice2) || AppTool.IsNullOrEmpty(mySalePrice2)) {
             this.SaleUnitPrice2Color = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -1721,7 +1736,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price3
         var myCostPrice3: number = this.CostUnitPrice3InSaleCurrency;
         var mySalePrice3: number = this.SaleContainerType3UnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice3) || AppTool.IsNullOrEmpty(mySalePrice3)) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkup3Text) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice3) && !AppTool.IsNullOrEmpty(mySalePrice3) && (myCostPrice3 == mySalePrice3)) {
+            this.SaleUnitPrice3Color = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice3) || AppTool.IsNullOrEmpty(mySalePrice3)) {
             this.SaleUnitPrice3Color = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -1732,7 +1751,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price4
         var myCostPrice4: number = this.CostUnitPrice4InSaleCurrency;
         var mySalePrice4: number = this.SaleContainerType4UnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice4) || AppTool.IsNullOrEmpty(mySalePrice4)) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkup4Text) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice4) && !AppTool.IsNullOrEmpty(mySalePrice4) && (myCostPrice4 == mySalePrice4)) {
+            this.SaleUnitPrice4Color = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice4) || AppTool.IsNullOrEmpty(mySalePrice4)) {
             this.SaleUnitPrice4Color = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -1743,7 +1766,11 @@ export class FCLQuoteChargeItem extends BaseComponent {
         // Price5
         var myCostPrice5: number = this.CostUnitPrice5InSaleCurrency;
         var mySalePrice5: number = this.SaleContainerType5UnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice5) || AppTool.IsNullOrEmpty(mySalePrice5)) {
+        if (AppTool.IsNullOrEmpty(this.CellMarkup5Text) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice5) && !AppTool.IsNullOrEmpty(mySalePrice5) && (myCostPrice5 == mySalePrice5)) {
+            this.SaleUnitPrice5Color = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice5) || AppTool.IsNullOrEmpty(mySalePrice5)) {
             this.SaleUnitPrice5Color = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -2454,7 +2481,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPriceInSaleCurrency != value) {
             this.EntityPM.CostUnitPriceInSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2463,7 +2489,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPrice1InSaleCurrency != value) {
             this.EntityPM.CostUnitPrice1InSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice1();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2472,7 +2497,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPrice2InSaleCurrency != value) {
             this.EntityPM.CostUnitPrice2InSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice2();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2481,7 +2505,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPrice3InSaleCurrency != value) {
             this.EntityPM.CostUnitPrice3InSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice3();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2490,7 +2513,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPrice4InSaleCurrency != value) {
             this.EntityPM.CostUnitPrice4InSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice4();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2499,7 +2521,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostUnitPrice5InSaleCurrency != value) {
             this.EntityPM.CostUnitPrice5InSaleCurrency = AppTool.Round(value, 3);
             this.ComputeSalePrice5();
-            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2916,7 +2937,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
             this.fatherComponent.CheckUpdateQuantities();
-
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2925,6 +2946,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleContainerType1UnitPrice != value) {
             this.EntityPM.SaleContainerType1UnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2933,6 +2955,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleContainerType2UnitPrice != value) {
             this.EntityPM.SaleContainerType2UnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2941,6 +2964,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleContainerType3UnitPrice != value) {
             this.EntityPM.SaleContainerType3UnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2949,6 +2973,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleContainerType4UnitPrice != value) {
             this.EntityPM.SaleContainerType4UnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -2957,6 +2982,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleContainerType5UnitPrice != value) {
             this.EntityPM.SaleContainerType5UnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3746,6 +3772,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.MarkUpValue != value) {
             this.EntityPM.MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUpString();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3754,6 +3781,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.ContainerType1MarkUpValue != value) {
             this.EntityPM.ContainerType1MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUp1String();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3762,6 +3790,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.ContainerType2MarkUpValue != value) {
             this.EntityPM.ContainerType2MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUp2String();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3770,6 +3799,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.ContainerType3MarkUpValue != value) {
             this.EntityPM.ContainerType3MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUp3String();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3778,6 +3808,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.ContainerType4MarkUpValue != value) {
             this.EntityPM.ContainerType4MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUp4String();
+            this.SetUIProperties_CellsColors();
         }
     }
 
@@ -3786,6 +3817,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.ContainerType5MarkUpValue != value) {
             this.EntityPM.ContainerType5MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUp5String();
+            this.SetUIProperties_CellsColors();
         }
     }
 

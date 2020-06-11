@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -115,7 +115,7 @@
                     <tr *ngIf="UploadedSuccessfully" style="height:20px">
                         <td style="width:10px;"><div></div> </td>
                         <td style="width:62px;text-align:left;font-size:11px;color:dimgray"><span></span></td>
-                        <td style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">{{'DocsIn.M.FileUploadedSuccessfully' | TextCodeTranslationPipe}}</span></td>
+                        <td id="{{'FileUploadedSuccessfully' | IdGeneratorPipe}}" style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">{{'DocsIn.M.FileUploadedSuccessfully' | TextCodeTranslationPipe}}</span></td>
                         <td colspan="3"><div></div></td>
                     </tr>
 

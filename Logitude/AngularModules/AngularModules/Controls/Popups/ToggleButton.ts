@@ -6,7 +6,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
     selector: "ToggleButton",
     
     templateUrl: './ToggleButton.html',
-    inputs: ['Title', 'IconPath', 'DropDownWidth', 'DropDownHeight', 'Position', 'IsEnabled', 'IsOpened'],
+    inputs: ['Title', 'IconPath', 'DropDownWidth', 'DropDownHeight', 'Position', 'IsEnabled', 'IsOpened', 'IconButtonName'],
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -20,6 +20,7 @@ export class ToggleButton implements OnInit, OnDestroy {
     public Position: string = "Right";
     public DropDownWidth: number = 0;
     public DropDownHeight: number = 0;
+    public IconButtonName: string = null;
     @Output() Opened: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {

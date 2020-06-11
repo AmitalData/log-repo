@@ -2363,6 +2363,71 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRIN&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Invoiced&quot;"
+      LocalName="&quot;הופקה חשבונית&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCW&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Closed without Invoice&quot;"
+      LocalName="&quot;נסגר ללא חשבונית&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRIF&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Invoicing Failed&quot;"
+      LocalName="&quot;הפקת חשבונית נכשלה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRFD&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Failed&quot;"
+      LocalName="&quot;הפקת דוח נכשלה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCD&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;נוצר&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

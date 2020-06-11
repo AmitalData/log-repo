@@ -183,6 +183,7 @@ export class DynamicLoader_Cust {
       case "InfrastructureModules/InfrastructureTenantManagement": { myResult = "InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement#ModuleInfrastructureTenantManagement"; break; }
       case "InfrastructureModules/InfrastructureUser": { myResult = "InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser"; break; }
       case "InfrastructureModules/InfrastructureComputingPartner": { myResult = "InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner"; break; }
+        case "InfrastructureModules/InfrastructureHelpResource": { myResult = "InfrastructureModules/InfrastructureHelpResource/ModuleInfrastructureHelpResource#ModuleInfrastructureHelpResource"; break; }
 
       //Common
       case "Common": { myResult = "Common/Module_COMN#LogitudeCommonModule"; break; }

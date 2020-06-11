@@ -1,0 +1,7 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+      update BIReportFolders set PermissionForAll = 1
+    ]]>       
+  </Sql>
+</Script>

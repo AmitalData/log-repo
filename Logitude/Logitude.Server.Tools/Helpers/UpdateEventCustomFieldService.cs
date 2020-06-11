@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.Helpers
 {
-public  class UpdateEventCustomFieldService
+public  class EventCustomFieldUpdateService
     {
 
         #region UpdateEventCustomFieldValue
