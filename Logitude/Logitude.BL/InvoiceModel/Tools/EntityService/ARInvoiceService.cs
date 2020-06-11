@@ -1299,7 +1299,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberFromStock)
                     {
-                        entityPM.InvoiceNumber = "433445";
+                       
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
                             if (entityPM.IsConstituentInvoice)
