@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateUpdateClass
    {  		
-		public const string HashString = "6fbd3469b43e1867c8f87c9269e33f6b";
+		public const string HashString = "471a0ecf0001b55e874e673396062811";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1276,6 +1276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TenantName",
 					  						ListPropertyPath =  "TenantName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1293,9 +1294,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TenantName",
-					  						DefaultText =  "Tenant Name",
+					  						DefaultText =  "Tenant",
 					  						ListFieldLable =  "TenantNameListLable",
-					  						ListLableDefaultText =  "Tenant Name",
+					  						ListLableDefaultText =  "Tenant",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
