@@ -162,8 +162,9 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(hashCodePar);
-                        cmd.Parameters.Add(queueMessageIdPar);
                         cmd.Parameters.Add(watingStatusPar);
+                        cmd.Parameters.Add(queueMessageIdPar);
+                       
 
 
                         //cmd.Parameters.Add(NextRunDateTime);

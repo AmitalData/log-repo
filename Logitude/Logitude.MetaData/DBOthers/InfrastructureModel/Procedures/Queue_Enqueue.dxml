@@ -62,10 +62,10 @@
         v_DelaySeconds        IN NUMBER,
         v_CustomerId          IN VARCHAR2,
         v_BatchNumber         IN VARCHAR2 ,
-       
-        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE,
-        v_HashCode         IN VARCHAR2,
-        v_WatingStatus        IN NUMBER
+        v_HashCode            IN VARCHAR2,
+        v_WatingStatus        IN NUMBER,
+        v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
+        
         )
     AS
       v_currentdate     DATE;  
