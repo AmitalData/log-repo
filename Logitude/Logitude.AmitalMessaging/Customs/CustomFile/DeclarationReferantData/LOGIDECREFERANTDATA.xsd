@@ -20,6 +20,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ClassifiedUserId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ControllerUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -33,4 +34,5 @@
   <xs:element name="Tenant" type="xs:string" />
   <xs:element name="ClassifiedUserId" type="xs:string" />
   <xs:element name="ControllerUserId" type="xs:string" />
+  <xs:element name="FileStatus" type="xs:string" />
 </xs:schema>
