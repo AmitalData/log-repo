@@ -15673,6 +15673,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;OpenCourierMaster&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -15756,6 +15763,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedFastProcess&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -15823,6 +15837,13 @@
         ObjectFieldName="&quot;FastIndividualProcessCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -15907,6 +15928,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedIndividual&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -15975,6 +16003,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;WithoutId&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16041,6 +16076,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;WithoutClassification&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16101,6 +16143,13 @@
         ObjectFieldName="&quot;IsPending900&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingPayment&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16180,6 +16229,13 @@
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingCustoms&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -16252,6 +16308,13 @@
         ObjectFieldName="&quot;IsPendingNotNull&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Pending&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCourierDeclaration&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>

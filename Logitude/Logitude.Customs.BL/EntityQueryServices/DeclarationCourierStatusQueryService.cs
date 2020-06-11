@@ -277,7 +277,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
                                                                                join dm in context.CourierMasters 
                                                                                on d.CourierMasterId  equals dm.Id
-                                                                               where dc.Tenant == tenant
+                                                                               where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration==true 
                                                                                select  dc);
         
                                                                             

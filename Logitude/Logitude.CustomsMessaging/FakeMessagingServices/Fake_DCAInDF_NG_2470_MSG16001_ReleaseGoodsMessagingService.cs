@@ -66,6 +66,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _generalData.ReleaseMessageCode = 1;
             _generalData.currentDate = DateTime.Now;
             _generalData.releaseDate = DateTime.Now;
+            _generalData.TaxationDate=DateTime.Now;
             _generalData.dealValueNISSpecified = true;
             _generalData.dealValueNIS = _dec.DealValue;
             _generalData.CifValueNisSpecified = true;
