@@ -21,6 +21,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {BIReportFolderPM} from '../../EntityPMs/BIReportFolderPM';
 
+import {BIFoldersPermissionPM} from '../../EntityPMs/BIFoldersPermissionPM';
 
 @Injectable()
 
@@ -181,12 +182,22 @@ export class BIReportFolderPMService {
                  
             }
 			
+               this.MapPermittedBIFolders(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.PermittedBIFolders = [];
+            for (var item in entityPM.PermittedBIFolders) {
+            var myBIFoldersPermissionPM = entityPM.PermittedBIFolders[item];
+            var newBIFoldersPermissionPM: BIFoldersPermissionPM = this.clone(myBIFoldersPermissionPM);
+						
+							 
+            entityPM.OldEntityPM.PermittedBIFolders.push(newBIFoldersPermissionPM);
+            }
+			   
 		}
         else {
 
@@ -196,6 +207,96 @@ export class BIReportFolderPMService {
         return entityPM;
     }
 
+    MapPermittedBIFolders(entityPM: BIReportFolderPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldPermittedBIFolders: BIFoldersPermissionPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldPermittedBIFolders = entityPM.OldEntityPM.PermittedBIFolders;
+        }
+
+        entityPM.PermittedBIFolders = new Array<BIFoldersPermissionPM>();
+        for (var item in jsonPM.PermittedBIFolders) {
+            var jItem = jsonPM.PermittedBIFolders[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newBIFoldersPermissionPM: BIFoldersPermissionPM;
+	  
+            if (mapParent) {
+                newBIFoldersPermissionPM = new BIFoldersPermissionPM(entityPM);
+            }
+            else
+            {
+                newBIFoldersPermissionPM = new BIFoldersPermissionPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newBIFoldersPermissionPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newBIFoldersPermissionPM.UniqueKey = Guid.newGuid();
+                newBIFoldersPermissionPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newBIFoldersPermissionPM.OldEntityPM = this.clone(newBIFoldersPermissionPM);
+
+				
+            }
+            else {
+                if (newBIFoldersPermissionPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newBIFoldersPermissionPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newBIFoldersPermissionPM.ChangeSetOp = "Insert";
+                }
+ 
+                newBIFoldersPermissionPM.OldEntityPM = null;
+                newBIFoldersPermissionPM.EntityParentPM = null;
+            }
+			
+			 newBIFoldersPermissionPM.IsDirty = false;
+            entityPM.PermittedBIFolders.push(newBIFoldersPermissionPM);
+        }
+        if (oldPermittedBIFolders) {
+            
+            for (var itemKey in oldPermittedBIFolders) {
+                if (entityPM.PermittedBIFolders.filter(p=> p.UniqueKey === oldPermittedBIFolders[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldPermittedBIFolders[itemKey]) {
+                        //oldPermittedBIFolders[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.PermittedBIFolders.push(oldPermittedBIFolders[itemKey]);
+						var oldItemJson = oldPermittedBIFolders[itemKey];
+                        var deletedPM: BIFoldersPermissionPM = new BIFoldersPermissionPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.PermittedBIFolders.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

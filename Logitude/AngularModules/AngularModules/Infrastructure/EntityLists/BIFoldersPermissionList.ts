@@ -6,22 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class BIReportFolderList {
+export class BIFoldersPermissionList {
    
 	Id: string;
 	Tenant: number;
-	CreateDate: Date;
-	CreatedByUserId: string;
-	UpdateDate: Date;
-	UpdatedByUserId: string;
-	SearchFields: string;
-	Name: string;
-	Description: string;
-	Index: number;
-	CreatedByUserName: string;
-	UpdatedByUserName: string;
-	PermissionForAll: boolean;
-	PermittedByUserId: string;
+	FolderId: string;
+	UserId: string;
 	
 }
  
