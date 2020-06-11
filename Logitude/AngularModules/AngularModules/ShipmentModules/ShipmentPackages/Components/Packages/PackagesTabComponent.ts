@@ -3439,7 +3439,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
-
+    public IsEditingFieldsEnabled: boolean = false;
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -3447,6 +3447,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
+        this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
 
         this.SetUIProperties();
         if (this.IsNewEntity) {
