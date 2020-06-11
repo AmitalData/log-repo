@@ -138,6 +138,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
 "UCBNDCD",///  Send bonded filing
+"8302" //בקשה לטופס הצהרה
+
 
             };
 
