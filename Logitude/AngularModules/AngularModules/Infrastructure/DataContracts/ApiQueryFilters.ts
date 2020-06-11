@@ -30,6 +30,7 @@ export class ApiQueryFilters {
             if (typeof (FieldValue) === "string") {
                 if (FieldValue)
                 FieldValue = this.myReplace(FieldValue);//FieldValue.replace('"', '\\"');
+                if (FieldName != "ImportersFilter")
                 FieldValue = encodeURIComponent(FieldValue)
                 //FieldValue = FieldValue.replace("%22", "\%22");
             }
