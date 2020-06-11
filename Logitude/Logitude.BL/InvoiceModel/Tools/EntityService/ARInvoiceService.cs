@@ -1299,6 +1299,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberFromStock)
                     {
+                        entityPM.InvoiceNumber = "433445";
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
                             if (entityPM.IsConstituentInvoice)
@@ -1312,7 +1313,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
 
                             else
-                            {
+                            { 
                                 entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
                             }
                         }
