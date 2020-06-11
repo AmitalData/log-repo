@@ -434,6 +434,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
@@ -446,7 +447,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             //entityPoco.EstimatedFinalArrivalDate = entityPM.EstimatedFinalArrivalDate;
             //entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
             //entityPoco.FirstARInvoiceApprovalDate = entityPM.FirstARInvoiceApprovalDate;
-            
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

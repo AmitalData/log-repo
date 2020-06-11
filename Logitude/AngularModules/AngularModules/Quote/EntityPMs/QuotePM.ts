@@ -1593,6 +1593,11 @@ export class QuotePM {
     public set ProfitExchangeRate(newValue: number) { if (this.profitExchangeRate != newValue) { this.profitExchangeRate = newValue; this.MarkAsDirty("ProfitExchangeRate"); } }
        
 	 
+    private shipmentSubTypeId: string;
+    public get ShipmentSubTypeId() { return this.shipmentSubTypeId; }
+    public set ShipmentSubTypeId(newValue: string) { if (this.shipmentSubTypeId != newValue) { this.shipmentSubTypeId = newValue; this.MarkAsDirty("ShipmentSubTypeId"); } }
+       
+	 
 
     public OldEntityPM: QuotePM;
 		

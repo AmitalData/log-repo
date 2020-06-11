@@ -2501,6 +2501,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentReceivableLineStatusList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentReceivableStatusList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentsReceivablesPayablesList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ShipmentSubTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\SpecialServicesTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\APILogsDataPM.cs" />
@@ -2564,6 +2565,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivablePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReceivableStatusPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentSubTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\SpecialServicesTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\UserIdNumberRequestPM.cs" />
@@ -2626,6 +2628,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentSubTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
@@ -2638,6 +2641,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentTypeMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\FBLStockMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestMapping.cs" />
@@ -2663,6 +2667,7 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\AWBSpecialHandlingCodeService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestsCountService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCustomsTransmissionService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentSubTypeService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentTypeService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\FBLStockService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusesService.cs" />
@@ -2679,6 +2684,7 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\SpecialServicesTypeService.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.cs" />
+    <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\IEntityValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentReceivableValidator.cs" />

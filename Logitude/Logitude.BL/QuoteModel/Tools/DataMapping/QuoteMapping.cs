@@ -202,6 +202,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.EstimatedProfitInProfit = entityPM.EstimatedProfitInProfit;
             entityPoco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
             entityPoco.ProfitExchangeRate = entityPM.ProfitExchangeRate;
+            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;

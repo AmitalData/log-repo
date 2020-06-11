@@ -1387,6 +1387,7 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\PrepaidCollect.lxml" />

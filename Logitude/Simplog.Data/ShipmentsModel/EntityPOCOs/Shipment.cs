@@ -794,5 +794,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int? WarehouseStorageFreeDays { get; set; }
 
         public string SLAC { get; set; }
+
+        public string ShipmentSubTypeId { get; set; }
+        public virtual ShipmentSubType ShipmentSubType { get; set; }
     }
 }

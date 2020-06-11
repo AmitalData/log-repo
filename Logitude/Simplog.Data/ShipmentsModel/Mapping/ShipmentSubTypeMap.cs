@@ -22,7 +22,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.Code)
                 .IsRequired()
-                .HasMaxLength(2)
+                .HasMaxLength(5)
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
@@ -30,9 +30,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .HasMaxLength(60)
                 .IsUnicode(false);
 
-            this.Property(t => t.ShipmentTypeId)
+            this.Property(t => t.ShipmentTypeCode)
                 .IsRequired()
-                .HasMaxLength(15)
+                .HasMaxLength(4)
                 .IsUnicode(false);
 
             this.Property(t => t.SearchFields)
@@ -56,14 +56,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
+            this.Property(t => t.ShipmentTypeCode).HasColumnName("ShipmentTypeCode");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
-            this.HasRequired(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeId);
+            this.HasRequired(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeCode);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
         }

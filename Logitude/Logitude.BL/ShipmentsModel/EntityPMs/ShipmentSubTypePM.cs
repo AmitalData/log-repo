@@ -1,14 +1,13 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Data.ShipmentsModel.EntityPOCOs
+namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
-    public class ShipmentSubType
+    public class ShipmentSubTypePM
     {
         [Key]
         public string Id { get; set; }
@@ -22,9 +21,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string UpdatedByUserId { get; set; }
         public bool Inactive { get; set; }
         public string SearchFields { get; set; }
-
-        public virtual ShipmentType ShipmentType { get; set; }
-        public virtual User CreatedByUser { get; set; }
-        public virtual User UpdatedByUser { get; set; }
+        public string ShipmentTypeName { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
     }
 }
