@@ -1143,6 +1143,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\TenantManagementJS.ts" />
     <TypeScriptCompile Include="Infrastructure\Directives\ChildDirective.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\BIFoldersPermissionList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportFolderList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportsTypeList.ts" />
@@ -1168,6 +1169,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\WebhookKeysList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMInitServices\FeatureTogglePMInitService.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\BIFoldersPermissionPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
@@ -1202,12 +1204,14 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ApiCredintialsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIFoldersPermissionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsInvitationStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsSettingListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\TeamListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BatchTaskExecutionPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BIFoldersPermissionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BIReportsExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BluesnapContractTypePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BusinessProcessQueuePMService.ts" />
