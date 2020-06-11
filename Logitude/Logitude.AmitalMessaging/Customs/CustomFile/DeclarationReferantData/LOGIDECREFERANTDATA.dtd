@@ -1,5 +1,5 @@
 <!ELEMENT LOGIDECREFERANTDATA (LogitudeDeclarationReferantData*)>
-<!ELEMENT LogitudeDeclarationReferantData (Id?, CustomsFile?, QueueType?, QueueStatus?, QueueRemarks?, FollowUpStatus?, PreClassification?, Tenant?, ClassifiedUserId?, ControllerUserId?)>
+<!ELEMENT LogitudeDeclarationReferantData (Id?, CustomsFile?, QueueType?, QueueStatus?, QueueRemarks?, FollowUpStatus?, PreClassification?, Tenant?, ClassifiedUserId?, ControllerUserId?, FileStatus?)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT CustomsFile (#PCDATA)>
 <!ELEMENT QueueType (#PCDATA)>
@@ -10,3 +10,4 @@
 <!ELEMENT Tenant (#PCDATA)>
 <!ELEMENT ClassifiedUserId (#PCDATA)>
 <!ELEMENT ControllerUserId (#PCDATA)>
+<!ELEMENT FileStatus (#PCDATA)>
