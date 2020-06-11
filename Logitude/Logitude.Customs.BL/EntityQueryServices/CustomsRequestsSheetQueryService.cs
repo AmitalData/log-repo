@@ -140,6 +140,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
+"8302", //בקשה לטופס הצהרה
 
             };
 
