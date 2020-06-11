@@ -222,7 +222,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if(taxReportLinePM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                    if(taxReportLinePM.TransmitStatusCode != "0")
+                    if(taxReportLinePM.TransmitStatusCode != "0" && taxReportLinePM.StatusCode =="7")
                     {
                         taxReportLinePM.StatusCode = "6";
                     }
