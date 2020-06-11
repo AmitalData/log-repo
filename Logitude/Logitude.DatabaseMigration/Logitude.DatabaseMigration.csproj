@@ -2391,6 +2391,10 @@
     <Compile Include="Migrations\202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.Designer.cs">
       <DependentUpon>202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006111316023_FullAccountingSettingsAllowMultipleRatesMigration.cs" />
+    <Compile Include="Migrations\202006111316023_FullAccountingSettingsAllowMultipleRatesMigration.Designer.cs">
+      <DependentUpon>202006111316023_FullAccountingSettingsAllowMultipleRatesMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
     <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
@@ -4324,6 +4328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.resx">
       <DependentUpon>202006030647221_ModifyQuantityFieldInQuotePackagesTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006111316023_FullAccountingSettingsAllowMultipleRatesMigration.resx">
+      <DependentUpon>202006111316023_FullAccountingSettingsAllowMultipleRatesMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
