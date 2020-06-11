@@ -121,7 +121,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 CreateEvent("IRCN", entityPM);
                                 break;
                             }
-                        case "7":
+                        case "9":
                             {
                                 CreateEvent("IRIF", entityPM);
                                 break;
