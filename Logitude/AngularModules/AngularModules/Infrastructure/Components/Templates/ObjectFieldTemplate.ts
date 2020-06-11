@@ -224,7 +224,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
 
                     SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
-                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate });
+                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, RowIndex: this.RowIndex });
                             this.DetectChanges();                           
                         });
                 }

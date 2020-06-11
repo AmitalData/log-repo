@@ -8,11 +8,11 @@
                     </td>
                 </tr>
                 <tr style="visibility:visible;">
-                    <td style=" width:10%; padding-bottom:115px; right:30px; z-index:99">
+                    <td style=" width:10%; padding-bottom:115px; left:110px; z-index:99">
                         <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
                     </td>
-                    <td>
-                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:170px">
+                    <td style="left:130px">
+                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:300px">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
                                                 (RowEnded)="OnRowEnded($event)"
@@ -24,7 +24,7 @@
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'">
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.ShowCode">
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.ExceptionReasonsCode}}</span>
+                                            <span>{{item.ExceptionReasonName}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogLov #ReferantReasonLovBox
@@ -32,7 +32,7 @@
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="item"
                                                     [LookUpTableName]="'Customs.ExceptionReason'"
-                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CourierPendingReasonName')"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
                                                     [FocusOnMe]="'true'"
                                                     [HideColumns]="true">
                                             </LogLov>

@@ -3,6 +3,8 @@ using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments;
 using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.CustomsMessaging.Helpers;
+using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System;
@@ -26,6 +28,7 @@ namespace WebFreight.Web.CustomModel
 
             ContainerAccessor.Container.RegisterType<ICreateUD2LTService, Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService>("CreateUD2LTService", new InjectionFactory(c => new Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService()));
 
+            ContainerAccessor.Container.RegisterType<ISendBondedCustomDocumentService, SendBondedCustomDocumentService>("SendBondedCustomDocumentService", new InjectionFactory(c => new SendBondedCustomDocumentService()));
 
         }
     }

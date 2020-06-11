@@ -306,8 +306,8 @@
 
             //58cOURIER 
             data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20021308","Token":"Ofh3FM0MN8FSmvf8Kv3dZaC5B9qx/Oqxx3g=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"J8WHHw+FeeDYtMItiOjOEVEk1AEJ2TAIBRw=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-02-13T11:57:39.8332964","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
-
-
+            //591
+            data = '{ "AmitalBrowserInUse":true,"$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"AG","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20052606","Token":"ig9SSJCcWrY+531uIP2lVynYTd0TKUmWLKk=","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"HvVLMqSfqmpP169bB4ERH/DxSgNwd9Iwobs=","NumberOfRetries":0,"SessionTimeout":0,"WebTokenExpirationWarningInMinutes":0,"WebTokenLifeTimeInMinutes":0,"Param1":false,"CaptchaImage":null,"CaptchaKey":null,"InValidCaptcha":false,"LastLoginDateTime":"2020-05-25T13:35:42.2723227","InvalidDocumentToken":null,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
 
             //HOWTO - LOGIN http://localhost:9996/
             // THEN DEVTOOLS >>SESSION STORAGE >> KEY >> USERDATA
@@ -575,7 +575,36 @@
                 alert("Wrong Number");
         }
         }
+        function JustReturn(toContinue) {
 
+            //=·; =
+                if (_JavascriptGateway.LastRequestFromAngular &&
+                    (_JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIUFILEFromDeclarationReferantData"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMFUStatusScreen"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowCFIFILEMMoveToQueueScreen"
+                    || _JavascriptGateway.LastRequestFromAngular.MessageID =="ShowCustomFileOPCFromDeclaration"
+                )
+                ){
+                    if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                        _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                    }
+                     /*
+                    ....putitem/id P_RESPONSELIST, "Response.InstructionReturnCanIContinue", "false" 
+                    ....putitem/id P_RESPONSELIST, "Response.UnifreightResponseStatus", "false"
+                    */
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                    let myItem = ["Response.JustReturn", "11"];
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+
+                    RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                    //alert("u choose toContinue:" + toContinue + " !!!");
+
+                    
+                   
+                } else {
+                alert("Wrong Number");
+        }
+        }
         function GetRihbitFromTransmissionsMessage() {
             if (_JavascriptGateway.LastRequestFromAngular &&
                 _JavascriptGateway.LastRequestFromAngular.MessageID == "GetRihbitFromTransmissions") {

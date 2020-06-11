@@ -1671,6 +1671,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsRequierdFieldsController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomDocumentViewerController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\SignStationStatusController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\SupplierInvioceItemCertificatsController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\VendorController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ClientController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationRestoreController.cs" />
@@ -2023,6 +2024,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
+    <Compile Include="CustomWebServices\BL\XLSImport\SupplierInvioceItemCertificats.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
     <Compile Include="DataContracts\AutomationArgs.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
@@ -6370,6 +6372,7 @@
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
+    <Folder Include="MobileApplication\Views\SupplierInvioceItemCertificats\" />
     <Folder Include="OceanInsights\" />
     <Folder Include="SocialModel\DomainServices\Generated\" />
     <Folder Include="Stimulsoft\CacheFiles\" />

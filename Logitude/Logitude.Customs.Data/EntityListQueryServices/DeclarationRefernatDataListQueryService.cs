@@ -68,11 +68,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ATAOrETA =   a.ArrivalDate != null ? "ATA" : "ETA",
 
                                                                  DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
-
+                                                                  
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
                                                                  ReferentUserId = d.ReferentUserId,
                                                                  DepartmentId = d.DepartmentId,
+                                                                 AvailabilityDate = d.AvailabilityDate,
 
                                                              });
             return query;
