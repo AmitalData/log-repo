@@ -2,7 +2,8 @@
 <Table
   Name="BIFoldersPermissions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
