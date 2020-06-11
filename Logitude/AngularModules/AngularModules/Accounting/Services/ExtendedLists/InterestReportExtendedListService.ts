@@ -6,7 +6,7 @@ import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { InterestReportArgs } from '../../DataContracts/InterestReportArgs';
+import { InterestReportArguments } from '../../DataContracts/InterestReportArgs';
 
 
 @Injectable()
@@ -62,7 +62,7 @@ export class InterestReportExtendedListService {
   }
 
  
-    PutInterestReortStatus(interestReportArgs: InterestReportArgs) {
+    PutInterestReortStatus(interestReportArgs: InterestReportArguments) {
         return this.httpClient.put(this._apiUrl + "/PutInterestReportStatus", JSON.stringify(interestReportArgs), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;

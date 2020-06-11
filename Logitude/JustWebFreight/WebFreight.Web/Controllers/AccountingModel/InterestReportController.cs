@@ -1,9 +1,14 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -19,6 +24,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -56,26 +62,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage PutInterestReportStatus(InterestReportArgs interestReportArgs)
+        public HttpResponseMessage PutInterestReportStatus(InterestReportArguments interestReportArgs)
         {
             try
             {
                 int tenant = AuthinticateTenant();
-                var accountingContext = AccountingContext.GetContext(tenant);
-                if (interestReportArgs.AllSelected)
-                {
-                    UpdateStatusForALLNotInvoicedInterestReports(interestReportArgs, tenant);
-                }
-                else
-                {
-                    UpdateStatusForSelectedInterestReport(interestReportArgs, tenant);
-                }
-                ServiceResponse response = new ServiceResponse();
-                InterestReportListQueryService interestReportListQueryService = new InterestReportListQueryService(accountingContext);
-              
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
-
-
+                string email = HttpContext.Current.User.Identity.Name;
+                interestReportArgs.Tenant = tenant;
+                interestReportArgs.Email = email;
+                CreateBatchTaskExecution(interestReportArgs, "Create Batch Invoice", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceService,Logitude.Accounting.BL");
+                string BatchId = CreateBatchTaskExecution(interestReportArgs, "Update Interest Reports Status To Inprogress", "Logitude.Accounting.BL.CoreBL.Batch.BatchInterestReportInvoiceInProgressService,Logitude.Accounting.BL");
+                return Request.CreateResponse(HttpStatusCode.OK, BatchId);
             }
             catch (Exception ex)
             {
@@ -83,7 +80,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
-        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArgs interestReportArgs, int tenant)
+        private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
         {            
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             
@@ -97,7 +94,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
             UpdateInterestReports(interestReports, tenant);
         }
-        private void UpdateStatusForSelectedInterestReport(InterestReportArgs interestReportArgs,int tenant)
+        private void UpdateStatusForSelectedInterestReport(InterestReportArguments interestReportArgs,int tenant)
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
             List<InterestReportPM> interestReports = interestReportQueryService.GetInterestReportsByIds(interestReportArgs.SelectedIds, tenant);
@@ -167,5 +164,49 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             return queryOperations;
         }
+
+        private string CreateBatchTaskExecution(InterestReportArguments args,string Subject , string ClassName)
+        {
+            // 1- create BTE record
+            BatchTaskExecutionPM taskExe;
+
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(InterestReportArguments));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+
+
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = Subject,
+                Tenant = args.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = ClassName,
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+
+            };
+
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(args.Tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), args.Tenant);
+            bteUpdateService.Update(taskExe, true);
+
+            // 2- Send to queue
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant",  args.Tenant.ToString() }
+                }, args.Tenant);
+
+
+            return taskExe.Id;
+        }
+
+ 
+
     }
 }

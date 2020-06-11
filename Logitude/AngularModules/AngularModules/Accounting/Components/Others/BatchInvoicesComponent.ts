@@ -9,8 +9,10 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { InterestReportExtendedListService } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
-import { InterestReportArgs } from '../../DataContracts/InterestReportArgs';
+import { InterestReportArguments } from '../../DataContracts/InterestReportArgs';
 import { InterestReportEventManager } from '../../Utilities/InterestReportEventManager';
+import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 
 
 
@@ -28,6 +30,11 @@ export class BatchInvoicesComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
   public SelectedItemsCountText: string = null;
   public ValidationErrorsList: string[] = [];
+  public BatchId:string;
+  public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+  public bteList: BatchTaskExecutionList;
+  public timer: any;
+  public timerInterval: number = 1000;
   public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
   constructor() {
     super();
@@ -65,6 +72,8 @@ export class BatchInvoicesComponent extends BaseComponent {
         });
       
   }
+
+  
   ngAfterViewInit() {
     var t = setTimeout(() => {
       this.LoadGrids = true;
@@ -299,15 +308,21 @@ export class BatchInvoicesComponent extends BaseComponent {
     if (this.SelectedItemsCount == 0) {
       this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
     } else {
-      var interestReportArgs: InterestReportArgs=  this.FillInterestReportArgs();  
+      var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
       this.CurrentSession.StartBusyIndicator("");
-
       this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
-        this.SelectedItemsCount=0;
-        this.SetCreateInvoiceButtonText();
-        this.ReloadData();
-        this.AllSelected = false;
-        this.CurrentSession.StopBusyIndicator();
+        // this.CurrentSession.StopBusyIndicator();
+        var mm: ServiceResponse = response;
+        if (!mm.HasError) {
+            this.BatchId= mm.Result;
+            this.timer = setInterval(() => {
+              this.GetBTE();
+          }, this.timerInterval);
+        }
+        else {
+
+        }
+
       });
 
     }
@@ -321,12 +336,13 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
 }
 }
   FillInterestReportArgs() {
-    var interestReportArgs: InterestReportArgs = new InterestReportArgs();
+    var interestReportArgs: InterestReportArguments = new InterestReportArguments();
     interestReportArgs.AllSelected = this.AllSelected;
     interestReportArgs.FromDate = this.FromDate;
     interestReportArgs.ToDate = this.ToDate;
     interestReportArgs.SelectedIds = [];
     interestReportArgs.ExcludedIds = [];
+    interestReportArgs.Tenant =SessionLocator.TenantPM.Id;
     this.selectedItems.Collection.forEach((item) => {
       interestReportArgs.SelectedIds.push(item.Id);
     });
@@ -335,5 +351,38 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
   }
 CancelButtonClicked(){
     this.CurrentSession.CloseCurrentWindow();
+}
+
+
+GetBTE() {
+  this._BatchTaskExecutionListService.getSingle(this.BatchId).subscribe((myResult:any) => {
+      console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
+      var mm: ServiceResponse = myResult;
+      if (!mm.HasError) {
+          this.bteList = mm.Result;
+          if (this.bteList.StatusCode == "D") // D- Done
+          {
+              //stop timer
+              if (this.timer) {
+                  clearInterval(this.timer);
+               }
+               this.SelectedItemsCount=0;
+               this.SetCreateInvoiceButtonText();
+               this.ReloadData();
+               this.AllSelected = false;
+               this.CurrentSession.StopBusyIndicator();
+          }
+          else if (this.bteList.StatusCode == "F") // F- Failed
+          {
+               this.CurrentSession.StopBusyIndicator();
+              if (this.timer) {
+                  clearInterval(this.timer);
+              }
+          }
+      }
+      else {
+      }
+  });
+
 }
 }

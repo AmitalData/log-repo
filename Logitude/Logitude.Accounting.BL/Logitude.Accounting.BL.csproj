@@ -201,6 +201,9 @@
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
     <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceEachLineService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceService.cs" />
+    <Compile Include="CoreBL\Batch\BatchInterestReportInvoiceInProgressService.cs" />
     <Compile Include="CoreBL\Batch\BatchInterestReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchReconciliationStageBTask.cs" />
@@ -674,6 +677,7 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
+    <Compile Include="InterestService\HelperClasses\InterestReportArguments.cs" />
     <Compile Include="InterestService\InterestReportService.CS" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
