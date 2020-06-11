@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           AdditionalPrice = a.AdditionalPrice,
                                                                                           AdditionalPriceTypeCode = a.AdditionalPriceTypeCode,
                                                                                           InvoiceCounterKey = a.InvoiceCounterKey,
-
+                                                                                          LineNumber = a.LineNumber,
                                                                                           Tenant = a.Tenant,
 
                                                                                       }).ToList();

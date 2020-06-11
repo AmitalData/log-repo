@@ -1805,7 +1805,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 foreach (var price in supplierInvoiceItemPM.SupplierInvoiceItemsPrices)
                 {
-                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, supplierInvoiceItemPM.ItemPriceCurrencyCode));
+                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, "USD"));
 
                 }
             }
