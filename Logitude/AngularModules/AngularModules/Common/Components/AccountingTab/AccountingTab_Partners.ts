@@ -44,9 +44,9 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
 
     InitializeComponent() {
         var myService = new CurrencyListService();
-        myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+        myService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.AllCurrencies = myResponse.Result;
+                this.AllCurrencies = myResponse.Result.filter(a => !a.InActive);
             }
             this.BuildItemsSource();
         });

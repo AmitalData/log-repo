@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.Helpers
@@ -23,6 +24,31 @@ namespace Logitude.BL.Helpers
             }
 
             return accountingSystem;
+        }
+
+        public string GetGenericCreditAccount(string cardId, string currencyId, int tenant, bool isPayable)
+        {
+            string myResult = null; 
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(tenant);
+            CardRepository cardRepository = new CardRepository(tenant);
+
+            Card card = cardRepository.GetSingleCard(cardId, tenant);
+
+            if (card != null && card.AccountingVATSplit)
+            {
+                CardCurrenciesAccounting crdCurrenciesAccounting = cardCurrenciesAccountingRepository.GetSingleCardCurrenciesAccountingsByCurrencyId(cardId, currencyId, tenant);
+
+                if (crdCurrenciesAccounting != null)
+                {
+                    myResult = isPayable == true ? crdCurrenciesAccounting.PayableDebitAccount : crdCurrenciesAccounting.ReceivableCreditAccount;
+                }
+            }
+            else
+            {
+                myResult = isPayable == true ? card.PayablesAccountingCard : card.ReceivablesAccountingCard;
+            }
+
+            return myResult;
         }
     }
 }

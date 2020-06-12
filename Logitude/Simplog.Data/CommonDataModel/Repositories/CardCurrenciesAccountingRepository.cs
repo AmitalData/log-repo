@@ -28,9 +28,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public CardCurrenciesAccounting GetSingleCardCurrenciesAccountings(string id, int tenant)
+        public CardCurrenciesAccounting GetSingleCardCurrenciesAccountings(string id,  int tenant)
         {
             return (from d in context.CardCurrenciesAccountings.Include("Card").Include("Currency") where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
+        }
+
+        public CardCurrenciesAccounting GetSingleCardCurrenciesAccountingsByCurrencyId(string cardId, string currencyId, int tenant)
+        {
+            return (from d in context.CardCurrenciesAccountings.Include("Card").Include("Currency") where d.CardId == cardId && d.CurrencyId == currencyId && d.Tenant == tenant select d).FirstOrDefault();
         }
 
         public IQueryable<CardCurrenciesAccounting> GetCardCurrenciesAccountings(int tenant)
