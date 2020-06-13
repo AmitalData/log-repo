@@ -127,7 +127,11 @@ export class ARInvoiceValidator {
                 else if (lineItem.Rate != item.ForiegnExchangeRate) {
                     if (!lineItem.Validated) {
                         lineItem.Validated = true;
-                        this.ValidateMultipleExchangeRates(lineItem);
+                        if (SessionLocator.TenantPM.AccountingActivated) {
+                            this.ValidateMultipleExchangeRates(lineItem);
+                        }
+                        else this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+
                     }
                 }
             });
@@ -201,6 +205,7 @@ export class ARInvoiceValidator {
                     if (!this.FullAccountingSetting.AllowMultiRatesInInvoiceLines)
                         this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
                 }
+
             })
         });               
 
