@@ -1909,7 +1909,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                         list.Add(itemDescription);
 
-                        if (this.AllInsideHarmonizes.Count > 0)
+                        if (this.AllInsideHarmonizes.Count > 0 || !string.IsNullOrEmpty(item.Harmonize))
                         {
                             if (item.IsMultiHarmonize)
                             {
@@ -2119,7 +2119,7 @@ namespace Logitude.XSD.INTTRA.BL
                         #endregion
                     }
 
-                    if (this.AllInsideHarmonizes.Count > 0)
+                    if (this.AllInsideHarmonizes.Count > 0 || !string.IsNullOrEmpty(item.Harmonize))
                     {
                         if (item.IsMultiHarmonize)
                         {

@@ -45,7 +45,7 @@ export class AddEditInsidePackageComponent {
     MultiHarmonizeClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { PackagePM: this.DataContext.ShipmentPackagePM, InsidePackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Container Multi-Harmonize";
+        logWindow.Title = "Inside Package Multi-Harmonize";
         logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
