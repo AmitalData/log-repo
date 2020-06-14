@@ -139,7 +139,7 @@ namespace WebFreight.Web.Helpers
                         if (entityProperties[i].PropertyType == typeof(bool))
                             propValue = propValue.ToString().ToLower() == "true" ? 1 : 0;
                         else
-                            propValue = "'" + propValue.ToString().Replace("'", "''") + "'";
+                            propValue = "N'" + propValue.ToString().Replace("'", "''") + "'";
                     }
                     else
                         propValue = "NULL";

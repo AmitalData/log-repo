@@ -1,9 +1,3 @@
--- Unset Nullable For Column CompanyName
-ALTER TABLE [dbo].[GlobalTenants] ALTER COLUMN [CompanyName] NVARCHAR(100) NOT NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4c9a7586-9606-41e3-bef6-50da473fee9b', 'GlobalTenant.dxml', 'GlobalTenants', 'CompanyName', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CompanyNameALTER TABLE [dbo].[GlobalTenants] ALTER COLUMN [CompanyName] NVARCHAR(100) NOT NULL;');
-
-
 -- Procedure Script From DeleteTenantFromGlobalDB.dxml
 EXEC('IF (OBJECT_ID(''[dbo].[DeleteTenantFromGlobalDB]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[DeleteTenantFromGlobalDB] END');
 EXEC('--delete global records execute this on global database

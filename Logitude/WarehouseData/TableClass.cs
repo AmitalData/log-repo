@@ -35,6 +35,10 @@ namespace WarehouseData
         public string ParentKeyName { get; set; }
 
         public string AdditionalIndexes { get; set; }
+
+        public List<DWObjectFieldDB> CopyToDwObjectFieldLists { get; set; }
+
+
     }
 
     public class DWObjectFieldDB

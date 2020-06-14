@@ -1,0 +1,151 @@
+<table style="top:0; bottom:0; left:0; right:0; margin:auto; background: white;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <tr style="height:20px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:200px;"><span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [ObjectTableName]="'User'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span></td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>       
+    </tr>
+
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <tr style="height:100%">
+        <td class="CellStretch">
+            <div style="border:1px solid lightGray;height:100%">
+                <table>
+                    <tr style="height:5px;"><td></td></tr>
+                    <tr style="height:100%">
+
+                        <td style="margin-left:5px;margin-right:5px;">
+
+                            <table>
+                                <tr style="height:100%">
+                                    <td style="width:5px;"></td>
+
+                                    <td>
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:30px; min-width: 30px; max-width:30px;"></td>
+                                                        <td style="width:200px; min-width:200px; max-width:200px; text-align:center">Email</td>
+                                                        <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Name</td>
+                                                        <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Notes</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody">
+                                                <table>
+                                                    <tr style="height: 1px;">
+                                                        <td>
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of UsersItemsSource">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr style="height:25px;">
+                                                                                <td class="CellStretched" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:5px;"></td>
+                                                                                            <td>
+                                                                                                <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>                                                                                   
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+                                                                                    <div style="text-align:left">{{item.Email}}</div>
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+                                                                                    <div style="text-align:left">{{item.Name}}</div>
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+                                                                                    <div style="text-align:left">{{item.Notes}}</div>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr><td colspan="5"></td></tr>
+                                                                        </table>
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:5px;"></td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                    </tr>
+                    <tr style="height:5px;"><td></td></tr>
+                </table>
+
+
+
+
+            </div>
+
+        </td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

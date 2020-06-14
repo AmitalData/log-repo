@@ -12,5 +12,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
+        public bool DuplicateMessagesAutoRemove { get; set; }
     }
 }

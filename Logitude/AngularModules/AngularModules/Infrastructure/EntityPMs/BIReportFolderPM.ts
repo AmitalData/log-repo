@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {BIFoldersPermissionPM} from './BIFoldersPermissionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -84,7 +85,51 @@ export class BIReportFolderPM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
+    private permissionForAll: boolean;
+    public get PermissionForAll() { return this.permissionForAll; }
+    public set PermissionForAll(newValue: boolean) { if (this.permissionForAll != newValue) { this.permissionForAll = newValue; this.MarkAsDirty("PermissionForAll"); } }
+       
+	 
+    private permittedByUserId: string;
+    public get PermittedByUserId() { return this.permittedByUserId; }
+    public set PermittedByUserId(newValue: string) { if (this.permittedByUserId != newValue) { this.permittedByUserId = newValue; this.MarkAsDirty("PermittedByUserId"); } }
+       
+	 
+     
+	private permittedBIFolders: BIFoldersPermissionPM[];
+    get  PermittedBIFolders() {
+        if (this.permittedBIFolders == null) {
+            this.permittedBIFolders = [];
+        }
 
+        return this.permittedBIFolders;
+    }
+    set  PermittedBIFolders(newValue: BIFoldersPermissionPM[]) {
+        if (this.permittedBIFolders != newValue) {
+            this.permittedBIFolders = newValue;
+        }
+    }
+    public AddBIFoldersPermission(item: BIFoldersPermissionPM) {
+        if (item != null) {
+            var index = this. PermittedBIFolders.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. PermittedBIFolders.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveBIFoldersPermission(item: BIFoldersPermissionPM) {
+        if (item != null) {
+            var index = this. PermittedBIFolders.indexOf(item);
+            if (index > -1) {
+                this. PermittedBIFolders.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public PermittedBIFolders: Array<BIFoldersPermissionPM>= [];
+ 
     public OldEntityPM: BIReportFolderPM;
 		
     public IsDirty: boolean;

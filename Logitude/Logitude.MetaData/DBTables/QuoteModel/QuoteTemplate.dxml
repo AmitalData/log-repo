@@ -124,6 +124,11 @@
       Nullable="false" />
   </Column>
   <Relation
+    ForeignKeyColumn="Tenant"
+    ReferencedTable="Tenants"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="HeaderDocId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"

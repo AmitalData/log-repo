@@ -1,0 +1,12 @@
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'InterestCalculationDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+<div class="TextTrimming" *ngIf="fieldName == 'Select'" style="padding: 4px;">
+    <CheckBox [IsEnabled]="rowData['InterestReportStatusCode'] != 8" (Checked)="CheckBoxClicked($event)" [IsChecked]="IsChecked"></CheckBox>
+
+
+</div>
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming">
+
+    <a href="javascript:;" (click)="OpenInterestReport(rowData['Id'])">
+        {{ rowData['ReportNumber'] }}
+    </a>
+</div>

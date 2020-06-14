@@ -233,6 +233,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 }               
                 VatNumber = VatNumber == null? "000000000": VatNumber;
                 SetVatAmounts(a);
+                if(a.JournalId == "1-1500394")
+                {
+
+                }
                 SetReferenceFields(a.Reference);
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                 TaxReportLinePM taxReportLine = new TaxReportLinePM()
@@ -413,6 +417,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 referenceGroup = "0000";
             }
+            if (reference.Length > 9)
+            {
+                reference = reference.Substring(reference.Length - 9);
+            }
         }
         private static string RemoveSomeChars(string reference)
         {
@@ -421,10 +429,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 reference = reference.Replace(c.ToString(), String.Empty);
             }
-            if (reference.Length > 9)
-            {
-                reference = reference.Substring(reference.Length - 9);
-            }
+           
             return reference;
         }
         private static void SetVatNumber(Simplog.Data.CommonDataModel.EntityPOCOs.Card card)

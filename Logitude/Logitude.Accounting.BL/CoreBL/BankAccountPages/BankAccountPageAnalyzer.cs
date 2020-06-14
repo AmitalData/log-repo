@@ -372,14 +372,17 @@ s             b                   a
                 //}
                 //else
                 {
-                    if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                    //                    if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                    if (prevReconcileExternalPagePM.ToDate > newBankPageLines.First().ReferenceDate)
                     {
                         //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
                         var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
                         MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                             new MyDTO()
                             {
-                                Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנועות ישנות ",
+                                //Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנועות ישנות ",
+                                Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - בשורה הראשונה ישנה תנועה ישנה ",
+                          
                                 RawLine = newBankPageLines.First().RawLine
 
                             });

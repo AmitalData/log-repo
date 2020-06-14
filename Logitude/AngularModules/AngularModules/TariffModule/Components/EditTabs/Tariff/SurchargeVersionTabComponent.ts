@@ -715,8 +715,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         args.CarrierId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
-        logWindow.Height = 600;
+        //logWindow.Width = 1300;
+        //logWindow.Height = 600;
+        logWindow.IsFillScreen_90 = true;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surcharge Update";
 

@@ -27,6 +27,7 @@ import { AddEditAllInChargesComponent } from './Components/EditTabs/Tariff/AddEd
 import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLVersionTabComponent';
 import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent';
 import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
+import { ChooseCountryComponent } from './Components/EditTabs/Tariff/ChooseCountryComponent';
 
 export const Components =
     [
@@ -57,6 +58,7 @@ export const Components =
         AddTariffContainersComponent,
         NewTariffProductsComponent,
         TariffShortTitleComponent,
+        ChooseCountryComponent,
     ];
 
 export const ControlsComponents =
@@ -96,6 +98,7 @@ export class ModuleDeclarations {
             case "ContainerDefaultsComponent": { myResult = ContainerDefaultsComponent; break; }
             case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
             case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
+            case "ChooseCountryComponent": { myResult = ChooseCountryComponent; break; }
         }
 
         return myResult;

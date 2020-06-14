@@ -272,6 +272,7 @@
     <Compile Include="Repositories\InterestReportLinesByDateRepository.cs" />
     <Compile Include="Repositories\InterestReportRepository.cs" />
     <Compile Include="Repositories\InterestReportStatuseRepository.cs" />
+    <Compile Include="Utilities\InterestTransactionGetParameters.cs" />
     <Compile Include="Utilities\LedgerTransactionsSorter.cs" />
     <Compile Include="Repositories\AccountingIntegrityCheckRepository.cs" />
     <Compile Include="Repositories\AccountingNoteRepository.cs" />

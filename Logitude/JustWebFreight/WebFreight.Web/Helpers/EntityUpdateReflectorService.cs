@@ -25,7 +25,7 @@ namespace WebFreight.Web.Helpers
 
         public  void UpdateEntity(object entityPM, string entityName, int tenant)
         {
-            PrepareUpdateEntityResult prepareUpdateEntityResult = GetPrepareUpdateEntityResult(entityName, tenant);
+            UpdateEntityServiceParameter prepareUpdateEntityResult = GetUpdateEntityServiceParameter(entityName, tenant);
             if (prepareUpdateEntityResult.Type != null)
             {
                 object entityUpdateService = GentNewInStanceFromEntityUpdateService(entityPM, entityName, prepareUpdateEntityResult);
@@ -48,7 +48,7 @@ namespace WebFreight.Web.Helpers
             if (propInfo != null) propInfo.SetValue(entityPM, Simplog.Server.Infrastructure.ChangeSetOperation.Update, null);
         }
 
-        private   PrepareUpdateEntityResult GetPrepareUpdateEntityResult(string entityName, int tenant)
+        private UpdateEntityServiceParameter GetUpdateEntityServiceParameter(string entityName, int tenant)
         {
             Assembly blAssembly = Assembly.Load("Logitude.BL");
             object objectContext = ShipmentsContext.GetContext(tenant);
@@ -122,7 +122,7 @@ namespace WebFreight.Web.Helpers
                 type = assembly.GetType(typePath);
             }
 
-            return new PrepareUpdateEntityResult(){Type = type,ObjectContext = objectContext,IsNewModule = isNewModule,Tenant = tenant};
+            return new UpdateEntityServiceParameter(){Type = type,ObjectContext = objectContext,IsNewModule = isNewModule,Tenant = tenant};
 
         }
 
@@ -148,7 +148,7 @@ namespace WebFreight.Web.Helpers
             return parameters;
         }
 
-        private  object GentNewInStanceFromEntityUpdateService(object entityPM, string entityName, PrepareUpdateEntityResult PrepareUpdateEntityResult)
+        private  object GentNewInStanceFromEntityUpdateService(object entityPM, string entityName, UpdateEntityServiceParameter PrepareUpdateEntityResult)
         {
             object entityService = null;
             if (entityName == "Shipment")
@@ -172,7 +172,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-    public class PrepareUpdateEntityResult
+    public class UpdateEntityServiceParameter
     {
         public object ObjectContext { get; set; }
         public Type Type { get; set; }

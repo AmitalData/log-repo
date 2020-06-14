@@ -45,6 +45,13 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Description { get; set; }
         [Column("Index")]
 	    public int? Index { get; set; }
+        [Column("PermissionForAll")]
+	    public bool PermissionForAll { get; set; }
+        [ForeignKey("PermittedByUser")]
+        [Column("PermittedByUserId")]
+	    public string PermittedByUserId { get; set; }
+	      
+        public virtual User PermittedByUser { get; set; }
     }
 }
 	 

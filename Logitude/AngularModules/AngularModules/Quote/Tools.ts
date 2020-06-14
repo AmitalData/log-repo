@@ -37,7 +37,7 @@ export class QuoteTool {
                             myResult = false;
                         }
                     }
-                });                
+                });
             }
         }
 
@@ -111,7 +111,7 @@ export class QuoteTool {
                                 default: { break; }
                             }
 
-                            var mySaleQuantity = null;                           
+                            var mySaleQuantity = null;
                             switch (item.SaleMeasurementCode) {
                                 case "GRWT": { mySaleQuantity = entityPM.GrossWeight; break; }
                                 case "CHWT": { mySaleQuantity = entityPM.ChargeableWeight; break; }
@@ -126,7 +126,7 @@ export class QuoteTool {
                                 case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { mySaleQuantity = entityPM.VolumeInCBM; break; }
                                 default: { break; }
-                            }                            
+                            }
 
                             if (item.CostQuantity != myCostQuantity) {
                                 item.CostQuantity = AppTool.Round(myCostQuantity, 2);
@@ -148,5 +148,30 @@ export class QuoteTool {
                 }
             }
         }
+    }
+    public static IsQuoteStageDraft(entityPM: QuotePM) {
+        var myResult: boolean = true;
+
+        if (entityPM != null) {
+            var myService: QuoteStageListService = new QuoteStageListService();
+            myService.getAllFromCache().subscribe((resp: any) => {
+                if (!resp.HasError) {
+                    var allStages = resp.Result;
+
+                    var draftStageId = "";
+                    var draftStage: QuoteStageList = allStages.filter(d => d.Code == "QTDR")[0];
+
+                    if (draftStage != null) {
+                        draftStageId = draftStage.Id;
+                    }
+
+                    if (entityPM.StageId == draftStageId) {
+                        myResult = true;
+                    }
+                }
+            });
+        }
+
+        return myResult;
     }
 }

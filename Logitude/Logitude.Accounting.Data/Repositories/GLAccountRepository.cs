@@ -897,7 +897,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 
                         join a in context.GLAccounts
-       .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+       .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
        on crm.PayablesAccountingCard equals a.DisplayNumber
 
                         select new CardDTO()
@@ -922,7 +922,7 @@ namespace Logitude.Accounting.Data.Repositories
 
                                                             
                                                             join a in context.GLAccounts
-                                           .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+                                           .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
                                            on crm.ReceivablesAccountingCard equals a.DisplayNumber
 
                                                             select new CardDTO()
@@ -1038,8 +1038,12 @@ namespace Logitude.Accounting.Data.Repositories
                    }; 
         }
 
-
- 
+        public DateTime? GetInterestCalculationStartDate(string glaccountId, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && a.Id == glaccountId
+                    select a.InterestCalculationStartDate).FirstOrDefault();
+        }
     }
 
     public class GLAccountAndMoreDTO//: GLAccount

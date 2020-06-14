@@ -30,6 +30,7 @@ import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { QuoteTool } from '../../../Quote/Tools';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -1166,6 +1167,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.SetUIProperties();
         this.ReadVatTypeData();
         this.ComputeMarkUpString();
+        this.SetUIProperties_CellsColors();
         this.BuildPriceBreaksTooltips();
     }
 
@@ -1568,7 +1570,12 @@ export class QuoteChargeItem extends BaseComponent {
         // Price
         var myCostPrice: number = this.CostUnitPriceInSaleCurrency;
         var mySalePrice: number = this.SaleUnitPrice;
-        if (AppTool.IsNullOrEmpty(myCostPrice) || AppTool.IsNullOrEmpty(mySalePrice)) {
+
+        if (AppTool.IsNullOrEmpty(this.CellMarkupText) && QuoteTool.IsQuoteStageDraft(this.fatherComponent.EntityPM) && !AppTool.IsNullOrEmpty(myCostPrice) && !AppTool.IsNullOrEmpty(mySalePrice) && (myCostPrice == mySalePrice) ) {
+            this.SaleUnitPriceColor = this.IsEditingEnabled ? FontTool.Orange : FontTool.CellDisabledColor;
+        }
+
+        else if (AppTool.IsNullOrEmpty(myCostPrice) || AppTool.IsNullOrEmpty(mySalePrice)) {
             this.SaleUnitPriceColor = this.IsEditingEnabled ? FontTool.Black : FontTool.CellDisabledColor;
         }
 
@@ -2294,6 +2301,7 @@ export class QuoteChargeItem extends BaseComponent {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
             this.fatherComponent.CheckUpdateQuantities();
+            
         }
     }
     
@@ -2608,6 +2616,7 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.MarkUpValue != value) {
             this.EntityPM.MarkUpValue = AppTool.Round(value, 3);
             this.ComputeMarkUpString();
+            this.SetUIProperties_CellsColors();
         }
     }
 

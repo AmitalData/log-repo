@@ -41,6 +41,9 @@ namespace WarehouseData.Helper
 
             foreach (TableClass tableClass in tableNameLists)
             {
+                var rowLists = copyToDwObjectFieldLists.AsEnumerable().Where(row => row["ObjectTableId"].ToString() == tableClass.ObjectTableId).ToList();
+                tableClass.CopyToDwObjectFieldLists = GetDWObjectFieldDBLists(rowLists);
+
                 if (tableClass.TableName != "WaterMark") tableClass.FieldsDBName = tableClass.FieldsDBName + GetAdditionalDWObjectFieldsDBName(tableClass);
 
             }
@@ -79,7 +82,7 @@ namespace WarehouseData.Helper
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
-                SqlCommand commandSourceData = new SqlCommand("SELECT  FieldName,ObjectTableId from ObjectFields where CopyToDW = 1", sourceConnection);
+                SqlCommand commandSourceData = new SqlCommand("SELECT  FieldName,ObjectTableId,DataTypeCode from ObjectFields where CopyToDW = 1", sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 objectFieldsTable.Load(reader);
                 reader.Close();
@@ -183,13 +186,14 @@ namespace WarehouseData.Helper
             foreach (DataRow row in rowList)
             {
                 var fieldDB = new DWObjectFieldDB();
-                fieldDB.FieldName = row["Code"].ToString();
-                fieldDB.DataTypeCode = row["DataTypeCode"].ToString();
-                fieldDB.MaxLength = Int32.Parse(row["MaxLength"].ToString());
-                fieldDB.MinLength = Int32.Parse(row["MinLength"].ToString());
-                fieldDB.IsRequired = bool.Parse(row["IsRequired"].ToString());
-                fieldDB.IsPrimaryKey = bool.Parse(row["IsPrimaryKey"].ToString());
-                fieldDB.DimensionTableCode = row["DimensionTableCode"].ToString();
+                fieldDB.FieldName = row.Table.Columns.Contains("Code") ? row["Code"].ToString(): row.Table.Columns.Contains("FieldName") ? row["FieldName"].ToString() : "";
+                fieldDB.DataTypeCode = row.Table.Columns.Contains("DataTypeCode") ? row["DataTypeCode"].ToString():"";
+                fieldDB.MaxLength = row.Table.Columns.Contains("MaxLength") ?  Int32.Parse(row["MaxLength"].ToString()):100;
+                fieldDB.MinLength = row.Table.Columns.Contains("MinLength") ? Int32.Parse(row["MinLength"].ToString()):0;
+                fieldDB.IsRequired = row.Table.Columns.Contains("IsRequired") ? bool.Parse(row["IsRequired"].ToString()):false;
+                fieldDB.IsPrimaryKey = row.Table.Columns.Contains("IsPrimaryKey") ? bool.Parse(row["IsPrimaryKey"].ToString()):false;
+                fieldDB.DimensionTableCode = row.Table.Columns.Contains("DimensionTableCode") ? row["DimensionTableCode"].ToString():"";
+
                 result.Add(fieldDB);
             }
 

@@ -55,6 +55,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("TemplateTypeCode")]
         public virtual QuoteType QuoteType { get; set; }
 
+        [ForeignKey("Tenant")]
+        public virtual Tenant CurrentTenant { get; set; }
 
     }
 }

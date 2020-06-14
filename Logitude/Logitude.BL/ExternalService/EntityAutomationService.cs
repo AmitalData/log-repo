@@ -87,10 +87,6 @@ namespace Logitude.BL.ExternalService
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
                 {
-                    if (objectFieldPM.FieldName == "Field2")
-                    {
-
-                    }
                     object value = GetPropertyValue(poco, objectFieldPM.FieldName);
                     if (objectFieldPM.IsCustom)
                     {
@@ -125,10 +121,6 @@ namespace Logitude.BL.ExternalService
             {
                 foreach (ObjectFieldPM objectFieldPM in automationObjectFields)
                 {
-                    if (objectFieldPM.FieldName == "Field2")
-                    {
-
-                    }
                     object oldValue = GetPropertyValue(changeTrackingPM, objectFieldPM.FieldName);
                     object newValue = GetPropertyValue(entityPM, objectFieldPM.FieldName);
                     NotifyPropertyChangeValues notifyPropertyChangeValues = GetNotifyPropertyChangeValues(new NotifyPropertyChangeArgs() { PropertyName = objectFieldPM.FieldName, PropertyType = objectFieldPM.DataTypeCode, OldValue = oldValue, NewValue = newValue, IsCustom = objectFieldPM.IsCustom });

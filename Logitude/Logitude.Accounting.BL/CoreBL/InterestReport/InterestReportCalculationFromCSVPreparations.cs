@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.Accounting.BL.CoreBL.InterestReport
@@ -127,7 +128,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             return interestReportPM;
         }
 
-        public List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(string glaccountId, DateTime InterestReportCalculationDate, int tenant)
+        public List<InterestTransactionPM> GetInterestTransactionsForGlAccountAndInterestValueDate(InterestTransactionGetParameters interestTransactionGetParameters)
         {
             List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
             string[] csvPeriodsLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "interesttransactions.csv");
@@ -161,8 +162,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
                     if(!interestTransactionPM.IsCancelled 
                         && !interestTransactionPM.IsClosed 
-                        &&glaccountId==interestTransactionPM.GLAccountId
-                        && interestTransactionPM.InterestValueDate <= InterestReportCalculationDate)
+                        && interestTransactionGetParameters.GLAccountId == interestTransactionPM.GLAccountId
+                        && interestTransactionPM.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate)
                             interestTransactionPMs.Add(interestTransactionPM);
                 }
             }
