@@ -175,6 +175,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            shipmentPM.ShipmentSubTypeId = shipment.ShipmentSubTypeId;
+            if (!string.IsNullOrEmpty(shipment.ShipmentSubTypeId))
+            {
+                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(shipment.Tenant);
+                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(shipment.ShipmentSubTypeId, shipment.Tenant);
+                if (subType != null)
+                {
+                    shipmentPM.ShipmentSubTypeName = subType.Name;
+                }
+            }
+
             if (shipment.ShipmentLevelCode == "C")
             {
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
@@ -11682,6 +11693,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FirstARInvoiceApprovalDate = f.FirstARInvoiceApprovalDate,
                                MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                                MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                               ShipmentSubTypeId = f.ShipmentSubTypeId,
+                               ShipmentSubTypeName = f.ShipmentSubTypeName,
                            };
             return myResult;
         }

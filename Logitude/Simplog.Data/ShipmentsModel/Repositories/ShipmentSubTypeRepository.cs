@@ -35,6 +35,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public ShipmentSubType GetSingleShipmentSubTypeByCode(string code, int tenant)
+        {
+            return (from a in context.ShipmentSubTypes
+                    where a.Code == code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
         public IQueryable<ShipmentSubType> GetAll()
         {
             return context.ShipmentSubTypes;

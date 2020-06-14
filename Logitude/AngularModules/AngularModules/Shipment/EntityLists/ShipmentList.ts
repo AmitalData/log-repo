@@ -441,5 +441,8 @@ export class ShipmentList {
 		CreatedByPartner: string;
 		FirstARInvoiceApprovalDate: Date;
 		SLAC: string;
+		CreatedFromDigital: boolean;
+		ShipmentSubTypeId: string;
+		ShipmentSubTypeName: string;
 	
 }

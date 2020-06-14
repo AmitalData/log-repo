@@ -156,6 +156,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transhipment1Vessel = shipment.Transshipment1VesselName;
                 myDataProvider.Transhipment2Vessel = shipment.Transshipment2VesselName;
                 myDataProvider.Transhipment3Vessel = shipment.Transshipment3VesselName;
+                myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
 
                 if (shipment.DocumentsClosingDate != null)
                 {
