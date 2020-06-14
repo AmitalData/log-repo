@@ -14,6 +14,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {QuoteTemplateExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateExtendedPMService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'NewQuoteTemplateComponent',
@@ -61,7 +62,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
   
         });
 
-
+        ServiceLocator.SendTotangoUserActivity("Quotation", "Create Quote Template");
         
     }
 
