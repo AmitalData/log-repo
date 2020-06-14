@@ -259,9 +259,11 @@ export class ExceptionReason extends BaseComponent {
         if (this.EntityPM.ExceptionReasonsCode == null) {
             this.ShowCode = false;
         }
-        this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
-            this.ExceptionReason = response.Result;
-        });
+        if (this.EntityPM.ExceptionReasonsCode != null) {
+            this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
+                this.ExceptionReason = response.Result;
+            });
+        }
     }
     
     _SelectedItemStatus: KeyValuePair;
