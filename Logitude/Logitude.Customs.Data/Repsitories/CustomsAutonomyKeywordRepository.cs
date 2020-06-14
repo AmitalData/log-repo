@@ -21,12 +21,21 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List< CustomsAutonomyKeyword> GetByKeywordtypeCode(string keywordtypeCode, int tenant)
+        public List< CustomsAutonomyKeyword> GetByKeywordtypeCodeList(string keywordtypeCode, int tenant)
         {
             return
             this
                 .GetAll(tenant)
                 .Where(r => r.KeywordtypeCode == keywordtypeCode).ToList()
+                ;
+        }
+
+        public CustomsAutonomyKeyword  GetByKeywordtypeCode(string keywordtypeCode, int tenant)
+        {
+            return
+            this
+                .GetAll(tenant)
+                .FirstOrDefault(r => r.KeywordtypeCode == keywordtypeCode)
                 ;
         }
         public CustomsAutonomyKeyword GetBykeywordList(string keywordsList, int tenant)

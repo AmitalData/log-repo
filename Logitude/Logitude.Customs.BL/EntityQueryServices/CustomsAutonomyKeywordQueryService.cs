@@ -52,7 +52,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             valueToSearch = valueToSearch.TrimEnd();
             valueToSearch = valueToSearch.TrimStart();
 
-            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCode(type, tenant);
+            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeList(type, tenant);
             if (myCustomsAutonomyKeyword == null ) return false;
             //string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
 
