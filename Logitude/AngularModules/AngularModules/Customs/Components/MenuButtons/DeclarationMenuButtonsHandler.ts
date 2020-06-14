@@ -1063,11 +1063,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     SendPrintRequest() {
 
+        let objecttable//: ObjectTablePM = //window.ObjectTable.Where(d => d.Name == "Customs.Declaration").FirstOrDefault();
+            = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+
         let declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
 
         var currRequestParams = new PrintRequestRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+
+        currRequestParams.LoggingEntityId = this.EntityPM.Id;
+        currRequestParams.LoggingObjectTableId = objecttable.Id;
+
         //currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         //currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
