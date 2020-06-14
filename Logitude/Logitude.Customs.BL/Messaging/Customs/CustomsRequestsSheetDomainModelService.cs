@@ -242,21 +242,24 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
                     {
-
-                        string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
-                        var concurrentKiller = new ConcurrentKiller();
-                        concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
-                        bool ReleaseConcurrentKeyOn1stStep = true;
-                        if (!ReleaseConcurrentKeyOn1stStep)
+                        if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
+                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId))
                         {
-                            Transaction.Current.TransactionCompleted +=
-                                (sender, e) =>
-                                {
-                                    if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
+                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                            var concurrentKiller = new ConcurrentKiller();
+                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+                            bool ReleaseConcurrentKeyOn1stStep = true;
+                            if (!ReleaseConcurrentKeyOn1stStep)
+                            {
+                                Transaction.Current.TransactionCompleted +=
+                                    (sender, e) =>
                                     {
-                                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
-                                    }
-                                };
+                                        if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
+                                        {
+                                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                                        }
+                                    };
+                            }
                         }
                     }
                 }
