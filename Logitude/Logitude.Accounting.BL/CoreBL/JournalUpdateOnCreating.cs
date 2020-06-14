@@ -24,9 +24,10 @@ namespace Logitude.Accounting.BL.CoreBL
     public class JournalUpdateOnCreating : IJournalUpdateInsert
     {
         private IAccountingContext _MainContext;
-        
+        private List<JournalLinePM> SplitiedJournals;
         public JournalUpdateOnCreating(IAccountingContext mainContext)
         {
+            this.SplitiedJournals = new List<JournalLinePM>();
             this._MainContext = mainContext;
         }
         
@@ -113,12 +114,16 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 //if (entityPM.CreateDate == DateTime.MinValue) entityPM.CreateDate = DateTime.Now;
                 entityPM.CreateDate = DateTime.Now; //eyal 
-
+               
                 foreach (JournalLinePM item in entityPM.JournalLines)
                 {
-
+                    CheckJournalActionCodeAndSplitedIt(item, entityPM.JournalLines);
                     OnCreateLine(entityPM, item);
-
+                }
+                foreach (JournalLinePM item in SplitiedJournals)
+                {
+                    entityPM.JournalLines.Add(item);
+                    OnCreateLine(entityPM, item);
                 }
                 foreach (var item in entityPM.JournalReconciles)
                 {
@@ -151,6 +156,48 @@ namespace Logitude.Accounting.BL.CoreBL
             //{
             //    Case_2(entityPM);
             //}
+
+        }
+
+        private void CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM , List<JournalLinePM>  JournalLines)
+        {
+            if (LinePM.ActionCode=="3")
+            {
+                JournalLinePM newLine = new JournalLinePM
+                {
+                     ActionCode = "2",
+                     Reference1 = LinePM.Reference1,
+                     Reference2 = LinePM.Reference2,
+                     Reference3 = LinePM.Reference3,
+                     AccountingDate = LinePM.AccountingDate,
+                     Notes = LinePM.Notes,
+                     ActionId = LinePM.ActionId ,
+                     CurrentContextTag = LinePM.CurrentContextTag,
+                     //CreditAccountId = LinePM.CreditAccountId,
+                     DebitAccountId = LinePM.DebitAccountId,
+                     DebitControlAccountId = LinePM.DebitControlAccountId,
+                     //CreditControlAccountId = LinePM.CreditControlAccountId,
+                     Tenant = LinePM.Tenant,
+                     DueDate = LinePM.DueDate,
+                     Line = JournalLines.Count()+1,
+                     DocumentDate = LinePM.DocumentDate,
+                     ExchangeRate = LinePM.ExchangeRate,
+                     ForeignAmount = LinePM.ForeignAmount,
+                     LocalAmount = LinePM.LocalAmount,
+                     CurrencyId = LinePM.CurrencyId,
+                     CurrencyCode = LinePM.CurrencyCode,
+                     ExternalOpenAmount = LinePM.ExternalOpenAmount,
+                     ExternalReconcileNumber = LinePM.ExternalReconcileNumber,
+                     IsExternalReconcile = LinePM.IsExternalReconcile,
+                     IsCreditAccountMulti = LinePM.IsCreditAccountMulti,
+                     IsDebitAccountMulti = LinePM.IsDebitAccountMulti,
+                     EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
+
+              };
+                LinePM.ActionCode = "1";
+                LinePM.DebitAccountId = null;
+                SplitiedJournals.Add(newLine);
+            }
 
         }
 
