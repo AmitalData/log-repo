@@ -257,8 +257,11 @@
                 </div>
             </div>
             <div *ngIf="rowCount == 0 || HasPermition == false" style="width:100%;top:10px;position: relative;">
-                <label *ngIf="rowCount == 0 &&  HasPermition == true" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                <label *ngIf="rowCount == 0 &&  HasPermition == true && !NoDataTextCode" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
                     {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
+                </label>
+                <label *ngIf="rowCount == 0 &&  HasPermition == true && NoDataTextCode" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
+                    {{NoDataTextCode | TextCodeTranslationPipe}}
                 </label>
                 <label *ngIf="HasPermition == false" style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
                     {{'General.O.PckgNotIncluded' | TextCodeTranslationPipe}}

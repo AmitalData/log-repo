@@ -121,14 +121,32 @@ export class FieldTemplateComponent {
             }
         }
 
-        if (this.ObjectTableName == "InterestReport" && this.FieldName == "InterestReportStatusName") {
-
+        if (this.ObjectTableName == "InterestReport") {  
+           if(this.FieldName == "InterestReportStatusName"){
             if (SessionLocator.LoggedUserPM.DontShowLocal) {
                 this.FieldValue = this.Entity.InterestReportStatusName;
             }
             else {
                 this.FieldValue = this.Entity.InterestReportStatusLocalName;
             }
+
+            if (this.Entity.InterestReportStatusCode == "5") {
+                this.textColor = "orange";
+            }
+             else if (this.Entity.InterestReportStatusCode == "6") {
+                this.textColor = "red";
+            }
+            
+           }
+          else if(this.FieldName == "InterestReportStatusLocalName"){
+            if (this.Entity.InterestReportStatusCode == "5") {
+                this.textColor = "orange";
+            }
+             else if (this.Entity.InterestReportStatusCode == "6") {
+                this.textColor = "red";
+            }
+          }
+
         }
 
         if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "CreatedByUserName") {
