@@ -90,7 +90,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetMasterReceivables(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> result = new List<ShipmentReceivablePM>();
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetAllMasterHousesReceivables(List<string> housesIds, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> myResult = new List<ShipmentReceivablePM>();
             ShipmentReceivableQuery receivablesQuery = new ShipmentReceivableQuery(tenant);
@@ -140,7 +140,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentPayablePM> GetAllMasterHousesPayables(List<string> housesIds, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+          //  SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentPayablePM> myResult = new List<ShipmentPayablePM>();
             ShipmentPayableQuery query = new ShipmentPayableQuery(tenant);
@@ -189,7 +189,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentPayablePM> GetMasterPayablesForProfit(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentPayablePM> result = new List<ShipmentPayablePM>();
             shipmentQuery = new ShipmentQuery(tenant);
@@ -213,7 +213,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public IQueryable<ShipmentList> GetMasterFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
            
@@ -413,7 +413,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public int GetMasterFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
             
@@ -572,7 +572,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             shipmentQuery = new ShipmentQuery(tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
             return shipmentQuery.GetShipmentPMsByMasterIdAndTenant(masterId, tenant);
         }
 
