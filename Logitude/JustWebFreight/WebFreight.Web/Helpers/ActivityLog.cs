@@ -73,10 +73,17 @@ namespace WebFreight.Web.Helpers
                         loggedUser = commonDataContext.Users.Where(c => c.Id == loggedContact.Id && c.Tenant == 0).FirstOrDefault();
                     }
 
+                   
+                    scope.Complete();
+                }
+
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
                     SettingRepository mySettingRepository = new SettingRepository();
                     isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
                     scope.Complete();
                 }
+
                 commonDataContext = CommonDataContext.GetContext(tenant);
                 if (loggedContact == null)
                 {
