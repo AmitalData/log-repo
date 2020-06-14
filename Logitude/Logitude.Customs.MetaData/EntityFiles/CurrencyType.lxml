@@ -682,33 +682,38 @@
     FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;"
     FeatureDefaultText="&quot;Currency Types&quot;"
     IsSpellChecked="false">
-      <QueryColumns>
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="0"
-                       ObjectFieldName="&quot;Code&quot;"
-                       ColumnWidth="130" />
-
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="1"
-                       ObjectFieldName="&quot;EnglishName&quot;"
-                       ColumnWidth="130" />
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="2"
-                       ObjectFieldName="&quot;LocalName&quot;"
-                       ColumnWidth="130" />
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="3"
-                       ObjectFieldName="&quot;Inactive&quot;"
-                       ColumnWidth="130" />
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="4"
-                       ObjectFieldName="&quot;TenantInactive&quot;"
-                       ColumnWidth="130" />
-          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
-                       IndexOrder="5"
-                       ObjectFieldName="&quot;MehesInactive&quot;"
-                       ColumnWidth="130" />
-      </QueryColumns>
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TenantInactive&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;CurrencyType&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;MehesInactive&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
     <QueryFilters />
   </Query>
   <Screen
@@ -737,6 +742,17 @@
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;Customs.CurrencyType&quot;"
+    Code="&quot;CTGE&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;Customs.CurrencyType.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
