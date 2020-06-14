@@ -133,6 +133,9 @@ namespace Logitude.Server.Tools.QueueService
                         OracleParameter queueMessageIdPar = new OracleParameter("v_QueueMessageId", OracleDbType.Number);
                         queueMessageIdPar.Direction = ParameterDirection.Output;
 
+                        OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
+                        watingStatusPar.Direction = ParameterDirection.Input;
+
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
                         tenantPar.Direction = ParameterDirection.Input;
@@ -148,6 +151,7 @@ namespace Logitude.Server.Tools.QueueService
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
+                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
                         //NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
 
@@ -158,11 +162,13 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(hashCodePar);
+                        cmd.Parameters.Add(watingStatusPar);
                         cmd.Parameters.Add(queueMessageIdPar);
+                       
 
 
                         //cmd.Parameters.Add(NextRunDateTime);
-                        
+
                         try
                         {
                             cn.Open();
@@ -204,6 +210,7 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter batchNumber = new SqlParameter("@BatchNumber", SqlDbType.VarChar, 15);
                         SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
                         SqlParameter hashCodePar = new SqlParameter("@HashCode", SqlDbType.NVarChar, 1000);
+                        SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -213,6 +220,7 @@ namespace Logitude.Server.Tools.QueueService
                         batchNumber.Direction = ParameterDirection.Input;
                         NextRunDateTime.Direction = ParameterDirection.Input;
                         hashCodePar.Direction = ParameterDirection.Input;
+                        watingStatusPar.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
@@ -222,6 +230,7 @@ namespace Logitude.Server.Tools.QueueService
                         batchNumber.Value = BNo;
                         NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
+                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
@@ -231,6 +240,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(NextRunDateTime);
                         cmd.Parameters.Add(hashCodePar);
+                        cmd.Parameters.Add(watingStatusPar);
 
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
@@ -279,8 +289,8 @@ namespace Logitude.Server.Tools.QueueService
                             OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
                             OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
                             OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
+                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
 
-                            
                             queueCodePar.Direction = ParameterDirection.Input;
                             nextRunDelayInSecPar.Direction = ParameterDirection.Input;
 
@@ -288,6 +298,9 @@ namespace Logitude.Server.Tools.QueueService
                             messageBodyPar.Direction = ParameterDirection.Output;
                             retryNumberPar.Direction = ParameterDirection.Output;
                             messageCreatedServerTimePar.Direction = ParameterDirection.Output;
+                            watingStatusPar.Direction = ParameterDirection.Input;
+
+                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
                             nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
@@ -297,9 +310,10 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(messageCreatedServerTimePar);
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(nextRunDelayInSecPar);
+                            cmd.Parameters.Add(watingStatusPar);
 
 
-                             
+
                             try
                             {
                                 cn.Open();
@@ -346,18 +360,22 @@ namespace Logitude.Server.Tools.QueueService
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
                             SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
+                            SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
                             queueCodePar.Direction = ParameterDirection.Input;
                             retryNumberPar.Direction = ParameterDirection.Output;
+                            watingStatusPar.Direction = ParameterDirection.Input;
 
                             queueCodePar.Value = QueueCode;
+                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
                             cmd.Parameters.Add(queueCodePar);
+                            cmd.Parameters.Add(watingStatusPar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
@@ -431,7 +449,7 @@ namespace Logitude.Server.Tools.QueueService
                             OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
                             OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
                             OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
-
+                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
 
                             queueCodePar.Direction = ParameterDirection.Input;
                             nextRunDelayInSecPar.Direction = ParameterDirection.Input;
@@ -440,6 +458,8 @@ namespace Logitude.Server.Tools.QueueService
                             messageBodyPar.Direction = ParameterDirection.Output;
                             retryNumberPar.Direction = ParameterDirection.Output;
                             messageCreatedServerTimePar.Direction = ParameterDirection.Output;
+                            watingStatusPar.Direction = ParameterDirection.Input;
+                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
                             nextRunDelayInSecPar.Value = nextRunDelayInSec;
@@ -449,6 +469,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(messageCreatedServerTimePar);
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(nextRunDelayInSecPar);
+                            cmd.Parameters.Add(watingStatusPar);
 
 
 
@@ -498,18 +519,22 @@ namespace Logitude.Server.Tools.QueueService
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
                             SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
+                            SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
                             queueCodePar.Direction = ParameterDirection.Input;
                             retryNumberPar.Direction = ParameterDirection.Output;
+                            watingStatusPar.Direction = ParameterDirection.Input;
 
+                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
                             queueCodePar.Value = QueueCode;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
                             cmd.Parameters.Add(queueCodePar);
+                            cmd.Parameters.Add(watingStatusPar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
