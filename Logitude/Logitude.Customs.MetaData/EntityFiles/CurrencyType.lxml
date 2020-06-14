@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.CurrencyType&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CurrencyTypes&quot;"
-  OldDBTableName="&quot;Customs.CurrencyTypes&quot;"
+  DBTableOldNames="Customs.CurrencyTypes"
   ObjectTableSingular="&quot;Customs.CurrencyType&quot;"
   ObjectTablePlural="&quot;Customs.CurrencyTypes&quot;"
   HasCustomFilter="false"
@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Currency Type&quot;"
-  Code="&quot;eb59&quot;"
+  Code="&quot;CURT&quot;"
   Name="&quot;Customs.CurrencyType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -67,7 +67,7 @@
   <field
     Id="&quot;7ead0950-7fc7-4169-b1f9-f99fb0ed716b&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -118,6 +118,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -131,6 +132,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -141,7 +143,7 @@
   <field
     Id="&quot;743954b9-8e5f-4333-b34d-9d26402fc89d&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -192,6 +194,7 @@
     ListLocalDefaultText="&quot;שם אנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -205,6 +208,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -215,7 +219,7 @@
   <field
     Id="&quot;3e3ba90c-dc7c-4bed-aa44-69c421eaf920&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -266,6 +270,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -279,6 +284,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -289,7 +295,7 @@
   <field
     Id="&quot;153f6559-39d0-4467-845a-a3d0dd1ef831&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -339,6 +345,7 @@
     HelpTextDefaultText="&quot;SearchFields&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -352,6 +359,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -362,7 +370,7 @@
   <field
     Id="&quot;66c24982-f8cd-4c03-9be0-a4e49fcd6fcb&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -412,6 +420,7 @@
     ListLocalDefaultText="&quot;לא פּעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -425,6 +434,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -435,7 +445,7 @@
   <field
     Id="&quot;66c24982-f8cd-4c03-9be0-a4e49fcd6fcb&quot;"
     FieldName="&quot;TenantInactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="TenantInactive"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -485,6 +495,7 @@
     ListLocalDefaultText="&quot;לא פעיל בדייר&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -498,6 +509,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -508,7 +520,7 @@
   <field
     Id="&quot;66c24982-f8cd-4c03-9be0-a4e49fcd6fcb&quot;"
     FieldName="&quot;MehesInactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="MehesInactive"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -558,6 +570,7 @@
     ListLocalDefaultText="&quot;לא פעיל במכס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -571,6 +584,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -581,7 +595,7 @@
   <field
     Id="&quot;a2456239-8351-4cc5-9d26-0f2dfcffba6f&quot;"
     FieldName="&quot;CodeSorted&quot;"
-    OldFieldName="&quot;CodeSorted&quot;"
+    OldNames="CodeSorted"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -629,6 +643,7 @@
     ListLocalDefaultText="&quot;CodeSorted&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="false"
@@ -642,6 +657,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -649,6 +665,108 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;CurrencyType&quot;"
+    TextCode="&quot;Currency Types&quot;"
+    LocalTextCode="&quot;סוג מטבע&quot;"
+    QueryGroupCode="&quot;CURT&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CurrencyType&quot;"
+    QuerySection="&quot;Customs.CurrencyType&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.CurrencyType&quot;"
+    TextCodeCode="&quot;Customs.CurrencyType.Q.CurrencyTypeQuery&quot;"
+    FeatureCode="&quot;CURRENCYTYPE&quot;"
+    FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;"
+    FeatureDefaultText="&quot;Currency Types&quot;"
+    IsSpellChecked="false">
+      <QueryColumns>
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="0"
+                       ObjectFieldName="&quot;Code&quot;"
+                       ColumnWidth="130" />
+
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="1"
+                       ObjectFieldName="&quot;EnglishName&quot;"
+                       ColumnWidth="130" />
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="2"
+                       ObjectFieldName="&quot;LocalName&quot;"
+                       ColumnWidth="130" />
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="3"
+                       ObjectFieldName="&quot;Inactive&quot;"
+                       ColumnWidth="130" />
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="4"
+                       ObjectFieldName="&quot;TenantInactive&quot;"
+                       ColumnWidth="130" />
+          <QueryColumn QueryCode="&quot;CurrencyType&quot;"
+                       IndexOrder="5"
+                       ObjectFieldName="&quot;MehesInactive&quot;"
+                       ColumnWidth="130" />
+      </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CurrencyType&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;CurrencyType.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="3">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;MehesInactive&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;TenantInactive&quot;"
+        ScreenName="GeneralTabScreen" />
+    </ScreenFields>
+  </Screen>
+  <EventTypes>
+    <EventType
+      Code="&quot;CREV&quot;"
+      ObjectTableName="&quot;Customs.CurrencyType&quot;"
+      EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPEV&quot;"
+      ObjectTableName="&quot;Customs.CurrencyType&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+  </EventTypes>
   <Records>
     <Record
       Code="&quot;AUD&quot;"
@@ -853,102 +971,5 @@
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures></AdditionalFeatures>
-  <Query
-    Code="&quot;CurrencyType&quot;"
-    ObjectTableName="&quot;Customs.CurrencyType&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CurrencyType&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;CURT&quot;"
-    QueryGroupName="&quot;Customs.CurrencyType&quot;"
-    LocalTextCode="&quot;סוג מטבע&quot;"
-    TextCode="&quot;Currency Types&quot;"
-    TextCodeCode="&quot;Customs.CurrencyType.Q.CurrencyTypeQuery&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;CURRENCYTYPE&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;"
-    FeatureDefaultText="&quot;Currency Types&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;Code&quot;"
-        QueryCode="&quot;CurrencyType&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        QueryCode="&quot;CurrencyType&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;LocalName&quot;"
-        QueryCode="&quot;CurrencyType&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="130"
-        ObjectFieldName="&quot;Inactive&quot;"
-        QueryCode="&quot;CurrencyType&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Code="&quot;CurrencyType.GeneralTabScreen&quot;"
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CurrencyType&quot;"
-    IsHeaderScreen="false"
-    IsReadOnly="false"
-    NumberOfRows="3"
-    NumberOfColumns="1">
-    <ScreenFields>
-      <ScreenField
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="CurrencyType.GeneralTabScreen"
-        Row="0"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;MehesInactive&quot;"
-        ScreenName="CurrencyType.GeneralTabScreen"
-        Row="1"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;TenantInactive&quot;"
-        ScreenName="CurrencyType.GeneralTabScreen"
-        Row="2"
-        Column="0" />
-    </ScreenFields>
-  </Screen>
-  <EventTypes>
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.CurrencyType&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
-      EnglishName="&quot;Created&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.CurrencyType&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
-      EnglishName="&quot;Updated&quot;"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-  </EventTypes>
+  <AdditionalFeatures />
 </entity>
