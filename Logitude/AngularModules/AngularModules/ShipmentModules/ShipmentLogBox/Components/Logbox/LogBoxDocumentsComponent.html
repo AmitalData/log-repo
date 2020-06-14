@@ -329,9 +329,9 @@
                     <tr>
                         <td>
                             <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageFromPortCode != '---'" src="{{SelectedShipment.MainCarriageFromPortCountryCode ? SelectedShipment.MainCarriageFromPortCountryCode :SelectedShipment.FromPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode ? SelectedShipment.MainCarriageFromPortCode : SelectedShipment.FromPort : ''}} , </span>
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode ? SelectedShipment.MainCarriageFromPortCode : SelectedShipment.FromPortCode : ''}} , </span>
                             <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageToPortCode != '---'" src="{{SelectedShipment.MainCarriageToPortCountryCode ?SelectedShipment.MainCarriageToPortCountryCode:SelectedShipment.ToPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode ? SelectedShipment.MainCarriageToPortCode :SelectedShipment.ToPort : ''}}</span>
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode ? SelectedShipment.MainCarriageToPortCode :SelectedShipment.ToPortCode : ''}}</span>
 
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + AgentLable + ' Forwarding ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' - ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId != ShipmentPM.ForwardingPartnerId
