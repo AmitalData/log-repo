@@ -166,6 +166,7 @@ public partial class LogitudeCustomsFile
 
     private string withPaperField;
 
+    private string fileStatusField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -869,7 +870,6 @@ public partial class LogitudeCustomsFile
         }
     }
 
-
     /// <remarks/>
     public string EstimatedTimeOfArrival
     {
@@ -909,4 +909,16 @@ public partial class LogitudeCustomsFile
         }
     }
 
+    /// <remarks/>
+    public string FileStatus
+    {
+        get
+        {
+            return this.fileStatusField;
+        }
+        set
+        {
+            this.fileStatusField = value;
+        }
+    }
 }
