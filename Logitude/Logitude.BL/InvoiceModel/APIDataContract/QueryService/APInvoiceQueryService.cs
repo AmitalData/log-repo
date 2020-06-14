@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -139,7 +140,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     if (string.IsNullOrEmpty(this.billToAccountingCard))
                     {
-                        this.billToAccountingCard = vendor.PayablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        this.billToAccountingCard = accountingSystemHelper.GetGenericCreditAccount(vendor.Id, aPInvoicePM.InvoiceCurrencyId, tenant, true);
                     }
 
                     if (string.IsNullOrEmpty(this.aPInvoicePM.VATNumber))

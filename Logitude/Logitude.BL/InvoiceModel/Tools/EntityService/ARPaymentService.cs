@@ -1654,11 +1654,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     currencyError = "Currency: " + currency.Code + ". External Id is missing";
                 }
-                if (card != null && FieldIsEmpty(card.ReceivablesAccountingCard))
+
+                if (card != null)
                 {
-                    isReady = false;
-                    myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    var receivablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, newPayment.PaymentCurrencyId, tenant, false);
+                    if (FieldIsEmpty(receivablesAccountingCard))
+                    {
+                        isReady = false;
+                        myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    }
                 }
+
                 if (currency != null && FieldIsEmpty(currency.AccountingExternalCode))
                 {
                     isReady = false;

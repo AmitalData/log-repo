@@ -72,8 +72,9 @@
                                             <table>
                                                 <tr>
                                                     <td style="width: 120px; min-width: 120px; max-width: 120px;">Currency</td>
-                                                    <td *ngIf="IsPayablesAccountingCardVisible" style="width: 130px; min-width: 130px; max-width: 130px;">Payable Debit Account</td>
-                                                    <td>Receivable Credit Account</td>
+                                                    <td style="width: 160px; min-width: 160px; max-width: 160px;">Receivable Credit Account</td>
+                                                    <td *ngIf="IsPayablesAccountingCardVisible">Payable Debit Account</td>
+                                                    
                                                 </tr>
                                             </table>
                                         </div>
@@ -85,13 +86,15 @@
                                                         {{item.CurrencyCode}}
                                                     </td>
 
-                                                    <td *ngIf="IsPayablesAccountingCardVisible" class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                                        <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="item.PayableDebitAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                    </td>
-                                                 
-                                                    <td class="GridViewCell">
+                                                    <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
                                                         <LogTextBox [ObjectFieldName]="'ReceivableCreditAccount'" [Text]="item.ReceivableCreditAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
+
+                                                    <td *ngIf="IsPayablesAccountingCardVisible" class="GridViewCell">
+                                                        <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="item.PayableDebitAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                   
+
                                                 </tr>
 
                                                 <tr>
