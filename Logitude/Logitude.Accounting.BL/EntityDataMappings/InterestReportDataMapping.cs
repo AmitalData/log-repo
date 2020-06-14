@@ -55,9 +55,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             if (entityPOCO.UpdatedByUserId != null)
             {
-                ContactPM updatedByContact = contactQuery.GetSinglePMFromCache(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
+                ContactPM updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
                 if (updatedByContact == null)
-                    updatedByContact = contactQuery.GetSinglePMFromCache(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
+                    updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
                 if (updatedByContact != null)
                     entityPM.UpdatedByLocalName = showLocals ? updatedByContact.LocalName : updatedByContact.EnglishName;
             }
