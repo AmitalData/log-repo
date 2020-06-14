@@ -1366,7 +1366,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public FilterTypes: ObjectFieldOperator[];
     public FullNameTextCodeCode: string;
     public PartnerFullNameTextCodeCode: string;
-
+    public IsHaveTranslation: boolean = false;
     
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
@@ -1441,6 +1441,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
         this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+        this.IsHaveTranslation = this.CheckIsFieldHaveTranslation(this);
 
 
     }
@@ -1451,7 +1452,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (!DWObjectField.IsCustom) {
             var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
             var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.PartnerFullNameTextCodeCode) : "";
-
+      
             displayname = (translateText ? translateText : DWObjectField.Name);
 
             if (DWObjectField.DimensionTableDisplayName) {
@@ -1461,6 +1462,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         return displayname;
     
+    }
+
+    CheckIsFieldHaveTranslation(DWObjectField: any) {
+        var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.BIReportTranslate(DWObjectField.FullNameTextCodeCode) : "";
+
+        return !AppTool.IsNullOrEmpty(translateText) ? true : false;
     }
 
 
