@@ -1279,6 +1279,67 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                     }
                     break;
+
+                case "TEST":
+                    {
+                        //FBLDataProvider
+                        OceanExportWebService oceanWebService = new OceanExportWebService();
+                        byte[] byteArray = oceanWebService.GetFBLData(entityId, tenant, documentTypeCopyId);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
+                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        fbLdataprovider.InServerSide = true;
+                        theT2 = System.DateTime.Now.Ticks;
+                        //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
+
+                        StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
+                        packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantity", typeof(string));
+                        packagesLinesColumns.Add("PackageType", typeof(string));
+                        packagesLinesColumns.Add("PackageDescriptionOfGoods", typeof(string));
+                        packagesLinesColumns.Add("PackageGrossWeight", typeof(string));
+                        packagesLinesColumns.Add("PackageVolume", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantityAndType", typeof(string));
+
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FBL", Name = "FBLDataProvider", BusinessObjectValue = fbLdataprovider };
+                        StiBusinessObject packageLinesBusinessObject = new StiBusinessObject() { Name = "PackagesLines", Alias = "PackagesLines", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns };
+                        StiBusinessObject attachmentListBusinessObject = new StiBusinessObject() { Name = "AttachmentList", Alias = "AttachmentList", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns };
+
+                        report.Dictionary.BusinessObjects.Clear();
+                        currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
+                        currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
+
+
+                        //ShippingDeclarationDataProvider
+                        ShippingDeclarationWebService shippingDeclarationWebService = new ShippingDeclarationWebService();
+                        byte[] byteArray2 = shippingDeclarationWebService.GetShippingDeclarationData(entityId, tenant, documentTypeCode, documentTypeCopyId);
+                        MemoryStream memorystream2 = new MemoryStream(byteArray2);
+                        XmlSerializer serializer2 = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
+                        ShippingDeclarationDataProvider shippingDeclarationdataprovider = (ShippingDeclarationDataProvider)serializer2.Deserialize(memorystream2);
+                        theT2 = System.DateTime.Now.Ticks;
+
+                        StiDataColumnsCollection packagesLinesColumns2 = new StiDataColumnsCollection();
+                        packagesLinesColumns2.Add("PackageMarksAndNumbers", typeof(string));
+                        packagesLinesColumns2.Add("PackageQuantity", typeof(string));
+                        packagesLinesColumns2.Add("PackageType", typeof(string));
+                        packagesLinesColumns2.Add("PackageDescriptionOfGoods", typeof(string));
+                        packagesLinesColumns2.Add("PackageGrossWeight", typeof(string));
+                        packagesLinesColumns2.Add("PackageVolume", typeof(string));
+                        packagesLinesColumns2.Add("PackageQuantityAndType", typeof(string));
+
+                        StiBusinessObject currentBusinessObject2 = new StiBusinessObject() { Category = "Shipping declaration", Name = "ShippingDeclarationDataProvider", BusinessObjectValue = shippingDeclarationdataprovider };
+                        StiBusinessObject packageLinesBusinessObject2 = new StiBusinessObject() { Name = "PackagesLines", Alias = "PackagesLines", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns2 };
+                        StiBusinessObject attachmentListBusinessObject2 = new StiBusinessObject() { Name = "AttachmentList", Alias = "AttachmentList", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns2 };
+
+                        currentBusinessObject2.BusinessObjects.Add(packageLinesBusinessObject2);
+                        currentBusinessObject2.BusinessObjects.Add(attachmentListBusinessObject2);
+
+
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant, currentBusinessObject2);
+                    }
+                    break;
+
+
             }
 
             return report;
