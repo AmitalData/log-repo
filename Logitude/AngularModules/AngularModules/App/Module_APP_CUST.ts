@@ -101,7 +101,9 @@ import { AppComponent_Cust } from './AppComponent_Cust';
         { loadChildren: 'CustomsModules/CustomsDocuments/ModuleCustomsDocuments#ModuleCustomsDocuments' },
         { loadChildren: 'CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests' },
         { loadChildren: 'CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests' },
-        { loadChildren: 'CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor' },
+          { loadChildren: 'CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor' },
+          { loadChildren: 'CustomsModules/InvoiceQueue/ModuleInvoiceQueue#ModuleInvoiceQueue' },
+
         ])
     ],
 

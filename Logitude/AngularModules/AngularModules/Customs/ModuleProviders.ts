@@ -330,6 +330,8 @@ import { TapagMessagesService } from './Services/WebServices/TapagMessagesServic
 import { VendorMessagesService } from './Services/WebServices/VendorMessagesService';
 import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
+import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
+
 //#endregion
 
 // Others
@@ -688,7 +690,8 @@ export class ModuleProviders {
             case "VendorMessagesService": { myResult = new VendorMessagesService(); break; }
             case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
-                
+            case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
+    
             //#endregion
 
             //Others

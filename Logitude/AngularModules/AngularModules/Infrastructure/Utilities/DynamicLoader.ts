@@ -234,6 +234,7 @@ export class DynamicLoader {
            case "CustomsModules/CustomsRequests": { myResult = "CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests"; break; }
            case "CustomsModules/CustomsGeneralRequests": { myResult = "CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests"; break; }
           case "CustomsModules/CustomsVendor": { myResult = "CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor"; break; }
+            case "CustomsModules/InvoiceQueue": { myResult = "CustomsModules/InvoiceQueue/ModuleInvoiceQueue#ModuleInvoiceQueue"; break; }
 
 
             
