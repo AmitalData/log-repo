@@ -340,4 +340,9 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
         }
     }
+
+    public class DataTestProvider
+    {
+        public string Abed { get; set; }
+    }
 }
