@@ -85,6 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 if (aRInvoicePM!=null)
                 {
                    interestReportPM.ARinvoiceId = aRInvoicePM.Id;
+                   interestReportPM.InvoiceAmount =(decimal?) aRInvoicePM.AmountInLocalCurrency;
                 }
                 interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
