@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "7e98ad7e4d7a78656b1a98c22f9f07ed";
+		public const string HashString = "ef621b08cedae24a797dd0d6589f2764";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -724,11 +724,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalAmount",
-					  						DefaultText =  "Total Amount",
-					  						FullLocalDefaultText =  "סכום כולל",
+					  						DefaultText =  "Total Interest Amount",
+					  						FullLocalDefaultText =  "סכום ריבית מחושב",
 					  						ListFieldLable =  "TotalAmountListLable",
-					  						ListLableDefaultText =  "Total Amount",
-					  						ListLocalDefaultText =  "סכום כולל",
+					  						ListLableDefaultText =  "Total Interest Amount",
+					  						ListLocalDefaultText =  "סכום ריבית מחושב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -963,11 +963,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceAmount",
-					  						DefaultText =  "Invoice Amount",
-					  						FullLocalDefaultText =  "סכום חשבונית",
+					  						DefaultText =  "Invoice Amount Including VAT",
+					  						FullLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						ListFieldLable =  "InvoiceAmountListLable",
-					  						ListLableDefaultText =  "Invoice Amount",
-					  						ListLocalDefaultText =  "סכום חשבונית",
+					  						ListLableDefaultText =  "Invoice Amount Including VAT",
+					  						ListLocalDefaultText =  "סכום חשבונית כולל מעמ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
