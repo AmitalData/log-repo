@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0033_RefIsClosedForFollowUp : PatchDistributionBase
+    class P19R03_0037_RefIsClosedForFollowUp : PatchDistributionBase
     {
-        public P19R03_0033_RefIsClosedForFollowUp()
+        public P19R03_0037_RefIsClosedForFollowUp()
             : base("update IsClosedForFollowUp", new DateTime(2020, 06, 04))
         {
 
