@@ -159,12 +159,14 @@ public partial class LogitudeCustomsFile
     private string casualImporterCountryField;
 
     private string isDiamondsDeclarationField;
+
     private string estimatedTimeOfArrivalField;
 
     private string orderNumberField;
 
     private string withPaperField;
- 
+
+    private string fileStatusField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -868,7 +870,6 @@ public partial class LogitudeCustomsFile
         }
     }
 
-
     /// <remarks/>
     public string EstimatedTimeOfArrival
     {
@@ -905,6 +906,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.withPaperField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FileStatus
+    {
+        get
+        {
+            return this.fileStatusField;
+        }
+        set
+        {
+            this.fileStatusField = value;
         }
     }
 }
