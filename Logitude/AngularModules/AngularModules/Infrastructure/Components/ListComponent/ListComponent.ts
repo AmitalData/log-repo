@@ -1586,11 +1586,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
 
 
-        // if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
-        //     this._ListComponentArgs.SuppressOnRowSelectedField = false;
-        //     console.log("SuppressOnRowSelectedField");
-        //     return;
-        // }
+         if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
+             this._ListComponentArgs.SuppressOnRowSelectedField = false;
+             console.log("SuppressOnRowSelectedField");
+             return;
+         }
 
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         //var BackGridEvent = $event.BackFromEdit;
