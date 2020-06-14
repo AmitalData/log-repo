@@ -165,6 +165,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2892",
 
 "UCBNDCD",///  Send bonded filing
+"8302", //בקשה לטופס הצהרה
 
 "2751"//הצהרת יצוא- מסר יוצא
 ,"2757", //הצהרת יצוא - מסר נכנס

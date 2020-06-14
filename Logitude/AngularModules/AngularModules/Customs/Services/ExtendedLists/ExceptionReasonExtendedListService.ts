@@ -17,7 +17,7 @@ export class ExceptionReasonExtendedListService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExceptionReason';
-        this._mainApiUrl = ServiceHelper.GetLogitudeURL() + 'api/exceptionreasonviews';
+        this._mainApiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExceptionReasonViews';
 
     }
 
@@ -61,7 +61,7 @@ export class ExceptionReasonExtendedListService {
         var callTime = new Date();
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + exceptionReasonCode, ServiceHelper.GetHttpFullHeaders())
+            return this._http.get(this._mainApiUrl + '/GetSingle?' + 'code=' + exceptionReasonCode, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
                         var myJsonResult = response.body;

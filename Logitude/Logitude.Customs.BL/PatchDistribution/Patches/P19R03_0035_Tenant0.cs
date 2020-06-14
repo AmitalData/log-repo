@@ -1,4 +1,7 @@
 ﻿
+#if true
+		 /**/ 
+	
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,3 +54,5 @@ UPDATE "AMINETNXT_GLOBAL"."TENANTMANAGEMENTS" SET PACKAGECODE = 'TNT0p' WHERE TE
     }
 }
 
+
+#endif
