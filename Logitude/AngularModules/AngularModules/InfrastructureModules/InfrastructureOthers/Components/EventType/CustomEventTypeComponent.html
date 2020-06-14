@@ -1,10 +1,10 @@
-﻿<table *ngIf="IsDataReady">
+<table *ngIf="IsDataReady">
     <tr>
         <td style="width:100%;">
 
             <!--[style.pointer-events]="ObjectTableId ? 'none':''"  [style.opacity]="ObjectTableId ? '0.5':'1'"-->  
 
-            <div [style.pointer-events]="!ObjectTableId ? 'none':''"  [style.opacity]="!ObjectTableId ? '0.5':'1'" style="width:185px">
+            <div *ngIf="IsCustomerCare" [style.pointer-events]="!IsEnable ? 'none':''"  [style.opacity]="!IsEnable ? '0.5':'1'" style="width:185px">
                 <LogLov *ngIf="!IsRefreshComponent" (SelectedItemChanged)="CustomObjectFieldChange($event)"
                         [ObjectFieldName]="'CustomField'"
                         [QueryFilterItems]="ObjectFieldFilterItems"
