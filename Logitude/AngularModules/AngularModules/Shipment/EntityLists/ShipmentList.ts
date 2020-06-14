@@ -441,5 +441,6 @@ export class ShipmentList {
 		CreatedByPartner: string;
 		FirstARInvoiceApprovalDate: Date;
 		SLAC: string;
-	
+        ToPortCode: string;
+        FromPortCode: string;
 }
