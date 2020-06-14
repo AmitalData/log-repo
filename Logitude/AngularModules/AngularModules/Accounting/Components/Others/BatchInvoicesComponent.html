@@ -23,18 +23,18 @@
     </tr>
     <tr>
         <!--<td style="width: 35px;height:23px;">
-            <div>
-                <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event "></CheckBox>
+        <div>
+            <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event "></CheckBox>
 
-            </div>
-        </td>-->
+        </div>
+    </td>-->
 
         <td style="width: 75px;">
             {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
         </td>
 
-        <td style="width:150px;">
-            <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="FromDate"></LogDatePicker>
+        <td style="width:120px;">
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="FromDate" [HideColumns]="true">></LogDatePicker>
         </td>
 
 
@@ -44,12 +44,15 @@
             {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
         </td>
 
-        <td style="width:150px;">
-            <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="ToDate"></LogDatePicker>
+        <td style="width:120px;">
+            <LogDatePicker [ObjectFieldName]="'ToDate'" [NoObjectField]="true" [DataContext]="DataContext" [SelectedDateValue]="ToDate" [HideColumns]="true">></LogDatePicker>
         </td>
+        <td style="width:10px"></td>
+
         <td style="width: 30px;">
             <IconButton [Name]="'Refresh'" (click)="Refresh()"></IconButton>
         </td>
+        <td style="width:10px"></td>
         <td style="width: 35px;height:23px;">
             <div>
                 <CheckBox [IsChecked]="ShowInProgressReports" (Checked)="ShowInProgressReports = $event "></CheckBox>
@@ -91,7 +94,7 @@
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
-                    <td style="width: 80%">
+                    <td style="width: 85%">
                         <div></div>
                     </td>
                     <td style="width: 57px;">

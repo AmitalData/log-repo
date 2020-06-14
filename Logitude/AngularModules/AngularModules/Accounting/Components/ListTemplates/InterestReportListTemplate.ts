@@ -21,7 +21,7 @@ export class InterestReportListTemplate     {
 
 
    public isRTL: boolean = false;
-   // public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
       if (ObjectsLocator.GlobalSetting)

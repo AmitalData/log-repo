@@ -170,12 +170,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     OpenConfirmWindow() {
         var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 400;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
-
-
-        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6") {
+      if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6" || this.EntityPM.InterestReportStatusCode == "9") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
         } else if (this.EntityPM.InterestReportStatusCode == "2") {
@@ -183,20 +178,17 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         }
         else if (this.EntityPM.InterestReportStatusCode == "5") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
-            confirmWindow.ShowNoButton=false;
         }
-       
-      
-
-
-         confirmWindow.WindowClosed.subscribe((event: any) => {
+      else if (this.EntityPM.InterestReportStatusCode == "8") {
+        confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ReportIsBeingInvoiced");
+      }
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
+        
+        confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                if(this.EntityPM.InterestReportStatusCode == "5"){
-                    confirmWindow.Close();
-                }
-                else{
-                    this.UpdateReport();
-                }
+                this.UpdateReport();
             }
         });
         confirmWindow.Show(confirmMessage);
@@ -304,13 +296,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
         //  }
         //  else{
-            if(this.chargesTypeList){
-                _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
-
-            }
-            else{
-                _ARInvoiceLinePM.VatTypeId = null; 
-            }
+            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
 
         //  }
          _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
