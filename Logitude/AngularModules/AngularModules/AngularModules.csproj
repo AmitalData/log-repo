@@ -333,6 +333,7 @@
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\External.png" />
+    <Content Include="Images\favicon.png" />
     <Content Include="Images\HideFilters.png" />
     <Content Include="Images\Icons\ActionsGray.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
@@ -356,6 +357,7 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\ManualyChanged.png" />
     <Content Include="Images\PriceCheck\EmptyTariffPrice.png" />
     <Content Include="Images\PriceCheck\FillDimensions.png" />
     <Content Include="Images\ReportScheduler.png" />

@@ -13,6 +13,7 @@ import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 
 @Component({
     
@@ -24,7 +25,7 @@ export class TaxReportListTemplate {
     public rowData: any;
     public fieldName: any;
     public AdditionalData: any;
-
+    public UpdateMessage: string;
 
     public isRTL: boolean = false;
     public showLocal: boolean = false;
@@ -45,6 +46,8 @@ export class TaxReportListTemplate {
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
         this.AdditionalData = MyAdditionalData;
+        //var DatePipe = new DateTimePipe();
+        //this.UpdateMessage = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.rowData.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.rowData.LastUpdateDateTime, "DT") + " }";
 
         if (fieldName.includes(';')) {
             var temp = fieldName.split(';');
@@ -80,7 +83,10 @@ export class TaxReportListTemplate {
                 });
         }
     }
-
+    GetUpdateMessage(){
+        var DatePipe = new DateTimePipe();
+       return   TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.rowData.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.rowData.LastUpdateDateTime, "DT") + " }";
+    }
     EditLine() {
         var lineEntity: TaxReportLineList = this.rowData;
         if (lineEntity) {

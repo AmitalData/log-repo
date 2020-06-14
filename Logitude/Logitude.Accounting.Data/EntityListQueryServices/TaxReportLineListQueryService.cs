@@ -57,9 +57,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        StatusEnglishName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.EnglishName : null,
                                                        StatusLocalName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.LocalName : null,
                                                        JournalNumber = a.Journal != null ? a.Journal.JournalNumber : null,
+                                                       UpdatedBUserName = a.UpdatedByUser.Contact.LocalName ==null? a.UpdatedByUser.Contact.EnglishName : a.UpdatedByUser.Contact.LocalName,
 
-                                                       
-                                                       
+
+
 
                                                        TotalInvoiceAmount = a.TotalInvoiceAmount,
 

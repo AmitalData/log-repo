@@ -138,6 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 ChangeSetOp = ChangeSetOperation.Insert,
                                 LastUpdateDateTime = DateTime.Now,
                                 UpdatedByUserId = taxReport.UpdatedByUserId,
+                                UpdatedBUserName = taxReport.UpdatedByUserName,
                                 Tenant = tenant,
                                 TaxReportDate=taxReport.TaxReportMonth
 
@@ -258,6 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     ChangeSetOp = ChangeSetOperation.Insert,
                     LastUpdateDateTime = DateTime.Now,
                     UpdatedByUserId = taxReport.UpdatedByUserId,
+                    UpdatedBUserName = taxReport.UpdatedByUserName,
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth

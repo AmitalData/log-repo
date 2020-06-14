@@ -514,7 +514,17 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true,
             IsCustomTemplate: true,
       });
-
+        this.columns.push({
+            FieldName: 'IsManuallyChanged',
+            DataTypeCode: 'boolean',
+            Display: '',
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'TaxReportListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+           
+            IsCustomTemplate: true,
+          
+        });
       this.columns.push({
         FieldName: 'IsExternalLine',
         DataTypeCode: 'String',
@@ -522,7 +532,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         Styles: { width: '40px' },
         HtmlListComponentName: 'TaxReportListTemplate',
         HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
-        IsCustomTemplate: true
+          IsCustomTemplate: true, 
       });
         this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);

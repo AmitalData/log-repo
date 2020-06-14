@@ -76,7 +76,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ProcessStartDate = a.ProcessStartDate,
 
                                                    ProcessEndDate = a.ProcessEndDate,
-
+                                                   UpdatedByUserName = a.UpdatedByUser.Contact.LocalName != null ? a.UpdatedByUser.Contact.LocalName : a.UpdatedByUser.Contact.EnglishName,
                                                    ProcessProgress = a.ProcessProgress,
                                                    CreatedByUserName = a.CreatedByUser != null? a.CreatedByUser.Contact.LocalName : null,
 					

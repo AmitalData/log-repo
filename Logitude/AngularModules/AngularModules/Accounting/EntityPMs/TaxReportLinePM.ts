@@ -154,6 +154,11 @@ export class TaxReportLinePM {
     public set OriginalReference(newValue: string) { if (this.originalReference != newValue) { this.originalReference = newValue; this.MarkAsDirty("OriginalReference"); } }
        
 	 
+    private updatedBUserName: string;
+    public get UpdatedBUserName() { return this.updatedBUserName; }
+    public set UpdatedBUserName(newValue: string) { if (this.updatedBUserName != newValue) { this.updatedBUserName = newValue; this.MarkAsDirty("UpdatedBUserName"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		
