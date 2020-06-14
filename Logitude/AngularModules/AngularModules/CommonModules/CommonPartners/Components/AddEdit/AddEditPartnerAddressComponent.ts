@@ -216,10 +216,14 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
         if (this.addressTypeList != value) {
             this.addressTypeList = value;
 
-            this.Description = null;
+            if (this.IsNewEntity) {
+                if (value) {
+                    this.Description = value.Name;
+                }
 
-            if (value) {
-                this.Description = value.Name;
+                else {
+                    this.Description = null;
+                }
             }
         }
     }
