@@ -29,13 +29,14 @@ export class CustomEventTypeComponent {
     public IsDataReady: boolean = false;
     public ObjectFieldFilterItems: ApiQueryFilters;
     public IsRefreshComponent: boolean;
-
-
+    public IsEnable: boolean = false;
+    public IsCustomerCare: boolean = false;
 
     public Run(args: any) {
         this.EntityPM = args['DataContext'];
         this.ObjectTableName = args['ObjectTableName'];
         this.IsNewEntityCall = args['IsNewEntityCall'];
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
 
         if (this.EntityPM) {
 
@@ -95,6 +96,10 @@ export class CustomEventTypeComponent {
                 if (objectTable) {
 
                     this.IsDisable = !objectTable.AllowCustomFields ? true : false;
+                    if (objectTable.Name == "Shipment" || objectTable.Name == "Master")
+                        this.IsEnable = true;
+                    else
+                        this.IsEnable = false;
                 }
                 this.GetObjectFieldFilterItems();
 
