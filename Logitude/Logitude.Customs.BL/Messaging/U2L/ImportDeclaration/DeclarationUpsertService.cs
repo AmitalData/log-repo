@@ -854,7 +854,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 this._DeclarationReferantDataPM.WithPaper = true;
             }
-            //if (_AmitalCustomsFile.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
+            if (_AmitalCustomsFile.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
         }
