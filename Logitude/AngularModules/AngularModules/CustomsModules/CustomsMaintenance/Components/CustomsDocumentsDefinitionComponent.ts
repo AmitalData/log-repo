@@ -185,7 +185,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
                 this.DocumentsDefinitionResultList.Collection.forEach((item: DocumentsDefinitionComponent) => {
 
                     if (item.IsNew == true) {
-                        item.entityPM.Tenant = 1; // ????
+                        item.entityPM.Tenant = SessionLocator.Tenant; // ????
                         this._EntityPMService.insert(item.entityPM).subscribe((response:any) => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
