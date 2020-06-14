@@ -23,6 +23,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     public DataContext: InterestReportGeneralTabComponent = this;
     private _entityListService: EntityListService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public  NoDataTextCode:string=null;
     public IsNew: boolean = false;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
@@ -30,6 +31,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
          this.EntityPM = entityArgs.EntityPM;
+         this.FillNoDataTextCodeValue();
          this.InterestReportLinesByDateList = new ObservableCollection([]);
          this._entityListService = new EntityListService();
          this.Listen();
@@ -37,6 +39,22 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     }
     ngOnInit() {
         this.BuildColumns();
+    }
+    private FillNoDataTextCodeValue(){
+        switch(this.EntityPM.InterestReportStatusCode){
+            case "5":{
+                   this.NoDataTextCode=  "InterestReport.O.ReportinProgress";
+                break;
+            }
+            case "6":{
+                this.NoDataTextCode=  "InterestReport.O.ReportCreationFailed";
+                break;
+            }
+            default :{
+                this.NoDataTextCode=  null;
+                break;
+            }
+        }
     }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
