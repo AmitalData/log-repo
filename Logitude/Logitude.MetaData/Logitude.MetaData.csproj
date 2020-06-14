@@ -345,6 +345,7 @@
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
     <None Include="DBScripts\InfrastructureModel\202006011050_UpdateAllowedInTicketFieldValueOfObjectTable.sxml" />
+    <None Include="DBScripts\QuoteModel\202006132005_AddDepartureFrequencyToQuoteDetails.sxml" />
     <None Include="DBScripts\QuoteModel\202006011340_DropQuoteClosingReason.sxml" />
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
     <None Include="DBScripts\QuoteModel\202006011458_FillQuoteClosingReasonId.sxml" />
