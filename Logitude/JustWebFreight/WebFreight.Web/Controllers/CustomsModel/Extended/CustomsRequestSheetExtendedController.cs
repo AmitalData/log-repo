@@ -499,12 +499,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                     {
                                         if (DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault()) < TimeSpan.FromMinutes(10)) //CALL#321639         
                                         {
+                                            var TS = DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault());
+                                            try
+                                            {
+
+                                            
                                             string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
                                             using (var scope1 = TransactionFactory.GetNewTransaction())
                                             {
                                                 var concurrentKiller = new ConcurrentKiller();
                                                 concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
                                                 scope1.Complete();
+                                            }
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                var wait = 10 - TS.TotalMinutes;
+                                                throw new Exception( $"  דקות {wait} נסה עוד",e);
                                             }
                                         }
                                     }
@@ -518,6 +529,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 us.Update(currententityPm, true);
                                 mess = null;
+
+                                if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(currententityPm.InterfaceTypeCode))
+                                {
+                                    var req = new CD_NG_8347_Web01_CurrencyRateSearchRequestParams()
+                                    {
+                                        InterfaceTypeCode = currententityPm.InterfaceTypeCode,
+                                        LoggingObjectTableId = currententityPm.ObjectTableId1,
+                                        LoggingEntityId = currententityPm.EntityId1,
+
+                                    };
+                                    CustomsRequestsSheetDomainModelUtil
+                                        .ReleaseConcurrentVirtualKey(req);
+
+                                }
                                 scope.Complete();
                             }
 
