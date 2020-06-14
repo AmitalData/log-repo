@@ -190,7 +190,7 @@ export class FieldTemplateComponent {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
-            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את מילת המפתח?");
+            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את שורת המפתח?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
