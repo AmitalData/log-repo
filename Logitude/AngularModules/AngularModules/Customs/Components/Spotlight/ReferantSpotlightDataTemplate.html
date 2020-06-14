@@ -1,6 +1,6 @@
 <div style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
     <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
-        <div class="MediaFillRelative" style=" overflow-x: auto;overflow-y: hidden;z-index:0;">
+        <div class="MediaFillRelative"style="overflow-x: auto;overflow-y: hidden;">
             <table style="width:80%;">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td colspan="2">
@@ -21,10 +21,10 @@
                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                 [SelectedRow]="SelectedRow">
                                 <!-- ExceptionReasonsCode -->
-                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'">
+                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe"  [binding]="'ExceptionReasonsCode'" [width]="'130'" [Alignment]="'center'">
                                      <ng-template let-item>
 <log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
-                                        <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ExceptionReasonName}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
