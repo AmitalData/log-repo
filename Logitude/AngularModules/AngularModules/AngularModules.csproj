@@ -145,6 +145,7 @@
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.html" />
     <Content Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditAreaComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\AddEdit\AddEditPartnerAddressComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChooseCountryPortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AreasTabComponent.html" />
@@ -578,6 +579,7 @@
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\AddEditAreaComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\AddEditPartnerAddressComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\ChooseCountryPortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\AddEdit\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AreasTabComponent.ts" />
@@ -611,6 +613,7 @@
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
     <TypeScriptCompile Include="Common\EntityLists\AccountingPartnerList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\AddressTypeList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CarrierAreaList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CarrierAreasPortList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CheckDigitControlAlgorithmList.ts" />
@@ -636,6 +639,7 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\AddressTypeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CarrierAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ChargesExternalAccountsByProductListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
@@ -2274,7 +2278,6 @@
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Partners\PartnersTabComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Routings\InlandDomesticRoutingsComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Routings\OrdinaryRoutingsComponent.ts" />
-    <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Routings\RoutingsAddEditAddressComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Routings\RoutingsTabComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\Components\Tariffs\TariffsComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteTabs\ModuleDeclarations.ts" />
@@ -2289,7 +2292,6 @@
     <Content Include="QuoteModules\QuoteTabs\Components\Partners\PartnersTabComponent.html" />
     <Content Include="QuoteModules\QuoteTabs\Components\Routings\InlandDomesticRoutingsComponent.html" />
     <Content Include="QuoteModules\QuoteTabs\Components\Routings\OrdinaryRoutingsComponent.html" />
-    <Content Include="QuoteModules\QuoteTabs\Components\Routings\RoutingsAddEditAddressComponent.html" />
     <Content Include="QuoteModules\QuoteTabs\Components\Tariffs\TariffsComponent.html" />
     <Content Include="QuoteModules\QuoteTemplates\Components\AddEditQuoteTemplateSectionComponent.html" />
     <Content Include="QuoteModules\QuoteTemplates\Components\AddQuoteTemplateFromLibraryComponent.html" />
@@ -2416,7 +2418,6 @@
     <Content Include="ShipmentModules\ShipmentTabs\Components\Orders\AddEditOrderPackageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Orders\OrdersTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Overview\OverviewTabComponent.html" />
-    <Content Include="ShipmentModules\ShipmentTabs\Components\Partners\AddEditAddressComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Partners\AddEditPartnerComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Partners\PartnersTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Payables\AddEditPayableComponent.html" />
@@ -6361,7 +6362,6 @@
     <Content Include="Quote\Components\Helpers\QuoteHelperComponent.html" />
     <Content Include="Quote\Components\MenuButtons\ApproveBuildShipmentComponent.html" />
     <Content Include="Quote\Components\MenuButtons\QuoteEventNotesComponent.html" />
-    <Content Include="Quote\Components\NewEntity\NewQuoteAddEditAddressComponent.html" />
     <Content Include="Quote\Components\NewEntity\NewQuoteAddEditDimensionsComponent.html" />
     <Content Include="Quote\Components\NewEntity\NewQuoteComponent.html" />
     <Content Include="Quote\Components\NewEntity\QuoteDimensionsComponent.html" />
@@ -6421,7 +6421,6 @@
     <Content Include="Shipment\Components\MenuButtons\MenuButtonsTemplateComponent.html" />
     <Content Include="Shipment\Components\NewEntity\NewMasterComponent.html" />
     <Content Include="Shipment\Components\NewEntity\NewShipmentComponent.html" />
-    <Content Include="Shipment\Components\NewEntity\WizardAddEditAddressComponent.html" />
     <Content Include="Shipment\Components\NewEntity\WizardAddEditDimensionsComponent.html" />
     <Content Include="Shipment\Components\NewEntity\WizardDimensionsComponent.html" />
     <Content Include="Shipment\Components\Reactivate\ReactivateShipmentComponent.html" />
@@ -6696,7 +6695,6 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Orders\AddEditOrderPackageComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Orders\OrdersTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Overview\OverviewTabComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Partners\AddEditAddressComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Partners\AddEditPartnerComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Partners\PartnersTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Payables\AddEditPayableComponent.ts" />
@@ -7451,7 +7449,6 @@
     <TypeScriptCompile Include="Quote\Components\MenuButtons\ApproveBuildShipmentComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\MenuButtons\QuoteEventNotesComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\MenuButtons\QuoteMenuButtonsHandler.ts" />
-    <TypeScriptCompile Include="Quote\Components\NewEntity\NewQuoteAddEditAddressComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\NewEntity\NewQuoteAddEditDimensionsComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\NewEntity\NewQuoteComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\NewEntity\QuoteDimensionsComponent.ts" />
@@ -7590,7 +7587,6 @@
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MenuButtonsTemplateComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\NewEntity\NewMasterComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\NewEntity\NewShipmentComponent.ts" />
-    <TypeScriptCompile Include="Shipment\Components\NewEntity\WizardAddEditAddressComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\NewEntity\WizardAddEditDimensionsComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\NewEntity\WizardDimensionsComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Reactivate\ReactivateShipmentComponent.ts" />

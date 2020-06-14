@@ -655,8 +655,8 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = TextCodeTranslator.Translate("Quote.S.Routings.EditAddress");
-            logeWindow.WindowArgs = { EntityId: myAddressId, CardId: myPartnerId };
-            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -686,7 +686,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = myPartnerId;
                     }
                 }
@@ -701,7 +701,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "O";
+                        entityPM.AddressTypeId = "P";
                         entityPM.CardId = myPartnerId;
                     }
                 }
@@ -715,8 +715,8 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = TextCodeTranslator.Translate("Quote.S.Routings.AddAddress");
-            logeWindow.WindowArgs = { EntityPM: entityPM, CardId: myPartnerId };
-            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

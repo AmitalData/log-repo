@@ -15,6 +15,9 @@ import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
+import { AddressTypeList } from '../../../../Common/EntityLists/AddressTypeList';
+import { AddressTypeListService } from '../../../../Common/Services/StandardLists/AddressTypeListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -34,7 +37,7 @@ export class AddressesTabComponent implements OnDestroy {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+    private AllAddressTypes: AddressTypeList[] = [];
     constructor(public entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -55,7 +58,14 @@ export class AddressesTabComponent implements OnDestroy {
 
             this.Listen();
             this.SetUIProperties();
-            this.LoadData();
+
+            var myService = new AddressTypeListService();
+            myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.AllAddressTypes = myResponse.Result;
+                    this.LoadData();
+                }
+            });
         });
     }
 
@@ -93,7 +103,6 @@ export class AddressesTabComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
-
 
     public IsEditingEnabled: boolean = false;
     public IsBlockingUnifreightCustomer: boolean = false;
@@ -159,7 +168,7 @@ export class AddressesTabComponent implements OnDestroy {
                 myAddress_M = new AddressPM();
                 myAddress_M.Tenant = this.EntityPM.Tenant;
                 myAddress_M.AddressTypeId = "M";
-                myAddress_M.Description = "Main Address";
+                myAddress_M.Description = this.GetAddressDescription("M"); //"Main Address";
                 myAddress_M.CardId = this.EntityId;
                 myAddress_M.InActive = false;
                 this.AllAddresses.push(myAddress_M);
@@ -170,7 +179,7 @@ export class AddressesTabComponent implements OnDestroy {
                 myAddress_B = new AddressPM();
                 myAddress_B.Tenant = this.EntityPM.Tenant;
                 myAddress_B.AddressTypeId = "B";
-                myAddress_B.Description = "Billing Address";
+                myAddress_B.Description = this.GetAddressDescription("B"); //"Billing Address";
                 myAddress_B.CardId = this.EntityId;
                 myAddress_B.InActive = false;
                 this.AllAddresses.push(myAddress_B);
@@ -181,7 +190,7 @@ export class AddressesTabComponent implements OnDestroy {
                 myAddress_P = new AddressPM();
                 myAddress_P.Tenant = this.EntityPM.Tenant;
                 myAddress_P.AddressTypeId = "P";
-                myAddress_P.Description = "Pickup / Delivery Address";
+                myAddress_P.Description = this.GetAddressDescription("P"); //"Pickup / Delivery Address";
                 myAddress_P.CardId = this.EntityId;
                 myAddress_P.InActive = false;
                 this.AllAddresses.push(myAddress_P);
@@ -213,6 +222,7 @@ export class AddressesTabComponent implements OnDestroy {
         item.CardId = this.EntityId;
         item.Name = this.EntityPM.EnglishName;
         item.AddressTypeId = 'O';
+        item.Description = this.GetAddressDescription("O"); //"Others";
         item.InActive = false;
 
         var itemViewModel = new AddressItemClass(item, true, this);
@@ -228,8 +238,20 @@ export class AddressesTabComponent implements OnDestroy {
         logWindow.DataContext = itemViewModel;
         logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/AddEditAddressComponent');
     }
-}
 
+    GetAddressDescription(typeId: string): string {
+        var output: string = null;
+
+        if (typeId) {
+            var list: AddressTypeList = this.AllAddressTypes.filter(f => f.Id == typeId)[0];
+            if (list) {
+                output = list.Name;
+            }
+        }
+
+        return output;
+    }
+}
 export class AddressItemClass extends BaseComponent {
     public Header: string;
     public ObjectTableName = "Address";
@@ -267,7 +289,17 @@ export class AddressItemClass extends BaseComponent {
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
         this.IsBlockingUnifreightCustomer = this.fatherComponent.IsBlockingUnifreightCustomer;
 
-        this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("AddressTypeId", this.ObjectTableName, false);
+
+        var isDescriptionEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (this.AddressTypeId == "O") {
+                isDescriptionEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Description", this.ObjectTableName, isDescriptionEnabled);
+
         this.UIProperties.SetEnabled("Name", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Address1", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Address2", this.ObjectTableName, this.IsEditingEnabled);
@@ -355,6 +387,7 @@ export class AddressItemClass extends BaseComponent {
     }
 
     // Properties
+
     get AddressTypeId() { return this.EntityPM.AddressTypeId; }
     set AddressTypeId(newValue: string) {
         if (this.EntityPM.AddressTypeId != newValue) {

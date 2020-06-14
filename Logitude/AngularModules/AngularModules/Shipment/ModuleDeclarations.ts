@@ -17,7 +17,6 @@ import {DateCellDisplayListTemplate} from './Components/ListTemplates/DateCellDi
 import {ApprovePaymentButtonListTemplate} from './Components/ListTemplates/ApprovePaymentButtonListTemplate';
 import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
 import {NewMasterComponent} from './Components/NewEntity/NewMasterComponent';
-import {WizardAddEditAddressComponent} from './Components/NewEntity/WizardAddEditAddressComponent';
 import {WizardDimensionsComponent} from './Components/NewEntity/WizardDimensionsComponent';
 import {WizardAddEditDimensionsComponent} from './Components/NewEntity/WizardAddEditDimensionsComponent';
 import {ActionButtonsListTemplate} from './Components/ListTemplates/ActionButtonsListTemplate';
@@ -57,7 +56,6 @@ export const Components =
         TaskCellDisplayListTemplate,
         NewShipmentComponent,
         NewMasterComponent,
-        WizardAddEditAddressComponent,
         WizardDimensionsComponent,
         WizardAddEditDimensionsComponent,
         DateCellDisplayListTemplate,
@@ -106,7 +104,6 @@ export class ModuleDeclarations {
             case "ReferenceNumberCellDisplayListTemplate": { myResult = ReferenceNumberCellDisplayListTemplate; break; }
             case "NewShipmentComponent": { myResult = NewShipmentComponent; break; }
             case "NewMasterComponent": { myResult = NewMasterComponent; break; }
-            case "WizardAddEditAddressComponent": { myResult = WizardAddEditAddressComponent; break; }
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "WizardAddEditDimensionsComponent": { myResult = WizardAddEditDimensionsComponent; break; }
             case "StatusCellDisplayListTemplate": { myResult = StatusCellDisplayListTemplate; break; }

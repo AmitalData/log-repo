@@ -263,6 +263,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AddressTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationLogTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationStatusTypeDetails.Generated.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AddressTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreasPortList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CarrierAreaList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerOpenFilesAmountList.cs" />
@@ -351,6 +353,7 @@
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AddressTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CarrierAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
