@@ -74,6 +74,8 @@
 
         private string controllerUserIdField;
 
+        private string fileStatusField;
+
         /// <remarks/>
         public string Id
         {
@@ -203,5 +205,19 @@
                 this.controllerUserIdField = value;
             }
         }
+
+        /// <remarks/>
+        public string FileStatus
+        {
+            get
+            {
+                return this.fileStatusField;
+            }
+            set
+            {
+                this.fileStatusField = value;
+            }
+        }
     }
+
 }

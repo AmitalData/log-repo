@@ -25,6 +25,10 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public WCOErrorPointerModel GetTagID(int level, string TagId)
         {
+            if(_List==null)
+            {
+                _List = new List<WCOErrorPointerModel>();
+            }
             var elm = _List.FirstOrDefault(rec => rec.Level == level & rec.WCOID == TagId);
             if (elm != null)
             {

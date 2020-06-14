@@ -303,46 +303,95 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public IQueryable<TasksSchedulerList> GetIQueryableEntityList(IQueryable<TasksScheduler> iQueryable)
         {
-            IQueryable<TasksSchedulerList> result = from a in iQueryable
-                                                    select new TasksSchedulerList()
-                                                    {
-                                                        Id = a.Id,
-                                                        Tenant = a.Tenant,
-                                                        CreateDateTime = a.CreateDateTime,
-                                                        CreatedBy = a.CreatedBy,
-                                                        Description = a.Description,
-                                                        Friday = a.Friday,
-                                                        InActive = a.InActive,
-                                                        IsLastRunError = a.IsLastRunError,
-                                                        LastRunResult = a.LastRunResult,
-                                                        LastRunStartTime = a.LastRunStartTime,
-                                                        Monday = a.Monday,
-                                                        Name = a.Name,
-                                                        NextRunTime = a.NextRunTime,
-                                                        RepeatInMinutes = a.RepeatInMinutes,
-                                                        Satarday = a.Satarday,
-                                                        ProcedureCode = a.ProcedureCode,
-                                                        StartDateTime = a.StartDateTime,
-                                                        Sunday = a.Sunday,
-                                                        Thursday = a.Thursday,
-                                                        TriggerType = a.TriggerType,
-                                                        Tuesday = a.Tuesday,
-                                                        UpdateDateTime = a.UpdateDateTime,
-                                                        UpdatedBy = a.UpdatedBy,
-                                                        Wednesday = a.Wednesday,
-                                                        Type = a.Type,
-                                                        NextRunTimeUTC = a.NextRunTimeUTC,
-                                                        StartDateTimeUTC = a.StartDateTimeUTC,
-                                                        LastRunStartTimeUTC = a.LastRunStartTimeUTC,
-                                                        Version = a.Version,
-                                                        Status = a.Status,
-                                                        Retries = a.Retries,
-                                                        LastRunEndTime = a.LastRunEndTime,
-                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
-                                                        AverageRunTime = a.AverageRunTime,
-                                                        EntityId = a.EntityId,
-                                                        Recepients = (a.SchedulerDetailsXML.IndexOf("<To>") > -1 ? a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<To>") + 4, a.SchedulerDetailsXML.IndexOf("</To>") - 4 - a.SchedulerDetailsXML.IndexOf("<To>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Cc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Cc>") + 4, a.SchedulerDetailsXML.IndexOf("</Cc>") - 4 - a.SchedulerDetailsXML.IndexOf("<Cc>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Bcc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Bcc>") + 5, a.SchedulerDetailsXML.IndexOf("</Bcc>") - 5 - a.SchedulerDetailsXML.IndexOf("<Bcc>")) : null)
-                                                    };
+            IQueryable<TasksSchedulerList> result = null;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                result = from a in iQueryable
+                                                        select new TasksSchedulerList()
+                                                        {
+                                                            Id = a.Id,
+                                                            Tenant = a.Tenant,
+                                                            CreateDateTime = a.CreateDateTime,
+                                                            CreatedBy = a.CreatedBy,
+                                                            Description = a.Description,
+                                                            Friday = a.Friday,
+                                                            InActive = a.InActive,
+                                                            IsLastRunError = a.IsLastRunError,
+                                                            LastRunResult = a.LastRunResult,
+                                                            LastRunStartTime = a.LastRunStartTime,
+                                                            Monday = a.Monday,
+                                                            Name = a.Name,
+                                                            NextRunTime = a.NextRunTime,
+                                                            RepeatInMinutes = a.RepeatInMinutes,
+                                                            Satarday = a.Satarday,
+                                                            ProcedureCode = a.ProcedureCode,
+                                                            StartDateTime = a.StartDateTime,
+                                                            Sunday = a.Sunday,
+                                                            Thursday = a.Thursday,
+                                                            TriggerType = a.TriggerType,
+                                                            Tuesday = a.Tuesday,
+                                                            UpdateDateTime = a.UpdateDateTime,
+                                                            UpdatedBy = a.UpdatedBy,
+                                                            Wednesday = a.Wednesday,
+                                                            Type = a.Type,
+                                                            NextRunTimeUTC = a.NextRunTimeUTC,
+                                                            StartDateTimeUTC = a.StartDateTimeUTC,
+                                                            LastRunStartTimeUTC = a.LastRunStartTimeUTC,
+                                                            Version = a.Version,
+                                                            Status = a.Status,
+                                                            Retries = a.Retries,
+                                                            LastRunEndTime = a.LastRunEndTime,
+                                                            LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                                                            AverageRunTime = a.AverageRunTime,
+                                                            EntityId = a.EntityId,
+                                                            Recepients ="" 
+                                                        };
+            }
+            else
+            {
+                result = from a in iQueryable
+                                                        select new TasksSchedulerList()
+                                                        {
+                                                            Id = a.Id,
+                                                            Tenant = a.Tenant,
+                                                            CreateDateTime = a.CreateDateTime,
+                                                            CreatedBy = a.CreatedBy,
+                                                            Description = a.Description,
+                                                            Friday = a.Friday,
+                                                            InActive = a.InActive,
+                                                            IsLastRunError = a.IsLastRunError,
+                                                            LastRunResult = a.LastRunResult,
+                                                            LastRunStartTime = a.LastRunStartTime,
+                                                            Monday = a.Monday,
+                                                            Name = a.Name,
+                                                            NextRunTime = a.NextRunTime,
+                                                            RepeatInMinutes = a.RepeatInMinutes,
+                                                            Satarday = a.Satarday,
+                                                            ProcedureCode = a.ProcedureCode,
+                                                            StartDateTime = a.StartDateTime,
+                                                            Sunday = a.Sunday,
+                                                            Thursday = a.Thursday,
+                                                            TriggerType = a.TriggerType,
+                                                            Tuesday = a.Tuesday,
+                                                            UpdateDateTime = a.UpdateDateTime,
+                                                            UpdatedBy = a.UpdatedBy,
+                                                            Wednesday = a.Wednesday,
+                                                            Type = a.Type,
+                                                            NextRunTimeUTC = a.NextRunTimeUTC,
+                                                            StartDateTimeUTC = a.StartDateTimeUTC,
+                                                            LastRunStartTimeUTC = a.LastRunStartTimeUTC,
+                                                            Version = a.Version,
+                                                            Status = a.Status,
+                                                            Retries = a.Retries,
+                                                            LastRunEndTime = a.LastRunEndTime,
+                                                            LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                                                            AverageRunTime = a.AverageRunTime,
+                                                            EntityId = a.EntityId,
+                                                            Recepients =
+                    (a.SchedulerDetailsXML.IndexOf("<To>") > -1 ? a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<To>") + 4, a.SchedulerDetailsXML.IndexOf("</To>") - 4 - a.SchedulerDetailsXML.IndexOf("<To>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Cc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Cc>") + 4, a.SchedulerDetailsXML.IndexOf("</Cc>") - 4 - a.SchedulerDetailsXML.IndexOf("<Cc>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Bcc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Bcc>") + 5, a.SchedulerDetailsXML.IndexOf("</Bcc>") - 5 - a.SchedulerDetailsXML.IndexOf("<Bcc>")) : null)
+                                                        };
+
+            }
             return result;
         }
 
