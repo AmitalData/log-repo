@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.HybridTest
 {
-    class WcfServiceInvoker
+    public class WcfServiceInvoker
     {
         public static ServiceOutcome InvokeServiceMethod(InvokedProperties serviceProperties,object[] serviceParameters)
         {
