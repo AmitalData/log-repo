@@ -18310,11 +18310,11 @@
         TextCodeCode="&quot;Customs.Declaration.B.CourierPendingReason&quot;" />
       <MenuItem
         EventCode="&quot;CourierPendingReasonDel&quot;"
-        DefaultText="&quot;Courier Pending Reason&quot;"
+        DefaultText="&quot;Courier Pending Reason Del&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="10"
         LocalDefaultText="&quot;מחיקת Pending&quot;"
-        IsPackagable="false" />
+        IsPackagable="true" />
       <MenuItem
         EventCode="&quot;Declaration Closure&quot;"
         DefaultText="&quot;Declaration Closure&quot;"
