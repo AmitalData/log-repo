@@ -3909,57 +3909,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortView = true,
             }, EventTypeRepository, tenantEventTypes);
             #endregion
-
-            #region ARPaymentMethod
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "UARM",
-                EnglishName = "AR Payment Method Updated",
-                Tenant = 0,
-                AddedManually = false,
-                LocalName = "AR Payment Method Updated",
-                ObjectTableId = ARPaymentMethodObject.Id,
-                ShortView = false,
-            }, EventTypeRepository, tenantEventTypes);
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "CARM",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-                IsManualEntry = false,
-                LocalName = "Created",
-                ObjectTableId = ARPaymentMethodObject.Id,
-                ShortView = true,
-            }, EventTypeRepository, tenantEventTypes);
-            #endregion
-
-            #region APPaymentMethod
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "UAPM",
-                EnglishName = "AP Payment Method Updated",
-                Tenant = 0,
-                AddedManually = false,
-                LocalName = "AP Payment Method Updated",
-                ObjectTableId = APPaymentMethodObject.Id,
-                ShortView = false,
-            }, EventTypeRepository, tenantEventTypes);
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code = "CAPM",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-                IsManualEntry = false,
-                LocalName = "Created",
-                ObjectTableId = APPaymentMethodObject.Id,
-                ShortView = true,
-            }, EventTypeRepository, tenantEventTypes);
-            #endregion
-
+            
             #region AccountingTransferHeader            
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
