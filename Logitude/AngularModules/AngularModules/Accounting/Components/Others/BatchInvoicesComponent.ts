@@ -33,7 +33,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     super();
     this.ExcludedItems = new ObservableCollection([]);
     this.selectedItems = new ObservableCollection([]);
-    this.Listen();
+   // this.Listen();
  }
   @Output() onQueryChangeEvent = new EventEmitter();
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
@@ -50,21 +50,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
   }
-  Listen() {
- this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
-            if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-               
-                this.onCheckBoxChecked(isChecked, row, RowIndex );
-
-
-            }
-        });
-      
-  }
+ 
   ngAfterViewInit() {
     var t = setTimeout(() => {
       this.LoadGrids = true;
@@ -143,7 +129,19 @@ export class BatchInvoicesComponent extends BaseComponent {
         
            
         });
-       
+        this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
+            if (!AppTool.IsNullOrEmpty($event)) {
+                var row = $event.line;
+                var rowId = $event.line.Id;
+                var RowIndex = $event.RowIndex;
+                var isChecked = $event.isChecked;
+
+                this.onCheckBoxChecked(isChecked, row, RowIndex);
+            ////    this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+
+            }
+        });
+
     }
   public DataCount: number;
   private EnabledDataCount: number;
@@ -264,20 +262,8 @@ export class BatchInvoicesComponent extends BaseComponent {
       }
     
     else {
-      var removedIndex = null;
-      for (var i = 0; i < this.selectedItems.Collection.length; i++) {
-       
-          removedIndex = i;
-          break;
-        
-      }
-
-      if (removedIndex != null) {
-
-        this.selectedItems.RemoveFromIndex(removedIndex);
-      }
-
-     
+  
+        this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == row.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -335,7 +321,11 @@ this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateIn
     interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
     return interestReportArgs;
   }
-CancelButtonClicked(){
-    this.CurrentSession.CloseCurrentWindow();
-}
+    CancelButtonClicked() {
+        this.SelectedItemsCount = 0;
+        this.selectedItems.Clear();
+        this.CurrentSession.CloseCurrentWindow();
+    }
+
+
 }
