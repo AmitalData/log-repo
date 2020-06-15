@@ -145,7 +145,7 @@ export class GLAccountShortTitleComponent {
     CheckIsConnectedCard(accountId: string) {
         this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId).subscribe((myResponse: ServiceResponse) => {
             var connectedCards = myResponse.Result;
-            if (connectedCards.length > 0) {
+            if (connectedCards.length == 1) {
                 this.IsConnectedCard = true;
             }
             });
