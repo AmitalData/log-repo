@@ -2082,7 +2082,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<CardList> GetCardPMsByGLAccountId(string glAccountId,int tenant)
         {
-            IQueryable<CardList> cards = from a in repository.context.Cards
+            IQueryable<CardList> IQueryable_cards = from a in repository.context.Cards.Include("CreditLimitAmount")
                                          where a.Tenant == tenant && a.GLAccountId == glAccountId
                                          select new CardList()
                                          {
@@ -2093,12 +2093,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              VatNumber = a.VatNumber,
                                              CountryCode = a.CountryCode,
                                              CountryName = a.CountryName,
+                                             CreditLimitAmount = a.Customer==null?null: a.Customer.CreditLimitAmount,
+                                             Tenant = a.Tenant,
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
                                              PartnerTypeId = a.PartnerTypeId,
                                          };
 
-            return cards.ToList();
+
+            List<CardList> cards = IQueryable_cards.ToList();
+            foreach (CardList card in cards)
+            {
+                card.OpenShipments = SetCustomerOpenShipments(card);
+            }
+
+            return cards;
         }
 
         public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)

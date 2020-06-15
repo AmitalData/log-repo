@@ -257,9 +257,9 @@ namespace CommunicationWorkerRole
             //try
             //{
 
-            XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
-            var nameElement = workerRoleNameElement.Element("WorkerName");
-            LogitudeSettings.WorkerRoleName = nameElement.Value;
+            //XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
+            //var nameElement = workerRoleNameElement.Element("WorkerName");
+            //LogitudeSettings.WorkerRoleName = nameElement.Value;
 
 
                 //HttpContext.Current.Items.Add("workerrolename", xmlnode.v);
@@ -689,9 +689,9 @@ namespace CommunicationWorkerRole
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
 
-            XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
-            var nameElement = workerRoleNameElement.Element("WorkerName");
-            LogitudeSettings.WorkerRoleName = nameElement.Value;
+            //XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
+            //var nameElement = workerRoleNameElement.Element("WorkerName");
+            //LogitudeSettings.WorkerRoleName = nameElement.Value;
 
             CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);//Where is the cache (Why as usuall i neeed to do averything ?!?)
         }
