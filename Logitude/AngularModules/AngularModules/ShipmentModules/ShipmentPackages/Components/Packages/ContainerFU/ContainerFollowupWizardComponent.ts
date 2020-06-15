@@ -67,6 +67,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
                                 }
 
                                 this.IsResourcesReady = true;
+                                this.LoadTemplate();
                             }
 
                             else {
@@ -81,25 +82,27 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
         });
     }
 
-    private isLoaderReady: boolean = false;
+    private isViewInited: boolean = false;
     ngAfterViewInit() {
-        this.isLoaderReady = true;
+        this.isViewInited = true;
         this.LoadTemplate();
     }
 
     LoadTemplate() {
-        if (this.ChildViewContainerRef) {
-            this.ChildViewContainerRef.clear();
+        if (this.isViewInited && this.IsResourcesReady) {
+            if (this.ChildViewContainerRef) {
+                this.ChildViewContainerRef.clear();
 
-            var myComponentPath = './ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
+                var myComponentPath = './ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
 
-            SessionLocator.DynamicLoader.Load(myComponentPath, this.ChildViewContainerRef)
-                .then(cmpRef => {
+                SessionLocator.DynamicLoader.Load(myComponentPath, this.ChildViewContainerRef)
+                    .then(cmpRef => {
 
-                    this.TemplateComponent = cmpRef.instance;
+                        this.TemplateComponent = cmpRef.instance;
 
-                    cmpRef.instance.Run({ FatherComponent: this });                    
-                });
+                        cmpRef.instance.Run({ FatherComponent: this });
+                    });
+            }
         }
     }
 
