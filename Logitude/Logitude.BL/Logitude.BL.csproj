@@ -426,6 +426,7 @@
     <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\APInvoiceTotalVAT.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoiceAdditionalData.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceStatusQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceTotalVATQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceTransferStatusQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.cs" />

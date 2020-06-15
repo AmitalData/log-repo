@@ -176,7 +176,15 @@ using Simplog.Data.InvoiceModel;
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
 				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
-				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;					
+				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
+				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
+				{
+					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant);
+				}
+
+							 
+				   temp.TotalVATOnly = MyEntityPM.TotalVATOnly;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -375,7 +383,16 @@ using Simplog.Data.InvoiceModel;
 					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
 					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
 					temp.MainEntityReference = MyEntity.EntityReference;
-					temp.VendorGLAccountId = MyEntity.VendorGLAccount;					   
+					temp.VendorGLAccountId = MyEntity.VendorGLAccount; 
+
+					if(MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
+					{
+						APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
+						temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMappingAndValidatin(MyEntity.TotalVATs,Tenant,ComputingPartnerName);
+					}
+
+								 
+					temp.TotalVATOnly = MyEntity.TotalVATOnly;					   
 					   return temp;
 		    }
             catch (Exception ex)
