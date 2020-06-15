@@ -83185,6 +83185,8 @@
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="false"
+    DependencyFilter1Value="&quot;ShipmentTypeId&quot;"
+    DependencyFilter1Type="&quot;Path&quot;"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"

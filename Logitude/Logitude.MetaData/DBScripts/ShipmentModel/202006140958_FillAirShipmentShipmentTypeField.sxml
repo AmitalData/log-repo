@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
     
       
@@ -35,6 +35,7 @@
 				end
 
 				update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+        update Shipments set ShipmentTypeId = 'Air' where Id = @EntityId and Tenant = @Tenant and TransportModeId = 'A'
 
                  FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId  
               END

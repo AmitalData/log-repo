@@ -208,5 +208,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public double? EstimatedProfitInLocal { get; set; }
         public double? EstimatedProfitInProfit { get; set; }
 
+        public string ShipmentSubTypeId { get; set; }
+        public string ShipmentSubTypeName { get; set; }
     }
 }
