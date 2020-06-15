@@ -209,34 +209,6 @@ export class NewHelpResouceComponent extends BaseComponent {
         }
     }
 
-    //VideoURLKeyUpMethod(url: string) {        
-    //    if (!AppTool.IsNullOrEmpty(url)) {
-    //        url = url.trim();
-
-    //        var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    //        var isOk = true;
-
-    //        if (!regex.test(url)) {
-    //            isOk = false;
-    //            this.UIProperties.SetValidity("VideoURL", this.ObjectTableName, isOk, url + " has invalid format");                
-    //        }
-    //    }
-    //}
-
-    //DurationKeyUpMethod(duration: string) {
-    //    if (!AppTool.IsNullOrEmpty(duration)) {
-    //        duration = duration.trim();
-
-    //        var regex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-    //        var isOk = true;
-
-    //        if (!regex.test(duration)) {
-    //            isOk = false;
-    //            this.UIProperties.SetValidity("Duration", this.ObjectTableName, isOk, duration + " has invalid format");
-    //        }
-    //    }
-    //}
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -271,6 +243,25 @@ export class NewHelpResouceComponent extends BaseComponent {
             //        this.ValidationErrorsList.push("Duration has invalid format");
             //    }
             //}
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.FileName)) {
+            if (this.FileName.indexOf(".") > -1) {
+                var filename: string[] = this.FileName.split('.');
+                if (filename[1].toLowerCase() != "pdf" && filename[1].toLowerCase() != "html") {
+                    this.ValidationErrorsList.push("File extension must be pdf or html only");
+                }
+            }
+
+            else {
+                this.ValidationErrorsList.push("File Name does not contain extension");
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.FileExtension)) {
+            if (this.EntityPM.FileExtension.toLowerCase() != "pdf" && this.EntityPM.FileExtension.toLowerCase() != "html") {
+                this.ValidationErrorsList.push("Uploaded file must be pdf or html only");
+            }            
         }
 
         if (this.ValidationErrorsList.length == 0) {
