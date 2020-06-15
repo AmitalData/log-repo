@@ -603,7 +603,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
-        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
             this.IsDemoTenant = true;
         }
 
@@ -2311,7 +2311,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 }
 
-                if (this.TenantPM.Id == 65) {
+                if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
 
                     if (SessionInfo.LoggedUserPM.IsCustomerCare && (this.ObjectTableName == "User" || this.ObjectTableName == "ChargesType")) {

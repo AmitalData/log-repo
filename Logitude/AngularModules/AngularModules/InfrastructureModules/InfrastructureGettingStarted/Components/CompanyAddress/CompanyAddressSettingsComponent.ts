@@ -19,6 +19,7 @@ import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'CompanyAddressSettingsComponent',
@@ -63,7 +64,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.LoadAddressPM();
                 this.GetDemoMessageVisibility();
 
-                if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+                if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
                     this.SetUIPropertiesHitVisible();
                 }
 
@@ -186,7 +187,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public DemoMessageVisibility: boolean = false;
     private GetDemoMessageVisibility() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

@@ -46,6 +46,8 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.BL.EntityQueryServices;
 using Logitude.CRM.Data.Repsitories;
+using System.Transactions;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 {
@@ -84,17 +86,28 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                     UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
-                    if (loggedUser != null && !loggedUser.IsCustomerCare && authToken.Tenant == 65)
+                    var isDemo = false;
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
-                    }
-                    else
-                    {
-                        iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
+                        SettingRepository mySettingRepository = new SettingRepository();
+                        isDemo = mySettingRepository.IsDemoTenant(authToken.Tenant.ToString());
+                        scope.Complete();
                     }
 
-                    entityList = iQueryableEntityList.FirstOrDefault();
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
+                        {
+                            iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
+                        }
+                        else
+                        {
+                            iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
+                        }
 
+                        entityList = iQueryableEntityList.FirstOrDefault();
+                        scope.Complete();
+                    }
                 }
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -256,19 +269,31 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                 UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
-                if (loggedUser != null && !loggedUser.IsCustomerCare && tenant == 65)
+
+                var isDemo = false;
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    isDemo = mySettingRepository.IsDemoTenant(tenant.ToString());
+                    scope.Complete();
                 }
 
-                else
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    entityLists = userQuery.GetIQueryableEntityList(entityPocos);
+                    
+                    if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
+                    {
+                        entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
+                    }
+
+                    else
+                    {
+                        entityLists = userQuery.GetIQueryableEntityList(entityPocos);
+                    }
+
+                    entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
+                    scope.Complete();
                 }
-
-
-                entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
-
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {

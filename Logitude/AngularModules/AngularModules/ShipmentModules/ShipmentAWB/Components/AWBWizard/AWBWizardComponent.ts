@@ -47,6 +47,7 @@ import { DueTypeListService } from '../../../../Common/Services/StandardLists/Du
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
 import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -2747,7 +2748,7 @@ export class AWBWizardComponent implements AfterViewInit{
                 if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
                     var isDemoTenant = false;
 
-                    if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+                    if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
                         isDemoTenant = true;
                     }
 

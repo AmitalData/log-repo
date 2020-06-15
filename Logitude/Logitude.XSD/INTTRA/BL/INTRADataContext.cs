@@ -116,6 +116,8 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+                SettingRepository mySettingRepository = new SettingRepository();
+                var isDemoTenant = mySettingRepository.IsDemoTenant(Tenant.ToString());
 
                 bool isINTTRAOnlyDemo = false;
                 TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
@@ -171,7 +173,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                 }
 
-                if (Tenant == 65 || isINTTRAOnlyDemo)
+                if (isDemoTenant || isINTTRAOnlyDemo)
                 {
                     this.IsDemoTenant = true;
                 }
