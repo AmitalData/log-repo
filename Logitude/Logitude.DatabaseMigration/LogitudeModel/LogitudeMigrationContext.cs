@@ -1858,13 +1858,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
-
-        public IDbSet<APPaymentMethod> APPaymentMethods
-        {
-            get;
-            set;
-        }
-
+        
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
             get;
@@ -4692,7 +4686,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
-            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());

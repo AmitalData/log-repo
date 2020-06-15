@@ -5496,9 +5496,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARInvoicePMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\APInvoiceMultipleShortPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\APInvoiceTotalVATPM.ts" />
-    <TypeScriptCompile Include="Invoice\EntityPMs\APPaymentMethodPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceTotalVATPM.ts" />
-    <TypeScriptCompile Include="Invoice\EntityPMs\ARPaymentMethodPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\BankAccountLitePM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\SATInterfaceSettingPM.ts" />
     <TypeScriptCompile Include="Invoice\Services\ExtendedLists\ARPaymentExtendedListService.ts" />
@@ -6519,8 +6517,6 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInterfaceListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInterfaceSettingListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATPaymentMethodListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardPMs\APPaymentMethodPMService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARPaymentMethodPMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\BankAccountLitePMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\SATInterfaceSettingPMService.ts" />
     <TypeScriptCompile Include="polyfills.ts" />
@@ -7367,7 +7363,6 @@
     <TypeScriptCompile Include="Invoice\EntityLists\APInvoiceTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APInvoiceTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentList.ts" />
-    <TypeScriptCompile Include="Invoice\EntityLists\APPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceLineList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceList.ts" />
@@ -7375,7 +7370,6 @@
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentList.ts" />
-    <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\CreditCardTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ExternalSystemsTablesCodeList.ts" />
@@ -7418,14 +7412,12 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APInvoiceTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APInvoiceTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentMethodListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentMethodListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\CreditCardTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ExternalSystemsTablesCodeListService.ts" />

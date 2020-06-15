@@ -2043,7 +2043,6 @@
     <Compile Include="InvoiceModel\EntityLists\APInvoiceTransferStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APInvoiceTypeList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentList.cs" />
-    <Compile Include="InvoiceModel\EntityLists\APPaymentMethodList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentTransferStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceEntityList.cs" />
@@ -2093,7 +2092,6 @@
     <Compile Include="InvoiceModel\EntityPMs\APInvoiceTransferStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APInvoiceTypePM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentInvoicePM.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\APPaymentMethodPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentTransferStatusPM.cs" />
@@ -2138,7 +2136,6 @@
     <Compile Include="InvoiceModel\EntityQueries\APInvoiceTotalVATQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APInvoiceTransferStatusQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APInvoiceTypeQuery.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\APPaymentMethodQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentStatusQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentTransferStatusQuery.cs" />
@@ -2178,7 +2175,6 @@
     <Compile Include="InvoiceModel\Tools\DataMapping\AccountMapping.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\APInvoiceMapping.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\APPaymentMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\APPaymentMethodMapping.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceMapping.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceTotalVATMapping.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentMapping.cs" />
@@ -2196,7 +2192,6 @@
     <Compile Include="InvoiceModel\Tools\EntityService\APInvoiceMultipleShipmentService.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\APInvoiceMultipleShortService.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\APInvoiceService.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\APPaymentMethodService.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\APPaymentService.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\APInvoiceNormalService.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\ARInvoiceService.cs" />
@@ -2214,7 +2209,6 @@
     <Compile Include="InvoiceModel\Tools\TraceEvents\AccountingTransferHeaderTracing.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\AccountTracing.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\APInvoiceTracing.cs" />
-    <Compile Include="InvoiceModel\Tools\TraceEvents\APPaymentMethodTracing.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\APPaymentTracing.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceTotalVATTracing.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceTracing.cs" />

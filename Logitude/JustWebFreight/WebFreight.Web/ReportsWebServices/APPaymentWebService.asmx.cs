@@ -207,7 +207,7 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.PrintDate = DateTime.Now.Date;
 
                     // payment method
-                    APPaymentMethod paymentMethod = (from a in invoiceCotnext.APPaymentMethods
+                    AccountingPaymentMethod paymentMethod = (from a in invoiceCotnext.AccountingPaymentMethods
                                                      where a.Id == currentPayment.AccountingPaymentMethodId
                                                      select a).FirstOrDefault();
 
