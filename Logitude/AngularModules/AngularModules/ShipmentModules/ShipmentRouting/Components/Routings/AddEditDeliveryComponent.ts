@@ -47,7 +47,8 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
-        this.myCardListService = new CardListService();   
+        this.myCardListService = new CardListService();
+        this.BuildTabs();
     }
 
     SavedEntityId: string;
@@ -84,16 +85,21 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDelivery").subscribe((res: any) => {
             this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((res2: any) => {
                 this.IsResourcesReady = true;
-                this.BuildTabs();
+                this.LoadTemplate();
                 this.Listen();
             });
         });
     }
 
-    private isViewInited = false;
+    private isViewInited: boolean = false;
     ngAfterViewInit() {
         this.isViewInited = true;
-        this.InitializeComponent();
+        this.LoadTemplate();
+    }
+    LoadTemplate() {
+        if (this.isViewInited && this.IsResourcesReady) {
+            this.SelectionChanged();
+        }
     }
 
     private SaveCompletedEvent: any = null;
@@ -126,14 +132,6 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.TabsItemsSource.push(new TabItem("DCSI", "ShipmentPickUpDelivery.TH.DocsIn", this.IsNewEntity));
         this.selectedTabCode = "MAIN";
     }
-
-    InitializeComponent() {
-        if (this.isViewInited) {
-            this.SelectionChanged();
-        }
-    }
-
-
 
     NewWarehouseReleaseButtonClicked() {
 
