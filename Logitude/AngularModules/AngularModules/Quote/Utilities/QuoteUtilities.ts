@@ -502,10 +502,11 @@ export class QuoteUtilities {
         shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
-        shipmentPM.ShipmentTypeId = (entityPM.TransportModeId == "A") ? null : entityPM.ShipmentTypeId;
+        shipmentPM.ShipmentTypeId = entityPM.ShipmentTypeId;
         shipmentPM.ValueOfGoods = entityPM.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
         shipmentPM.MoveTypeId = entityPM.MoveTypeId;
+        shipmentPM.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
         //Partners
         shipmentPM.ShipperId = entityPM.ShipperId;
