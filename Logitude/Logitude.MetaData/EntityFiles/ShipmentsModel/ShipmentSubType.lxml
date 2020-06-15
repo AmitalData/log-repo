@@ -20,7 +20,7 @@
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"
-  CacheOnClient="false"
+  CacheOnClient="true"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"
   EnableAddFromLOV="true"

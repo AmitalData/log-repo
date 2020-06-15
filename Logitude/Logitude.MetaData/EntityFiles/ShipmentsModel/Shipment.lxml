@@ -83199,6 +83199,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentSubTypeId&quot;"
     DefaultText="&quot;Shipment Sub Type&quot;"
+    ListFieldLable="&quot;ShipmentSubTypeIdListLable&quot;"
+    ListLableDefaultText="&quot;Shipment Sub Type&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ShipmentSubType"
