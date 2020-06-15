@@ -2504,7 +2504,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //this.MustIgnoreRowIndexes.push({ Id: rowData.Id, IsChecked: IsChecked });
         }
        
-        var Row = this.rows.filter(a => a.rowIndex === RowIndex)[0];
+        var Row = this.rows.filter(a => a.rowIndex == RowIndex)[0];
         if (Row) {
             Row.rowData.IsChecked = IsChecked;
             Row.rowData.IsCustomChecked = FromOutSide;

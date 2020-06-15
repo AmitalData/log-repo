@@ -38,6 +38,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   @Output() onQueryChangeEvent = new EventEmitter();
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
+  //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
 
   ngOnInit() {
     this.BuildColumns();
@@ -137,8 +138,8 @@ export class BatchInvoicesComponent extends BaseComponent {
                 var isChecked = $event.isChecked;
 
                 this.onCheckBoxChecked(isChecked, row, RowIndex);
-            ////    this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-
+                this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+                /// this.MarkIsChecked.emit({ MyRecord: row });
             }
         });
 
