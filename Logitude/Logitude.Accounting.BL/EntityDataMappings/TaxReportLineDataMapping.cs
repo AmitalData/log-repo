@@ -12,6 +12,9 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -80,14 +83,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
 
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
+        private static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
 
 
 
         public void CustomPOCOToPM(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
-
+            ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
             if (entityPOCO.StatusCode != null)
             {
                 TaxReportLineStatusQueryService queryService = new TaxReportLineStatusQueryService(entityPOCO.Tenant);
@@ -110,7 +124,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.JournalNumber = jr.JournalNumber;
                 }
             }
-
+            if (entityPOCO.UpdatedByUserId != null)
+            {
+                ContactPM updatedByContact = contactQuery.GetSinglePMFromCache(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
+                if (updatedByContact == null)
+                    updatedByContact = contactQuery.GetSinglePMFromCache(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (updatedByContact != null)
+                    entityPM.UpdatedBUserName = updatedByContact.LocalName == null ? updatedByContact.EnglishName : updatedByContact.LocalName;
+            }
             //entityPM.SearchFields = entityPM.VatNumber + "," + entityPM.Reference + "," + entityPM.ReferecneGroup + "," + entityPM.JournalNumber + "," + entityPM.StatusEnglishName + "," + entityPM.StatusLocalName;
 
 

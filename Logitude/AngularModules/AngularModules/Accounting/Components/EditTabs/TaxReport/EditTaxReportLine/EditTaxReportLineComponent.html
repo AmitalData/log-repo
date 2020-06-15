@@ -1,4 +1,15 @@
-
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -111,11 +122,18 @@
 
 
     </tr>
-
+    <tr  style="height: 22px;">
+        <td colspan="4">
+            <div class="DisbleBox" style="margin: 0 auto;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+                {{UpdateMessage}}
+            </div>
+        </td>
+    </tr>
     <tr style="height: 32px;">
         <td colspan="4" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                   
                     <td>
                         <div></div>
                     </td>
