@@ -26,7 +26,6 @@ import {InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainS
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {APInvoicePMService} from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 
-
 @Component({
     
     templateUrl: './APInvoiceTransferTemplate.html',
@@ -336,7 +335,10 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
             if (!response.HasError) {
                 var card: CardList = response.Result;
                 if (card != null) {
-                    this.EditingFieldValue = card.PayablesAccountingCard;
+                    var invoiceDomainService = new InvoiceDomainService();
+                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.invoicePM.InvoiceCurrencyId, true).subscribe((myResult: ServiceResponse) => {
+                        this.EditingFieldValue = myResult.Result;
+                    });
                 }
             }
         });
@@ -884,7 +886,10 @@ export class APInvoiceTransferLineArgs extends BaseComponent {
                 var entity = s.EntityPM;
                 if (entity != null) {
                     if (this.Code == "BLTO") {
-                        this.EditingFieldValue = entity.PayablesAccountingCard;
+                        var invoiceDomainService = new InvoiceDomainService();
+                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.invoicePM.InvoiceCurrencyId, true).subscribe((myResult: ServiceResponse) => {
+                            this.EditingFieldValue = myResult.Result;
+                        });
                     }
                     else if (this.Code == "CURR") {
                         this.EditingFieldValue = entity.AccountingExternalCode;

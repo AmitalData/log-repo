@@ -10,6 +10,8 @@ import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
+import { CardPM } from '../Common/EntityPMs/CardPM';
+import { InvoiceDomainService } from '../Invoice/Services/InvoiceDomainService';
 
 export class InvoiceTool {
     public static IsEditingARInvoiceEnabled(entityPM: ARInvoicePM) {
@@ -62,7 +64,7 @@ export class InvoiceTool {
         if (entityPM != null) {
             if (AppTool.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR") {
                 myResult = true;
-            }            
+            }
         }
 
         return myResult;
@@ -343,7 +345,7 @@ export class InvoiceTool {
                                         entityPM.DueDate = myComparativeDate;
                                     }
                                 }
-                            }                           
+                            }
                         }
                     }
                 });
@@ -448,7 +450,7 @@ export class InvoiceTool {
 
                         entityPM.PaymentTermId = myPaymentTermId;
                     }
-                });                
+                });
             }
         }
     }
@@ -485,6 +487,15 @@ export class InvoiceTool {
 
     public static GetBillToNotAllowConsolidation() {
         return "Bill to is not allowed for consolidation invoices";
+    }
+
+    public static GetGenericCreditAccount(cardId: string, currencyId: string, isPayable: boolean) {
+        var myResult = null;
+        var invoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(cardId, currencyId, isPayable).subscribe((myResult: ServiceResponse) => {
+           return myResult = myResult.Result;
+        });
+        return myResult;
     }
 }
 export class CreditLimitHelper {

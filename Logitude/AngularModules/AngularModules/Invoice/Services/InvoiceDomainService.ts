@@ -29,6 +29,17 @@ export class InvoiceDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
     }
 
+    GetCardCurrenciesAccountingByCurrencyAndId(cardId: string, currencyId: string, isPayable: boolean) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCardCurrenciesAccountingByCurrencyAndId?cardId=' + cardId + '&currencyId=' + currencyId + '&isPayable=' + isPayable, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var cardCurrenciesAccounting = response;
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = cardCurrenciesAccounting;
+                return myResponse;
+            }));
+        });
+    }
     GetAccountingReceivablesSummary() {
 
         var url = this._apiUrl + '/GetAccountingReceivablesSummary';
