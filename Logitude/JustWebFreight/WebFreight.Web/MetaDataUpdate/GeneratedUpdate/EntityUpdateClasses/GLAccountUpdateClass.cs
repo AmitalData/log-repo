@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "573d56d3e54980a41fcf776d24a313ce";
+		public const string HashString = "9dd5c1770551c8834321e10a543dd28a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9014,6 +9014,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyDisconnected", DefaultText = "GLAccount.currency disconnected",LocalDefaultText = @"ניתוק כרטסת מטבעית בוצע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOWasDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasDisconnected", DefaultText = "was disconnected to glaccount .main",LocalDefaultText = @"נותק מכרטיס ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCategory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Category", DefaultText = "Category",LocalDefaultText = @"קטגוריה ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

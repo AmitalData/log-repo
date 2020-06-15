@@ -13009,6 +13009,12 @@
       LocalDefaultText="&quot;נותק מכרטיס ראשי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Category&quot;"
+      DefaultText="&quot;Category&quot;"
+      LocalDefaultText="&quot;קטגוריה &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
