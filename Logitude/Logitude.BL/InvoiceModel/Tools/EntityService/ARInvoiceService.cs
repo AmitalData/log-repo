@@ -1469,7 +1469,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         Card myCard = CardRepository.GetSingleCard(entityPM.BillToId, tenant, true);
                         AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                        entityPM.DebitAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, invoice.InvoiceCurrencyId, tenant, false);
+                        entityPM.DebitAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entityPM.InvoiceCurrencyId, tenant, false);
                     }
 
                     else if (isExternal)
