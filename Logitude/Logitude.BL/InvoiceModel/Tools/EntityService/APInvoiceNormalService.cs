@@ -1001,26 +1001,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (FieldIsEmpty(itemVAT.ExternalVATCard) || FieldIsEmpty(itemVAT.ExternalTAXItemId))
                     {
                         VatType myVatType = VatTypeRepository.GetSingleVatType(itemVAT.VatTypeId, tenant, true);
-
-                        if (FieldIsEmpty(itemVAT.ExternalVATCard))
+                        if (myVatType != null)
                         {
-                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                            if (FieldIsEmpty(itemVAT.ExternalVATCard))
                             {
-                                itemVAT.ExternalVATCard = this.accountingSetting.PayableVATCard;
+                                if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                                {
+                                    itemVAT.ExternalVATCard = this.accountingSetting.PayableVATCard;
+                                }
+
+                                else if (myVatType != null)
+                                {
+                                    itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
+                                }
                             }
 
-                            else if (myVatType != null)
+                            if (FieldIsEmpty(itemVAT.ExternalTAXItemId))
                             {
-                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
+                                itemVAT.ExternalTAXItemId = myVatType.ExternalTAXItemId;
                             }
-                        }
 
-                        if (FieldIsEmpty(itemVAT.ExternalTAXItemId))
-                        {
-                            itemVAT.ExternalTAXItemId = myVatType.ExternalTAXItemId;
-                        }
 
-                        invoiceTotalVatRepository.Update(itemVAT);
+                            invoiceTotalVatRepository.Update(itemVAT);
+                        }
                     }
                 }
                 #endregion
