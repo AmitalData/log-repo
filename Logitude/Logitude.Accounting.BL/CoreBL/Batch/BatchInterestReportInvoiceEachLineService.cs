@@ -64,6 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             catch (Exception e)
             {
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant,"9");
+                throw new Exception(e.Message+"\n"+e.StackTrace);
             }
           
         }
