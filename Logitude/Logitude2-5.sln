@@ -256,7 +256,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoTracking", "CargoTrack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoTrackingService", "CargoTrackingService\CargoTrackingService.csproj", "{6D5CF168-5E41-4CB6-BB30-04445578C5B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.LogBoxIntegrationTest", "Logitude.LogBoxIntegrationTest\Logitude.LogBoxIntegrationTest.csproj", "{3DD19857-5B09-4F68-91C3-D9267EF4FEFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.LogboxIntegrationTest", "Logitude.LogBoxIntegrationTest\Logitude.LogboxIntegrationTest.csproj", "{3DD19857-5B09-4F68-91C3-D9267EF4FEFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
