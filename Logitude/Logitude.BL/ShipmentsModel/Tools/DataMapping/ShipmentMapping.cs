@@ -462,46 +462,60 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
         private static void MapShipmentSubType(ShipmentPM entityPM, Shipment entityPoco)
         {
-            ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
-
-            string code = null;
-            if (entityPM.TransportModeId == "A")
+            if(entityPM.TransportModeId == "A")
             {
-                code = "Air";
+                entityPM.ShipmentTypeId = "Air";
+                entityPoco.ShipmentTypeId = "Air";
             }
 
-            if (entityPM.TransportModeId == "I")
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
             {
-                if (entityPM.ShipmentTypeId == "FTL")
+                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
+
+                string code = null;
+                if (entityPM.TransportModeId == "A")
                 {
-                    code = "FTL";
+                    code = "Air";
                 }
 
-                else
+                if (entityPM.TransportModeId == "I")
                 {
-                    code = "LTL";
+                    if (entityPM.ShipmentTypeId == "FTL")
+                    {
+                        code = "FTL";
+                    }
+
+                    else
+                    {
+                        code = "LTL";
+                    }
+                }
+
+                if (entityPM.TransportModeId == "O")
+                {
+                    if (entityPM.ShipmentTypeId == "FCLD")
+                    {
+                        code = "FCL";
+                    }
+
+                    else
+                    {
+                        code = "LCL";
+                    }
+                }
+
+                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
+                if (subType != null)
+                {
+                    entityPM.ShipmentSubTypeId = subType.Id;
+                    entityPoco.ShipmentSubTypeId = subType.Id;
                 }
             }
 
-            if (entityPM.TransportModeId == "O")
+            else
             {
-                if (entityPM.ShipmentTypeId == "FCLD")
-                {
-                    code = "FCL";
-                }
-
-                else
-                {
-                    code = "LCL";
-                }
+                entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
             }
-
-            ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubTypeByCode(code, entityPM.Tenant);
-            if (subType != null)
-            {
-                entityPM.ShipmentSubTypeId = subType.Id;
-                entityPoco.ShipmentSubTypeId = subType.Id;
-            }            
         }
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
