@@ -813,6 +813,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     AutoFillPaymentScreen() {
+        var BetweenMinAndMax: boolean = false;
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
                 (response: ServiceResponse) => {
@@ -822,22 +823,56 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                         if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
                             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                                this.JustAutoFillPaymentScreen();
+                                var MinAndMax;
+                                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+                                    .subscribe(
+                                        (response: ServiceResponse) => {
+                                            let obj = response.Result;
+                                            if (obj) {
+                                                var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+                                                if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+                                                    let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+                                                    let min = Number(MinAndMax[0].replace(",", ""));
+                                                    let max = Number(MinAndMax[1].replace(",", ""));
+                                                    if (min < this.TotalTax && max > this.TotalTax) {
+                                                        BetweenMinAndMax = true;
+                                                    }
+                                                }
+                                            }
+                                            if (BetweenMinAndMax) {
+                                                this.AutoFillPaymentScreenWhenBetweenMinAndMax();
+                                            } else {
+                                                this.JustAutoFillPaymentScreen();
+                                            }
+                                        });
+                            
                             }
                         }
+
                     }
                 });
     }
+    AutoFillPaymentScreenWhenBetweenMinAndMax() {
+        var x = this.sumBtl;
+        for (let method of this.PaymentMethodsList.Collection) {
+            method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
+            method.MethodTypeCode = "2";
+            method.InternalBankId  = "";
+            this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                method.MethodTypeName = response.Result.LocalName;
+            });
+        }
+    }
 
     JustAutoFillPaymentScreen() {
- 
+
         if (this.sumBtl != null && this.sumBtl > 0)
         {
             for (let method of this.PaymentMethodsList.Collection) {
                 method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
                 method.MethodTypeCode = "1";
                 this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
-                    method.MethodTypeName = response.Result.LocalName;
+                    method.MethodTypeName = response.Result.LocalName; 
                 });
             }
             this.NewMethodMethod(true);

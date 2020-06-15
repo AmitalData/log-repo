@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class NbcDeclarationTypeUpdateClass
    {  		
-		public const string HashString = "ca8c7c3391faba0eaa0dd8f8fd73355f";
+		public const string HashString = "4f01b2adcb25eda32d322005e6663b5f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -477,7 +477,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query NbcDeclarationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NbcDeclarationTypeTextCode_0.Id, NameTextCodeCode = NbcDeclarationTypeTextCode_0.Code, ObjectTableName = "Customs.NbcDeclarationType", Code = "NbcDeclarationType",  QueryGroupCode = "c984", IndexOrder = 0, Tenant = 0, ObjectTableId = NbcDeclarationTypeObjectTable.Id, QuerySection = "Customs.NbcDeclarationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = NbcDeclarationTypeFeature_0.Id,FeatureUniqeCode= NbcDeclarationTypeFeature_0.FeatureUniqeCode, DefaultSortName = "LocalName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn NbcDeclarationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NbcDeclarationTypeQuery.Id,QueryCode = NbcDeclarationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.NbcDeclarationType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn NbcDeclarationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NbcDeclarationTypeQuery.Id,QueryCode = NbcDeclarationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.NbcDeclarationType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn NbcDeclarationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NbcDeclarationTypeQuery.Id,QueryCode = NbcDeclarationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.NbcDeclarationType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn NbcDeclarationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NbcDeclarationTypeQuery.Id,QueryCode = NbcDeclarationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.NbcDeclarationType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
