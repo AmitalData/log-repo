@@ -3,12 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DeclarationList } from '../../EntityLists/DeclarationList';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { CLAIM_2340_ClaimRequestRequestParams } from '../../DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
-import { ContinuousRequestOnClaimFileRequestParams } from '../../DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
-import { map, catchError } from 'rxjs/operators';
+ import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
