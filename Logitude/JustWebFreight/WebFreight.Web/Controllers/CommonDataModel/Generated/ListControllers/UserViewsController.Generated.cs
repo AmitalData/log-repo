@@ -86,12 +86,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                     UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
-
+                    var isDemo = false;
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         SettingRepository mySettingRepository = new SettingRepository();
+                        isDemo = mySettingRepository.IsDemoTenant(authToken.Tenant.ToString());
+                        scope.Complete();
+                    }
 
-                        if (loggedUser != null && !loggedUser.IsCustomerCare && mySettingRepository.IsDemoTenant(authToken.Tenant.ToString()))
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
                         {
                             iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
                         }
@@ -265,11 +270,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                 UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
 
+                var isDemo = false;
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     SettingRepository mySettingRepository = new SettingRepository();
+                    isDemo = mySettingRepository.IsDemoTenant(tenant.ToString());
+                    scope.Complete();
+                }
 
-                    if (loggedUser != null && !loggedUser.IsCustomerCare && mySettingRepository.IsDemoTenant(tenant.ToString()))
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    
+                    if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
                     {
                         entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
                     }
