@@ -1,0 +1,67 @@
+﻿<Script DBType="Main">
+  <Sql Version="1">
+    <![CDATA[
+    
+    declare @Tenant as int
+    declare @EntityId as varchar(15)
+	  declare @ShipmentTypeId as varchar(4)
+	  declare @TransportModeId as varchar(4)
+	  declare @ShipmentSubTypeId as varchar(15)
+
+      BEGIN 
+	      DECLARE QuotesCursor CURSOR READ_ONLY
+	      FOR
+	      SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+	      FROM Quotes
+	      OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId       
+	      WHILE @@FETCH_STATUS = 0
+		      BEGIN
+          
+				set @ShipmentSubTypeId = null
+
+				if(@TransportModeId = 'A')
+				begin
+					set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+				end
+
+				else if(@TransportModeId = 'O')
+				begin
+
+					if(@ShipmentTypeId = 'FCLD')
+					begin
+						set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FCL' and Tenant = @Tenant)
+					end
+
+					else if(@ShipmentTypeId = 'LCLD')
+					begin
+						set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LCL' and Tenant = @Tenant)
+					end
+					
+				end
+
+				else if(@TransportModeId = 'I')
+				begin
+					
+					if(@ShipmentTypeId = 'FTL')
+					begin
+						set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FTL' and Tenant = @Tenant)
+					end
+
+					else if(@ShipmentTypeId = 'LTL')
+					begin
+						set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LTL' and Tenant = @Tenant)
+					end
+
+				end
+
+				update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+
+                 FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId  
+              END
+	      CLOSE QuotesCursor
+	      DEALLOCATE QuotesCursor
+      END
+      
+    ]]>
+  </Sql>
+</Script>

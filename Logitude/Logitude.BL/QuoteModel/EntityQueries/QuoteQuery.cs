@@ -22,6 +22,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.QuoteModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -91,7 +93,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 iQueryable = ProductPermitionsFilter.AddUserProductRestrictionFilters<Quote>(new QueryOperations(), iQueryable, tenant);
             }
 
-            IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType")
+            IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType").Include("ShipmentSubType")
                                            select new QuoteList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -271,6 +273,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RequestDate = f.RequestDate,
                                                EstimatedProfitInLocal = f.EstimatedProfitInLocal,
                                                EstimatedProfitInProfit = f.EstimatedProfitInProfit,
+                                               ShipmentSubTypeId = f.ShipmentSubTypeId,
+                                               ShipmentSubTypeName = f.ShipmentSubType == null ? null : f.ShipmentSubType.Name,
                                            };
             return result;
         }
@@ -1910,6 +1914,17 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 entityPM.FollowUps.Add(followUpPM);
             }
             #endregion
+
+            entityPM.ShipmentSubTypeId = entityPOCO.ShipmentSubTypeId;
+            if (!string.IsNullOrEmpty(entityPOCO.ShipmentSubTypeId))
+            {
+                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(tenant);
+                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPOCO.ShipmentSubTypeId, tenant);
+                if (subType != null)
+                {
+                    entityPM.ShipmentSubTypeName = subType.Name;
+                }
+            }
 
             entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
 

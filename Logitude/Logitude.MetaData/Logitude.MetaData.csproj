@@ -352,6 +352,12 @@
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
     <None Include="DBScripts\QuoteModel\202006011458_FillQuoteClosingReasonId.sxml" />
     <None Include="DBScripts\QuoteModel\202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151503_FillQuoteShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151500_FillAirQuoteShipmentTypeField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
@@ -1396,6 +1402,7 @@
     </None>
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\PrepaidCollect.lxml" />

@@ -366,5 +366,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? ProfitExchangeRate { get; set; }
         [ForeignKey("ProfitCurrencyId")]
         public virtual Currency ProfitCurrency { get; set; }
+
+        public string ShipmentSubTypeId { get; set; }
+        public virtual ShipmentSubType ShipmentSubType { get; set; }
     }
 }

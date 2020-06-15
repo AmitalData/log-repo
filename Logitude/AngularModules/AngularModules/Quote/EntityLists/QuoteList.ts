@@ -187,5 +187,7 @@ export class QuoteList {
 		RequestDate: Date;
 		EstimatedProfitInLocal: number;
 		EstimatedProfitInProfit: number;
+		ShipmentSubTypeId: string;
+		ShipmentSubTypeName: string;
 	
 }

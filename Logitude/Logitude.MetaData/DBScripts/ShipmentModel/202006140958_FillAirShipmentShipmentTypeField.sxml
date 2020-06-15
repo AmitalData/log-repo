@@ -1,0 +1,48 @@
+﻿<Script DBType="Main">
+  <Sql Version="2">
+    <![CDATA[
+    
+      
+	  declare @Tenant as int
+      declare @EntityId as varchar(15)
+	  declare @ShipmentTypeId as varchar(4)
+	  declare @TransportModeId as varchar(4)
+	  declare @ShipmentSubTypeId as varchar(15)
+
+      BEGIN 
+	      DECLARE ShipmentsCursor CURSOR READ_ONLY
+	      FOR
+	      SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+	      FROM Shipments
+		  Where DirectionId != 'C' and ShipmentTypeId is null
+	      OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId       
+	      WHILE @@FETCH_STATUS = 0
+		      BEGIN
+          
+				if(@TransportModeId = 'A')
+				begin
+					set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+				end
+
+				else if(@TransportModeId = 'O')
+				begin
+					set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LCL' and Tenant = @Tenant)
+				end
+
+				if(@TransportModeId = 'I')
+				begin
+					set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LTL' and Tenant = @Tenant)
+				end
+
+				update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+        update Shipments set ShipmentTypeId = 'Air' where Id = @EntityId and Tenant = @Tenant and TransportModeId = 'A'
+
+                 FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId  
+              END
+	      CLOSE ShipmentsCursor
+	      DEALLOCATE ShipmentsCursor
+      END
+      
+    ]]>
+  </Sql>
+</Script>

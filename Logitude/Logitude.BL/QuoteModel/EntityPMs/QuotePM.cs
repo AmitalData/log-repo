@@ -672,5 +672,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? EstimatedProfitInProfit { get; set; }
         public string ProfitCurrencyId { get; set; }
         public double? ProfitExchangeRate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentSubTypeId { get; set; }
+        public string ShipmentSubTypeName { get; set; }
     }
 }

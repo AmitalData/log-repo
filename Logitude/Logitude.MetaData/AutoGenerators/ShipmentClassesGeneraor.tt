@@ -44,7 +44,7 @@ GenerateMetaDataUpdateClass("../EntityFiles/ShipmentsModel","../../JustWebFreigh
 GenerateAllUpdateClasses("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel/EntityUpdateClasses","ShipmentsModel");
 GenerateMetaDataUpdateClass("../EntityFiles/Master","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/ShipmentsModel","MasterModelUpdateClass");
 
-//GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/CloseTables","ShipmentsModel");
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/CloseTables","ShipmentsModel");
 //
  //
 //
@@ -55,16 +55,16 @@ GenerateMetaDataUpdateClass("../EntityFiles/Master","../../JustWebFreight/WebFre
 //
 //
 //
-//GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
+GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
 //
 //
 //
 //// Generate Shipment TS files --------------------------------------------------------------------------------------------------------------
-//GenerateAllPMTS("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/EntityPMs","../../AngularModules/AngularModules/Shipment/EntityPMs");
-//GenerateAllListTS("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/EntityLists","../../AngularModules/AngularModules/Shipment/EntityLists");
+GenerateAllPMTS("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/EntityPMs","../../AngularModules/AngularModules/Shipment/EntityPMs");
+GenerateAllListTS("../EntityFiles/ShipmentsModel","../../Logitude.BL/ShipmentsModel/EntityLists","../../AngularModules/AngularModules/Shipment/EntityLists");
 //
-//GenerateAllServices("../EntityFiles/ShipmentsModel","../../AngularModules/AngularModules/Shipment/Services/StandardPMs","Shipment");
-//GenerateAllListServices("../EntityFiles/ShipmentsModel","../../AngularModules/AngularModules/Shipment/Services/StandardLists","Shipment");
+GenerateAllServices("../EntityFiles/ShipmentsModel","../../AngularModules/AngularModules/Shipment/Services/StandardPMs","Shipment");
+GenerateAllListServices("../EntityFiles/ShipmentsModel","../../AngularModules/AngularModules/Shipment/Services/StandardLists","Shipment");
 //
 //
 

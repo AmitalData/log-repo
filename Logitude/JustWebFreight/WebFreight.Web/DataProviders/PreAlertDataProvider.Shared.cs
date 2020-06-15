@@ -240,6 +240,7 @@ namespace WebFreight.Web.DataProviders
         public string BookingConfirmationNumber { get; set; }
         public string Salesman { get; set; }
         public string SpecialServicesType { get; set; }
+        public string ShipmentSubTypeName { get; set; }
     }
 
     public class Packages

@@ -304,6 +304,7 @@ export class ShipmentTool {
         shipmentPM.FreightPrepaidCollectId = oldShipment.FreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;
         shipmentPM.MoveTypeId = oldShipment.MoveTypeId;
+        shipmentPM.ShipmentSubTypeId = oldShipment.ShipmentSubTypeId;
 
         // FWB CCS Dummy fields
         shipmentPM.TenantZeroAirlineId = oldShipment.TenantZeroAirlineId;
