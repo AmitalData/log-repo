@@ -11,7 +11,6 @@ import {BookingProductListService} from '../../Booking/Services/StandardLists/Bo
 import { QuoteStageListService } from '../../Quote/Services/StandardLists/QuoteStageListService';
 import { QuoteClosingReasonListService } from '../../Quote/Services/StandardLists/QuoteClosingReasonListService';
 import {AWBSpecialHandlingCodeListService} from '../../Shipment/Services/StandardLists/AWBSpecialHandlingCodeListService';
-import {APPaymentMethodListService} from '../../Invoice/Services/StandardLists/APPaymentMethodListService';
 import {AccountingPaymentMethodListService} from '../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import {CreditCardTypeListService} from '../../Invoice/Services/StandardLists/CreditCardTypeListService';
 import {EmployeeGroupListService} from '../../CRM/Services/StandardLists/EmployeeGroupListService';
@@ -75,7 +74,6 @@ import {GovernmentProcedureTypeListService} from '../../Customs/Services/Standar
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
 import {BusinessProcessQueueListService } from '../Services/StandardLists/BusinessProcessQueueListService'; 
 import {TeamListService} from '../Services/StandardLists/TeamListService'; 
-import { ARPaymentMethodListService } from '../../Invoice/Services/StandardLists/ARPaymentMethodListService';
 
 import {TMBudgetListService} from '../../TimeManagement/Services/StandardLists/TMBudgetListService'; 
 import {TMProjectCategoryListService} from '../../TimeManagement/Services/StandardLists/TMProjectCategoryListService'; 
@@ -127,8 +125,7 @@ export class CachedDataManagerServices {
             case "BookingProductListService": { myResult = new BookingProductListService(); break; }
             case "QuoteStageListService": { myResult = new QuoteStageListService(); break; }
             case "QuoteClosingReasonListService": { myResult = new QuoteClosingReasonListService(); break; }
-            case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }
-            case "APPaymentMethodListService": { myResult = new APPaymentMethodListService(); break; }
+            case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }            
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }
             case "EmployeeGroupListService": { myResult = new EmployeeGroupListService(); break; }
@@ -186,7 +183,6 @@ export class CachedDataManagerServices {
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }
             case "TeamListService": { myResult = new TeamListService(); break; }
-            case "ARPaymentMethodListService": { myResult = new ARPaymentMethodListService(); break; }
             case "TMBudgetListService": { myResult = new TMBudgetListService(); break; }
             case "TMProjectCategoryListService": { myResult = new TMProjectCategoryListService(); break; }
             case "SprintListService": { myResult = new SprintListService(); break; }
@@ -231,8 +227,6 @@ Shipment	1
 AccountingSetting
 AdditionalService
 Airline
-APPaymentMethod
-ARPaymentMethod
 AWBSpecialHandlingCode
 BluesnapContract
 BookingProduct

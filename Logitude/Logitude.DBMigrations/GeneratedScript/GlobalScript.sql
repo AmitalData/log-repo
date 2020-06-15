@@ -1,113 +1,81 @@
--- Procedure Script From DeleteTenantFromGlobalDB.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[DeleteTenantFromGlobalDB]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[DeleteTenantFromGlobalDB] END');
-EXEC('--delete global records execute this on global database
-Create  PROCEDURE dbo.DeleteTenantFromGlobalDB
-(
-@tenant int                     --Input parameter ,  tenant to delete
-)
-AS
-BEGIN
-delete from globalcontacts
-where globaltenantid=@tenant
-delete from globaltenants
-where id=@tenant
-END');
+-- Set Nullable For Column CreateDate
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [CreateDate] DATETIME NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('73b75a58-9c1d-400e-984a-95fc2c7d2f33', 'HelpResource.dxml', 'HelpResources', 'CreateDate', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column CreateDateALTER TABLE [dbo].[HelpResources] ALTER COLUMN [CreateDate] DATETIME NULL;');
+
+-- Set Nullable For Column UpdateDate
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [UpdateDate] DATETIME NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ff68d1fc-603b-4b75-a066-99ebf2310d7a', 'HelpResource.dxml', 'HelpResources', 'UpdateDate', 'Set Column Nullable', GETDATE(), '-- Set Nullable For Column UpdateDateALTER TABLE [dbo].[HelpResources] ALTER COLUMN [UpdateDate] DATETIME NULL;');
+
+-- Unset Nullable For Column Language
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Language] VARCHAR(2) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8137072e-a0d8-433c-bd4e-93141e7b6849', 'HelpResource.dxml', 'HelpResources', 'Language', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column LanguageALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Language] VARCHAR(2) NOT NULL;');
+
+-- Unset Nullable For Column Type
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Type] VARCHAR(3) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2da59a44-2abc-46c9-904c-ad0e65ffc330', 'HelpResource.dxml', 'HelpResources', 'Type', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column TypeALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Type] VARCHAR(3) NOT NULL;');
+
+-- Unset Nullable For Column Category
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Category] VARCHAR(3) NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2d9dcdd1-8fd1-4c05-b429-0a9fb112c102', 'HelpResource.dxml', 'HelpResources', 'Category', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column CategoryALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Category] VARCHAR(3) NOT NULL;');
+
+-- Unset Nullable For Column Tenant
+ALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Tenant] INT NOT NULL;
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('75be03c6-8aa5-4f49-b72f-c2f767d1fb13', 'HelpResource.dxml', 'HelpResources', 'Tenant', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column TenantALTER TABLE [dbo].[HelpResources] ALTER COLUMN [Tenant] INT NOT NULL;');
 
 
--- Procedure Script From usp_DeleteContactsUnseenEntitiesByContactId_Global.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_DeleteContactsUnseenEntitiesByContactId]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_DeleteContactsUnseenEntitiesByContactId] END');
-EXEC('Create PROCEDURE [dbo].[usp_DeleteContactsUnseenEntitiesByContactId]
-(
-@pContactId   varchar(15),
-@pObjectTableId   varchar(15),
-@pTenant    int
-)
-as
-BEGIN;
-Delete  From ContactsUnseenEntities where [ContactId] =  @pContactId  and [Tenant] =  @pTenant and  [ObjectTableId] =  @pObjectTableId;
-End;');
-
-
--- Procedure Script From GetNextGlobalTenantId.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[GetNextGlobalTenantId]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[GetNextGlobalTenantId] END');
-EXEC('Create PROCEDURE GetNextGlobalTenantId
-(
-@pLastNumber INT OUTPUT
-)
-AS
-BEGIN
-Declare @Current As Int
-Set @Current	= (SELECT  LastNumber
-FROM GlobalTenantCounters  WHERE Id=1)
-Set @Current = @Current + 1
-Update GlobalTenantCounters
-set LastNumber = LastNumber + 1
-Where Id=1
-End;
-Set @pLastNumber = @Current');
-
-
--- Procedure Script From usp_GetForeignKeyName_Global.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_GetForeignKeyName]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_GetForeignKeyName] END');
-EXEC('Create PROCEDURE dbo.usp_GetForeignKeyName
-(
-@keyName as varchar(500) output,
-@baseTableName as varchar(500) ,
-@foreignTableName as varchar(500) ,
-@foreignColumnName as varchar(500)
-)
-AS
-set @keyName = (select g.ForeignKey from
-(
-SELECT
-f.name AS ForeignKey,
-OBJECT_NAME(f.parent_object_id) AS TableName,
-COL_NAME(fc.parent_object_id,
-fc.parent_column_id) AS ColumnName,
-OBJECT_NAME (f.referenced_object_id) AS ReferenceTableName,
-COL_NAME(fc.referenced_object_id,
-fc.referenced_column_id) AS ReferenceColumnName
-FROM
-sys.foreign_keys AS f
-INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
-) as g
-where g.TableName = @baseTableName
-and g.ReferenceTableName = @foreignTableName
-and g.ColumnName = @foreignColumnName
-)');
-
-
--- Procedure Script From usp_UpdateMobileNotificationLogsMarkReadOrDelete.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[usp_UpdateMobileNotificationLogsMarkReadOrDelete]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[usp_UpdateMobileNotificationLogsMarkReadOrDelete] END');
-EXEC('Create PROCEDURE [dbo].[usp_UpdateMobileNotificationLogsMarkReadOrDelete]
-(
-@pType   varchar(10),
-@pEmail   varchar(70),
-@pNotificationId  varchar(50),
-@pIsAll    bit
-)
-as
-IF @pType = ''Delete''
-BEGIN;
-IF @pIsAll = 1
-BEGIN;
-Update   MobileNotificationLogs Set IsDelete = 1 where [Email] =  @pEmail ;
-End;
-ELSE
-BEGIN;
-Update   MobileNotificationLogs Set IsDelete = 1 where [Id] =  @pNotificationId ;
-End;
-End;
-IF @pType = ''Read''
-BEGIN;
-IF @pIsAll = 1
-BEGIN;
-Update   MobileNotificationLogs Set IsRead = 1 where [Email] =  @pEmail ;
-End;
-ELSE
-BEGIN;
-Update   MobileNotificationLogs Set IsRead = 1 where [Id] =  @pNotificationId ;
-End;
-End;');
-
+-- General Script From 202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+INSERT INTO [dbo].[BatchServicesDefinitions]
+([Code]
+,[ClassName]
+,[Parameter1]
+,[Parameter2])
+VALUES
+('DeleteDuplicatedQueuesWR'
+,'DeleteDuplicatedQueuesWR'
+,NULL
+,NULL)
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+([Code]
+,[InActive]
+,[NumberOfThreads])
+VALUES
+('DeleteDuplicatedQueuesWR'
+,0
+,1)
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml', GETDATE(), 'INSERT INTO [dbo].[BatchServicesDefinitions]
+([Code]
+,[ClassName]
+,[Parameter1]
+,[Parameter2])
+VALUES
+(''DeleteDuplicatedQueuesWR''
+,''DeleteDuplicatedQueuesWR''
+,NULL
+,NULL)
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+([Code]
+,[InActive]
+,[NumberOfThreads])
+VALUES
+(''DeleteDuplicatedQueuesWR''
+,0
+,1)', DATEDIFF(MS,@StartTime,@EndTime), 'b7bc70a5dc075e5ed022cc86e62af1db', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
 

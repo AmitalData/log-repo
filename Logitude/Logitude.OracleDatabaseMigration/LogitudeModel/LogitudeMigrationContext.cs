@@ -1712,12 +1712,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
-
-        public IDbSet<APPaymentMethod> APPaymentMethods
-        {
-            get;
-            set;
-        }
+        
 
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
@@ -4145,7 +4140,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
-            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
