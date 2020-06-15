@@ -132,8 +132,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -186,8 +186,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
