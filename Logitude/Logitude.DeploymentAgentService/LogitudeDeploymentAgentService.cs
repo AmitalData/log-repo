@@ -22,6 +22,7 @@ namespace Logitude.DeploymentAgentService
         protected string AgentServiceId = ConfigurationManager.AppSettings["AgentServiceId"];
         protected string InstanceName = ConfigurationManager.AppSettings["InstanceName"];
         protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
+        protected bool RunDBMigrations = (ConfigurationManager.AppSettings["RunDBMigrations"] == "true");
 
         protected string InProgressDeploymentStatusCode = "I";
         protected string CompletedDeploymentStatusCode = "C";
@@ -39,7 +40,7 @@ namespace Logitude.DeploymentAgentService
         
         protected override void OnStart(string[] args)
         {
-            //AddAgentLog("Deployment Agent Service Started");
+            AddAgentLog("Deployment Agent Service Started");
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = ServiceIntervalInSeconds * 1000;
             ServiceTimer.Enabled = true;
@@ -54,7 +55,6 @@ namespace Logitude.DeploymentAgentService
         {
             DisableAgentServiceTimer();
             GetAgentInfo();
-            GetInstanceFolderPath();
             StartDeploymentProcess();
             EnableAgentServiceTimer();
         }
@@ -73,8 +73,126 @@ namespace Logitude.DeploymentAgentService
             }
         }
 
-        protected void GetInstanceFolderPath()
+        protected void StartDeploymentProcess()
         {
+            if (AgentInfo != null)
+            {
+                if (!IsAgentCurrentVersionLatest())
+                {
+                    bool deploySuccess = false;
+                    string agentServiceType = AgentInfo.ServiceType.Code.ToLower();
+
+                    UpdateDeploymentStatus(InProgressDeploymentStatusCode);
+
+                    if (agentServiceType == "web")
+                    {
+                        deploySuccess = DeployPackage();
+                    }
+                    else if (agentServiceType == "wr")
+                    {
+                        deploySuccess = DeployPackageForWorkerRole();
+                    }
+
+                    if (deploySuccess)
+                    {
+                        if (RunDBMigrations)
+                        {
+                            bool runDBMigrationsTool = RunDBMigrationsTool();
+                            if (runDBMigrationsTool)
+                            {
+                                UpdateCurrentVersion();
+                                AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
+                                UpdateDeploymentStatus(CompletedDeploymentStatusCode);
+                            }
+                        }
+                        else
+                        {
+                            UpdateCurrentVersion();
+                            AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
+                            UpdateDeploymentStatus(CompletedDeploymentStatusCode);
+                        }
+                    }
+                    else
+                    {
+                        UpdateDeploymentStatus(ErrorDeploymentStatusCode);
+                    }
+                }
+            }
+        }
+
+        protected bool IsAgentCurrentVersionLatest()
+        {
+            return (AgentInfo.CurrentVersion == AgentInfo.NewVersion) || AgentInfo.LastReleaseId == null;
+        }
+
+        protected bool DeployPackage()
+        {
+            bool deploySuccess = false;
+            int packageVersion = AgentInfo.NewVersion;
+            string packageUrl = AgentInfo.Artifact.FolderName + "/" + AgentInfo.Artifact.FileName;
+
+            AddAgentLog("Deployment Process For Version " + packageVersion + " Started");
+
+            bool getInstanceFolderPathResult = GetInstanceFolderPath();
+            if (getInstanceFolderPathResult)
+            {
+                bool createTempFolderResult = CreateTempFolder();
+                if (createTempFolderResult)
+                {
+                    bool downloadPackageFromFTPResult = DownloadPackageFromFTP(packageUrl);
+                    if (downloadPackageFromFTPResult)
+                    {
+                        bool extractDownloadedPackageResult = ExtractDownloadedPackage(packageUrl);
+                        if (extractDownloadedPackageResult)
+                        {
+                            bool copyConfigFilesToTempFolderResult = CopyConfigFilesToTempFolder();
+                            if (copyConfigFilesToTempFolderResult)
+                            {
+                                bool renameOriginalFolderResult = RenameInstanceFolder(null, ".Old");
+                                if (renameOriginalFolderResult)
+                                {
+                                    bool renameTempFolderResult = RenameInstanceFolder(".Temp", null);
+                                    if (renameTempFolderResult)
+                                    {
+                                        deploySuccess = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return deploySuccess;
+        }
+
+        protected bool DeployPackageForWorkerRole()
+        {
+            bool deploySuccess = false;
+            bool stopWorkerRoleServiceResult = StopWorkerRoleService();
+            if (stopWorkerRoleServiceResult)
+            {
+                deploySuccess = DeployPackage();
+                StartWorkerRoleService();
+            }
+
+            return deploySuccess;
+        }
+
+        protected void DisableAgentServiceTimer()
+        {
+            ServiceTimer.Enabled = false;
+        }
+
+        protected void EnableAgentServiceTimer()
+        {
+            ServiceTimer.Enabled = true;
+        }
+
+        protected bool GetInstanceFolderPath()
+        {
+            AddAgentLog("Get Instance Folder Path Started");
+
             try
             {
                 string agentServiceType = AgentInfo?.ServiceType.Code.ToLower();
@@ -87,6 +205,11 @@ namespace Logitude.DeploymentAgentService
                 {
                     InstanceFolderPath = GetWorkerRoleFolderPath();
                 }
+
+                if (String.IsNullOrEmpty(InstanceFolderPath))
+                {
+                    AddAgentLog("Cannot Get Instance Folder Path", true);
+                }
             }
             catch (Exception exception)
             {
@@ -94,90 +217,7 @@ namespace Logitude.DeploymentAgentService
                 AddAgentLog("Cannot Get Instance Folder Path With Exception: " + exception.Message, true);
             }
 
-            if (String.IsNullOrEmpty(InstanceFolderPath))
-            {
-                AddAgentLog("Cannot Get Instance Folder Path", true);
-            }
-        }
-
-        protected void StartDeploymentProcess()
-        {
-            if (AgentInfo != null && !String.IsNullOrEmpty(InstanceFolderPath))
-            {
-                if (!IsAgentCurrentVersionLatest())
-                {
-                    string agentServiceType = AgentInfo.ServiceType.Code.ToLower();
-
-                    if (agentServiceType == "web")
-                    {
-                        DeployPackage();
-                    }
-                    else if (agentServiceType == "wr")
-                    {
-                        DeployPackageForWorkerRole();
-                    }
-                }
-            }
-        }
-
-        protected bool IsAgentCurrentVersionLatest()
-        {
-            return (AgentInfo.CurrentVersion == AgentInfo.NewVersion) || AgentInfo.LastReleaseId == null;
-        }
-
-        protected void DeployPackage()
-        {
-            int packageVersion = AgentInfo.NewVersion;
-            string packageUrl = AgentInfo.Artifact.FolderName + "/" + AgentInfo.Artifact.FileName;
-
-            AddAgentLog("Deployment Process For Version " + packageVersion + " Started");
-            UpdateDeploymentStatus(InProgressDeploymentStatusCode);
-
-            bool createTempFolderResult = CreateTempFolder();
-            if (createTempFolderResult)
-            {
-                bool downloadPackageFromFTPResult = DownloadPackageFromFTP(packageUrl);
-                if (downloadPackageFromFTPResult)
-                {
-                    bool extractDownloadedPackageResult = ExtractDownloadedPackage(packageUrl);
-                    if (extractDownloadedPackageResult)
-                    {
-                        bool copyConfigFilesToTempFolderResult = CopyConfigFilesToTempFolder();
-                        if (copyConfigFilesToTempFolderResult)
-                        {
-                            bool renameOriginalFolderResult = RenameInstanceFolder(null, ".Old");
-                            if (renameOriginalFolderResult)
-                            {
-                                bool renameTempFolderResult = RenameInstanceFolder(".Temp", null);
-                                if (renameTempFolderResult)
-                                {
-                                    UpdateCurrentVersion();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        protected void DeployPackageForWorkerRole()
-        {
-            bool stopWorkerRoleServiceResult = StopWorkerRoleService();
-            if (stopWorkerRoleServiceResult)
-            {
-                DeployPackage();
-                StartWorkerRoleService();
-            }
-        }
-
-        protected void DisableAgentServiceTimer()
-        {
-            ServiceTimer.Enabled = false;
-        }
-
-        protected void EnableAgentServiceTimer()
-        {
-            ServiceTimer.Enabled = true;
+            return !String.IsNullOrEmpty(InstanceFolderPath);
         }
 
         protected bool CreateTempFolder()
@@ -331,8 +371,6 @@ namespace Logitude.DeploymentAgentService
                 httpRequest.GetResponse();
 
                 AddAgentLog("Agent Current Version Was Updated To " + AgentInfo.NewVersion);
-                AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
-                UpdateDeploymentStatus(CompletedDeploymentStatusCode);
             }
             catch (Exception exception)
             {
@@ -479,6 +517,43 @@ namespace Logitude.DeploymentAgentService
             return result;
         }
 
+        protected bool RunDBMigrationsTool()
+        {
+            AddAgentLog("Running Database Migrations Tool Started");
+
+            bool result = false;
+
+            string filePath = InstanceFolderPath + @"\Logitude.DBMigrations\bin\Debug\Logitude.DBMigrations.exe";
+            string dbMigrationsToolFilesPath = "\"" + InstanceFolderPath + @"\Logitude.DBMigrations" + "\"";
+            string arguments = string.Format(@"{0} {1} {2} {3}", "-root", dbMigrationsToolFilesPath, "-ignoresettingscheck", "-exe");
+            string workingDirectory = InstanceFolderPath + @"\Logitude.DBMigrations\bin\Debug";
+
+            ProcessHelper processHelper = new ProcessHelper(filePath, arguments, workingDirectory, null);
+            ProcessRunResult processRunResult = processHelper.RunProcess();
+            if (processRunResult.ProcessResult != null)
+            {
+                AddAgentLog("Database Migrations Tool Finished With Exit Code " + processRunResult.ProcessResult.ExitCode.ToString());
+
+                if (!String.IsNullOrEmpty(processRunResult.ProcessResult.OutputDataReceived))
+                {
+                    AddAgentLog("Database Migrations Tool Returned Output Data:\n" + processRunResult.ProcessResult.OutputDataReceived);
+                }
+
+                if (!String.IsNullOrEmpty(processRunResult.ProcessResult.ErrorDataReceived))
+                {
+                    AddAgentLog("Database Migrations Tool Returned Output Error:\n" + processRunResult.ProcessResult.ErrorDataReceived);
+                }
+
+                result = true;
+            }
+            else
+            {
+                AddAgentLog("Exception While Running Database Migrations Tool: " + processRunResult.ExceptionMessage, true);
+            }
+
+            return result;
+        }
+
         protected void WriteToLogsFile(string log)
         {
             try
@@ -526,11 +601,6 @@ namespace Logitude.DeploymentAgentService
                     };
                     DeploymentApiHttpRequest httpRequest = new DeploymentApiHttpRequest("/AgentLogs", saveAgentLog, HttpRequestType.BodyRequestType.Post);
                     httpRequest.GetResponse();
-
-                    if (isException)
-                    {
-                        UpdateDeploymentStatus(ErrorDeploymentStatusCode);
-                    }
                 }
                 catch (Exception exception)
                 {

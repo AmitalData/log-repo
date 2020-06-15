@@ -248,7 +248,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateUsers.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\QueueEnQueueProcedure.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteDuplicatedQueueMessagesProcedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldErrorLog.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldQueueMessageMoreDetailsTask.dxml" />
@@ -352,6 +352,8 @@
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingPort.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipment.dxml" />
+    <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
+    <None Include="DBTables\CommonDataModel\ShipmentHeader.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingPartner.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSetting.dxml" />
     <None Include="DBTables\CommonDataModel\AccountingSystem.dxml" />

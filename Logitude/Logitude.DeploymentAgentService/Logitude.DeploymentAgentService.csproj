@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ProcessHelper.cs" />
+    <Compile Include="Models\ProcessResult.cs" />
+    <Compile Include="Models\ProcessRunResult.cs" />
     <Compile Include="Models\SaveAgentLog.cs" />
     <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\UpdateAgentCurrentVersion.cs" />

@@ -65,7 +65,7 @@
 
                             <tr style="height:150px">
                                 <td>
-                                    <div class="ScrollViewer">
+                                    <div>
                                         <div class="ScrollContent">
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</div>
@@ -99,6 +99,22 @@
                                                     </table>
                                                 </div>
                                             </div>
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'InterestInvoice.O.BatchInterest' |TextCodeTranslationPipe}}</div>
+                                                
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="RunBatchInvoicesWizard()">{{'InterestReport.O.BatchInvoice' |TextCodeTranslationPipe}}</p>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </td>

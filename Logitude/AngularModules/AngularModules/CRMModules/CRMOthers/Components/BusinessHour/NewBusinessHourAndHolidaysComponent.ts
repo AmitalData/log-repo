@@ -490,7 +490,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     private timeDifferencecalCulationMethod(toHour: Date, fromHour: Date, isEnable: boolean) {
         var time = "0";
         var dateDiff;
-        if (isEnable) {
+      if (isEnable && toHour && fromHour) {
             var d1 = DateTool.GetDateFormats(new Date(toHour.toString())).DateParts.DateObject;
             var d2 = DateTool.GetDateFormats(new Date(fromHour.toString())).DateParts.DateObject;
             var timeDiff = Math.abs(DateTool.GetDateFromDate(toHour).getTime() - DateTool.GetDateFromDate(fromHour).getTime());
@@ -553,28 +553,60 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         });
     }
 
-    UpadteDates() {
-        this.entityPM.MondayFromHour = DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCSeconds();
-        this.entityPM.MondayToHour = DateTool.GetDateFromDate(this.MondayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCSeconds();
+  UpadteDates() {
+    if (this.MondayFromHourDate) {
+      this.entityPM.MondayFromHour = DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCSeconds();
 
-        this.entityPM.TuesdayFromHour = DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCSeconds();
-        this.entityPM.TuesdayToHour = DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCSeconds();
-
-        this.entityPM.WednesdayFromHour = DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCSeconds();
-        this.entityPM.WednesdayToHour = DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate( this.WednesdayToHourDate).getUTCSeconds();
-
-        this.entityPM.ThursdayFromHour = DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCSeconds();
-        this.entityPM.ThursdayToHour = DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCSeconds();
-
-        this.entityPM.FridayFromHour = DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCSeconds();
-        this.entityPM.FridayToHour = DateTool.GetDateFromDate(this.FridayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCSeconds();
-
-        this.entityPM.SaturdayFromHour = DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCSeconds();
-        this.entityPM.SaturdayToHour = DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCSeconds();
-
-        this.entityPM.SundayFromHour = DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCSeconds();
-        this.entityPM.SundayToHour = DateTool.GetDateFromDate(this.SundayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCSeconds();
     }
+
+    if (this.MondayToHourDate) {
+      this.entityPM.MondayToHour = DateTool.GetDateFromDate(this.MondayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCSeconds();
+    }
+    if (this.TuesdayFromHourDate) {
+      this.entityPM.TuesdayFromHour = DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCSeconds();
+
+    }
+    if (this.TuesdayToHourDate) {
+      this.entityPM.TuesdayToHour = DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCSeconds();
+    }
+
+    if (this.WednesdayFromHourDate) {
+      this.entityPM.WednesdayFromHour = DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCSeconds();
+
+    }
+    if (this.WednesdayToHourDate) {
+      this.entityPM.WednesdayToHour = DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCSeconds();
+    }
+    if (this.ThursdayFromHourDate) {
+      this.entityPM.ThursdayFromHour = DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCSeconds();
+    }
+    if (this.ThursdayToHourDate) {
+      this.entityPM.ThursdayToHour = DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCSeconds();
+    }
+
+    if (this.FridayFromHourDate) {
+      this.entityPM.FridayFromHour = DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCSeconds();
+
+    }
+    if (this.FridayToHourDate) {
+      this.entityPM.FridayToHour = DateTool.GetDateFromDate(this.FridayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCSeconds();
+    }
+
+    if (this.SaturdayFromHourDate) {
+      this.entityPM.SaturdayFromHour = DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCSeconds();
+
+    }
+    if (this.SaturdayToHourDate) {
+      this.entityPM.SaturdayToHour = DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCSeconds();
+    }
+    if (this.SundayFromHourDate) {
+      this.entityPM.SundayFromHour = DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCSeconds();
+
+    }
+    if (this.SundayToHourDate) {
+      this.entityPM.SundayToHour = DateTool.GetDateFromDate(this.SundayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCSeconds();
+    }
+  }
 
     AddHoliday() {
         var todayDateTime = DateTool.GetCurrentDateTimeAsUtc();
@@ -586,8 +618,8 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         holidayPM.UpdateDate = todayDateTime;
         holidayPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         var viewModel = new BusinessHourHolidayArgs(this.entityPM, holidayPM, this, true, false);
-        var logWindow = new LogitudeWindow();
         logWindow.Title = "New Holiday";
+        var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 450;
         logWindow.DataContext = viewModel;

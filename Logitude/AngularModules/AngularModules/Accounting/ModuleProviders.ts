@@ -107,7 +107,7 @@ import { BankAccountExtendedListService } from './Services/ExtendedLists/BankAcc
 import { ReconcileExternalPageListService } from './Services/StandardLists/ReconcileExternalPageListService';
 import { BankDepositExtendedPMService } from './Services/ExtendedPMs/BankDepositExtendedPMService';
 import { AccountingOpService } from './Services/Others/AccountingOpService';
-
+import { InterestReportExtendedListService } from './Services/ExtendedLists/InterestReportExtendedListService';
 import { PaymentChequeListService } from './Services/StandardLists/PaymentChequeListService';
 import { TaxWithholdingAssessOfficeListService } from './Services/StandardLists/TaxWithholdingAssessOfficeListService';
 import { ExternalReconciliationExtendedPMService } from './Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
@@ -201,7 +201,7 @@ export class ModuleProviders {
             case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
             case "InterestReportListService": { myResult = new InterestReportListService(); break; }
             case "InterestReportLineListService": { myResult = new InterestReportLineListService(); break; }
-
+          case "InterestReportExtendedListService": { myResult = new InterestReportExtendedListService(); break;}
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
             case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
             case "ExternalPageAdditionalDataPMService": { myResult = new ExternalPageAdditionalDataPMService(); break; }

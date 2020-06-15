@@ -83,8 +83,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBScripts\202006092059_SetPermissionToAllBIFolders.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
+    <None Include="DBTables\BIFoldersPermission.dxml" />
     <None Include="DBTables\BIReport.dxml" />
     <None Include="DBTables\BIReportFolder.dxml" />
     <None Include="DBTables\BIReportsExecutionLog.dxml" />
@@ -101,6 +103,7 @@
     <None Include="DBTables\Toggle.dxml" />
     <None Include="EntityFiles\BatchTaskExecution.lxml" />
     <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
+    <None Include="EntityFiles\BIFoldersPermission.lxml" />
     <None Include="EntityFiles\BIReport.lxml">
       <SubType>Designer</SubType>
     </None>

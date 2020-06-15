@@ -42,6 +42,10 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(500).IsUnicode(false);
 
             this.Property(t => t.Index).HasColumnName("Index");
+
+            this.Property(t => t.PermissionForAll).HasColumnName("PermissionForAll");
+
+            this.Property(t => t.PermittedByUserId).HasColumnName("PermittedByUserId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

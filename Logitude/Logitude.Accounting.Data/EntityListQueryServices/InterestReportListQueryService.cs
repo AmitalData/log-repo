@@ -42,7 +42,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          GLAccountId = a.GLAccountId,
 					
 					                          ReportNumber = a.ReportNumber,
-					
 					                          InterestCalculationDate = a.InterestCalculationDate,
 					
 					                          TotalAmount = a.TotalAmount,
@@ -71,8 +70,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                               ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
 
-                                              GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
-
+                                              GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
+                                            EnableInvoiceing = a.InterestReportStatusCode =="8"? false :true
                                             });
             return query;
 		}
@@ -81,12 +80,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-				private IQueryable<InterestReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
+		private IQueryable<InterestReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestReport> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
-
-
 
 
     }

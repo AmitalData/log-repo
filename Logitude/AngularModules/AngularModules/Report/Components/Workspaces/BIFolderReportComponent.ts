@@ -7,7 +7,7 @@ import { BIReportList } from '../../../Infrastructure/EntityLists/BIReportList';
 import { BIReportListService } from '../../../Infrastructure/Services/StandardLists/BIReportListService';
 import { InfrastructureDomainService } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { BIReportFolderList } from '../../../Infrastructure/EntityLists/BIReportFolderList';
-import { BIReportFolderListService } from '../../../Infrastructure/Services/StandardLists/BIReportFolderListService';
+import { BIReportFolderExtendedListService } from '../../../Infrastructure/Services/ExtendedLists/BIReportFolderExtendedListService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
@@ -20,12 +20,12 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 export class BIFolderReportComponent {
     public ItemsSource: BIFolderClass[] = [];
-    private folderListService: BIReportFolderListService;
+    private folderListService: BIReportFolderExtendedListService;
     private reportListService: BIReportListService;
     public _InfrastructureDomainService: InfrastructureDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.folderListService = new BIReportFolderListService();
+        this.folderListService = new BIReportFolderExtendedListService();
         this.reportListService = new BIReportListService();
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this.LoadData();
@@ -46,8 +46,8 @@ export class BIFolderReportComponent {
 
     private folderList: BIReportFolderList[];
     private reportList: BIReportList[];
-    LoadData() {        
-        this.folderListService.getAll().subscribe((myResponse: ServiceResponse) => {
+    LoadData() {
+        this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.folderList = myResponse.Result;
                 

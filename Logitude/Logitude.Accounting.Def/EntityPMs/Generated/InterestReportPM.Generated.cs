@@ -699,6 +699,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool enableInvoiceing ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool EnableInvoiceing  
+	   {
+	    
+	     get
+		{
+		   return enableInvoiceing;
+		 }
+		 set
+		 {
+		   if(enableInvoiceing != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnableInvoiceing",OldValue=enableInvoiceing,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   enableInvoiceing=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

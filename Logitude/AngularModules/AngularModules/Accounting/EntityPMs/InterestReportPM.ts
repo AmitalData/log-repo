@@ -199,6 +199,11 @@ export class InterestReportPM {
     public set CustomerLocalName(newValue: string) { if (this.customerLocalName != newValue) { this.customerLocalName = newValue; this.MarkAsDirty("CustomerLocalName"); } }
        
 	 
+    private enableInvoiceing: boolean;
+    public get EnableInvoiceing() { return this.enableInvoiceing; }
+    public set EnableInvoiceing(newValue: boolean) { if (this.enableInvoiceing != newValue) { this.enableInvoiceing = newValue; this.MarkAsDirty("EnableInvoiceing"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

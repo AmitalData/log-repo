@@ -68,6 +68,22 @@ namespace Logitude.Accounting.BL
                 SearchFields = "5,In Progress,בתהליך", 
                 EnglishName = "In Progress", 
 			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "8", 
+                EnglishName = "Invoicing In Progress", 
+                LocalName = "הפקת החשבונית בתהליך", 
+                SearchFields = "8,הפקת החשבונית בתהליך,Invoicing In Progress", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "9", 
+                EnglishName = "Invoicing Failed", 
+                LocalName = "הפקת החשבונית נכשלה", 
+                SearchFields = "9,הפקת החשבונית נכשלה,Invoicing Failed", 
+			});
 			
             return all;
        }
