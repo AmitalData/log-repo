@@ -116,7 +116,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                         myResult.DeploymentStage = mySetting.DeploymentStage;
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
-
+                        myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -680,6 +680,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
         public string ReleaseNotesURL { get; set; }
+
+        public string LogitudeDemoTenants { get; set; }
     }
 
     public class TenantManagementJS

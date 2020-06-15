@@ -43,364 +43,358 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class AutomaticExternalReconcileService
     {
-        public AutoSelectedExternalReconciliationLines AutomaticExternalReconcile(bool amountReconcile, bool referenceReconcile, bool refDateReconcile,
-            string objectTableId, string entityId, string glAccountId, QueryOperations transactionQueryOperations, QueryOperations bankPageLineQueryOperations, int tenant)
+        public const int RESULT_LIMIT = 100;
+        public int tenant;
+        private List<MatchingLine> matchedLines = new List<MatchingLine>();
+        List<MyPageLine> externalPageLines;
+        List<MyLedgerTransaction> ledgerTransactions;
+
+        public AutomaticExternalReconcileService(int _tenant)
         {
-
-            int resultedArrayLimit = 100;
-            List<string> pageLinesIds = new List<string>();
-            List<string> transactionsLinesIds = new List<string>();
-
-            //smoke validation
-            if (amountReconcile == false && referenceReconcile == false && refDateReconcile == false) throw new ApplicationException("Please select at least one choice");
-            if (objectTableId == null) throw new ApplicationException("objectTableId is not provided !!!");
-            if (glAccountId == null) throw new ApplicationException("gl Account is not provided !!!");
-            //
-
-
-            // get filterd lines
-            var accountingContext = AccountingContext.GetContext(tenant);
-            List<MyPageLine> filteredPageLines = GetFilteredPageLines(bankPageLineQueryOperations, objectTableId, entityId, tenant);
-            List<MyLedgerTransaction> filteredLedgerTransactions = GetFilteredLedgerTransactions(transactionQueryOperations, glAccountId, tenant);
-
-            // prepare result array
-            List<AutoSelectedExternalReconciliation> resultedArray = new List<AutoSelectedExternalReconciliation>();
-
-            // loop on page lines
-            if (filteredPageLines.Count > 0)
-            {
-                if (filteredLedgerTransactions.Count == 0) throw new ApplicationException("No ledger transactions found for this bank account!");
-                int groupNumberCounter = 1;
-
-                #region case: [Amount only]
-                // case: [Amount only]
-                if (amountReconcile && !referenceReconcile && !refDateReconcile)
-                {
-
-                    // Group Transactions by Amount
-                    var groupedTransactions = filteredLedgerTransactions.GroupBy(x => x.Amount);
-                    var groupedTransactionsList = groupedTransactions.ToList();
-
-                    // Build dictionary
-                    var groupedTransactionsDictionary = groupedTransactionsList.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    foreach (var pageLine in filteredPageLines)
-                    {
-
-                        // Get matched transaction
-                        List<MyLedgerTransaction> groubedTransactionsListByAmount;
-                        groupedTransactionsDictionary.TryGetValue(pageLine.Amount, out groubedTransactionsListByAmount);
-
-                        if (groubedTransactionsListByAmount != null)
-                        {
-                            foreach (MyLedgerTransaction transaction in groubedTransactionsListByAmount)
-                            {
-                                if (transaction != null)
-                                {
-                                    // 1- check if use before
-                                    var item = resultedArray.Find(d => d.LedgerTransactionId == transaction.Id);
-
-                                    if (item == null)
-                                    {
-                                        // 2- push to result array
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
-                                        pageLinesIds.Add(pageLine.Id);
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = transaction.Id, BankPageLineId = null, GroupNumber = groupNumberCounter });
-                                        transactionsLinesIds.Add(transaction.Id);
-
-                                        // 3- check result array length
-                                        if (resultedArray.Count >= resultedArrayLimit)
-                                            goto Finish;
-
-                                        groupNumberCounter++;
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                }
-                #endregion
-
-                #region case: [Amount + Reference]
-                // case: [Amount + Reference]
-                if (amountReconcile && referenceReconcile && !refDateReconcile)
-                {
-
-                    // [Ref 1] Group Transactions by Amount, Build dictionary 
-                    var groupedTransactions_ref1 = filteredLedgerTransactions.GroupBy(x => new AmountRefKey(x.Amount, x.Reference1));
-                    var groupedTransactionsList_ref1 = groupedTransactions_ref1.ToList();
-                    var groupedTransactionsDictionary_ref1 = groupedTransactionsList_ref1.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    // [Ref 2] Group Transactions by Amount, Build dictionary 
-                    var groupedTransactions_ref2 = filteredLedgerTransactions.GroupBy(x => new AmountRefKey(x.Amount, x.Reference2));
-                    var groupedTransactionsList_ref2 = groupedTransactions_ref2.ToList();
-                    var groupedTransactionsDictionary_ref2 = groupedTransactionsList_ref2.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    // [Ref 3] Group Transactions by Amount, Build dictionary 
-                    var groupedTransactions_ref3 = filteredLedgerTransactions.GroupBy(x => new AmountRefKey(x.Amount, x.Reference3));
-                    var groupedTransactionsList_ref3 = groupedTransactions_ref3.ToList();
-                    var groupedTransactionsDictionary_ref3 = groupedTransactionsList_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-
-                    foreach (var pageLine in filteredPageLines)
-                    {
-                        if (pageLine.Reference == null)
-                            continue;
-
-                        // Get matched transaction
-                        List<MyLedgerTransaction> groubedTransactionsListByAmount;
-                        groupedTransactionsDictionary_ref1.TryGetValue(new AmountRefKey(pageLine.Amount, pageLine.Reference), out groubedTransactionsListByAmount);
-                        if (groubedTransactionsListByAmount == null)
-                            groupedTransactionsDictionary_ref2.TryGetValue(new AmountRefKey(pageLine.Amount, pageLine.Reference), out groubedTransactionsListByAmount);
-                        if (groubedTransactionsListByAmount == null)
-                            groupedTransactionsDictionary_ref3.TryGetValue(new AmountRefKey(pageLine.Amount, pageLine.Reference), out groubedTransactionsListByAmount);
-
-
-                        if (groubedTransactionsListByAmount != null)
-                        {
-                            foreach (MyLedgerTransaction transaction in groubedTransactionsListByAmount)
-                            {
-                                if (transaction != null)
-                                {
-                                    // 1- check if use before
-                                    var item = resultedArray.Find(d => d.LedgerTransactionId == transaction.Id);
-
-                                    if (item == null)
-                                    {
-                                        // 2- push to result array
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
-                                        pageLinesIds.Add(pageLine.Id);
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = transaction.Id, BankPageLineId = null, GroupNumber = groupNumberCounter });
-                                        transactionsLinesIds.Add(transaction.Id);
-
-                                        // 3- check result array length
-                                        if (resultedArray.Count >= resultedArrayLimit)
-                                            goto Finish;
-
-                                        groupNumberCounter++;
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        
-                    }
-
-
-
-                }
-                #endregion
-
-                #region case: [Amount + ReferenceDate]
-                // case: [Amount + ReferenceDate]
-                if (amountReconcile && !referenceReconcile && refDateReconcile)
-                {
-
-                    // Group Transactions by Amount + ReferenceDate
-
-                    var groupedTransactions = filteredLedgerTransactions.GroupBy(x => new AmountRefDateKey(x.Amount, x.DocumentDate));
-                    //var groupedTransactions = filteredLedgerTransactions.GroupBy(x => new { x.Amount, x.Reference1 });
-                    var groupedTransactionsList = groupedTransactions.ToList();
-
-                    // Build dictionary
-                    var groupedTransactionsDictionary = groupedTransactionsList.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    foreach (var pageLine in filteredPageLines)
-                    {
-                        // Get matched transaction
-                        List<MyLedgerTransaction> groubedTransactionsListByAmount;
-                        groupedTransactionsDictionary.TryGetValue(new AmountRefDateKey(pageLine.Amount, pageLine.ReferenceDate), out groubedTransactionsListByAmount);
-
-                        if (groubedTransactionsListByAmount != null)
-                        {
-                            foreach (MyLedgerTransaction transaction in groubedTransactionsListByAmount)
-                            {
-                                if (transaction != null)
-                                {
-                                    // 1- check if use before
-                                    var item = resultedArray.Find(d => d.LedgerTransactionId == transaction.Id);
-
-                                    if (item == null)
-                                    {
-                                        // 2- push to result array
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
-                                        pageLinesIds.Add(pageLine.Id);
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = transaction.Id, BankPageLineId = null, GroupNumber = groupNumberCounter });
-                                        transactionsLinesIds.Add(transaction.Id);
-
-                                        // 3- check result array length
-                                        if (resultedArray.Count >= resultedArrayLimit)
-                                            goto Finish;
-
-                                        groupNumberCounter++;
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-
-                }
-                #endregion
-
-                #region case: [Amount + Reference + ReferenceDate]
-                // case: [Amount + Reference + ReferenceDate]
-                if (amountReconcile && referenceReconcile && refDateReconcile)
-                {
-                    // [Ref 1] Group Transactions by Amount + Reference + ReferenceDate , Build dictionary
-                    var groupedTransactions_ref1 = filteredLedgerTransactions.GroupBy(x => new AmountRefRefDateKey(x.Amount, x.Reference1, x.DocumentDate));
-                    var groupedTransactionsList_ref1 = groupedTransactions_ref1.ToList();
-                    var groupedTransactionsDictionary_ref1 = groupedTransactionsList_ref1.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    // [Ref 2] Group Transactions by Amount + Reference + ReferenceDate , Build dictionary
-                    var groupedTransactions_ref2 = filteredLedgerTransactions.GroupBy(x => new AmountRefRefDateKey(x.Amount, x.Reference2, x.DocumentDate));
-                    var groupedTransactionsList_ref2 = groupedTransactions_ref2.ToList();
-                    var groupedTransactionsDictionary_ref2 = groupedTransactionsList_ref2.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    // [Ref 3] Group Transactions by Amount + Reference + ReferenceDate , Build dictionary
-                    var groupedTransactions_ref3 = filteredLedgerTransactions.GroupBy(x => new AmountRefRefDateKey(x.Amount, x.Reference3, x.DocumentDate));
-                    var groupedTransactionsList_ref3 = groupedTransactions_ref3.ToList();
-                    var groupedTransactionsDictionary_ref3 = groupedTransactionsList_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
-
-                    foreach (var pageLine in filteredPageLines)
-                    {
-                        if (pageLine.Reference == null)
-                            continue;
-
-                        // Get matched transaction
-                        List<MyLedgerTransaction> groubedTransactionsListByAmount;
-                        groupedTransactionsDictionary_ref1.TryGetValue(new AmountRefRefDateKey(pageLine.Amount, pageLine.Reference, pageLine.ReferenceDate), out groubedTransactionsListByAmount);
-                        if (groubedTransactionsListByAmount == null)
-                            groupedTransactionsDictionary_ref2.TryGetValue(new AmountRefRefDateKey(pageLine.Amount, pageLine.Reference, pageLine.ReferenceDate), out groubedTransactionsListByAmount);
-                        if (groubedTransactionsListByAmount == null)
-                            groupedTransactionsDictionary_ref3.TryGetValue(new AmountRefRefDateKey(pageLine.Amount, pageLine.Reference, pageLine.ReferenceDate), out groubedTransactionsListByAmount);
-
-
-                        if (groubedTransactionsListByAmount != null)
-                        {
-                            foreach (MyLedgerTransaction transaction in groubedTransactionsListByAmount)
-                            {
-                                if (transaction != null)
-                                {
-                                    // 1- check if use before
-                                    var item = resultedArray.Find(d => d.LedgerTransactionId == transaction.Id);
-
-                                    if (item == null)
-                                    {
-                                        // 2- push to result array
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
-                                        pageLinesIds.Add(pageLine.Id);
-                                        resultedArray.Add(new AutoSelectedExternalReconciliation() { LedgerTransactionId = transaction.Id, BankPageLineId = null, GroupNumber = groupNumberCounter });
-                                        transactionsLinesIds.Add(transaction.Id);
-
-                                        // 3- check result array length
-                                        if (resultedArray.Count >= resultedArrayLimit)
-                                            goto Finish;
-
-                                        groupNumberCounter++;
-
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                }
-                #endregion
-
-            }
-            else
-            {
-                //throw new ApplicationException("No page lines found in bank account!");
-            }
-
-
-            Finish:
-
-
-            AutoSelectedExternalReconciliationLines result = new AutoSelectedExternalReconciliationLines();
-
-            LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-            var transactions = query.GetTransactionsByIds(transactionsLinesIds);
-            transactions.ForEach(line => { line.GroupHash = resultedArray.Find(d => d.LedgerTransactionId == line.Id).GroupNumber; });
-            result.transactionLines = transactions.OrderBy(d=>d.GroupHash).ToList();
-
-            ReconcileExternalPageLineListQueryService pageQuery = new ReconcileExternalPageLineListQueryService(accountingContext);
-            var pageLines = pageQuery.GetPageLinesByIds(pageLinesIds);
-            pageLines.ForEach(line => { line.GroupHash = resultedArray.Find(d => d.BankPageLineId == line.Id).GroupNumber; });
-            result.pageLines = pageLines.OrderBy(d => d.GroupHash).ToList();
-
-            result.Count = resultedArray.Count;
-
-
-            // return result
-            return result;
+            tenant = _tenant;
         }
 
-        List<MyPageLine> GetFilteredPageLines(QueryOperations bankPageLineQueryOperations, string objectTableId, string entityId, int tenant)
+        public MatchedReconciliationLines GetMatchedLines(AutoExternalReconcileArgs args)
+        {
+            ValidateParameters(args);
+
+            externalPageLines = GetFilteredPageLines(args);
+            ledgerTransactions = GetFilteredLedgerTransactions(args);
+
+            if (externalPageLines.Count > 0 && ledgerTransactions.Count > 0)
+            {
+                if (args.AmountReconcile && !args.ReferenceReconcile && !args.RefDateReconcile)
+                    SetMatchedLinesByAmount();
+                else if (args.AmountReconcile && args.ReferenceReconcile && !args.RefDateReconcile)
+                    SetMatchedLinesByAmountAndReferences();
+                else if (args.AmountReconcile && !args.ReferenceReconcile && args.RefDateReconcile)
+                    SetMatchedLinesByAmountAndReferenceDate();
+                else if (args.AmountReconcile && args.ReferenceReconcile && args.RefDateReconcile)
+                    SetMatchedLinesByAmountAndReferenceDateAndReferences();
+            }
+
+            return BuildMathcedReconcileLines();
+        }
+
+        private MatchedReconciliationLines BuildMathcedReconcileLines()
+        {
+            MatchedReconciliationLines matchedReconcileLines = new MatchedReconciliationLines();
+            matchedReconcileLines.transactionLines = GetLedgerTransactionsFromMatchedLines();
+            matchedReconcileLines.pageLines = GetPageLinesFromMatchedLines();
+            matchedReconcileLines.Count = matchedLines.Count;
+            return matchedReconcileLines;
+        }
+
+        // ----------------------------------------------------------------------------------------------
+        //   [Abdullah]: process logic
+        //   1- get lines filtered by accounts
+        //   2- set dictionary of (KEY => list of transactions) , KEY will be (amount, ref, ref date)
+        //   3- loop on page lines, and select matched transaction from dictionary
+        //   4- add it to matched result
+        // ----------------------------------------------------------------------------------------------
+
+        private void SetMatchedLinesByAmount()
+        {
+            int groupNumberCounter = 1;
+            Dictionary<decimal, List<MyLedgerTransaction>> transactionsByCreditAmountDictionary = GetTransactionsByCreditAmountDictionary(ledgerTransactions);
+            Dictionary<decimal, List<MyLedgerTransaction>> transactionsByDebitAmountDictionary = GetTransactionsByDebitAmountDictionary(ledgerTransactions);
+
+            foreach (var pageLine in externalPageLines)
+            {
+                MyLedgerTransaction matchedTransaction;
+                if (pageLine.CreditAmount != 0)
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountDictionary, pageLine.CreditAmount);
+                else
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountDictionary, pageLine.DebitAmount);
+
+                if (matchedTransaction != null)
+                {
+                    AddMatchedPageLine(groupNumberCounter, pageLine);
+                    AddMatchedTransaction(groupNumberCounter, matchedTransaction);
+                    groupNumberCounter++;
+
+                    if (matchedLines.Count >= RESULT_LIMIT)
+                        break;
+                }
+            }
+        }
+        private void SetMatchedLinesByAmountAndReferenceDate()
+        {
+            int groupNumberCounter = 1;
+            Dictionary<AmountRefDateKey, List<MyLedgerTransaction>> transactionsByCreditAmountAndReferenceDateDictionary = GetTransactionByCreditAmountAndReferenceDateDictionary(ledgerTransactions);
+            Dictionary<AmountRefDateKey, List<MyLedgerTransaction>> transactionsByDebitAmountAndReferenceDateDictionary = GetTransactionByDebitAmountAndReferenceDateDictionary(ledgerTransactions);
+
+            foreach (var pageLine in externalPageLines)
+            {
+                MyLedgerTransaction matchedTransaction;
+                if (pageLine.CreditAmount != 0)
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByCreditAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.CreditAmount, pageLine.ReferenceDate));
+                else
+                    matchedTransaction = GetNotUsedMatchedTransaction(transactionsByDebitAmountAndReferenceDateDictionary, new AmountRefDateKey(pageLine.DebitAmount, pageLine.ReferenceDate));
+
+                if (matchedTransaction != null)
+                {
+                    AddMatchedPageLine(groupNumberCounter, pageLine);
+                    AddMatchedTransaction(groupNumberCounter, matchedTransaction);
+                    groupNumberCounter++;
+
+                    if (matchedLines.Count >= RESULT_LIMIT)
+                        break;
+                }
+
+
+            }
+        }
+        private void SetMatchedLinesByAmountAndReferences()
+        {
+            int groupNumberCounter = 1;
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref1 = GetTransactionsByAmountAndReference(ledgerTransactions, true, 1);
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref1 = GetTransactionsByAmountAndReference(ledgerTransactions, false, 1);
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref2 = GetTransactionsByAmountAndReference(ledgerTransactions, true, 2);
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref2 = GetTransactionsByAmountAndReference(ledgerTransactions, false, 2);
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref3 = GetTransactionsByAmountAndReference(ledgerTransactions, true, 3);
+            Dictionary<AmountRefKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref3 = GetTransactionsByAmountAndReference(ledgerTransactions, false, 3);
+
+            foreach (var pageLine in externalPageLines.Where(d => d.Reference != null))
+            {
+                MyLedgerTransaction matchedTransaction;
+                if (pageLine.CreditAmount != 0)
+                {
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefKey(pageLine.CreditAmount, pageLine.Reference));
+                }
+                else
+                {
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefKey(pageLine.DebitAmount, pageLine.Reference));
+                }
+
+                if (matchedTransaction != null)
+                {
+                    AddMatchedPageLine(groupNumberCounter, pageLine);
+                    AddMatchedTransaction(groupNumberCounter, matchedTransaction);
+                    groupNumberCounter++;
+
+                    if (matchedLines.Count >= RESULT_LIMIT) break;
+                }
+            }
+        }
+        private void SetMatchedLinesByAmountAndReferenceDateAndReferences()
+        {
+            int groupNumberCounter = 1;
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref1 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, true, 1);
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref1 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, false, 1);
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref2 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, true, 2);
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref2 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, false, 2);
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryCredit_ref3 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, true, 3);
+            Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> groupedTransactionsDictionaryDebit_ref3 = GetTransactionsByAmountAndReferenceDateAndReference(ledgerTransactions, false, 3);
+
+            foreach (var pageLine in externalPageLines.Where(d => d.Reference != null))
+            {
+                MyLedgerTransaction matchedTransaction;
+                if (pageLine.CreditAmount != 0)
+                {
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref1, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref2, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryCredit_ref3, new AmountRefRefDateKey(pageLine.CreditAmount, pageLine.Reference, pageLine.ReferenceDate));
+                }
+                else
+                {
+                    matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref1, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref2, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                    if (matchedTransaction == null)
+                        matchedTransaction = GetNotUsedMatchedTransaction(groupedTransactionsDictionaryDebit_ref3, new AmountRefRefDateKey(pageLine.DebitAmount, pageLine.Reference, pageLine.ReferenceDate));
+                }
+                if (matchedTransaction != null)
+                {
+                    AddMatchedPageLine(groupNumberCounter, pageLine);
+                    AddMatchedTransaction(groupNumberCounter, matchedTransaction);
+                    groupNumberCounter++;
+                    if (matchedLines.Count >= RESULT_LIMIT) break;
+                }
+            }
+        }
+
+
+
+        private static Dictionary<AmountRefKey, List<MyLedgerTransaction>> GetTransactionsByAmountAndReference(List<MyLedgerTransaction> ledgerTransactions, bool isCreditAmount, int refNumber)
+        {
+            List<IGrouping<AmountRefKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefKey, MyLedgerTransaction>>();
+            if (refNumber == 1)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1)).ToList();
+            else if (refNumber == 2)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2)).ToList();
+            else if (refNumber == 3)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3)).ToList();
+
+            var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return groupedTransactionsDictionary_ref3;
+        }
+
+        private static Dictionary<AmountRefRefDateKey, List<MyLedgerTransaction>> GetTransactionsByAmountAndReferenceDateAndReference(List<MyLedgerTransaction> ledgerTransactions, bool isCreditAmount, int refNumber)
+        {
+            List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>> groupedTransactions_ref3 = new List<IGrouping<AmountRefRefDateKey, MyLedgerTransaction>>();
+            if (refNumber == 1)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference1, x.DocumentDate)).ToList();
+            else if (refNumber == 2)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference2, x.DocumentDate)).ToList();
+            else if (refNumber == 3)
+                groupedTransactions_ref3 = ledgerTransactions.GroupBy(x => new AmountRefRefDateKey(isCreditAmount ? x.ForeignAmountCredit : x.ForeignAmountDebit, x.Reference3, x.DocumentDate)).ToList();
+
+            var groupedTransactionsDictionary_ref3 = groupedTransactions_ref3.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return groupedTransactionsDictionary_ref3;
+        }
+        private static Dictionary<AmountRefDateKey, List<MyLedgerTransaction>> GetTransactionByCreditAmountAndReferenceDateDictionary(List<MyLedgerTransaction> ledgerTransactions)
+        {
+            var groupedTransactions = ledgerTransactions.GroupBy(x => new AmountRefDateKey(x.ForeignAmountCredit, x.DocumentDate));
+            var groupedTransactionsList = groupedTransactions.ToList();
+            var groupedTransactionsDictionary = groupedTransactionsList.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return groupedTransactionsDictionary;
+        }
+        private static Dictionary<AmountRefDateKey, List<MyLedgerTransaction>> GetTransactionByDebitAmountAndReferenceDateDictionary(List<MyLedgerTransaction> ledgerTransactions)
+        {
+            var groupedTransactions = ledgerTransactions.GroupBy(x => new AmountRefDateKey(x.ForeignAmountDebit, x.DocumentDate));
+            var groupedTransactionsList = groupedTransactions.ToList();
+            var groupedTransactionsDictionary = groupedTransactionsList.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return groupedTransactionsDictionary;
+        }
+
+        private List<ReconcileExternalPageLineList> GetPageLinesFromMatchedLines()
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            ReconcileExternalPageLineListQueryService pageQuery = new ReconcileExternalPageLineListQueryService(accountingContext);
+            var pageLinesIds2 = matchedLines.Where(d => d.BankPageLineId != null).Select(d => d.BankPageLineId).ToList();
+            var externalPageLines = pageQuery.GetPageLinesByIds(pageLinesIds2);
+            externalPageLines.ForEach(line => { line.GroupHash = matchedLines.Find(d => d.BankPageLineId == line.Id).GroupNumber; });
+
+            return externalPageLines.OrderBy(d => d.GroupHash).ToList();
+        }
+
+        private List<LedgerTransactionList> GetLedgerTransactionsFromMatchedLines()
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
+            var transactionsLinesIds2 = matchedLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
+            var transactions = query.GetTransactionsByIds(transactionsLinesIds2);
+
+            transactions.ForEach(line => { line.GroupHash = matchedLines.Find(d => d.LedgerTransactionId == line.Id).GroupNumber; });
+            return transactions.OrderBy(d => d.GroupHash).ToList();
+        }
+
+        private Dictionary<decimal, List<MyLedgerTransaction>> GetTransactionsByCreditAmountDictionary(List<MyLedgerTransaction> ledgerTransactions)
+        {
+            var groupebByAmountTransactions = ledgerTransactions.GroupBy(x => x.ForeignAmountCredit).ToList();
+            var transactionsByAmountDictionary = groupebByAmountTransactions.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return transactionsByAmountDictionary;
+        }
+        private Dictionary<decimal, List<MyLedgerTransaction>> GetTransactionsByDebitAmountDictionary(List<MyLedgerTransaction> ledgerTransactions)
+        {
+            var groupebByAmountTransactions = ledgerTransactions.GroupBy(x => x.ForeignAmountDebit).ToList();
+            var transactionsByAmountDictionary = groupebByAmountTransactions.ToDictionary(d => d.Key, d => d.ToList()); // Key: Amount, Value: List of transaction
+            return transactionsByAmountDictionary;
+        }
+
+        ////private MyLedgerTransaction GetNotUsedMatchedTransaction(Dictionary<decimal, List<MyLedgerTransaction>> groupedTransactionsDictionary, MyPageLine pageLine)
+        ////{
+        ////    groupedTransactionsDictionary.TryGetValue(pageLine.Amount, out List<MyLedgerTransaction> pageLineMatchedTransactions);
+
+        ////    // get not used transaction matched with page line
+        ////    var matchedTransaction = pageLineMatchedTransactions
+        ////        .FirstOrDefault(trans =>
+        ////            !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
+        ////        );
+        ////    return matchedTransaction;
+        ////}
+        //private MyLedgerTransaction GetNotUsedMatchedTransaction(Dictionary<decimal, List<MyLedgerTransaction>> groupedTransactionsDictionary, decimal amount)
+        //{
+        //    groupedTransactionsDictionary.TryGetValue(amount, out List<MyLedgerTransaction> pageLineMatchedTransactions);
+
+        //    // get not used transaction matched with page line
+        //    if(pageLineMatchedTransactions != null)
+        //    return pageLineMatchedTransactions
+        //        .FirstOrDefault(trans =>
+        //            !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
+        //        );
+        //    else
+        //        return null;
+        //}
+        private MyLedgerTransaction GetNotUsedMatchedTransaction<T>(Dictionary<T, List<MyLedgerTransaction>> groupedTransactionsDictionary, T key)
+        {
+            groupedTransactionsDictionary.TryGetValue(key, out List<MyLedgerTransaction> pageLineMatchedTransactions);
+
+            // get not used transaction matched with page line
+            if (pageLineMatchedTransactions != null)
+                return pageLineMatchedTransactions
+                    .FirstOrDefault(trans =>
+                        !matchedLines.Select(d => d.LedgerTransactionId).Contains(trans.Id)
+                    );
+            else
+                return null;
+        }
+        private void AddMatchedTransaction(int groupNumberCounter, MyLedgerTransaction transaction)
+        {
+            matchedLines.Add(new MatchingLine() { LedgerTransactionId = transaction.Id, BankPageLineId = null, GroupNumber = groupNumberCounter });
+        }
+
+        private void AddMatchedPageLine(int groupNumberCounter, MyPageLine pageLine)
+        {
+            matchedLines.Add(new MatchingLine() { LedgerTransactionId = null, BankPageLineId = pageLine.Id, GroupNumber = groupNumberCounter });
+        }
+
+        private static void ValidateParameters(AutoExternalReconcileArgs args)
+        {
+            if (args.AmountReconcile == false && args.ReferenceReconcile == false && args.RefDateReconcile == false) throw new ApplicationException("Please select at least one choice");
+            if (args.ObjectTableId == null) throw new ApplicationException("args.objectTableId is not provided !!!");
+            if (args.GLAccountId == null) throw new ApplicationException("gl Account is not provided !!!");
+        }
+
+        List<MyPageLine> GetFilteredPageLines(AutoExternalReconcileArgs args)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconcileExternalPageListQueryService query = new ReconcileExternalPageListQueryService(accountingContext);
-
-            // Get list query with query filters 
-            IQueryable<ReconcileExternalPageLineList> iQuerableList = query.getPageLinesByFilter(bankPageLineQueryOperations, objectTableId, entityId, tenant);
-
-            // Ordering
+            IQueryable<ReconcileExternalPageLineList> iQuerableList = query.getPageLinesByFilter(args.BankPageLineQueryOperations, args.ObjectTableId, args.EntityId, tenant);
             iQuerableList = iQuerableList.OrderByDescending(a => a.ReferenceDate);
-
             IQueryable<MyPageLine> pageLinesDTO = (from a in iQuerableList
                                                                       select new MyPageLine()
                                                                       {
                                                                           Id = a.Id,
-
                                                                           Amount = a.Amount,
-
+                                                                          CreditAmount = a.CreditAmount,
+                                                                          DebitAmount = a.DebitAmount,
                                                                           Reference = a.Reference,
-
                                                                           ReferenceDate = a.ReferenceDate,
-
                                                                       });
             return pageLinesDTO.ToList();
-
         }
 
-        List<MyLedgerTransaction> GetFilteredLedgerTransactions(QueryOperations transactionQueryOperations, string glAccountId, int tenant)
+        List<MyLedgerTransaction> GetFilteredLedgerTransactions(AutoExternalReconcileArgs args)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(accountingContext);
-
-            // Get list query with query filters 
-            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(transactionQueryOperations, glAccountId, tenant);
-
+            IQueryable<LedgerTransactionList> iQuerableList = query.GetIquerableOpenReconciliationFilterList(args.TransactionQueryOperations, args.GLAccountId, tenant);
             IQueryable<MyLedgerTransaction> linesDTO = (from a in iQuerableList
                                                             select new MyLedgerTransaction()
                                                             {
                                                                 Id = a.Id,
-
                                                                 DocumentDate = a.DocumentDate,
-
                                                                 Reference1 = a.Reference1,
-
                                                                 Reference2 = a.Reference2,
-
                                                                 Reference3 = a.Reference3,
-
                                                                 OpenAmount = a.OpenAmount,
-
                                                                 Amount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-
+                                                                ForeignAmountCredit = a.ForeignAmountCredit,
+                                                                ForeignAmountDebit = a.ForeignAmountDebit,
                                                             });
             return linesDTO.ToList();
-
         }
 
 
@@ -427,7 +421,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public void GenerateTestRecordsForExternalReco(string glAccountId, string bankAccountId, string type, int tenant)
         {
 
-            if (glAccountId == null || bankAccountId == null) throw new ApplicationException("glAccountId or bankAccountId is not provided!!");
+            if (glAccountId == null || bankAccountId == null) throw new ApplicationException("args.glAccountId or bankAccountId is not provided!!");
 
             int linesCount = 10;
 
@@ -838,6 +832,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public DateTime DocumentDate { get; set; }
 
         public decimal Amount { get; set; }
+        public decimal ForeignAmountCredit { get; set; }
+        public decimal ForeignAmountDebit { get; set; }
+
         //public string CurrencyId { get; set; }
 
         //public decimal ExchangeRate { get; set; }
@@ -858,11 +855,13 @@ namespace Logitude.Accounting.BL.CoreBL
         public string Id { get; set; }
         public DateTime ReferenceDate { get; set; }
         public decimal Amount { get; set; }
+        public decimal CreditAmount { get; set; }
+        public decimal DebitAmount { get; set; }
         public string Reference { get; set; }
 
     }
 
-    public class AutoSelectedExternalReconciliation
+    public class MatchingLine
     {
         public string LedgerTransactionId { get; set; }
         public string BankPageLineId { get; set; }
@@ -870,7 +869,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
     }
-    public class AutoSelectedExternalReconciliationLines
+    public class MatchedReconciliationLines
     {
         public List<LedgerTransactionList> transactionLines { get; set; }
         public List<ReconcileExternalPageLineList> pageLines { get; set; }
@@ -923,6 +922,18 @@ namespace Logitude.Accounting.BL.CoreBL
             Amount = amount;
             ReferenceDate = referenceDate;
         }
+    }
+
+    public class AutoExternalReconcileArgs
+    {
+        public bool AmountReconcile { get; set; }
+        public bool ReferenceReconcile { get; set; }
+        public bool RefDateReconcile { get; set; }
+        public string ObjectTableId { get; set; }
+        public string EntityId { get; set; }
+        public string GLAccountId { get; set; }
+        public QueryOperations TransactionQueryOperations { get; set; }
+        public QueryOperations BankPageLineQueryOperations { get; set; }
     }
 
 }

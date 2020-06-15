@@ -65,17 +65,25 @@ namespace Logitude.XSD
         }
         private void CheckDemoTenantData()
         {
-            if (Tenant == 65)
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                this.IsDemoTenant = true;
-            }
+                SettingRepository mySettingRepository = new SettingRepository();
+                var isDemoTenant = mySettingRepository.IsDemoTenant(Tenant.ToString());
 
-            else if (XmlTypeCode == "FWB" || XmlTypeCode == "FHL")
-            {
-                if (IsEAWBOnlyDemo)
+                if (isDemoTenant)
                 {
                     this.IsDemoTenant = true;
                 }
+
+                else if (XmlTypeCode == "FWB" || XmlTypeCode == "FHL")
+                {
+                    if (IsEAWBOnlyDemo)
+                    {
+                        this.IsDemoTenant = true;
+                    }
+                }
+
+                scope.Complete();
             }
         }
         private void GetLoggedContactData()

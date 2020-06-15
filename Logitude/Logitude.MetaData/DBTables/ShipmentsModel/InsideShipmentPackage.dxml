@@ -187,6 +187,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Harmonize"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsMultiHarmonize"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentPackageId"
     ReferencedTable="ShipmentPackages"

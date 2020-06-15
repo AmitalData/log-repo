@@ -9,6 +9,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'LocalSettingsComponent',
@@ -37,7 +38,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
     //Tenant 65
     public get DemoMessageVisibility() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -66,7 +67,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
                 this.ShowDayLightSettings = true;
             }
 
-            if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+            if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
                 this.SetUIPropertiesHitVisible();
             }
 
@@ -216,7 +217,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
 
     get IsHitTestVisible() {
         var result = false;
-        if (this.TenantPm.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

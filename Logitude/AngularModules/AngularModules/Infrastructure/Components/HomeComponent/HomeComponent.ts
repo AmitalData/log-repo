@@ -107,7 +107,7 @@ export class HomeComponent implements OnDestroy{
 
         this.IsNewSignupTenant = SessionLocator.IsNewSignupTenant = isNewSignupTenant;
 
-        this.IsTenant65 = SessionLocator.Tenant == 65 ? true : false;
+        this.IsTenant65 = ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString());
         this.IsLogBox = SessionLocator.TenantPM.IsDocumentsArchive == true ? true : false;
 
         // Layout Direction

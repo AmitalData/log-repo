@@ -807,7 +807,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this.LookUpTable.EnableAddFromLOV) {
             this.isAddDisabled = false;
 
-            if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
+            if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                 this.ShowAddLink = false
 
             }
@@ -2577,7 +2577,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.isEditDisabled = false;
             this.isDeleteDisabled = false;
 
-            if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+            if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
                 if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
                     this.isEditDisabled = true;
                 }
@@ -2588,7 +2588,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if ((this.LookUpTable.EnableAddFromLOV) && !this.HideAdd) {
                 this.isAddDisabled = false;
 
-                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
+                if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                     this.ShowAddLink = false;
 
                 }
@@ -2597,7 +2597,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.ShowAddLink = true;
                 }
 
-                if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+                if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
                     if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
                         this.isAddDisabled = true;
                         this.ShowAddLink = false;
@@ -2659,7 +2659,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 //this.show = true;
                 this.showPopup = false;
 
-                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
+                if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
                     this.ShowMaintenanceBtn = false;
                 }
 

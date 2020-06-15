@@ -255,7 +255,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         _ARInvoicePM.CreateDate = todayDate;
         _ARInvoicePM.UpdateDate = todayDate;
-        _ARInvoicePM.InvoiceDate = todayDate;
+        _ARInvoicePM.InvoiceDate = this.EntityPM.InterestCalculationDate;
         _ARInvoicePM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         _ARInvoicePM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         _ARInvoicePM.IssuedByUserId = SessionLocator.LoggedUserId;

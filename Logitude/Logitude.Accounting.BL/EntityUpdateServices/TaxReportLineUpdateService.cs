@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -58,8 +59,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
                 journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
             }
-
+            entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
+            entityPM.LastUpdateDateTime = DateTime.Now;
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+
+
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
         private  void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
         {

@@ -18,6 +18,7 @@ import {PackageList} from '../../../Common/EntityLists/PackageList';
 import {PackageListService} from '../../../Common/Services/StandardLists/PackageListService';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {UserLicenseArgs} from '../../../Infrastructure/Args';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -47,7 +48,7 @@ export class UserWorkspaceComponent implements OnInit {
             this.BackButtonText = args.BackButtonText;
         }
 
-        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsDemoTenant = true;
         }
 

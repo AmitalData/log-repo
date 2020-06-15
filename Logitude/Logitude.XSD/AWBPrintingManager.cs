@@ -81,12 +81,14 @@ namespace Logitude.XSD
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(myResult.Tenant);
+                SettingRepository mySettingRepository = new SettingRepository();
+                var isDemoTenant = mySettingRepository.IsDemoTenant(myResult.Tenant.ToString());
 
                 if (tenantManagement != null)
                 {
                     myResult.IsAWBStockPrepaid = tenantManagement.IsAWBStockPrepaid;
 
-                    if (myResult.Tenant == 65 || tenantManagement.IsEAWBOnlyDemo)
+                    if (isDemoTenant || tenantManagement.IsEAWBOnlyDemo)
                     {
                         myResult.IsDemoTenant = true;
                     }

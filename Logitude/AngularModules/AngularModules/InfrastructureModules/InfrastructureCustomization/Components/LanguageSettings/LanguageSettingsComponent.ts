@@ -8,6 +8,7 @@ import {CommonDomainService, TranslationHeader} from '../../../../Common/Service
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -30,7 +31,7 @@ export class LanguageSettingsComponent {
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPM = response.Result;
 
-            this.IsLanguageDisabled = this.TenantPM.Id == 65 ? true : false;
+            this.IsLanguageDisabled = ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString());
 
             this.LoadLanguages();
             this.LoadFormat();
