@@ -628,6 +628,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardCurrenciesAccountingPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
@@ -664,6 +665,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\TenantAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\TermsofUseSignatureListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CardCurrenciesAccountingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerOpenFilesAmountPMService.ts" />

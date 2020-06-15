@@ -39,6 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                            {
                                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                               AccountingVATSplit = a.Card.AccountingVATSplit,
                                AddedManually = a.AddedManually,
                                Id = a.Id,
                                Remark = a.Card.Notes,
@@ -83,7 +84,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             trucker.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(trucker.Id, trucker.Tenant);
-            
+
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            trucker.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(trucker.Id, trucker.Tenant).ToList();
+
+
             if (trucker != null)
             {
                 trucker.IsExternal = false;
@@ -113,6 +119,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              {
                                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                                 AccountingVATSplit = a.Card.AccountingVATSplit,
                                                  AddedManually = a.AddedManually,
                                                  Id = a.Id,
                                                  Remark = a.Card.Notes,
@@ -161,6 +168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          {
                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                             AccountingVATSplit = a.Card.AccountingVATSplit,
                              AddedManually = a.AddedManually,
                              Id = a.Id,
                              Remark = a.Card.Notes,
@@ -270,6 +278,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 {
                                     ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                     PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                    AccountingVATSplit = a.Card.AccountingVATSplit,
                                     AddedManually = a.AddedManually,
                                     Id = a.Id,
                                     Remark = a.Card.Notes,

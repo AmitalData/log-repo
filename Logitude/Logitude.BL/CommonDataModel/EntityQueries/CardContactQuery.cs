@@ -169,6 +169,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LocalName = card.LocalName,
                     ReceivablesAccountingCard = card.ReceivablesAccountingCard,
                     PayablesAccountingCard = card.PayablesAccountingCard,
+                    AccountingVATSplit = card.AccountingVATSplit,
                     InActive = card.InActive,
                     Notes = card.Notes,
                     Id = card.Id,

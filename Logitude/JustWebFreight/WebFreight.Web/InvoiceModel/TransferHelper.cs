@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.InvoiceModel
 {
@@ -127,7 +128,8 @@ namespace WebFreight.Web.InvoiceModel
                     else
                     {
                         Card myCard = CardRepository.GetSingleCard(entity.BillToId, tenant, true);
-                        entity.DebitAccount = myCard.ReceivablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        entity.DebitAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entity.InvoiceCurrencyId, tenant, false);
                     }
                 }
 
@@ -234,7 +236,9 @@ namespace WebFreight.Web.InvoiceModel
                     else
                     {
                         Card myCard = CardRepository.GetSingleCard(entity.VendorId, tenant, true);
-                        entity.CreditAccount = myCard.PayablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        entity.CreditAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entity.InvoiceCurrencyId, tenant, true);
+
                     }
                 }
 
@@ -677,10 +681,17 @@ namespace WebFreight.Web.InvoiceModel
                 Card card = cardRep.GetSingleCard(entity.BillToId, entity.Tenant);
                 Currency currency = currencyRep.GetSingleCurrency(entity.PaymentCurrencyId, entity.Tenant);
                 string currencyError = "Currency External Id is required";
-                if (card != null && string.IsNullOrEmpty(card.ReceivablesAccountingCard))
+
+               
+                if (card != null)
                 {
-                    isReady = false;
-                    myError = "Bill To External Id is required";
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    var receivablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, entity.PaymentCurrencyId, entity.Tenant, false);
+                    if (string.IsNullOrEmpty(receivablesAccountingCard))
+                    {
+                        isReady = false;
+                        myError = "Bill To External Id is required";
+                    }
                 }
                 if (currency != null && string.IsNullOrEmpty(currency.AccountingExternalCode))
                 {

@@ -26,6 +26,7 @@ using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -382,7 +383,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     else
                     {
                         Card myCard = CardRepository.GetSingleCard(entityPM.VendorId, tenant, true);
-                        entityPM.CreditAccount = myCard.PayablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        entityPM.CreditAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entityPM.InvoiceCurrencyId, tenant, true);
                     }
                 }
 

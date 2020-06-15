@@ -25,12 +25,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="MyWarehouse"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="FirmCode"
     Type="varchar"
     Size="25">
@@ -43,6 +37,12 @@
     Size="4">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="MyWarehouse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="PrimaryContactName"

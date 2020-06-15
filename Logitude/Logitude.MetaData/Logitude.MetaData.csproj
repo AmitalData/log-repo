@@ -851,6 +851,7 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\CardCurrenciesAccounting.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>

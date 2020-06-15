@@ -109,6 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.Website = entityPM.Website;
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
+            entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
             entityCard.EnglishName = entityPM.EnglishName;
             entityCard.InActive = entityPM.InActive;
             entityCard.LocalName = entityPM.LocalName;
@@ -289,6 +290,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                                     CardPMId = a.Id,
                                     ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                     PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                    AccountingVATSplit =a.Card.AccountingVATSplit,
                                     CreateDate = a.Card.CreateDate,
                                     UpdateDate = a.Card.UpdateDate,
                                     CreatedByUserId = a.Card.CreatedByUserId,
@@ -378,6 +380,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                                         PrimaryContactId = a.Card.PrimaryContactId,
                                         ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                         PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                        AccountingVATSplit=a.Card.AccountingVATSplit,
                                     },
                                 };
             return pm;

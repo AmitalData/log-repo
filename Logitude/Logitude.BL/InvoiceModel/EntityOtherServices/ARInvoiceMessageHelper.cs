@@ -2067,7 +2067,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card myCard = CardRepository.GetSingleCard(invoice.BillToId, invoice.Tenant, true);
                 if (myCard != null)
                 {
-                    myResult = myCard.ReceivablesAccountingCard;
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    myResult = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, invoice.InvoiceCurrencyId, tenant, false);
                 }                
             }
 

@@ -68,4 +68,4 @@ export class CustomerOpenFilesAmountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

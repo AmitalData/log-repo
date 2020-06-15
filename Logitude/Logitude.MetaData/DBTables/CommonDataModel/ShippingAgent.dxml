@@ -19,6 +19,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="LocalCustomsCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ForwarderAccountNumber"
     Type="varchar"
     Size="15">
@@ -29,13 +36,6 @@
     Name="ForwarderCreditNumber"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalCustomsCode"
-    Type="varchar"
-    Size="50">
     <Constraints
       Nullable="true" />
   </Column>

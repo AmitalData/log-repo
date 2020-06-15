@@ -1482,7 +1482,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (isJournal)
                     {
                         Card myCard = CardRepository.GetSingleCard(entityPM.BillToId, tenant, true);
-                        entityPM.DebitAccount = myCard.ReceivablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        entityPM.DebitAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entityPM.InvoiceCurrencyId, tenant, false);
                     }
 
                     else if (isExternal)

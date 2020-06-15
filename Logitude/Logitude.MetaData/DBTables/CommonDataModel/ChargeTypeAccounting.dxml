@@ -2,8 +2,7 @@
 <Table
   Name="ChargeTypeAccountings"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -19,14 +18,21 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="PayableDebitAccount"
+    Name="VatTypeId"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="PayableDebitGLAcountId"
+    Name="ChargeTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PayableDebitAccount"
     Type="varchar"
     Size="15">
     <Constraints
@@ -40,25 +46,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ReceivableCreditGLAccountId"
+    Name="PayableDebitGLAcountId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="VatTypeId"
+    Name="ReceivableCreditGLAccountId"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ChargeTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="VatTypeId"

@@ -37,7 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-
+        private CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository;
         public AgentService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(objectContext);
             this.GetLoggedContact();
         }
 
@@ -62,6 +63,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
         }
 
@@ -72,9 +74,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet;
-        public void SetChangeSet(List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
+        private List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet;
+        public void SetChangeSet(List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet, List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet)
         {
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
+            this.cardCurrenciesAccountingChangeSet = cardCurrenciesAccountingChangeSet;
         }
 
         public void Create(AgentPM entityPM)
@@ -147,6 +151,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (mapComposition)
             {
                 this.cardExternalCodeByCurrencyChangeSet = this.entityPM.CardExternalCodeByCurrencies;
+                this.cardCurrenciesAccountingChangeSet = this.entityPM.CardCurrenciesAccountings;
             }
             this.InitializeComponent();
 
@@ -168,7 +173,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
-
+            this.UpdateCardCurrenciesAccountingCollection();
             if (!entityPM.IsHybrid)
             {
                 AgentTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -323,7 +328,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
+      
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -345,6 +350,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, true);
             cardExternalCodeByCurrencyRepository.Add(itemPoco);
         }
+
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -361,6 +367,75 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void UpdateCardCurrenciesAccountingCollection()
+        {
+            if (cardCurrenciesAccountingChangeSet != null)
+            {
+                foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteCardCurrenciesAccounting(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
+        private void CreateCardCurrenciesAccounting(CardCurrenciesAccountingPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardCurrenciesAccounting", tenant).ToString();
+            itemPM.CardId = this.entityPM.Id;
+            itemPM.Tenant = tenant;
+            itemPM.CurrencyId = itemPM.CurrencyId;
+            itemPM.CardId = itemPM.CardId;
+            itemPM.PayableDebitAccount = itemPM.PayableDebitAccount;
+            itemPM.ReceivableCreditAccount = itemPM.ReceivableCreditAccount;
+            CardCurrenciesAccounting itemPoco = new CardCurrenciesAccounting()
+            {
+                Id = itemPM.Id,
+                CardId = itemPM.CardId,
+                CurrencyId = itemPM.CurrencyId,
+                PayableDebitAccount = itemPM.PayableDebitAccount,
+                ReceivableCreditAccount = itemPM.ReceivableCreditAccount,
+                Tenant = tenant,
+            };
+
+            CardCurrenciesAccountingMapping.MapEntity(itemPM, itemPoco, true);
+            cardCurrenciesAccountingRepository.Add(itemPoco);
+        }
+        private void UpdateCardCurrenciesAccounting(CardCurrenciesAccountingPM itemPM)
+        {
+            CardCurrenciesAccounting itemPoco = cardCurrenciesAccountingRepository.GetSingleCardCurrenciesAccountings(itemPM.Id, tenant);
+            CardCurrenciesAccountingMapping.MapEntity(itemPM, itemPoco, false);
+
+            cardCurrenciesAccountingRepository.Update(itemPoco);
+        }
+        private void DeleteCardCurrenciesAccounting(CardCurrenciesAccountingPM itemPM)
+        {
+            CardCurrenciesAccounting itemPoco = cardCurrenciesAccountingRepository.GetSingleCardCurrenciesAccountings(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                cardCurrenciesAccountingRepository.Remove(itemPoco);
+            }
+        }
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();

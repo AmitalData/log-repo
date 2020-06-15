@@ -250,6 +250,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entity.Tenant = entityPm.Tenant;
             entity.ForwarderCreditNumber = entityPm.ForwarderCreditNumber;
             entity.ForwarderAccountNumber = entityPm.ForwarderAccountNumber;
+            card.AccountingVATSplit = entityPm.AccountingVATSplit;
             card.ReceivablesAccountingCard = entityPm.ReceivablesAccountingCard;
             card.PayablesAccountingCard = entityPm.PayablesAccountingCard;
             card.CreateDate = entityPm.CreateDate;
@@ -332,11 +333,33 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             }
 
+            this.UpdateCardCurrenciesAccountings_ShippingAgent(currentEntity);
             ShippingAgentService service = new ShippingAgentService(objectContext, currentEntity.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_ShippingAgent);
             service.Update(currentEntity);
         }
 
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_ShippingAgent;
+
+        private void UpdateCardCurrenciesAccountings_ShippingAgent(ShippingAgentPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_ShippingAgent = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_ShippingAgent)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+        }
         public void DeleteShippingAgent(ShippingAgentPM shippingAgent)
         {
             if (objectContext == null)
