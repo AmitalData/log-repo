@@ -1,5 +1,7 @@
 ﻿using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -82,5 +84,48 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public string CountryCode{ get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string Harmonize { get; set; }
+
+        public bool IsMultiHarmonize { get; set; }
+
+        private List<ShipmentPackageHarmonizePM> insidePackageHarmonizes;
+        [Composition]
+        [Include]
+        [Association("InsideShipmentPackageShipmentPackageHarmonize", "Id", "InsidePackageId")]
+        public virtual List<ShipmentPackageHarmonizePM> InsidePackageHarmonizes
+        {
+            get
+            {
+                if (insidePackageHarmonizes == null)
+                {
+                    insidePackageHarmonizes = new List<ShipmentPackageHarmonizePM>();
+                }
+
+                return insidePackageHarmonizes;
+            }
+
+            set { insidePackageHarmonizes = value; }
+        }
+
+        private List<ShipmentPackageHarmonizePM> insidePackageHarmonizesChangeSet;
+        public List<ShipmentPackageHarmonizePM> InsidePackageHarmonizesChangeSet
+        {
+            get
+            {
+                if (insidePackageHarmonizesChangeSet == null)
+                {
+                    insidePackageHarmonizesChangeSet = new List<ShipmentPackageHarmonizePM>();
+                }
+
+                return insidePackageHarmonizesChangeSet;
+            }
+
+            set
+            {
+                insidePackageHarmonizesChangeSet = value;
+            }
+        }
     }
 }
