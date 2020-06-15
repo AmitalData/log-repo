@@ -109,8 +109,7 @@ namespace Logitude.XSD.FSR
                     #region
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        SettingRepository mySettingRepository = new SettingRepository();
-                        var isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
+                        var isDemoTenant = false;
 
                         string myTTY = null;
                         string myCCSMessageType = null;
@@ -120,6 +119,8 @@ namespace Logitude.XSD.FSR
                         {
                             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                             TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                            SettingRepository mySettingRepository = new SettingRepository();
+                            isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
 
                             if (tenantManagement != null)
                             {
