@@ -52,20 +52,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
             valueToSearch = valueToSearch.TrimEnd();
             valueToSearch = valueToSearch.TrimStart();
 
-            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCode(type, tenant);
-            if (myCustomsAutonomyKeyword == null) return false;
-            string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
+            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeList(type, tenant);
+            if (myCustomsAutonomyKeyword == null ) return false;
+            //string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
 
-            for (int i = 0; i < list.Count(); i++)
-            {
-                list[i]= list[i].TrimEnd();
-                list[i] = list[i].TrimStart();
+            //for (int i = 0; i < list.Count(); i++)
+            //{
+            //    list[i]= list[i].TrimEnd();
+            //    list[i] = list[i].TrimStart();
             
-            }
+            //}
              
-            if (list != null && list.Count() > 0)
+            if (myCustomsAutonomyKeyword != null && myCustomsAutonomyKeyword.Count() > 0)
             {
-                if (list.Contains(valueToSearch))
+                if (myCustomsAutonomyKeyword.FirstOrDefault(x=>x.KeywordsList == valueToSearch)!=null)
                     return true;
             }
 
