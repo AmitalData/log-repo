@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContinuousRequestTypeUpdateClass
    {  		
-		public const string HashString = "809c59e4a468c01f516df415892abef0";
+		public const string HashString = "47810470e853c8dae3ebefa9aad26a71";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.ContinuousRequestType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.ContinuousRequestTypes",
-			      				    OldDBTableName =  "Customs.ContinuousRequestTypes",
 			      				    ObjectTableSingular =  "ContinuousRequestType",
 			      				    ObjectTablePlural =  "ContinuousRequestTypes",
 			      				    HasCustomFilter =  false,
@@ -134,6 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    HashString =  ContinuousRequestTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -146,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Customs.ContinuousRequestType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -197,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -208,7 +208,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "Customs.ContinuousRequestType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -259,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -270,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.ContinuousRequestType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -318,6 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -329,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "Customs.ContinuousRequestType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -380,6 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -391,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "Customs.ContinuousRequestType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -441,6 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -481,7 +481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ContinuousRequestTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousRequestTypeTextCode_0.Id, NameTextCodeCode = ContinuousRequestTypeTextCode_0.Code, ObjectTableName = "Customs.ContinuousRequestType", Code = "ContinuousRequestType",  QueryGroupCode = "cc88", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousRequestTypeObjectTable.Id, QuerySection = "Customs.ContinuousRequestType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousRequestTypeFeature_0.Id,FeatureUniqeCode= ContinuousRequestTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContinuousRequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContinuousRequestType.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContinuousRequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContinuousRequestType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ContinuousRequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContinuousRequestType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -497,7 +497,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ContinuousRequestTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousRequestType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ContinuousRequestTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContinuousRequestType").ToList();
+		       
+	      
+
+	         Screen ContinuousRequestTypeCustomsContinuousRequestTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContinuousRequestType.HeaderScreen", Name = "Customs.ContinuousRequestTypeHeaderScreen", ObjectTableId = ContinuousRequestTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ContinuousRequestTypeObjectTable.HeaderScreenId = ContinuousRequestTypeCustomsContinuousRequestTypeHeaderScreenScreen0.Id;
+		    ContinuousRequestTypeObjectTable.HeaderScreenCode = ContinuousRequestTypeCustomsContinuousRequestTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -516,10 +528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -535,10 +547,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPEV",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Updated",
                 EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

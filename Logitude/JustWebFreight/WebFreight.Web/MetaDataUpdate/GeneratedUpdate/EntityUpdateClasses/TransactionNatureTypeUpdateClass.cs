@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TransactionNatureTypeUpdateClass
    {  		
-		public const string HashString = "b1bfa94299568fbd123335717bfd9529";
+		public const string HashString = "b0d6fc9958de74ef4f7c62f08b40f810";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -477,7 +477,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query TransactionNatureTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TransactionNatureTypeTextCode_0.Id, NameTextCodeCode = TransactionNatureTypeTextCode_0.Code, ObjectTableName = "Customs.TransactionNatureType", Code = "TransactionNatureType",  QueryGroupCode = "8c0c", IndexOrder = 0, Tenant = 0, ObjectTableId = TransactionNatureTypeObjectTable.Id, QuerySection = "Customs.TransactionNatureType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TransactionNatureTypeFeature_0.Id,FeatureUniqeCode= TransactionNatureTypeFeature_0.FeatureUniqeCode, DefaultSortName = "LocalName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn TransactionNatureTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransactionNatureTypeQuery.Id,QueryCode = TransactionNatureTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TransactionNatureType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TransactionNatureTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransactionNatureTypeQuery.Id,QueryCode = TransactionNatureTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TransactionNatureType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TransactionNatureTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransactionNatureTypeQuery.Id,QueryCode = TransactionNatureTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TransactionNatureType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TransactionNatureTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransactionNatureTypeQuery.Id,QueryCode = TransactionNatureTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TransactionNatureType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);

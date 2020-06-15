@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimReasonTypeUpdateClass
    {  		
-		public const string HashString = "27fce88ccfbfb0174218ffeeb83e0f4f";
+		public const string HashString = "ae2d7abadb1cfdbdb9eebe41106503d3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -477,7 +477,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query ClaimReasonTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimReasonTypeTextCode_0.Id, NameTextCodeCode = ClaimReasonTypeTextCode_0.Code, ObjectTableName = "Customs.ClaimReasonType", Code = "ClaimReasonType",  QueryGroupCode = "999f", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimReasonTypeObjectTable.Id, QuerySection = "Customs.ClaimReasonType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimReasonTypeFeature_0.Id,FeatureUniqeCode= ClaimReasonTypeFeature_0.FeatureUniqeCode, DefaultSortName = "LocalName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn ClaimReasonTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimReasonTypeQuery.Id,QueryCode = ClaimReasonTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ClaimReasonType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ClaimReasonTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimReasonTypeQuery.Id,QueryCode = ClaimReasonTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ClaimReasonType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ClaimReasonTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimReasonTypeQuery.Id,QueryCode = ClaimReasonTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ClaimReasonType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ClaimReasonTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimReasonTypeQuery.Id,QueryCode = ClaimReasonTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ClaimReasonType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
