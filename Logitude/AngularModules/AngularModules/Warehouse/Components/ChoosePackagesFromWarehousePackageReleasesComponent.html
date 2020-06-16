@@ -1,4 +1,4 @@
-﻿<table>
+<table>
 
     <tr style="height: 34px;">
         <td>
@@ -196,6 +196,7 @@
                                                                                                                         <div style="width:200px">
                                                                                                                             <span style="font-size:13px;">Release</span>
                                                                                                                             <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>
+                                                                                                                            <span style="font-size:12px;margin-left:8px;">{{warehouseReleaseItem.CreateDate | DateTimeToDatePipe}}</span>
                                                                                                                         </div>
 
                                                                                                                     </td>
