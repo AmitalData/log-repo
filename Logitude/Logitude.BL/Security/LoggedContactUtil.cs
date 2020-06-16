@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,19 @@ namespace Logitude.BL.Security
 {
     public class LoggedContactUtil : ILoggedContactUtil
     {
+
         public ContactPM GetLoggedContact(int tenant)
+        {
+            string key = $"GetLoggedContact({tenant})";
+            var loggedContact = CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
+            {
+                var res = GetLoggedContactNoValidCache(tenant);
+                return res;
+            }, true);
+            return loggedContact;
+
+        }
+        ContactPM GetLoggedContactNoValidCache(int tenant)
         {
             ContactPM loggedContact=null;
             try
