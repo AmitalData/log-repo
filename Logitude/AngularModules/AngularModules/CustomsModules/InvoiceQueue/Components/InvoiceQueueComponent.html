@@ -176,58 +176,76 @@
                             <log-column [header]="'קוד סעיף'"
                                         [binding]="'ServiceCode'"
                                         [width]="'80'" [Alignment]="'Right'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.ServiceCode}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.ServiceCode}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
 
                             <log-column [header]="'שם סעיף'"
                                         [width]="'120'" [Alignment]="'Right'"
                                         [binding]="'ServiceName'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.ServiceName}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.ServiceName}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'לחיוב'"
                                         [width]="'120'" [Alignment]="'Right'"
                                         [binding]="'PayType'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.PayType}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.PayType}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
 
                             <log-column [header]="'סכום בשח'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'AmountNIS'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.AmountNIS}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.AmountNIS}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Currency'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Currency}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Currency}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'סכום במטח'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'AmountForeign'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.AmountForeign}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.AmountForeign}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
@@ -253,49 +271,65 @@
                             <log-column [header]="'קוד סטטוס'"
                                         [binding]="'Code'"
                                         [width]="'80'" [Alignment]="'Right'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Code}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Code}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+
                             </log-column>
 
                             <log-column [header]="'שם סטטוס'"
                                         [width]="'80'" [Alignment]="'Right'"
                                         [binding]="'Name'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Name}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Name}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'תאריך'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Date'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Date}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Date}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
 
                             <log-column [header]="'שעה'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Time'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Time}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Time}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'הערות'"
                                         [width]="'220'" [Alignment]="'Right'"
                                         [binding]="'Comments'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div class="RightCenter">
-                                        <span>{{item.Comments}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="RightCenter">
+                                            <span>{{item.Comments}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
@@ -323,40 +357,52 @@
                             <log-column [header]="'חשבונית שילוח'"
                                         [binding]="'InvoiceNumber'"
                                         [width]="'120'" [Alignment]="'Right'">
-                                <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                    <div style="text-align:right">
-                                        <span>{{item.InvoiceNumber}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div style="text-align:right">
+                                            <span>{{item.InvoiceNumber}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
 
                             <log-column [header]="'תיק שילוח'"
                                         [width]="'80'" [Alignment]="'Right'"
                                         [binding]="'ForwarderFile'">
-                                <log-cell-template #logcelltemplate template="let item" [IgnoreMods]="true">
-                                    <div style="text-align:right">
-                                        <span>{{item.ForwarderFile}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div style="text-align:right">
+                                            <span>{{item.ForwarderFile}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                             <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'InvoiceCurrency'">
-                                <log-cell-template #logcelltemplate template="let item" [IgnoreMods]="true">
-                                    <div style="text-align:right">
-                                        <span>{{item.InvoiceCurrency}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template #logcelltemplate   [IgnoreMods]="true">
+                                        <div style="text-align:right">
+                                            <span>{{item.InvoiceCurrency}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
 
                             <log-column [header]="'סכום'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'InvoiceAmount'">
-                                <log-cell-template #logcelltemplate template="let item" [IgnoreMods]="true">
-                                    <div style="text-align:right">
-                                        <span>{{item.InvoiceAmount}}</span>
-                                    </div>
-                                </log-cell-template>
+                                <ng-template let-item>
+
+                                    <log-cell-template #logcelltemplate  [IgnoreMods]="true">
+                                        <div style="text-align:right">
+                                            <span>{{item.InvoiceAmount}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
