@@ -179,7 +179,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.FileState = declarationOrg.FileState;
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
-                    declarationPM.IsClose = declarationOrg.IsClose;
+                    //declarationPM.IsClose = declarationOrg.IsClose;
 
                     if (isFromAmendment)
                     {
