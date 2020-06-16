@@ -11,5 +11,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         InterestReportPM GetInterestReportPM(string interestReportId, int tenant);
         List<GLAccountInterestPeriodPM> GetGlaccountInterestPeriods(InterestReportPM interestReportPM);
         List<InterestBasesPeriodPM> GetAllInterestBasesPeriodPMs(int tenant);
+        GLAccountPM GetGLAccount(string GLAccountId, int tenant);
     }
 }
