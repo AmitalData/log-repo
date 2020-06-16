@@ -16,8 +16,7 @@ import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCour
 
 @Component({
     selector: 'InvoiceQueueComponent',
-    moduleId: module.id,
-    templateUrl: './InvoiceQueueComponent.html',
+     templateUrl: './InvoiceQueueComponent.html',
     providers: [DeclarationPMService]
 
 })
