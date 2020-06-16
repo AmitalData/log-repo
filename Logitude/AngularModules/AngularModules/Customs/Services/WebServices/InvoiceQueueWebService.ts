@@ -17,7 +17,7 @@ export class InvoiceQueueWebService {
     }
 
 
-    GetInvoice(id: string) {
+    GetInvoice() {
 
         var callTime = new Date();
 
@@ -26,7 +26,7 @@ export class InvoiceQueueWebService {
                 .pipe(
                     map((response: HttpResponse<any>) => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
+                        serviceResponse.Result = response.body;
                         return serviceResponse;
  
                     }),
