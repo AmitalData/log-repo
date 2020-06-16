@@ -986,6 +986,18 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\VatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
+    <TypeScriptCompile Include="cypress\Login\Login.e2e-spec.ts" />
+    <TypeScriptCompile Include="cypress\Login\Login.po.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Agent-Spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\Agent.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\AgentScenario.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsIn.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\BuildShipmentDocsOut.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\CreateEditShipment.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocOutSenario.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocsOut.e2e-spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\DocsOutTab.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
@@ -7721,6 +7733,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cypress\fixtures\example.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cypress\package-lock.json" />
+    <Content Include="cypress\package.json" />
+    <Content Include="cypress\tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cypress\cypress.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

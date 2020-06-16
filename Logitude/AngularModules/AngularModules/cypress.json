@@ -1,4 +1,26 @@
 {
+    "viewportWidth": 2000,
+    "viewportHeight": 1000,
+    "projectId": "b2kqc4",
+    "integrationFolder": "cypress/TeamIslam",
+    "screenshotsFolder": "cypress/screenshots",
+    "scripts": {
+        "cypressRun": "cypress run",
+        "runtests": "npm run cypressRun --",
+        "cypressopen": "node_modules\\.bin\\cypress open"
+
+    },
     "chromeWebSecurity": false,
-    "requestTimeout": 500000000
+
+    "defaultCommandTimeout": 60000,
+
+    "responseTimeout": 60000,
+    "requestTimeout": 60000,
+
+    "video": true,
+    "screenshotOnRunFailure": true,
+    "screenshots": true
+
+
+
 }
