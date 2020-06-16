@@ -1848,6 +1848,7 @@
     <Compile Include="Messaging\Amital\CustomFile\AmitalCustomFileCommunicationModel.cs" />
     <Compile Include="Messaging\Amital\AmitalCommunicationModelBase.cs" />
     <Compile Include="Messaging\Amital\SendMessageToUServerUtil.cs" />
+    <Compile Include="Messaging\Amital\UnifreightQInvoiceList.cs" />
     <Compile Include="Messaging\Amital\UnifreightQStatusList.cs" />
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
