@@ -4,6 +4,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Injectable()
 export class TotangoService {
@@ -64,7 +65,7 @@ export class TotangoService {
 
                 var orgDisplayName = SessionLocator.TenantPM.Company + (SessionLocator.TenantPM.CountryName != null ? ("-" + SessionLocator.TenantPM.CountryName.trim()) : "");
 
-                if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantPM.Id == 153) {
+                if (ObjectsLocator.IsDemoTenant(SessionLocator.TenantPM.Id.toString()) || SessionLocator.TenantPM.Id == 153) {
                     orgDisplayName = SessionLocator.LoggedUserPM.Notes;
                     data.OrganizationId = SessionLocator.LoggedUserId;
 

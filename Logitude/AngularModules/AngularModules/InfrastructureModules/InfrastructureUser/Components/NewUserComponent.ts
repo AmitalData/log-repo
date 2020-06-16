@@ -89,7 +89,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         this.IsScreenEnabled = true;
 
-        if (SessionInfo.LoggedUserTenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionInfo.LoggedUserTenant.toString())) {
 
             this.DemoTenantMessageVisibility = true;
             this.IsScreenEnabled = false;
@@ -303,7 +303,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) this.LicencedUserVisible = true;
         else this.LicencedUserVisible = false;
 
-        if (SessionInfo.LoggedUserTenant == 65 && SessionInfo.LoggedUserPM.IsCustomerCare) this.ExpirationDateVisible = true;
+        if (ObjectsLocator.IsDemoTenant(SessionInfo.LoggedUserTenant.toString()) && SessionInfo.LoggedUserPM.IsCustomerCare) this.ExpirationDateVisible = true;
         else this.ExpirationDateVisible = false;
 
         if (SessionInfo.LoggedUserTenant != 0) {

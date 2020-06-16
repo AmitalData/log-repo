@@ -1647,18 +1647,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 string myError = null;
                 CardRepository cardRep = new CardRepository(newPayment.Tenant);
                 CurrencyRepository currencyRep = new CurrencyRepository(newPayment.Tenant);
-                Card card = cardRep.GetSingleCard(newPayment.BillToId, newPayment.Tenant);
+                Card card = cardRep.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
                 Currency currency = currencyRep.GetSingleCurrency(newPayment.PaymentCurrencyId, newPayment.Tenant);
                 string currencyError = "Currency External Id is missing";
                 if (currency != null && !string.IsNullOrEmpty(currency.Code))
                 {
                     currencyError = "Currency: " + currency.Code + ". External Id is missing";
                 }
-                if (card != null && FieldIsEmpty(card.ReceivablesAccountingCard))
+
+                if (card != null)
                 {
-                    isReady = false;
-                    myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    var receivablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, entityPM.PaymentCurrencyId, tenant, false);
+                    if (FieldIsEmpty(receivablesAccountingCard))
+                    {
+                        isReady = false;
+                        myError = "Bill To: " + entityPM.BillToName + ". External Id is missing";
+                    }
                 }
+
                 if (currency != null && FieldIsEmpty(currency.AccountingExternalCode))
                 {
                     isReady = false;

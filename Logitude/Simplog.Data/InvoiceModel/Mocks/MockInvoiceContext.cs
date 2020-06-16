@@ -553,12 +553,7 @@ namespace Simplog.Data.InvoiceModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-
-        public IDbSet<APPaymentMethod> APPaymentMethods
-        {
-            get { throw new NotImplementedException(); }
-        }
-
+        
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
             get { throw new NotImplementedException(); }

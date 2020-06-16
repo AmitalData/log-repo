@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomAgentUpdateClass
    {  		
-		public const string HashString = "ea5e12dbbe960535bbedff7e9be027e8";
+		public const string HashString = "852cb17b26e36917c3253f3b4578a9a0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CustomAgent",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomAgents",
-			      				    OldDBTableName =  "CustomAgents",
 			      				    ObjectTableSingular =  "Custom Agent",
 			      				    ObjectTablePlural =  "Custom Agents",
 			      				    DescriptionDefaultText =  "Add and manage information about customs agents you work with. Specify communication, address and billing details, and create list of contacts.",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceCurrencyId",
-					  						OldFieldName =  "InvoiceCurrencyId",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -272,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankName",
-					  						OldFieldName =  "BankName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -335,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankAddress",
-					  						OldFieldName =  "BankAddress",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -398,7 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Swift",
-					  						OldFieldName =  "Swift",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -461,7 +455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountNumber",
-					  						OldFieldName =  "AccountNumber",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -524,7 +517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IBANNumber",
-					  						OldFieldName =  "IBANNumber",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -587,7 +579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableConsolidationInvoices",
-					  						OldFieldName =  "EnableConsolidationInvoices",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -651,7 +642,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Website",
-					  						OldFieldName =  "Website",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -716,7 +706,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -781,7 +770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -846,7 +834,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -911,7 +898,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -974,7 +960,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1039,7 +1024,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1104,7 +1088,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingCard",
-					  						OldFieldName =  "AccountingCard",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1168,7 +1151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentTerm",
@@ -1232,7 +1214,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermEnglishName",
-					  						OldFieldName =  "PaymentTermEnglishName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1297,7 +1278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1363,7 +1343,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CityName",
-					  						OldFieldName =  "CityName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1430,7 +1409,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -1498,7 +1476,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1564,7 +1541,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MetodoPagoCode",
-					  						OldFieldName =  "MetodoPagoCode",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "MetodoPago",
@@ -1632,7 +1608,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UsoCFDICode",
-					  						OldFieldName =  "UsoCFDICode",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "UsoCFDI",
@@ -1700,7 +1675,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SATForeignRFC",
-					  						OldFieldName =  "SATForeignRFC",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1762,7 +1736,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalId2",
-					  						OldFieldName =  "ExternalId2",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1823,7 +1796,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IRSPlace",
-					  						OldFieldName =  "IRSPlace",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1886,7 +1858,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IRSNumber",
-					  						OldFieldName =  "IRSNumber",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1949,7 +1920,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivablesAccountingCard",
-					  						OldFieldName =  "ReceivablesAccountingCard",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2014,7 +1984,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayablesAccountingCard",
-					  						OldFieldName =  "PayablesAccountingCard",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2079,7 +2048,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalAccountingBusinessArea",
-					  						OldFieldName =  "ExternalAccountingBusinessArea",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2142,7 +2110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentMethodCode",
-					  						OldFieldName =  "PaymentMethodCode",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "SATPaymentMethod",
@@ -2206,7 +2173,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactName",
-					  						OldFieldName =  "PrimaryContactName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2271,7 +2237,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactEmail",
-					  						OldFieldName =  "PrimaryContactEmail",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2336,7 +2301,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactPhone",
-					  						OldFieldName =  "PrimaryContactPhone",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2399,7 +2363,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "GLAccountId",
-					  						OldFieldName =  "GLAccountId",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2456,7 +2419,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "StateName",
-					  						OldFieldName =  "StateName",
 					  						ObjectTableName =  "CustomAgent",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2497,6 +2459,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "State",
 					  						ListFieldLable =  "StateNameListLable",
 					  						ListLableDefaultText =  "State",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CardCurrenciesAccountings",
+					  						ObjectTableName =  "CustomAgent",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CardCurrenciesAccountings",
+					  						ListPropertyPath =  "CardCurrenciesAccountings",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "CardCurrenciesAccounting",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomAgent",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CardCurrenciesAccountings",
+					  						DefaultText =  "CardCurrenciesAccountings",
+					  						ListFieldLable =  "CardCurrenciesAccountingsListLable",
+					  						ListLableDefaultText =  "CardCurrenciesAccountings",
+					  						ListLocalDefaultText =  "CardCurrenciesAccountings",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AccountingVATSplit",
+					  						ObjectTableName =  "CustomAgent",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AccountingVATSplit",
+					  						ListPropertyPath =  "AccountingVATSplit",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AccountingVATSplit",
+					  						DefaultText =  "Split by Currency",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

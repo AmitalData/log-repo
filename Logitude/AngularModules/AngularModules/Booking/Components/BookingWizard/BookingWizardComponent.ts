@@ -33,6 +33,7 @@ import {BookingDomainService, BookingValidatorResultClass} from '../../Services/
 import {FSRWebService, FSRResultClass} from '../../../Infrastructure/Services/WebServices/FSRWebService';
 import {InfrastructureDomainService} from '../../../Infrastructure/Services/InfrastructureDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'BookingWizardComponent',
@@ -1622,7 +1623,7 @@ export class BookingWizardComponent implements AfterViewInit {
     }
 
     private SetDemoMessage() {
-        if (InfraSettings.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (ObjectsLocator.IsDemoTenant(InfraSettings.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Please note that this message will not be sent to the airline since it is a demo environment. You can still review the built message");
         }

@@ -620,6 +620,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string updatedBUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedBUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedBUserName;
+		 }
+		 set
+		 {
+		   if(updatedBUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedBUserName",OldValue=updatedBUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedBUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

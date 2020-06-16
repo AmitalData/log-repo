@@ -16,6 +16,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 declare var UploadLogoFile, base64ToArrayBuffer, saveByteArray, ArrayBufferToBase64: any;
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -88,7 +89,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
     SetUIProperties() {
 
         var isEditingEnabled = true;
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isEditingEnabled = false;
             }

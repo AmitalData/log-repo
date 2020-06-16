@@ -57,7 +57,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public int? TaxDeductionPercentage { get; set; }
         public string ApprovedByUserId { get; set; }
         public DateTime? ApprovedDateTime { get; set; }
-      //  public string PaymentMethodId { get; set; }
         public string AccountingPaymentMethodId { get; set; }
         public string BankAccountId { get; set; }
         public DateTime? FirstApproveDate { get; set; }

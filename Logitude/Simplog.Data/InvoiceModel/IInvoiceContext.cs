@@ -26,7 +26,6 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<APInvoiceType> APInvoiceTypes { get; }       
         IDbSet<APInvoiceEntity> APInvoiceEntities { get; }
         IDbSet<APPayment> APPayments { get; }
-        IDbSet<APPaymentMethod> APPaymentMethods { get; }
         IDbSet<APPaymentStatus> APPaymentStatus { get; }
         IDbSet<APInvoicePayment> APInvoicePayments { get; }
         IDbSet<CreditCardType> CreditCardTypes { get; }

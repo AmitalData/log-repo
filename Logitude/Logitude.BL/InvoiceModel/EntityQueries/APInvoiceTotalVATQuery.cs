@@ -18,7 +18,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             repository = new APInvoiceTotalVATRepository(); 
         }
 
-
         public APInvoiceTotalVATQuery(int tenant)
         {
             repository = new APInvoiceTotalVATRepository(tenant);
@@ -27,6 +26,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public APInvoiceTotalVATQuery(APInvoiceTotalVATRepository apInvoiceTotalVATRepository)
         {
             repository = apInvoiceTotalVATRepository;
+        }
+
+        public APInvoiceTotalVATPM GetSinglePM(string id, int tenant)
+        {
+            return (from a in repository.context.APInvoiceTotalVATs.Include("VatType")
+                   where a.Tenant == tenant && a.Id == id
+                   select new APInvoiceTotalVATPM()
+                   {
+                       Id = a.Id,
+                       Tenant = a.Tenant,
+                       APInvoiceId = a.APInvoiceId,
+                       ExternalVATCard = a.ExternalVATCard,
+                       ExternalTAXItemId = a.ExternalTAXItemId,
+                       InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
+                       InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
+                       LocalVatableAmount = a.LocalVatableAmount,
+                       LocalVATAmount = a.LocalVATAmount,
+                       ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
+                       ProfitVatableAmount = a.ProfitVatableAmount,
+                       VatTypeId = a.VatTypeId,
+                       VatPercent = a.VatPercent,
+                       VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                   }).FirstOrDefault();
         }
 
         public IQueryable<APInvoiceTotalVATPM> GetTotalVATs(string invoiceId, int tenant)

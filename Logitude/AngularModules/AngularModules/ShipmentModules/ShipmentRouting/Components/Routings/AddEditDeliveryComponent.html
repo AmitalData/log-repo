@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -9,7 +9,7 @@
     <tr>
         <td class="CellStretch">
             <div class="Stretch CurvedEditArea">
-                <table *ngIf="IsResourcesReady">
+                <table>
                     <tr>
                         <td class="CellStretch" style="width: 100px;">
                             <div class="Stretch AppLeftMenuBackground">
@@ -22,7 +22,7 @@
 
                                     <tr>
                                         <td style="vertical-align: top;">
-                                            <ul>
+                                            <ul *ngIf="IsResourcesReady">
                                                 <li id="{{ item.TextCode | IdGeneratorPipe}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
                                                     <div>{{item.TextCode | TextCodeTranslationPipe}}</div>
                                                     <img class="RightCenter" *ngIf="item == SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />

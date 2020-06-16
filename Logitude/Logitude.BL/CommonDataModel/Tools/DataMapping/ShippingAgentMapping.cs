@@ -35,6 +35,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.EnableConsolidationInvoices = entityPM.EnableConsolidationInvoices;
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
+            entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
             entityCard.EnglishName = entityPM.EnglishName;
             entityCard.InActive = entityPM.InActive;
             entityCard.LocalName = entityPM.LocalName;

@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  CardPMId = a.Id,
                                  ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                  PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                 AccountingVATSplit = a.Card.AccountingVATSplit,
                                  CreateDate = a.Card.CreateDate,
                                  InActive = a.Card.InActive,
                                  Notes = a.Card.Notes,
@@ -95,6 +96,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             agent.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(agent.Id, agent.Tenant);
 
+            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
+            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
+            agent.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(agent.Id, agent.Tenant).ToList();
+
             if (agent != null)
             {
                 agent.IsExternal = false;
@@ -130,6 +135,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CardPMId = a.Id,
                                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                             AccountingVATSplit = a.Card.AccountingVATSplit,
                                              CreateDate = a.Card.CreateDate,
                                              InActive = a.Card.InActive,
                                              Notes = a.Card.Notes,
@@ -195,6 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CardPMId = a.Id,
                              ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                              PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                             AccountingVATSplit = a.Card.AccountingVATSplit,
                              CreateDate = a.Card.CreateDate,
                              InActive = a.Card.InActive,
                              Notes = a.Card.Notes,

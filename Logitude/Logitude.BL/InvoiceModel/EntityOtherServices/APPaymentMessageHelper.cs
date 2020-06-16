@@ -19,6 +19,7 @@ using Logitude.Server.Tools;
 using System.Web;
 using Logitude.SystemLogs;
 using Logitude.Server.Tools.QueueService;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -175,7 +176,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card vendor = CardRepository.GetSingleCard(item.VendorId, tenant, true);
                 if (vendor != null)
                 {
-                    paymentElement.Card.AccountingCard = vendor.PayablesAccountingCard;
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(vendor.Id, item.PaymentCurrencyId, tenant, true);
                     paymentElement.Card.IntercompanyCode = vendor.ExternalId2;
                     paymentElement.Card.Name = vendor.EnglishName;
                     paymentElement.Card.Code = vendor.Code;

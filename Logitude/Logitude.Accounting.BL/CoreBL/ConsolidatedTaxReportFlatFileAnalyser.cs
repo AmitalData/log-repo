@@ -120,8 +120,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             OutputOrInput = taxLineDTO.OutputOrInput,
                             ReferecneGroup = taxLineDTO.ReferenceGroup,
                             UpdatedByUserId = _contact.Id,
-                          //  JournalId = "1-1027720",
+                            //JournalId = "1-1027720",
                             TransmitStatusCode = "1",
+                            IsEquipment = false,
+                            LastUpdateDateTime = DateTime.Now,
+                            TaxReportDate = MyTaxReportPM.TaxReportMonth,
                         };
                         newLines.Add(taxReportLine);
                     } 

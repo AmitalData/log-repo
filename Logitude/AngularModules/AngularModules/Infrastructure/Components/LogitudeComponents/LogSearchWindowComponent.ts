@@ -25,7 +25,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
-
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -207,7 +207,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             if (!this.IsAddDisabled) {
                 this.IsAddBtnVisible = true; 
 
-                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+                if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
                     if (this.ObjectTableName == "ChargesType") {
                         this.IsAddBtnVisible = false;
                     }

@@ -316,6 +316,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -715,6 +716,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
             this.Property(t => t.SLAC).HasColumnName("SLAC");
+            this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -792,8 +794,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNumber");
                 this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAdditionalTransportModeCode");
             }
-
-
+            
             // Relationships
             this.HasOptional(t => t.FreightLocationWarehouse).WithMany().HasForeignKey(d => d.FreightLocationId);
             this.HasOptional(t => t.AgentAddress).WithMany().HasForeignKey(d => d.AgentAddressId);
@@ -926,7 +927,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.AdditionalCharges).WithMany().HasForeignKey(d => d.AdditionalChargesId);
             this.HasOptional(t => t.FreightPayer).WithMany().HasForeignKey(d => d.FreightPayerId);
             this.HasOptional(t => t.FreightPayerAddress).WithMany().HasForeignKey(d => d.FreightPayerAddressId);
-
+            this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
         }
     }
 }

@@ -316,9 +316,31 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            UpdateCardCurrenciesAccountings_Airline(currentAirline);
             AirlineService service = new AirlineService(objectContext, currentAirline.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Airline);
             service.Update(currentAirline);
+        }
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Airline;
+        private void UpdateCardCurrenciesAccountings_Airline(AirlinePM currentAirline)
+        {
+            cardCurrenciesAccountingChangeSet_Airline = ChangeSet.GetAssociatedChanges(currentAirline, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Airline)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
         }
 
         public void DeleteAirline(AirlinePM airline)

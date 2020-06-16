@@ -621,10 +621,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     currencyError = "Currency: " + currency.Code + ". External Id is missing";
                 }
-                if (card != null && FieldIsEmpty(card.PayablesAccountingCard))
+
+                if (card != null)
                 {
-                    isReady = false;
-                    myError = "Bill To: " + entityPM.VendorName + ". External Id is missing";
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    var payablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, entityPM.PaymentCurrencyId, tenant, true);
+                    if (FieldIsEmpty(payablesAccountingCard))
+                    {
+                        isReady = false;
+                        myError = "Bill To: " + entityPM.VendorName + ". External Id is missing";
+                    }
                 }
                 if (currency != null && FieldIsEmpty(currency.AccountingExternalCode))
                 {

@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -78,6 +79,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidateCurrencyRateData();
                 this.InitAndValidateShipmentReference();
                 this.InitAndValidatePaymentTerm_DueDate();
+                this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
                 this.InitAndValidateTransferStatus();
@@ -139,7 +141,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     if (string.IsNullOrEmpty(this.billToAccountingCard))
                     {
-                        this.billToAccountingCard = vendor.PayablesAccountingCard;
+                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                        this.billToAccountingCard = accountingSystemHelper.GetGenericCreditAccount(vendor.Id, aPInvoicePM.InvoiceCurrencyId, tenant, true);
                     }
 
                     if (string.IsNullOrEmpty(this.aPInvoicePM.VATNumber))
@@ -364,6 +367,47 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment Term is required");
             }
         }
+        private void InitAndValidateTotalVATsOnly()
+        {
+            if (this.aPInvoicePM.TotalVATOnly)
+            {
+                foreach (APInvoiceLinePM line in this.aPInvoicePM.InvoiceLines)
+                {
+                    if (line.VatTypeId != null || line.VatPercentage != null)
+                    {
+                        throw new ApplicationException("VAT types or percentages can't be sent in the lines with total VATs only invoices");
+                    }
+                }
+
+                if (this.aPInvoicePM.TotalVATs == null || this.aPInvoicePM.TotalVATs.Count == 0)
+                {
+                    throw new ApplicationException("Total VATs is Missing");
+                }
+
+                foreach (APInvoiceTotalVATPM item in this.aPInvoicePM.TotalVATs)
+                {
+                    if(item.VatTypeId == null)
+                    {
+                        throw new ApplicationException("Total VAT Type is Missing");
+                    }
+
+                    if (item.VatPercent == null)
+                    {
+                        throw new ApplicationException("Total VAT Percent is Missing");
+                    }
+
+                    //if (item.InvoiceCurrencyVATAmount == null)
+                    //{
+                    //    throw new ApplicationException("Total VAT Amount is Missing");
+                    //}
+
+                    item.VatPercent = MethodHelper.Round(item.VatPercent, 3);
+                    item.InvoiceCurrencyVATAmount = MethodHelper.Roundd(item.InvoiceCurrencyVATAmount, 2);
+                    item.LocalVATAmount = MethodHelper.Roundd(item.InvoiceCurrencyVATAmount * aPInvoicePM.InvoiceCurrencyExchangeRate, 2);
+                    item.ProfitCurrencyVATAmount = MethodHelper.Roundd(item.LocalVATAmount / aPInvoicePM.ProfitCurrencyExchangeRate, 2);
+                }
+            }
+        }
         private void InitAndValidateInvoiceLines()
         {
             foreach (APInvoiceLinePM line in this.aPInvoicePM.InvoiceLines)
@@ -448,36 +492,39 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         line.Description = chargesType.EnglishName;
                         line.LocalDescription = chargesType.LocalName;
 
-                        if (string.IsNullOrEmpty(line.VatTypeId))
+                        if (!aPInvoicePM.TotalVATOnly)
                         {
-                            line.VatTypeId = chargesType.VatTypeId;
-                        }
-
-                        if (!string.IsNullOrEmpty(line.VatTypeId))
-                        {
-                            Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
-                            if (vatType != null)
+                            if (string.IsNullOrEmpty(line.VatTypeId))
                             {
-                                line.VatTypeName = vatType.EnglishName;
-                                line.VatIsMultiPercentage = vatType.IsMultiPercentage;
+                                line.VatTypeId = chargesType.VatTypeId;
+                            }
 
-                                if (line.VatPercentage == null)
+                            if (!string.IsNullOrEmpty(line.VatTypeId))
+                            {
+                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+                                if (vatType != null)
                                 {
-                                    if (!vatType.IsMultiPercentage)
+                                    line.VatTypeName = vatType.EnglishName;
+                                    line.VatIsMultiPercentage = vatType.IsMultiPercentage;
+
+                                    if (line.VatPercentage == null)
                                     {
-                                        VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
-                                        if (vatTypePercentage != null)
+                                        if (!vatType.IsMultiPercentage)
                                         {
-                                            line.VatPercentage = vatTypePercentage.Percentage;
+                                            VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
+                                            if (vatTypePercentage != null)
+                                            {
+                                                line.VatPercentage = vatTypePercentage.Percentage;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        else
-                        {
-                            throw new ApplicationException(chargesType.Code + " Line VAT Type is Missing");
+                            else
+                            {
+                                throw new ApplicationException(chargesType.Code + " Line VAT Type is Missing");
+                            }
                         }
 
                         if (string.IsNullOrEmpty(line.ForiegnCurrencyId))

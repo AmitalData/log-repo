@@ -443,4 +443,7 @@ export class ShipmentList {
 		SLAC: string;
         ToPortCode: string;
         FromPortCode: string;
-}
+		CreatedFromDigital: boolean;
+		ShipmentSubTypeId: string;
+		ShipmentSubTypeName: string;
+}

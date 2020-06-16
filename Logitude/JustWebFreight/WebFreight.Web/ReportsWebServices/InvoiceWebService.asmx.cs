@@ -1648,6 +1648,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoicedataprovider.AmountDueInInvoiceCurrency = currentInvoice.AmountDue;
                 invoicedataprovider.AmountDueInLocalCurrency = currentInvoice.AmountDueInLocalCurrency;
+
+                invoicedataprovider.ShipmentSubTypeName = shipment == null ? null : shipment.ShipmentSubTypeName;
                 #endregion
 
                 #region Vatable amounts

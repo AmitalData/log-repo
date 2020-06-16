@@ -6,7 +6,7 @@ import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityAr
 import { TaxReportPM } from '../../../../EntityPMs/TaxReportPM';
 import { TaxReportLinePM } from '../../../../EntityPMs/TaxReportLinePM';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
 import { ReconcileExternalPageExtendedPMService } from '../../../../Services/ExtendedPMs/ReconcileExternalPageExtendedPMService';
 import { ReconcileExternalPagePMService } from '../../../../Services/StandardPMs/ReconcileExternalPagePMService';
@@ -18,6 +18,7 @@ import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLo
 import { TaxReportPMService } from '../../../../Services/StandardPMs/TaxReportPMService';
 import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxReportLinePMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DateTimePipe } from '../../../../../Controls/Pipes/DateTimePipe';
 
 @Component({
     
@@ -32,7 +33,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
     public TypeFilterItems: ApiQueryFilters = new ApiQueryFilters();
-
+    public UpdateMessage: string;
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -53,7 +54,8 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.OldReferecneGroup = this.ReferecneGroup;
             this.OldReferenceDate = this.ReferenceDate;
             this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
-
+            var DatePipe = new DateTimePipe();
+            this.UpdateMessage = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.TaxReportLinePM.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.TaxReportLinePM.LastUpdateDateTime, "DT") + " }";
             this.SetUIProperties();
         }
     }

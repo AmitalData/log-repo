@@ -8,6 +8,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FSRWebService, FSRResultClass} from '../../../../Infrastructure/Services/WebServices/FSRWebService';
 import {AWBOverviewTabComponent} from '../AWBWizard/Overview/AWBOverviewTabComponent';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -353,7 +354,7 @@ export class SendFSRComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (ObjectsLocator.IsDemoTenant(this.Tenant.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 

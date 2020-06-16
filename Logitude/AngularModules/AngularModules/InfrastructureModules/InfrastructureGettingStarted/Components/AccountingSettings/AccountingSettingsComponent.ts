@@ -12,6 +12,7 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'AccountingSettingsComponent',
@@ -86,7 +87,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         this.ShowDummySingleTaxCheckBox = isShowDummySingleTaxCheckBox;
 
         var isDemoTenant = false;
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             isDemoTenant = true;
 
             if (SessionLocator.LoggedUserPM.Email) {

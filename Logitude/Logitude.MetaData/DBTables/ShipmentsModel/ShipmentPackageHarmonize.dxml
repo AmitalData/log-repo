@@ -32,9 +32,21 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="InsidePackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="PackageId"
     ReferencedTable="ShipmentPackages"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InsidePackageId"
+    ReferencedTable="InsideShipmentPackages"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

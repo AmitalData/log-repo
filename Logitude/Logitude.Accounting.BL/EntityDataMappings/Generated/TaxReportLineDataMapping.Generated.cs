@@ -76,7 +76,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportDate, 
 	         IsExternalLine, 
 	         TotalInvoiceAmount, 
-	         OriginalReference,
+	         OriginalReference, 
+	         UpdatedBUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

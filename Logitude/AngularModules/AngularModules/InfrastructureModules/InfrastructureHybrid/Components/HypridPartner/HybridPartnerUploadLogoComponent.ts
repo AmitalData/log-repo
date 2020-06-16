@@ -12,6 +12,7 @@ import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/Hy
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -57,7 +58,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
 
 
-        if (SessionLocator.Tenant == 65) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
             this.DemoMessageVisibility = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {

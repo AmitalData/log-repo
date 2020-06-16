@@ -221,11 +221,11 @@ export class QuoteUtilities {
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
         entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
         entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
-
         entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
         entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
         entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
+        entityPM.ShipmentSubTypeId = copiedEntityPM.ShipmentSubTypeId;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
@@ -502,10 +502,11 @@ export class QuoteUtilities {
         shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
-        shipmentPM.ShipmentTypeId = (entityPM.TransportModeId == "A") ? null : entityPM.ShipmentTypeId;
+        shipmentPM.ShipmentTypeId = entityPM.ShipmentTypeId;
         shipmentPM.ValueOfGoods = entityPM.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
         shipmentPM.MoveTypeId = entityPM.MoveTypeId;
+        shipmentPM.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
         //Partners
         shipmentPM.ShipperId = entityPM.ShipperId;

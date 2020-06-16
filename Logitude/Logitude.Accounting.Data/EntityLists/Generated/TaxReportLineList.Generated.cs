@@ -68,6 +68,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? TotalInvoiceAmount  { get; set; }
        [DataMember]
        public string OriginalReference  { get; set; }
+       [DataMember]
+       public string UpdatedBUserName  { get; set; }
    }
 
 }

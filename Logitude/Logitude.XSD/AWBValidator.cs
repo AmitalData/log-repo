@@ -188,9 +188,15 @@ namespace Logitude.XSD
         }
         private void CheckDemoTenantData()
         {
-            if (myAWBResultClass.Tenant == 65 || myAWBResultClass.IsEAWBOnlyDemo)
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                myAWBResultClass.IsDemoTenant = true;
+                SettingRepository mySettingRepository = new SettingRepository();
+                var isDemoTenant = mySettingRepository.IsDemoTenant(myAWBResultClass.Tenant.ToString());
+                if (isDemoTenant || myAWBResultClass.IsEAWBOnlyDemo)
+                {
+                    myAWBResultClass.IsDemoTenant = true;
+                }
+                scope.Complete();
             }
         }
         private void CheckStockValidity()

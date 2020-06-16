@@ -9,6 +9,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'RatesMainTabComponent',
@@ -175,7 +176,7 @@ export class RatesItem extends BaseComponent implements OnInit {
     get IsEditingEnabled() {
         var myResult: boolean = true;
 
-        if (this.TenantPM.Id == 65) {
+        if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
             myResult = false;
 
             if (SessionLocator.LoggedUserPM.IsCustomerCare) {

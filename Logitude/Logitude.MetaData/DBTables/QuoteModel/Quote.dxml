@@ -1192,6 +1192,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentSubTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"
@@ -1457,11 +1464,15 @@
     ReferencedTable="QuoteClosingReasons"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentSubTypeId"
+    ReferencedTable="ShipmentSubTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,OpenDate" />
   <Index
     Columns="OpportunityId" />
   <UniqueConstraint
     Columns="Tenant,QuoteNumber" />
-  
 </Table>

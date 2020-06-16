@@ -110,6 +110,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.FMCNumber = tenantSettings.FMCNumber;
                 myDataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
                 myDataProvider.VolumeUnitCode = shipment.VolumeUnitCode;
+                myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
 
                 if (shipment.DocumentsClosingDate != null)
                 {

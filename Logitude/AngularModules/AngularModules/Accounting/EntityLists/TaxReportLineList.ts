@@ -34,6 +34,7 @@ export class TaxReportLineList {
 	IsExternalLine: boolean;
 	TotalInvoiceAmount: number;
 	OriginalReference: string;
+	UpdatedBUserName: string;
 	
 }
  

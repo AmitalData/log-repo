@@ -74,6 +74,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusEnglishName  { get; set; }
        [DataMember]
        public bool NeedsRebulid  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
    }
 
 }

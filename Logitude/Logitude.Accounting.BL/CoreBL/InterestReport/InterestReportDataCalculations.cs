@@ -48,10 +48,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     scope.Complete();
                 }
             }
-            catch
+            catch (Exception e)
             {
                 SetInterestReportStatusFailed();
-                throw;
+                throw new Exception(e.Message+"\n"+ e.StackTrace);
             }
         }
 

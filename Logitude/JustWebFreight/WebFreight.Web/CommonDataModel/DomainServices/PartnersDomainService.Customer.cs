@@ -602,13 +602,36 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            this.UpdateCardCurrenciesAccountings_Customer(entityPM);
             CustomerService service = new CustomerService(objectContext, entityPM);
-            service.SetChangeSet(salesNotesChangeSet, productsChangeSet, competitorsChangeSet, servicesChangeSet, customerSalesmanByProductsChangeSet, customerAccountManagerByProductsChangeSet, customerCustomsAgentByProductsChangeSet, customerForwarderByProductsChangeSet, customerMediatorByProductsChangeSet, cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(salesNotesChangeSet, productsChangeSet, competitorsChangeSet, servicesChangeSet, customerSalesmanByProductsChangeSet, customerAccountManagerByProductsChangeSet, customerCustomsAgentByProductsChangeSet, customerForwarderByProductsChangeSet, customerMediatorByProductsChangeSet, cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Customer);
             service.Update();
 
             if (this.ChangeSet != null)
             {
                 this.ChangeSet.Associate(entityPM, service.entityPOCO, MapBackCustomer);
+            }
+        }
+
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Customer;
+
+        private void UpdateCardCurrenciesAccountings_Customer(CustomerPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_Customer = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Customer)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
             }
         }
 

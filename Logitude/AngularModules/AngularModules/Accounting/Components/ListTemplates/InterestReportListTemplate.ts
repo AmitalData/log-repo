@@ -32,7 +32,7 @@ export class InterestReportListTemplate     {
   Listen() {
 
     InterestReportEventManager.SelectAllEvent.subscribe(($event) => {
-      this.IsChecked = $event;
+     // this.IsChecked = $event;
     });
 
    // this.IsChecked = InterestReportEventManager.AllSelected;
@@ -48,15 +48,6 @@ export class InterestReportListTemplate     {
         }
   }
   
-  private isChecked: boolean;
-  public get IsChecked() { return this.isChecked; }
-  public set IsChecked(value: boolean) {
-    if (this.isChecked != value) {
-      this.isChecked = value;
-
-
-    }
-  }
     CheckBoxClicked(checked: boolean) {
        
           this.CurrentSession.InterestReportCheckBoxCheckedEvent.emit({

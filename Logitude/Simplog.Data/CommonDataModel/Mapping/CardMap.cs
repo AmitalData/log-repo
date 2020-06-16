@@ -118,6 +118,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsAutonomy).HasColumnName("IsAutonomy");
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.AccountingVATSplit).HasColumnName("AccountingVATSplit");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

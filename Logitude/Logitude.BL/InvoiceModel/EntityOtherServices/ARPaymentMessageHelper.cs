@@ -19,6 +19,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
 using Logitude.SystemLogs;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -33,6 +34,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool isDropBox = false;
         public bool UsingFTP = false;
         public string FTPDetailId;
+
         public ARPaymentMessageHelper(int tenant)
         {
             this.tenant = tenant;
@@ -176,7 +178,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card billTo = CardRepository.GetSingleCard(item.BillToId, tenant, true);
                 if (billTo != null)
                 {
-                    paymentElement.Card.AccountingCard = billTo.ReceivablesAccountingCard;
+                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(billTo.Id,item.PaymentCurrencyId, tenant, false);
                     paymentElement.Card.IntercompanyCode = billTo.ExternalId2;
                     paymentElement.Card.Name = billTo.EnglishName;
                     paymentElement.Card.Code = billTo.Code;

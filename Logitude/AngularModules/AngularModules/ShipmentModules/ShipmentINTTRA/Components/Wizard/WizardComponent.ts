@@ -13,6 +13,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -41,7 +42,7 @@ export class WizardComponent extends BaseComponent {
         this.myService = new INTRAWebService();
         this.CardListService = new CardListService();
 
-        if (SessionLocator.Tenant == 65 || SessionLocator.TenantManagementJS.IsINTTRAOnlyDemo) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) || SessionLocator.TenantManagementJS.IsINTTRAOnlyDemo) {
             this.IsDemoAreaVisible = true;
         }
     }

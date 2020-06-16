@@ -9,6 +9,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CCSWebService, CCSResult, AWBResultClass, FHLShipmentValidator} from '../../../../Infrastructure/Services/WebServices/CCSWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -637,7 +638,7 @@ export class SendWindowComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (ObjectsLocator.IsDemoTenant(this.Tenant.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 

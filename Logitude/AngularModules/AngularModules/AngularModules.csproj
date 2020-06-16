@@ -334,6 +334,7 @@
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="Images\External.png" />
+    <Content Include="Images\favicon.png" />
     <Content Include="Images\HideFilters.png" />
     <Content Include="Images\Icons\ActionsGray.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
@@ -357,6 +358,7 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\ManualyChanged.png" />
     <Content Include="Images\PriceCheck\EmptyTariffPrice.png" />
     <Content Include="Images\PriceCheck\FillDimensions.png" />
     <Content Include="Images\ReportScheduler.png" />
@@ -626,6 +628,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardCurrenciesAccountingPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
@@ -662,6 +665,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\TenantAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\TermsofUseSignatureListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CardCurrenciesAccountingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerOpenFilesAmountPMService.ts" />
@@ -5494,9 +5498,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARInvoicePMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\APInvoiceMultipleShortPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\APInvoiceTotalVATPM.ts" />
-    <TypeScriptCompile Include="Invoice\EntityPMs\APPaymentMethodPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\ARInvoiceTotalVATPM.ts" />
-    <TypeScriptCompile Include="Invoice\EntityPMs\ARPaymentMethodPM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\BankAccountLitePM.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMs\SATInterfaceSettingPM.ts" />
     <TypeScriptCompile Include="Invoice\Services\ExtendedLists\ARPaymentExtendedListService.ts" />
@@ -6517,8 +6519,6 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInterfaceListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInterfaceSettingListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATPaymentMethodListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardPMs\APPaymentMethodPMService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARPaymentMethodPMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\BankAccountLitePMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\SATInterfaceSettingPMService.ts" />
     <TypeScriptCompile Include="polyfills.ts" />
@@ -6747,6 +6747,8 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentComputedFieldsList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ShipmentSubTypeList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMInitServices\ShipmentSubTypePMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferHeaderPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferLinePM.ts" />
@@ -6758,6 +6760,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentComputedFieldsPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
@@ -6782,11 +6785,13 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\PickUpDeliveryTransportModeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsMessageTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsTransmissionListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentSubTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBAdditionalHandlingInfoPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentSubTypePMService.ts" />
     <TypeScriptCompile Include="Shipment\Validators\ShipmentDeliveryValidator.ts" />
     <TypeScriptCompile Include="Shipment\Validators\ShipmentPickupValidator.ts" />
     <TypeScriptCompile Include="Social\Components\AddSocialMessageParticipantsComponent.ts" />
@@ -7365,7 +7370,6 @@
     <TypeScriptCompile Include="Invoice\EntityLists\APInvoiceTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APInvoiceTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentList.ts" />
-    <TypeScriptCompile Include="Invoice\EntityLists\APPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceLineList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceList.ts" />
@@ -7373,7 +7377,6 @@
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentList.ts" />
-    <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARPaymentStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\CreditCardTypeList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ExternalSystemsTablesCodeList.ts" />
@@ -7416,14 +7419,12 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APInvoiceTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APInvoiceTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentMethodListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentListService.ts" />
-    <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentMethodListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\CreditCardTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ExternalSystemsTablesCodeListService.ts" />

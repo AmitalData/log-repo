@@ -271,12 +271,33 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
-
+            UpdateCardCurrenciesAccountings_Vendor(currentEntity);
             VendorService service = new VendorService(objectContext, currentEntity.Tenant);
-            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
+            service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Vendor);
             service.Update(currentEntity);
         }
 
+        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Vendor;
+
+        private void UpdateCardCurrenciesAccountings_Vendor(VendorPM currentEntity)
+        {
+            cardCurrenciesAccountingChangeSet_Vendor = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
+            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Vendor)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update:
+                        {
+                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+        }
         public void DeleteVendor(VendorPM vendor)
         {
             if (objectContext == null)

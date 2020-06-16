@@ -136,7 +136,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 int fileSize = fileData.Length;
                 string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
                 string filelocation = "how-to";
-                string fileName = this.entityPM.FileName;
+                string fileName = this.entityPM.FileName.Split('.')[0];
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 

@@ -2952,6 +2952,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentSubTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -3630,6 +3637,11 @@
   <Relation
     ForeignKeyColumn="OperationalClosedByUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentSubTypeId"
+    ReferencedTable="ShipmentSubTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

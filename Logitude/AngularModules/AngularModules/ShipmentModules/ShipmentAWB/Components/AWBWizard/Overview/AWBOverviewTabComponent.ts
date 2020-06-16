@@ -14,6 +14,7 @@ import {SendFSRArgs} from '../../FSRWizard/SendFSRComponent';
 import {AWBHelper, AWBCCSValidator} from '../../../../../Shipment/Tools';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -102,7 +103,7 @@ export class AWBOverviewTabComponent {
             this.IsFNAReasonStatusVisible = true;
         }
 
-        if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (ObjectsLocator.IsDemoTenant(SessionLocator.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             this.IsDemoTenantStatusVisible = true;
         }
 

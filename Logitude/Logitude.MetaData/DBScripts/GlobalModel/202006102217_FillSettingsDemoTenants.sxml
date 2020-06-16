@@ -1,0 +1,11 @@
+﻿<Script DBType="Global">
+  <Sql Version="1">
+    <![CDATA[
+    
+      update settings   
+      set LogitudeDemoTenants = '65,2279,2307'
+      
+    ]]>
+  </Sql>
+</Script>
+

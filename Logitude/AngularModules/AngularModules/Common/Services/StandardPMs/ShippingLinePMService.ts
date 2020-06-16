@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ShippingLinePM} from '../../EntityPMs/ShippingLinePM';
 
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
+import {CardCurrenciesAccountingPM} from '../../EntityPMs/CardCurrenciesAccountingPM';
 
 @Injectable()
 
@@ -183,6 +184,7 @@ export class ShippingLinePMService {
             }
 			
                this.MapCardExternalCodeByCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapCardCurrenciesAccountings(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -196,6 +198,15 @@ export class ShippingLinePMService {
 						
 							 
             entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.CardCurrenciesAccountings = [];
+            for (var item in entityPM.CardCurrenciesAccountings) {
+            var myCardCurrenciesAccountingPM = entityPM.CardCurrenciesAccountings[item];
+            var newCardCurrenciesAccountingPM: CardCurrenciesAccountingPM = this.clone(myCardCurrenciesAccountingPM);
+						
+							 
+            entityPM.OldEntityPM.CardCurrenciesAccountings.push(newCardCurrenciesAccountingPM);
             }
 			   
 		}
@@ -292,6 +303,96 @@ export class ShippingLinePMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.CardExternalCodeByCurrencies.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapCardCurrenciesAccountings(entityPM: ShippingLinePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCardCurrenciesAccountings: CardCurrenciesAccountingPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCardCurrenciesAccountings = entityPM.OldEntityPM.CardCurrenciesAccountings;
+        }
+
+        entityPM.CardCurrenciesAccountings = new Array<CardCurrenciesAccountingPM>();
+        for (var item in jsonPM.CardCurrenciesAccountings) {
+            var jItem = jsonPM.CardCurrenciesAccountings[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCardCurrenciesAccountingPM: CardCurrenciesAccountingPM;
+	  
+            if (mapParent) {
+                newCardCurrenciesAccountingPM = new CardCurrenciesAccountingPM(entityPM);
+            }
+            else
+            {
+                newCardCurrenciesAccountingPM = new CardCurrenciesAccountingPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCardCurrenciesAccountingPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newCardCurrenciesAccountingPM.UniqueKey = Guid.newGuid();
+                newCardCurrenciesAccountingPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newCardCurrenciesAccountingPM.OldEntityPM = this.clone(newCardCurrenciesAccountingPM);
+
+				
+            }
+            else {
+                if (newCardCurrenciesAccountingPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newCardCurrenciesAccountingPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newCardCurrenciesAccountingPM.ChangeSetOp = "Insert";
+                }
+ 
+                newCardCurrenciesAccountingPM.OldEntityPM = null;
+                newCardCurrenciesAccountingPM.EntityParentPM = null;
+            }
+			
+			 newCardCurrenciesAccountingPM.IsDirty = false;
+            entityPM.CardCurrenciesAccountings.push(newCardCurrenciesAccountingPM);
+        }
+        if (oldCardCurrenciesAccountings) {
+            
+            for (var itemKey in oldCardCurrenciesAccountings) {
+                if (entityPM.CardCurrenciesAccountings.filter(p=> p.UniqueKey === oldCardCurrenciesAccountings[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldCardCurrenciesAccountings[itemKey]) {
+                        //oldCardCurrenciesAccountings[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.CardCurrenciesAccountings.push(oldCardCurrenciesAccountings[itemKey]);
+						var oldItemJson = oldCardCurrenciesAccountings[itemKey];
+                        var deletedPM: CardCurrenciesAccountingPM = new CardCurrenciesAccountingPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.CardCurrenciesAccountings.push(deletedPM);
                     }
                 }
             }

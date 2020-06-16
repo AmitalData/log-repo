@@ -187,6 +187,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 DirectionId = oldEntity.DirectionId,
                 TransportModeId = oldEntity.TransportModeId,
                 ShipmentTypeId = oldEntity.ShipmentTypeId,
+                ShipmentSubTypeId = oldEntity.ShipmentSubTypeId,
                 BranchId = oldEntity.BranchId,
                 DepartmentId = oldEntity.DepartmentId,
                 ProfitCurrencyId = oldEntity.ProfitCurrencyId,
