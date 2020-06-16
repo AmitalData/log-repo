@@ -200,6 +200,61 @@ export class ShipmentComputedFieldsPM {
     public set OperationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("OperationallyClosedByUserName"); } }
        
 	 
+    private createdFromDigital: boolean;
+    public get CreatedFromDigital() { return this.createdFromDigital; }
+    public set CreatedFromDigital(newValue: boolean) { if (this.createdFromDigital != newValue) { this.createdFromDigital = newValue; this.MarkAsDirty("CreatedFromDigital"); } }
+       
+	 
+    private deliveryTruckerId: string;
+    public get DeliveryTruckerId() { return this.deliveryTruckerId; }
+    public set DeliveryTruckerId(newValue: string) { if (this.deliveryTruckerId != newValue) { this.deliveryTruckerId = newValue; this.MarkAsDirty("DeliveryTruckerId"); } }
+       
+	 
+    private deliveryTruckerNumber: string;
+    public get DeliveryTruckerNumber() { return this.deliveryTruckerNumber; }
+    public set DeliveryTruckerNumber(newValue: string) { if (this.deliveryTruckerNumber != newValue) { this.deliveryTruckerNumber = newValue; this.MarkAsDirty("DeliveryTruckerNumber"); } }
+       
+	 
+    private deliveryDriver: string;
+    public get DeliveryDriver() { return this.deliveryDriver; }
+    public set DeliveryDriver(newValue: string) { if (this.deliveryDriver != newValue) { this.deliveryDriver = newValue; this.MarkAsDirty("DeliveryDriver"); } }
+       
+	 
+    private deliveryTrailerNumber: string;
+    public get DeliveryTrailerNumber() { return this.deliveryTrailerNumber; }
+    public set DeliveryTrailerNumber(newValue: string) { if (this.deliveryTrailerNumber != newValue) { this.deliveryTrailerNumber = newValue; this.MarkAsDirty("DeliveryTrailerNumber"); } }
+       
+	 
+    private deliveryNotes: string;
+    public get DeliveryNotes() { return this.deliveryNotes; }
+    public set DeliveryNotes(newValue: string) { if (this.deliveryNotes != newValue) { this.deliveryNotes = newValue; this.MarkAsDirty("DeliveryNotes"); } }
+       
+	 
+    private pickupTruckerId: string;
+    public get PickupTruckerId() { return this.pickupTruckerId; }
+    public set PickupTruckerId(newValue: string) { if (this.pickupTruckerId != newValue) { this.pickupTruckerId = newValue; this.MarkAsDirty("PickupTruckerId"); } }
+       
+	 
+    private pickupTruckerNumber: string;
+    public get PickupTruckerNumber() { return this.pickupTruckerNumber; }
+    public set PickupTruckerNumber(newValue: string) { if (this.pickupTruckerNumber != newValue) { this.pickupTruckerNumber = newValue; this.MarkAsDirty("PickupTruckerNumber"); } }
+       
+	 
+    private pickupDriver: string;
+    public get PickupDriver() { return this.pickupDriver; }
+    public set PickupDriver(newValue: string) { if (this.pickupDriver != newValue) { this.pickupDriver = newValue; this.MarkAsDirty("PickupDriver"); } }
+       
+	 
+    private pickupTrailerNumber: string;
+    public get PickupTrailerNumber() { return this.pickupTrailerNumber; }
+    public set PickupTrailerNumber(newValue: string) { if (this.pickupTrailerNumber != newValue) { this.pickupTrailerNumber = newValue; this.MarkAsDirty("PickupTrailerNumber"); } }
+       
+	 
+    private pickupNotes: string;
+    public get PickupNotes() { return this.pickupNotes; }
+    public set PickupNotes(newValue: string) { if (this.pickupNotes != newValue) { this.pickupNotes = newValue; this.MarkAsDirty("PickupNotes"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		

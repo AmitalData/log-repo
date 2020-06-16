@@ -58,189 +58,201 @@ IF @@TRANCOUNT > 0
 ROLLBACK TRAN
 END CATCH;
 
--- General Script From 202006132005_AddDepartureFrequencyToQuoteDetails.sxml File
-BEGIN TRAN
-BEGIN TRY
-DECLARE @StartTime datetime
-DECLARE @EndTime datetime
-SELECT @StartTime = GETDATE()
-declare @QuoteTemplateId as varchar(15)
-declare @QuoteTemplateTextCodeId as varchar(15)
-declare @Tenant as int
-declare @NewEntityId as varchar(15)
-DECLARE QuoteTemplateCursor CURSOR READ_ONLY
-FOR
-SELECT Id , Tenant
-From QuoteTemplates
-OPEN QuoteTemplateCursor FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'DEPARTUREFREQUENCY' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
-if(@QuoteTemplateTextCodeId is null)
-begin
-EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'DEPARTUREFREQUENCY', 'Departure Frequency' , 'Departure Frequency' , @QuoteTemplateId ,'QuoteDetails' ,'Departure Frequency','Departure Frequency' );
-end
-FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant
-End
-CLOSE QuoteTemplateCursor
-DEALLOCATE QuoteTemplateCursor
-SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006132005_AddDepartureFrequencyToQuoteDetails.sxml', GETDATE(), 'declare @QuoteTemplateId as varchar(15)
-declare @QuoteTemplateTextCodeId as varchar(15)
-declare @Tenant as int
-declare @NewEntityId as varchar(15)
-DECLARE QuoteTemplateCursor CURSOR READ_ONLY
-FOR
-SELECT Id , Tenant
-From QuoteTemplates
-OPEN QuoteTemplateCursor FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant
-WHILE @@FETCH_STATUS = 0
-BEGIN
-set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = ''DEPARTUREFREQUENCY'' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
-if(@QuoteTemplateTextCodeId is null)
-begin
-EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,''QuoteTemplateTextCode''
-INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , ''DEPARTUREFREQUENCY'', ''Departure Frequency'' , ''Departure Frequency'' , @QuoteTemplateId ,''QuoteDetails'' ,''Departure Frequency'',''Departure Frequency'' );
-end
-FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant
-End
-CLOSE QuoteTemplateCursor
-DEALLOCATE QuoteTemplateCursor', DATEDIFF(MS,@StartTime,@EndTime), '37293753384c284c15beaf1c8fd60701', 1);
-COMMIT TRAN
-END TRY
-BEGIN CATCH
-IF @@TRANCOUNT > 0
-ROLLBACK TRAN
-END CATCH;
+-- Add New Column With Name AccountingVATSplit
+ALTER TABLE [dbo].[Cards] ADD [AccountingVATSplit] BIT DEFAULT(0) NOT NULL;
 
--- Create New Table With Name BIFoldersPermissions
-CREATE TABLE [dbo].[BIFoldersPermissions](
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3bb6166c-dad5-495a-a979-d9a26922fd4f', 'Card.dxml', 'Cards', 'AccountingVATSplit', 'Add Column', GETDATE(), '-- Add New Column With Name AccountingVATSplitALTER TABLE [dbo].[Cards] ADD [AccountingVATSplit] BIT DEFAULT(0) NOT NULL;');
+
+
+-- Create New Table With Name CardCurrenciesAccountings
+CREATE TABLE [dbo].[CardCurrenciesAccountings](
 [Id] VARCHAR(15) NOT NULL,
 [Tenant] INT NOT NULL,
-[FolderId] VARCHAR(15) NULL,
-[UserId] VARCHAR(15) NULL,
-CONSTRAINT [PK_BIFoldersPermissions] PRIMARY KEY([Id])
+[CardId] VARCHAR(15) NULL,
+[CurrencyId] VARCHAR(15) NULL,
+[PayableDebitAccount] VARCHAR(15) NULL,
+[ReceivableCreditAccount] VARCHAR(15) NULL,
+CONSTRAINT [PK_CardCurrenciesAccountings] PRIMARY KEY([Id])
 );
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('5e510049-05bb-4c16-b5b6-2d6fc3e952f2', 'BIFoldersPermission.dxml', 'BIFoldersPermissions', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name BIFoldersPermissionsCREATE TABLE [dbo].[BIFoldersPermissions]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NOT NULL,[FolderId] VARCHAR(15) NULL,[UserId] VARCHAR(15) NULL,CONSTRAINT [PK_BIFoldersPermissions] PRIMARY KEY([Id]));');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('76da7d85-1a1b-4dc8-b2e0-b866620ec7d9', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name CardCurrenciesAccountingsCREATE TABLE [dbo].[CardCurrenciesAccountings]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NOT NULL,[CardId] VARCHAR(15) NULL,[CurrencyId] VARCHAR(15) NULL,[PayableDebitAccount] VARCHAR(15) NULL,[ReceivableCreditAccount] VARCHAR(15) NULL,CONSTRAINT [PK_CardCurrenciesAccountings] PRIMARY KEY([Id]));');
 
 
--- Add New Column With Name PermissionForAll
-ALTER TABLE [dbo].[BIReportFolders] ADD [PermissionForAll] BIT DEFAULT(0) NOT NULL;
+-- Add New Column With Name ShipmentSubTypeId
+ALTER TABLE [dbo].[Quotes] ADD [ShipmentSubTypeId] VARCHAR(15) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('dc62589f-4cb6-4d2e-9365-a3ddf5f1edcc', 'BIReportFolder.dxml', 'BIReportFolders', 'PermissionForAll', 'Add Column', GETDATE(), '-- Add New Column With Name PermissionForAllALTER TABLE [dbo].[BIReportFolders] ADD [PermissionForAll] BIT DEFAULT(0) NOT NULL;');
-
--- Add New Column With Name PermittedByUserId
-ALTER TABLE [dbo].[BIReportFolders] ADD [PermittedByUserId] VARCHAR(15) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f32477ee-6047-4491-b685-7096c8cb5dda', 'BIReportFolder.dxml', 'BIReportFolders', 'PermittedByUserId', 'Add Column', GETDATE(), '-- Add New Column With Name PermittedByUserIdALTER TABLE [dbo].[BIReportFolders] ADD [PermittedByUserId] VARCHAR(15) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a3fdb9fe-41c3-4f49-8412-83bd6249de82', 'Quote.dxml', 'Quotes', 'ShipmentSubTypeId', 'Add Column', GETDATE(), '-- Add New Column With Name ShipmentSubTypeIdALTER TABLE [dbo].[Quotes] ADD [ShipmentSubTypeId] VARCHAR(15) NULL;');
 
 
--- Add New Column With Name DuplicateMessagesAutoRemove
-ALTER TABLE [dbo].[QueueDefinitions] ADD [DuplicateMessagesAutoRemove] BIT DEFAULT(0) NOT NULL;
+-- Add New Column With Name ShipmentSubTypeId
+ALTER TABLE [dbo].[Shipments] ADD [ShipmentSubTypeId] VARCHAR(15) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ef8ad58c-1005-4460-a9e6-74fb2760c473', 'QueueDefinition.dxml', 'QueueDefinitions', 'DuplicateMessagesAutoRemove', 'Add Column', GETDATE(), '-- Add New Column With Name DuplicateMessagesAutoRemoveALTER TABLE [dbo].[QueueDefinitions] ADD [DuplicateMessagesAutoRemove] BIT DEFAULT(0) NOT NULL;');
-
-
--- Add New Column With Name HashCode
-ALTER TABLE [dbo].[QueueMessages] ADD [HashCode] NVARCHAR(MAX) NULL;
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('943813a1-2e26-4376-b76e-cbe62e34eb91', 'QueueMessage.dxml', 'QueueMessages', 'HashCode', 'Add Column', GETDATE(), '-- Add New Column With Name HashCodeALTER TABLE [dbo].[QueueMessages] ADD [HashCode] NVARCHAR(MAX) NULL;');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0d724155-b9eb-4516-abea-f29a067498c7', 'Shipment.dxml', 'Shipments', 'ShipmentSubTypeId', 'Add Column', GETDATE(), '-- Add New Column With Name ShipmentSubTypeIdALTER TABLE [dbo].[Shipments] ADD [ShipmentSubTypeId] VARCHAR(15) NULL;');
 
 
--- Drop Column ShipmentSubTypeId
-EXEC SP_RENAME 'dbo.Quotes.ShipmentSubTypeId', 'Drop_ShipmentSubTypeId', 'COLUMN';
+-- Add New Column With Name DeliveryTruckerId
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTruckerId] VARCHAR(15) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0fd25b86-9d96-4762-9b3b-235bd023b337', 'Quote.dxml', 'Quotes', 'ShipmentSubTypeId', 'Drop Column', GETDATE(), '-- Drop Column ShipmentSubTypeIdEXEC SP_RENAME ''dbo.Quotes.ShipmentSubTypeId'', ''Drop_ShipmentSubTypeId'', ''COLUMN'';');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a997de8c-5797-4aca-98c3-2c0e3f3a7139', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryTruckerId', 'Add Column', GETDATE(), '-- Add New Column With Name DeliveryTruckerIdALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTruckerId] VARCHAR(15) NULL;');
 
+-- Add New Column With Name DeliveryTruckerNumber
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTruckerNumber] VARCHAR(15) NULL;
 
--- Unset Nullable For Column IsMultiHarmonize
-ALTER TABLE [dbo].[InsideShipmentPackages] ALTER COLUMN [IsMultiHarmonize] BIT NOT NULL;
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a1ed136e-6e77-4687-b343-a666b8f0bc55', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryTruckerNumber', 'Add Column', GETDATE(), '-- Add New Column With Name DeliveryTruckerNumberALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTruckerNumber] VARCHAR(15) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ca364dd9-1c26-4578-b828-e323310df46f', 'InsideShipmentPackage.dxml', 'InsideShipmentPackages', 'IsMultiHarmonize', 'Unset Column Nullable', GETDATE(), '-- Unset Nullable For Column IsMultiHarmonizeALTER TABLE [dbo].[InsideShipmentPackages] ALTER COLUMN [IsMultiHarmonize] BIT NOT NULL;');
+-- Add New Column With Name DeliveryDriver
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryDriver] VARCHAR(40) NULL;
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('aaa22d0b-1ea3-4812-9c93-94bc1bcadec4', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryDriver', 'Add Column', GETDATE(), '-- Add New Column With Name DeliveryDriverALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryDriver] VARCHAR(40) NULL;');
 
--- Drop Column ShipmentSubTypeId
-EXEC SP_RENAME 'dbo.Shipments.ShipmentSubTypeId', 'Drop_ShipmentSubTypeId', 'COLUMN';
+-- Add New Column With Name DeliveryTrailerNumber
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTrailerNumber] VARCHAR(15) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('22f67524-e367-4847-a9b7-b0f90659b599', 'Shipment.dxml', 'Shipments', 'ShipmentSubTypeId', 'Drop Column', GETDATE(), '-- Drop Column ShipmentSubTypeIdEXEC SP_RENAME ''dbo.Shipments.ShipmentSubTypeId'', ''Drop_ShipmentSubTypeId'', ''COLUMN'';');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c19e6590-5a79-4dd4-ac31-18760422e3ae', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryTrailerNumber', 'Add Column', GETDATE(), '-- Add New Column With Name DeliveryTrailerNumberALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryTrailerNumber] VARCHAR(15) NULL;');
 
+-- Add New Column With Name DeliveryNotes
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryNotes] NVARCHAR(2000) NULL;
 
--- Add Foreign Key Constraint For Column FolderId In Table BIFoldersPermissions As Reference To Column Id In Table BIReportFolders
-EXEC('ALTER TABLE [dbo].[BIFoldersPermissions] ADD CONSTRAINT [FK_BIFoldersPermissions_BIReportFolders_FolderId] FOREIGN KEY([FolderId]) REFERENCES [dbo].[BIReportFolders]([Id])');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('e9f3ae75-62ec-40c4-9ce1-6b7dc52a080b', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryNotes', 'Add Column', GETDATE(), '-- Add New Column With Name DeliveryNotesALTER TABLE [dbo].[ShipmentComputedFields] ADD [DeliveryNotes] NVARCHAR(2000) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('91fefcb2-b51e-4816-baaf-65f0138e8baa', 'BIFoldersPermission.dxml', 'BIFoldersPermissions', 'FolderId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column FolderId In Table BIFoldersPermissions As Reference To Column Id In Table BIReportFoldersEXEC(''ALTER TABLE [dbo].[BIFoldersPermissions] ADD CONSTRAINT [FK_BIFoldersPermissions_BIReportFolders_FolderId] FOREIGN KEY([FolderId]) REFERENCES [dbo].[BIReportFolders]([Id])'');');
+-- Add New Column With Name PickupTruckerId
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTruckerId] VARCHAR(15) NULL;
 
--- Create Index On BIFoldersPermissions Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_BIFoldersPermissions_FolderId] ON [dbo].[BIFoldersPermissions]([FolderId])');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('fd5979f1-cebd-4bd3-9e7b-7eb189bdb0d0', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupTruckerId', 'Add Column', GETDATE(), '-- Add New Column With Name PickupTruckerIdALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTruckerId] VARCHAR(15) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('3a77d38f-6328-476d-b8ea-8143dbac3997', 'BIFoldersPermission.dxml', 'BIFoldersPermissions', 'FolderId', 'Create Index', GETDATE(), '-- Create Index On BIFoldersPermissions TableEXEC(''CREATE NONCLUSTERED INDEX [IX_BIFoldersPermissions_FolderId] ON [dbo].[BIFoldersPermissions]([FolderId])'');');
+-- Add New Column With Name PickupTruckerNumber
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTruckerNumber] VARCHAR(15) NULL;
 
--- Add Foreign Key Constraint For Column UserId In Table BIFoldersPermissions As Reference To Column Id In Table Users
-EXEC('ALTER TABLE [dbo].[BIFoldersPermissions] ADD CONSTRAINT [FK_BIFoldersPermissions_Users_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[Users]([Id])');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('db29f95b-0974-4d22-8e2e-3ada498bdcab', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupTruckerNumber', 'Add Column', GETDATE(), '-- Add New Column With Name PickupTruckerNumberALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTruckerNumber] VARCHAR(15) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d1499e96-b1dd-41c5-a668-1edf9ffaa8a1', 'BIFoldersPermission.dxml', 'BIFoldersPermissions', 'UserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column UserId In Table BIFoldersPermissions As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[BIFoldersPermissions] ADD CONSTRAINT [FK_BIFoldersPermissions_Users_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[Users]([Id])'');');
+-- Add New Column With Name PickupDriver
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupDriver] VARCHAR(40) NULL;
 
--- Create Index On BIFoldersPermissions Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_BIFoldersPermissions_UserId] ON [dbo].[BIFoldersPermissions]([UserId])');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('892b71b5-5e08-40bb-a5e8-92ef1581b070', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupDriver', 'Add Column', GETDATE(), '-- Add New Column With Name PickupDriverALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupDriver] VARCHAR(40) NULL;');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('37dc2901-60d1-43cb-81cb-466f43a1040b', 'BIFoldersPermission.dxml', 'BIFoldersPermissions', 'UserId', 'Create Index', GETDATE(), '-- Create Index On BIFoldersPermissions TableEXEC(''CREATE NONCLUSTERED INDEX [IX_BIFoldersPermissions_UserId] ON [dbo].[BIFoldersPermissions]([UserId])'');');
+-- Add New Column With Name PickupTrailerNumber
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTrailerNumber] VARCHAR(15) NULL;
 
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f007bcdb-8ca5-4a8f-a717-9bf3415e9c04', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupTrailerNumber', 'Add Column', GETDATE(), '-- Add New Column With Name PickupTrailerNumberALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupTrailerNumber] VARCHAR(15) NULL;');
 
--- Add Foreign Key Constraint For Column PermittedByUserId In Table BIReportFolders As Reference To Column Id In Table Users
-EXEC('ALTER TABLE [dbo].[BIReportFolders] ADD CONSTRAINT [FK_BIReportFolders_Users_PermittedByUserId] FOREIGN KEY([PermittedByUserId]) REFERENCES [dbo].[Users]([Id])');
+-- Add New Column With Name PickupNotes
+ALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupNotes] NVARCHAR(2000) NULL;
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('4b6a6172-bb79-464b-b2e7-45d3f23635dc', 'BIReportFolder.dxml', 'BIReportFolders', 'PermittedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column PermittedByUserId In Table BIReportFolders As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[BIReportFolders] ADD CONSTRAINT [FK_BIReportFolders_Users_PermittedByUserId] FOREIGN KEY([PermittedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
-
--- Create Index On BIReportFolders Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_BIReportFolders_PermittedByUserId] ON [dbo].[BIReportFolders]([PermittedByUserId])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f1a8d0a4-60b4-478f-80df-bc83a87f9dd6', 'BIReportFolder.dxml', 'BIReportFolders', 'PermittedByUserId', 'Create Index', GETDATE(), '-- Create Index On BIReportFolders TableEXEC(''CREATE NONCLUSTERED INDEX [IX_BIReportFolders_PermittedByUserId] ON [dbo].[BIReportFolders]([PermittedByUserId])'');');
-
-
--- Drop Foreign Key Constraint For Column ShipmentSubTypeId In Table Quotes That Reference To Column Id In Table ShipmentSubTypes
-EXEC('IF (OBJECT_ID(''[dbo].[FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId] END');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d6fb3afe-ac5e-4650-8ac7-12d678b6cd73', 'Quote.dxml', 'Quotes', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ShipmentSubTypeId In Table Quotes That Reference To Column Id In Table ShipmentSubTypesEXEC(''IF (OBJECT_ID(''''[dbo].[FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Quotes] DROP CONSTRAINT [FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId] END'');');
-
--- Drop Index IX_Quotes_ShipmentSubTypeId From Table Quotes
-EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_Quotes_ShipmentSubTypeId'' AND object_id = OBJECT_ID(''[dbo].[Quotes]'', ''U'')) BEGIN DROP INDEX [IX_Quotes_ShipmentSubTypeId] ON [dbo].[Quotes] END');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ed56f0d5-4ce4-487b-bce5-054ed8f8a1eb', 'Quote.dxml', 'Quotes', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_Quotes_ShipmentSubTypeId From Table QuotesEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_Quotes_ShipmentSubTypeId'''' AND object_id = OBJECT_ID(''''[dbo].[Quotes]'''', ''''U'''')) BEGIN DROP INDEX [IX_Quotes_ShipmentSubTypeId] ON [dbo].[Quotes] END'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('56e655bf-66ff-4b59-8746-55404b5b5370', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupNotes', 'Add Column', GETDATE(), '-- Add New Column With Name PickupNotesALTER TABLE [dbo].[ShipmentComputedFields] ADD [PickupNotes] NVARCHAR(2000) NULL;');
 
 
--- Add Foreign Key Constraint For Column Tenant In Table QuoteTemplates As Reference To Column Id In Table Tenants
-EXEC('ALTER TABLE [dbo].[QuoteTemplates] ADD CONSTRAINT [FK_QuoteTemplates_Tenants_Tenant] FOREIGN KEY([Tenant]) REFERENCES [dbo].[Tenants]([Id])');
+-- Create New Table With Name ShipmentSubTypes
+CREATE TABLE [dbo].[ShipmentSubTypes](
+[Id] VARCHAR(15) NOT NULL,
+[Tenant] INT NOT NULL,
+[CreateDate] DATETIME NOT NULL,
+[CreatedByUserId] VARCHAR(15) NOT NULL,
+[UpdateDate] DATETIME NOT NULL,
+[UpdatedByUserId] VARCHAR(15) NOT NULL,
+[SearchFields] NVARCHAR(MAX) NULL,
+[Code] VARCHAR(5) NOT NULL,
+[Name] VARCHAR(60) NOT NULL,
+[Inactive] BIT DEFAULT(0) NOT NULL,
+[ShipmentTypeCode] VARCHAR(4) NOT NULL,
+CONSTRAINT [PK_ShipmentSubTypes] PRIMARY KEY([Id])
+);
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('97c71161-3175-4486-be36-a59ca0872d69', 'QuoteTemplate.dxml', 'QuoteTemplates', 'Tenant', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column Tenant In Table QuoteTemplates As Reference To Column Id In Table TenantsEXEC(''ALTER TABLE [dbo].[QuoteTemplates] ADD CONSTRAINT [FK_QuoteTemplates_Tenants_Tenant] FOREIGN KEY([Tenant]) REFERENCES [dbo].[Tenants]([Id])'');');
-
--- Create Index On QuoteTemplates Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_QuoteTemplates_Tenant] ON [dbo].[QuoteTemplates]([Tenant])');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c1eeb8c6-8b1e-4626-a545-c3ecc27aab03', 'QuoteTemplate.dxml', 'QuoteTemplates', 'Tenant', 'Create Index', GETDATE(), '-- Create Index On QuoteTemplates TableEXEC(''CREATE NONCLUSTERED INDEX [IX_QuoteTemplates_Tenant] ON [dbo].[QuoteTemplates]([Tenant])'');');
-
-
--- Drop Foreign Key Constraint For Column ShipmentSubTypeId In Table Shipments That Reference To Column Id In Table ShipmentSubTypes
-EXEC('IF (OBJECT_ID(''[dbo].[FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId]'', ''F'') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Shipments] DROP CONSTRAINT [FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId] END');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('15c730e4-729d-4f77-b675-26cfa78ae989', 'Shipment.dxml', 'Shipments', NULL, 'Drop Relation', GETDATE(), '-- Drop Foreign Key Constraint For Column ShipmentSubTypeId In Table Shipments That Reference To Column Id In Table ShipmentSubTypesEXEC(''IF (OBJECT_ID(''''[dbo].[FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId]'''', ''''F'''') IS NOT NULL) BEGIN ALTER TABLE [dbo].[Shipments] DROP CONSTRAINT [FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId] END'');');
-
--- Drop Index IX_Shipments_ShipmentSubTypeId From Table Shipments
-EXEC('IF EXISTS (SELECT * FROM sys.indexes WHERE name=''IX_Shipments_ShipmentSubTypeId'' AND object_id = OBJECT_ID(''[dbo].[Shipments]'', ''U'')) BEGIN DROP INDEX [IX_Shipments_ShipmentSubTypeId] ON [dbo].[Shipments] END');
-
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('d30e8220-6ef0-412e-8eae-6e3a80827660', 'Shipment.dxml', 'Shipments', NULL, 'Drop Index', GETDATE(), '-- Drop Index IX_Shipments_ShipmentSubTypeId From Table ShipmentsEXEC(''IF EXISTS (SELECT * FROM sys.indexes WHERE name=''''IX_Shipments_ShipmentSubTypeId'''' AND object_id = OBJECT_ID(''''[dbo].[Shipments]'''', ''''U'''')) BEGIN DROP INDEX [IX_Shipments_ShipmentSubTypeId] ON [dbo].[Shipments] END'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('666ebe55-e1cb-4280-bd76-cbf0d9d82f24', 'ShipmentSubType.dxml', 'ShipmentSubTypes', NULL, 'Create Table', GETDATE(), '-- Create New Table With Name ShipmentSubTypesCREATE TABLE [dbo].[ShipmentSubTypes]([Id] VARCHAR(15) NOT NULL,[Tenant] INT NOT NULL,[CreateDate] DATETIME NOT NULL,[CreatedByUserId] VARCHAR(15) NOT NULL,[UpdateDate] DATETIME NOT NULL,[UpdatedByUserId] VARCHAR(15) NOT NULL,[SearchFields] NVARCHAR(MAX) NULL,[Code] VARCHAR(5) NOT NULL,[Name] VARCHAR(60) NOT NULL,[Inactive] BIT DEFAULT(0) NOT NULL,[ShipmentTypeCode] VARCHAR(4) NOT NULL,CONSTRAINT [PK_ShipmentSubTypes] PRIMARY KEY([Id]));');
 
 
--- Add Foreign Key Constraint For Column InsidePackageId In Table ShipmentPackageHarmonize As Reference To Column Id In Table InsideShipmentPackages
-EXEC('ALTER TABLE [dbo].[ShipmentPackageHarmonize] ADD CONSTRAINT [FK_ShipmentPackageHarmonize_InsideShipmentPackages_InsidePackageId] FOREIGN KEY([InsidePackageId]) REFERENCES [dbo].[InsideShipmentPackages]([Id])');
+-- Add Foreign Key Constraint For Column CardId In Table CardCurrenciesAccountings As Reference To Column Id In Table Cards
+EXEC('ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Cards_CardId] FOREIGN KEY([CardId]) REFERENCES [dbo].[Cards]([Id])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('15e28a2b-231a-41c6-891f-98db1fed5b9f', 'ShipmentPackageHarmonize.dxml', 'ShipmentPackageHarmonize', 'InsidePackageId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column InsidePackageId In Table ShipmentPackageHarmonize As Reference To Column Id In Table InsideShipmentPackagesEXEC(''ALTER TABLE [dbo].[ShipmentPackageHarmonize] ADD CONSTRAINT [FK_ShipmentPackageHarmonize_InsideShipmentPackages_InsidePackageId] FOREIGN KEY([InsidePackageId]) REFERENCES [dbo].[InsideShipmentPackages]([Id])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('7e41c74c-b4cb-4341-b6ce-ffcf26cc2a3f', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CardId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CardId In Table CardCurrenciesAccountings As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Cards_CardId] FOREIGN KEY([CardId]) REFERENCES [dbo].[Cards]([Id])'');');
 
--- Create Index On ShipmentPackageHarmonize Table
-EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentPackageHarmonize_InsidePackageId] ON [dbo].[ShipmentPackageHarmonize]([InsidePackageId])');
+-- Create Index On CardCurrenciesAccountings Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CardId] ON [dbo].[CardCurrenciesAccountings]([CardId])');
 
-INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('edba83ad-f565-434e-b825-f0525e018822', 'ShipmentPackageHarmonize.dxml', 'ShipmentPackageHarmonize', 'InsidePackageId', 'Create Index', GETDATE(), '-- Create Index On ShipmentPackageHarmonize TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentPackageHarmonize_InsidePackageId] ON [dbo].[ShipmentPackageHarmonize]([InsidePackageId])'');');
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('aa49181c-b033-4d6f-9fd2-7e849afec695', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CardId', 'Create Index', GETDATE(), '-- Create Index On CardCurrenciesAccountings TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CardId] ON [dbo].[CardCurrenciesAccountings]([CardId])'');');
+
+-- Add Foreign Key Constraint For Column CurrencyId In Table CardCurrenciesAccountings As Reference To Column Id In Table Currencies
+EXEC('ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Currencies_CurrencyId] FOREIGN KEY([CurrencyId]) REFERENCES [dbo].[Currencies]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0943e90b-df0d-418b-bdb7-acf64dbfe65a', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CurrencyId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CurrencyId In Table CardCurrenciesAccountings As Reference To Column Id In Table CurrenciesEXEC(''ALTER TABLE [dbo].[CardCurrenciesAccountings] ADD CONSTRAINT [FK_CardCurrenciesAccountings_Currencies_CurrencyId] FOREIGN KEY([CurrencyId]) REFERENCES [dbo].[Currencies]([Id])'');');
+
+-- Create Index On CardCurrenciesAccountings Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CurrencyId] ON [dbo].[CardCurrenciesAccountings]([CurrencyId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('2da124d2-797f-43f9-b388-056773f4a414', 'CardCurrenciesAccounting.dxml', 'CardCurrenciesAccountings', 'CurrencyId', 'Create Index', GETDATE(), '-- Create Index On CardCurrenciesAccountings TableEXEC(''CREATE NONCLUSTERED INDEX [IX_CardCurrenciesAccountings_CurrencyId] ON [dbo].[CardCurrenciesAccountings]([CurrencyId])'');');
+
+
+-- Add Foreign Key Constraint For Column ShipmentSubTypeId In Table Quotes As Reference To Column Id In Table ShipmentSubTypes
+EXEC('ALTER TABLE [dbo].[Quotes] ADD CONSTRAINT [FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId] FOREIGN KEY([ShipmentSubTypeId]) REFERENCES [dbo].[ShipmentSubTypes]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('80bd28e6-fc62-48ef-b293-681baacc2997', 'Quote.dxml', 'Quotes', 'ShipmentSubTypeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ShipmentSubTypeId In Table Quotes As Reference To Column Id In Table ShipmentSubTypesEXEC(''ALTER TABLE [dbo].[Quotes] ADD CONSTRAINT [FK_Quotes_ShipmentSubTypes_ShipmentSubTypeId] FOREIGN KEY([ShipmentSubTypeId]) REFERENCES [dbo].[ShipmentSubTypes]([Id])'');');
+
+-- Create Index On Quotes Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_Quotes_ShipmentSubTypeId] ON [dbo].[Quotes]([ShipmentSubTypeId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('46694df0-79b9-4b56-89e0-41afb8d3d1de', 'Quote.dxml', 'Quotes', 'ShipmentSubTypeId', 'Create Index', GETDATE(), '-- Create Index On Quotes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Quotes_ShipmentSubTypeId] ON [dbo].[Quotes]([ShipmentSubTypeId])'');');
+
+
+-- Add Foreign Key Constraint For Column ShipmentSubTypeId In Table Shipments As Reference To Column Id In Table ShipmentSubTypes
+EXEC('ALTER TABLE [dbo].[Shipments] ADD CONSTRAINT [FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId] FOREIGN KEY([ShipmentSubTypeId]) REFERENCES [dbo].[ShipmentSubTypes]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('ab5b01c5-e963-45a8-a41c-df910c9135af', 'Shipment.dxml', 'Shipments', 'ShipmentSubTypeId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ShipmentSubTypeId In Table Shipments As Reference To Column Id In Table ShipmentSubTypesEXEC(''ALTER TABLE [dbo].[Shipments] ADD CONSTRAINT [FK_Shipments_ShipmentSubTypes_ShipmentSubTypeId] FOREIGN KEY([ShipmentSubTypeId]) REFERENCES [dbo].[ShipmentSubTypes]([Id])'');');
+
+-- Create Index On Shipments Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_Shipments_ShipmentSubTypeId] ON [dbo].[Shipments]([ShipmentSubTypeId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b006c4ed-3388-41bf-9eb3-081cc88ab693', 'Shipment.dxml', 'Shipments', 'ShipmentSubTypeId', 'Create Index', GETDATE(), '-- Create Index On Shipments TableEXEC(''CREATE NONCLUSTERED INDEX [IX_Shipments_ShipmentSubTypeId] ON [dbo].[Shipments]([ShipmentSubTypeId])'');');
+
+
+-- Add Foreign Key Constraint For Column DeliveryTruckerId In Table ShipmentComputedFields As Reference To Column Id In Table Cards
+EXEC('ALTER TABLE [dbo].[ShipmentComputedFields] ADD CONSTRAINT [FK_ShipmentComputedFields_Cards_DeliveryTruckerId] FOREIGN KEY([DeliveryTruckerId]) REFERENCES [dbo].[Cards]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('221ac304-2e2b-461a-85ca-9721d75139aa', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryTruckerId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column DeliveryTruckerId In Table ShipmentComputedFields As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[ShipmentComputedFields] ADD CONSTRAINT [FK_ShipmentComputedFields_Cards_DeliveryTruckerId] FOREIGN KEY([DeliveryTruckerId]) REFERENCES [dbo].[Cards]([Id])'');');
+
+-- Create Index On ShipmentComputedFields Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentComputedFields_DeliveryTruckerId] ON [dbo].[ShipmentComputedFields]([DeliveryTruckerId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('c96c362d-0bc2-475b-986b-c5a49585b128', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'DeliveryTruckerId', 'Create Index', GETDATE(), '-- Create Index On ShipmentComputedFields TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentComputedFields_DeliveryTruckerId] ON [dbo].[ShipmentComputedFields]([DeliveryTruckerId])'');');
+
+-- Add Foreign Key Constraint For Column PickupTruckerId In Table ShipmentComputedFields As Reference To Column Id In Table Cards
+EXEC('ALTER TABLE [dbo].[ShipmentComputedFields] ADD CONSTRAINT [FK_ShipmentComputedFields_Cards_PickupTruckerId] FOREIGN KEY([PickupTruckerId]) REFERENCES [dbo].[Cards]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('b38cac8f-07b1-4217-a61d-ebbf21a1d0cf', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupTruckerId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column PickupTruckerId In Table ShipmentComputedFields As Reference To Column Id In Table CardsEXEC(''ALTER TABLE [dbo].[ShipmentComputedFields] ADD CONSTRAINT [FK_ShipmentComputedFields_Cards_PickupTruckerId] FOREIGN KEY([PickupTruckerId]) REFERENCES [dbo].[Cards]([Id])'');');
+
+-- Create Index On ShipmentComputedFields Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentComputedFields_PickupTruckerId] ON [dbo].[ShipmentComputedFields]([PickupTruckerId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('bd55536d-40f4-4826-b7b3-398b61c7f301', 'ShipmentComputedFields.dxml', 'ShipmentComputedFields', 'PickupTruckerId', 'Create Index', GETDATE(), '-- Create Index On ShipmentComputedFields TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentComputedFields_PickupTruckerId] ON [dbo].[ShipmentComputedFields]([PickupTruckerId])'');');
+
+
+-- Add Foreign Key Constraint For Column CreatedByUserId In Table ShipmentSubTypes As Reference To Column Id In Table Users
+EXEC('ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_Users_CreatedByUserId] FOREIGN KEY([CreatedByUserId]) REFERENCES [dbo].[Users]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('861a5b3e-5617-444f-b55f-28fa910a8379', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'CreatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column CreatedByUserId In Table ShipmentSubTypes As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_Users_CreatedByUserId] FOREIGN KEY([CreatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
+
+-- Create Index On ShipmentSubTypes Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_CreatedByUserId] ON [dbo].[ShipmentSubTypes]([CreatedByUserId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0ed99deb-7aea-4667-a3cf-55af07668c1d', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'CreatedByUserId', 'Create Index', GETDATE(), '-- Create Index On ShipmentSubTypes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_CreatedByUserId] ON [dbo].[ShipmentSubTypes]([CreatedByUserId])'');');
+
+-- Add Foreign Key Constraint For Column UpdatedByUserId In Table ShipmentSubTypes As Reference To Column Id In Table Users
+EXEC('ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_Users_UpdatedByUserId] FOREIGN KEY([UpdatedByUserId]) REFERENCES [dbo].[Users]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('0120d467-3b35-4b4c-8cb0-79d5dad98437', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'UpdatedByUserId', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column UpdatedByUserId In Table ShipmentSubTypes As Reference To Column Id In Table UsersEXEC(''ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_Users_UpdatedByUserId] FOREIGN KEY([UpdatedByUserId]) REFERENCES [dbo].[Users]([Id])'');');
+
+-- Create Index On ShipmentSubTypes Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_UpdatedByUserId] ON [dbo].[ShipmentSubTypes]([UpdatedByUserId])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('8ef42322-7346-4d00-9c16-20c9efcdac29', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'UpdatedByUserId', 'Create Index', GETDATE(), '-- Create Index On ShipmentSubTypes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_UpdatedByUserId] ON [dbo].[ShipmentSubTypes]([UpdatedByUserId])'');');
+
+-- Add Foreign Key Constraint For Column ShipmentTypeCode In Table ShipmentSubTypes As Reference To Column Id In Table ShipmentTypes
+EXEC('ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_ShipmentTypes_ShipmentTypeCode] FOREIGN KEY([ShipmentTypeCode]) REFERENCES [dbo].[ShipmentTypes]([Id])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('a34c26a3-4015-41d8-98e5-c205e305e2ba', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'ShipmentTypeCode', 'Create Relation', GETDATE(), '-- Add Foreign Key Constraint For Column ShipmentTypeCode In Table ShipmentSubTypes As Reference To Column Id In Table ShipmentTypesEXEC(''ALTER TABLE [dbo].[ShipmentSubTypes] ADD CONSTRAINT [FK_ShipmentSubTypes_ShipmentTypes_ShipmentTypeCode] FOREIGN KEY([ShipmentTypeCode]) REFERENCES [dbo].[ShipmentTypes]([Id])'');');
+
+-- Create Index On ShipmentSubTypes Table
+EXEC('CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_ShipmentTypeCode] ON [dbo].[ShipmentSubTypes]([ShipmentTypeCode])');
+
+INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('f9b10b99-0698-42c8-a741-e43160552e9e', 'ShipmentSubType.dxml', 'ShipmentSubTypes', 'ShipmentTypeCode', 'Create Index', GETDATE(), '-- Create Index On ShipmentSubTypes TableEXEC(''CREATE NONCLUSTERED INDEX [IX_ShipmentSubTypes_ShipmentTypeCode] ON [dbo].[ShipmentSubTypes]([ShipmentTypeCode])'');');
 
 
 -- DataView Script From ShipmentDataView.dxml
@@ -318,6 +330,7 @@ dbo.Shipments.ShipperAddressId, dbo.Shipments.Notify2Id, dbo.Shipments.Notify1Id
 dbo.Shipments.ShipperId, dbo.Shipments.ShipmentTypeId, dbo.Shipments.DepartmentId, dbo.Shipments.CreateDateTime, dbo.Shipments.SalesmanUserId,
 dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House, dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1,
 dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,
+dbo.Shipments.ShipmentSubTypeId,
 dbo.Shipments.ARInvoices,
 dbo.Shipments.NotInvoicedReceivablesAmount,
 dbo.Shipments.ReleasingAgentId,
@@ -400,6 +413,7 @@ dbo.TransportModes.Name AS TransportModeName, dbo.ShipmentTypes.Name AS Shipment
 dbo.ShipmentReceivableStatus.Name AS ShipmentReceivableStatusName, dbo.ShipmentPayableStatus.Name AS ShipmentPayableStatusName,
 AWBCurrencies.Code AS AWBCurrencyCode, dbo.Branches.EnglishName AS BranchName,dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName ,
 dbo.ShipmentLevels.Name AS ShipmentLevelName,
+dbo.ShipmentSubTypes.Name AS ShipmentSubTypeName,
 dbo.EntityStatus.Id AS ShipmentStatusId,
 dbo.EntityStatus.Name AS ShipmentStatusName,
 dbo.EntityStatus.StatusWeight AS ShipmentStatusWeight,
@@ -566,6 +580,7 @@ dbo.ShipmentPayableStatus ON dbo.Shipments.ShipmentPayableStatusCode = dbo.Shipm
 dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
 dbo.Currencies AS AWBCurrencies ON dbo.Shipments.AWBCurrencyId = AWBCurrencies.Id LEFT OUTER JOIN
 dbo.Branches ON dbo.Shipments.BranchId = dbo.Branches.Id LEFT OUTER JOIN
+dbo.ShipmentSubTypes ON dbo.Shipments.ShipmentSubTypeId = dbo.ShipmentSubTypes.Id LEFT OUTER JOIN
 dbo.MoveTypes ON dbo.Shipments.MoveTypeId = dbo.MoveTypes.Id LEFT OUTER JOIN
 dbo.ShipmentLevels ON dbo.Shipments.ShipmentLevelCode = dbo.ShipmentLevels.Code LEFT OUTER JOIN
 dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
@@ -605,120 +620,539 @@ dbo.States AS MainCarriageFromPortsStates ON MainCarriageFromPorts.StateId = Mai
 dbo.States AS MainCarriageFinalDestinationPortsStates ON MainCarriageFinalDestinationPorts.StateId = MainCarriageFinalDestinationPortsStates.Id');
 
 
--- Procedure Script From DeleteDuplicatedQueueMessagesProcedure.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[RemoveDuplicatedQueueMessages]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[RemoveDuplicatedQueueMessages] END');
-EXEC('CREATE procedure [dbo].[RemoveDuplicatedQueueMessages]
-as begin
-declare @HashCode as varchar(1000)
-declare duplicatedQueuesCursor Cursor read_only
-for
-select hashcode
-from QueueMessages WITH (UPDLOCK, READPAST,ROWLOCK)  inner join QueueDefinitions on QueueMessages.QueueDefinitionCode = QueueDefinitions.Code
-WHERE Status = 0 and QueueDefinitions.DuplicateMessagesAutoRemove = 1 and HashCode is not null
-group by HashCode
-having count(*) > 1
-open duplicatedQueuesCursor
-fetch next from duplicatedQueuesCursor into @HashCode
-while @@FETCH_STATUS = 0
-begin
---print @HashCode
-declare @TopQueueMessageId as varchar(1000)
-set @TopQueueMessageId = (select top 1 id from QueueMessages where hashcode = @HashCode order by NextRunDateTime ASC)
---print ''top queue message id:'' + @TopQueueMessageId
-update QueueMessages set Status = 2 where hashcode = @HashCode and Id <> @TopQueueMessageId
-fetch next from duplicatedQueuesCursor into @HashCode
-end
-close duplicatedQueuesCursor
-deallocate duplicatedQueuesCursor
-end;');
-
-
--- Procedure Script From Queue_Enqueue.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[Queue_Enqueue]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[Queue_Enqueue] END');
-EXEC('CREATE procedure [dbo].[Queue_Enqueue]
-(
-@QueueDefinitionCode varchar(255),
-@MessageBody varchar(1000),
-@Tenant int,
-@DelaySeconds int,
-@CustomerId varchar(15),
-@BatchNumber varchar(15),
-@NextRunDTime datetime = null,
-@HashCode nvarchar(1000),
-@WatingStatus int
-)
-as begin
-declare @currentdate  datetime
-declare @nextRunDateTime  datetime
-set @currentdate =getdate()
-if @NextRunDTime is null
-set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
-else
-set @nextRunDateTime = @NextRunDTime
---set @nextRunDateTime = dateadd(second,@DelaySeconds,getdate())
-insert into [dbo].[QueueMessages] ([CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,HashCode)
-values(@currentdate,@QueueDefinitionCode,@WatingStatus,@MessageBody,@Tenant,@nextRunDateTime,0,@HashCode)
-declare @CId as varchar(15);
-declare @BNo as varchar(15);
-if @CustomerId = ''''
-set @CId = NULL
-else
-set @CId = @CustomerId
-if @BatchNumber = ''''
-set @BNo = NULL
-else
-set @BNo = @BatchNumber
-insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,Field1,Field2)
-values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,@WatingStatus,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
-end;');
-
-
--- Procedure Script From Queue_Peek.dxml
-EXEC('IF (OBJECT_ID(''[dbo].[Queue_Peek]'', ''P'') IS NOT NULL) BEGIN DROP PROCEDURE [dbo].[Queue_Peek] END');
-EXEC('CREATE procedure [dbo].[Queue_Peek]
-(@MessageId  bigint output,
-@MessageBody  varchar(1000) output,
-@RetryNumber int output,
-@QueueDefinitionCode varchar(255),
-@WatingStatus int)
-as
-begin
---DECLARE @NextId INTEGER
-Declare @frequency INTEGER
-set @frequency = 60
--- Find next available item available where the status is enabled
-SET @MessageId = (SELECT TOP 1 [Id]
-FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK) WHERE [NextRunDateTime] <= getdate() and [Status] = @WatingStatus and QueueDefinitionCode = @QueueDefinitionCode ORDER BY [NextRunDateTime] ASC)
---If found, flag it to prevent being picked up again
-IF (@MessageId IS NOT NULL)
-BEGIN
-Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
-Set @RetryNumber = (Select RetryNumber from [dbo].[QueueMessages] where [Id] = @MessageId)
-Set @MessageBody = (Select MessageBody from [dbo].[QueueMessages] where [Id] = @MessageId)
-UPDATE [dbo].[QueueMessages]
-SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
-WHERE [Id] = @MessageId
-UPDATE [dbo].[QueueMessageMoreDetails]
-SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
-WHERE [Id] = @MessageId
-END
--- return queue data
---IF (@NextId IS NOT NULL)
---select [QueueID],[QueueDateTime],[Title],[Status],[TextData],[NextRunTime],[ProcessingTime]
---from [dbo].[TasksQueue]
---where [QueueID] = @NextId
-end');
-
-
--- General Script From 202006092059_SetPermissionToAllBIFolders.sxml File
+-- General Script From 202006151400_AddAirShipmentType_V2.sxml File
 BEGIN TRAN
 BEGIN TRY
 DECLARE @StartTime datetime
 DECLARE @EndTime datetime
 SELECT @StartTime = GETDATE()
-update BIReportFolders set PermissionForAll = 1
+if not exists (select Id from ShipmentTypes where Id = 'Air')
+begin
+insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+values ('Air', 'Air', 'Air,Air', 'A', GETDATE())
+end
 SELECT @EndTime = GETDATE()
-INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006092059_SetPermissionToAllBIFolders.sxml', GETDATE(), 'update BIReportFolders set PermissionForAll = 1', DATEDIFF(MS,@StartTime,@EndTime), '1f42afaf1e581cb5298189859895c618', 1);
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006151400_AddAirShipmentType_V2.sxml', GETDATE(), 'if not exists (select Id from ShipmentTypes where Id = ''Air'')
+begin
+insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+values (''Air'', ''Air'', ''Air,Air'', ''A'', GETDATE())
+end', DATEDIFF(MS,@StartTime,@EndTime), 'b359fbfc8a145c6c7d90def0a951767e', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006151500_FillAirQuoteShipmentTypeField.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE QuotesCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Quotes
+Where ShipmentTypeId is null
+OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if(@TransportModeId = 'A')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+end
+update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+update Quotes set ShipmentTypeId = 'Air' where Id = @EntityId and Tenant = @Tenant and TransportModeId = 'A'
+FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE QuotesCursor
+DEALLOCATE QuotesCursor
+END
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006151500_FillAirQuoteShipmentTypeField.sxml', GETDATE(), 'declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE QuotesCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Quotes
+Where ShipmentTypeId is null
+OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if(@TransportModeId = ''A'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''Air'' and Tenant = @Tenant)
+end
+update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+update Quotes set ShipmentTypeId = ''Air'' where Id = @EntityId and Tenant = @Tenant and TransportModeId = ''A''
+FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE QuotesCursor
+DEALLOCATE QuotesCursor
+END', DATEDIFF(MS,@StartTime,@EndTime), '2891ede05e6d408dcd8a293fea76b007', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006151503_FillQuoteShipmentSubTypeBackward.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE QuotesCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Quotes
+OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @ShipmentSubTypeId = null
+if(@TransportModeId = 'A')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+end
+else if(@TransportModeId = 'O')
+begin
+if(@ShipmentTypeId = 'FCLD')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FCL' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = 'LCLD')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LCL' and Tenant = @Tenant)
+end
+end
+else if(@TransportModeId = 'I')
+begin
+if(@ShipmentTypeId = 'FTL')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FTL' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = 'LTL')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LTL' and Tenant = @Tenant)
+end
+end
+update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE QuotesCursor
+DEALLOCATE QuotesCursor
+END
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006151503_FillQuoteShipmentSubTypeBackward.sxml', GETDATE(), 'declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE QuotesCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Quotes
+OPEN QuotesCursor FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @ShipmentSubTypeId = null
+if(@TransportModeId = ''A'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''Air'' and Tenant = @Tenant)
+end
+else if(@TransportModeId = ''O'')
+begin
+if(@ShipmentTypeId = ''FCLD'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = ''LCLD'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = @Tenant)
+end
+end
+else if(@TransportModeId = ''I'')
+begin
+if(@ShipmentTypeId = ''FTL'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = ''LTL'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = @Tenant)
+end
+end
+update Quotes set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+FETCH NEXT FROM QuotesCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE QuotesCursor
+DEALLOCATE QuotesCursor
+END', DATEDIFF(MS,@StartTime,@EndTime), 'a70d9d0c39d6fe3b640d648754f71a2a', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006111511_AddAirShipmentType.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+if not exists (select Id from ShipmentTypes where Id = 'Air')
+begin
+insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+values ('Air', 'Air', 'Air,Air', 'A', GETDATE())
+end
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006111511_AddAirShipmentType.sxml', GETDATE(), 'if not exists (select Id from ShipmentTypes where Id = ''Air'')
+begin
+insert into ShipmentTypes (Id, Name, SearchFields, TransportModeId, AutomaticLastUpdateDate)
+values (''Air'', ''Air'', ''Air,Air'', ''A'', GETDATE())
+end', DATEDIFF(MS,@StartTime,@EndTime), 'b359fbfc8a145c6c7d90def0a951767e', 2);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006111515_AddShipmentSubTypesToTenants.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @Tenant as int
+declare @TenantString as varchar(50)
+declare @EntityId as varchar(15)
+declare @UserId as varchar(15)
+declare @UserEmail as varchar(150)
+declare @ShipmentTypeCode as varchar(4)
+BEGIN
+DECLARE TenantsCursor CURSOR READ_ONLY
+FOR
+SELECT Id
+FROM Tenants
+OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @TenantString = CONVERT(varchar(50), @Tenant)
+set @UserEmail = 'system@tenant'+ @TenantString + '.com'
+set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
+set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
+if (@UserId is not null)
+begin
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'Air')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'Air')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  'Air', 'Air', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'Air,Air')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'FCL')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'FCLD')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  'FCL', 'FCL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'FCL,FCL')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'LCL')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'LCLD')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  'LCL', 'LCL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'LCL,LCL')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'FTL')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'FTL')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  'FTL', 'FTL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'FTL,FTL')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = 'LTL')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = 'LTL')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'ShipmentSubType'
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  'LTL', 'LTL', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, 'LTL,LTL')
+end
+end
+FETCH NEXT FROM TenantsCursor INTO @Tenant
+END
+CLOSE TenantsCursor
+DEALLOCATE TenantsCursor
+END
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006111515_AddShipmentSubTypesToTenants.sxml', GETDATE(), 'declare @Tenant as int
+declare @TenantString as varchar(50)
+declare @EntityId as varchar(15)
+declare @UserId as varchar(15)
+declare @UserEmail as varchar(150)
+declare @ShipmentTypeCode as varchar(4)
+BEGIN
+DECLARE TenantsCursor CURSOR READ_ONLY
+FOR
+SELECT Id
+FROM Tenants
+OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @TenantString = CONVERT(varchar(50), @Tenant)
+set @UserEmail = ''system@tenant''+ @TenantString + ''.com''
+set @UserId = (select Id from Contacts where Email = @UserEmail and Tenant = @Tenant)
+set @UserId = (select Id from Users where Id = @UserId and Tenant = @Tenant)
+if (@UserId is not null)
+begin
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = ''Air'')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = ''Air'')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''ShipmentSubType''
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  ''Air'', ''Air'', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, ''Air,Air'')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = ''FCL'')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = ''FCLD'')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''ShipmentSubType''
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  ''FCL'', ''FCL'', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, ''FCL,FCL'')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = ''LCL'')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = ''LCLD'')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''ShipmentSubType''
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  ''LCL'', ''LCL'', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, ''LCL,LCL'')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = ''FTL'')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = ''FTL'')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''ShipmentSubType''
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  ''FTL'', ''FTL'', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, ''FTL,FTL'')
+end
+if not exists (select Id from ShipmentSubTypes where Tenant = @Tenant and Code = ''LTL'')
+begin
+set @ShipmentTypeCode = (select Id from ShipmentTypes where Id = ''LTL'')
+EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,''ShipmentSubType''
+insert into ShipmentSubTypes(Id, Tenant, Code, Name, ShipmentTypeCode, CreateDate, UpdateDate, CreatedByUserId, UpdatedByUserId, Inactive, SearchFields)
+values(@EntityId, @Tenant,  ''LTL'', ''LTL'', @ShipmentTypeCode, GETDATE(), GETDATE(), @UserId, @UserId, 0, ''LTL,LTL'')
+end
+end
+FETCH NEXT FROM TenantsCursor INTO @Tenant
+END
+CLOSE TenantsCursor
+DEALLOCATE TenantsCursor
+END', DATEDIFF(MS,@StartTime,@EndTime), '0f56c05ce3cc89966a1d2fd6a5bcc0a0', 1);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006140958_FillAirShipmentShipmentTypeField.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE ShipmentsCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Shipments
+Where DirectionId != 'C' and ShipmentTypeId is null
+OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if(@TransportModeId = 'A')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+end
+else if(@TransportModeId = 'O')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LCL' and Tenant = @Tenant)
+end
+if(@TransportModeId = 'I')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LTL' and Tenant = @Tenant)
+end
+update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+update Shipments set ShipmentTypeId = 'Air' where Id = @EntityId and Tenant = @Tenant and TransportModeId = 'A'
+FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE ShipmentsCursor
+DEALLOCATE ShipmentsCursor
+END
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006140958_FillAirShipmentShipmentTypeField.sxml', GETDATE(), 'declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE ShipmentsCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Shipments
+Where DirectionId != ''C'' and ShipmentTypeId is null
+OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if(@TransportModeId = ''A'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''Air'' and Tenant = @Tenant)
+end
+else if(@TransportModeId = ''O'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = @Tenant)
+end
+if(@TransportModeId = ''I'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = @Tenant)
+end
+update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+update Shipments set ShipmentTypeId = ''Air'' where Id = @EntityId and Tenant = @Tenant and TransportModeId = ''A''
+FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE ShipmentsCursor
+DEALLOCATE ShipmentsCursor
+END', DATEDIFF(MS,@StartTime,@EndTime), '0c0bd2941f5a12f814933c9cdce3331d', 2);
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ROLLBACK TRAN
+END CATCH;
+
+-- General Script From 202006141227_FillShipmentSubTypeBackward.sxml File
+BEGIN TRAN
+BEGIN TRY
+DECLARE @StartTime datetime
+DECLARE @EndTime datetime
+SELECT @StartTime = GETDATE()
+declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE ShipmentsCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Shipments
+OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @ShipmentSubTypeId = null
+if(@TransportModeId = 'A')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'Air' and Tenant = @Tenant)
+end
+else if(@TransportModeId = 'O')
+begin
+if(@ShipmentTypeId = 'FCLD')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FCL' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = 'LCLD')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LCL' and Tenant = @Tenant)
+end
+end
+else if(@TransportModeId = 'I')
+begin
+if(@ShipmentTypeId = 'FTL')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'FTL' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = 'LTL')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = 'LTL' and Tenant = @Tenant)
+end
+end
+update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE ShipmentsCursor
+DEALLOCATE ShipmentsCursor
+END
+SELECT @EndTime = GETDATE()
+INSERT INTO [dbo].[DBScriptsHistory]([SxmlFileName], [ExecutionDate], [ScriptBody], [ElapsedTimeInMs], [HashValue], [Version])VALUES('202006141227_FillShipmentSubTypeBackward.sxml', GETDATE(), 'declare @Tenant as int
+declare @EntityId as varchar(15)
+declare @ShipmentTypeId as varchar(4)
+declare @TransportModeId as varchar(4)
+declare @ShipmentSubTypeId as varchar(15)
+BEGIN
+DECLARE ShipmentsCursor CURSOR READ_ONLY
+FOR
+SELECT Id, Tenant, TransportModeId, ShipmentTypeId
+FROM Shipments
+OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+set @ShipmentSubTypeId = null
+if(@TransportModeId = ''A'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''Air'' and Tenant = @Tenant)
+end
+else if(@TransportModeId = ''O'')
+begin
+if(@ShipmentTypeId = ''FCLD'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''FCL'' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = ''LCLD'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LCL'' and Tenant = @Tenant)
+end
+end
+else if(@TransportModeId = ''I'')
+begin
+if(@ShipmentTypeId = ''FTL'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''FTL'' and Tenant = @Tenant)
+end
+else if(@ShipmentTypeId = ''LTL'')
+begin
+set @ShipmentSubTypeId = (select Id from ShipmentSubTypes where Code = ''LTL'' and Tenant = @Tenant)
+end
+end
+update Shipments set ShipmentSubTypeId = @ShipmentSubTypeId where Id = @EntityId and Tenant = @Tenant
+FETCH NEXT FROM ShipmentsCursor INTO @EntityId, @Tenant, @TransportModeId, @ShipmentTypeId
+END
+CLOSE ShipmentsCursor
+DEALLOCATE ShipmentsCursor
+END', DATEDIFF(MS,@StartTime,@EndTime), '908df2fd92b651891a15157002cee3b8', 1);
 COMMIT TRAN
 END TRY
 BEGIN CATCH

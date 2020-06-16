@@ -239,6 +239,76 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DeliveryTruckerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryTruckerNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryDriver"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryTrailerNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryNotes"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupTruckerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupTruckerNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupDriver"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupTrailerNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupNotes"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
@@ -252,6 +322,16 @@
   <Relation
     ForeignKeyColumn="DeliveryToPortId"
     ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeliveryTruckerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PickupTruckerId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

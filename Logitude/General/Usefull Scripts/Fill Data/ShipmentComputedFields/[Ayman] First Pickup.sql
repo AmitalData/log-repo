@@ -11,91 +11,103 @@ End
 
 CREATE TABLE #temp_ShipmentComputedFields
 (
-	Id varchar(15) not null,
-	[From] nvarchar(40) null,
-	[To] nvarchar(40) null
+	   Id VARCHAR(15) NULL,
+	   PickupTruckerId VARCHAR(15) NULL,
+	   PickupTruckerNumber VARCHAR(15) NULL,
+	   PickupDriver VARCHAR(40) NULL,
+	   PickupTrailerNumber VARCHAR(15) NULL,
+	   PickupNotes NVARCHAR(2000) NULL,
+	   DeliveryTruckerId VARCHAR(15) NULL,
+	   DeliveryTruckerNumber VARCHAR(15) NULL,
+	   DeliveryDriver VARCHAR(40) NULL,
+	   DeliveryTrailerNumber VARCHAR(15) NULL,
+	   DeliveryNotes NVARCHAR(2000) NULL,
 )
 
 select
 Shipments.Id,
-ShipmentPickUpDeliveries.PickUpDeliveryFromTypeCode as FromTypeCode,
-ShipmentPickUpDeliveries.PickUpDeliveryToTypeCode as ToTypeCode,
-ShipmentPickUpDeliveries.FromAddressCity as FromCity,
-ShipmentPickUpDeliveries.ToAddressCity as ToCity,
-FromAddress.City as FromAddressCity,
-ToAddress.City as ToAddressCity,
-FromPort.EnglishName as FromPortName,
-ToPort.EnglishName as ToPortName
-
+ShipmentPickUps.CarrierId as PickupTruckerId,
+ShipmentPickUps.CarrierNumber as PickupTruckerNumber,
+ShipmentPickUps.Driver as PickupDriver,
+ShipmentPickUps.TrailerNumber as PickupTrailerNumber,
+ShipmentPickUps.Notes as PickupNotes,
+ShipmentDeliveries.CarrierId as DeliveryTruckerId,
+ShipmentDeliveries.CarrierNumber as DeliveryTruckerNumber ,
+ShipmentDeliveries.Driver as DeliveryDriver,
+ShipmentDeliveries.TrailerNumber as DeliveryTrailerNumber,
+ShipmentDeliveries.Notes as DeliveryNotes
 into #temp
 
 from Shipments
-left outer join ShipmentPickUpDeliveries
-on ShipmentPickUpDeliveries.Id = 
+left outer join ShipmentPickUpDeliveries ShipmentPickUps
+on ShipmentPickUps.Id = 
 (
 	select top 1 Id from ShipmentPickUpDeliveries
 	where ShipmentPickUpDeliveries.ShipmentId = Shipments.Id 
 	and PickUpDeliveryTypeCode = 'PICK' 
 	order by PickUpDeliveryNumber
 )
-left outer join Addresses as FromAddress on FromAddress.Id = ShipmentPickUpDeliveries.FromAddressId
-left outer join Addresses as ToAddress on ToAddress.Id = ShipmentPickUpDeliveries.ToAddressId
-left outer join Ports as FromPort on FromPort.Id = ShipmentPickUpDeliveries.FromPortId
-left outer join Ports as ToPort on ToPort.Id = ShipmentPickUpDeliveries.ToPortId
+left outer join ShipmentPickUpDeliveries ShipmentDeliveries
+on ShipmentDeliveries.Id = 
+(
+	select top 1 Id from ShipmentPickUpDeliveries
+	where ShipmentPickUpDeliveries.ShipmentId = Shipments.Id 
+	and PickUpDeliveryTypeCode = 'DELV' 
+	order by PickUpDeliveryNumber desc
+)
+
 go
 
 	declare @Id as varchar(15)
-	declare @FromTypeCode as varchar(4)
-	declare @ToTypeCode as varchar(4)
-	declare @FromCity as nvarchar(25)
-	declare @ToCity as nvarchar(25)
-	declare @FromAddressCity as nvarchar(25)
-	declare @ToAddressCity as nvarchar(25)	
-	declare @FromPortName as varchar(40)
-	declare @ToPortName as varchar(40)
-	declare @From as nvarchar(40)
-	declare @To as nvarchar(40)
+
+
+       declare @PickupTruckerId as VARCHAR(15) 
+	   declare @PickupTruckerNumber as VARCHAR(15) 
+	   declare @PickupDriver as  VARCHAR(40) 
+	   declare @PickupTrailerNumber as VARCHAR(15) 
+	   declare @PickupNotes as NVARCHAR(2000) 
+	   declare @DeliveryTruckerId as VARCHAR(15) 
+	   declare @DeliveryTruckerNumber as  VARCHAR(15) 
+	   declare @DeliveryDriver  as VARCHAR(40) 
+	   declare @DeliveryTrailerNumber  as VARCHAR(15) 
+	   declare @DeliveryNotes as NVARCHAR(2000) 
+
+
+
+
+
 
 	declare @Count as int
 	set @Count = 0;
 
 	DECLARE DataCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id, FromTypeCode, ToTypeCode, FromCity, ToCity, FromAddressCity, ToAddressCity, FromPortName, ToPortName
+	SELECT Id, PickupTruckerId, PickupTruckerNumber, PickupDriver, PickupTrailerNumber, PickupNotes,  DeliveryTruckerId , DeliveryTruckerNumber, DeliveryDriver, DeliveryTrailerNumber, DeliveryNotes
 	FROM #temp	
-	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @FromTypeCode, @ToTypeCode, @FromCity, @ToCity, @FromAddressCity, @ToAddressCity, @FromPortName, @ToPortName
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-		-- From
-		if (@FromTypeCode = 'CASL')
-		set @From = @FromCity
+		
 
-		else if (@FromTypeCode = 'PORT')
-		set @From = @FromPortName
-
-		else
-		set @From = @FromAddressCity
-
-		-- To
-		if (@ToTypeCode = 'CASL')
-		set @To = @ToCity
-
-		else if (@ToTypeCode = 'PORT')
-		set @To = @ToPortName
-
-		else
-		set @To = @ToAddressCity
-
-		insert into #temp_ShipmentComputedFields(Id, [From], [To]) values(@Id, @From, @To)
+		insert into #temp_ShipmentComputedFields(Id, [PickupTruckerId] , [PickupTruckerNumber], [PickupDriver],[PickupTrailerNumber] , [PickupNotes], [DeliveryTruckerId] , [DeliveryTruckerNumber], [DeliveryDriver],[DeliveryTrailerNumber] , [DeliveryNotes]) values(@Id, @PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes)
 
 		set @Count = @Count + 1;
 		if(@Count = 1000)
 		begin		
 			update ShipmentComputedFields
 			set
-			PickupFrom = #temp_ShipmentComputedFields.[From],
-			PickupTo = #temp_ShipmentComputedFields.[To]
+			PickupTruckerId = #temp_ShipmentComputedFields.[PickupTruckerId],
+			PickupTruckerNumber = #temp_ShipmentComputedFields.PickupTruckerNumber,
+			PickupDriver = #temp_ShipmentComputedFields.PickupDriver,
+			PickupTrailerNumber = #temp_ShipmentComputedFields.PickupTrailerNumber,
+			PickupNotes = #temp_ShipmentComputedFields.PickupNotes,
+			DeliveryTruckerId = #temp_ShipmentComputedFields.DeliveryTruckerId,
+			DeliveryTruckerNumber = #temp_ShipmentComputedFields.DeliveryTruckerNumber,
+			DeliveryDriver = #temp_ShipmentComputedFields.DeliveryDriver,
+			DeliveryTrailerNumber = #temp_ShipmentComputedFields.DeliveryTrailerNumber,
+			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes
+
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields
 			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
@@ -103,7 +115,7 @@ go
 			truncate table #temp_ShipmentComputedFields
 			set @Count = 0
 		end
-	FETCH NEXT FROM DataCursor INTO @Id, @FromTypeCode, @ToTypeCode, @FromCity, @ToCity, @FromAddressCity, @ToAddressCity, @FromPortName, @ToPortName
+	FETCH NEXT FROM DataCursor  INTO @Id,@PickupTruckerId, @PickupTruckerNumber, @PickupDriver, @PickupTrailerNumber, @PickupNotes,@DeliveryTruckerId, @DeliveryTruckerNumber, @DeliveryDriver, @DeliveryTrailerNumber, @DeliveryNotes
 	END
 	CLOSE DataCursor
 	DEALLOCATE DataCursor
@@ -113,8 +125,17 @@ go
 	begin
 			update ShipmentComputedFields
 			set
-			PickupFrom = #temp_ShipmentComputedFields.[From],
-			PickupTo = #temp_ShipmentComputedFields.[To]
+			PickupTruckerId = #temp_ShipmentComputedFields.[PickupTruckerId],
+			PickupTruckerNumber = #temp_ShipmentComputedFields.PickupTruckerNumber,
+			PickupDriver = #temp_ShipmentComputedFields.PickupDriver,
+			PickupTrailerNumber = #temp_ShipmentComputedFields.PickupTrailerNumber,
+			PickupNotes = #temp_ShipmentComputedFields.PickupNotes,
+			DeliveryTruckerId = #temp_ShipmentComputedFields.DeliveryTruckerId,
+			DeliveryTruckerNumber = #temp_ShipmentComputedFields.DeliveryTruckerNumber,
+			DeliveryDriver = #temp_ShipmentComputedFields.DeliveryDriver,
+			DeliveryTrailerNumber = #temp_ShipmentComputedFields.DeliveryTrailerNumber,
+			DeliveryNotes = #temp_ShipmentComputedFields.DeliveryNotes
+
 			FROM ShipmentComputedFields
 			INNER JOIN #temp_ShipmentComputedFields
 			on ShipmentComputedFields.Id = #temp_ShipmentComputedFields.Id
