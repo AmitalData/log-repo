@@ -95,7 +95,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuotePM = args.QuotePM;
 
-        if (((this.QuotePM && this.QuotePM.IsChargesByVAT) || !this.QuotePM) && FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
+        if (((this.QuotePM && this.QuotePM.IsChargesByVAT) || !this.QuotePM) && FeatureLocator.HasFeaturePermession("Quote", "VATDetAILSINQUOTATION")) {
                 this.ShowVATDetails = true;
             }
         
