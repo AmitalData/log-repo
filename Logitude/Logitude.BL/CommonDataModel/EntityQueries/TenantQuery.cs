@@ -197,7 +197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             string entityName = "TenantPM" + id;
 
             TenantPM entity;
-            if (HttpContext.Current != null)
+            if (true)//HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
