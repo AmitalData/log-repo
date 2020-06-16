@@ -18,7 +18,7 @@ namespace Logitude.LogboxIntegrationTest.Senarios
 
         private void CreateShipmentInCloud()
         {
-            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
             AdditionalIncludedData includedData = new AdditionalIncludedData
             {
                 URL = EnvironmentParams.CloudServerURL,
