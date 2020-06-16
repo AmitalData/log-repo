@@ -7734,14 +7734,6 @@
   <ItemGroup>
     <Content Include="cypress\fixtures\example.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="cypress\package-lock.json" />
-    <Content Include="cypress\package.json" />
-    <Content Include="cypress\tsconfig.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="cypress\cypress.json" />
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
