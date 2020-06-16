@@ -37,8 +37,7 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-
-                this._invoiceQueueWebService.GetInvoice().subscribe(data => {
+                 this._invoiceQueueWebService.GetInvoice().subscribe(data => {
 
                     (data.Result.Invoice as Invoices).InvoiceLines.forEach(
                         x => {
@@ -57,7 +56,7 @@ export class InvoiceQueueComponent
                         });
 
 
-                    this._declarationPMService.get("1-5352").subscribe(
+                    this._declarationPMService.get("1-5347").subscribe(
                         data => {
                             this.declaration = data.Result;
                         });
