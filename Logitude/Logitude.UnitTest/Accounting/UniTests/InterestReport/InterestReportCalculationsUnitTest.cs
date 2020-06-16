@@ -9,6 +9,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.UnitTest.Utils;
 using FakeItEasy;
 using Logitude.Accounting.BL.CoreBL.InterestReport;
+using Logitude.Accounting.Data.Utilities;
 
 namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
 {
@@ -24,19 +25,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
         [TestMethod]
         public void CreateInterestReportLinesByDate_InputInterestTransactionsByDate_ResultInInterestReportLinesByDate()
         {
-            //InterestReportPM interestReportPM = new InterestReportPM()
-            //{
-            //    OpenBalance = 200,
-            //    CreateDateTime = new DateTime(2020, 2, 6),
-            //    Tenant = 1,
-            //    Id = "1-1",
-            //    InterestCalculationDate = new DateTime(2020, 2, 1),
-            //    GLAccountInterestCreditLimit=500,
-            //};
+           
             IInterestReportCalculationPreparations interestReportCalculationPreparations = new InterestReportCalculationFromCSVPreparations(@"Accounting\UniTests\InterestReport\");
             InterestReportTestResultGetter interestReportTestResultGetter = new InterestReportTestResultGetter();
             InterestReportPM interestReportPM = interestReportCalculationPreparations.GetInterestReportPM("", 1);
-            List<InterestTransactionPM> interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate("", DateTime.Now, 1);
+            GLAccountPM gLAccountPM = interestReportCalculationPreparations.GetGLAccount("", 1);
+            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, interestReportPM.GLAccountId, gLAccountPM.InterestCalculationStartDate);
+            List<InterestTransactionPM> interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
             List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
             List<InterestReportLinesByDatePM> resultInterestReportLinesByDatePMs = interestReportTestResultGetter.GetInterestReportLinesByDatePMsFromCSV(@"Accounting\UniTests\InterestReport\");
@@ -48,6 +43,53 @@ namespace Logitude.UnitTest.Accounting.UniTests.InterestReport
 
             AssertResults(resultInterestReportLinesByDatePMs, interestReportLinesByDatePMs);
 
+
+        }
+
+
+        [TestMethod]
+        public void CreateInterestReportLinesByDate_InputInterestTransactionsByDateWithNoTransactions_NoInterestReportLinesByDate()
+        {
+
+            IInterestReportCalculationPreparations interestReportCalculationPreparations = new InterestReportCalculationFromCSVPreparations(@"Accounting\UniTests\InterestReport\");
+            InterestReportPM interestReportPM = interestReportCalculationPreparations.GetInterestReportPM("", 1);
+            GLAccountPM gLAccountPM = interestReportCalculationPreparations.GetGLAccount("", 1);
+            List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
+            List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
+            List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
+
+            InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
+            InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM,
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+            List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
+
+            Assert.AreEqual(0, interestReportLinesByDatePMs.Count);
+
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException), "there is no GL Account Interest period in the dates provided")]
+        public void CreateInterestReportLinesByDate_InputNoGlaccountInterestPeriods_NoInterestReportLinesByDate()
+        {
+
+            IInterestReportCalculationPreparations interestReportCalculationPreparations = new InterestReportCalculationFromCSVPreparations(@"Accounting\UniTests\InterestReport\");
+            InterestReportTestResultGetter interestReportTestResultGetter = new InterestReportTestResultGetter();
+            InterestReportPM interestReportPM = interestReportCalculationPreparations.GetInterestReportPM("", 1);
+            GLAccountPM gLAccountPM = interestReportCalculationPreparations.GetGLAccount("", 1);
+            InterestTransactionGetParameters interestTransactionGetParameters = new InterestTransactionGetParameters(interestReportPM.InterestCalculationDate, 1, interestReportPM.GLAccountId, gLAccountPM.InterestCalculationStartDate);
+            List<InterestTransactionPM> interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestTransactionGetParameters);
+            List<GLAccountInterestPeriodPM> gLAccountInterestPeriodPMs = new List<GLAccountInterestPeriodPM>(); //interestReportCalculationPreparations.GetGlaccountInterestPeriods(interestReportPM);
+            List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestReportCalculationPreparations.GetAllInterestBasesPeriodPMs(1);
+            List<InterestReportLinesByDatePM> resultInterestReportLinesByDatePMs = interestReportTestResultGetter.GetInterestReportLinesByDatePMsFromCSV(@"Accounting\UniTests\InterestReport\");
+
+            InterestReportLinesByDateCreationService interestReportLinesByDateCreationService = new InterestReportLinesByDateCreationService();
+            InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams = new InterestReportLinesByDateCreationParams(interestReportPM,
+                interestTransactionPMs, gLAccountInterestPeriodPMs, interestBasesPeriodPMs);
+            List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = interestReportLinesByDateCreationService.CreateInterestReportLinesByDate(interestReportLinesByDateCreationParams);
+
+            //AssertResults(resultInterestReportLinesByDatePMs, interestReportLinesByDatePMs);
+            
 
         }
 

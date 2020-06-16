@@ -250,6 +250,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                .Where(d => d.PeriodStartDate <= interestPercentageForDateParams.ToDate)
                .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault();
 
+            if(gLAccountInterestPeriodPM ==null)
+            {
+                throw new ApplicationException("there is no GL Account Interest period in the dates provided");
+            }
+
             return gLAccountInterestPeriodPM;
         }
     }
