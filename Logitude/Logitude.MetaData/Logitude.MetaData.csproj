@@ -352,6 +352,7 @@
     <None Include="DBScripts\QuoteModel\202006011347_FillQuoteClosingReasonTable.sxml" />
     <None Include="DBScripts\QuoteModel\202006011458_FillQuoteClosingReasonId.sxml" />
     <None Include="DBScripts\QuoteModel\202006011500_AddQuoteClosingReasonEventTypesToTenants.sxml" />
+    <None Include="DBScripts\QuoteModel\202006151400_AddAirShipmentType_V2.sxml" />
     <None Include="DBScripts\QuoteModel\202006151503_FillQuoteShipmentSubTypeBackward.sxml" />
     <None Include="DBScripts\QuoteModel\202006151500_FillAirQuoteShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
