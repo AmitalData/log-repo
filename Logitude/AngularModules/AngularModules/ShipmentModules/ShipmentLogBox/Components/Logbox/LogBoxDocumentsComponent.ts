@@ -74,6 +74,14 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     private messageWindow: MessageWindow = new MessageWindow();
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+
+    public FromPortCountryCode: string;
+    public   FromPortCode: string;
+
+    public ToPortCountryCode: string;
+    public ToPortCode: string;
     constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
@@ -93,6 +101,24 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             }
         });
     }
+
+
+    SetPortFields() {
+
+        if (this.SelectedShipment) {
+
+            this.FromPortCountryCode = this.SelectedShipment.MainCarriageFromPortCountryCode ? this.SelectedShipment.MainCarriageFromPortCountryCode : this.SelectedShipment.FromPortCountryCode;
+            this.ToPortCountryCode = this.SelectedShipment.MainCarriageToPortCountryCode ? this.SelectedShipment.MainCarriageToPortCountryCode : this.SelectedShipment.ToPortCountryCode;
+
+            this.FromPortCode = (this.SelectedShipment.MainCarriageFromPortCode && this.SelectedShipment.MainCarriageFromPortCode != '---') ? this.SelectedShipment.MainCarriageFromPortCode : this.SelectedShipment.FromPortCode;
+            this.ToPortCode = (this.SelectedShipment.MainCarriageToPortCode && this.SelectedShipment.MainCarriageToPortCode != '---') ? this.SelectedShipment.MainCarriageToPortCode : this.SelectedShipment.ToPortCode;
+
+            if (!this.FromPortCode) this.FromPortCode = "";
+            if (!this.ToPortCode) this.ToPortCode = "";
+
+        }
+    }
+
     IsPrivateLabel: boolean = false;
     AllowSendingDocsToAgent: boolean = false;
     DocsSentToAgent: boolean = false;
@@ -125,6 +151,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             var div = document.getElementById("DocsTab");
             this.Style = { "max-height": div.clientHeight };
             this.SelectedShipment = res;
+
+            this.SetPortFields();
             //if (this.RefreshTimer) {
             //    clearTimeout(this.RefreshTimer);
             //}
