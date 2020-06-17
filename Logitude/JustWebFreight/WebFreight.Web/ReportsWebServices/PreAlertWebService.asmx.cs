@@ -127,6 +127,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (customerContact != null)
                     {
                         prealertDataProvider.ClientName = customerContact.EnglishName;
+                        prealertDataProvider.CustomerContactPhone = customerContact.BusinessPhone;
 
                         Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
                         if (consigneeContactAddress != null)
