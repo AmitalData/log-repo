@@ -1800,6 +1800,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     entityPM.BillToCode = myBillTo.Code;
                     entityPM.BillToPartnerTypeId = myBillTo.PartnerTypeId;
                     entityPM.IsBillToAllowConsolidation = myBillTo.EnableConsolidationInvoices;
+                    entityPM.BillToContactId = myBillTo.PrimaryContactId;
 
                     if (myBillTo.Customer != null)
                     {

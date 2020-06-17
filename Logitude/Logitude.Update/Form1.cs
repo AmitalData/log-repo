@@ -852,7 +852,11 @@ User/Pass",
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;
 
+
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+
+            
+
         }
 
         private void button13_Click(object sender, EventArgs e)

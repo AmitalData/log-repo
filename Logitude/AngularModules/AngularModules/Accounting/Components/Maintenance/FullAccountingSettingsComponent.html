@@ -186,7 +186,7 @@
 
                                                     <!-- AccountingActivated -->
                                                     <tr class="FormFieldRow">
-                                                        <td>
+                                                        <td width="220px">
                                                             <LogLabel [ObjectFieldName]="'AccountingActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
@@ -195,15 +195,23 @@
                                                         </td>
                                                     </tr>
 
+                                                    <tr class="FormFieldRow">
+                                                        <td >
+                                                            <LogLabel [ObjectFieldName]="'AllowMultiRatesInInvoiceLines'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
 
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="AllowMultiRatesInInvoiceLines" (Checked)="AllowMultiRatesInInvoiceLines = $event"></CheckBox>
+                                                        </td>
+                                                    </tr>
 
                                                     <!-- AccountingActivationDate -->
                                                     <tr class="FormFieldRow">
-                                                        <td style="width: 180px;">
+                                                        <td >
                                                             <LogLabel [ObjectFieldName]="'AccountingActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width: 190px;">
+                                                        <td style="width: 170px;">
                                                             <LogDatePicker [ObjectFieldName]="'AccountingActivationDate'" [ObjectTableName]="'Tenant'"
                                                                            [SelectedDateValue]="AccountingActivationDate" [DataContext]="DataContext"
                                                                            [HideColumns]="true" [InputType]="'date'"></LogDatePicker>
@@ -247,8 +255,7 @@
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'VatType'"
-                                                                    [DependencyFilter2Value]="false"
-                                                                    >
+                                                                    [DependencyFilter2Value]="false">
                                                             </LogLov>
                                                         </td>
                                                     </tr>
@@ -319,12 +326,12 @@
                                                     <tr class="FormFieldRow">
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'NumberOfAgingMonths'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
+                                                                      [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
                                                         <td colspan="2">
                                                             <LogTextBox [ObjectFieldName]="'NumberOfAgingMonths'" [ObjectTableName]="ObjectTableName" [InputType]="'integer'"
-                                                                [DataContext]="DataContext"></LogTextBox>
+                                                                        [DataContext]="DataContext"></LogTextBox>
                                                         </td>
                                                     </tr>
 
@@ -332,7 +339,7 @@
                                                 </table>
                                             </td>
 
-                                            <td style="width: 20px;"><div></div></td>
+                                            <td style="width: 10px;"><div></div></td>
 
                                             <td>
                                                 <table>

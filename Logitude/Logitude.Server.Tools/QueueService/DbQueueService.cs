@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -336,6 +337,8 @@ namespace Logitude.Server.Tools.QueueService
                                             response.MessageValues = messageValues;
                                         }
                                     }
+
+                                    RunDebuggerBreak();
                                 }
 
                             }
@@ -396,6 +399,8 @@ namespace Logitude.Server.Tools.QueueService
                                         response.MessageValues = messageValues;
                                     }
                                 }
+
+                                RunDebuggerBreak();
                             }
 
                         }
@@ -413,6 +418,14 @@ namespace Logitude.Server.Tools.QueueService
             }
 
             return response;
+        }
+
+        private static void RunDebuggerBreak()
+        {   
+            string automaticBreakPoint = System.Configuration.ConfigurationManager.AppSettings.Get("AutomaticBreakPoint");
+
+            if (Debugger.IsAttached && automaticBreakPoint == "true")
+                Debugger.Break();
         }
 
         public QueueResponse Receive()
@@ -495,6 +508,8 @@ namespace Logitude.Server.Tools.QueueService
                                             response.MessageValues = messageValues;
                                         }
                                     }
+
+                                    RunDebuggerBreak();
                                 }
 
                             }
@@ -556,6 +571,8 @@ namespace Logitude.Server.Tools.QueueService
                                     }
                                 }
                             }
+
+                            RunDebuggerBreak();
 
                         }
                     }

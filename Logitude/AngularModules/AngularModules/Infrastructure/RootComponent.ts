@@ -62,7 +62,13 @@ export class RootComponent implements AfterViewInit {
 
   isDSV: boolean = false;
   RunComponent() {
-    var url = window.location.href;
+      var url = window.location.href;
+      if (url.indexOf("staging"))
+          SessionLocator.WorkerRoleName = "staging";
+
+      if (url.indexOf("localhost"))
+          SessionLocator.WorkerRoleName = "development";
+
 
     this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
 

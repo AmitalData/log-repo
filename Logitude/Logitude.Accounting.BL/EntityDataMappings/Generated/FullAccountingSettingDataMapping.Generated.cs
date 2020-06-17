@@ -49,7 +49,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsPaymentChequesActivated, 
 	         GLAccounterCounterLength, 
 	         PaymentChequesLogoId, 
-	         NumberOfAgingMonths,
+	         NumberOfAgingMonths, 
+	         AllowMultiRatesInInvoiceLines,
 	      }
 
 
@@ -100,7 +101,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsPaymentChequesActivated, 
 	         GLAccounterCounterLength, 
 	         PaymentChequesLogoId, 
-	         NumberOfAgingMonths,
+	         NumberOfAgingMonths, 
+	         AllowMultiRatesInInvoiceLines,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -242,6 +244,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfAgingMonths))
             {
 				entityPOCO.NumberOfAgingMonths = entityPM.NumberOfAgingMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowMultiRatesInInvoiceLines))
+            {
+				entityPOCO.AllowMultiRatesInInvoiceLines = entityPM.AllowMultiRatesInInvoiceLines;
 			}
 			}
 
@@ -388,6 +395,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.NumberOfAgingMonths = entityPOCO.NumberOfAgingMonths;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowMultiRatesInInvoiceLines))
+            {
+					entityPM.AllowMultiRatesInInvoiceLines = entityPOCO.AllowMultiRatesInInvoiceLines;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -527,6 +539,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfAgingMonths))
             {
                 oldEntityPM.NumberOfAgingMonths = entityPM.NumberOfAgingMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowMultiRatesInInvoiceLines))
+            {
+                oldEntityPM.AllowMultiRatesInInvoiceLines = entityPM.AllowMultiRatesInInvoiceLines;
             }
 			
 		}

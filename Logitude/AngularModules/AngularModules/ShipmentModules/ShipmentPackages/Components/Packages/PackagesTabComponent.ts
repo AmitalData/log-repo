@@ -194,7 +194,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsCommodityNameVisible = true;
             }
 
-            if (FeatureLocator.HasFeaturePermession("Shipment", "RELEASENUMBER")) {
+            if (FeatureLocator.HasFeaturePermession("Shipment", "RELEASENUMBER") && this.DirectionId != "I") {
                 this.IsShowReleaseNumber = true;
             }
 

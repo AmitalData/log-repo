@@ -419,7 +419,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 referenceGroup = "0000";
             }
-            if (reference.Length > 9)
+            if (reference != null&& reference.Length > 9)
             {
                 reference = reference.Substring(reference.Length - 9);
             }

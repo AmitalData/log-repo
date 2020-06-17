@@ -7,11 +7,16 @@ import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
 //import {InvoiceTotalsClass} from '../Args';
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { EntityListService } from '../../Infrastructure/Services/EntityListService';
+import { FullAccountingSettingPM } from '../../Accounting/EntityPMs/FullAccountingSettingPM';
 
 export class ARInvoiceValidator {
     private Errors: string[] = [];
     private EntityPM: ARInvoicePM;
     private message: string;
+    entityListService: EntityListService = new EntityListService();
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+
     constructor() {
         this.Errors = [];
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -122,7 +127,11 @@ export class ARInvoiceValidator {
                 else if (lineItem.Rate != item.ForiegnExchangeRate) {
                     if (!lineItem.Validated) {
                         lineItem.Validated = true;
-                        this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+                        if (SessionLocator.TenantPM.AccountingActivated) {
+                            this.ValidateMultipleExchangeRates(lineItem);
+                        }
+                        else this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+
                     }
                 }
             });
@@ -186,6 +195,22 @@ export class ARInvoiceValidator {
 
             this.ValidateSingleTaxPerInvoice();
         }
+    }
+    private ValidateMultipleExchangeRates(lineItem:LineCurrency) {
+        this.entityListService.getSingle(this.EntityPM.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+                    var res = myResponse.Result;
+                    this.FullAccountingSetting = res;
+                    if (!this.FullAccountingSetting.AllowMultiRatesInInvoiceLines)
+                        this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+                }
+
+            })
+        });               
+
+
+
     }
     private ValidateConsolidationInvoice() {
 
