@@ -28,6 +28,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 
 @Component({
     
@@ -167,6 +168,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+ get AllowMultiRatesInInvoiceLines() { return this.EntityPM.AllowMultiRatesInInvoiceLines; }
+    set AllowMultiRatesInInvoiceLines(value: boolean) {
+        if (this.EntityPM.AllowMultiRatesInInvoiceLines != value) {
+            this.EntityPM.AllowMultiRatesInInvoiceLines = value;
+            this.SetUIProperties();
+        }
+    }
     get AccountingActivated() { return this.EntityPM.AccountingActivated; }
     set AccountingActivated(value: boolean) {
         if (this.EntityPM.AccountingActivated != value) {
