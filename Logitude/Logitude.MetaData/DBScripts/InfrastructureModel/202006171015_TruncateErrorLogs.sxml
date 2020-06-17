@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Pre="true">
+﻿<Script DBType="SystemLogs" Pre="true">
   <Sql Version="1">
     <![CDATA[
     truncate table ErrorLogs     
