@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
 				QueueMessageMoreDetailsList entityList = null;
-				QueueMessageMoreDetails entityPoco = queueMessageMoreDetailsRepository.GetSingleQueueMessageMoreDetails(id );
+				QueueMessageMoreDetails entityPoco = queueMessageMoreDetailsRepository.GetSingleQueueMessageMoreDetails(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -100,7 +100,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-				IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
+				IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails(authToken.Tenant);
 
 				QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
 			    IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
@@ -217,7 +217,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-                IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
+                IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails(tenant);
 
                 QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
                 
