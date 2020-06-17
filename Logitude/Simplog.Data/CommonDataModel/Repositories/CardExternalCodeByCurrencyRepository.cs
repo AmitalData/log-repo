@@ -55,9 +55,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();          
         }
-        public CardExternalCodeByCurrency GetSingleCardExternalCodeByCurrencyAndTenant(string id, string currencyId, int tenant)
+        public CardExternalCodeByCurrency GetSingleCardExternalCodeByCurrencyAndTenant(string cardId, string currencyId, int tenant)
         {
-            return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.Id == id && record.CurrencyId == currencyId && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.CardId == cardId && record.CurrencyId == currencyId && record.Tenant == tenant select record).FirstOrDefault();
         }
 
 
