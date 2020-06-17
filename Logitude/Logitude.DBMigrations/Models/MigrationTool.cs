@@ -659,6 +659,7 @@ namespace Logitude.DBMigrations.Models
                         foreach (var command in commands)
                         {
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
+                            oracleCommand.CommandTimeout = 3600;
                             currentCommandText = oracleCommand.CommandText;
                             oracleCommand.ExecuteNonQuery();
                         }
@@ -1290,6 +1291,7 @@ namespace Logitude.DBMigrations.Models
                         try
                         {
                             OracleCommand oracleCommand = new OracleCommand(script, oracleConnection);
+                            oracleCommand.CommandTimeout = 3600;
                             oracleCommand.Transaction = oracleTransaction;
                             oracleCommand.ExecuteNonQuery();
                             oracleTransaction.Commit();
