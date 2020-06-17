@@ -51,7 +51,7 @@
   <Column
     Name="ContainersNumbers"
     Type="nvarchar"
-    Size="1000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
