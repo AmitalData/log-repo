@@ -194,7 +194,7 @@ export class FieldTemplateComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
-                        //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                      SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                         SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         this.CD.detectChanges();
                     });
