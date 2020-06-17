@@ -5,14 +5,6 @@
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -66,6 +58,14 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="VATOutputGLAccountId"
@@ -197,6 +197,12 @@
     Type="int">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AllowMultiRatesInInvoiceLines"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
