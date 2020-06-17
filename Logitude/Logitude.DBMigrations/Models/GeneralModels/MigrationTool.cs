@@ -378,14 +378,19 @@ namespace Logitude.DBMigrations.Models
             string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string generatedScriptDirPath = Path.Combine(projectDirectory, @"GeneratedScript");
+            if (IsArgumentProvided("-deployment"))
+            {
+                projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            }
+
+            string generatedScriptDirectoryPath = Path.Combine(projectDirectory, @"GeneratedScript");
             string globalScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\GlobalScript.sql");
             string mainScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\MainScript.sql");
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
 
-            if (!Directory.Exists(generatedScriptDirPath))
+            if (!Directory.Exists(generatedScriptDirectoryPath))
             {
-                Directory.CreateDirectory(generatedScriptDirPath);
+                Directory.CreateDirectory(generatedScriptDirectoryPath);
             }
 
             File.WriteAllText(globalScriptFilePath, globalScript);
@@ -513,6 +518,11 @@ namespace Logitude.DBMigrations.Models
         {
             string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            if (IsArgumentProvided("-deployment"))
+            {
+                projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            }
+
             string warningsDirectoryPath = Path.Combine(projectDirectory, @"Warnings");
             string missingIndexesWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingIndexesWarnings.txt");
 
@@ -1851,8 +1861,19 @@ namespace Logitude.DBMigrations.Models
 
         private void ValidateToolVersion()
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            string versionInfoFilePath;
+
+            if (IsArgumentProvided("-deployment"))
+            {
+                string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                versionInfoFilePath = Path.Combine(projectDirectory, @"VersionInfo.xml");
+            }
+            else
+            {
+                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                versionInfoFilePath = Path.Combine(projectDirectory, @"Settings\VersionInfo.xml");
+            }
+
             if (File.Exists(versionInfoFilePath))
             {
                 try

@@ -88,8 +88,10 @@ namespace WebFreight.Web.DataProviders
         public string MasterImportManifest { get; set; }
         public string ConnectedShipmentTransportMode { get; set; }
         public string Trailer { get; set; }
+        public int StorageDays { get; set; }
+
     }
-    
+
 
     public class ReleasePackageGroup
     {
@@ -123,5 +125,9 @@ namespace WebFreight.Web.DataProviders
         public int? InStock { get; set; }
         public string EntryId { get; set; }
         public string EntryNumber { get; set; }
+
+        
+
+
     }
 }

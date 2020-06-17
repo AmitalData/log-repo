@@ -218,6 +218,7 @@ export class QueueMessageMoreDetailsPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: QueueMessageMoreDetailsPM;
 			entityPM = new QueueMessageMoreDetailsPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

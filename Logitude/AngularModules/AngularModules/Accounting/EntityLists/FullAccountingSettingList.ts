@@ -50,6 +50,7 @@ export class FullAccountingSettingList {
 	GLAccounterCounterLength: number;
 	PaymentChequesLogoId: string;
 	NumberOfAgingMonths: number;
+	AllowMultiRatesInInvoiceLines: boolean;
 	
 }
  

@@ -230,7 +230,6 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                         warningWindow.RTL = this.RTL;
                         //warningWindow.Title
                         var windowArgs: any = {};
-                        var warningCode: string = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
                         windowArgs.WarningCode = warningCode;
                         windowArgs.RTL = this.RTL;
                         warningWindow.WindowArgs = windowArgs;
@@ -240,11 +239,22 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                                 this.UpdateShipmentAdditionalCloudData(entity);
                         });
                     }
-                    else
-                        this.UpdateShipmentAdditionalCloudData(entity);
+                    else {
+                        if (SessionLocator.LoggedUserPM.Email == "wesam@logitudeworld.com") { //For testing.
+                            alert("tax details" + this.AdditionalData.TaxesMoreDetails);
+                            alert("warningCode = " + warningCode);
+                        }
+                        else
+                            this.UpdateShipmentAdditionalCloudData(entity);
+                    }
                 }
                 else {
-                    this.UpdateShipmentAdditionalCloudData(entity);
+                    if (SessionLocator.LoggedUserPM.Email == "wesam@logitudeworld.com") {
+                        alert("SessionLocator.PrivateLableSettings = " + SessionLocator.PrivateLableSettings);
+                        alert("SessionLocator.TenantPM.ShowTaxAmountWarning = " + SessionLocator.TenantPM.ShowTaxAmountWarning);
+                    }
+                    else
+                        this.UpdateShipmentAdditionalCloudData(entity);
                 }
             }
         });
