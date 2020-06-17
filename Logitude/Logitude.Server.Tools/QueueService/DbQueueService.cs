@@ -1,5 +1,6 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Server.Tools.Helpers;
+using Newtonsoft.Json;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -15,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Web;
 
 namespace Logitude.Server.Tools.QueueService
 {
@@ -212,6 +214,8 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
                         SqlParameter hashCodePar = new SqlParameter("@HashCode", SqlDbType.NVarChar, 1000);
                         SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
+                        SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                        
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -222,6 +226,7 @@ namespace Logitude.Server.Tools.QueueService
                         NextRunDateTime.Direction = ParameterDirection.Input;
                         hashCodePar.Direction = ParameterDirection.Input;
                         watingStatusPar.Direction = ParameterDirection.Input;
+                        messageIdPar.Direction = ParameterDirection.Output;
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
@@ -242,10 +247,22 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(NextRunDateTime);
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
+                        cmd.Parameters.Add(messageIdPar);
 
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
                         cn.Close();
+
+                        var v_QueueMessageId = cmd.Parameters["@MessageId"].Value;
+                        if (v_QueueMessageId != null)
+                        {
+                            string sQueueMessageId = v_QueueMessageId.ToString();
+                            if (!String.IsNullOrWhiteSpace(sQueueMessageId))
+                            {
+                                queueMessageId = sQueueMessageId.ChangeValue<int>();
+                                AddQueueDetailsToRequestHeaders(messageBody, sQueueMessageId);
+                            }
+                        }
 
                     }
                 }
@@ -258,7 +275,33 @@ namespace Logitude.Server.Tools.QueueService
             return queueMessageId;
         }
 
- 
+        private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)
+        { 
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                if (HttpContext.Current.Request.Headers["SentQueueMessages"] == null)
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>
+                    {
+                        { sQueueMessageId, messageBody }
+                    };
+                    string addedQueues = dictionary.FromDictionaryToJson();
+                    HttpContext.Current.Request.Headers.Add("SentQueueMessages", addedQueues);
+
+                }
+                else
+                {
+                    string openedQueues = HttpContext.Current.Request.Headers["SentQueueMessages"];
+                    Dictionary<string, string> dictionary = openedQueues.FromJsonToDictionary();
+                    dictionary.Add(sQueueMessageId, messageBody);
+                    string addedQueues = dictionary.FromDictionaryToJson();
+                    HttpContext.Current.Request.Headers["SentQueueMessages"] = addedQueues;
+
+
+                }
+            }
+        }
+
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
