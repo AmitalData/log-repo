@@ -55,7 +55,7 @@ import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeLis
 import {VesselListService} from '../../Common/Services/StandardLists/VesselListService';
 import {WarehouseListService} from '../../Common/Services/StandardLists/WarehouseListService';
 import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
-import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService';
+import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
