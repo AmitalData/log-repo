@@ -163,11 +163,18 @@ export class DWObjectFieldPM {
     private fullNameTextCodeCode: string;
     public get FullNameTextCodeCode() { return this.fullNameTextCodeCode; }
     public set FullNameTextCodeCode(newValue: string) { if (this.fullNameTextCodeCode != newValue) { this.fullNameTextCodeCode = newValue; this.MarkAsDirty("FullNameTextCodeCode"); } }
-
+       
+	 
     private partnerFullNameTextCodeCode: string;
     public get PartnerFullNameTextCodeCode() { return this.partnerFullNameTextCodeCode; }
     public set PartnerFullNameTextCodeCode(newValue: string) { if (this.partnerFullNameTextCodeCode != newValue) { this.partnerFullNameTextCodeCode = newValue; this.MarkAsDirty("PartnerFullNameTextCodeCode"); } }
-
+       
+	 
+    private partnerOriginalObjectFieldCode: string;
+    public get PartnerOriginalObjectFieldCode() { return this.partnerOriginalObjectFieldCode; }
+    public set PartnerOriginalObjectFieldCode(newValue: string) { if (this.partnerOriginalObjectFieldCode != newValue) { this.partnerOriginalObjectFieldCode = newValue; this.MarkAsDirty("PartnerOriginalObjectFieldCode"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
