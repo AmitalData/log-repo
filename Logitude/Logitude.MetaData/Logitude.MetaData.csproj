@@ -48,7 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
+    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
@@ -121,8 +121,8 @@
     </Content>
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
-      <LastOutputs>.\CommonClassesGenerator.cs</LastOutputs>
+      <LastOutputs>.\CommonClassesGenerator1.cs</LastOutputs>
+      <LastGenOutput>CommonClassesGenerator1.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\EntityControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -859,7 +859,6 @@
     <None Include="EntityFiles\CommonDataModel\AgentSharedDocument.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\CommonDataModel\CardCurrenciesAccounting.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
