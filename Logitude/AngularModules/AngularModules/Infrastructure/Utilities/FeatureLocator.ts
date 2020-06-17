@@ -27,9 +27,17 @@ export class FeatureLocator {
                         }
                     });
 
-                    if (myGroupedList.length == 1) {
-                        if (myGroupedList[0] == myPackageCode) {
+                    if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+                        if (myGroupedList.indexOf(myPackageCode) > -1) {
                             myResult = true;
+                        }
+                    }
+
+                    else {
+                        if (myGroupedList.length == 1) {
+                            if (myGroupedList[0] == myPackageCode) {
+                                myResult = true;
+                            }
                         }
                     }
                 }
