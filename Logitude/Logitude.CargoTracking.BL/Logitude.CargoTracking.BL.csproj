@@ -43,5 +43,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIDataContract\" />
+    <Folder Include="CloseTables\" />
+    <Folder Include="EntityDataMappings\" />
+    <Folder Include="EntityQueryServices\" />
+    <Folder Include="EntityUpdateServices\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

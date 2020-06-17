@@ -6553,6 +6553,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
+    <Folder Include="CargoTrackingModel\" />
+    <Folder Include="Controllers\CargoTrackingModel\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
