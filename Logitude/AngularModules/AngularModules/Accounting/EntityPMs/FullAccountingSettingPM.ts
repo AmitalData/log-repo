@@ -249,6 +249,11 @@ export class FullAccountingSettingPM {
     public set NumberOfAgingMonths(newValue: number) { if (this.numberOfAgingMonths != newValue) { this.numberOfAgingMonths = newValue; this.MarkAsDirty("NumberOfAgingMonths"); } }
        
 	 
+    private allowMultiRatesInInvoiceLines: boolean;
+    public get AllowMultiRatesInInvoiceLines() { return this.allowMultiRatesInInvoiceLines; }
+    public set AllowMultiRatesInInvoiceLines(newValue: boolean) { if (this.allowMultiRatesInInvoiceLines != newValue) { this.allowMultiRatesInInvoiceLines = newValue; this.MarkAsDirty("AllowMultiRatesInInvoiceLines"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

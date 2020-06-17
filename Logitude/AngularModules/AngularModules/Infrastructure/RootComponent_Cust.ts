@@ -59,7 +59,13 @@ export class RootComponent_Cust implements OnInit {
   isDSV: boolean = false;
   RunComponent() {
     if (this.isComponentBooted && this.isComponentInited) {
-      var url = window.location.href;
+        var url = window.location.href;
+
+        if (url.indexOf("staging"))
+            SessionLocator.WorkerRoleName = "staging";
+
+        if (url.indexOf("localhost"))
+            SessionLocator.WorkerRoleName = "development";
 
       this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
 

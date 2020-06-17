@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class QueueMessageMoreDetailsUpdateClass
    {  		
-		public const string HashString = "1f277e36e7d39515c998c461093d2657";
+		public const string HashString = "fcaafd59dfcee162ebb10448a90769a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "QueueMessageMoreDetails",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QueueMessageMoreDetails",
-			      				    OldDBTableName =  "QueueMessageMoreDetails",
 			      				    ObjectTableSingular =  "Queue Message More Details",
 			      				    ObjectTablePlural =  "Queue Messages More Details",
 			      				    HasCustomFilter =  false,
@@ -115,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Queue Message More Details",
-			      				    Code =  "d6ba",
+			      				    Code =  "48ff",
 			      				    Name =  "QueueMessageMoreDetails",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -140,7 +139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "QueueMessageMoreDetails",
 					  						FieldsDataType =  "BigInteger",
 					  						MinLength =  0,
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
-					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "QueueMessageMoreDetails",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,

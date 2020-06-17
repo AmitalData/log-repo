@@ -48,7 +48,7 @@ namespace WebFreight.Web.WcfApi
                 }
 
 
-                HttpContext.Current.Items.Add("workerrolename", "production");
+                //HttpContext.Current.Items.Add("workerrolename", "production");
 
                 string enableQueueWaitOnExternalWCFService = System.Configuration.ConfigurationManager.AppSettings.Get("EnableQueueWaitOnExternalWCFService");
                 TimeSpan queueWaitTime = new TimeSpan(0, 0, 0);
@@ -161,7 +161,7 @@ namespace WebFreight.Web.WcfApi
                 {
                     CacheManager.CacheWrapper = new MockCacheWrapper();
                 }
-                HttpContext.Current.Items.Add("workerrolename", "production");
+                //HttpContext.Current.Items.Add("workerrolename", "production");
                 //QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
                 string queueName = "externaltasksqueue" + tenant + priority;
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);
