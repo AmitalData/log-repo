@@ -49,15 +49,16 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         myService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllCurrencies = myResponse.Result.filter(a => !a.InActive);
+                this.BuildItemsSource();
             }
-            this.BuildItemsSource();
+           
         });
     }
 
     BuildItemsSource() {
         this.ItemsSource = [];
 
-        this.EntityPM.CardCurrenciesAccountings.forEach(item => {
+        this.EntityPM.CardExternalCodeByCurrencies.forEach(item => {
             this.ItemsSource.push(new CardCurrenciesAccountingTab(item, this));
         });
 
