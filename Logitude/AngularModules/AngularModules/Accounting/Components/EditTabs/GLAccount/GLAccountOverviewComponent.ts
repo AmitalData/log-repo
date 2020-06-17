@@ -35,6 +35,7 @@ import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
 import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
+import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 declare var makeAmBarChart;
 
 @Component({
@@ -56,7 +57,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public isRTL: boolean = false;
     public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
-
+    public OpenShipments:number=0;
+    public CreditLimitAmount:number=0;
     //Services
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
@@ -65,6 +67,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -148,7 +152,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //}
     //#endregion
     TenantCurrency:string;
-    accountCardlist: CardList;
+    accountCardlist: CardList[];
     GetDefaultValues() {
 
         // Get GLAccountMoreData
@@ -179,21 +183,51 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
         });
 
+
+      
+            this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.AccountPM.Id).subscribe((myResponse: ServiceResponse) => {
+                var connectedCards = myResponse.Result;
+                this.accountCardlist = connectedCards;
+                if(this.accountCardlist != null && this.accountCardlist.length > 0){
+                    var IsAllCardHasCriedtLimitNull:boolean=true;
+                    var IsAllCardHasOpenShipmentNull:boolean=true;
+                    this.accountCardlist.forEach(s=>{
+                        if(s.OpenShipments!=null){
+                            this.OpenShipments+=s.OpenShipments;
+                            IsAllCardHasOpenShipmentNull=false;
+                        }
+                        if(s.CreditLimitAmount!=null){
+                            IsAllCardHasCriedtLimitNull=false;
+                            this.CreditLimitAmount+=s.CreditLimitAmount;
+                        }
+                    });
+                    if(IsAllCardHasCriedtLimitNull){
+                        this.CreditLimitAmount=null;
+                    }
+                    if(IsAllCardHasOpenShipmentNull){
+                        this.OpenShipments=null;
+                    }
+                }
+
+            });
+    
+ 
+
         // Get connect card
-        this._CardListService.getSingle(this.AccountPM.CardId).subscribe((myResult:any) => {
-            console.log("_CardListService.getSingle", myResult);
-            var result: ServiceResponse = myResult;
-            if (!result.HasError)
-            {
-                this.accountCardlist = result.Result;
-                this.LoadCreditDetailsData();
+        // this._CardListService.getSingle(this.AccountPM.CardId).subscribe((myResult:any) => {
+        //     console.log("_CardListService.getSingle", myResult);
+        //     var result: ServiceResponse = myResult;
+        //     if (!result.HasError)
+        //     {
+        //         this.accountCardlist = result.Result;
+        //         this.LoadCreditDetailsData();
 
-            }
-            else {
-                console.log("[!] cannot get glaccount card");
+        //     }
+        //     else {
+        //         console.log("[!] cannot get glaccount card");
 
-            }
-        });
+        //     }
+        // });
 
 
         // Get tenant currency
@@ -221,6 +255,44 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //#region Balance Section
     GLAccountOpenTransactionsCount: number = 0.0;
 
+    private timerToken: any;
+    private isMouseIn: boolean = false;
+    OnMouseOver(HeadId:string,ElementId:string) {
+        this.isMouseIn = true;
+        
+            this.timerToken = setTimeout(() => {
+                var item = document.getElementById(HeadId);
+                if (AppTool.IsNullOrEmpty(item))
+                    return;
+                var itemRect = item.getBoundingClientRect();
+
+                if (this.isMouseIn) {
+                    document.getElementById(ElementId).style.position = "fixed";
+                    document.getElementById(ElementId).style.top = (itemRect.top - 35) + 'px';
+                    document.getElementById(ElementId).style.left = (itemRect.left + 145) + 'px';
+                    document.getElementById(ElementId).style.visibility = "visible";
+                    document.getElementById(ElementId).style.display = "initial";
+
+                    // this.timerToken = setTimeout(() => {
+                    //     document.getElementById(ElementId).style.visibility = "hidden";
+                    //     document.getElementById(ElementId).style.display = "none";
+
+                    // }, 500);
+                }
+
+            }, 100);
+    
+    }
+    OnMouseLeave(ElementId:string) {
+        this.isMouseIn = false;
+    
+            this.timerToken = setTimeout(() => {
+                document.getElementById(ElementId).style.visibility = "hidden";
+                document.getElementById(ElementId).style.display = "none";
+
+            }, 400);
+
+    }
 
     DisplayTransactionsLinkClicked() {
 
@@ -558,16 +630,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
             +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-            + (this.accountCardlist.OpenShipments?this.accountCardlist.OpenShipments:0 );
+            + (this.OpenShipments?this.OpenShipments:0 );
 
             this.accountTotal = percentage;
 
-            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
-                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
+            if(this.CreditLimitAmount && this.CreditLimitAmount != 0)
+                percentage = percentage / (this.CreditLimitAmount ? this.CreditLimitAmount : 0);
             else
                 percentage = 0;
 
-            this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
+            this.creditStatusAmount = (this.CreditLimitAmount ? this.CreditLimitAmount : 0) - this.accountTotal;
 
         }
 
@@ -592,13 +664,13 @@ export class GLAccountOverviewComponent extends BaseComponent {
         (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
     +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
     +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-        + (this.accountCardlist.OpenShipments ? this.accountCardlist.OpenShipments : 0);
+        + (this.OpenShipments ? this.OpenShipments : 0);
 
 
-        return (total > this.accountCardlist.CreditLimitAmount);
+        return (total > this.CreditLimitAmount);
     }
     IsCreditNotDefined(){
-        return this.accountCardlist.CreditLimitAmount == null;
+        return this.CreditLimitAmount == null;
     }
     //
 

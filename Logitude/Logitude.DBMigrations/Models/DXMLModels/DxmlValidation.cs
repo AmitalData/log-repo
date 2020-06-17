@@ -9,11 +9,18 @@ namespace Logitude.DBMigrations.Models
     {
         private string[] DXMLFiles;
         private List<DXMLTable> DXMLTables;
+        private List<DXMLView> DXMLViews;
+        private List<DXMLProcedure> DXMLProcedures;
+        private List<DXMLTrigger> DXMLTriggers;
         
         public DXMLValidation(string[] dxmlFiles)
         {
             DXMLFiles = dxmlFiles;
-            DXMLTables = GetDXMLTables();
+            DXMLDefinitions dxmlDefinitions = GetDXMLDefinitions();
+            DXMLTables = dxmlDefinitions.DXMLTables;
+            DXMLViews = dxmlDefinitions.DXMLViews;
+            DXMLProcedures = dxmlDefinitions.DXMLProcedures;
+            DXMLTriggers = dxmlDefinitions.DXMLTriggers;
         }
 
         public void Validate()
@@ -21,7 +28,24 @@ namespace Logitude.DBMigrations.Models
             string error;
 
             error = ValidateDXMLFilesNames();
-            
+            if (!String.IsNullOrEmpty(error))
+            {
+                ExitTool(error);
+            }
+
+            error = ValidateDXMLViewsNames();
+            if (!String.IsNullOrEmpty(error))
+            {
+                ExitTool(error);
+            }
+
+            error = ValidateDXMLProceduresNames();
+            if (!String.IsNullOrEmpty(error))
+            {
+                ExitTool(error);
+            }
+
+            error = ValidateDXMLTriggersNames();
             if (!String.IsNullOrEmpty(error))
             {
                 ExitTool(error);
@@ -61,32 +85,72 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private List<DXMLTable> GetDXMLTables()
+        private DXMLDefinitions GetDXMLDefinitions()
         {
             List<DXMLTable> dxmlTables = new List<DXMLTable>();
+            List<DXMLView> dxmlViews = new List<DXMLView>();
+            List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
+            List<DXMLTrigger> dxmlTriggers = new List<DXMLTrigger>();
 
             foreach (var dxmlFile in DXMLFiles)
             {
-                string xmlString = File.ReadAllText(dxmlFile);
-                if (xmlString.EndsWith("</Table>"))
+                string dxmlString = File.ReadAllText(dxmlFile);
+                if (dxmlString.EndsWith("</Table>"))
                 {
-                    DXMLTable dxmlTable = CreateDXMLTable(xmlString, dxmlFile);
+                    DXMLTable dxmlTable = CreateDXMLTable(dxmlString, dxmlFile);
                     if(dxmlTable == null)
                     {
                         ExitTool("Cannot Create Table Definition For " + Path.GetFileName(dxmlFile));
                     }
                     dxmlTables.Add(dxmlTable);
                 }
+                else if (dxmlString.EndsWith("</View>"))
+                {
+                    DXMLView dxmlView = CreateDXMLView(dxmlString, dxmlFile);
+                    if (dxmlView == null)
+                    {
+                        ExitTool("Error: Cannot Create View Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlViews.Add(dxmlView);
+                }
+                else if (dxmlString.EndsWith("</Procedure>"))
+                {
+                    DXMLProcedure dxmlProcedure = CreateDXMLProcedure(dxmlString, dxmlFile);
+                    if (dxmlProcedure == null)
+                    {
+                        ExitTool("Error: Cannot Create Procedure Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlProcedures.Add(dxmlProcedure);
+                }
+                else if (dxmlString.EndsWith("</Trigger>"))
+                {
+                    DXMLTrigger dxmlTrigger = CreateDXMLTrigger(dxmlString, dxmlFile);
+                    if (dxmlTrigger == null)
+                    {
+                        ExitTool("Error: Cannot Create Trigger Definition For " + Path.GetFileName(dxmlFile));
+                    }
+                    dxmlTriggers.Add(dxmlTrigger);
+                }
+                else
+                {
+                    ExitTool("Error: Cannot Create Class Definition For " + Path.GetFileName(dxmlFile));
+                }
             }
 
-            return dxmlTables;
+            return new DXMLDefinitions
+            {
+                DXMLTables = dxmlTables,
+                DXMLViews = dxmlViews,
+                DXMLProcedures = dxmlProcedures,
+                DXMLTriggers = dxmlTriggers
+            };
         }
 
-        private DXMLTable CreateDXMLTable(string xmlString, string dxmlFile)
+        private DXMLTable CreateDXMLTable(string dxmlString, string dxmlFile)
         {
             try
             {
-                TableDefinition dxmlTableDefinition = xmlString.ParseXML<TableDefinition>();
+                TableDefinition dxmlTableDefinition = dxmlString.ParseXML<TableDefinition>();
 
                 DXMLTable dxmlTable = new DXMLTable
                 {
@@ -95,6 +159,66 @@ namespace Logitude.DBMigrations.Models
                 };
 
                 return dxmlTable;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLView CreateDXMLView(string dxmlString, string dxmlFile)
+        {
+            try
+            {
+                ViewDefinition dxmlViewDefinition = dxmlString.ParseXML<ViewDefinition>();
+
+                DXMLView dxmlView = new DXMLView
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    ViewDefinition = dxmlViewDefinition
+                };
+
+                return dxmlView;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLProcedure CreateDXMLProcedure(string dxmlString, string dxmlFile)
+        {
+            try
+            {
+                ProcedureDefinition dxmlProcedureDefinition = dxmlString.ParseXML<ProcedureDefinition>();
+
+                DXMLProcedure dxmlProcedure = new DXMLProcedure
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    ProcedureDefinition = dxmlProcedureDefinition
+                };
+
+                return dxmlProcedure;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private DXMLTrigger CreateDXMLTrigger(string dxmlString, string dxmlFile)
+        {
+            try
+            {
+                TriggerDefinition dxmlTriggerDefinition = dxmlString.ParseXML<TriggerDefinition>();
+
+                DXMLTrigger dxmlTrigger = new DXMLTrigger
+                {
+                    DXMLFileName = Path.GetFileName(dxmlFile),
+                    TriggerDefinition = dxmlTriggerDefinition
+                };
+
+                return dxmlTrigger;
             }
             catch (Exception)
             {
@@ -114,6 +238,63 @@ namespace Logitude.DBMigrations.Models
                 foreach(var dxmlFile in DXMLFiles.Where(d => d.Contains(@"\" + duplicatedDxmlFiles.First())).ToList())
                 {
                     error += dxmlFile + "\n";
+                }
+                return error.TrimEnd('\n');
+            }
+
+            return error;
+        }
+
+        private string ValidateDXMLViewsNames()
+        {
+            string error = null;
+
+            List<ViewDefinition> duplicatedDxmlViews = DXMLViews.Select(d => d.ViewDefinition).ToList().GroupBy(d => new { Name = d.Name.ToLower(), DBType = d.DBType.ToLower() }).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedDxmlViews.Any())
+            {
+                error = "Error: Duplicate DXML Views With Same Database Type:\n";
+                foreach (var dxmlView in DXMLViews.Where(d => d.ViewDefinition.Name.ToLower() == duplicatedDxmlViews.First().Name.ToLower()).ToList())
+                {
+                    error += DXMLFiles.Where(d => d.Contains(@"\" + dxmlView.DXMLFileName)).First() + "\n";
+                }
+                return error.TrimEnd('\n');
+            }
+
+            return error;
+        }
+
+        private string ValidateDXMLProceduresNames()
+        {
+            string error = null;
+
+            List<ProcedureDefinition> duplicatedDxmlProcedures = DXMLProcedures.Select(d => d.ProcedureDefinition).ToList().GroupBy(d => new { Name = d.Name.ToLower(), DBType = d.DBType.ToLower() }).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedDxmlProcedures.Any())
+            {
+                error = "Error: Duplicate DXML Procedures With Same Database Type:\n";
+                foreach (var dxmlProcedure in DXMLProcedures.Where(d => d.ProcedureDefinition.Name.ToLower() == duplicatedDxmlProcedures.First().Name.ToLower()).ToList())
+                {
+                    error += DXMLFiles.Where(d => d.Contains(@"\" + dxmlProcedure.DXMLFileName)).First() + "\n";
+                }
+                return error.TrimEnd('\n');
+            }
+
+            return error;
+        }
+
+        private string ValidateDXMLTriggersNames()
+        {
+            string error = null;
+
+            List<TriggerDefinition> duplicatedDxmlTriggers = DXMLTriggers.Select(d => d.TriggerDefinition).ToList().GroupBy(d => new { Name = d.Name.ToLower(), DBType = d.DBType.ToLower() }).SelectMany(g => g.Skip(1)).ToList();
+
+            if (duplicatedDxmlTriggers.Any())
+            {
+                error = "Error: Duplicate DXML Triggers With Same Database Type:\n";
+                foreach (var dxmlTrigger in DXMLTriggers.Where(d => d.TriggerDefinition.Name.ToLower() == duplicatedDxmlTriggers.First().Name.ToLower()).ToList())
+                {
+                    error += DXMLFiles.Where(d => d.Contains(@"\" + dxmlTrigger.DXMLFileName)).First() + "\n";
                 }
                 return error.TrimEnd('\n');
             }
@@ -157,7 +338,6 @@ namespace Logitude.DBMigrations.Models
                 .First().TableDefinition.Columns.Select(c => c.Name).Contains(r.ReferencedColumn) && !r.ReferencedColumn.Contains(",")) || (r.ReferencedColumn.Split(',')
                 .Where(cc => DXMLTables.Where(t => t.TableDefinition.Name == r.ReferencedTable)
                 .First().TableDefinition.Columns.Select(c => c.Name).All(c => c != cc)).Any() && r.ReferencedColumn.Contains(","))).ToList();
-
 
             if (relationsWithWrongReferencedColumnName.Any())
             {

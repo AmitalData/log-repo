@@ -241,6 +241,7 @@ namespace WebFreight.Web.DataProviders
         public string Broker { get; set; }
         public string BrokerName { get; set; }
         public string CustomsAgent { get; set; }
+        public string ShipmentSubTypeName { get; set; }
     } 
     
     public class ReceivablesCharges

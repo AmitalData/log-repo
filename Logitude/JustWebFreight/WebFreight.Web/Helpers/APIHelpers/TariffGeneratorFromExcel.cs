@@ -12,10 +12,12 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.Controllers.WebDomainControllers;
@@ -31,9 +33,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public override void RunCode()
         {
-            this.RunPartnersGenerator();
-            //this.RunTariffGenerator();
-          
+            using (TransactionScope scope = TransactionFactory.GetTransaction(new TimeSpan(3, 0, 0)))
+            {
+                this.RunPartnersGenerator();
+                //this.RunTariffGenerator();  
+                scope.Complete();
+            }
+
         }
 
         private void RunPartnersGenerator()

@@ -75,6 +75,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<CustomsTransferType> CustomsTransferTypes { get; }
         IDbSet<CustomsTransferLine> CustomsTransferLines { get; }
         IDbSet<CustomsTransferHeader> CustomsTransferHeaders { get; }
+        IDbSet<ShipmentSubType> ShipmentSubTypes { get; }
 
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);

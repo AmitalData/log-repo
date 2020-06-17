@@ -169,6 +169,42 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
             return interestTransactionPMs;
         }
+
+        public GLAccountPM GetGLAccount(string GLAccountId, int tenant) 
+        {
+            string[] csvInterestReportLines = cSVStringLinesGetter.GetstringLinesFromCSV(path + "interestreportglaccount.csv");
+            GLAccountPM gLAccountPM = new GLAccountPM();
+            for (int i = 0; i < csvInterestReportLines.Length; i++)
+            {
+                if (csvInterestReportLines[i].Length > 0)
+                {
+                    //Id	Tenant	InternalNumber	AccountTypeCode	DisplayNumber	LocalName	EnglishName	SearchFields	
+                    //IsMultiCurrency	CurrencyId	RevenueExpenseType	IsControlAccount	ChartOfAccountsId	Inactive	
+                    //ChartOfAccountsTypeCode	ReconcileMethodCode	ControlAccountId	AutomaticReconcileId	PreviousEnglishName	
+                    //PreviousEnglishNameChangeDate	PreviousLocalName	PreviousLocalNameChangeDate	PreviousNumber	PreviousNumberChangeDate
+                    //PreviousChartOfAccountsId	PreviousChartOfAccountsChangeDate	CustomerGLAccountId	RevaluationEnabled	ParentAccountId	
+                    //Category1Id	Category2Id	Category3Id	Category4Id	Category5Id	IsVATExempt	DeductionFileTypeId	DeductionFileNumber	AssessingOfficeCode	
+                    //Occupation	DeductionTypeId	ConsolidationVat	Drop_temp	IsEquipmentVendor	Drop_temp1	ExcludeFromDeductionReport	
+                    //CreatedByUserId	UpdatedByUserId	CreateDate	UpdateDate	AllowEditChequePayToName	ActiveForInterest	InterestCalculationStartDate
+                    //ActiveForInterestCreditInvoice	InterestCreditLimit	NameForPrintingCheques	Smallcashbook	MinimumInterestInvoiceBilling
+                    string[] lineFields = csvInterestReportLines[i].Split(',');
+                    gLAccountPM.Id = lineFields[0];
+                    gLAccountPM.Tenant = Convert.ToInt32(lineFields[1]);
+                    gLAccountPM.InternalNumber = lineFields[2];
+                    gLAccountPM.AccountTypeCode = lineFields[3];
+                    gLAccountPM.DisplayNumber = lineFields[4];
+                    gLAccountPM.LocalName = lineFields[5];
+                    gLAccountPM.EnglishName = lineFields[6];
+                    gLAccountPM.SearchFields = lineFields[7];
+                    gLAccountPM.ActiveForInterest = lineFields[52] == "0" ? false : true; 
+                    gLAccountPM.InterestCalculationStartDate = GetDateTimeFromString(lineFields[53]);
+                  
+                }
+            }
+            return gLAccountPM;
+        }
+        
+        
         public DateTime GetDateTimeFromString(string dateString)
         {
             DateTime dateValue;

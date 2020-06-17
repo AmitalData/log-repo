@@ -523,16 +523,16 @@ namespace Logitude.DeploymentAgentService
 
             bool result = false;
 
-            string filePath = InstanceFolderPath + @"\Logitude.DBMigrations\bin\Debug\Logitude.DBMigrations.exe";
-            string dbMigrationsToolFilesPath = "\"" + InstanceFolderPath + @"\Logitude.DBMigrations" + "\"";
-            string arguments = string.Format(@"{0} {1} {2} {3}", "-root", dbMigrationsToolFilesPath, "-ignoresettingscheck", "-exe");
-            string workingDirectory = InstanceFolderPath + @"\Logitude.DBMigrations\bin\Debug";
+            string dbMigrationsToolDirectoryPath = InstanceFolderPath + @"\Logitude.DBMigrations";
+            string filePath = dbMigrationsToolDirectoryPath + @"\Logitude.DBMigrations.exe";
+            string arguments = string.Format(@"{0} {1} {2} {3} {4}", "-root", ("\"" + dbMigrationsToolDirectoryPath + "\""), "-ignoresettingscheck", "-deployment", "-exe");
+            string workingDirectory = dbMigrationsToolDirectoryPath;
 
             ProcessHelper processHelper = new ProcessHelper(filePath, arguments, workingDirectory, null);
             ProcessRunResult processRunResult = processHelper.RunProcess();
             if (processRunResult.ProcessResult != null)
             {
-                AddAgentLog("Database Migrations Tool Finished With Exit Code " + processRunResult.ProcessResult.ExitCode.ToString());
+                AddAgentLog("Database Migrations Tool Finished " + (processRunResult.ProcessResult.ExitCode == 0 ? "Successfully" : "With Errors"));
 
                 if (!String.IsNullOrEmpty(processRunResult.ProcessResult.OutputDataReceived))
                 {

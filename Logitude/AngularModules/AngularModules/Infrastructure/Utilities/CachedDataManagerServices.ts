@@ -91,7 +91,10 @@ import { TariffProductListService } from '../../TariffModule/Services/StandardLi
 //Occasions
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
 import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
+
 import { AWBAdditionalHandlingInfoListService } from '../../Shipment/Services/StandardLists/AWBAdditionalHandlingInfoListService';
+import { ShipmentSubTypeListService } from '../../shipment/services/standardlists/shipmentsubtypelistservice';
+
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -194,9 +197,9 @@ export class CachedDataManagerServices {
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
-            case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
+            case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "CardCurrenciesAccountingListService": { myResult = new CardCurrenciesAccountingListService(); break; }
-
+            case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }  
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;
