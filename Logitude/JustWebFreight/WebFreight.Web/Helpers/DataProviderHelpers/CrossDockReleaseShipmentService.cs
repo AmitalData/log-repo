@@ -8,6 +8,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebFreight.Web.DataProviders;
@@ -35,6 +36,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     SetOriginAndDestinationtShipmenFields();
                     SetShipmentPartnersFields();
                     SetShipmentCustomFields();
+                    SetStorageDaysShipmenField();
                 }
             }
 
@@ -42,7 +44,30 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         }
 
 
-       
+        public int GetDaysNmuberBetweenTwoDates(DateTime createdate, DateTime actualEntryDate)
+        {
+            TimeSpan span = createdate.Subtract(actualEntryDate);
+            return (int)span.TotalDays;
+
+        }
+
+
+        private void SetStorageDaysShipmenField()
+        {
+            int storageDays = 0;
+            if (shipmentDataView.WarehouseLegActualReleaseDate != null && shipmentDataView.WarehouseLegActualEntryDate != null)
+            {
+                if (shipmentDataView.WarehouseLegActualReleaseDate >= shipmentDataView.WarehouseLegActualEntryDate)
+                {
+                    DateTime warehouseLegActualReleaseDate = (DateTime)shipmentDataView.WarehouseLegActualReleaseDate;
+                    DateTime warehouseLegActualEntryDate = (DateTime)shipmentDataView.WarehouseLegActualEntryDate;
+                    TimeSpan span = warehouseLegActualReleaseDate.Subtract(warehouseLegActualEntryDate);
+                    storageDays = (int)span.TotalDays;
+                }
+            }
+            crossDockReleaseDataProvider.StorageDays = storageDays;
+        }
+
         private void SetShipmentGeneralFields()
         {
             crossDockReleaseDataProvider.MainCarriageCarrierName = shipmentDataView.MainCarriageCarrierName;
