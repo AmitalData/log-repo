@@ -275,12 +275,13 @@ namespace CommunicationWorkerRole
 
             //throw (new InvalidOperationException());
         }
-
         private void TestBatch()
         {
 
             try
             {
+                List<string> Last_journalBufferKeys = null;
+                Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
 
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();

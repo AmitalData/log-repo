@@ -41,6 +41,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             List<InterestBasesPeriodPM> interestBasesPeriodPMs = interestBasesPeriodQueryService.GetAllInterestBasesPeriodPMs(tenant);
             return interestBasesPeriodPMs;
         }
+
+        public GLAccountPM GetGLAccount(string GLAccountId, int tenant)
+        {
+            throw new NotImplementedException();
+        }
     }
 
    
