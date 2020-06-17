@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+    truncate table ErrorLogs     
+    ]]>
+  </Sql>
+</Script>
