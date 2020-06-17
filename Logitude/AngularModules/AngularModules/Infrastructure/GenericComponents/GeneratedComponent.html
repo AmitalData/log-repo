@@ -10,7 +10,7 @@
                 <tr>
                     <td *ngFor="let ScreenColumn of ScreenColumns" style="width: 400px;">
                         <table>
-                            <tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{background: (IsCustomerCare && objectField.IsCustom == true) ? 'rgba(255, 171, 3, 0.6)' : 'transparent'}">
+                            <tr class="FormFieldRow" *ngFor="let objectField of ScreenColumn.ObjectFields" [ngStyle]="{background: (IsCustomerCareOrDistributor && objectField.IsCustom == true) ? 'rgba(255, 171, 3, 0.6)' : 'transparent'}">
 
                                 <td *ngIf="!objectField.MultiLine" [style.width.px]="LabelWidth" [style.min-width.px]="LabelWidth">
                                     <LogLabel *ngIf="objectField.FieldName != 'CustomField'" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
