@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
                 QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(authToken.Tenant);
-                QueueMessageMoreDetailsPM queueMessageMoreDetailsPM = queueMessageMoreDetailsQuery.GetSinglePM(id);
+                QueueMessageMoreDetailsPM queueMessageMoreDetailsPM = queueMessageMoreDetailsQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -75,7 +75,131 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
          
 		
+
+        public HttpResponseMessage Post(QueueMessageMoreDetailsPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("QueueMessageMoreDetails", entityPM.Tenant, authToken.Tenant);
+                
+                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
+                        QueueMessageMoreDetailsService service = new QueueMessageMoreDetailsService(MyContext, entityPM.Tenant);
+                        service.Create(entityPM);
+				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QueueMessageMoreDetails", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage Put(QueueMessageMoreDetailsPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("QueueMessageMoreDetails", entityPM.Tenant, authToken.Tenant);
+
+                        string entityName = "QueueMessageMoreDetails" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "QueueMessageMoreDetailsPM" + entityPM.Id + entityPM.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityName);
+                        }
+                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        }
+                
+                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
+                        QueueMessageMoreDetailsService service = new QueueMessageMoreDetailsService(MyContext, entityPM.Tenant);
+ 
+                        service.Update(entityPM);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("QueueMessageMoreDetails", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
+
+
 		
+          
+			
+			 
+		  
+        
+
+		
+			 		
       
     }
 }
