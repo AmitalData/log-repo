@@ -44,13 +44,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         }
 
 
-        public int GetDaysNmuberBetweenTwoDates(DateTime createdate, DateTime actualEntryDate)
-        {
-            TimeSpan span = createdate.Subtract(actualEntryDate);
-            return (int)span.TotalDays;
-
-        }
-
+     
 
         private void SetStorageDaysShipmenField()
         {
