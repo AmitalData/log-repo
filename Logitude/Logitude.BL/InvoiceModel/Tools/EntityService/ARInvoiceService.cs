@@ -973,7 +973,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.InvoiceNumber = MethodHelper.Trim(entityPM.InvoiceNumber);
             }
-            entityPM.BillToPartnerTypeId = SetBillToPartnerId();
+
+             SetBillToPartnerIdAndPrimaryContact();
             // DR: Draft
             // CN: Connected
             // NT: Not Connected
@@ -1174,15 +1175,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private string SetBillToPartnerId()
+        private void SetBillToPartnerIdAndPrimaryContact()
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
-            if (card != null)
-            {
-                return card.PartnerTypeId;
-            }
-            else return null;
+            entityPM.BillToPartnerTypeId = card != null ? card.PartnerTypeId : null;
+            entityPM.BillToContactId = card != null ? card.PrimaryContactId : null;
         }
         private void InitializeDueDate()
         {
