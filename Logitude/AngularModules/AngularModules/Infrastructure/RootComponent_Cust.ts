@@ -61,10 +61,10 @@ export class RootComponent_Cust implements OnInit {
     if (this.isComponentBooted && this.isComponentInited) {
         var url = window.location.href;
 
-        if (url.indexOf("staging"))
+        if (url.indexOf("staging") > -1)
             SessionLocator.WorkerRoleName = "staging";
 
-        if (url.indexOf("localhost"))
+        if (url.indexOf("localhost") > -1)
             SessionLocator.WorkerRoleName = "development";
 
       this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
