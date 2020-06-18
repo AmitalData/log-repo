@@ -814,36 +814,23 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             TenantManagementLicenseQuery licenseQuery = new TenantManagementLicenseQuery(entityPM.Id);
             entityPM.TenantManagementLicenses = licenseQuery.GetTenantManagementLicensePMs(entityPM.Id).ToList();
 
-            if (entityPM.IsMultiPackage)
+            if (entityPM.MainAdditionalPackageApplied)
             {
-                List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
-                entityPM.PackagesCodes_PK = licensesCodes;
-
-                PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
-                entityPM.PackagesCodes_BS = (from a in connectedPackageRepository.context.PackageConnectedPackages
-                                             where licensesCodes.Contains(a.PackageCode)
-                                             group a by a.ConnectedPackageCode into g
-                                             select g.Key).ToList();
-
-            }
-
-            if (entityPM.PackageCode != null)
-            {
-                PackageRepository pckgRep = new PackageRepository(entityPM.Id);
-                Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
-
-                if (!entityPM.IsMultiPackage)
+                if (entityPM.PackagesCodes_PK == null)
                 {
-                    if (entityPM.PackagesCodes_PK == null)
-                    {
-                        entityPM.PackagesCodes_PK = new List<string>();
-                    }
+                    entityPM.PackagesCodes_PK = new List<string>();
+                }
 
-                    if (entityPM.PackagesCodes_BS == null)
-                    {
-                        entityPM.PackagesCodes_BS = new List<string>();
-                    }
+                if (entityPM.PackagesCodes_BS == null)
+                {
+                    entityPM.PackagesCodes_BS = new List<string>();
+                }
 
+                if (entityPM.PackageCode != null)
+                {
+                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
+                    
                     if (pckg.FeaturePackageTypeCode == "BS")
                     {
                         entityPM.PackagesCodes_BS.Add(pckg.Code);
@@ -862,13 +849,78 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         entityPM.PackagesCodes_BS = myCodes;
                     }
                 }
+
+                if(entityPM.IsMultiPackage)
+                {
+                    List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
+                    entityPM.PackagesCodes_PK.AddRange(licensesCodes);
+
+                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                    entityPM.PackagesCodes_BS.AddRange((from a in connectedPackageRepository.context.PackageConnectedPackages
+                                                 where licensesCodes.Contains(a.PackageCode)
+                                                 group a by a.ConnectedPackageCode into g
+                                                 select g.Key).ToList());
+                }
             }
 
-            if (entityPM.TemporalPackageCode != null)
+            else
             {
-                PackageRepository pckgRep = new PackageRepository(entityPM.Id);
-                Package pckg = pckgRep.GetSinglePackage(entityPM.TemporalPackageCode);
-                entityPM.TemporalPackageName = pckg.Name;
+                if (entityPM.IsMultiPackage)
+                {
+                    List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
+                    entityPM.PackagesCodes_PK = licensesCodes;
+
+                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                    entityPM.PackagesCodes_BS = (from a in connectedPackageRepository.context.PackageConnectedPackages
+                                                 where licensesCodes.Contains(a.PackageCode)
+                                                 group a by a.ConnectedPackageCode into g
+                                                 select g.Key).ToList();
+
+                }
+
+                if (entityPM.PackageCode != null)
+                {
+                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
+
+                    if (!entityPM.IsMultiPackage)
+                    {
+                        if (entityPM.PackagesCodes_PK == null)
+                        {
+                            entityPM.PackagesCodes_PK = new List<string>();
+                        }
+
+                        if (entityPM.PackagesCodes_BS == null)
+                        {
+                            entityPM.PackagesCodes_BS = new List<string>();
+                        }
+
+                        if (pckg.FeaturePackageTypeCode == "BS")
+                        {
+                            entityPM.PackagesCodes_BS.Add(pckg.Code);
+                        }
+
+                        else
+                        {
+                            entityPM.PackagesCodes_PK.Add(pckg.Code);
+
+                            PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                            List<string> myCodes = (from a in connectedPackageRepository.context.PackageConnectedPackages
+                                                    where pckg.Code == a.PackageCode
+                                                    group a by a.ConnectedPackageCode into g
+                                                    select g.Key).ToList();
+
+                            entityPM.PackagesCodes_BS = myCodes;
+                        }
+                    }
+                }
+
+                if (entityPM.TemporalPackageCode != null)
+                {
+                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                    Package pckg = pckgRep.GetSinglePackage(entityPM.TemporalPackageCode);
+                    entityPM.TemporalPackageName = pckg.Name;
+                }
             }
         }
 
