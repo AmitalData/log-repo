@@ -1801,14 +1801,25 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationGoodsItemAmountList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsGoodsItemAmount>();
             string cur = supplierInvoicePM.InvoiceCurrencyTypeCode;
 
-            if(supplierInvoiceItemPM.SupplierInvoiceItemsPrices != null && supplierInvoiceItemPM.SupplierInvoiceItemsPrices.Count()>0)
+            if(!String.IsNullOrWhiteSpace(cur))
+            {
+             if(supplierInvoiceItemPM.SupplierInvoiceItemsPrices != null && supplierInvoiceItemPM.SupplierInvoiceItemsPrices.Count()>0)
             {
                 foreach (var price in supplierInvoiceItemPM.SupplierInvoiceItemsPrices)
                 {
-                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, "USD"));
+                declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(price.AdditionalPrice, price.AdditionalPriceTypeCode, cur));
 
                 }
             }
+
+                if (supplierInvoiceItemPM.ItemPrice.HasValue)
+                {
+                   
+                        declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.ItemPrice.Value, "1", cur));
+            
+                }
+            }
+
             //if (supplierInvoiceItemPM.ItemPrice.HasValue)
             //{
             //    if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.ItemPriceCurrencyCode))
@@ -1823,16 +1834,16 @@ namespace Logitude.CustomsMessaging.RequestServices
             //if (supplierInvoiceItemPM.NonCustomsItemPrice.HasValue && supplierInvoiceItemPM.NonCustomsItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.NonCustomsItemPriceCurCode))//17997
             //{
 
-                //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.NonCustomsItemPrice.Value, "11", supplierInvoiceItemPM.NonCustomsItemPriceCurCode));
+            //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.NonCustomsItemPrice.Value, "11", supplierInvoiceItemPM.NonCustomsItemPriceCurCode));
 
-                //}
-                //if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue && supplierInvoiceItemPM.WholeSaleItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode))//17997
-                //{
+            //}
+            //if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue && supplierInvoiceItemPM.WholeSaleItemPrice != decimal.Zero && !String.IsNullOrWhiteSpace(supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode))//17997
+            //{
 
-                //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.WholeSaleItemPrice.Value, "5", supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode));
+            //    declarationGoodsItemAmountList.Add(GetDeclarationGoodsItemAmount(supplierInvoiceItemPM.WholeSaleItemPrice.Value, "5", supplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode));
 
-                //}
-                DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
+            //}
+            DMExtensions.GoodsItemAmount = declarationGoodsItemAmountList.ToArray();
            
             if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode))
             {
