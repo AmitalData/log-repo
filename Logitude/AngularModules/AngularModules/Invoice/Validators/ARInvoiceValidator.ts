@@ -127,10 +127,10 @@ export class ARInvoiceValidator {
                 else if (lineItem.Rate != item.ForiegnExchangeRate) {
                     if (!lineItem.Validated) {
                         lineItem.Validated = true;
-                        if (SessionLocator.TenantPM.AccountingActivated) {
-                            this.ValidateMultipleExchangeRates(lineItem);
+                        if (!SessionLocator.TenantPM.AccountingActivated) {
+                            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+
                         }
-                        else this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
 
                     }
                 }
@@ -196,22 +196,22 @@ export class ARInvoiceValidator {
             this.ValidateSingleTaxPerInvoice();
         }
     }
-    private ValidateMultipleExchangeRates(lineItem:LineCurrency) {
-        this.entityListService.getSingle(this.EntityPM.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
-            res.subscribe(myResponse => {
-                if (myResponse != null) {
-                    var res = myResponse.Result;
-                    this.FullAccountingSetting = res;
-                    if (!this.FullAccountingSetting.AllowMultiRatesInInvoiceLines)
-                        this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
-                }
+    //private ValidateMultipleExchangeRates(lineItem:LineCurrency) {
+    //    this.entityListService.getSingle(this.EntityPM.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
+    //        res.subscribe(myResponse => {
+    //            if (myResponse != null) {
+    //                var res = myResponse.Result;
+    //                this.FullAccountingSetting = res;
+    //                if (!this.FullAccountingSetting.AllowMultiRatesInInvoiceLines)
+    //                    this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
+    //            }
 
-            })
-        });               
+    //        })
+    //    });               
 
 
 
-    }
+    //}
     private ValidateConsolidationInvoice() {
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
