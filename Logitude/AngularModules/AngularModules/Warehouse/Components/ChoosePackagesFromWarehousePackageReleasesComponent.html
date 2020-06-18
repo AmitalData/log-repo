@@ -195,10 +195,11 @@
                                                                                                                     <td style="width:200px">
                                                                                                                         <div style="width:200px">
                                                                                                                             <span style="font-size:13px;">Release</span>
-                                                                                                                            <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>
-                                                                                                                            <span style="font-size:12px;margin-left:8px;">{{warehouseReleaseItem.CreateDate | DateTimeToDatePipe}}</span>
-                                                                                                                        </div>
+                                                                                                                            <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>                                                                                                                        </div>
 
+                                                                                                                    </td>
+                                                                                                                    <td style="width:200px">
+                                                                                                                        <div style="font-size:13px;width:200px">ReleaseDate: {{warehouseReleaseItem.ReleaseDate | DateTimeToDatePipe}}    </div>
                                                                                                                     </td>
                                                                                                                     <td style="width:200px">
                                                                                                                         <div style="font-size:13px;width:200px">References: {{warehouseReleaseItem.References}}    </div>
