@@ -8550,84 +8550,48 @@
     <Feature
       Code="&quot;APPaymentEditExchangeRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.EditExchangeRate&quot;"
+      FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.EditExchangeRate&quot;"
-      FeatureDefaultText="&quot;Edit Exchange Rate&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;RecalculateExternals&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.RecalculateExternals&quot;"
+      FeatureDefaultText="&quot;Recalculate External IDs&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.RecalculateExternals&quot;"
-      FeatureDefaultText="&quot;Recalculate External IDs&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;EnableMultiCurrency&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.EnableMultiCurrency&quot;"
+      FeatureDefaultText="&quot;Enable multi-currency&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.EnableMultiCurrency&quot;"
-      FeatureDefaultText="&quot;Enable multi-currency&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;APPaymentConnectInvoices&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;APPayment.Features.APPaymentConnectInvoices&quot;"
+      FeatureDefaultText="&quot;Connect AP invoices&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.APPaymentConnectInvoices&quot;"
-      FeatureDefaultText="&quot;Connect AP invoices&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;APPaymentDissconectInvoices&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      IsPackagable="false"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
       FeatureTextCodeCode="&quot;APPayment.Features.APPaymentDissconectInvoices&quot;"
-      FeatureDefaultText="&quot;Disconnect AP invoices&quot;" />
-    <Feature
-      Code="&quot;DETAILS&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureDefaultText="&quot;Disconnect AP invoices&quot;"
       IsPackagable="false"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.Details&quot;"
-      FeatureDefaultText="&quot;Details&quot;" />
-    <Feature
-      Code="&quot;DOCSOUT&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.DocsOut&quot;"
-      FeatureDefaultText="&quot;Docs Out&quot;" />
-    <Feature
-      Code="&quot;DOCSIN&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.DocsIn&quot;"
-      FeatureDefaultText="&quot;Docs In&quot;" />
-    <Feature
-      Code="&quot;EVENTS&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      IsPackagable="false"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;APPayment.Features.Events&quot;"
-      FeatureDefaultText="&quot;Events&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;DETAILS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"

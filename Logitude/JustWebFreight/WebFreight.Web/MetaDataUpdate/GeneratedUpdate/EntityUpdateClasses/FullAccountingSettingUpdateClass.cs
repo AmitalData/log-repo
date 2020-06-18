@@ -2769,7 +2769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2838,7 +2838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable FullAccountingSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FullAccountingSetting" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> FullAccountingSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "FullAccountingSetting").ToList();
+		   //List<ObjectField> FullAccountingSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "FullAccountingSetting").ToList();
 		       
 	      
 
