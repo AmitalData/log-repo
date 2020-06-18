@@ -174,6 +174,7 @@ export class DeclarationList {
 	AgentRoleCode: string;
 	ExportFile: string;
 	DestinationCountryCode: string;
+	ExportAutonomyRegionTypeCode: string;
 	
 }
  

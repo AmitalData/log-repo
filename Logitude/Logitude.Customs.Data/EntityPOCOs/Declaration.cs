@@ -374,6 +374,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DestinationCountryCode { get; set; }
 	      
         public virtual CustomsCountry CustomsCountry { get; set; }
+        [ForeignKey("ExportAutonomyRegionType")]
+        [Column("ExportAutonomyRegionTypeCode")]
+	    public string ExportAutonomyRegionTypeCode { get; set; }
+	      
+        public virtual AutonomyRegionType ExportAutonomyRegionType { get; set; }
     }
 }
 	 

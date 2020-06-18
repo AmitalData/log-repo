@@ -33,6 +33,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsImport { get; set; }
         [Column("IndexOrder")]
 	    public int? IndexOrder { get; set; }
+        [Column("IsExport")]
+	    public bool? IsExport { get; set; }
     }
 }
 	 
