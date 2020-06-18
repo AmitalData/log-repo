@@ -19,7 +19,6 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         internal TSH_MSG2_PaymentOrderReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
         {
             dynamic data = JObject.Parse(requestParamsData.TestCase.Param1);
-
             paymentStatus = data.paymentStatus;
 
             SetRequestContentHeader();
@@ -41,13 +40,15 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
         public void SetPaymentOrderReply(GenericRequestParams requestParamsData)
         {
-             _paymentOrderReply = new PaymentOrderReply();
+            _paymentOrderReply = new PaymentOrderReply();
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsData.Tenant);
             ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(requestParamsData.Tenant);
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
-    
 
-            
+
+
+
+
             ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id, 1, false, false);
             _paymentOrderReply.PaymentDetails = new PaymentDetails();
             //_paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(_dec.DeclarationNumber.Substring(_dec.DeclarationNumber.Length-4)); // Or Use counter?\

@@ -138,7 +138,7 @@ MainInterfaceCode ="2892"
                     Name = " תשלום הוראה ",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{}",
+                    Param1= @"{""PaymentId"":""1""}",
                     Param2= @"{}",
                     MainInterfaceCode="3052",
                 },
