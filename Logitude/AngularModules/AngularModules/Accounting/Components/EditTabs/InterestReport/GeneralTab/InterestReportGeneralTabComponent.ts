@@ -91,6 +91,23 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         },
     };
 
+
+
+    LogWindowShow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate("InterestReport.O.EditOpenBalance");
+        var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalanceComponent/InterestReportEditOpenBalanceComponent";
+        logWindow.Width = 350;
+        logWindow.Height = 160;
+        logWindow.DataContext = this.EntityPM.OpenBalance ;
+        logWindow.Show(myPath);
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+               this.EntityPM.OpenBalance = s;
+            }
+        })
+    }
+
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         var filters = new ApiQueryFilters();
         filters.PageSize = take;
@@ -111,6 +128,18 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     set CustomerId(newValue: string) {
         if (this.EntityPM.CustomerId != newValue) {
             this.EntityPM.CustomerId = newValue;
+        }
+    }
+    get IsFirstReport() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.IsFirstReport;
+        }
+        else
+            return null;
+    }
+    set IsFirstReport(newValue: boolean) {
+        if (this.EntityPM.IsFirstReport != newValue) {
+            this.EntityPM.IsFirstReport = newValue;
         }
     }
     get OpenBalance() {
