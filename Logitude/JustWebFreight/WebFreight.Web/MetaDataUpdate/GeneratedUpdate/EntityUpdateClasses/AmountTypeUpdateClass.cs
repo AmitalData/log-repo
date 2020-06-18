@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmountTypeUpdateClass
    {  		
-		public const string HashString = "c208b68f1742785da1de2cd1b330fe20";
+		public const string HashString = "eff259eeb752f96e9dcc20820168a417";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -477,7 +477,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	      
 
 			  Query AmountTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmountTypeTextCode_0.Id, NameTextCodeCode = AmountTypeTextCode_0.Code, ObjectTableName = "Customs.AmountType", Code = "AmountType",  QueryGroupCode = "c984", IndexOrder = 0, Tenant = 0, ObjectTableId = AmountTypeObjectTable.Id, QuerySection = "Customs.AmountType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmountTypeFeature_0.Id,FeatureUniqeCode= AmountTypeFeature_0.FeatureUniqeCode, DefaultSortName = "LocalName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+	
+			 QueryColumn AmountTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmountTypeQuery.Id,QueryCode = AmountTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AmountType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmountTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmountTypeQuery.Id,QueryCode = AmountTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AmountType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmountTypeQuery.Id,QueryCode = AmountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AmountType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AmountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmountTypeQuery.Id,QueryCode = AmountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AmountType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);

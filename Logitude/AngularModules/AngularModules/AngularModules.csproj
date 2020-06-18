@@ -351,6 +351,8 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
+
+    <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
@@ -1159,6 +1161,9 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPaymentOrder\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleCustomsVendor.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVendor\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleInvoiceQueue.ts" />
+    <TypeScriptCompile Include="CustomsModules\InvoiceQueue\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\ModuleDeclarationOthers.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\ModuleDeclarations.ts" />
@@ -1249,6 +1254,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
@@ -1370,8 +1376,11 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\TPGFileTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\CustomDocumentViewerService.ts" />
-    <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
+
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
+
+    <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
+
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />

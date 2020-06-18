@@ -24,8 +24,7 @@ import { AmendmentTypeList } from '../../../../Customs/EntityLists/AmendmentType
 import { AmendmentTypeListService } from '../../../../Customs/Services/StandardLists/AmendmentTypeListService';
 
 @Component({
-    selector: 'CargoSealsQueryComponent',
-    templateUrl: './CargoSealsQueryComponent.html',
+     templateUrl: './CargoSealsQueryComponent.html',
     providers: [AmendmentTypeListService]
 })
 
