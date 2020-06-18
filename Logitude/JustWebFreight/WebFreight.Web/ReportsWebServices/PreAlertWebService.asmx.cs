@@ -123,11 +123,42 @@ namespace WebFreight.Web.ReportsWebServices
                 if (!string.IsNullOrEmpty(shipmentpm.ConsigneeId))
                 {
                     ContactQuery contactQuery = new ContactQuery(contactRepository);
+
+                    CardPM consignee = cardQuery.GetSinglePM(shipmentpm.ConsigneeId, tenant);
+                    if (consignee != null)
+                    {
+                        prealertDataProvider.Consignee = consignee.EnglishName;
+                        ContactPM consigneeContact = contactQuery.GetSinglePM(shipmentpm.ConsigneeContactId, tenant);
+                        if (consigneeContact != null)
+                        {
+                            prealertDataProvider.ConsigneeContactPhone = consigneeContact.BusinessPhone;
+                            prealertDataProvider.ConsigneeContactName = consigneeContact.EnglishName;
+
+                            Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
+                            if (consigneeContactAddress != null)
+                            {
+                                if (consigneeContactAddress.IsLocalLanguage)
+                                {
+                                    if (consignee != null && !string.IsNullOrEmpty(consignee.LocalName))
+                                    {
+                                        prealertDataProvider.Company = consignee.LocalName;
+                                    }
+
+                                    if (!string.IsNullOrEmpty(consigneeContact.LocalName))
+                                    {
+                                        prealertDataProvider.ConsigneeContactName = consigneeContact.LocalName;
+                                    }
+                                }
+                                prealertDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(consigneeContactAddress);
+                            }
+                        }
+                    }
+
                     ContactPM customerContact = contactQuery.GetSinglePM(shipmentpm.CustomerContactId, tenant);
                     if (customerContact != null)
                     {
                         prealertDataProvider.ClientName = customerContact.EnglishName;
-
+                       
                         Address consigneeContactAddress = addressRepository.GetSingleAddress(shipmentpm.ConsigneeAddressId, tenant);
                         if (consigneeContactAddress != null)
                         {
@@ -142,9 +173,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     prealertDataProvider.ClientName = customerContact.LocalName;
                                 }
-                            }
-
-                            //prealertDataProvider.ContactDetails = DataProviders.General.GetAddress(consigneeContactAddress);
+                            } 
                         }
                     }
                 }
@@ -337,16 +366,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                #region Consignee
-                if (!string.IsNullOrEmpty(shipmentpm.ConsigneeId))
-                {
-                    CardPM consignee = cardQuery.GetSinglePM(shipmentpm.ConsigneeId, tenant);
-                    if (consignee != null)
-                    {
-                        prealertDataProvider.Consignee = consignee.EnglishName;
-                    }
-                }
-                #endregion
+                
 
                 #region DeliveryDetails                
                 ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(tenant);
