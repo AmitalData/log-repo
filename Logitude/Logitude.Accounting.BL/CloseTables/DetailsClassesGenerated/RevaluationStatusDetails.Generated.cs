@@ -20,17 +20,37 @@ namespace Logitude.Accounting.BL
    {
        public List<RevaluationStatusDetails> GetAll()
        {
-		    var all = new List<RevaluationStatusDetails>(); 
+		    var all = new List<RevaluationStatusDetails>();  
+            all.Add(new RevaluationStatusDetails()
+            {    
+                Code = "1", 
+                Name = "In Progress", 
+                LocalName = "בתהליך", 
+                SearchFields = "1,In Progress,בתהליך", 
+			});
+			 
+            all.Add(new RevaluationStatusDetails()
+            {    
+                Code = "2", 
+                Name = "Done", 
+                LocalName = "הסתיים", 
+                SearchFields = "2,Done,הסתיים", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(RevaluationStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(RevaluationStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",",rec.LocalName,",");
         }
    }
 }

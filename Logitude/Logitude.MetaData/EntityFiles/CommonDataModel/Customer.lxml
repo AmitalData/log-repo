@@ -16993,6 +16993,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AccountingVATSplit&quot;"
     ListPropertyPath="&quot;AccountingVATSplit&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -18817,6 +18818,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customer.Features.CreateActiveCustomer&quot;"
       FeatureDefaultText="&quot;Allow creating active customers&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EDITCREDITAMOUNT&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customer.Features.EditCreditAmount&quot;"
+      FeatureDefaultText="&quot;Edit Credit Amount&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -13,6 +13,7 @@ import { BIReportList } from '../../../../Infrastructure/EntityLists/BIReportLis
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWObjectTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/DWObjectTableExtendedListService';
+import { BIReportFolderExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportFolderExtendedListService';
 
 @Component({
     
@@ -29,6 +30,7 @@ export class NewBIReport extends BaseComponent {
     public BIReportExtendedPMService: BIReportExtendedPMService;
     public BIReportExtendedListService: BIReportExtendedListService;
     public DWObjectTableExtendedListService: DWObjectTableExtendedListService;
+    private folderListService: BIReportFolderExtendedListService;
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     public IsCopy: boolean = false;
@@ -39,7 +41,9 @@ export class NewBIReport extends BaseComponent {
     public HasChargesDWHFeature: boolean = false;
     public CopyFromTitle: string;
     public FactTables: string[] = [];
+    public BIReportFolders: string[] = [];
     public SelectdFactTableName: string;
+    public SelectdBIReportFolder: string;
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() TenantFieldChangeEvent = new EventEmitter();
@@ -51,6 +55,7 @@ export class NewBIReport extends BaseComponent {
         this.BIReportExtendedPMService = new BIReportExtendedPMService();
         this.BIReportExtendedListService = new BIReportExtendedListService();
         this.DWObjectTableExtendedListService = new DWObjectTableExtendedListService();
+        this.folderListService = new BIReportFolderExtendedListService();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.CreateDate = todayDate;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -59,6 +64,7 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.TypeCode = "EXL";
         this.FillFactTableNamesList();
+        this.FillBIReportFolderNamesList();
         var DefineChargesDWHFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CWH" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (DefineChargesDWHFeatureToggle) { this.HasChargesDWHFeature = true; }
         else { this.FactTableSelectionChanged("Shipments"); }
@@ -136,10 +142,6 @@ export class NewBIReport extends BaseComponent {
         this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
 
         switch (selectControl) {
-            case "":
-                this.FactTableName = "";
-                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
-                break;
             case "Shipments":
             case "Fact_Shipments":
                 this.FactTableName = "Fact_Shipments";
@@ -151,6 +153,31 @@ export class NewBIReport extends BaseComponent {
                 this.FactTableName = "Fact_Charges";
                 this.SelectdFactTableName = "Shipment Charges";
                 break;
+            default:
+                this.FactTableName = "";
+                this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
+                break;
+        }
+    }
+
+    FillBIReportFolderNamesList() {
+        this.folderListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.BIReportFolders = myResponse.Result;
+            }
+        });
+    }
+
+    BIReportFolderSelectionChanged(selectControl: any) {
+        if (selectControl) {
+            this.SelectdBIReportFolder = selectControl;
+            this.BIReportFolderId = selectControl.Id;
+            this.UIProperties.SetRequired("BIReportFolderId", this.ObjectTableName, false);
+        }
+        else {
+            this.SelectdBIReportFolder = "";
+            this.BIReportFolderId = "";
+            this.UIProperties.SetRequired("BIReportFolderId", this.ObjectTableName, true);
         }
     }
 

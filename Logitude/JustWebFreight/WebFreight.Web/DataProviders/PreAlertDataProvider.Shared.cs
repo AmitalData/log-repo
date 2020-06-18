@@ -241,6 +241,12 @@ namespace WebFreight.Web.DataProviders
         public string Salesman { get; set; }
         public string SpecialServicesType { get; set; }
         public string ShipmentSubTypeName { get; set; }
+
+        public string ConsigneeContactName { get; set; }
+        public string ConsigneeContactPhone { get; set; }
+
+        public string ConsigneeAddress { get; set; }
+
     }
 
     public class Packages
