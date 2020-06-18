@@ -392,6 +392,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MoveType = shipment.MoveTypeName;
                     invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
                     invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
+                    invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
 
                     User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
                     if (salesman != null)
