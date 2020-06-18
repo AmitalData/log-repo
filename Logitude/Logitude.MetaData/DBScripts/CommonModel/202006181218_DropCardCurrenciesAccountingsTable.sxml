@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Pre="false">
+  <Sql Version="1">
+    <![CDATA[
+
+     if exists (SELECT * FROM sys.tables WHERE name='CardCurrenciesAccountings')
+     begin
+        drop table CardCurrenciesAccountings;
+     end            
+     
+    ]]>
+  </Sql>
+</Script>
