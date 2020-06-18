@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class QueueMessageMoreDetailsUpdateClass
    {  		
-		public const string HashString = "fcaafd59dfcee162ebb10448a90769a9";
+		public const string HashString = "49c7364efbc2f890502fe62462368b07";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Queue Message More Details",
-			      				    Code =  "48ff",
+			      				    Code =  "3bc7",
 			      				    Name =  "QueueMessageMoreDetails",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
