@@ -63,10 +63,10 @@ export class RootComponent implements AfterViewInit {
   isDSV: boolean = false;
   RunComponent() {
       var url = window.location.href;
-      if (url.indexOf("staging"))
+      if (url.indexOf("staging") > -1)
           SessionLocator.WorkerRoleName = "staging";
 
-      if (url.indexOf("localhost"))
+      if (url.indexOf("localhost") > -1)
           SessionLocator.WorkerRoleName = "development";
 
 
