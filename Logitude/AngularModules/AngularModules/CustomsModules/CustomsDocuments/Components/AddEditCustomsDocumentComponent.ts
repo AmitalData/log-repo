@@ -47,6 +47,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     }
     set DocumentTypeCode(value: string) {
+        debugger;
         if (value != this.documentTypeCode) {
             this.documentTypeCode = value;
             //if (value != null) {
@@ -1081,6 +1082,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     ClearAllMetaDataValues() {
         this.previousValueList = [];
+        if(this.customDocumentMetaDataValueList! = null)
         this.customDocumentMetaDataValueList.forEach((value) => {
             this.previousValueList.push(value);
         });
