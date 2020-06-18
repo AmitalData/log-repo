@@ -31,6 +31,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AttachmentType> AttachmentTypes { get; }
 		 IDbSet<Authority> Authorities { get; }
 		 IDbSet<AuthorizedSignerPermit> AuthorizedSignerPermits { get; }
+		 IDbSet<AutonomyRegionType> AutonomyRegionTypes { get; }
 		 IDbSet<AutonomyType> AutonomyTypes { get; }
 		 IDbSet<Bank> Banks { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
@@ -187,6 +188,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
 		 IDbSet<ExceptionReason> ExceptionReasons { get; }
+		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }

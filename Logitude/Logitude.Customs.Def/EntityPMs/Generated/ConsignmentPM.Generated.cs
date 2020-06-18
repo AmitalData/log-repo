@@ -713,48 +713,94 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string recieverWareHouseCode ;
+	  private string exportRecieverWareHouseCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string RecieverWareHouseCode  
+       public string ExportRecieverWareHouseCode  
 	   {
 	    
 	     get
 		{
-		   return recieverWareHouseCode;
+		   return exportRecieverWareHouseCode;
 		 }
 		 set
 		 {
-		   if(recieverWareHouseCode != value)
+		   if(exportRecieverWareHouseCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseCode",OldValue=recieverWareHouseCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportRecieverWareHouseCode",OldValue=exportRecieverWareHouseCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   recieverWareHouseCode=value;
+		   exportRecieverWareHouseCode=value;
 		   }
 			
 		 }
 	   }
-	  private string recieverWareHouseName ;
+	  private string exportRecieverWareHouseName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string RecieverWareHouseName  
+       public string ExportRecieverWareHouseName  
 	   {
 	    
 	     get
 		{
-		   return recieverWareHouseName;
+		   return exportRecieverWareHouseName;
 		 }
 		 set
 		 {
-		   if(recieverWareHouseName != value)
+		   if(exportRecieverWareHouseName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseName",OldValue=recieverWareHouseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportRecieverWareHouseName",OldValue=exportRecieverWareHouseName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   recieverWareHouseName=value;
+		   exportRecieverWareHouseName=value;
+		   }
+			
+		 }
+	   }
+	  private string exportUnloadingPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportUnloadingPortCode  
+	   {
+	    
+	     get
+		{
+		   return exportUnloadingPortCode;
+		 }
+		 set
+		 {
+		   if(exportUnloadingPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportUnloadingPortCode",OldValue=exportUnloadingPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportUnloadingPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string exportLoadingPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportLoadingPortCode  
+	   {
+	    
+	     get
+		{
+		   return exportLoadingPortCode;
+		 }
+		 set
+		 {
+		   if(exportLoadingPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportLoadingPortCode",OldValue=exportLoadingPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportLoadingPortCode=value;
 		   }
 			
 		 }

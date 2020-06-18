@@ -51,4 +51,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsExport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

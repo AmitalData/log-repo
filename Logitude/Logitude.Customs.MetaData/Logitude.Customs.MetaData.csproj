@@ -149,6 +149,7 @@
     <None Include="DBTables\AttachmentType.dxml" />
     <None Include="DBTables\Authority.dxml" />
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
+    <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
@@ -299,6 +300,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
@@ -451,6 +453,8 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\ExporterRoleType.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />

@@ -4871,6 +4871,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportAutonomyRegionTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportAutonomyRegionTypeCode  
+	   {
+	    
+	     get
+		{
+		   return exportAutonomyRegionTypeCode;
+		 }
+		 set
+		 {
+		   if(exportAutonomyRegionTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportAutonomyRegionTypeCode",OldValue=exportAutonomyRegionTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportAutonomyRegionTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

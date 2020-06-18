@@ -96,6 +96,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AuthorizedSignerPermitMap());
 	
+            modelBuilder.Configurations.Add(new AutonomyRegionTypeMap());
+	
             modelBuilder.Configurations.Add(new AutonomyTypeMap());
 	
             modelBuilder.Configurations.Add(new BankMap());
@@ -407,6 +409,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
             modelBuilder.Configurations.Add(new ExceptionReasonMap());
+	
+            modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
@@ -1287,6 +1291,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AuthorizedSignerPermit> AuthorizedSignerPermits 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AutonomyRegionType> AutonomyRegionTypes 
 	 {
 	      get; set;
 	 
@@ -2223,6 +2233,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExceptionReason> ExceptionReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExporterRoleType> ExporterRoleTypes 
 	 {
 	      get; set;
 	 

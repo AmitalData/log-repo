@@ -181,6 +181,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsExport  
+	   {
+	    
+	     get
+		{
+		   return isExport;
+		 }
+		 set
+		 {
+		   if(isExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExport",OldValue=isExport,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

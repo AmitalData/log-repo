@@ -137,7 +137,7 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
                         this.ClaimReasonCode = this.originalSupplierInvoiceItem.ClaimReasonCode;
                         this.TransactionNatureCode = this.originalSupplierInvoiceItem.TransactionNatureCode;
-                        this.ClassificationTypeCode = this.originalSupplierInvoiceItem.ClassificationTypeCode;
+                        this.ClassificationTypeCode = this.originalSupplierInvoiceItem.ClassificationTypeCode ? this.originalSupplierInvoiceItem.ClassificationTypeCode:"HS";
  
                         if (args.SupplierInvoiceItem.SupplierInvoiceItemsPrices != null && args.SupplierInvoiceItem.SupplierInvoiceItemsPrices.length > 0) {
                             this.originalSupplierInvoiceItemsPrice = args.SupplierInvoiceItem.SupplierInvoiceItemsPrices[0];

@@ -146,7 +146,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Direction, 
 	         AgentRoleCode, 
 	         ExportFile, 
-	         DestinationCountryCode,
+	         DestinationCountryCode, 
+	         ExportAutonomyRegionTypeCode,
 	      }
 
 
@@ -351,7 +352,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Direction, 
 	         AgentRoleCode, 
 	         ExportFile, 
-	         DestinationCountryCode,
+	         DestinationCountryCode, 
+	         ExportAutonomyRegionTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -978,6 +980,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
             {
 				entityPOCO.DestinationCountryCode = entityPM.DestinationCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+				entityPOCO.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1611,6 +1618,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+					entityPM.ExportAutonomyRegionTypeCode = entityPOCO.ExportAutonomyRegionTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2235,6 +2247,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
             {
                 oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportAutonomyRegionTypeCode))
+            {
+                oldEntityPM.ExportAutonomyRegionTypeCode = entityPM.ExportAutonomyRegionTypeCode;
             }
 			
 		}

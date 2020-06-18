@@ -859,6 +859,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportAutonomyRegionTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1032,6 +1039,11 @@
   <Relation
     ForeignKeyColumn="DestinationCountryCode"
     ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportAutonomyRegionTypeCode"
+    ReferencedTable="AutonomyRegionTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

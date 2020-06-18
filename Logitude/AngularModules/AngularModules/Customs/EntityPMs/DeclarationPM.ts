@@ -1239,6 +1239,11 @@ export class DeclarationPM {
     public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
        
 	 
+    private exportAutonomyRegionTypeCode: string;
+    public get ExportAutonomyRegionTypeCode() { return this.exportAutonomyRegionTypeCode; }
+    public set ExportAutonomyRegionTypeCode(newValue: string) { if (this.exportAutonomyRegionTypeCode != newValue) { this.exportAutonomyRegionTypeCode = newValue; this.MarkAsDirty("ExportAutonomyRegionTypeCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
