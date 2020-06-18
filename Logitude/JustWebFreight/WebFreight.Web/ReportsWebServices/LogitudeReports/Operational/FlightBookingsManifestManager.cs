@@ -138,7 +138,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.MoveType = shipmentPackage.MoveTypeName;
                     myDataRecord.CustomAgentImportId = shipmentPackage.CustomAgentImportId;
                     myDataRecord.CustomAgentImportName = shipmentPackage.CustomAgentImportName;
+                    myDataRecord.PackageReference1 = shipmentPackage.ShipmentPackageReference1;
+                    myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
+                    myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+
+                    if(shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
+                        && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
+                        && shipmentPackage.PackageHeight != null && shipmentPackage.PackageHeight != 0)
+                    {
+                        myDataRecord.Dimensions = shipmentPackage.PackageLength + "x" + shipmentPackage.PackageWidth + "x" + shipmentPackage.PackageHeight;
+                    }
 
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPackage, myDataRecord);
 
@@ -313,6 +323,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      ShipmentPackageReference2 = package.Reference2,
                      ShipmentPackageReference3 = package.Reference3,
                      ShipmentPackageReference4 = package.Reference4,
+                     PackageWidth = package.Width,
+                     PackageLength = package.Length,
+                     PackageHeight = package.Height,
                  });
 
             return dataList;
