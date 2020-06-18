@@ -92,12 +92,11 @@
     <None Include="Reports\DBMigrationsPerformance.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GeneratedScript\SystemLogsScript.sql" />
-    <Content Include="GeneratedScript\MainScript.sql" />
-    <Content Include="GeneratedScript\GlobalScript.sql" />
     <Content Include="Settings\VersionInfo.xml" />
-    <Content Include="Warnings\MissingIndexesWarnings.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GeneratedScript\" />
+    <Folder Include="Warnings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
