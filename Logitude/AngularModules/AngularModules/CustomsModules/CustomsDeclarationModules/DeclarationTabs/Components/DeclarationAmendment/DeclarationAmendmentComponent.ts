@@ -119,6 +119,8 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
  
+        this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList == false);
+        this.LoadDeclarationAmendmentsList();
 
 
         this.IsLoaded = true;
