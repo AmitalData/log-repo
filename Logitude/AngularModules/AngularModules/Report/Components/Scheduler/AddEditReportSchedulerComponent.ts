@@ -97,6 +97,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
     }
 
+    SavedRecepients: boolean = false;
     SelectionChanged() {
         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
         if (myLocation != null) {
@@ -134,6 +135,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                             .then(cmpRef => {
                                 this.PageChild_OPEMA = cmpRef.instance;
                                 this.SetRecepientsDetails(false);
+                                this.SavedRecepients = true;
                                 this.CurrentSession.StopBusyIndicator();
                             });
                     }
@@ -153,12 +155,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetRecepientsDetails(isReloaded) {
-        this.PageChild_PRREP.PrepareContactList();
+        if (this.PageChild_PRREP.IsPartnersChanged("3"))
+            this.PageChild_OPEMA.CleanRecepientsLists();
+        else
+            this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
-        windowArgs.ToEmail = recepients.To;
-        windowArgs.Cc = recepients.Cc;
-        windowArgs.Bcc = recepients.Bcc;
+        windowArgs.ToEmail = this.SavedRecepients ? "" : recepients.To;
+        windowArgs.Cc = this.SavedRecepients ? "" : recepients.Cc;
+        windowArgs.Bcc = this.SavedRecepients ? "" : recepients.Bcc;
         windowArgs.PartnersObslist = this.PageChild_PRREP.PartnersObslist;
         windowArgs.EntityId = this.ReportList.Id;
         windowArgs.OnCloseSendToContactsEvent = false;
@@ -225,6 +230,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
         else if (this.SelectedTabLocation == 2) {
             this.SetSelectedItem("PRREP");
+            this.PageChild_PRREP.IsPartnersChanged("2");
         }
         this.SelectedTabLocation -= 1;
     }
