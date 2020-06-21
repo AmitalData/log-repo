@@ -880,8 +880,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     MustIgnoreItems: any[] = [];
     onDataLoaded() {
 
-        this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
-
+        //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+        this.MarkIsChecked.emit({SelectedLines:this.SelectedLines});
     }
     DataSource = {
         pageSize: 30,
@@ -981,7 +981,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     ReloadScreen() {
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         //this.SelectedLines = [];
-        this.SelectedLines.Clear();
+        // this.SelectedLines.Clear();
         this.CalculateTotals();
     }
     //#endregion
