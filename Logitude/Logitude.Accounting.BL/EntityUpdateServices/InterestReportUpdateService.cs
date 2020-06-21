@@ -134,7 +134,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.OpenBalance != entityPOCO.OpenBalance)
                 {
                     string notes = TranslateTextsClass.Translate("InterestReport.F.OpenBalance", entityPOCO.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant, showLocals) + entityPOCO.OpenBalance  + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant, showLocals) + entityPM.OpenBalance ;
-                    CreateEvent("UPEV", entityPM);
+                    CreateEvent("UPEV", entityPM, notes);
                 }
             }
             base.Trace(entityPM, entityPOCO, changesXml);

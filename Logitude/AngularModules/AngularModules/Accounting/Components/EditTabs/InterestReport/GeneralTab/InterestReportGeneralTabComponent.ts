@@ -83,7 +83,6 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
      public DataSource = {
         pageSize: 50,
         rowCount: null,
-        //sortingCol: "CreateDateTime",
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -102,7 +101,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         logWindow.DataContext = this.EntityPM.OpenBalance ;
         logWindow.Show(myPath);
         logWindow.WindowClosed.subscribe(s => {
-            if (s) {
+            if (s!=null) {
                this.EntityPM.OpenBalance = s;
             }
         })
@@ -246,33 +245,7 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
             IsCustomTemplate: true
         });
-        //this.columns.push({
-        //    FieldName: 'StandardInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"), // 'StandardInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
-        //this.columns.push({
-        //    FieldName: 'ExceptionalInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"), // 'ExceptionalInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
-        //this.columns.push({
-        //    FieldName: 'CreditInterestPercentage',
-        //    DataTypeCode: 'Number',
-        //    Display: TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"), // 'CreditInterestPercentage',
-        //    Styles: { width: '100px' },
-        //    HtmlListComponentName: 'InterestReportLinesByDateListTemplate',
-        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportLinesByDateListTemplate',
-        //    IsCustomTemplate: true
-        //});
+
         this.columns.push({
             FieldName: 'ShowDetails',
             DataTypeCode: 'Number', 
