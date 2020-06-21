@@ -9,7 +9,6 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
-import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
 import { QuoteChargePM } from '../../../Quote/EntityPMs/QuoteChargePM';
 import { QuoteChargeItem } from '../../../QuoteModules/QuoteCharges/Components/LCLChargesComponent';
 import { FCLQuoteChargeItem } from '../../../QuoteModules/QuoteCharges/Components/FCLChargesComponent';
@@ -23,10 +22,9 @@ import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Compo
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
-import { QuoteTool } from '../../../Quote/Tools';
 import { TariffProductListService } from '../../Services/StandardLists/TariffProductListService';
 import { TariffProductList } from '../../EntityLists/TariffProductList';
-
+import { TariffSettingPM } from '../../EntityPMs/TariffSettingPM';
 
 @Component({
 
@@ -62,9 +60,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.myDomainService = new TariffDomainService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.SetUIProperties();
-        this.Date = DateTool.GetCurrentDateAsUtc();
-
-        this.CalculateDefaultCurrency();
+        this.Date = DateTool.GetCurrentDateAsUtc();        
         this.GetTariffProducts();
 
         this.dimenstionShipment = new ShipmentPM();
@@ -77,8 +73,15 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         var tariffDomainService = new TariffDomainService();
         tariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.ContainerDefaults = myResponse.Result.ContainerDefaults;
+                var tariffSetting: TariffSettingPM = myResponse.Result;
+
+                if (tariffSetting != null) {
+                    this.ContainerDefaults = tariffSetting.ContainerDefaults;
+                    this.CurrencyId = tariffSetting.DefaultCurrencyId;                    
+                }
+
                 this.LoadContainers();
+                this.CalculateDefaultCurrency();
             }
         });
     }
@@ -130,20 +133,19 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     private CalculateDefaultCurrency() {
-        var CurrencyList: CurrencyList[] = [];
-        var myService: CurrencyListService = new CurrencyListService();
-        myService.getAllFromCache().subscribe((myResult: ServiceResponse) => {
-            if (myResult) {
-                CurrencyList = myResult.Result;
-                var usdCurrency = CurrencyList.filter(c => c.Code == "USD" && c.Tenant == SessionLocator.Tenant)[0];
-                if (usdCurrency != null) {
-                    this.CurrencyId = usdCurrency.Id;
+        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+            var CurrencyList: CurrencyList[] = [];
+            var myService: CurrencyListService = new CurrencyListService();
+            myService.getAllFromCache().subscribe((myResult: ServiceResponse) => {
+                if (myResult) {
+                    CurrencyList = myResult.Result;
+                    var usdCurrency = CurrencyList.filter(c => c.Code == "USD" && c.Tenant == SessionLocator.Tenant)[0];
+                    if (usdCurrency != null) {
+                        this.CurrencyId = usdCurrency.Id;
+                    }
                 }
-                else {
-                    this.CurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-                }
-            }
-        });
+            });
+        }
     }
     SetPortsDependencyFilterValue() {
         if (this.TariffType == "OLC" || this.TariffType == "OFC") {
