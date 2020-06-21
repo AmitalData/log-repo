@@ -163,5 +163,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public DateTime? MainCarriageDateFilter { get; set; }
+        public double? PackageWidth { get; set; }
+        public double? PackageLength { get; set; }
+        public double? PackageHeight { get; set; }
     }
 }

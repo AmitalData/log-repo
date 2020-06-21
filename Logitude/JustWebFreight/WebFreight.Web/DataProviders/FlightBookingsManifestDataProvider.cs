@@ -55,7 +55,11 @@ namespace WebFreight.Web.DataProviders
         public string MoveType { get; set; }
         public string CustomAgentImportName { get; set; }
         public string CustomAgentImportId { get; set; }
+        public string PackageReference1 { get; set; }
+        public string PackageReference2 { get; set; }
+        public string PackageReference3 { get; set; }
         public string PackageReference4 { get; set; }
+        public string Dimensions { get; set; }
 
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
