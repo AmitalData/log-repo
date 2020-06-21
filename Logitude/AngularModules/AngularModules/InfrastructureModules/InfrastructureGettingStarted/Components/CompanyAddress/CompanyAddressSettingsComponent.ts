@@ -171,6 +171,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("Signature", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("PhoneNumber", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("FaxNumber", this.AddressObjectTableName, false);
+        this.UIProperties.SetEnabled("StateId", this.AddressObjectTableName, false);       
     }
 
     // Cach Lists 
