@@ -1058,6 +1058,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable BookingAnswerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BookingAnswer" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> BookingAnswerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BookingAnswer").ToList();
+		       
+	      
+
+	         Screen BookingAnswerBookingAnswerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BookingAnswer.HeaderScreen", Name = "BookingAnswerHeaderScreen", ObjectTableId = BookingAnswerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    BookingAnswerObjectTable.HeaderScreenId = BookingAnswerBookingAnswerHeaderScreenScreen0.Id;
+		    BookingAnswerObjectTable.HeaderScreenCode = BookingAnswerBookingAnswerHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

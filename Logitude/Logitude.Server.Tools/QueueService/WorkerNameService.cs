@@ -43,7 +43,7 @@ namespace Logitude.Server.Tools.QueueService
 
         private static int GetWatingStatusByWorkerRoleName(int tenant, string workerName)
         {
-            if (workerName.ToLower() == "production")
+            if (workerName.ToLower() == "production" || workerName.ToLower() == "development")
                 return 0;
 
             if (workerName.ToLower() == "staging")

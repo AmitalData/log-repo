@@ -98,6 +98,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string PaymentChequesLogoId  { get; set; }
        [DataMember]
        public int? NumberOfAgingMonths  { get; set; }
+       [DataMember]
+       public bool AllowMultiRatesInInvoiceLines  { get; set; }
    }
 
 }

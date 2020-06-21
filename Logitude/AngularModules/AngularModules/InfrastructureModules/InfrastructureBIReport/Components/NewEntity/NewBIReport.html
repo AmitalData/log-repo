@@ -101,42 +101,12 @@
                         <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'BIReportFolderId'"
-                                [SelectedValue]="BIReportFolderId"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
-                        </LogLov>
+                        <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)" [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders" [Binding]="'Name'"></ComboBox>
                     </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
-
-                <!-- DWQueryId -->
-                <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'DWQueryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td *ngIf="IsNewQuery" style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Build Query</button>
-                    </td>
-                    <td *ngIf="!IsNewQuery" s style="width: 57px;">
-                        <button class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <div></div>
-        </td>
-    </tr>-->
 
                 <tr>
                     <td colspan="3">
@@ -182,12 +152,7 @@
                         <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'BIReportFolderId'"
-                                [SelectedValue]="BIReportFolderId"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
-                        </LogLov>
+                        <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)" [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders" [Binding]="'Name'"></ComboBox>
                     </td>
                     <td colspan="2">
                         <div></div>
@@ -208,25 +173,6 @@
                     </td>
                 </tr>
 
-                <!-- Tenant -->
-                <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
-        </td>
-        <td>
-            <LogLov [ObjectFieldName]="'Tenant'"
-                    [SelectedValue]="BIReportTenant"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'Tenant'"
-                    [SelectedValuePath]="BIReportTenant"
-                    [HideColumns]="true">
-            </LogLov>
-        </td>
-        <td>
-            <div></div>
-        </td>
-    </tr>-->
                 <!-- Grid -->
                 <tr>
                     <td colspan="4">

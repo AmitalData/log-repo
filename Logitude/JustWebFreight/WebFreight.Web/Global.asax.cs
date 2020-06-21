@@ -527,6 +527,23 @@ namespace WebFreight.Web
             //     HttpContext.Current.Response.End();
             //  }
 
+
+            if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.ToLower().Contains("/wcfapi/"))
+            {
+                if (!HttpContext.Current.Items.Contains("workerrolename"))
+                    HttpContext.Current.Items.Add("workerrolename", "production");
+            }
+            else
+            {
+                if (HttpContext.Current.Request.Headers["workerrolename"] != null)
+                {
+                    if (!HttpContext.Current.Items.Contains("workerrolename"))
+                        HttpContext.Current.Items.Add("workerrolename", HttpContext.Current.Request.Headers["workerrolename"]);
+                    else
+                        HttpContext.Current.Items["workerrolename"] = HttpContext.Current.Request.Headers["workerrolename"];
+                }
+
+            }
         }
 
 
@@ -557,6 +574,7 @@ namespace WebFreight.Web
                 if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.Contains("/WcfApi/"))
                 {
                     HttpContext.Current.User = null;
+                    
                 }
               
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -609,8 +627,7 @@ namespace WebFreight.Web
                         else
                             HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                         
-                        if(HttpContext.Current.Request.Headers["workerrolename"] != null)
-                            HttpContext.Current.Items.Add("workerrolename", HttpContext.Current.Request.Headers["workerrolename"]);
+                    
                     }
                     else
                     {
