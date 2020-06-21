@@ -95,21 +95,16 @@ namespace Logitude.DeploymentAgentService
 
                     if (deploySuccess)
                     {
-                        if (RunDBMigrations)
-                        {
-                            bool runDBMigrationsTool = RunDBMigrationsTool();
-                            if (runDBMigrationsTool)
-                            {
-                                UpdateCurrentVersion();
-                                AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
-                                UpdateDeploymentStatus(CompletedDeploymentStatusCode);
-                            }
-                        }
-                        else
+                        bool runTasksAfterDeploymentResult = RunTasksAfterDeployment();
+                        if (runTasksAfterDeploymentResult)
                         {
                             UpdateCurrentVersion();
                             AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
                             UpdateDeploymentStatus(CompletedDeploymentStatusCode);
+                        }
+                        else
+                        {
+                            UpdateDeploymentStatus(ErrorDeploymentStatusCode);
                         }
                     }
                     else
@@ -177,6 +172,18 @@ namespace Logitude.DeploymentAgentService
             }
 
             return deploySuccess;
+        }
+
+        protected bool RunTasksAfterDeployment()
+        {
+            bool runDBMigrationsToolResult = true;
+
+            if (RunDBMigrations)
+            {
+                runDBMigrationsToolResult = RunDBMigrationsTool();
+            }
+            
+            return runDBMigrationsToolResult;
         }
 
         protected void DisableAgentServiceTimer()
@@ -546,7 +553,7 @@ namespace Logitude.DeploymentAgentService
                     AddAgentLog("Database Migrations Tool Returned Output Error:\n" + processRunResult.ProcessResult.ErrorDataReceived);
                 }
 
-                result = true;
+                result = (processRunResult.ProcessResult.ExitCode == 0);
             }
             else
             {
