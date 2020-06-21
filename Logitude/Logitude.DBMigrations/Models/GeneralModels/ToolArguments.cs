@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.DBMigrations.Models
+{
+    public static class ToolArguments
+    {
+        public const string ROOT = "-root";
+        public const string EXE = "-exe";
+        public const string DEPLOYMENT = "-deployment";
+        public const string BASIC = "-basic";
+        public const string IGNOREHASH = "-ignorehash";
+        public const string IGNORESETTINGSCHECK = "-ignoresettingscheck";
+    }
+}
