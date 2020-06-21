@@ -562,6 +562,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
+                accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
+                accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
 
                 if (arInvoice.BranchId != null)
                 {
@@ -661,6 +663,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apInvoice.InternalNotes;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
+                accountingLedgerRecord.MasterNumber = apInvoice.MasterNumber;
+                accountingLedgerRecord.HouseNumber = apInvoice.HouseNumber;
 
                 if (apInvoice.BranchId != null)
                 {
@@ -988,6 +992,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.BillToVendor = ledger.BillToVendor;
                         currencyRecord.BranchId = ledger.BranchId;
                         currencyRecord.BranchName = ledger.BranchName;
+                        currencyRecord.MasterNumber = ledger.MasterNumber;
+                        currencyRecord.HouseNumber = ledger.HouseNumber;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }
