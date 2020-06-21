@@ -54,11 +54,12 @@ namespace Logitude.Accounting.BL.Utils
                 ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
                 aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
             }
-                
-            
+            var uniqueCheques = aRPaymentCheques.Distinct();
+
+
             if (aRPaymentCheques != null)
             {
-                foreach (ARPaymentChequeList chq in aRPaymentCheques)
+                foreach (ARPaymentChequeList chq in uniqueCheques)
                 {
                     if (chq != null)
                     {
