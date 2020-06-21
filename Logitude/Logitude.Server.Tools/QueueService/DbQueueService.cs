@@ -888,7 +888,10 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessageandChangeStatusTozero", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName(
+                                //"Queue_DelayMessageandChangeStatusTozero"
+                                "Q_DelayMsgandChangeStatusTo0"
+                                , LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
