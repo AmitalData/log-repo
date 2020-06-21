@@ -12,18 +12,18 @@
 
 
             <td style="width: 150px;">
-                <LogLabel [ObjectFieldName]="'LoadingPortCode'" [ObjectTableName]="ObjectTableName"
+                <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'" [ObjectTableName]="ObjectTableName"
                           [DataContext]="DataContext"></LogLabel>
             </td>
 
             <td style="width: 160px;">
                 <!--(SelectedItemChanged)="CustomsShip = $event"-->
-                <LogLov [ObjectFieldName]="'LoadingPortCode'"
+                <LogLov [ObjectFieldName]="'ExportUnloadingPortCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Customs.InternationalSite'"
                         [DisplayMemberPath]="'LocalName'"
-                        [SelectedValue]="LoadingPortCode"
+                        [SelectedValue]="ExportUnloadingPortCode"
                         [HideColumns]="true">
                 </LogLov>
             </td>
@@ -38,17 +38,17 @@
 
 
             <td style="width: 150px;">
-                <LogLabel [ObjectFieldName]="'UnloadPortCode'" [ObjectTableName]="ObjectTableName"
+                <LogLabel [ObjectFieldName]="'ExportLoadingPortCode'" [ObjectTableName]="ObjectTableName"
                           [DataContext]="DataContext"></LogLabel>
             </td>
 
             <td style="width: 160px;">
-                <LogLov [ObjectFieldName]="'UnloadPortCode'"
+                <LogLov [ObjectFieldName]="'ExportLoadingPortCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Customs.UnloadingSiteType'"
                         [DisplayMemberPath]="'LocalName'"
-                        [SelectedValue]="UnloadPortCode"
+                        [SelectedValue]="ExportLoadingPortCode"
                         [HideColumns]="true">
                 </LogLov>
 
@@ -141,17 +141,17 @@
 
 
             <td style="width: 150px;">
-                <LogLabel [ObjectFieldName]="'RecieverWareHouseCode'" [ObjectTableName]="ObjectTableName"
+                <LogLabel [ObjectFieldName]="'ExportRecieverWareHouseCode'" [ObjectTableName]="ObjectTableName"
                           [DataContext]="DataContext"></LogLabel>
             </td>
 
             <td style="width: 160px;">
-                <LogLov [ObjectFieldName]="'RecieverWareHouseCode'"
+                <LogLov [ObjectFieldName]="'ExportRecieverWareHouseCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Customs.DeliverySiteType'"
                         [DisplayMemberPath]="'LocalName'"
-                        [SelectedValue]="RecieverWareHouseCode"
+                        [SelectedValue]="ExportRecieverWareHouseCode"
                         [HideColumns]="true">
                 </LogLov>
 

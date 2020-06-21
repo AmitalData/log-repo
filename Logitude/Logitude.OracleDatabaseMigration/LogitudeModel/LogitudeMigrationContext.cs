@@ -2045,6 +2045,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+ 
+
         public IDbSet<AutonomyType> AutonomyTypes
         {
             get;
