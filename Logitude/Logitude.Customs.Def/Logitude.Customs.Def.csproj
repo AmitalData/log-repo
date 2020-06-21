@@ -69,12 +69,14 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />

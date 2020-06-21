@@ -48,27 +48,27 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     //#region properties
 
 
-    public get LoadingPortCode() { return this.EntityPM.LoadingPortCode; }
-    public set LoadingPortCode(newValue: string) {
-        this.EntityPM.LoadingPortCode = newValue;
+    public get ExportLoadingPortCode() { return this.EntityPM.ExportLoadingPortCode; }
+    public set ExportLoadingPortCode(newValue: string) {
+        this.EntityPM.ExportLoadingPortCode = newValue;
         if (newValue) {
-            this.UIProperties.SetRequired("LoadingPortCode", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("LoadingPortCode", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("ExportLoadingPortCode", this.ObjectTableName, true);
         }
     }
 
 
 
-    public get UnloadPortCode() { return this.EntityPM.UnloadPortCode; }
-    public set UnloadPortCode(newValue: string) {
-        this.EntityPM.UnloadPortCode = newValue;
+    public get ExportUnloadingPortCode() { return this.EntityPM.ExportUnloadingPortCode; }
+    public set ExportUnloadingPortCode(newValue: string) {
+        this.EntityPM.ExportUnloadingPortCode = newValue;
         if (newValue) {
-            this.UIProperties.SetRequired("UnloadPortCode", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("UnloadPortCode", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("ExportUnloadingPortCode", this.ObjectTableName, true);
         }
     }
 
@@ -94,14 +94,14 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     }
 
     
-    public get RecieverWareHouseCode() { return this.EntityPM.RecieverWareHouseCode; }
-    public set RecieverWareHouseCode(newValue: string) {
-        this.EntityPM.RecieverWareHouseCode = newValue;
+    public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
+    public set ExportRecieverWareHouseCode(newValue: string) {
+        this.EntityPM.ExportRecieverWareHouseCode = newValue;
         if (newValue) {
-            this.UIProperties.SetRequired("RecieverWareHouseCode", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("RecieverWareHouseCode", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, true);
         }
     }
     
@@ -149,21 +149,21 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     }
 
     private ForceMust() {
-        this.LoadingPortCode = this.EntityPM.LoadingPortCode;
-        this.UnloadPortCode = this.EntityPM.UnloadPortCode;
+        this.ExportLoadingPortCode = this.EntityPM.ExportLoadingPortCode;
+        this.ExportUnloadingPortCode = this.EntityPM.ExportUnloadingPortCode;
         //this.FinalDestinationPortCode = this.EntityPM.FinalDestinationPortCode;
         this.StorageSiteCode = this.EntityPM.StorageSiteCode;
-        this.RecieverWareHouseCode = this.EntityPM.RecieverWareHouseCode;
+        this.ExportRecieverWareHouseCode = this.EntityPM.ExportRecieverWareHouseCode;
         this.IsDangerousGoods = this.EntityPM.IsDangerousGoods;
     }
 
     SetScreenFieldsEditability() {
-        this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("UnloadPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportLoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportUnloadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportRecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
 
 
@@ -224,18 +224,18 @@ export class ExportConsigmentContentComponent extends BaseComponent {
         //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
 
-        if (AppTool.IsNullOrEmpty(this.LoadingPortCode)) {
+        if (AppTool.IsNullOrEmpty(this.ExportLoadingPortCode)) {
            
             this.ValidationErrorsList.push("נמל טעינה שדה חובה");
         }
 
-        if (AppTool.IsNullOrEmpty(this.UnloadPortCode)) {
+        if (AppTool.IsNullOrEmpty(this.ExportUnloadingPortCode)) {
             this.ValidationErrorsList.push("נמל פריקה שדה חובה");
         }
         if (AppTool.IsNullOrEmpty(this.StorageSiteCode)) {
             this.ValidationErrorsList.push("אתר  מסירה שדה חובה");
         }
-        if (AppTool.IsNullOrEmpty(this.RecieverWareHouseCode)) {
+        if (AppTool.IsNullOrEmpty(this.ExportRecieverWareHouseCode)) {
             this.ValidationErrorsList.push("אתר  המכלה שדה חובה");
         }
 
