@@ -191,16 +191,20 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     FillAutomationEntityObjectField() {
         var translation: TextCodeTranslationPipe = new TextCodeTranslationPipe();
         var objectTableId = this.AddEditAutomationsViewModel.ObjectTableId;
+
         var objectTableName = this.AddEditAutomationsViewModel.IsMasterShipment ? "Master" : this.AddEditAutomationsViewModel.ObjectTableName;
+
+        var displayName = this.AddEditAutomationsViewModel.AutomationItemClass ? this.AddEditAutomationsViewModel.AutomationItemClass.DisplayName : objectTableName;
+
         this.AutomationEntityLists = [];
-        this.AutomationEntityLists.push(new AutomationEntityList(objectTableName, objectTableId, null));
+        this.AutomationEntityLists.push(new AutomationEntityList(objectTableName, objectTableId, null, displayName));
 
 
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == objectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == objectTableName)[0]))).forEach((objectField) => {
             var objectFieldName = objectField.FullNameTextCodeDefaultText;
             if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
                 objectFieldName = "Customer";
-            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode));
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
         });
 
         this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
@@ -632,13 +636,17 @@ class Operator {
 
 
 class AutomationEntityList {
+
+    DisplayName: string;
+
     Name: string;
     ObjectTableId: string;
     ObjectFieldCode: string;
-    constructor(name: string, objectTableId: string, objectFieldcode:string) {
+    constructor(name: string, objectTableId: string, objectFieldcode: string,displayName:string) {
         this.Name = name;
         this.ObjectTableId = objectTableId;
         this.ObjectFieldCode = objectFieldcode;
+        this.DisplayName = displayName;
 
     }
 

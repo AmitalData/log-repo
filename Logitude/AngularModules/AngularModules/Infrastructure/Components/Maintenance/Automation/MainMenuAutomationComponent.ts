@@ -50,6 +50,8 @@ export class MainMenuAutomationComponent implements OnInit {
 
     ItemClicked(item: AutomationItemClass) {
 
+        var windowArgs: any = {};
+        windowArgs.AutomationItemClass = item;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 980;
@@ -58,7 +60,7 @@ export class MainMenuAutomationComponent implements OnInit {
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = item;
         logWindow.Show('./Infrastructure/Components/Automation/AutomationsSettingsComponent');
-
+        logWindow.WindowArgs = windowArgs; 
         logWindow.WindowClosed.subscribe(($event: any) => {
           
 
