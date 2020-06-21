@@ -2002,10 +2002,10 @@ export class TransactionLineModel extends BaseComponent {
         if (v) {
 
             if(this.AmountToReconcile == null || this.AmountToReconcile == 0){
-                if(this.OpenAmount <= this.parent.EntityPM.AmountInPaymentCurrency)
+                if(this.OpenAmount <= this.parent.EntityPM.OpenAmount)
                     this.AmountToReconcile = this.OpenAmount;
-                else if(this.OpenAmount > this.parent.EntityPM.AmountInPaymentCurrency)
-                    this.AmountToReconcile = this.parent.EntityPM.AmountInPaymentCurrency;
+                else if(this.OpenAmount > this.parent.EntityPM.OpenAmount)
+                    this.AmountToReconcile = this.parent.EntityPM.OpenAmount;
             }
 
             this.parent.PushTransaction(this.ledgerTransaction);

@@ -2191,10 +2191,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool useLocalRecoMethod = _payment.GLAccountRecoMethodCode == "0";
             decimal amount2reconcile = 0;
 
-            if (useLocalRecoMethod)
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+            if (_payment.PaymentInvoices.Count > 0)
+            {
+
+                if (useLocalRecoMethod)
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+                else
+                    amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            }
             else
-                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            {
+                    amount2reconcile = (decimal)_payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);   // amount to reconcile = Local Amount
+            }
+
             return amount2reconcile;
         }
 
