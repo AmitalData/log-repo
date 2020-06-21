@@ -76,7 +76,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         double? invoiceAmount = (double)MethodHelper.Round(entityPM.AmountInInvoiceCurrency, 2);
 
-                        if (invoiceAmount == 0 || invoiceAmount == null)
+                        if (entityPM.AmountInInvoiceCurrency == null)
                         {
                             throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }
