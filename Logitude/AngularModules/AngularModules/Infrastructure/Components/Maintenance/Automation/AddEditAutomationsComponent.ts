@@ -154,7 +154,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsLoadEventFollowUp: boolean = false;
     IsLoadSLAHeaders: boolean = false;
     IsAutomationResultEmailAllActiveUsers: boolean = false;
-
+    AutomationItemClass: any;
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
         this.entityResourceService.getEntityResourceByTableName("Automation", 0).subscribe((response:any) => {
@@ -172,7 +172,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.entityArgs.EntityPM = this.CurrentEntityPM;
         this.entityArgs.ObjectTableName = "Automation";
         this.SLAHeaderLists = [];
-
+        this.AutomationItemClass = this.DataViewModel.AutomationItemClass;
         this.BuildQueuedTaskFilters();
 
         var myService = new EventTypeListService();
