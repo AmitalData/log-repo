@@ -1009,6 +1009,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(NbcDeclarationType, NbcDeclarationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(NbcDeclarationType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExporterRoleType = closedSystemTables.Where(d => d.id == "23783").FirstOrDefault();
+            ObjectTable ExporterRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExporterRoleType", 0, false);
+            InsertClosedTableRecord(ExporterRoleType, ExporterRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ExporterRoleType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AutonomyRegionType = closedSystemTables.Where(d => d.id == "1937").FirstOrDefault();
+            ObjectTable AutonomyRegionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AutonomyRegionType", 0, false);
+            InsertClosedTableRecord(AutonomyRegionType, AutonomyRegionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(AutonomyRegionType);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
