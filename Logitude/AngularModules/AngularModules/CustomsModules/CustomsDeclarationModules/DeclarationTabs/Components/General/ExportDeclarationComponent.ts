@@ -154,7 +154,7 @@ export class ExportDeclarationComponent extends BaseComponent {
             }
 
             this.PreceduralFilterItems = new ApiQueryFilters();
-            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, true, true, "NotEqual", false, false, false, "boolean");
+            this.PreceduralFilterItems.addAdditionalFilter("IsExport", true, true, true, "Equal", false, false, false, "boolean");
 
             //Disable fields
             if (this.IsDisplayOnly) {

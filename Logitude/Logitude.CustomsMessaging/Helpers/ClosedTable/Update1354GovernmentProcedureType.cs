@@ -41,6 +41,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyGovernmentProcedureType ?? new GovernmentProcedureType();
             curDbPM.IsImport = gov.IsImport;
+            curDbPM.IsExport = gov.IsExport;
 
         }
     }

@@ -42,8 +42,13 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
     public DeleteDocumentsDefinitionList: ObservableCollection; 
     public DocumentTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
+    public PreceduralFilterItems: ApiQueryFilters;
+
     constructor() {
         super();
+        this.PreceduralFilterItems = new ApiQueryFilters();
+        this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
+
         this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
         this.DocumentsDefinitionResultList = new ObservableCollection([]);
         this.DeleteDocumentsDefinitionList = new ObservableCollection([]);
