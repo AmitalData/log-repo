@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "bba711e0d86073699d895c63219b5c52";
+		public const string HashString = "b948de17cd08d5eb8257cd2650b9a422";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2505,7 +2505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn FilesInProcessQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 68 }, addedQueryColumns);
 
-             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsClosedForFollowUp", PredefinedValue = "0",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter FilesInProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsClosedForFollowUp", PredefinedValue = "1",PredefinedValue2 = null, QueryId = FilesInProcessQuery.Id,QueryCode = FilesInProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      

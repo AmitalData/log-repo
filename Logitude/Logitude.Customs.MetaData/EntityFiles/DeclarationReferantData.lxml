@@ -2959,10 +2959,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;FilesInProcess&quot;"
-        PredefinedValue="&quot;0&quot;"
+        PredefinedValue="&quot;1&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;Equal&quot;"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
