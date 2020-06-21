@@ -830,7 +830,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value =declarationPM.LoadingDateTime.Value };
             }
-            DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.AutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
+            DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.ExportAutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
             if (declarationPM.DestinationCountryCode != null)
             {

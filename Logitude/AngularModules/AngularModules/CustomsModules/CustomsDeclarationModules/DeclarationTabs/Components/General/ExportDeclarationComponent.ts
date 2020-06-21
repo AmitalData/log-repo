@@ -77,6 +77,11 @@ export class ExportDeclarationComponent extends BaseComponent {
         this.EntityPM.ProcedureCurrentCode = newValue;
     }
 
+    public get ExportAutonomyRegionTypeCode() { return this.EntityPM.ExportAutonomyRegionTypeCode; }
+    public set ExportAutonomyRegionTypeCode(newValue: string) {
+        this.EntityPM.ExportAutonomyRegionTypeCode = newValue;
+    }
+
     DestinationCountry: any;
     public get DestinationCountryCode() { return this.EntityPM.DestinationCountryCode; }
     public set DestinationCountryCode(newValue: string) {

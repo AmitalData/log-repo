@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AutonomyRegionTypeUpdateClass
    {  		
-		public const string HashString = "6309627dc48b61d59d569ac192369eb7";
+		public const string HashString = "b68f6904ec762fd2183d5edd8dc8f8f5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -84,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
 			
 	             				    ObjectTableName =  "Customs.AutonomyRegionType",
+			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.AutonomyRegionTypes",
 			      				    ObjectTableSingular =  "Customs.AutonomyRegionType",
 			      				    ObjectTablePlural =  "Customs.AutonomyRegionTypes",
@@ -98,13 +99,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
@@ -524,7 +525,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable AutonomyRegionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AutonomyRegionType" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature AutonomyRegionTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AutonomyRegionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutonomyRegionType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutonomyRegionTypeObjectTable);
+		   Feature AutonomyRegionTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AutonomyRegionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutonomyRegionType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutonomyRegionTypeObjectTable);
+		   Feature AutonomyRegionTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AutonomyRegionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutonomyRegionType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutonomyRegionTypeObjectTable);
+		   Feature AutonomyRegionTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AutonomyRegionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutonomyRegionType.Features.PackageFeature", NameTextCodeDefaultText = "AutonomyRegionType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutonomyRegionTypeObjectTable);    
 	    
 		}
 

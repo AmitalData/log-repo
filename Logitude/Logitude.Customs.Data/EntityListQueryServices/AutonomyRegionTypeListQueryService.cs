@@ -24,19 +24,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<AutonomyRegionTypeList> query = (from a in iQueryable
                                             select new AutonomyRegionTypeList()
 											{
-                     
-					                          SearchFields = a.SearchFields,
-					
-					                          Inactive = a.Inactive,
-					
-		                    	            });
+
+                                                Code = a.Code,
+                                                EnglishName = a.EnglishName,
+                                                LocalName = a.LocalName,
+                                                SearchFields = a.SearchFields,
+                                                Inactive = a.Inactive
+
+                                            });
             return query;
 		}
 
 		private IQueryable<AutonomyRegionType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AutonomyRegionType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 

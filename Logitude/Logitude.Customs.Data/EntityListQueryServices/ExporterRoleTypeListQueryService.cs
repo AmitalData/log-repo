@@ -28,6 +28,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          SearchFields = a.SearchFields,
 					
 					                          Inactive = a.Inactive,
+                                              Code= a.Code,
+                                              EnglishName= a.EnglishName,
+                                              LocalName = a.LocalName,
+                                              
 					
 		                    	            });
             return query;
@@ -35,8 +39,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<ExporterRoleType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ExporterRoleType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 
