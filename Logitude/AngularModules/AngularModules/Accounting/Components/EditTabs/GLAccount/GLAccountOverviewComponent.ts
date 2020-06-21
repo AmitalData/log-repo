@@ -192,6 +192,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     var IsAllCardHasCriedtLimitNull:boolean=true;
                     var IsAllCardHasOpenShipmentNull:boolean=true;
                     this.CreditLimitAmount=0;
+                    this.OpenShipments=0;
                     this.accountCardlist.forEach(s=>{
                         if(s.OpenShipments!=null){
                             this.OpenShipments+=s.OpenShipments;
