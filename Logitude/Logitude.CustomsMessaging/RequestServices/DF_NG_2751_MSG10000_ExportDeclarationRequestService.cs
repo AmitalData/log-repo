@@ -1971,12 +1971,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
                 {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>("ZWHUI"), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
                                                                                                    // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
                 };
                 declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
                 {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentLoadingLocationID>("ILOVL") //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
                 };
                 declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
@@ -2012,10 +2012,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 seqnum++;
                 registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.StorageSiteCode, "004", seqnum));
             }
-            if (!String.IsNullOrWhiteSpace(consignmentPM.ReceiverWarehouseCode))
+            if (!String.IsNullOrWhiteSpace(consignmentPM.ExportRecieverWareHouseCode))
             {
                 seqnum++;
-                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "006", seqnum));
+                registeredFacilitylist.Add(GetRegisteredFacility(consignmentPM.ExportRecieverWareHouseCode, "006", seqnum));
             }
             if (consignmentPM.ConsignmentInternalTransitions != null)
             {

@@ -97,12 +97,12 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
     public set ExportRecieverWareHouseCode(newValue: string) {
         this.EntityPM.ExportRecieverWareHouseCode = newValue;
-        if (newValue) {
-            this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, false);
-        }
-        else {
-            this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, true);
-        }
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("ExportRecieverWareHouseCode", this.ObjectTableName, true);
+        //}
     }
     
 
@@ -153,7 +153,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
         this.ExportUnloadingPortCode = this.EntityPM.ExportUnloadingPortCode;
         //this.FinalDestinationPortCode = this.EntityPM.FinalDestinationPortCode;
         this.StorageSiteCode = this.EntityPM.StorageSiteCode;
-        this.ExportRecieverWareHouseCode = this.EntityPM.ExportRecieverWareHouseCode;
+        //this.ExportRecieverWareHouseCode = this.EntityPM.ExportRecieverWareHouseCode;
         this.IsDangerousGoods = this.EntityPM.IsDangerousGoods;
     }
 
@@ -235,9 +235,9 @@ export class ExportConsigmentContentComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.StorageSiteCode)) {
             this.ValidationErrorsList.push("אתר  מסירה שדה חובה");
         }
-        if (AppTool.IsNullOrEmpty(this.ExportRecieverWareHouseCode)) {
-            this.ValidationErrorsList.push("אתר  המכלה שדה חובה");
-        }
+        //if (AppTool.IsNullOrEmpty(this.ExportRecieverWareHouseCode)) {
+        //    this.ValidationErrorsList.push("אתר  המכלה שדה חובה");
+        //}
 
     }
     OkButtonClicked() {
