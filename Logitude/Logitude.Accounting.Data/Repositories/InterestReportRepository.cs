@@ -28,7 +28,13 @@ namespace Logitude.Accounting.Data.Repositories
                                       select a ).FirstOrDefault();
             return interestReport;
         }
-
+        public InterestReport GetSingleByCusstomerAndStatudNotCancelledOrFailed(string ReportNumber, string CustomerId, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant &&  a.InterestReportStatusCode != "3" && a.InterestReportStatusCode != "6"  && a.CustomerId == CustomerId && a.ReportNumber != ReportNumber
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
         public InterestReport GetSingleByGraterInterestCalculationDate(string CustomerId, DateTime InterestCalculationDate, int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
