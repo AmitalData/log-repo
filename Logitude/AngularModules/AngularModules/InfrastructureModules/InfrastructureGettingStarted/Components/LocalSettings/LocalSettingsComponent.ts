@@ -54,6 +54,7 @@ export class LocalSettingsComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("DayLightStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("DayLightEndDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("DayLightOffset", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("NumberFormatCode", this.ObjectTableName, false);
     }
 
     // Load Tenant 
