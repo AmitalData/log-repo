@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
 
                     List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                    if (customResponse.Response.Declaration != null && currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
+                    if ((customResponse.Response.Declaration != null) && (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value)))
                     {
 
                         var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
