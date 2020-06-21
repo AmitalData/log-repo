@@ -178,6 +178,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         }
         else if (this.EntityPM.InterestReportStatusCode == "5") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
+            confirmWindow.ShowNoButton=false;
         }
       else if (this.EntityPM.InterestReportStatusCode == "8") {
         confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ReportIsBeingInvoiced");
@@ -188,12 +189,19 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.UpdateReport();
+                if(this.EntityPM.InterestReportStatusCode == "5"){
+                    confirmWindow.Close();
+                }
+                else{
+                    this.UpdateReport();
+                }
             }
         });
         confirmWindow.Show(confirmMessage);
 
     }
+
+ 
     CancelReport() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.InterestReportService.GetCheckRecentReports(this.EntityPM.InterestCalculationDate, this.EntityPM.CustomerId).subscribe((myResult: ServiceResponse) => {
