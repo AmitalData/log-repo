@@ -106,6 +106,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return reportFilterItems;
     }
 
+    IsPartnersChanged(SelectedTab) {
+        return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
+    }
+
     GetReportTemplate() {
         var reportTemplateId: string = this.Report.DefaultTemplateId;
         return reportTemplateId;

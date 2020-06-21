@@ -31,6 +31,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     public IsSchedulerReport: boolean = false;
+    public GLAccountChanged: boolean = false;
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
@@ -313,6 +314,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             default:
                 break;
         }
+    }
+
+    IsPartnersChanged(SelectedTab) {
+        if (SelectedTab == '2')
+            this.GLAccountChanged = false;
+        return this.GLAccountChanged;
     }
 
     GetQueryFilterItems()
@@ -632,7 +639,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     {
         if (this._GLAccountId != value) {
             this._GLAccountId = value;
-
+            this.GLAccountChanged = true;
 
         }
     }
