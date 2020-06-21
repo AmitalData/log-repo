@@ -59,6 +59,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_ChargesTypesSourceTenantNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ChargesTypesSourceTenantNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_ChargesTypesSourceTenantNewId,0,'DIM_ChargesTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+declare @DIM_ChargesTypesIsExpenseNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ChargesTypesIsExpenseNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode) Values(@DIM_ChargesTypesIsExpenseNewId,0,'DIM_ChargesTypes','[Is Expense]','Is Expense','Boolean','false',0,0,'false','false','true','Charges','false','false','false','ChargesType.IsExpense')  
 ------------------------------------------------------------------------------------
 declare @DIM_CurrenciesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesNewId OUTPUT,'DWObjectTable' 
