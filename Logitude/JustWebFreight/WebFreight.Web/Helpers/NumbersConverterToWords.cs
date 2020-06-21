@@ -1203,7 +1203,7 @@ namespace WebFreight.Web.Helpers
 
             text = Trim(text);
             text = FixSpaces(text);
-            return (text);
+            return (text+ " בלבד");
         }
 
         private string FixSpaces(string s)
