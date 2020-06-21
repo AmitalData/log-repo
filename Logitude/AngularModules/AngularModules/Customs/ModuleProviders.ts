@@ -232,6 +232,8 @@ import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReason
 import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
 import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
+import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRoleTypeListService';
+import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
 
 
 //#endregion
@@ -608,7 +610,9 @@ export class ModuleProviders {
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
- 
+            case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
+            case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
+
              //#endregion                
 
             //#region StandardPMs
