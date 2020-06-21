@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.BL.InterestService.HelperClasses;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -83,7 +84,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                     }).ToList();
         }
-        public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
+
+        public IQueryable<InterestReportPM> GetInterestReportsBySelectedIds(InterestReportArguments interestReportArgs)
+        {
+            return (from a in context.InterestReports
+                    where
+                     a.Tenant == interestReportArgs.Tenant && (!interestReportArgs.AllSelected ? interestReportArgs.SelectedIds.Contains(a.Id) : !interestReportArgs.ExcludedIds.Contains(a.Id) )&& (a.TotalAmount ==null || (a.TotalAmount == null && a.GLAccount.MinimumInterestInvoiceBilling==null) || a.TotalAmount <= a.GLAccount.MinimumInterestInvoiceBilling)
+
+                    select new InterestReportPM()
+                    {
+
+                        Id = a.Id,
+
+                    });
+
+        }
+
+
+
+            public List<InterestReportPM> GetInterestReportsByIds(List<string> ids, int tenant)
         {
             return (from a in context.InterestReports
                     where
@@ -94,7 +113,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         Id = a.Id,
 
                         Tenant = a.Tenant,
+
                         CustomerId = a.CustomerId ,
+
                         CreateDateTime = a.CreateDateTime,
 
                         CreatedByUserId = a.CreatedByUserId,
@@ -117,18 +138,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                         ARinvoiceId = a.ARinvoiceId,
 
+                        SearchFields = a.SearchFields,
+
                         InvoiceAmount = a.InvoiceAmount,
 
                         GLAccountInterestCreditLimit = a.GLAccountInterestCreditLimit,
 
                         InterestReportStatusCode = a.InterestReportStatusCode,
+
                         CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+
                         UpdatedByLocalName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+
                         InterestReportStatusName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.EnglishName,
+
                         InterestReportStatusLocalName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
+
                         GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
+
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
-                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
+
+                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
+
+                       GLAccountMinimumInterest = a.GLAccount.MinimumInterestInvoiceBilling,
 
                     }).ToList();
         }

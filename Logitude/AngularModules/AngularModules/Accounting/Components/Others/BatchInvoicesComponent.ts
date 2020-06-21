@@ -13,6 +13,9 @@ import { InterestReportArguments } from '../../DataContracts/InterestReportArgs'
 import { InterestReportEventManager } from '../../Utilities/InterestReportEventManager';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 
 
@@ -23,21 +26,23 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 })
 export class BatchInvoicesComponent extends BaseComponent {
     entityListService = new EntityListService();
-     DataContext: any = this;
+    DataContext: any = this;
     LoadGrids: boolean = false;
+    public isRTL: boolean = false;
     private ExcludedItems: ObservableCollection;
     private interestReportExtendedListService: InterestReportExtendedListService = new InterestReportExtendedListService();
     private CurrentSession = SessionLocator.SelectedSession;
-  public SelectedItemsCountText: string = null;
-  public ValidationErrorsList: string[] = [];
-  public BatchId:string;
-  public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-  public bteList: BatchTaskExecutionList;
-  public timer: any;
-  public timerInterval: number = 1000;
-  public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
+    public SelectedItemsCountText: string = null;
+    public ValidationErrorsList: string[] = [];
+    public BatchId:string;
+    public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+    public bteList: BatchTaskExecutionList;
+    public timer: any;
+    public timerInterval: number = 1000;
+    public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
   constructor() {
     super();
+    if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     this.ExcludedItems = new ObservableCollection([]);
     this.selectedItems = new ObservableCollection([]);
    // this.Listen();
@@ -292,14 +297,9 @@ export class BatchInvoicesComponent extends BaseComponent {
     } this.SetCreateInvoiceButtonText();
   }
   CreateInvoiceButtonClicked() {
-    this.ValidationErrorsList = [];
-    if (this.SelectedItemsCount == 0) {
-      this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
-    } else {
       var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
       this.CurrentSession.StartBusyIndicator("");
       this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
-        // this.CurrentSession.StopBusyIndicator();
         var mm: ServiceResponse = response;
         if (!mm.HasError) {
             this.BatchId= mm.Result;
@@ -312,9 +312,58 @@ export class BatchInvoicesComponent extends BaseComponent {
         }
 
       });
+  }
+   CheckNumberOfInterestReportInvoicingWithoutInvoice(){
+    this.ValidationErrorsList = [];
+    if (this.SelectedItemsCount == 0) {
+      this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+    } else {
+      var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+      this.CurrentSession.StartBusyIndicatorLoading();
+      this.interestReportExtendedListService.CheckNumberOfInterestReportInvoicingWithoutInvoice(interestReportArgs).subscribe((response: ServiceResponse) => {
+      this.CurrentSession.StopBusyIndicator();
+        var mm: ServiceResponse = response;
+        if (!mm.HasError) {
+        var NumberOfReportsWithoutInvoices = mm.Result;
+        if(NumberOfReportsWithoutInvoices>0){
+          this.ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices,interestReportArgs);
+         }
+         else{
+          this.CreateInvoiceButtonClicked();
+         }
+        }
+        else {
+
+        }
+
+      });
 
     }
+
   }
+
+ 
+ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
+      var confirmWindow = new ConfirmWindow();
+      confirmWindow.Width = 390;
+      var NumberIdsSelected:number=0;
+      if(!interestReportArgs.AllSelected){
+        NumberIdsSelected = interestReportArgs.SelectedIds.length;
+      }
+      else{
+        NumberIdsSelected = this.DataCount - interestReportArgs.ExcludedIds.length;
+      }
+      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + NumberIdsSelected + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
+      confirmWindow.WindowClosed.subscribe((event: any) => {
+          if (confirmWindow.Yes) {
+             this.CreateInvoiceButtonClicked();
+          } else if (confirmWindow.No) {
+
+          }
+      });
+}  
+ 
+  
 SetCreateInvoiceButtonText(){
 if (this.SelectedItemsCount > 0) {
 this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";
