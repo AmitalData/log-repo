@@ -485,7 +485,12 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entityPM.Id = entity.Id;
-                       
+                        bool exist = SecurityUtility.CheckFeature("Customer", "EDITCREDITAMOUNT", entity.Tenant);
+                        if (exist)
+                        {
+                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
+                        }
+
                         CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(entityPM.Tenant);
                         List<CustomerFieldsUpdateSettingPM> settings = customerFieldsUpdateSettingQuery.GetCustomerFieldsUpdateSettingPMsByTenant(entityPM.Tenant).ToList();
                         var salesManSettings = settings.FirstOrDefault(s => s.ObjectFieldName == "SalesmanUserId");
