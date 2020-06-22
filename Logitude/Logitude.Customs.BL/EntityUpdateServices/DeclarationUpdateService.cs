@@ -1733,6 +1733,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 toDeclaration.DeclarationNumberandVersionId = null;
                 toDeclaration.IsSignedVersion = false;
 
+                if (string.IsNullOrEmpty(toDeclaration.DestinationCountryCode))
+                {
+                    toDeclaration.DestinationCountryCode = fromDeclaration.DestinationCountryCode;
+                }
+
+                if ( toDeclaration.LoadingDateTime==null)
+                {
+                    toDeclaration.LoadingDateTime = fromDeclaration.LoadingDateTime;
+                }
+
+                if (string.IsNullOrEmpty(toDeclaration.ShipCode))
+                {
+                    toDeclaration.ShipCode = fromDeclaration.ShipCode;
+                }
+
+                if ( toDeclaration.IsExporterConfirmation==null)
+                {
+                    toDeclaration.IsExporterConfirmation = fromDeclaration.IsExporterConfirmation;
+                }
+
 
 
                 if (toDeclaration.Consignments.Count > 0)
@@ -1860,6 +1880,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 consignmentPM.CargoDescription = Consignment.CargoDescription;
 
                             }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+                            {
+                                consignmentPM.ExportLoadingPortCode = Consignment.ExportLoadingPortCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
+                            {
+                                consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode;
+
+                            }
+
+                            if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
+                            {
+                                consignmentPM.ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode;
+
+                            }
+                          
+                                consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
+
+                        
+
+                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
+                            {
+                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
+
+                            }
                             consignmentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
 
@@ -1895,6 +1943,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 UnloadDate = Consignment.UnloadDate,
                                 UnloadPortCode = Consignment.UnloadPortCode,
                                 UnloadPortName = Consignment.UnloadPortName,
+                                ExportLoadingPortCode= Consignment.ExportLoadingPortCode,
+                                ExportRecieverWareHouseCode= Consignment.ExportRecieverWareHouseCode,
+                                ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode,
+                                IsDangerousGoods = Consignment.IsDangerousGoods,
+                                FinalDestinationPortCode= Consignment.FinalDestinationPortCode,
+
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
