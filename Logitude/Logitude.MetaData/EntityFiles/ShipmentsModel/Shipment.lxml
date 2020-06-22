@@ -66378,7 +66378,7 @@
     MinLength="0"
     MaxLength="1"
     IsRequired="false"
-    CopyToDW="true"
+    CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
