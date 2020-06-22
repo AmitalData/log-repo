@@ -33,6 +33,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     public class GovernmentProcedureType
     {
         public bool IsImport { get; set; }
+        public bool IsExport { get; set; }
+
     }
     public class InternationalSiteP
     {

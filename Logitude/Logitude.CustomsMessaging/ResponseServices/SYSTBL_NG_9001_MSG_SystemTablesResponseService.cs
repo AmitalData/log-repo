@@ -411,6 +411,11 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyGovernmentProcedureType.IsImport = true;
                                                     }
+                                                    if (dr["InUseByExportDeclaration"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyGovernmentProcedureType.IsExport = true;
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
