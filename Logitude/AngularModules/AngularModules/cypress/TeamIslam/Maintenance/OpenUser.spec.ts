@@ -50,7 +50,7 @@ it('Search For User', () => {
     it('Edit User', () => {
       cy.get('#User_Notes').type('Test cypress')
       cy.wait(1000)
-      cy.get("#User-Save").click()
+      cy.get("#User-Save").click({ force: true })
 
     })
   
