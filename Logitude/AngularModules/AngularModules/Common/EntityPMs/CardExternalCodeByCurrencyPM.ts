@@ -78,6 +78,16 @@ export class CardExternalCodeByCurrencyPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private cardName: string;
+    public get CardName() { return this.cardName; }
+    public set CardName(newValue: string) { if (this.cardName != newValue) { this.cardName = newValue; this.MarkAsDirty("CardName"); } }
+       
+	 
+    private currencyName: string;
+    public get CurrencyName() { return this.currencyName; }
+    public set CurrencyName(newValue: string) { if (this.currencyName != newValue) { this.currencyName = newValue; this.MarkAsDirty("CurrencyName"); } }
+       
+	 
 
     public OldEntityPM: CardExternalCodeByCurrencyPM;
 	    

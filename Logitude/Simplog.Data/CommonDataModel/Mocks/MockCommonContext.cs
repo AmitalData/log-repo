@@ -1190,22 +1190,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        List<CardCurrenciesAccounting> cardCurrenciesAccountings;
-        MockObjectSet<CardCurrenciesAccounting> cardCurrenciesAccountingsObjectSet;
-        public IDbSet<CardCurrenciesAccounting> CardCurrenciesAccountings
-        {
-            get
-            {
-                if (cardCurrenciesAccountings == null)
-                {
-                    cardCurrenciesAccountings = new List<CardCurrenciesAccounting>() {
-                        new CardCurrenciesAccounting() {Id="1-1",Tenant = 1},
-                        new CardCurrenciesAccounting() { Id="1-2",Tenant = 1} };
-                    cardCurrenciesAccountingsObjectSet = new MockObjectSet<CardCurrenciesAccounting>(cardCurrenciesAccountings);
-                }
-                return cardCurrenciesAccountingsObjectSet;
-            }
-        }
 
         public IDbSet<Report> Reports
         {

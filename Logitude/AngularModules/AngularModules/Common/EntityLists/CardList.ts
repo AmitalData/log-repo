@@ -96,5 +96,6 @@ export class CardList {
 		StorageFreeDays: number;
 		RankId: string;
 		IndustryId: string;
+		AccountingVATSplit: boolean;
 	
 }

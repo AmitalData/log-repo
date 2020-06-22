@@ -48,8 +48,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ExternalRecievableTableId = entityPoco.ExternalRecievableTableId,
                     ExternalPayableTableId = entityPoco.ExternalPayableTableId,
                     CurrencyCode = entityPoco.Currency != null ? entityPoco.Currency.Code : null,
-                  //  ExternalTableName = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Name : null,
-                  //  ExternalTableCode = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Code : null,
+                    CurrencyName = entityPoco.Currency != null ? entityPoco.Currency.EnglishName : null,
+                    CardName = entityPoco.Card != null ? entityPoco.Card.EnglishName : null,
+
+                    //  ExternalTableName = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Name : null,
+                    //  ExternalTableCode = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Code : null,
                 };
             }
 
@@ -71,8 +74,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ExternalPayableTableId = a.ExternalPayableTableId,
                                                              Tenant = a.Tenant,
                                                              CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                           //  ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
-                                                           //  ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
+                                                             CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                             CardName = a.Card != null ? a.Card.EnglishName : null,
+
+                                                             //  ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
+                                                             //  ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
                                                          }).ToList();
 
             return result;
@@ -93,8 +99,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                    ExternalPayableTableId = a.ExternalPayableTableId,
                                                                    Tenant = a.Tenant,
                                                                    CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                                  // ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
-                                                                  // ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
+                                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                                   CardName = a.Card != null ? a.Card.EnglishName : null,
+
+                                                                   // ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
+                                                                   // ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
                                                                });
 
             return result;

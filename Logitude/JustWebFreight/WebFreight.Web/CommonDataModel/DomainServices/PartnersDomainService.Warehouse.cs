@@ -277,7 +277,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
 
             }
-            this.UpdateCardCurrenciesAccountings_Warehouse(currentEntity);
             CardPM c = cardQuery.GetSinglePM(currentEntity.Id, currentEntity.Tenant);
 
             bool exist = (from a in warehouseRepository.GetWarehousesByTenant(currentEntity.Tenant)
@@ -288,7 +287,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (!exist)
             {
                 WarehouseService service = new WarehouseService(objectContext, currentEntity.Tenant);
-                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, cardCurrenciesAccountingChangeSet_Warehouse);
+                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
                 service.Update(currentEntity);
             }
             else
@@ -299,27 +298,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
 
         }
-        List<CardCurrenciesAccountingPM> cardCurrenciesAccountingChangeSet_Warehouse;
-
-        private void UpdateCardCurrenciesAccountings_Warehouse(WarehousePM currentEntity)
-        {
-            cardCurrenciesAccountingChangeSet_Warehouse = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardCurrenciesAccountings).Cast<CardCurrenciesAccountingPM>().ToList();
-            foreach (CardCurrenciesAccountingPM itemPM in cardCurrenciesAccountingChangeSet_Warehouse)
-            {
-                switch (ChangeSet.GetChangeOperation(itemPM))
-                {
-                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
-                    case ChangeOperation.Update:
-                        {
-                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                            break;
-                        }
-
-                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                }
-            }
-        }
+       
         public void DeleteWarehouse(WarehousePM entity)
         {
             if (objectContext == null)
