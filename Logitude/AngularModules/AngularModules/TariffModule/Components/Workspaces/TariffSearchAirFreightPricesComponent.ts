@@ -836,46 +836,46 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     // Generate FCL Frieght
                     var shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType1Id)[0];
                     if (this.ContainerType1Id && shipmentContainer) {
-                        this.AddNewTariffPayable(item, notes, this.ContainerType1Id, this.Quantity1);
+                        this.AddNewTariffPayable(item, notes, this.ContainerType1Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
-                                this.AddNewTariffPayable(surcharge, null, this.ContainerType1Id, this.Quantity1);
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType1Id);
                             });
                         }
                     }
                     shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType2Id)[0];
                     if (this.ContainerType2Id && shipmentContainer) {
-                        this.AddNewTariffPayable(item, notes, this.ContainerType2Id, this.Quantity2);
+                        this.AddNewTariffPayable(item, notes, this.ContainerType2Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
-                                this.AddNewTariffPayable(surcharge, null, this.ContainerType2Id, this.Quantity2);
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType2Id);
                             });
                         }
                     }
                     shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType3Id)[0];
                     if (this.ContainerType3Id && shipmentContainer) {
-                        this.AddNewTariffPayable(item, notes, this.ContainerType3Id, this.Quantity3);
+                        this.AddNewTariffPayable(item, notes, this.ContainerType3Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
-                                this.AddNewTariffPayable(surcharge, null, this.ContainerType3Id, this.Quantity3);
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType3Id);
                             });
                         }
                     }
                     shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType4Id)[0];
                     if (this.ContainerType4Id && shipmentContainer) {
-                        this.AddNewTariffPayable(item, notes, this.ContainerType4Id, this.Quantity4);
+                        this.AddNewTariffPayable(item, notes, this.ContainerType4Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
-                                this.AddNewTariffPayable(surcharge, null, this.ContainerType4Id, this.Quantity4);
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType4Id);
                             });
                         }
                     }
                     shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType5Id)[0];
                     if (this.ContainerType5Id && shipmentContainer) {
-                        this.AddNewTariffPayable(item, notes, this.ContainerType5Id, this.Quantity5);
+                        this.AddNewTariffPayable(item, notes, this.ContainerType5Id);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
-                                this.AddNewTariffPayable(surcharge, null, this.ContainerType5Id, this.Quantity5);
+                                this.AddNewTariffPayable(surcharge, null, this.ContainerType5Id);
                             });
                         }
                     }
@@ -956,7 +956,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         return isDuplicate;
     }
 
-    AddNewTariffPayable(newRecord: any, notes = null, packageId = null, quantity = null) {
+    AddNewTariffPayable(newRecord: any, notes = null, packageId = null) {
         this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -1006,7 +1006,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     }
                     else {
                         shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
-
                     }
                 }
 
@@ -1031,7 +1030,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
                 shipmentPayable.MinAmount = newRecord.MinPrice;
-               
                 this.TariffList_Shipment.push(shipmentPayable);
             }
         });
@@ -1095,7 +1093,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "BTEU": { myQuantity = this.FatherComponent.EntityPM.TEU; break; }
             case "FIXD": { myQuantity = 1; break; }
             case "PRVL": { myQuantity = this.FatherComponent.EntityPM.ValueOfGoods; break; }
-            case "PRFR": { myQuantity = ArrayTool.Sum(this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffList_Shipment.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
