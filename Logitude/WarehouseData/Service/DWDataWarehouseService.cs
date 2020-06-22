@@ -52,8 +52,7 @@ namespace WarehouseData.Service
             {
                 sqlsc += "\n [" + table.Columns[i].ColumnName + "] ";
                 string columnType = table.Columns[i].DataType.ToString();
-                if (table.Columns[i].MaxLength > 8000) table.Columns[i].MaxLength = 8000;
-
+                if (table.Columns[i].MaxLength > 4000) table.Columns[i].MaxLength = -1;
                 switch (columnType)
                 {
                     case "System.Int32":
