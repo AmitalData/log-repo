@@ -160,7 +160,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             AccountingSettingPM entity = null;
             string entityName = "AccountingSettingPM" + id;
-            if (HttpContext.Current != null)
+            if (true )//HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {

@@ -104,7 +104,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
          
 
-            if (HttpContext.Current != null)
+            if (true) //HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
