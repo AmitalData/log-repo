@@ -36,124 +36,131 @@ export class APInvoiceMenuButtonsHandler {
                     var myButtonIsDisabled = false;
 
                     switch (button.EventCode) {
-                        case "SaveAPInvoice":
-                            {
-                                myButtonIsDisabled = true;
+                        case "SaveAPInvoice": {
+                            myButtonIsDisabled = true;
 
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
-                                    myButtonIsDisabled = false;
-                                }
-
-                                break;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+                                myButtonIsDisabled = false;
                             }
 
-                        case "ApproveAPInvoice":
-                            {
-                                myButtonIsDisabled = true;
+                            break;
+                        }
 
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
-                                    myButtonIsDisabled = false;
-                                }
+                        case "ApproveAPInvoice": {
+                            myButtonIsDisabled = true;
 
-                                break;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+                                myButtonIsDisabled = false;
                             }
 
-                        case "CancelApproval":
-                            {
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                    button.IsHidden = true;
-                                }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        myButtonIsDisabled = true;
-                                    }
+                            break;
+                        }
 
-                                    else if (this.EntityPM.TransferStatusCode == "TR") {
-                                        myButtonIsDisabled = true;
-                                    }
-
-                                    else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
-                                        myButtonIsDisabled = true;
-                                    }
-                                }
-
-                                break;
+                        case "CancelApproval": {
+                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                button.IsHidden = true;
                             }
-
-                        case "VoidAPInvoice":
-                            {
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                        myButtonIsDisabled = true;
-                                    }
-                                }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        myButtonIsDisabled = true;
-                                    }
-
-                                    else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "VD") {
-                                        myButtonIsDisabled = true;
-                                    }
-
-                                }
-                                break;
-                            }
-
-                        case "ReTransfer":
-                            {
-                                if (this.isFullAccounting) {
-                                    button.IsHidden = true;
-                                } else {
-
+                            else {
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                                     myButtonIsDisabled = true;
+                                }
 
-                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                            if (this.EntityPM.TransferStatusCode == "TR") {
-                                                myButtonIsDisabled = false;
-                                            }
+                                else if (this.EntityPM.TransferStatusCode == "TR") {
+                                    myButtonIsDisabled = true;
+                                }
+
+                                else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
+                                    myButtonIsDisabled = true;
+                                }
+                            }
+
+                            break;
+                        }
+
+                        case "VoidAPInvoice": {
+                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                    myButtonIsDisabled = true;
+                                }
+                            }
+                            else {
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    myButtonIsDisabled = true;
+                                }
+
+                                else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "VD") {
+                                    myButtonIsDisabled = true;
+                                }
+
+                            }
+                            break;
+                        }
+
+                        case "ReTransfer": {
+                            if (this.isFullAccounting) {
+                                button.IsHidden = true;
+                            }
+
+                            else {
+
+                                myButtonIsDisabled = true;
+
+                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                        if (this.EntityPM.TransferStatusCode == "TR") {
+                                            myButtonIsDisabled = false;
                                         }
                                     }
-
                                 }
-                                break;
-                            }
 
-                        case "PrintAPInvoice":
-                            {
+                            }
+                            break;
+                        }
+
+                        case "PrintAPInvoice": {
+                            myButtonIsDisabled = true;
+                            if (this.EntityPM.Id != null) {
+                                myButtonIsDisabled = false;
+                            }
+                            break;
+                        }
+
+                        case "SendToQBO": {
+                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                button.IsHidden = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                            }
+                            if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                button.DisplayText = "Send to QBO";
+                            }
+                            else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                button.LabelTextCodeCode = null;
+                                button.DisplayText = "Resend to QBO";
+                            }
+                            if (this.EntityPM.ApprovedDate == null) {
                                 myButtonIsDisabled = true;
-                                if (this.EntityPM.Id != null) {
-                                    myButtonIsDisabled = false;
-                                }
-                                break;
+                            }
+                            else {
+                                myButtonIsDisabled = false;
                             }
 
+                            break;
+                        }
 
-                        case "SendToQBO":
-                            {
+                        case "BlockFromTransfer": {
+                            var isHidden: boolean = true;
+
+                            if (this.EntityPM.TransferStatusCode == "ET") {
                                 if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                                    button.IsHidden = false;
+                                    isHidden = false;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
-                                    button.DisplayText = "Send to QBO";
-                                }
-                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
-                                    button.LabelTextCodeCode = null;
-                                    button.DisplayText = "Resend to QBO";
-                                }
-                                if (this.EntityPM.ApprovedDate == null) {
-                                    myButtonIsDisabled = true;
-                                }
-                                else {
-                                    myButtonIsDisabled = false;
-                                }
-
-                                break;
                             }
+
+                            button.IsHidden = false;
+                            break;
+                        }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -171,55 +178,52 @@ export class APInvoiceMenuButtonsHandler {
             this.ClickedButtonCode = menuButton.EventCode;
 
             switch (menuButton.EventCode) {
-                case "SaveAPInvoice":
-                    {
-                        this.SaveAPInvoiceClicked();
-                        break;
-                    }
+                case "SaveAPInvoice": {
+                    this.SaveAPInvoiceClicked();
+                    break;
+                }
 
-                case "ApproveAPInvoice":
-                    {
-                        this.ApproveClicked();
-                        break;
-                    }
+                case "ApproveAPInvoice": {
+                    this.ApproveClicked();
+                    break;
+                }
 
-                case "CancelApproval":
-                    {
-                        this.CancelApprovalClicked();
-                        break;
-                    }
+                case "CancelApproval": {
+                    this.CancelApprovalClicked();
+                    break;
+                }
 
-                case "VoidAPInvoice":
-                    {
-                        this.VoidClicked();
-                        break;
-                    }
+                case "VoidAPInvoice": {
+                    this.VoidClicked();
+                    break;
+                }
 
-                case "ReTransfer":
-                    {
-                        this.EnableReTransferClicked();
-                        break;
-                    }
+                case "ReTransfer": {
+                    this.EnableReTransferClicked();
+                    break;
+                }
 
-                case "PrintAPInvoice":
-                    {
-                        this.PrintClicked();
+                case "PrintAPInvoice": {
+                    this.PrintClicked();
 
-                        break;
-                    }
+                    break;
+                }
 
-                case "SendToQBO":
-                    {
-                        this.SendToQBO();
-                        break;
-                    }
+                case "SendToQBO": {
+                    this.SendToQBO();
+                    break;
+                }
+
+                case "BlockFromTransfer": {
+                    this.BlockFromTransferToQBO();
+                    break;
+                }
 
                 default: {
                     this.StopFlags();
                     break;
                 }
             }
-
         }
     }
 
@@ -710,6 +714,27 @@ if (response != null) {
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("APInvoice", "PrintInvoice");
             myPrintHelper.ShowPrintControl();
+        }
+    }
+
+    BlockFromTransferToQBO() {
+
+        this.Validate();
+
+        if (this.isValid) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Show("Please make sure that you've created the record manually at QBO online before marking as 'blocked for transfer', it is recommended to fix any issues and resend from the communication log rather than marking as blocked");
+            confirmWindow.WindowClosed.subscribe(s => {
+
+                this.StopFlags();
+
+                if (confirmWindow.Yes) {
+                    this.EntityPM.TransferStatusCode = "BL";
+                    this.EntityPM.TransferStatusName = "Blocked";
+                    this.entityArgs.EditComponent.SaveChanges("Blocking...");
+                }
+            });
         }
     }
 }

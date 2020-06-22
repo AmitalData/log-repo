@@ -10285,6 +10285,12 @@
         TextCodeCode="&quot;ARPayment.B.SendToQBO&quot;"
         FeatureTextCodeCode="&quot;ARPayment.Features.SendToQBO&quot;"
         FeatureDefaultText="&quot;Send To QBO&quot;" />
+      <MenuItem
+        EventCode="&quot;BlockFromTransfer&quot;"
+        DefaultText="&quot;Block from transfer&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="11"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>
