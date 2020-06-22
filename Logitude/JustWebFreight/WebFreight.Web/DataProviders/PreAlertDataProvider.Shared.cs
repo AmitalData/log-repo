@@ -251,6 +251,11 @@ namespace WebFreight.Web.DataProviders
 
     public class Packages
     {
+        public Packages()
+        {
+            this.InsidePackagesLines = new List<InsidePackageLine>();
+        }
+
         public string MarksAndNumbers { get; set; }
         public string PackageType { get; set; }
         public string Quantity { get; set; }
@@ -266,6 +271,7 @@ namespace WebFreight.Web.DataProviders
         public string CommodityNumber { get; set; }
         public int? NumberOfInsidePackages { get; set; }
         public string ContainerNumber { get; set; }
+        public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 
     public class PreAlertManifestDetails

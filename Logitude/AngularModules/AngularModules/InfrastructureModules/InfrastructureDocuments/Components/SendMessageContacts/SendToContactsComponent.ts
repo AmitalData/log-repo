@@ -462,6 +462,12 @@ export class SendToContactsComponent implements OnInit {
 
     }
 
+    CleanRecepientsLists() {
+        this.ToEmailLists = [];
+        this.CcEmailLists = [];
+        this.BccEmailLists = [];
+    }
+
     CloseButtonClicked() {
 
 
