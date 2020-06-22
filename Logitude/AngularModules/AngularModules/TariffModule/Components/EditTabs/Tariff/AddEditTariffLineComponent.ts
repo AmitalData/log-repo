@@ -88,33 +88,40 @@ export class AddEditTariffLineComponent  {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (this.DataContext.FatherComponent.CurrentVersion.TariffLines.length + 1 > 1000) {
+            errors.push("Can't add lines to the tariff bigger than the 1000");
+        }
 
-        if (this.TariffType == "AFC" || this.TariffType == "OLC" || this.TariffType == "OFC") {
-            if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
-                errors.push(msg.replace("%FieldName", "To"));
+        else {
+            var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+            if (this.TariffType == "AFC" || this.TariffType == "OLC" || this.TariffType == "OFC") {
+                if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
+                    errors.push(msg.replace("%FieldName", "To"));
+                }
+
+                if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId)) {
+                    errors.push(msg.replace("%FieldName", "From"));
+                }
             }
 
-            if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId)) {
-                errors.push(msg.replace("%FieldName", "From"));
+            else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
+                if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
+                    errors.push("To port or To All Other Ports is Required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId) && !this.DataContext.IsFromAllOtherPorts) {
+                    errors.push("From port or From All Other Ports is Required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                    errors.push("Currency Field is Required");
+                }
             }
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
-            if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
-                errors.push("To port or To All Other Ports is Required");
-            }
-
-            if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId) && !this.DataContext.IsFromAllOtherPorts) {
-                errors.push("From port or From All Other Ports is Required");
-            }
-
-            if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
-                errors.push("Currency Field is Required");
-            }
-        }       
-
         this.ValidationErrorsList = errors;
+
         if (this.ValidationErrorsList.length == 0) {
             this.EntityPM.AddedManually = true;
             if (this.DataContext.IsNewEntity) {
