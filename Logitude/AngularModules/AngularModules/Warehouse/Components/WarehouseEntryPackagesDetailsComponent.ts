@@ -61,6 +61,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     savedItems: WarehouseEntryPackagePM[] = [];
 
     ShowAddPackageButton: boolean = false;
+    DisableAddPackageButton: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -402,6 +403,9 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         
         if (this.warehouseEntryPM) {
 
+            if (this.warehouseEntryPM.DirectionId == "I") {
+                this.DisableAddPackageButton = true;
+            }
             if (this.warehouseEntryPM.Ratio == null) {
                 var isDirty = this.warehouseEntryPM.IsDirty;
                 this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);

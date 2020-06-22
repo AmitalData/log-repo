@@ -19,7 +19,7 @@
                         </td>
 
                         <td *ngIf="ShowAddPackageButton" style="width: 1px;">
-                            <button class="Button" (click)="AddPackage(false)">Add Package</button>
+                            <button [disabled]="DisableAddPackageButton" class="Button" (click)="AddPackage(false)">Add Package</button>
                         </td>
 
                         <td *ngIf="ShowAddPackageButton && !IsLCLEntity" style="width: 5px;">
@@ -27,7 +27,7 @@
                         </td>
 
                         <td *ngIf="!IsLCLEntity && ShowAddPackageButton" style="width: 1px;">
-                            <button class="Button" (click)="AddPackage(true)">Add Container</button>
+                            <button [disabled]="DisableAddPackageButton" class="Button" (click)="AddPackage(true)">Add Container</button>
                         </td>
 
                         <td *ngIf="ShowAddPackageButton && IsEditMode" style="width: 5px;">
