@@ -41,6 +41,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     WarehouseEntryPackagesLists: WarehouseEntryPackagePM[] = [];
     SelectedWarehouseEntryPackage: WarehouseEntryPackagePM;
     warehouseEntryPM: WarehouseEntryPM;
+    IsCancelled: boolean = false;
     ObjectTableName: string = "WarehouseEntryPM";
     VolumeLabel: string;
     GrossWeightLabel: string;
@@ -398,6 +399,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
  
     Start(args) {
         this.warehouseEntryPM = args.WarehouseEntryPM;
+        this.IsCancelled = this.warehouseEntryPM.StatusCode == "CAEA" ? true : false;
         this.ViewModelTrigger = args.ViewModelTrigger;
         
         if (this.warehouseEntryPM) {
