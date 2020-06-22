@@ -28,6 +28,7 @@ export class WarehouseEntryPartnersTabComponent implements OnInit, OnDestroy {
     public ItemsCollection: PartnerItem[];
     public IsInlandDomestic: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsCancelled: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.InitializeServices();
@@ -39,6 +40,7 @@ export class WarehouseEntryPartnersTabComponent implements OnInit, OnDestroy {
     private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
+            this.IsCancelled = this.EntityPM.StatusCode == "CAEA" ? true : false;
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {

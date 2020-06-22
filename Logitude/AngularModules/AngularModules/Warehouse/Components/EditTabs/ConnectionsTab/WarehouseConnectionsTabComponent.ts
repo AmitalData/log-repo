@@ -22,11 +22,12 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     public ItemsSource: any[] = [];
     public ReleaseItemsSource: any[] = [];
- 
+    public IsCancelled: boolean = false;
     connectedTo: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
+        this.IsCancelled = this.EntityPM.StatusCode == "CAEA" ? true : false;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.warehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
