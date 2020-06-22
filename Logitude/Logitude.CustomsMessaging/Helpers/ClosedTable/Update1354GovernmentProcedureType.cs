@@ -34,7 +34,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         protected override bool IsEqual(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, GovernmentProcedureTypePM curDbPM)
         {
             var gov = mehesTableRow.MyGovernmentProcedureType ?? new GovernmentProcedureType();
-            return base.IsEqual(mehesTableRow, curDbPM) && curDbPM.IsImport == gov.IsImport;
+            return base.IsEqual(mehesTableRow, curDbPM);// && curDbPM.IsImport == gov.IsImport;
         }
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, GovernmentProcedureTypePM curDbPM)
         {
