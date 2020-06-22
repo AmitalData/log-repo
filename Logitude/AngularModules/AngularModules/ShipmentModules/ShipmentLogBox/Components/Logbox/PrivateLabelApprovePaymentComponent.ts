@@ -172,7 +172,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
-            var entity = AdditionalResult.Result
+            var entity = AdditionalResult.Result;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
@@ -181,43 +182,96 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.VersionAlreadyApproved");//"גרסה זו כבר אושרה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
             }
             else {
-                entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult:any) => {
-                    ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
-                    this.DimApproveButton = true;
-                    var today = new Date();
-                    var d = today.getDate();
-                    var m = today.getMonth() + 1; //January is 0!
-                    var dd = "";
-                    var mm = "";
-                    var yyyy = today.getFullYear().toString();
-                    if (d < 10) {
-                        dd = '0' + d;
+                if (SessionLocator.TenantPM.ShowTaxAmountWarning) {
+                    var warningCode: string;
+                    if (this.AdditionalData.TaxesMoreDetails) {
+                        warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
+                    }
+                    if (warningCode && warningCode != '') {
+                        var warningWindow = new LogitudeWindow();
+                        warningWindow.Width = 340;
+                        warningWindow.Height = 200;
+                        warningWindow.RTL = this.RTL;
+                        //warningWindow.Title
+                        var windowArgs: any = {};
+                        windowArgs.WarningCode = warningCode;
+                        windowArgs.RTL = this.RTL;
+                        warningWindow.WindowArgs = windowArgs;
+                        warningWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/WarningApprovePaymentComponent');
+                        warningWindow.WindowClosed.subscribe((event: any) => {
+                            if (event == "Approved")
+                                this.UpdateShipmentAdditionalCloudData(entity);
+                        });
                     }
                     else {
-                        dd = d.toString();
+                        this.UpdateShipmentAdditionalCloudData(entity);
                     }
-                    if (m < 10) {
-                        mm = '0' + m;
-                    }
-                    else {
-                        mm = m.toString();
-                    }
-                    var to = dd + '/' + mm + '/' + yyyy;
-                    this.messageWindow.RTL = this.RTL;
-                    this.messageWindow.Width = 300;
-                    this.messageWindow.Height = 150;
-                    this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
-                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName;//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-                    this.messageWindow.Show(this.messageWindow.Message);
-                    //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                });
+                }
+                else {
+                    this.UpdateShipmentAdditionalCloudData(entity);
+                }
             }
         });
+
+    }
+
+    private UpdateShipmentAdditionalCloudData(entity: any) {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
+        entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+        this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
+            ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
+            this.DimApproveButton = true;
+            var today = new Date();
+            var d = today.getDate();
+            var m = today.getMonth() + 1; //January is 0!
+            var dd = "";
+            var mm = "";
+            var yyyy = today.getFullYear().toString();
+            if (d < 10) {
+                dd = '0' + d;
+            }
+            else {
+                dd = d.toString();
+            }
+            if (m < 10) {
+                mm = '0' + m;
+            }
+            else {
+                mm = m.toString();
+            }
+            var to = dd + '/' + mm + '/' + yyyy;
+            this.messageWindow.RTL = this.RTL;
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved"); //"הצהרה אושרה";
+            this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName; //"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+            this.messageWindow.Show(this.messageWindow.Message);
+            //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        });
+    }
+
+    private GetWarningCodeBeforeApproval(TaxDetails) {
+        var tax1Amount: number = 0, tax16Amount: number = 0;
+        TaxDetails.forEach((tax) => {
+            if (tax.TaxTypeCode == '1')
+                tax1Amount = +tax.TaxAmount;
+            else if (tax.TaxTypeCode == '16')
+                tax16Amount = +tax.TaxAmount;
+        });
+        if (tax1Amount != 0 && tax16Amount != 0) {
+            if (tax1Amount + tax16Amount > 100)
+                return '17';
+        }
+        else if (tax1Amount > 100) {
+            return '1';
+        }
+        else if (tax16Amount > 100) {
+            return '16';
+        }
+        return '0';
 
     }
 

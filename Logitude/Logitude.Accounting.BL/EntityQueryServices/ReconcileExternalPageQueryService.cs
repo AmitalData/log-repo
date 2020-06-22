@@ -78,7 +78,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 .Where(a =>
                  a.EntityId == entityId
                 && a.ObjectTableId == objectTable.Id
-                && a.StatusCode == "2").OrderBy(a => a.FromDate).ToList() ;
+                && a.StatusCode == "2")
+                .OrderBy(a => a.PageNo).ToList() ;
+                //.OrderBy(a => a.FromDate).ToList() ;
 
             var list = repository.GetAll(tenant);
             var list2 = list.Where(a =>

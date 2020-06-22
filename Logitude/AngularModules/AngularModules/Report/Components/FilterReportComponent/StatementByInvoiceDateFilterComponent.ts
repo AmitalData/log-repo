@@ -36,6 +36,10 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         this.RunReportTitle = "Preview";
     }
 
+    IsPartnersChanged() {
+        return false;
+    }
+
     GetQueryFilterItems() {
         var queryFilterItems = new Array<QueryFilterItem>();
         var queryFilterItem: QueryFilterItem;

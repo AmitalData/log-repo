@@ -424,7 +424,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
                     }
 
 
-                    this.AddCorrespondenceLine(entity.Id, "LineCompleted");
+                    //this.AddCorrespondenceLine(entity.Id, "LineCompleted");
 
                     #endregion
                 }

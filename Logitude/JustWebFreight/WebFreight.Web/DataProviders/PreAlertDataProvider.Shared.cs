@@ -241,10 +241,21 @@ namespace WebFreight.Web.DataProviders
         public string Salesman { get; set; }
         public string SpecialServicesType { get; set; }
         public string ShipmentSubTypeName { get; set; }
+
+        public string ConsigneeContactName { get; set; }
+        public string ConsigneeContactPhone { get; set; }
+
+        public string ConsigneeAddress { get; set; }
+
     }
 
     public class Packages
     {
+        public Packages()
+        {
+            this.InsidePackagesLines = new List<InsidePackageLine>();
+        }
+
         public string MarksAndNumbers { get; set; }
         public string PackageType { get; set; }
         public string Quantity { get; set; }
@@ -260,6 +271,7 @@ namespace WebFreight.Web.DataProviders
         public string CommodityNumber { get; set; }
         public int? NumberOfInsidePackages { get; set; }
         public string ContainerNumber { get; set; }
+        public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 
     public class PreAlertManifestDetails

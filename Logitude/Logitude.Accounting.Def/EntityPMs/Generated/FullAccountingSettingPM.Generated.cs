@@ -1055,6 +1055,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool allowMultiRatesInInvoiceLines ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowMultiRatesInInvoiceLines  
+	   {
+	    
+	     get
+		{
+		   return allowMultiRatesInInvoiceLines;
+		 }
+		 set
+		 {
+		   if(allowMultiRatesInInvoiceLines != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowMultiRatesInInvoiceLines",OldValue=allowMultiRatesInInvoiceLines,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowMultiRatesInInvoiceLines=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

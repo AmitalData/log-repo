@@ -315,9 +315,11 @@ namespace Logitude.DeploymentAgentService
 
             try
             {
-                string agentConfigFilesUrl = AppDomain.CurrentDomain.BaseDirectory + @"\ConfigFiles";
+                string webConfigFilesUrl = AppDomain.CurrentDomain.BaseDirectory + @"\ConfigFiles\Web";
+                string dbMigrationsConfigFilesUrl = AppDomain.CurrentDomain.BaseDirectory + @"\ConfigFiles\DBMigrations";
                 string tempFolderPath = InstanceFolderPath + ".Temp";
-                Copy(agentConfigFilesUrl, tempFolderPath);
+                Copy(webConfigFilesUrl, tempFolderPath);
+                Copy(dbMigrationsConfigFilesUrl, (tempFolderPath + @"\Logitude.DBMigrations"));
 
                 result = true;
                 AddAgentLog("Config Files Was Copied To Temp Folder");

@@ -23,7 +23,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="EntityId"
@@ -81,4 +81,6 @@
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+<UniqueConstraint
+    Columns="AnalyzeQueueId,Tenant" />
 </Table>

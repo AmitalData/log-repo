@@ -129,6 +129,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string PaymentChequesLogoId { get; set; }
         [Column("NumberOfAgingMonths")]
 	    public int? NumberOfAgingMonths { get; set; }
+        [Column("AllowMultiRatesInInvoiceLines")]
+	    public bool AllowMultiRatesInInvoiceLines { get; set; }
     }
 }
 	 

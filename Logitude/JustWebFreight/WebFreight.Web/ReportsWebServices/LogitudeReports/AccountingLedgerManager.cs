@@ -24,42 +24,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
     public class AccountingLedgerManager
     {
         private int tenant;
-        private DateTime? fromDate = null;
-        private DateTime? toDate = null;
-        private string customerId = null;
-        private bool isByCreateDate = true;
-        private List<Currency> systemCurrencies;
-        private List<ARInvoiceType> aRInvoiceTypes;
-        private IQueryable<ARInvoice> iQueryable_ARInvoice;
-        private IQueryable<APInvoice> iQueryable_APInvoice;
-        private IQueryable<ARPayment> iQueryable_ARPayment;
-        private IQueryable<APPayment> iQueryable_APPayment;
-        private IQueryable<APPayment> iQueryable_APPaymentExternalAmount;
-        private IQueryable<ARInvoice> iQueryable_ARInvoice_All;
-        private IQueryable<ARInvoice> iQueryable_ARInvoice_Open;
-        private IQueryable<APInvoice> iQueryable_APInvoice_Open;
-        private IQueryable<ARPayment> iQueryable_ARPayment_Open;
-        private IQueryable<APPayment> iQueryable_APPayment_Open;
-        private IQueryable<APPayment> iQueryable_APPayment_OpenExternalAmount;
-        private List<AccountingLedger> openingAccounts;
-        private List<Branch> branches;
-        private List<AccountingPaymentMethod> allPaymentMethods;
-        private List<AccountingPaymentMethod> aRPaymentMethods;
-        private List<AccountingPaymentMethod> aPPaymentMethods;
-        IInvoiceContext myInvoiceContext;
-        ICommonDataContext myCommonContext;
-        IShipmentsContext myShipmentsContext;
-        private ARInvoiceRepository aRInvoiceRepository;
-        private ARPaymentRepository aRPaymentRepository;
-        private APPaymentRepository aPPaymentRepository;
-        private APInvoiceRepository aPInvoiceRepository;
-        private AddressRepository addressRepository;
-        private AddressQuery addressQuery;
-        private CurrencyRepository currencyRepository;
-        private ShipmentRepository shipmentRepository;
-        private CardRepository cardRepository;
-        private List<AccountingLedger> accountingBalanceTempList;
-        private AccountingLedgerDataProvider myDataProvider; 
+
+        private DateTime? FromDate = null;
+        private DateTime? ToDate = null;
+        private string CustomerId = null;
+        private bool IsByCreateDate = true;
 
         public AccountingLedgerManager(byte[] xmlFilters, int tenant)
         {
@@ -83,7 +52,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 if (filterItem_IsByCreateDate.FieldValue != null)
                 {
-                    isByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
+                    IsByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
                 }
             }
 
@@ -93,7 +62,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 bool isValid = DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out date);
                 if (isValid)
                 {
-                    this.fromDate = date;
+                    this.FromDate = date;
                 }
             }
 
@@ -103,7 +72,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 bool isValid = DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date);
                 if (isValid)
                 {
-                    this.toDate = date;
+                    this.ToDate = date;
                 }
             }
 
@@ -111,14 +80,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 if (filterItem_CustomerId.FieldValue != null)
                 {
-                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                    CustomerId = filterItem_CustomerId.FieldValue.ToString();
                 }
             }
         }
 
         public byte[] GetData()
         {
-            this.LoadDataProvider();
+            AccountingLedgerDataProvider myDataProvider = new AccountingLedgerDataProvider();
+
+            myDataProvider = this.LoadDataProvider();
+
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AccountingLedgerDataProvider));
             MemoryStream memoryStream = new MemoryStream();
             xmlSerializer.Serialize(memoryStream, myDataProvider);
@@ -129,236 +101,39 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return bytearray;
         }
 
-        private void LoadDataProvider()
+        private AccountingLedgerDataProvider LoadDataProvider()
         {
-            myDataProvider = new AccountingLedgerDataProvider();
+            AccountingLedgerDataProvider myDataProvider = new AccountingLedgerDataProvider();
 
-            this.InitializeReportData();
-            this.BuildGeneralReportData();
-            this.FilterBaseData();
+            IInvoiceContext myInvoiceContext = InvoiceContext.GetContext(tenant);
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            IShipmentsContext myShipmentsContext = ShipmentsContext.GetContext(tenant);
 
-            #region Open Balance
-            openingAccounts = new List<AccountingLedger>();
-            List<AccountingLedger> lastLedgers = new List<AccountingLedger>();
-            double? Openbalance = 0;
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(myInvoiceContext);
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(myInvoiceContext);
+            APPaymentRepository aPPaymentRepository = new APPaymentRepository(myInvoiceContext);
+            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(myInvoiceContext);
 
-            this.RunOpenBalance();
-            var OpenledgerGroups_Customer = from item in openingAccounts
-                                            group item by item.CustomerId into g
-                                            select new { CustomerId = g.Key, Items = g };
+            AddressRepository addressRepository = new AddressRepository(myCommonContext);
+            AddressQuery addressQuery = new AddressQuery(addressRepository);
+            CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(myShipmentsContext);
+            CardRepository cardRepository = new CardRepository(myCommonContext);
 
-            foreach (var ledgerGroup_Customer in OpenledgerGroups_Customer)
-            {
-                var OpenledgerGroups = from item in ledgerGroup_Customer.Items
-                                       group item by item.Currency into g
-                                       select new { CurrencyCode = g.Key, Items = g };
+            List<Currency> systemCurrencies = currencyRepository.GetCurrencies(tenant).ToList();
+            List<ARInvoiceType> ARInvoiceTypes = myInvoiceContext.ARInvoiceTypes.ToList();
+            List<AccountingPaymentMethod> AllPaymentMethods = myInvoiceContext.AccountingPaymentMethods.Where(d => d.Tenant == tenant).ToList();
+            List<AccountingPaymentMethod> ARPaymentMethods = AllPaymentMethods.Where(d => d.IsAR).ToList();
+            List<AccountingPaymentMethod> APPaymentMethods = AllPaymentMethods.Where(d => d.IsAP).ToList();
+            List<Branch> branches = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
 
-                foreach (var ledgerGroup in OpenledgerGroups)
-                {
-                    Openbalance = 0;
-                    foreach (AccountingLedger ledger in ledgerGroup.Items)
-                    {
-                        switch (ledger.ReferenceType)
-                        {
-                            case "A\\P Payment":
-                            case "A\\R Invoice":
-                            case "A\\P Credit Note":
-                                {
-                                    Openbalance = Openbalance + ledger.Debit;
-                                    ledger.AccountBanalnce = Openbalance;
-                                    break;
-                                }
+            #region General Data
 
-                            case "A\\R Payment":
-                            case "Credit Note":
-                            case "A\\P Invoice":
-                            case "External Payment":
-                                {
-                                    Openbalance = Openbalance - ledger.Credits;
-                                    ledger.AccountBanalnce = Openbalance;
-                                    break;
-                                }
-                        }
-                    }
-
-                    AccountingLedger lastLedger = ledgerGroup.Items.LastOrDefault();
-                    AccountingLedger newLastLedger = new AccountingLedger()
-                    {
-                        AccountBanalnce = lastLedger.AccountBanalnce,
-                        ReferenceType = "Opening Balance",
-                        Currency = lastLedger.Currency,
-                        CustomerId = lastLedger.CustomerId,
-                    };
-
-                    lastLedgers.Add(newLastLedger);
-                }
-            }
-            #endregion
-
-            #region Accounting Balance            
-            accountingBalanceTempList = new List<AccountingLedger>();
-
-            this.RunAccountingBalance();
-
-            foreach (AccountingLedger ledger in lastLedgers)
-            {
-                accountingBalanceTempList.Add(ledger);
-            }
-            accountingBalanceTempList = accountingBalanceTempList.OrderBy(d => d.CreateDate).ToList();
-            #endregion
-
-            myDataProvider.AccountingLedgerList_Customer = new List<AccountingLedger_Customer>();
-            var customerGroups = from item in accountingBalanceTempList
-                                 group item by item.CustomerId into g
-                                 select new { CustomerId = g.Key, CustomerItems = g };
-
-            foreach (var item_customer in customerGroups)
-            {
-                AccountingLedger_Customer customerRecord = new AccountingLedger_Customer();
-                customerRecord.AccountingLedgerList = new List<AccountingLedger>();
-                customerRecord.CustomerId = item_customer.CustomerId;
-
-                Card myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
-                if (myCustomer != null)
-                {
-                    customerRecord.CustomerName = myCustomer.EnglishName;
-                }
-
-                Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
-                if (customerAddress != null)
-                {
-                    customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
-                }
-
-                double? balance = 0;
-                var ledgerGroups = from item in item_customer.CustomerItems
-                                   group item by item.Currency into g
-                                   select new { CurrencyCode = g.Key, Items = g };
-
-                foreach (var ledgerGroup in ledgerGroups)
-                {
-                    balance = 0;
-
-                    foreach (AccountingLedger ledger in ledgerGroup.Items)
-                    {
-                        switch (ledger.ReferenceType)
-                        {
-                            case "A\\P Payment":
-                            case "A\\R Invoice":
-                            case "A\\P Credit Note":
-                                {
-                                    balance = balance + ledger.Debit;
-                                    ledger.AccountBanalnce = balance;
-                                    break;
-                                }
-                            case "A\\R Payment":
-                            case "Credit Note":
-                            case "A\\P Invoice":
-                            case "External Payment":
-                                {
-                                    balance = balance - ledger.Credits;
-                                    ledger.AccountBanalnce = balance;
-                                    break;
-                                }
-                        }
-
-                        AccountingLedger currencyRecord = new AccountingLedger();
-                        currencyRecord.Currency = ledger.Currency;
-                        currencyRecord.CreateDate = ledger.CreateDate;
-                        currencyRecord.DueDate = ledger.DueDate;
-                        currencyRecord.ReferenceNumber = ledger.ReferenceNumber;
-                        currencyRecord.ReferenceType = ledger.ReferenceType;
-                        currencyRecord.Debit = ledger.Debit;
-                        currencyRecord.Credits = ledger.Credits;
-                        currencyRecord.AccountBanalnce = ledger.AccountBanalnce;
-                        currencyRecord.ShipperReference1 = ledger.ShipperReference1;
-                        currencyRecord.ShipperReference2 = ledger.ShipperReference2;
-                        currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
-                        currencyRecord.Notes = ledger.Notes;
-                        currencyRecord.BillToVendor = ledger.BillToVendor;
-                        currencyRecord.BranchId = ledger.BranchId;
-                        currencyRecord.BranchName = ledger.BranchName;
-
-                        customerRecord.AccountingLedgerList.Add(currencyRecord);
-                    }
-                }
-
-                var list = (from item in customerRecord.AccountingLedgerList
-                            group item by item.Currency into g
-                            select new { Currency = g.Key, Items = g });
-
-                customerRecord.AccountingLedgerList = new List<AccountingLedger>();
-
-                foreach (var group in list)
-                {
-                    List<AccountingLedger> ledgerList = group.Items.ToList();
-                    List<AccountingLedger> OpenList = group.Items.Where(d => d.ReferenceType == "Opening Balance").ToList();
-
-                    if (OpenList.Count() == 0)
-                    {
-                        AccountingLedger accountingLedgerRecord = new AccountingLedger();
-                        accountingLedgerRecord.ReferenceType = "Opening Balance";
-                        accountingLedgerRecord.AccountBanalnce = 0.00;
-                        accountingLedgerRecord.Currency = group.Currency;
-                        ledgerList.Add(accountingLedgerRecord);
-                    }
-
-                    ledgerList = ledgerList.OrderBy(d => d.CreateDate).ToList();
-
-                    foreach (AccountingLedger ledger in ledgerList)
-                    {
-                        customerRecord.AccountingLedgerList.Add(ledger);
-
-                        int i = ledgerList.IndexOf(ledger);
-
-                        if (i == 0)
-                        {
-
-                        }
-
-                        if (i < ledgerList.Count && i != 0)
-                        {
-                            ledger.AccountBanalnce = ledgerList[i - 1].AccountBanalnce + (ledgerList[i].Credits != null ? -1 * ledgerList[i].Credits : ledgerList[i].Debit);
-                        }
-
-                        ledger.Total = ledger.AccountBanalnce;
-                    }
-                }
-
-                myDataProvider.AccountingLedgerList_Customer.Add(customerRecord);
-            }
-        }
-
-        private void InitializeReportData()
-        {
-            myInvoiceContext = InvoiceContext.GetContext(tenant);
-            myCommonContext = CommonDataContext.GetContext(tenant);
-            myShipmentsContext = ShipmentsContext.GetContext(tenant);
-
-            aRInvoiceRepository = new ARInvoiceRepository(myInvoiceContext);
-            aRPaymentRepository = new ARPaymentRepository(myInvoiceContext);
-            aPPaymentRepository = new APPaymentRepository(myInvoiceContext);
-            aPInvoiceRepository = new APInvoiceRepository(myInvoiceContext);
-
-            addressRepository = new AddressRepository(myCommonContext);
-            addressQuery = new AddressQuery(addressRepository);
-            currencyRepository = new CurrencyRepository(myCommonContext);
-            shipmentRepository = new ShipmentRepository(myShipmentsContext);
-            cardRepository = new CardRepository(myCommonContext);
-            systemCurrencies = currencyRepository.GetCurrencies(tenant).ToList();
-            aRInvoiceTypes = myInvoiceContext.ARInvoiceTypes.ToList();
-            allPaymentMethods = myInvoiceContext.AccountingPaymentMethods.Where(d => d.Tenant == tenant).ToList();
-            aRPaymentMethods = allPaymentMethods.Where(d => d.IsAR).ToList();
-            aPPaymentMethods = allPaymentMethods.Where(d => d.IsAP).ToList();
-            branches = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
-        }
-        private void BuildGeneralReportData()
-        {
-            myDataProvider.FromPeriod = fromDate;
-            myDataProvider.ToPeriod = toDate;
+            myDataProvider.FromPeriod = FromDate;
+            myDataProvider.ToPeriod = ToDate;
             myDataProvider.Name = @"Accounting Ledger";
 
-            if (isByCreateDate)
+            if (IsByCreateDate)
             {
                 myDataProvider.DateType = "Create Date";
             }
@@ -367,10 +142,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 myDataProvider.DateType = "Value Date";
             }
 
-            if (!string.IsNullOrEmpty(customerId))
+            if (!string.IsNullOrEmpty(CustomerId))
             {
-                Card customer = CardRepository.GetSingleCard(customerId, tenant, true);
-                Address customerAddress = addressRepository.GetMainAddressByCardId(customerId, tenant);
+                Card customer = CardRepository.GetSingleCard(CustomerId, tenant, true);
+                Address customerAddress = addressRepository.GetMainAddressByCardId(CustomerId, tenant);
 
                 if (customer != null)
                 {
@@ -416,93 +191,93 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     myDataProvider.ZipCode = address.ZipCode;
                 }
             }
-        }
-        private void FilterBaseData()
-        {
-            iQueryable_ARInvoice = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
-            iQueryable_APInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
-            iQueryable_ARPayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
-            iQueryable_APPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
-            iQueryable_APPaymentExternalAmount = iQueryable_APPayment;
-            iQueryable_ARInvoice_All = iQueryable_ARInvoice;
+            #endregion
 
-            if (!string.IsNullOrEmpty(customerId))
+            #region Base Data Filtered
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
+            IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
+            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
+            IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
+            IQueryable<APPayment> iQueryable_APPaymentExternalAmount = iQueryable_APPayment;
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice_All = iQueryable_ARInvoice;
+
+            if (!string.IsNullOrEmpty(CustomerId))
             {
-                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == customerId);
-                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == customerId);
-                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == customerId);
-                iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == customerId);
-                iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == customerId);
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == CustomerId);
+                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == CustomerId);
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == CustomerId);
+                iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == CustomerId);
+                iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => d.VendorId == CustomerId);
             }
 
-            iQueryable_ARInvoice_Open = iQueryable_ARInvoice;
-            iQueryable_APInvoice_Open = iQueryable_APInvoice;
-            iQueryable_ARPayment_Open = iQueryable_ARPayment;
-            iQueryable_APPayment_Open = iQueryable_APPayment;
-            iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment;
+            IQueryable<ARInvoice> iQueryable_ARInvoice_Open = iQueryable_ARInvoice;
+            IQueryable<APInvoice> iQueryable_APInvoice_Open = iQueryable_APInvoice;
+            IQueryable<ARPayment> iQueryable_ARPayment_Open = iQueryable_ARPayment;
+            IQueryable<APPayment> iQueryable_APPayment_Open = iQueryable_APPayment;
+            IQueryable<APPayment> iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment;
 
-            if (isByCreateDate)
+            if (IsByCreateDate)
             {
-                if (fromDate != null)
+                if (FromDate != null)
                 {
-                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_ARInvoice_Open = iQueryable_ARInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APInvoice_Open = iQueryable_APInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_ARPayment_Open = iQueryable_ARPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment_Open = iQueryable_APPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment_OpenExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_ARInvoice_Open = iQueryable_ARInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APInvoice_Open = iQueryable_APInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_ARPayment_Open = iQueryable_ARPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment_Open = iQueryable_APPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment_OpenExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
                 }
 
-                if (toDate != null)
+                if (ToDate != null)
                 {
-                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
                 }
             }
+
             else
             {
-                if (fromDate != null)
+                if (FromDate != null)
                 {
-                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
 
-                    iQueryable_ARInvoice_Open = iQueryable_ARInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APInvoice_Open = iQueryable_APInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_ARPayment_Open = iQueryable_ARPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment_Open = iQueryable_APPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                    iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment_OpenExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) < System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                    iQueryable_ARInvoice_Open = iQueryable_ARInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APInvoice_Open = iQueryable_APInvoice_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_ARPayment_Open = iQueryable_ARPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment_Open = iQueryable_APPayment_Open.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+                    iQueryable_APPayment_OpenExternalAmount = iQueryable_APPayment_OpenExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) < System.Data.Entity.DbFunctions.TruncateTime(FromDate));
                 }
 
-                if (toDate != null)
+                if (ToDate != null)
                 {
-                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                    iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APInvoice = iQueryable_APInvoice.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_ARPayment = iQueryable_ARPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APPayment = iQueryable_APPayment.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
+                    iQueryable_APPaymentExternalAmount = iQueryable_APPaymentExternalAmount.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExternalPaymentDate) <= System.Data.Entity.DbFunctions.TruncateTime(ToDate));
                 }
             }
-        }
-        private void RunOpenBalance()
-        {
-            this.RunARInvoiceOpenBalance();
-            this.RunAPInvoiceOpenBalance();
-            this.RunARPaymentOpenBalance();
-            this.RunAPPaymentOpenBalance();
-            this.RunExternalAmountOpenBalance();
-        }
-        private void RunARInvoiceOpenBalance()
-        {
+
+            #endregion
+
+            #region Open Balance
+            List<AccountingLedger> OpeningAccounts = new List<AccountingLedger>();
+            List<AccountingLedger> lastLedgers = new List<AccountingLedger>();
+            double? Openbalance = 0;
+
             #region AR/ Invoice
             foreach (ARInvoice openARinvoice in iQueryable_ARInvoice_Open)
             {
@@ -559,13 +334,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
                 }
 
-                openingAccounts.Add(accountingLedgerRecord);
+                OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
 
-        }
-        private void RunAPInvoiceOpenBalance()
-        {
             #region AP/ Invoice
             foreach (APInvoice openAPInvoice in iQueryable_APInvoice_Open)
             {
@@ -596,13 +368,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
                 }
 
-                openingAccounts.Add(accountingLedgerRecord);
+                OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
 
-        }
-        private void RunARPaymentOpenBalance()
-        {
             #region AR/ Payment
             foreach (ARPayment openARpayment in iQueryable_ARPayment_Open)
             {
@@ -621,7 +390,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (aRPaymentMethods.Where(d => d.Id == openARpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                if (ARPaymentMethods.Where(d => d.Id == openARpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (openARpayment.AmountInPaymentCurrency < 0)
                     {
@@ -641,13 +410,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARpayment.PaymentCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARpayment.InternalNotes;
-                openingAccounts.Add(accountingLedgerRecord);
+                OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
 
-        }
-        private void RunAPPaymentOpenBalance()
-        {
             #region AP/ Payment
             foreach (APPayment openAPpayment in iQueryable_APPayment_Open)
             {
@@ -666,7 +432,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (aPPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                if (APPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (openAPpayment.AmountInPaymentCurrency < 0)
                     {
@@ -686,16 +452,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openAPpayment.PaymentCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openAPpayment.InternalNotes;
-                openingAccounts.Add(accountingLedgerRecord);
+                OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
-        }
-        private void RunExternalAmountOpenBalance()
-        {
-            this.RunAPPaymentExternal_OpenBalance();
-        }
-        private void RunAPPaymentExternal_OpenBalance()
-        {
+
             #region AP/ Payment External Amount
             foreach (APPayment openAPpayment in iQueryable_APPayment_OpenExternalAmount)
             {
@@ -718,23 +478,70 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.CreateDate = openAPpayment.ExternalPaymentDate;
                     accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openAPpayment.PaymentCurrencyId).FirstOrDefault().Code;
                     accountingLedgerRecord.Notes = openAPpayment.InternalNotes;
-                    openingAccounts.Add(accountingLedgerRecord);
+                    OpeningAccounts.Add(accountingLedgerRecord);
                 }
             }
             #endregion
-        }
-        private void RunAccountingBalance()
-        {
-            this.RunARInvoiceAccountingBalance();
-            this.RunAPInvoiceAccountingBalance();
-            this.RunARPaymentAccountingBalance();
-            this.RunAPPaymentAccountingBalance();
-            this.RunExternalAmountAccountingBalance();
-        }
-        private void RunARInvoiceAccountingBalance()
-        {
-            #region AR/ Invoice
 
+
+            var OpenledgerGroups_Customer = from item in OpeningAccounts
+                                            group item by item.CustomerId into g
+                                            select new { CustomerId = g.Key, Items = g };
+
+            foreach (var ledgerGroup_Customer in OpenledgerGroups_Customer)
+            {
+                var OpenledgerGroups = from item in ledgerGroup_Customer.Items
+                                       group item by item.Currency into g
+                                       select new { CurrencyCode = g.Key, Items = g };
+
+                foreach (var ledgerGroup in OpenledgerGroups)
+                {
+                    Openbalance = 0;
+                    foreach (AccountingLedger ledger in ledgerGroup.Items)
+                    {
+                        switch (ledger.ReferenceType)
+                        {
+                            case "A\\P Payment":
+                            case "A\\R Invoice":
+                            case "A\\P Credit Note":
+                                {
+                                    Openbalance = Openbalance + ledger.Debit;
+                                    ledger.AccountBanalnce = Openbalance;
+                                    break;
+                                }
+
+
+                            case "A\\R Payment":
+                            case "Credit Note":
+                            case "A\\P Invoice":
+                            case "External Payment":
+                                {
+                                    Openbalance = Openbalance - ledger.Credits;
+                                    ledger.AccountBanalnce = Openbalance;
+                                    break;
+                                }
+                        }
+                    }
+
+                    AccountingLedger lastLedger = ledgerGroup.Items.LastOrDefault();
+                    AccountingLedger newLastLedger = new AccountingLedger()
+                    {
+                        AccountBanalnce = lastLedger.AccountBanalnce,
+                        ReferenceType = "Opening Balance",
+                        Currency = lastLedger.Currency,
+                        CustomerId = lastLedger.CustomerId,
+                    };
+
+                    lastLedgers.Add(newLastLedger);
+                }
+            }
+            #endregion
+
+            #region Accounting Balance            
+            List<AccountingLedger> tempList = new List<AccountingLedger>();
+
+            #region AR/ Invoice
+            
             foreach (ARInvoice arInvoice in iQueryable_ARInvoice)
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
@@ -755,6 +562,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
+                accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
+                accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
 
                 if (arInvoice.BranchId != null)
                 {
@@ -787,7 +596,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (isByCreateDate)
+                if (IsByCreateDate)
                 {
                     accountingLedgerRecord.CreateDate = arInvoice.CreateDate.Value;
                 }
@@ -841,12 +650,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                accountingBalanceTempList.Add(accountingLedgerRecord);
+                tempList.Add(accountingLedgerRecord);
             }
             #endregion
-        }
-        private void RunAPInvoiceAccountingBalance()
-        {
+
             #region AP/ Invoice
             foreach (APInvoice apInvoice in iQueryable_APInvoice)
             {
@@ -856,6 +663,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apInvoice.InternalNotes;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
+                accountingLedgerRecord.MasterNumber = apInvoice.MasterNumber;
+                accountingLedgerRecord.HouseNumber = apInvoice.HouseNumber;
 
                 if (apInvoice.BranchId != null)
                 {
@@ -888,7 +697,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (isByCreateDate)
+                if (IsByCreateDate)
                 {
                     accountingLedgerRecord.CreateDate = apInvoice.CreateDate.Value;
                 }
@@ -908,19 +717,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apInvoice.AmountInInvoiceCurrency);
                 }
 
-                accountingBalanceTempList.Add(accountingLedgerRecord);
+                tempList.Add(accountingLedgerRecord);
             }
             #endregion
 
-        }
-        private void RunARPaymentAccountingBalance()
-        {
             #region AR/ Payment
             foreach (ARPayment arPayment in iQueryable_ARPayment)
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
 
-                if (isByCreateDate)
+                if (IsByCreateDate)
                 {
                     accountingLedgerRecord.CreateDate = arPayment.CreateDate.Value;
                 }
@@ -954,7 +760,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (aRPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                if (ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (arPayment.AmountInPaymentCurrency < 0)
                     {
@@ -976,20 +782,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = arPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = arPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = arPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = aRPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
 
-                accountingBalanceTempList.Add(accountingLedgerRecord);
+                tempList.Add(accountingLedgerRecord);
             }
             #endregion
-        }
-        private void RunAPPaymentAccountingBalance()
-        {
+
             #region AP/ Payment
             foreach (APPayment apPayment in iQueryable_APPayment)
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
 
-                if (isByCreateDate)
+                if (IsByCreateDate)
                 {
                     accountingLedgerRecord.CreateDate = apPayment.CreateDate.Value;
                 }
@@ -1023,7 +827,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (aPPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                if (APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
                     if (apPayment.AmountInPaymentCurrency < 0)
                     {
@@ -1045,18 +849,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = apPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = apPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = aPPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
 
-                accountingBalanceTempList.Add(accountingLedgerRecord);
+                tempList.Add(accountingLedgerRecord);
             }
             #endregion
-        }
-        private void RunExternalAmountAccountingBalance()
-        {
-            this.RunAPPaymentExternal_AccountingBalance();
-        }
-        private void RunAPPaymentExternal_AccountingBalance()
-        {
+
             #region AP/ Payment External 
             foreach (APPayment apPayment in iQueryable_APPaymentExternalAmount)
             {
@@ -1064,7 +862,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 {
                     AccountingLedger accountingLedgerRecord = new AccountingLedger();
 
-                    if (isByCreateDate)
+                    if (IsByCreateDate)
                     {
                         accountingLedgerRecord.CreateDate = apPayment.CreateDate.Value;
                     }
@@ -1107,12 +905,146 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.Notes = apPayment.InternalNotes;
                     accountingLedgerRecord.RegisterDate = apPayment.RegisterDate;
                     accountingLedgerRecord.ValueDate = apPayment.ValueDate;
-                    accountingLedgerRecord.PaymentMethod = aPPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                    accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
 
-                    accountingBalanceTempList.Add(accountingLedgerRecord);
+                    tempList.Add(accountingLedgerRecord);
                 }
             }
             #endregion
+
+            foreach (AccountingLedger ledger in lastLedgers)
+            {
+                tempList.Add(ledger);
+            }
+
+            tempList = tempList.OrderBy(d => d.CreateDate).ToList();
+            #endregion
+
+            myDataProvider.AccountingLedgerList_Customer = new List<AccountingLedger_Customer>();
+            var customerGroups = from item in tempList
+                                 group item by item.CustomerId into g
+                                 select new { CustomerId = g.Key, CustomerItems = g };
+
+            foreach (var item_customer in customerGroups)
+            {
+                AccountingLedger_Customer customerRecord = new AccountingLedger_Customer();
+                customerRecord.AccountingLedgerList = new List<AccountingLedger>();
+                customerRecord.CustomerId = item_customer.CustomerId;
+
+                Card myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
+                if (myCustomer != null)
+                {
+                    customerRecord.CustomerName = myCustomer.EnglishName;
+                }
+
+                Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
+                if (customerAddress != null)
+                {
+                    customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
+                }
+
+                double? balance = 0;
+                var ledgerGroups = from item in item_customer.CustomerItems
+                                   group item by item.Currency into g
+                                   select new { CurrencyCode = g.Key, Items = g };
+
+                foreach (var ledgerGroup in ledgerGroups)
+                {
+                    balance = 0;
+
+                    foreach (AccountingLedger ledger in ledgerGroup.Items)
+                    {
+                        switch (ledger.ReferenceType)
+                        {
+                            case "A\\P Payment":
+                            case "A\\R Invoice":
+                            case "A\\P Credit Note":
+                                {
+                                    balance = balance + ledger.Debit;
+                                    ledger.AccountBanalnce = balance;
+                                    break;
+                                }
+
+                            case "A\\R Payment":
+                            case "Credit Note":
+                            case "A\\P Invoice":
+                            case "External Payment":
+                                {
+                                    balance = balance - ledger.Credits;
+                                    ledger.AccountBanalnce = balance;
+                                    break;
+                                }
+                        }
+
+                        AccountingLedger currencyRecord = new AccountingLedger();
+                        currencyRecord.Currency = ledger.Currency;
+                        currencyRecord.CreateDate = ledger.CreateDate;
+                        currencyRecord.DueDate = ledger.DueDate;
+                        currencyRecord.ReferenceNumber = ledger.ReferenceNumber;
+                        currencyRecord.ReferenceType = ledger.ReferenceType;
+                        currencyRecord.Debit = ledger.Debit;
+                        currencyRecord.Credits = ledger.Credits;
+                        currencyRecord.AccountBanalnce = ledger.AccountBanalnce;
+                        currencyRecord.ShipperReference1 = ledger.ShipperReference1;
+                        currencyRecord.ShipperReference2 = ledger.ShipperReference2;
+                        currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
+                        currencyRecord.Notes = ledger.Notes;
+                        currencyRecord.BillToVendor = ledger.BillToVendor;
+                        currencyRecord.BranchId = ledger.BranchId;
+                        currencyRecord.BranchName = ledger.BranchName;
+                        currencyRecord.MasterNumber = ledger.MasterNumber;
+                        currencyRecord.HouseNumber = ledger.HouseNumber;
+
+                        customerRecord.AccountingLedgerList.Add(currencyRecord);
+                    }
+                }
+
+                var list = (from item in customerRecord.AccountingLedgerList
+                            group item by item.Currency into g
+                            select new { Currency = g.Key, Items = g });
+
+                customerRecord.AccountingLedgerList = new List<AccountingLedger>();
+
+                foreach (var group in list)
+                {
+                    List<AccountingLedger> ledgerList = group.Items.ToList();
+                    List<AccountingLedger> OpenList = group.Items.Where(d => d.ReferenceType == "Opening Balance").ToList();
+
+                    if (OpenList.Count() == 0)
+                    {
+                        AccountingLedger accountingLedgerRecord = new AccountingLedger();
+                        accountingLedgerRecord.ReferenceType = "Opening Balance";
+                        accountingLedgerRecord.AccountBanalnce = 0.00;
+                        accountingLedgerRecord.Currency = group.Currency;
+                        ledgerList.Add(accountingLedgerRecord);
+                    }
+
+                    ledgerList = ledgerList.OrderBy(d => d.CreateDate).ToList();
+
+                    foreach (AccountingLedger ledger in ledgerList)
+                    {
+                        customerRecord.AccountingLedgerList.Add(ledger);
+
+                        int i = ledgerList.IndexOf(ledger);
+
+                        if (i == 0)
+                        {
+
+                        }
+
+                        if (i < ledgerList.Count && i != 0)
+                        {
+                            ledger.AccountBanalnce = ledgerList[i - 1].AccountBanalnce + (ledgerList[i].Credits != null ? -1 * ledgerList[i].Credits : ledgerList[i].Debit);
+                        }
+
+                        ledger.Total = ledger.AccountBanalnce;
+                    }
+                }
+
+                myDataProvider.AccountingLedgerList_Customer.Add(customerRecord);
+            }
+
+            return myDataProvider;
         }
     }
 }

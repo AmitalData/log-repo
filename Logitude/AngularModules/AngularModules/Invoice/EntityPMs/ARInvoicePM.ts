@@ -123,6 +123,11 @@ export class ARInvoicePM {
     public set BillToAccountManagerName(newValue: string) { if (this.billToAccountManagerName != newValue) { this.billToAccountManagerName = newValue; this.MarkAsDirty("BillToAccountManagerName"); } }
        
 	 
+    private billToContactId: string;
+    public get BillToContactId() { return this.billToContactId; }
+    public set BillToContactId(newValue: string) { if (this.billToContactId != newValue) { this.billToContactId = newValue; this.MarkAsDirty("BillToContactId"); } }
+       
+	 
     private billToIsCreditLimitEnabled: boolean;
     public get BillToIsCreditLimitEnabled() { return this.billToIsCreditLimitEnabled; }
     public set BillToIsCreditLimitEnabled(newValue: boolean) { if (this.billToIsCreditLimitEnabled != newValue) { this.billToIsCreditLimitEnabled = newValue; this.MarkAsDirty("BillToIsCreditLimitEnabled"); } }

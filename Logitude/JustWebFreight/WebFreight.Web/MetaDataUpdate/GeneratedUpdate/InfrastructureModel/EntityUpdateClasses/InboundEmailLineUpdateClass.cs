@@ -654,6 +654,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable InboundEmailLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmailLine" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> InboundEmailLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmailLine").ToList();
+		       
+	      
+
+	         Screen InboundEmailLineInboundEmailLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InboundEmailLine.HeaderScreen", Name = "InboundEmailLineHeaderScreen", ObjectTableId = InboundEmailLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    InboundEmailLineObjectTable.HeaderScreenId = InboundEmailLineInboundEmailLineHeaderScreenScreen0.Id;
+		    InboundEmailLineObjectTable.HeaderScreenCode = InboundEmailLineInboundEmailLineHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

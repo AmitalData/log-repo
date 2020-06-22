@@ -17,7 +17,8 @@
       @BatchNumber varchar(15),
       @NextRunDTime datetime = null,
       @HashCode nvarchar(1000),
-      @WatingStatus int
+      @WatingStatus int,
+      @MessageId bigint out
 
       )
       as begin
@@ -44,6 +45,7 @@
       else
       set @BNo = @BatchNumber
 
+      Set @MessageId = (SELECT SCOPE_IDENTITY());
       insert into [dbo].[QueueMessageMoreDetails] ([Id],[CreateDateTime],[QueueDefinitionCode],[Status],[MessageBody],[Tenant],[NextRunDateTime],RetryNumber,Field1,Field2)
       values((SELECT SCOPE_IDENTITY()),@currentdate,@QueueDefinitionCode,@WatingStatus,@MessageBody,@Tenant,@nextRunDateTime,0,@CId,@BNo)
 
