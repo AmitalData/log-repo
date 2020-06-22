@@ -40,7 +40,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     public timer: any;
     public timerInterval: number = 1000;
     public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
-  constructor() {
+    constructor(private CD: ChangeDetectorRef) {
     super();
     if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     this.ExcludedItems = new ObservableCollection([]);
@@ -58,6 +58,7 @@ export class BatchInvoicesComponent extends BaseComponent {
 
   }
     ReloadData() {
+      
       this.SelectedItemsCount = 0;
         this.selectedItems.Clear();
         this.SetCreateInvoiceButtonText();
@@ -170,6 +171,25 @@ export class BatchInvoicesComponent extends BaseComponent {
         });
 
     }
+
+    ValidateDate(fieldName: any) {
+        this.ValidationErrorsList = [];
+        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
+            if (fieldName == null) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+            this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+            //  this.CD.detectChanges();
+
+        } else {
+
+            this.UIProperties.SetValidity("ToDate", null, true, "");
+            this.UIProperties.SetValidity("FromDate", null, true, "");
+            this.ReloadData();
+        }
+
+    }
   public DataCount: number;
   private EnabledDataCount: number;
     OnDataLoaded(result) {
@@ -187,7 +207,8 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-          this.ReloadData();
+            this.ValidateDate("FromDate");
+         
         }
     }
 
@@ -196,7 +217,8 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-             this.ReloadData();
+            this.ValidateDate("ToDate");
+           
 
         }
   }
@@ -211,7 +233,7 @@ export class BatchInvoicesComponent extends BaseComponent {
         }
         else this.IsSelectAllEnabled = true;
         this.BuildColumns();
-        this.ReloadData();
+        this.ValidateDate(null);
 
     }
     }
@@ -229,11 +251,12 @@ export class BatchInvoicesComponent extends BaseComponent {
         if (value) {
             this.IsSelectedItemsTextVisibile = true;
             this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
-        }else {
+            this.SelectedItemsCount = this.DataSource.rowCount;
+
+        } else {
             this.IsSelectedItemsTextVisibile = false;
             this.SelectedItemsCount = 0;
         }
-        this.SelectedItemsCount = this.DataSource.rowCount;
         this.SetCreateInvoiceButtonText();
     }
   }
@@ -273,8 +296,9 @@ export class BatchInvoicesComponent extends BaseComponent {
   }
 
 
-  Refresh() {
-    this.ReloadData();
+    Refresh() {
+        this.ValidateDate(null);
+   // this.ReloadData();
 
     }
     private selectedItems: ObservableCollection;
@@ -283,8 +307,8 @@ export class BatchInvoicesComponent extends BaseComponent {
   {
         if ($event.IsChecked) {
 
-            if (!this.selectedItems.Collection.includes($event)) {
-                this.selectedItems.Insert($event);
+            if (!this.selectedItems.Collection.includes($event.rowData)) {
+                this.selectedItems.Insert($event.rowData);
 
               this.SelectedItemsCount += 1;
               this.DataCount = this.DataSource.rowCount;
@@ -294,8 +318,8 @@ export class BatchInvoicesComponent extends BaseComponent {
               }
 
               if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes($event.Id)) {
-                      this.ExcludedItems.Remove($event.Id);
+                  if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                      this.ExcludedItems.Remove($event.rowData.Id);
                   }
               }
           }
@@ -303,7 +327,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     
     else {
   
-            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.Id));
+            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.rowData.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -311,8 +335,8 @@ export class BatchInvoicesComponent extends BaseComponent {
 
       }
         if (this.AllSelected) {
-            if (!this.ExcludedItems.Collection.includes($event.Id)) {
-                this.ExcludedItems.Insert($event.Id);
+            if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                this.ExcludedItems.Insert($event.rowData.Id);
           }
         }
       if (this.SelectedItemsCount == 0) {
@@ -373,11 +397,11 @@ ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,int
       var confirmWindow = new ConfirmWindow();
       confirmWindow.Width = 390;
       var NumberIdsSelected:number=0;
-      if(!interestReportArgs.AllSelected){
-        NumberIdsSelected = interestReportArgs.SelectedIds.length;
+      if(interestReportArgs.AllSelected){
+          NumberIdsSelected = this.DataCount - interestReportArgs.ExcludedIds.length;
       }
       else{
-        NumberIdsSelected = this.DataCount - interestReportArgs.ExcludedIds.length;
+          NumberIdsSelected = interestReportArgs.SelectedIds.length;
       }
       confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + NumberIdsSelected + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
       confirmWindow.WindowClosed.subscribe((event: any) => {
