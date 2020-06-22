@@ -22,13 +22,22 @@
         </td>
     </tr>
     <tr>
-        <!--<td style="width: 35px;height:23px;">
-        <div>
-            <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event "></CheckBox>
+        <td style="width: 35px;height:23px;">
+            <div>
+                <CheckBox [IsChecked]="AllSelected" (Checked)="AllSelected = $event " [IsEnabled]="IsSelectAllEnabled"></CheckBox>
 
-        </div>
-    </td>-->
+            </div>
+        </td>
+        <td *ngIf="IsSelectedItemsTextVisibile" style="width:90px">
+            <div style="width: 100%;text-align:center;  height:30px;">
+                <div class="DisbleBox">
 
+                    {{SelectedItemsCountText}}
+
+
+                </div>
+            </div>
+        </td>
         <td style="width: 75px;">
             {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}
         </td>
@@ -69,21 +78,21 @@
     </tr>
     <tr style="height:5px"></tr>
     <tr>
-        <td colspan="10" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
+        <td colspan="12" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'InterestReport'"
                                [dataSource]="DataSource" [FireCheckBoxChecked]="FireCheckBoxChecked"
                                [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="Columns" [autoLoad]="true"
                                [QueryChangeEvent]="onQueryChangeEvent" [IsCustomTemplate]="true"
                                [PassAdditionalDataToTemplates]="true"
-                               (DataLoaded)="OnDataLoaded($event)"   >
+                               (DataLoaded)="OnDataLoaded($event)" (CheckBoxChecked)="onCheckBoxChecked($event)"  [IsAllRecordsChecked]="AllSelected"    [CustomColumnsReady]="ColumnsReady">
                 </logitude-grid>
             </div>
         </td>
     </tr>
 
     <tr style="height: 32px;">
-        <td colspan="10" style="vertical-align: bottom">
+        <td colspan="12" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td>

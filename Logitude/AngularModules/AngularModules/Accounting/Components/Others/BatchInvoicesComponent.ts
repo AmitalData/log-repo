@@ -51,7 +51,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
-
+    public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.BuildColumns();
     this.ReloadData();
@@ -59,7 +59,9 @@ export class BatchInvoicesComponent extends BaseComponent {
   }
     ReloadData() {
       this.SelectedItemsCount = 0;
-      this.selectedItems.Clear();
+        this.selectedItems.Clear();
+        this.SetCreateInvoiceButtonText();
+        this.AllSelected = false;
     this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
   }
@@ -73,19 +75,30 @@ export class BatchInvoicesComponent extends BaseComponent {
     public Columns: any[] = null;
     BuildColumns() {
         this.Columns = [];
+        if (this.ShowInProgressReports) {
+            this.Columns.push({
+                FieldName: "Select",
+                DataTypeCode: 'String',
+                Display: '',
+                IsCustomTemplate: true,
+                Styles: { width: '27px' },
+                HtmlListComponentName: 'InterestReportListTemplate',
+                HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
 
-      this.Columns.push({
-        FieldName: "Select",
-        DataTypeCode: 'String',
-        Display: '',
-        IsCustomTemplate: true,
-        Styles: { width: '27px' },
-        HtmlListComponentName: 'InterestReportListTemplate',
-       HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-       
-       // IsCheckBox: true,
-      });
+                // IsCheckBox: true,
+            });
+        }
+        else {
 
+            this.Columns.push({
+                FieldName: "Select",
+                DataTypeCode: 'String',
+                Display: '',
+                IsCustomTemplate: true,
+                Styles: { width: '27px' },             
+                 IsCheckBox: true,
+            });
+        }
         this.Columns.push({
           FieldName: 'ReportNumber',
             DataTypeCode: 'String',
@@ -142,7 +155,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
         
            
-        });
+        }); this.ColumnsReady.emit(this.Columns); 
         this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 var row = $event.line;
@@ -150,7 +163,7 @@ export class BatchInvoicesComponent extends BaseComponent {
                 var RowIndex = $event.RowIndex;
                 var isChecked = $event.isChecked;
 
-                this.onCheckBoxChecked(isChecked, row, RowIndex);
+                this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
                 /// this.MarkIsChecked.emit({ MyRecord: row });
             }
@@ -161,7 +174,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   private EnabledDataCount: number;
     OnDataLoaded(result) {
         if (result) {
-          this.DataCount = result.length;
+            this.DataCount = this.DataSource.rowCount;
           this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         } 
@@ -191,24 +204,37 @@ export class BatchInvoicesComponent extends BaseComponent {
   public get ShowInProgressReports() { return this.showInProgressReports; }
   public set ShowInProgressReports(value: boolean) {
     if (this.showInProgressReports != value) {
-      this.showInProgressReports = value;
-      this.ReloadData();
+        this.showInProgressReports = value;
+        if (value) {
+
+            this.IsSelectAllEnabled = false;
+        }
+        else this.IsSelectAllEnabled = true;
+        this.BuildColumns();
+        this.ReloadData();
 
     }
-  }
+    }
+    public IsSelectedItemsTextVisibile: boolean = false;
+    public IsSelectAllEnabled: boolean = true;
   private allSelected: boolean = false; 
   public get AllSelected() { return this.allSelected; }
   public set AllSelected(value: boolean) {
     if (this.allSelected != value) {
       this.allSelected = value;
-      InterestReportEventManager.SelectAllEvent.emit({
-        value
-      });
-      InterestReportEventManager.AllSelected = value;
-    if(value)
-      this.SelectedItemsCountText = "selected "+ this.DataCount +" of " +this.DataCount;
-      else this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
-        this.SelectedItemsCount = this.DataCount;
+      //InterestReportEventManager.SelectAllEvent.emit({
+      //  value
+      //});
+      //InterestReportEventManager.AllSelected = value;
+        if (value) {
+            this.IsSelectedItemsTextVisibile = true;
+            this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
+        }else {
+            this.IsSelectedItemsTextVisibile = false;
+            this.SelectedItemsCount = 0;
+        }
+        this.SelectedItemsCount = this.DataSource.rowCount;
+        this.SetCreateInvoiceButtonText();
     }
   }
   DataSource = {
@@ -252,13 +278,13 @@ export class BatchInvoicesComponent extends BaseComponent {
 
     }
     private selectedItems: ObservableCollection;
-  private SelectedItemsCount: number=0;
-  onCheckBoxChecked(IsChecked:boolean, row:any, rowIndex:any)
+  public SelectedItemsCount: number=0;
+    onCheckBoxChecked($event:any)
   {
-    if (IsChecked) {
+        if ($event.IsChecked) {
 
-      if (!this.selectedItems.Collection.includes(row)) {
-        this.selectedItems.Insert(row);
+            if (!this.selectedItems.Collection.includes($event)) {
+                this.selectedItems.Insert($event);
 
               this.SelectedItemsCount += 1;
               this.DataCount = this.DataSource.rowCount;
@@ -268,8 +294,8 @@ export class BatchInvoicesComponent extends BaseComponent {
               }
 
               if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes(row.Id)) {
-                      this.ExcludedItems.Remove(row.Id);
+                  if (this.ExcludedItems.Collection.includes($event.Id)) {
+                      this.ExcludedItems.Remove($event.Id);
                   }
               }
           }
@@ -277,7 +303,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     
     else {
   
-        this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == row.Id));
+            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -285,12 +311,12 @@ export class BatchInvoicesComponent extends BaseComponent {
 
       }
         if (this.AllSelected) {
-          if (!this.ExcludedItems.Collection.includes(row.Id)) {
-            this.ExcludedItems.Insert(row.Id);
+            if (!this.ExcludedItems.Collection.includes($event.Id)) {
+                this.ExcludedItems.Insert($event.Id);
           }
         }
       if (this.SelectedItemsCount == 0) {
-          this.SelectedItemsCountText = "selected 0 of " + this.DataCount.toString();
+          this.IsSelectedItemsTextVisibile = false;
         this.AllSelected = false;
       }
 
@@ -298,7 +324,7 @@ export class BatchInvoicesComponent extends BaseComponent {
   }
   CreateInvoiceButtonClicked() {
       var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-      this.CurrentSession.StartBusyIndicator("");
+      this.CurrentSession.StartBusyIndicatorLoading();
       this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
         var mm: ServiceResponse = response;
         if (!mm.HasError) {
