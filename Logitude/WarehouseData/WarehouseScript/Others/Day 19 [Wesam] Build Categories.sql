@@ -78,12 +78,30 @@ ELSE      Begin
 				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 80 WHERE [dbo].[DWCategories].[Code] = 'Dates'	  
 		  End
 
---CustomFields
+
+
+		  --Routings
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Routings')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Routings','Routings',90)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 90 WHERE [dbo].[DWCategories].[Code] = 'Routings'	  
+		  End
+
+
+
+		  --CustomFields
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
           WHERE Code = 'CustomFields')
 		  Begin  
-				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',90)
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',100)
 		  End
 ELSE      Begin 
-				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 90 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 100 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
 		  End
+
+
+
+
