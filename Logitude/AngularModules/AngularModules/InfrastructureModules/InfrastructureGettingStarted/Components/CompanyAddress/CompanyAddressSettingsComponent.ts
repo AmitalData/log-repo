@@ -42,6 +42,8 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsDemoTenant = false;
+
     constructor() {
         super();      
     }
@@ -65,6 +67,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.GetDemoMessageVisibility();
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+                    this.IsDemoTenant = true;
                     this.SetUIPropertiesHitVisible();
                 }
 
@@ -414,7 +417,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.IsDemoTenant);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;
@@ -738,7 +741,7 @@ export class AddressItem extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.father.IsDemoTenant);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;

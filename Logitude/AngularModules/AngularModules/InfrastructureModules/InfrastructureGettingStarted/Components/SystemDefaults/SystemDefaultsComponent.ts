@@ -120,7 +120,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("IsNotesRightToLeftEnabled", "Tenant", false);
         this.UIProperties.SetEnabled("AllowCustomersInAgentsLOV", "Tenant", false);
         this.UIProperties.SetEnabled("AllowAgentInCustomersLOV", "Tenant", false);
-        this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
 
     }
     SetUIProperties_DemoAgent() {
