@@ -6,21 +6,40 @@
     "screenshotsFolder": "cypress/screenshots",
     "scripts": {
         "cypressRun": "cypress run",
-        "runtests": "npm run cypressRun --",
+        "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
         "cypressopen": "node_modules\\.bin\\cypress open"
 
     },
+    "env": {
+        "URL": "https://test.logitudeworld.com/test",
+        "Email": "protractor2@test.com",
+        "Password": "!P123p456"
+
+    },
+
+
     "chromeWebSecurity": false,
-
     "defaultCommandTimeout": 60000,
-
     "responseTimeout": 60000,
     "requestTimeout": 60000,
-
     "video": true,
     "screenshotOnRunFailure": true,
-    "screenshots": true
+    "screenshots": true,
 
+    "reporter": "cypress-multi-reporters",
+    "reporterOptions": {
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+            "reportDir": "cypress/reports/mocha",
+            "quite": true,
+            "overwrite": false,
+            "html": true,
+            "json": false
+        }
+    }
 
-
+    
+     
+       
+    
 }

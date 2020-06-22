@@ -27,9 +27,9 @@ it('Successfully Upload File', function () {
     cy.get('#row0').click();
     cy.get('#UploadDocumentdbtn',{ multiple: true }).click();
     //cy.get('.Button').click()
-const fileName = 'Cypress.png'
-cy.fixture('Cypress.png').then(function(fileContent){
-cy.get('input.upload').attachFile({fileContent,fileName,mimetype:'application/png'})
+const fileName = 'dummy.pdf'
+cy.fixture('dummy.pdf').then(function(fileContent){
+cy.get('input.upload').attachFile({fileContent,fileName,mimetype:'application/pdf'})
 cy.get('#FileUploadedSuccessfully').should('be.visible')
 //cy.get('#').should('be.visible')
 //cy.get(popupContainerSelector).contains('File Uploaded Successfully	').should('be.visible')
