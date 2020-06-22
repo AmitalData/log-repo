@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsLoaded">
+<table *ngIf="IsLoaded">
     <tr>
         <td>
             <div class="TableHolder">
@@ -38,6 +38,7 @@
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'Customs.GovernmentProcedureType'"
                                                         [HideLastColumn]="true"
+                                                        [QueryFilterItems]="PreceduralFilterItems"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </td>

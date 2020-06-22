@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           IndexOrder = a.IndexOrder
 
                                                       });
-            return query.Where(d => !d.Code.StartsWith("1") );
+            return query;//.Where(d => !d.Code.StartsWith("1") );
 		}
 
         private IQueryable<GovernmentProcedureType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<GovernmentProcedureType> iQueryable)
