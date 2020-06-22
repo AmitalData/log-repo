@@ -28,17 +28,20 @@ it('Search For Report', () => {
 it(' Run Report Sucssefuly', () => {
    // cy.wait(10000)
     //cy.wait(100)
-    cy.get('#CheckBox_0_0_LBL').click()
+    cy.get('#CheckBox_0_0_LBL').click({ force: true })
     cy.get('#RunReportButton').click()
 
   })
 
 it('Run Report Faield', () => {
     cy.wait(1000)
-    cy.get('#CheckBox_0_0_LBL').click()
+    cy.get('#CheckBox_0_0_LBL').should('be.visible')
+    cy.get('#CheckBox_0_0_LBL').click() 
     cy.get('#RunReportButton').click()
-    cy.wait(3000)
-    cy.get('#MessageWindow_Ok_0').click()
+    cy.wait(5000)
+    cy.get('.Button').should('be.visible')
+    cy.get('#MessageWindow_Ok_0').should('be.visible')
+    cy.get('#MessageWindow_Ok_0').click({ force: true })
 
 
 })
