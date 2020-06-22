@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                   // text = text + " בלבד";
                     text = Trim(text);
                     text = FixSpaces(text);
                     return (text);
@@ -1054,7 +1054,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                  //  text = text + " בלבד";
                     text = Trim(text);
                     text = FixSpaces(text);
                     return (text);
@@ -1070,7 +1070,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                  //  text = text + " בלבד";
                 }
                 else
                 {
@@ -1177,7 +1177,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                   // text = text + " בלבד";
                 }
                 else if (dcents == 1)
                 {
