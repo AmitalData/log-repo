@@ -517,6 +517,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     }
                 }
+                RemoveDummies(ref reportList);
                 CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
                 var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
                 List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
@@ -571,6 +572,29 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 xml = _PivotTable.ToXml();
                 return xml;
             }
+        }
+
+        private void RemoveDummies(ref List<PeriodM> reportList)
+        {
+             reportList = (from a in reportList
+                          group a by new { a.AccountId, a.PeriodName } into g
+                          select new PeriodM()
+                          {
+                              OrderDateB4 = g.First().OrderDateB4,
+                               SplitAccountId = g.First().SplitAccountId,
+                              OrderDate = g.First().OrderDate,
+                              AccountId = g.First().AccountId,
+                              CurrencyId = g.First().CurrencyId,
+                              Total = g.Sum(r => r.Total),
+                              OpenCredit = g.Sum(r => r.OpenCredit),
+                              OpenDebit =g.Sum(r => r.OpenDebit),
+                              
+
+                          })
+                          .ToList();
+                          
+
+
         }
 
         private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, IQueryable<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
