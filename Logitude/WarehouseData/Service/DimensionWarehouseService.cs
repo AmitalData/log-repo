@@ -49,11 +49,11 @@ namespace WarehouseData.Helper
             }
             result = result + fieldNamesBuilder.ToString() + " " + fieldValuesBuilder.ToString();
 
-            if (table.DBTableName == "ShipmentTypes")
-            {
-                string secondtNotSpecifiedValue = result.Replace("-1", "Air").Replace("Not Specified", "Air");
-                result += " " + secondtNotSpecifiedValue;
-            }
+            //if (table.DBTableName == "ShipmentTypes")
+            //{
+            //    string secondtNotSpecifiedValue = result.Replace("-1", "Air").Replace("Not Specified", "Air");
+            //    result += " " + secondtNotSpecifiedValue;
+            //}
 
 
             return result;

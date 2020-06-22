@@ -149,12 +149,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.PickupFrom = null;
                 entity.FirstPickupATA = null;
                 entity.FirstPickupATD = null;
+
+                entity.PickupTruckerId = null;
+                entity.PickupTruckerNumber  = null;
+                entity.PickupDriver = null;
+                entity.PickupTrailerNumber = null;
+                entity.PickupNotes = null;
+
+
             }
 
             else
             {
                 entity.FirstPickupATA = firstPickUp.ATA;
                 entity.FirstPickupATD = firstPickUp.ATD;
+
+                entity.PickupTruckerId = firstPickUp.CarrierId;
+                entity.PickupTruckerNumber = firstPickUp.CarrierNumber;
+                entity.PickupDriver = firstPickUp.Driver;
+                entity.PickupTrailerNumber = firstPickUp.TrailerNumber;
+                entity.PickupNotes = firstPickUp.Notes;
+
 
                 if (firstPickUp.PickUpDeliveryToTypeCode == "PART")
                 {
@@ -217,6 +232,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.FinalDeliveryATD = null;
                 entity.FinalDeliveryETA = null;
                 entity.FinalDeliveryETD = null;
+
+
+                entity.DeliveryTruckerId = null;
+                entity.DeliveryTruckerNumber = null;
+                entity.DeliveryDriver = null;
+                entity.DeliveryTrailerNumber = null;
+                entity.DeliveryNotes = null;
+
             }
 
             else
@@ -225,6 +248,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 entity.FinalDeliveryATD = finalDelivery.ATD;
                 entity.FinalDeliveryETA = finalDelivery.ETA;
                 entity.FinalDeliveryETD = finalDelivery.ETD;
+
+                entity.DeliveryTruckerId = finalDelivery.CarrierId;
+                entity.DeliveryTruckerNumber = finalDelivery.CarrierNumber;
+                entity.DeliveryDriver = finalDelivery.Driver;
+                entity.DeliveryTrailerNumber = finalDelivery.TrailerNumber;
+                entity.DeliveryNotes = finalDelivery.Notes;
+
+
 
                 if (finalDelivery.PickUpDeliveryToTypeCode == "PART")
                 {
