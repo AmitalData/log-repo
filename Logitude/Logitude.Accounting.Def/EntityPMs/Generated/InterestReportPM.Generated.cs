@@ -722,6 +722,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isFirstReport ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFirstReport  
+	   {
+	    
+	     get
+		{
+		   return isFirstReport;
+		 }
+		 set
+		 {
+		   if(isFirstReport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFirstReport",OldValue=isFirstReport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFirstReport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -526,12 +526,12 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                 });
             }
 
-            if (!this.IsAccountingActivated) {
+            // if (!this.IsAccountingActivated) {
                 InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
-            }
-            else {
-                InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
-            }
+            // }
+            // else {
+            //     InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
+            // }
         }
     }
 
@@ -546,9 +546,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     set InvoiceDate(value: Date) {
         if (this.EntityPM.InvoiceDate != value) {
             this.EntityPM.InvoiceDate = value;
-            if (!this.IsAccountingActivated) {
+            // if (!this.IsAccountingActivated) {
                 InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
-            }
+            // }
             this.ComputeRelativeRateDate();
             this.LoadData();
         }
@@ -573,10 +573,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
             }
 
-            if (this.IsAccountingActivated) {
-                InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
-                this.LoadData();
-            }
+            // if (this.IsAccountingActivated) {
+            //   //InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
+            //     InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
+            //     this.LoadData();
+            // }
         }
     }
 

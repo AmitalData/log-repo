@@ -91,11 +91,34 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
                 entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
             }
+            if (entityPM.InterestReportStatusCode=="1")
+            {
+                entityPM.IsFirstReport = IsCustomerHasReportNotCancelled(entityPM);
+
+            }
+            else
+            {
+                entityPM.IsFirstReport = false;
+            }
+
         }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public bool SuppressFetchOpenReconcilation { get; internal set; }
+        private bool IsCustomerHasReportNotCancelled(InterestReportPM entityPM)
+        {
+            InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByCusstomerAndStatudNotCancelledOrFailed(entityPM.ReportNumber, entityPM.CustomerId, entityPM.Tenant);
+            if (interestReport != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
 
+        }
         private static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)

@@ -479,13 +479,18 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null)
                     {
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CardCurrenciesAccountings);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
                         service.Create();
                     }
                     else
                     {
                         entityPM.Id = entity.Id;
-                       
+                        bool exist = SecurityUtility.CheckFeature("Customer", "EDITCREDITAMOUNT", entity.Tenant);
+                        if (exist)
+                        {
+                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;  
+                        }
+
                         CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(entityPM.Tenant);
                         List<CustomerFieldsUpdateSettingPM> settings = customerFieldsUpdateSettingQuery.GetCustomerFieldsUpdateSettingPMsByTenant(entityPM.Tenant).ToList();
                         var salesManSettings = settings.FirstOrDefault(s => s.ObjectFieldName == "SalesmanUserId");
@@ -545,7 +550,7 @@ namespace WebFreight.Web.WcfApi
 
                         }
 
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CardCurrenciesAccountings);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
                         service.Update();
                     }
 

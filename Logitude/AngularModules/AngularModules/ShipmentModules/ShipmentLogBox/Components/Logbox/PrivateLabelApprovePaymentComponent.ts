@@ -189,7 +189,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     if (this.AdditionalData.TaxesMoreDetails) {
                         warningCode = this.GetWarningCodeBeforeApproval(this.AdditionalData.TaxesMoreDetails);
                     }
-                    if (warningCode && warningCode != '') {
+                    if (warningCode && warningCode != '0') {
                         var warningWindow = new LogitudeWindow();
                         warningWindow.Width = 340;
                         warningWindow.Height = 200;
@@ -254,6 +254,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     private GetWarningCodeBeforeApproval(TaxDetails) {
+        this.AlertForTesting(TaxDetails);
         var tax1Amount: number = 0, tax16Amount: number = 0;
         TaxDetails.forEach((tax) => {
             if (tax.TaxTypeCode == '1')
@@ -273,6 +274,15 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         }
         return '0';
 
+    }
+
+    AlertForTesting(TaxDetails) {
+        if (SessionLocator.LoggedUserPM.Email == "ahmadb@logitudeworld.com") { //For testing.
+            TaxDetails.forEach((tax) => {
+                alert("tax type code:" + tax.TaxTypeCode);
+                alert("tax amount:" + tax.TaxAmount);
+            });
+        }
     }
 
     DenyButtonClicked() {
