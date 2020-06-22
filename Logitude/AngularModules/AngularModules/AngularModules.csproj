@@ -316,6 +316,7 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="cypress\Cypress.conf.js" />
     <Content Include="cypress\fixtures\Cypress.png" />
     <Content Include="cypress\fixtures\Logitude.jpg" />
     <Content Include="cypress\integration\examples\Prod.spec.js" />

@@ -34,7 +34,7 @@ export class NewAgent {
 
     SearchAgentTab() {
 
-        cy.get('#null_Search').type("Agent");
+        cy.get('#null_Search2').type("Agent");
         cy.get('#MaintenanceItemMTAG').click();
         
 

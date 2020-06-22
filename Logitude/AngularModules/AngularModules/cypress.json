@@ -3,7 +3,7 @@
     "viewportHeight": 1000,
     "projectId": "b2kqc4",
     "integrationFolder": "cypress/TeamIslam",
-    "screenshotsFolder": "cypress/screenshots",
+    "screenshotsFolder": "cypress/results/html/screenshots",
     "scripts": {
         "cypressRun": "cypress run",
         "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
@@ -26,15 +26,15 @@
     "screenshotOnRunFailure": true,
     "screenshots": true,
 
-    "reporter": "cypress-multi-reporters",
+    "reporter": "cypress-mochawesome-reporter",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
         "mochawesomeReporterOptions": {
-            "reportDir": "cypress/reports/mocha",
+            "reportDir": "cypress/results/html",
             "quite": true,
             "overwrite": false,
             "html": true,
-            "json": false
+            "json": true
         }
     }
 
