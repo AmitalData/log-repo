@@ -13,6 +13,7 @@ import { EntityResourceService } from "../../../Infrastructure/Services/EntityRe
 import { DeclarationPMService } from "../../../Customs/Services/StandardPMs/DeclarationPMService";
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DropdownMenuFilterComponent } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/DropdownMenuFilterComponent';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -28,6 +29,7 @@ export class InvoiceQueueComponent
     public StatusList: ObservableCollection;
     public declaration: DeclarationPM;
     _invoiceQueueWebService: InvoiceQueueWebService = new InvoiceQueueWebService();
+    RowIndex: any;
     constructor(private EntityResourceService: EntityResourceService, private _declarationPMService: DeclarationPMService) {
         super();
         this.InvoiceLineList = new ObservableCollection([]);
@@ -70,6 +72,96 @@ export class InvoiceQueueComponent
 
 
 
+    }
+
+
+    public Run(args: any) {
+        this.RowIndex = args['RowIndex'];
+        
+    }
+
+
+    ShowDisbursement() {
+
+        let myDeclaration: DeclarationPM = this.declaration;
+        let myViewModelName = "InvoiceQueueComponent.ts-ShowDisbursement";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+                            
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
+                        myViewModelName);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowDisbursementList",
+                "CFIHMAIN.LogitudeTask",
+                "ShowDisbursement",
+                unifreightMessageM,
+                " הצגת מסך : בילינג");
+        }
+        else {
+            alert("ShowDisbursement");
+        }
+    }
+
+    
+    ShowPayments() {
+
+        let myDeclaration: DeclarationPM = this.declaration;
+        let myViewModelName = "InvoiceQueueComponent.ts-ShowPayments";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
+                        myViewModelName);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowPaymentsList",
+                "CFIHMAIN.LogitudeTask",
+                "ShowPayments",
+                unifreightMessageM,
+                " הצגת מסך : רשימת הוצאות");
+        }
+        else {
+            alert("ShowPayments");
+        }
     }
 }
  
