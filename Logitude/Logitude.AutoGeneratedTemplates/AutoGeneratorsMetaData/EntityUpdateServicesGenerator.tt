@@ -142,6 +142,11 @@ void SaveEntityServiceOutput(string outputFileName)
 	{
 	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
 	}
+	
+	if(pocosspacestring.Contains("CargoTracking"))
+	{
+	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
+	}
 
 	string pmsspacestring =   entityPMsPath;
 	string mappingspacestring =   servicenamespacestring.ToString().Substring(0,servicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
