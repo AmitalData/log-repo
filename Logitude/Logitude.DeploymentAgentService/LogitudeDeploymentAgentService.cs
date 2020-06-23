@@ -586,7 +586,7 @@ namespace Logitude.DeploymentAgentService
             string filePath = vsTestConsoleDirectoryPath + @"\vstest.console.exe";
             string arguments = string.Format("{0}", unitTestsPathsArgument);
 
-            ProcessHelper processHelper = new ProcessHelper(filePath, arguments, null, Encoding.UTF8);
+            ProcessHelper processHelper = new ProcessHelper(filePath, arguments, null, Encoding.GetEncoding(866));
             ProcessRunResult processRunResult = processHelper.RunProcess();
             if (processRunResult.ProcessResult != null)
             {
