@@ -396,9 +396,9 @@ export class FieldTemplateComponent {
         }
 
     }
-    ShowGDMUSHARED() {
+    ShowSharedDocuments() {
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
-        let myViewModelName = "FieldTemplateComponent.ts-ShowGDMUSHARED";
+        let myViewModelName = "FieldTemplateComponent.ts-ShowSharedDocuments";
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
@@ -425,9 +425,9 @@ export class FieldTemplateComponent {
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.ShowGDMUSHARED",
+                "ScriptableGatewayUtil.ShowSharedDocuments",
                 "CFIHMAIN.LogitudeTask",
-                "ShowGDMUSHARED",
+                "ShowSharedDocuments",
                 unifreightMessageM,
                 " הצגת מסך : שיתוף מסמכים");
 
