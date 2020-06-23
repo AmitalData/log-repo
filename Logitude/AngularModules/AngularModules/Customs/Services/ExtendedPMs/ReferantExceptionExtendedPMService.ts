@@ -29,7 +29,7 @@ export class ReferantExceptionExtendedPMService {
             authHeader.append('Content-Type', 'application/json');
             return this._http.delete(this._apiUrl + '/Delete/?' + '&declarationid=' + declarationid + '&exceptionreasonscode=' + exceptionreasonscode, ServiceHelper.GetHttpHeaders())
             .pipe(map((response:any) => {
-                var myJsonResult = response.json();
+                var myJsonResult = response.body;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;

@@ -120,7 +120,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
             img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
             img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
-            img_I.setAttribute("src", "./Images/TransportModes/I_G.png");
+            img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
             switch (itemValue) {
                 case "A": {
                     img_A.setAttribute("src", "./Images/TransportModes/A_w.png");
