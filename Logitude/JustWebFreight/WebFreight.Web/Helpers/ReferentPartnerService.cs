@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact accountManagerContact = contactRepository.GetSingleContactByIdAndTenant(accountManagerId, tenant, true);
             if (accountManagerContact != null)
-            {
+            { 
                 shipmentPartnerPM.ContactName = accountManagerContact.EnglishName;
                 shipmentPartnerPM.Phone =!string.IsNullOrEmpty(accountManagerContact.BusinessPhone) ? accountManagerContact.BusinessPhone : accountManagerContact.Mobile;
                 shipmentPartnerPM.Fax = accountManagerContact.Fax;
