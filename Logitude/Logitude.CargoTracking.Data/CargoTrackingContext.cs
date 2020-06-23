@@ -17,6 +17,7 @@ using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
+using System.Configuration;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data; 
 using Logitude.CargoTracking.Data.EntityMapping;
@@ -43,12 +44,9 @@ namespace Logitude.CargoTracking.Data
 
         public static ICargoTrackingContext GetContext(int tenant)
         {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["CargoTrackingStr"].ConnectionString;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             CargoTrackingContext context = new CargoTrackingContext(connection);
-			 
             return context;
         }
 		public override LogitudeDBSchema LogitudeDBSchema
@@ -67,7 +65,9 @@ namespace Logitude.CargoTracking.Data
             }
             Database.SetInitializer<CargoTrackingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-						
+			
+            modelBuilder.Configurations.Add(new CargoTrackingPort2Map());
+				
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -347,7 +347,13 @@ namespace Logitude.CargoTracking.Data
 			return this;
 		}
  
-  
+
+	 public IDbSet<CargoTrackingPort2> CargoTrackingPort2s 
+	 {
+	      get; set;
+	 
+	 }
+	  
  }
 
 

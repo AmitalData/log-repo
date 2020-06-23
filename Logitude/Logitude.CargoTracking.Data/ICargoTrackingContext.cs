@@ -17,7 +17,8 @@ namespace Logitude.CargoTracking.Data
     public partial interface ICargoTrackingContext : IContext
     {
    
-        
+       	 IDbSet<CargoTrackingPort2> CargoTrackingPort2s { get; }
+	 
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();

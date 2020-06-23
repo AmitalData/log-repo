@@ -185,6 +185,7 @@ using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
+using System.Configuration;
 using <#= mappingsspacestring #>
 using <#= dataprojectnamespace #> 
 using <#= pocosspacestring #>
@@ -211,12 +212,9 @@ namespace <#= contextnamespacestring #>
 
         public static I<#= contextname #> GetContext(int tenant)
         {           
-            GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["CargoTrackingStr"].ConnectionString;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             <#= contextname #> context = new <#= contextname #>(connection);
-			 
             return context;
         }
 		public override LogitudeDBSchema LogitudeDBSchema

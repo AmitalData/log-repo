@@ -74,7 +74,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public  List<EntityStatus>  AllEntityStatuses { get; set; }
 		Dictionary<string, QueryGroup> tenantQueryGroups {get; set; }
 		 
-	   
+	   	CargoTrackingPort2UpdateClass  CargoTrackingPort2UpdateClass = new CargoTrackingPort2UpdateClass();
+	
 		public void LoadObjectsTenantZero(IWebFreightContext context)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
@@ -229,61 +230,114 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				return TablesHashStrings;
 
 			TablesHashStrings = new Dictionary<string, string>();
- 			return TablesHashStrings;
+ 			TablesHashStrings.Add("CargoTrackingPort2",  CargoTrackingPort2UpdateClass.HashString);
+			return TablesHashStrings;
         }
         public void CreateAllObjectTablesMetadata()
         {
    
+			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoTrackingPort2", ObjectTables, CargoTrackingPort2UpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("CargoTrackingPort2");
+					CargoTrackingPort2UpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					CargoTrackingPort2UpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoTrackingPort2UpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
         }
    
 
         public void CreateAllObjectTables()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
         }
    
 
         public void CreateAllObjectFields()
         {
    
+	   	   //CargoTrackingPort2UpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
         }
 
 		public void CreateAllQueries()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
         }
 
 		public void CreateAllScreens()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
         }
 
 		public void CreateAllTabs()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
         }
 
 		public void CreateAllEventTypes()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
         }
 
 		public void CreateAllFeatures()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
         }
 		public void CreateAdditionalTextCodes()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
         }
 		public void CreateAllMenuButtons()
         {
    
+	   	   CargoTrackingPort2UpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
         }
 
 		public void CreateAllClosedTables()
         {
    
+	   
         }
  	 
 	 

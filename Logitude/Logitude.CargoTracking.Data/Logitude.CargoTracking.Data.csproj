@@ -60,7 +60,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,8 +73,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CargoTrackingContext.cs" />
+    <Compile Include="EntityKeys\CargoTrackingPort2Keys.cs" />
+    <Compile Include="EntityListQueryServices\CargoTrackingPort2ListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CargoTrackingPort2ListQueryService.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CargoTrackingPort2List.Generated.cs" />
+    <Compile Include="EntityMapping\CargoTrackingPort2Map.cs" />
+    <Compile Include="EntityPOCOs\CargoTrackingPort2.cs" />
     <Compile Include="ICargoTrackingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CargoTrackingPort2Repository.cs" />
+    <Compile Include="Repositories\Generated\CargoTrackingPort2Repository.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
@@ -92,14 +102,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityKeys\" />
-    <Folder Include="EntityListQueryServices\" />
-    <Folder Include="EntityLists\" />
-    <Folder Include="EntityMapping\" />
-    <Folder Include="EntityPOCOs\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
