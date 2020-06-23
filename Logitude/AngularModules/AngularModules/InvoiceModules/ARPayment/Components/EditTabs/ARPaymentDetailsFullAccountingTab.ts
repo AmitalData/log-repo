@@ -1905,6 +1905,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         sortedTransactions = closedTransactions.concat(partiallyOpenedTransactions).concat(openedTransactions);
         return sortedTransactions;
     }
+
+
+    public get PaymentOpenAmount() : number {
+        return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
+    }
 }
 
 
@@ -2001,12 +2006,7 @@ export class TransactionLineModel extends BaseComponent {
 
         if (v) {
 
-            if(this.AmountToReconcile == null || this.AmountToReconcile == 0){
-                if(this.OpenAmount <= this.parent.EntityPM.OpenAmount)
-                    this.AmountToReconcile = this.OpenAmount;
-                else if(this.OpenAmount > this.parent.EntityPM.OpenAmount)
-                    this.AmountToReconcile = this.parent.EntityPM.OpenAmount;
-            }
+            this.SetAmountToReconcile();
 
             this.parent.PushTransaction(this.ledgerTransaction);
         } else {
@@ -2020,6 +2020,28 @@ export class TransactionLineModel extends BaseComponent {
 
     }
 
+
+
+
+    private SetAmountToReconcile()
+    {
+        if (this.AmountToReconcile == null || this.AmountToReconcile == 0)
+        {
+            // if(this.CurrencyId == this.parent.EntityPM.PaymentCurrencyId)
+            // {
+
+                if (this.OpenAmount <= this.parent.PaymentOpenAmount)
+                    this.AmountToReconcile = this.OpenAmount;
+
+                else if (this.OpenAmount > this.parent.PaymentOpenAmount)
+                    this.AmountToReconcile = this.parent.PaymentOpenAmount;
+
+            // }else{
+
+            // }
+
+        }
+    }
 
     get IsReconciled() { return this.LedgerTransactionPM.IsReconciled; }
     set IsReconciled(value: boolean) {
