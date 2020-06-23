@@ -74,6 +74,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -195,7 +196,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.conStrLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CargoTrackingTestBtn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -588,6 +589,11 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // conStrLabel
+            // 
+            this.conStrLabel.Name = "conStrLabel";
+            this.conStrLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // button12
             // 
@@ -1664,6 +1670,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.CargoTrackingTestBtn);
             this.tabPage2.Controls.Add(this.uploadMexicoCitiesBtn);
             this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
@@ -1910,10 +1917,15 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // conStrLabel
+            // CargoTrackingTestBtn
             // 
-            this.conStrLabel.Name = "conStrLabel";
-            this.conStrLabel.Size = new System.Drawing.Size(0, 17);
+            this.CargoTrackingTestBtn.Location = new System.Drawing.Point(497, 529);
+            this.CargoTrackingTestBtn.Name = "CargoTrackingTestBtn";
+            this.CargoTrackingTestBtn.Size = new System.Drawing.Size(135, 23);
+            this.CargoTrackingTestBtn.TabIndex = 99;
+            this.CargoTrackingTestBtn.Text = "CargoTrackingTest";
+            this.CargoTrackingTestBtn.UseVisualStyleBackColor = true;
+            this.CargoTrackingTestBtn.Click += new System.EventHandler(this.CargoTrackingTestBtn_Click);
             // 
             // Form1
             // 
@@ -2130,6 +2142,7 @@
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
         private System.Windows.Forms.Button uploadMexicoCitiesBtn;
         private System.Windows.Forms.ToolStripStatusLabel conStrLabel;
+        private System.Windows.Forms.Button CargoTrackingTestBtn;
     }
 }
 
