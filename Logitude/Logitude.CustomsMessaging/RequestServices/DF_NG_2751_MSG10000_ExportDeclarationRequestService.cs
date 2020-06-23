@@ -750,13 +750,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             //    }
             //};
 
-            customDeclaration.Exporter[0].ID.schemeID= "1";
+          //  customDeclaration.Exporter[0].ID.schemeID= "1";
 
             if (!String.IsNullOrWhiteSpace(declarationPM.ProcedureCurrentCode))
             {
                 customDeclaration.GovernmentProcedure = new DeclarationGovernmentProcedure()
                 {
-                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>("1000001") //  declarationPM.ProcedureCurrentCodenew GovernmentProcedureCurrentCodeType()
+                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>(declarationPM.ProcedureCurrentCode) //  declarationPM.ProcedureCurrentCodenew GovernmentProcedureCurrentCodeType()
                 };
                 }
 
