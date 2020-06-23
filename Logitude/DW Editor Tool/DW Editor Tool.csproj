@@ -125,6 +125,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Files\DIM_ShipmentReceivableStatuses.dwml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Files\DIM_ShipmentPayableStatuses.dwml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Files\DIM_Branches.dwml">
       <SubType>Designer</SubType>
     </None>
@@ -182,7 +188,7 @@
     <Content Include="Generated Scripts\dw_objecttables_fields.generated.sql" />
     <Content Include="Templates\DWObjectTablesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DWObjectTablesGenerator.cs</LastGenOutput>
+      <LastGenOutput>DWObjectTablesGenerator1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
