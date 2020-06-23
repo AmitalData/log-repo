@@ -34,7 +34,7 @@
             "quite": true,
             "overwrite": false,
             "html": true,
-            "json": true
+            "json": false
         }
     }
 
