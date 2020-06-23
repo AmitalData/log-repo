@@ -202,7 +202,7 @@ export class AmitalGatewayUtil {
             unifreightMessageM,
             " הזנת הערות לתור");
     }
-    public ShowGDMUSHARED(
+    public ShowSharedDocuments(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
         ViewModelName: string
@@ -213,9 +213,9 @@ export class AmitalGatewayUtil {
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.ShowGDMUSHARED",
+            "AmitalGatewayUtil.ShowSharedDocuments",
             "CFIHMAIN.LogitudeTask",
-            "ShowGDMUSHARED",
+            "ShowSharedDocuments",
             unifreightMessageM,
             "שיתוף מסמכים");
     }
