@@ -1229,6 +1229,7 @@ namespace WebFreight.Web.Helpers
         }
         private string LTrim(string s)
         {
+            s = s.Trim();
             var i = 0;
             var j = 0;
             for (i = 0; i <= s.Length - 1; i++)
@@ -1238,7 +1239,7 @@ namespace WebFreight.Web.Helpers
                    
                    break;
                 }
-            return s.Substring(j, s.Length);
+            return  s.Substring(j, s.Length);
         }
         private string RTrim(string s)
         {
