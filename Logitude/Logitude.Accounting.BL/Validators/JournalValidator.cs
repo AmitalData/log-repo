@@ -162,11 +162,24 @@ namespace Logitude.Accounting.BL.Validators
                         transText = "Closed Month";
                     }
 
-                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate))
+                    if (myJournalPM.APPaymentCancelDate==null)
                     {
-                        errorsList.Add(transText);
-                        valid = false;
+                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate))
+                        {
+                            errorsList.Add(transText);
+                            valid = false;
+                        }
                     }
+                    else
+                    {
+                        if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime) myJournalPM.APPaymentCancelDate))
+                        {
+                            errorsList.Add(transText);
+                            valid = false;
+                        }
+
+                    }
+
                 }
             }
 
