@@ -69,6 +69,11 @@ export class TariffSettingPM {
     public set ContainerDefaults(newValue: string) { if (this.containerDefaults != newValue) { this.containerDefaults = newValue; this.MarkAsDirty("ContainerDefaults"); } }
        
 	 
+    private defaultCurrencyId: string;
+    public get DefaultCurrencyId() { return this.defaultCurrencyId; }
+    public set DefaultCurrencyId(newValue: string) { if (this.defaultCurrencyId != newValue) { this.defaultCurrencyId = newValue; this.MarkAsDirty("DefaultCurrencyId"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

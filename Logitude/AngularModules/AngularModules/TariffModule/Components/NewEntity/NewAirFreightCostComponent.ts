@@ -936,12 +936,14 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                             this.PriceSteps = this.tariffSetting.LCLDefaultSteps;
                         }
 
-                        this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
+                        this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);                        
                     }
 
                     else if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "OFC") {
                         this.GetAllPackages();
                     }
+
+                    this.CurrencyId = this.tariffSetting.DefaultCurrencyId;
                 }
             }
         });
