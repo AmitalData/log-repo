@@ -27,7 +27,7 @@
                 cursor: pointer;
             }
 
-            
+
     .dropdown {
         display: block;
         outline: none;
@@ -65,31 +65,31 @@
                 <button style="text-align:right" (click)="ShowPayments()">רשימת הוצאות</button>
             </div>
             <!--
-        <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
-            <div (click)="ButtonClick()">
-                <courier-filter-button #MyDropdownMenuFilterComponent
-                                       [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
-                    <div class="class-filter-content">
-                        <div>
-                            <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
-                        </div>
-                    </div>
+                <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
+                    <div (click)="ButtonClick()">
+                        <courier-filter-button #MyDropdownMenuFilterComponent
+                                               [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
+                            <div class="class-filter-content">
+                                <div>
+                                    <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                                </div>
+                            </div>
 
-                    <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
-                        <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
-                            <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDisbursement();  ">
-                                <span>בילינג</span>
-                            </li>
-                            <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowPayments();">
-                                <span>רשימת הוצאות</span>
-                            </li>
-                        </ul>
+                            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                                <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDisbursement();  ">
+                                        <span>בילינג</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowPayments();">
+                                        <span>רשימת הוצאות</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </courier-filter-button>
                     </div>
-                </courier-filter-button>
+                </div>
             </div>
-        </div>
-    </div>
-            -->
+                    -->
         </div>
     </div>
     <table>
@@ -99,9 +99,9 @@
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
                     מספר תיק
                 </span>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;">
-                    {{declaration.CustomFileNo}}
-
+                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; ">
+                    <!--style="font-size:12px;"-->
+                    <a style="font-size:18px;" href="javascript:;" (click)="ShowCustomFileOPCFromDeclaration()">{{declaration.CustomFileNo}}</a>
                 </span>
             </td>
             <td></td>
@@ -202,12 +202,12 @@
                                         [width]="'80'" [Alignment]="'Right'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.ServiceCode}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
 
                             <log-column [header]="'שם סעיף'"
@@ -215,24 +215,24 @@
                                         [binding]="'ServiceName'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.ServiceName}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'לחיוב'"
                                         [width]="'120'" [Alignment]="'Right'"
                                         [binding]="'PayType'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.PayType}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
 
                             <log-column [header]="'סכום בשח'"
@@ -240,36 +240,36 @@
                                         [binding]="'AmountNIS'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.AmountNIS}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Currency'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Currency}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'סכום במטח'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'AmountForeign'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.AmountForeign}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
@@ -297,7 +297,7 @@
                                         [width]="'80'" [Alignment]="'Right'">
                                 <ng-template let-item>
 
-                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Code}}</span>
                                         </div>
@@ -311,24 +311,24 @@
                                         [binding]="'Name'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Name}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'תאריך'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Date'">
                                 <ng-template let-item>
 
-                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Date}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
 
                             <log-column [header]="'שעה'"
@@ -336,30 +336,30 @@
                                         [binding]="'Time'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Time}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'הערות'"
                                         [width]="'220'" [Alignment]="'Right'"
                                         [binding]="'Comments'">
                                 <ng-template let-item>
 
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div class="RightCenter">
                                             <span>{{item.Comments}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
 
                 </div>
-             
+
             </td>
 
         </tr>
@@ -388,7 +388,7 @@
                                             <span>{{item.InvoiceNumber}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
 
                             <log-column [header]="'תיק שילוח'"
@@ -401,19 +401,19 @@
                                             <span>{{item.ForwarderFile}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                             <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'InvoiceCurrency'">
                                 <ng-template let-item>
 
-                                    <log-cell-template #logcelltemplate   [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div style="text-align:right">
                                             <span>{{item.InvoiceCurrency}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
 
                             <log-column [header]="'סכום'"
@@ -421,16 +421,16 @@
                                         [binding]="'InvoiceAmount'">
                                 <ng-template let-item>
 
-                                    <log-cell-template #logcelltemplate  [IgnoreMods]="true">
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                         <div style="text-align:right">
                                             <span>{{item.InvoiceAmount}}</span>
                                         </div>
                                     </log-cell-template>
-                                    </ng-template>
+                                </ng-template>
                             </log-column>
                         </logitude-edit-grid>
                     </div>
-                    </div>
+                </div>
             </td>
 
         </tr>
@@ -438,7 +438,7 @@
     </table>
 
     <div style="float:left ;width:150px;margin-left: 10%;">
-        <button class="GreenButton"  >הפקת חשבונית</button>
+        <button class="GreenButton">הפקת חשבונית</button>
 
     </div>
 

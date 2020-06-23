@@ -3,7 +3,7 @@ import { BaseComponent } from "../../../Infrastructure/Components/LogitudeCompon
 import { CustomMessageWrapperComponent } from "../../CustomsControls/Components/CustomMessageWrapperComponent";
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from "../../CustomsRequests/Components/BaseRequestsSheetMassaging";
 import { CustomSendOptionsArgs } from "../../../Customs/DataContract/RequestParams/RequestParamsBase";
- import { DeclarationRemarks } from "../../../Customs/EntityPMs/Extended/DeclarationRemarks";
+import { DeclarationRemarks } from "../../../Customs/EntityPMs/Extended/DeclarationRemarks";
 import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator";
 import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
 import { DateTool } from "../../../Infrastructure/Tools";
@@ -17,13 +17,13 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 
 @Component({
     selector: 'InvoiceQueueComponent',
-     templateUrl: './InvoiceQueueComponent.html',
+    templateUrl: './InvoiceQueueComponent.html',
     providers: [DeclarationPMService]
 
 })
 export class InvoiceQueueComponent
-    extends BaseComponent{
-    public DataContext:any=this;
+    extends BaseComponent {
+    public DataContext: any = this;
     public InvoiceLineList: ObservableCollection;
     public IntegratedInvoiceList: ObservableCollection;
     public StatusList: ObservableCollection;
@@ -38,7 +38,7 @@ export class InvoiceQueueComponent
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                 this._invoiceQueueWebService.GetInvoice().subscribe(data => {
+                this._invoiceQueueWebService.GetInvoice().subscribe(data => {
 
                     (data.Result.Invoice as Invoices).InvoiceLines.forEach(
                         x => {
@@ -61,7 +61,7 @@ export class InvoiceQueueComponent
                         data => {
                             this.declaration = data.Result;
                         });
-                   
+
 
                 });
 
@@ -77,7 +77,7 @@ export class InvoiceQueueComponent
 
     public Run(args: any) {
         this.RowIndex = args['RowIndex'];
-        
+
     }
 
 
@@ -99,7 +99,7 @@ export class InvoiceQueueComponent
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
                             SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
-                            
+
                         }
                     }
                 );
@@ -122,7 +122,7 @@ export class InvoiceQueueComponent
         }
     }
 
-    
+
     ShowPayments() {
 
         let myDeclaration: DeclarationPM = this.declaration;
@@ -163,8 +163,53 @@ export class InvoiceQueueComponent
             alert("ShowPayments");
         }
     }
-}
- 
 
- 
+    ShowCustomFileOPCFromDeclaration() {
+
+        let myDeclaration: DeclarationPM = this.declaration;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCustomFileOPCFromDeclaration";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCustomFileOPCFromDeclarationList",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCustomFileOPCFromDeclaration",
+                unifreightMessageM,
+                " הצגת OPC תיק עמילות מכס");
+
+        }
+        else {
+            alert("ShowCustomFileOPCFromDeclaration");
+        }
+
+    }
+
+}
+
+
+
 
