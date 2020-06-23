@@ -71,6 +71,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private decimal? Sum_WithoutAllIn;
         private string sellerName;
         private SurchargeSummary SurchargeItem;
+        private Tariff CurrentSurcharge;
         public PriceCheckManager(TariffSearchArgs args, int tenant)
         {
             this.tenant = tenant;
@@ -520,7 +521,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         List<string> AllInIds_Charges = chargesTypes.Where(p => AllInChargesIds.Contains(p.Id)).Select(p => p.Id).ToList();
                         tariffsSummary.AllInIds = string.Join(", ", AllInIds_Charges);
                     }
-                    Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
+                    this.CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
 
                     string sellerName = "";
                     string documentId = null;
@@ -693,7 +694,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = result.Notes;
+                    tariffsSummary.Remarks = result.Notes + ", "+ CurrentSurcharge.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
@@ -830,7 +831,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.Remarks = trariff.Notes;
+                    tariffsSummary.Remarks = trariff.Notes + ", " + CurrentSurcharge.Notes;
                     var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = tariffLine.Version + "";
@@ -924,7 +925,7 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private void FillSurchargeData(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)
         {
-            Tariff CurrentSurcharge = surchargeTariffList.Where(p => p.SellerId == trariff.SellerId).FirstOrDefault();
+            this.CurrentSurcharge = surchargeTariffList.Where(p => p.SellerId == trariff.SellerId).FirstOrDefault();
             if (CurrentSurcharge != null)
             {
                 if (surchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
