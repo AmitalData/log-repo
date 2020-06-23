@@ -80,6 +80,28 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        public HttpResponseMessage PutCheckNumberOfInterestReportInvoicingWithoutInvoice(InterestReportArguments interestReportArgs)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+                string email = HttpContext.Current.User.Identity.Name;
+                interestReportArgs.Tenant = tenant;
+                interestReportArgs.Email = email;
+
+                InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                int NumberOfInterestReportsWithoutInvoice = interestReportQueryService.GetInterestReportsBySelectedIds(interestReportArgs).Count();
+
+                return Request.CreateResponse(HttpStatusCode.OK, NumberOfInterestReportsWithoutInvoice);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private void  UpdateStatusForALLNotInvoicedInterestReports(InterestReportArguments interestReportArgs, int tenant)
         {            
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
