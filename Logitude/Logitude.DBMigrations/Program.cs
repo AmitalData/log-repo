@@ -8,11 +8,11 @@ namespace Logitude.DBMigrations
         {
             RunSettings runSettings = new RunSettings
             {
-                DebugMode = false,
+                DebugMode = true,
                 ExecuteScripts = false,
                 IgnoreHash = false,
                 ValidateFiles = true,
-                Root = null,
+                Root = @"C:\source\log-repo\Logitude",
                 SpecificDxmlFile = null,
                 SpecificSxmlFile = null
             };
