@@ -43,12 +43,13 @@
 
     <div style="float:left;width:115px" class="dropdown">
 
-        <div tabindex="-1" class="ToggleButton" style="width:115px;height: 22px; background:white; border:unset">
+        <div tabindex="-1" class="ToggleButton" style="width:115px;height: 22px; border:unset; background-color:transparent">
+            <!--background:white; -->
             <div>
                 <table>
                     <tr>
                         <td class="LeftCenter" style="width: 80px;">
-                            <label style="width: 80px; font-size:14px; color: #4db6ea;">פעולות נוספות</label>
+                            <label style="width: 80px; font-size:14px; color: #4db6ea;">פעולות נוספות</label> <!--{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}-->
                             <!--<img src="./Images/Icons/Actions.png" />-->
                         </td>
                         <td class="CenterCenter" style="width: 10px;"></td>
@@ -60,13 +61,36 @@
             </div>
 
             <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
-                <button style="text-align:right" >כניסה לתיק עמילות</button>
-                <button style="text-align:right" >בילינג</button>
-                <button style="text-align:right" >רשימת הוצאות</button>
+                <button style="text-align:right" (click)="ShowDisbursement()">בילינג</button>
+                <button style="text-align:right" (click)="ShowPayments()">רשימת הוצאות</button>
             </div>
+            <!--
+        <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
+            <div (click)="ButtonClick()">
+                <courier-filter-button #MyDropdownMenuFilterComponent
+                                       [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
+                    <div class="class-filter-content">
+                        <div>
+                            <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                        </div>
+                    </div>
 
+                    <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                        <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
+                            <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDisbursement();  ">
+                                <span>בילינג</span>
+                            </li>
+                            <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowPayments();">
+                                <span>רשימת הוצאות</span>
+                            </li>
+                        </ul>
+                    </div>
+                </courier-filter-button>
+            </div>
         </div>
-
+    </div>
+            -->
+        </div>
     </div>
     <table>
         <tr>
