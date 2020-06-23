@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<CardList> vendors = (from a in commoncontext.Cards
                                       where accountIds.Contains(a.GLAccountId)
-                                      && a.Tenant == Tenant
+                                      && a.Tenant == Tenant && a.CountryCode =="IL"
                                       select new CardList()
                                       {
                                           Id = a.Id,
@@ -265,7 +265,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds)
         {
             return (from a in accountingContext.GLAccounts
-                    where a.Tenant == Tenant
+                    where a.Tenant == Tenant && a.ExcludeFromDeductionReport ==false
                     && accountIds.Contains(a.Id)
                     select new GLAccountList()
                     {
