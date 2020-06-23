@@ -735,6 +735,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PaidDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
