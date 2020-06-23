@@ -92,16 +92,32 @@ ELSE      Begin
 
 
 
+		  --KPI
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'KPI')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('KPI','KPI',100)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 100 WHERE [dbo].[DWCategories].[Code] = 'KPI'	  
+		  End
+
+
+
+
 		  --CustomFields
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
           WHERE Code = 'CustomFields')
 		  Begin  
-				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',100)
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',110)
 		  End
 ELSE      Begin 
-				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 100 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 110 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
 		  End
 
 
 
 
+
+
+		  
