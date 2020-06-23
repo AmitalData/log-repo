@@ -4951,6 +4951,25 @@ export class RoutingHelper {
             var allPickupsErrors: string[] = [];
             var isPickupsExists: boolean = entityPM.ShipmentPickUps.length > 0 ? true : false;
             if (isPickupsExists) {
+
+                if (isWarehousePickupsLegExists) {
+
+                    var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
+                    if (firsPickup) {
+
+                        var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
+                        var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
+
+                        if (this.IsDateSeriesBiggerNotEqual(firstPickupsETA, WarehouseLegEED)) {
+                            allPickupsErrors.push("Pick up expected arrival must be equal or less than Warehouse expected entry");
+                        }
+
+                        if (this.IsDateSeriesBiggerNotEqual(firstPickupsATA, WarehouseLegAED)) {
+                            allPickupsErrors.push("Pick up actual arrival must be equal or less than Warehouse actual entry");
+                        }
+                    }
+                }
+
                 entityPM.ShipmentPickUps.forEach(itemPickup => {
                     var ETD: number = DateTool.GetDateParts(itemPickup.ETD).DateTicks;
                     var ETA: number = DateTool.GetDateParts(itemPickup.ETA).DateTicks;
@@ -4983,17 +5002,7 @@ export class RoutingHelper {
                     //}
 
                     // Next
-                    if (isWarehousePickupsLegExists) {
-                        if (this.IsDateSeriesBiggerNotEqual(ETA, WarehouseLegEED)) {
-                            allPickupsErrors.push("Pick up expected arrival must be equal or less than Warehouse expected entry");
-                        }
-
-                        if (this.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
-                            allPickupsErrors.push("Pick up actual arrival must be equal or less than Warehouse actual entry");
-                        }
-                    }
-
-                    else if (isPreCarriageExists) {
+                    if (isPreCarriageExists) {
                         if (this.IsDateSeriesBigger(ETA, PreCarriageETD)) {
                             allPickupsErrors.push("Pick up expected arrival must be less than pre carriage expected departure");
                         }
@@ -5651,12 +5660,20 @@ export class RoutingHelper {
 
                     // Previous
                     if (isPickupsExists) {
-                        if (this.IsDateSeriesSmallerNotEqual(WarehouseLegEED, allPickupsETA)) {
-                            WarehouseLegErrors.push("Warehouse expected entry must be equal or bigger than all pick ups expected arrival");
-                        }
 
-                        if (this.IsDateSeriesSmallerNotEqual(WarehouseLegAED, allPickupsATA)) {
-                            WarehouseLegErrors.push("Warehouse actual entry must be equal or bigger than all pick ups actual arrival");
+                        var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
+                        if (firsPickup) {
+
+                            var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
+                            var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
+
+                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLegEED, firstPickupsETA)) {
+                                WarehouseLegErrors.push("Warehouse expected entry must be equal or bigger than first pick up expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLegAED, firstPickupsATA)) {
+                                WarehouseLegErrors.push("Warehouse actual entry must be equal or bigger than first pick up actual arrival");
+                            }
                         }
                     }
 
@@ -5745,6 +5762,7 @@ export class RoutingHelper {
             }
         }
     }
+
     public static ValidateRoutingsSeriesDates_PackageFollowup(entityPM: ShipmentPM, myPackagePM: ShipmentPackagePM, errors: string[], legCode: string) {
         if (entityPM != null && myPackagePM != null) {
 
@@ -6463,5 +6481,30 @@ export class RoutingHelper {
             default: { break; }
         }
     }
-    }     
+    }
+    public static GetFirstPickup(ShipmentPickUps: ShipmentPickUpPM[]) {
+
+        var output: ShipmentPickUpPM = null;
+
+        if (ShipmentPickUps) {
+
+            var index: number = null;
+
+            ShipmentPickUps.forEach((item: ShipmentPickUpPM) => {
+                var itemIndex = +item.PickUpDeliveryNumber.split('/')[1];
+
+                if (index == null) {
+                    output = item;
+                }
+
+                else if (itemIndex < index) {
+                    output = item;
+                }
+
+                index = itemIndex;
+            });
+        }            
+
+        return output;
+    }
 }

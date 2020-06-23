@@ -135,12 +135,26 @@ export class ShipmentPickupValidator {
 
         // Next
         if (isWarehouseLegExists) {
-            if (RoutingHelper.IsDateSeriesBiggerNotEqual(ETA, WarehouseLegEED)) {
-                this.errors.push("Expected arrival must be equal or less than Warehouse expected entry");
+
+            var isFirstPickup: boolean = true;
+
+            var firsPickup = RoutingHelper.GetFirstPickup(this.ShipmentPM.ShipmentPickUps);
+            if (firsPickup) {
+                isFirstPickup = false;
+
+                if (firsPickup.Id == this.EntityPM.Id) {
+                    isFirstPickup = true;
+                }
             }
 
-            if (RoutingHelper.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
-                this.errors.push("Actual arrival must be equal or less than Warehouse actual entry");
+            if (isFirstPickup) {
+                if (RoutingHelper.IsDateSeriesBiggerNotEqual(ETA, WarehouseLegEED)) {
+                    this.errors.push("Expected arrival must be equal or less than Warehouse expected entry");
+                }
+
+                if (RoutingHelper.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
+                    this.errors.push("Actual arrival must be equal or less than Warehouse actual entry");
+                }
             }
         }
 
