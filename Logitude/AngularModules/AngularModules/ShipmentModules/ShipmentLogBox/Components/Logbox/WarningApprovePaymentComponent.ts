@@ -29,11 +29,11 @@ export class WarningApprovePaymentComponent {
 
     SetWarningMessage(WarningCode: string) {
         switch (WarningCode) {
-            case '1':
-                this.WarningMessage = '"נדרש אישור לתשלום על סעיף מס קניה בסך (' + this.tax1Amount + ') ש"ח, <br/>האם אתה מאשר ⸮';
-                break;
             case '16':
-                this.WarningMessage = '"נדרש אישור לתשלום על סעיף מכס בסך (' + this.tax16Amount + ') ש"ח, <br/>האם אתה מאשר ⸮';
+                this.WarningMessage = '"נדרש אישור לתשלום על סעיף מס קניה בסך (' + this.tax16Amount + ') ש"ח, <br/>האם אתה מאשר ⸮';
+                break;
+            case '1':
+                this.WarningMessage = '"נדרש אישור לתשלום על סעיף מכס בסך (' + this.tax1Amount + ') ש"ח, <br/>האם אתה מאשר ⸮';
                 break;
             case '17':
                 this.WarningMessage = 'נדרש אישור לתשלום(' + this.tax1Amount + ') ש”ח <br/>בגין סעיף מכס וכן מס קניה בסך(' + this.tax16Amount + ') ש"ח, <br/>האם אתה מאשר ⸮';
