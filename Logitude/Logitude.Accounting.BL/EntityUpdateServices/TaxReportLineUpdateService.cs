@@ -59,7 +59,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
                 journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
             }
-            entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
+            }
             entityPM.LastUpdateDateTime = DateTime.Now;
             base.OnUpdating(entityPM, entityPOCO);
         }

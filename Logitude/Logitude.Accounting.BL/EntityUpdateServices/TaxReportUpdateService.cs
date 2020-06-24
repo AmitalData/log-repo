@@ -243,7 +243,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
                    
                 } 
-                entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+               // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
             }
