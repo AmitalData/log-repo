@@ -383,7 +383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable RevaluationStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RevaluationStatus" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> RevaluationStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "RevaluationStatus").ToList();
+		   //List<ObjectField> RevaluationStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "RevaluationStatus").ToList();
 		       
 	      
 
