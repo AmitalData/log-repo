@@ -202,7 +202,23 @@ export class AmitalGatewayUtil {
             unifreightMessageM,
             " הזנת הערות לתור");
     }
+    public ShowSharedDocuments(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
 
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowSharedDocuments",
+            "CFIHMAIN.LogitudeTask",
+            "ShowSharedDocuments",
+            unifreightMessageM,
+            "שיתוף מסמכים");
+    }
 
     public NewCustomsFileScreen(
         ViewModelName: string

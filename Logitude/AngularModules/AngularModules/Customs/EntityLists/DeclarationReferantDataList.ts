@@ -45,6 +45,7 @@ export class DeclarationReferantDataList {
 	NewFile: boolean;
 	Favorite: boolean;
 	SortedColumns: number;
+	IsCustomerLogBoxActivated: boolean;
 	
 }
  

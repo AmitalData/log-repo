@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Favorite  { get; set; }
        [DataMember]
        public int SortedColumns  { get; set; }
+       [DataMember]
+       public bool IsCustomerLogBoxActivated  { get; set; }
    }
 
 }
