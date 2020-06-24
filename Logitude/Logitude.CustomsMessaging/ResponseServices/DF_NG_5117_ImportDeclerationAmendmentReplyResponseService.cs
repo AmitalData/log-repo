@@ -1803,14 +1803,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Tenant = this._MyDeclarationPM.Tenant,
                 RequestName = "Declaration Print(5117)",
                 ResponseName = "Declaration Print(5117)",
-                LoggingEntityId = this._MyDeclarationPM.Id,
+                LoggingEntityId = this._MyDeclarationPMOrg != null? this._MyDeclarationPMOrg.Id: _MyDeclarationPM.Id,
                 RequestVIA = SendRequestVIA.WebServiceBatch,
 
 
                 LoggingUserId = requestParams.LoggingUserId ,//HD CALL#298426
-            };
+            }; 
 
-            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
+             var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
             var resData = myRequestMessagingService.Send(searchParams);
             _SendDeclarationPrintResponse = resData;
             if (!resData.Succeeded)
