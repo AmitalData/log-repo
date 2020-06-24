@@ -28,7 +28,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         DefaultWarningPercentage, 
 	         AirDefaultStepsId, 
 	         LCLDefaultStepsId, 
-	         ContainerDefaults,
+	         ContainerDefaults, 
+	         DefaultCurrencyId,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LCLDefaultStepsId, 
 	         AirDefaultSteps, 
 	         LCLDefaultSteps, 
-	         ContainerDefaults,
+	         ContainerDefaults, 
+	         DefaultCurrencyId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -80,6 +82,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
             {
 				entityPOCO.ContainerDefaults = entityPM.ContainerDefaults;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
+            {
+				entityPOCO.DefaultCurrencyId = entityPM.DefaultCurrencyId;
 			}
 			}
 
@@ -121,6 +128,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ContainerDefaults = entityPOCO.ContainerDefaults;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DefaultCurrencyId))
+            {
+					entityPM.DefaultCurrencyId = entityPOCO.DefaultCurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffSettingPM entityPM, TariffSettingPM oldEntityPM)
@@ -155,6 +167,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
             {
                 oldEntityPM.ContainerDefaults = entityPM.ContainerDefaults;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
+            {
+                oldEntityPM.DefaultCurrencyId = entityPM.DefaultCurrencyId;
             }
 			
 		}

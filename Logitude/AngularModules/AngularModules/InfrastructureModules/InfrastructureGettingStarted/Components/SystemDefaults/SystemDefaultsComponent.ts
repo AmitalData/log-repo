@@ -109,6 +109,18 @@ export class SystemDefaultsComponent extends BaseComponent{
 
         this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
+
+        this.UIProperties.SetEnabled("DimensionsUnitCode", "Tenant", false);
+        this.UIProperties.SetEnabled("TemperatureUnitCode", "Tenant", false);
+        this.UIProperties.SetEnabled("SCACCode", "Tenant", false);
+        this.UIProperties.SetEnabled("CBSA", "Tenant", false);
+        this.UIProperties.SetEnabled("CAAT", "Tenant", false);
+        this.UIProperties.SetEnabled("FMCNumber", "Tenant", false);
+
+        this.UIProperties.SetEnabled("IsNotesRightToLeftEnabled", "Tenant", false);
+        this.UIProperties.SetEnabled("AllowCustomersInAgentsLOV", "Tenant", false);
+        this.UIProperties.SetEnabled("AllowAgentInCustomersLOV", "Tenant", false);
+
     }
     SetUIProperties_DemoAgent() {
         if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {

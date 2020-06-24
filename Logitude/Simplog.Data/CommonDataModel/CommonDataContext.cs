@@ -662,7 +662,6 @@ namespace Simplog.Data.CommonDataModel
             set;
         }
         public IDbSet<ChargeTypeAccounting> ChargeTypeAccountings { get; set; }
-        public IDbSet<CardCurrenciesAccounting> CardCurrenciesAccountings { get; set; }
         public IDbSet<Report> Reports { get; set; }
         public IDbSet<LeadSource> LeadSources
         {

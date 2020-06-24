@@ -123,7 +123,9 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("APPaymentExternalPayment", this.ObjectTableName, false);
-            
+            this.UIProperties.SetEnabled("EnableMultiRateAPInvoices", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("EnableNegativeOffsetAPPayments", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("EnableMultiCurrencyAPPayments", this.ObjectTableName, false);      
         }
 
         else {

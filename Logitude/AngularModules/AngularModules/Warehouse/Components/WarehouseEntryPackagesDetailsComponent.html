@@ -19,7 +19,7 @@
                         </td>
 
                         <td *ngIf="ShowAddPackageButton" style="width: 1px;">
-                            <button class="Button" (click)="AddPackage(false)">Add Package</button>
+                            <button [disabled]="DisableAddPackageButton || IsCancelled" class="Button" (click)="AddPackage(false)">Add Package</button>
                         </td>
 
                         <td *ngIf="ShowAddPackageButton && !IsLCLEntity" style="width: 5px;">
@@ -27,7 +27,7 @@
                         </td>
 
                         <td *ngIf="!IsLCLEntity && ShowAddPackageButton" style="width: 1px;">
-                            <button class="Button" (click)="AddPackage(true)">Add Container</button>
+                            <button [disabled]="DisableAddPackageButton || IsCancelled" class="Button" (click)="AddPackage(true)">Add Container</button>
                         </td>
 
                         <td *ngIf="ShowAddPackageButton && IsEditMode" style="width: 5px;">
@@ -36,7 +36,7 @@
 
 
                         <td *ngIf="IsEditMode" style="width: 1px">
-                            <IconButton [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                            <IconButton [disabled]="IsCancelled" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
                         </td>
 
 
@@ -396,11 +396,11 @@
                                             <table>
                                                 <tr>
                                                     <td style="width: 23px; padding-left: 5px;">
-                                                        <IconButton [disabled]="item.IsDisabled" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
+                                                        <IconButton [disabled]="IsCancelled || item.IsDisabled" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
                                                     </td>
 
                                                     <td style="width: 20px; padding-left: 2px;">
-                                                        <IconButton [disabled]="item.IsDisabled" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
+                                                        <IconButton [disabled]="IsCancelled || item.IsDisabled" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
                                                     </td>
 
                                                     <td>

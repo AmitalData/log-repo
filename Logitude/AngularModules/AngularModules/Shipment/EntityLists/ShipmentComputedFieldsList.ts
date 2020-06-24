@@ -42,5 +42,16 @@ export class ShipmentComputedFieldsList {
 		PickupFrom: string;
 		PickupTo: string;
 		OperationallyClosedByUserName: string;
+		CreatedFromDigital: boolean;
+		DeliveryTruckerId: string;
+		DeliveryTruckerNumber: string;
+		DeliveryDriver: string;
+		DeliveryTrailerNumber: string;
+		DeliveryNotes: string;
+		PickupTruckerId: string;
+		PickupTruckerNumber: string;
+		PickupDriver: string;
+		PickupTrailerNumber: string;
+		PickupNotes: string;
 	
 }

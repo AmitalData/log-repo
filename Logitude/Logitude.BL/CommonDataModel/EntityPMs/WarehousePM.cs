@@ -274,32 +274,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool AccountingVATSplit { get; set; }
 
-        private List<CardCurrenciesAccountingPM> cardCurrenciesAccountings;
-        [Include]
-        [Association("CardCurrenciesAccountingCard", "Id", "CardId")]
-        [Composition]
-        [DataMember]
-        public virtual List<CardCurrenciesAccountingPM> CardCurrenciesAccountings
-        {
-            get
-            {
-                if (this.cardCurrenciesAccountings == null)
-                {
-                    cardCurrenciesAccountings = new List<CardCurrenciesAccountingPM>();
-                }
-
-                return this.cardCurrenciesAccountings;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    cardCurrenciesAccountings = value;
-                }
-            }
-        }
-
-        
     }
 }

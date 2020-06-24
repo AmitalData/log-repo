@@ -35,7 +35,7 @@ export class TariffSettingComponent extends BaseComponent {
         this.myService = new TariffSettingPMService();
         this.myDomainService = new TariffDomainService();
         this.GetSingletariffSetting();
-      
+        this.EntityPM = new TariffSettingPM();
     }
 
     private GetSingletariffSetting() {
@@ -51,6 +51,10 @@ export class TariffSettingComponent extends BaseComponent {
                     if (!this.EntityPM) {
                         this.EntityPM = new TariffSettingPM();
                         this.EntityPM.Tenant = SessionLocator.Tenant;
+                    }
+
+                    if (AppTool.IsNullOrEmpty(this.DefaultCurrencyId)) {
+                        this.DefaultCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
                     }
 
                     this.BuildItemsSource();
@@ -77,6 +81,7 @@ export class TariffSettingComponent extends BaseComponent {
         this.UIProperties.SetRequired("AirDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AirDefaultStepsId));
         this.UIProperties.SetRequired("LCLDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LCLDefaultStepsId));
         this.UIProperties.SetEnabled("ContainerDefaults", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("DefaultCurrencyId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DefaultCurrencyId));
     }
 
     get DefaultWarningPercentage() {
@@ -135,6 +140,15 @@ export class TariffSettingComponent extends BaseComponent {
         }
     }
 
+    get DefaultCurrencyId() { return this.EntityPM.DefaultCurrencyId; }
+    set DefaultCurrencyId(value: string) {
+        if (this.EntityPM.DefaultCurrencyId != value) {
+            this.EntityPM.DefaultCurrencyId = value;
+
+            this.SetUIPropertiesOfFields();
+        }
+    }
+
     BuildItemsSource() {
         var Steps: string[] = [];
         if (this.DefaultPriceSteps) {
@@ -179,6 +193,7 @@ export class TariffSettingComponent extends BaseComponent {
         if (!this.EntityPM.IsDirty && !AppTool.IsNullOrEmpty(this.AirDefaultStepsId) && !AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
             this.CurrentSession.CloseCurrentWindow();
         }
+
         else {
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
@@ -216,6 +231,10 @@ export class TariffSettingComponent extends BaseComponent {
 
             if (AppTool.IsNullOrEmpty(this.LCLDefaultStepsId)) {
                 errors.push("LCL Default Steps field is required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.DefaultCurrencyId)) {
+                errors.push("Default Currency field is required");
             }
 
             this.ValidationErrorsList = this.ValidationErrorsList.concat(errors);

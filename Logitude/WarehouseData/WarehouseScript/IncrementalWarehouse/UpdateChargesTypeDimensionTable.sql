@@ -17,24 +17,25 @@
    declare @ChargeGroupCode as varchar(5)
   declare @SourceTenant int
    declare @ParentTenant int
+         declare @IsExpense as bit
 
 	DECLARE ChargesTypeCursor CURSOR READ_ONLY
 	FOR
-    SELECT Id,Code, EnglishName , LocalName , ChargesGroupCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant
+    SELECT Id,Code, EnglishName , LocalName , ChargesGroupCode, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant , IsExpense
 	From dw_ChargesTypes
 	inner JOIN dw_DWHSettings ON dw_ChargesTypes.Tenant = dw_DWHSettings.Tenant
 	where dw_ChargesTypes.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN ChargesTypeCursor FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant
+	OPEN ChargesTypeCursor FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
 	set @Key = (select Id from DIM_ChargesTypes where Id = @Id)
 	
-	if(@Key is  null) begin     insert into DIM_ChargesTypes (Id, Code ,[English Name] ,[Local Name],[Charge Group Code], [Source Tenant],[Parent Tenant]) values(@Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant) end
-	else begin update   DIM_ChargesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Charge Group Code] = @ChargeGroupCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant Where Id = @Id end
+	if(@Key is  null) begin     insert into DIM_ChargesTypes (Id, Code ,[English Name] ,[Local Name],[Charge Group Code], [Source Tenant],[Parent Tenant],[Is Expense]) values(@Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense) end
+	else begin update   DIM_ChargesTypes set [Code] =@Code, [English Name] =@EnglishName, [Local Name] =@LocalName , [Charge Group Code] = @ChargeGroupCode , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  ,[Is Expense] =@IsExpense Where Id = @Id end
 
 
-	FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant
+	FETCH NEXT FROM ChargesTypeCursor INTO   @Id ,@Code, @EnglishName, @LocalName, @ChargeGroupCode , @SourceTenant , @ParentTenant,@IsExpense
 		End
 	CLOSE ChargesTypeCursor
 	DEALLOCATE ChargesTypeCursor
