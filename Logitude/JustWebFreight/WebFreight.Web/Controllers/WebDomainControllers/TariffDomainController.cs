@@ -2862,6 +2862,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant, tariff.TypeCode);
                         bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
 
+                        if(isValid)
+                        {
+                            if(routs.Count > 1000)
+                            {
+                                isValid = false;
+                                throw new ApplicationException("Can't perform this update due to tariff lines limitation to 1000");
+                            }
+                        }
+
                         if (isValid)
                         {
                             string mySurchargesText = "";
