@@ -107,8 +107,13 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "DCCL") {
+                         if (tabCode == "DCCL") {
                             this.LoadDeclarationCollateralsList();
+
+
+                            setTimeout(() => {
+                                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                            }, 10);
                         }
                     }
                 })
