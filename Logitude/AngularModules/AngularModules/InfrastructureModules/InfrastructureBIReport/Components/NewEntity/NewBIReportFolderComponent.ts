@@ -55,6 +55,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
             this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+            this.EntityPM.PermissionForAll = true;
             this.IsReady = true;
         }
         else {
@@ -64,12 +65,12 @@ export class NewBIReportFolderComponent extends BaseComponent {
                 }
                 else {
                     this.EntityPM = myResponse.Result;
+                    this.EntityPM.PermissionForAll = true;
                     this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                     this.IsReady = true;
                 }
             });
         }
-        this.EntityPM.PermissionForAll = true;
     }
 
     SetUIProperties() {
@@ -234,6 +235,9 @@ export class NewBIReportFolderComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         if (!this.EntityPM.PermissionForAll && this.ShareWithUsersCount == 0) {
             this.ValidationErrorsList.push("Please choose at least one user");
+        }
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Name)) {
+            this.ValidationErrorsList.push("Name Field is Required");
         }
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
