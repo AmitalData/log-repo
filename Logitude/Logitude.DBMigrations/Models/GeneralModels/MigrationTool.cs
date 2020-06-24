@@ -425,20 +425,6 @@ namespace Logitude.DBMigrations.Models
                 {
                     Console.WriteLine("Scripts Executed Successfully On " + dbType + " Database");
                 }
-
-                if (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript))
-                {
-                    Console.WriteLine("Executing Script On CargoTracking Database ...");
-                    string result = ExecuteScript(generatedScript.CargoTrackingScript, "CargoTracking");
-                    if (!String.IsNullOrEmpty(result))
-                    {
-                        ExitTool(result);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Scripts Executed Successfully On CargoTracking Database");
-                    }
-                }
             }
         }
 
@@ -1580,7 +1566,7 @@ namespace Logitude.DBMigrations.Models
         {
             List<ExecutedSxmlFile> executedSxmlFiles = new List<ExecutedSxmlFile>();
 
-            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
+            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
 
             foreach (var dbType in dbTypes)
             {
@@ -1933,7 +1919,7 @@ namespace Logitude.DBMigrations.Models
             string cargoTrackingConnectionString = ConfigurationManager.AppSettings["CargoTrackingConnectionString"];
             string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
             string cargoTrackingDB = null, cargoTrackingSource = null;
-           
+
             if (databaseType.ToLower() == "oracle")
             {
                 OracleConnectionStringBuilder globalConnectionStringBuilder = new OracleConnectionStringBuilder(globalConnectionString);
@@ -1947,31 +1933,46 @@ namespace Logitude.DBMigrations.Models
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
                 databaseTypeMessage = "Oracle";
                 databaseNameMessage = "User ID";
+                if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
+                {
+                    OracleConnectionStringBuilder cargoTrackingConnectionStringBuilder = new OracleConnectionStringBuilder(cargoTrackingConnectionString);
+                    cargoTrackingDB = cargoTrackingConnectionStringBuilder.UserID;
+                    cargoTrackingSource = cargoTrackingConnectionStringBuilder.DataSource;
+                }
             }
             else
             {
                 SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
                 SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
                 SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
-                SqlConnectionStringBuilder cargoTrackingConnectionStringBuilder = new SqlConnectionStringBuilder(cargoTrackingConnectionString);
+                
                 globalDB = globalConnectionStringBuilder.InitialCatalog;
                 globalSource = globalConnectionStringBuilder.DataSource;
                 mainDB = mainConnectionStringBuilder.InitialCatalog;
                 mainSource = mainConnectionStringBuilder.DataSource;
                 systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
-                cargoTrackingDB = cargoTrackingConnectionStringBuilder.InitialCatalog;
-                cargoTrackingSource = cargoTrackingConnectionStringBuilder.DataSource;
+              
                 databaseTypeMessage = "MSQL";
                 databaseNameMessage = "Initial Catalog";
+                if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
+                {
+                    SqlConnectionStringBuilder cargoTrackingConnectionStringBuilder = new SqlConnectionStringBuilder(cargoTrackingConnectionString);
+                    cargoTrackingDB = cargoTrackingConnectionStringBuilder.InitialCatalog;
+                    cargoTrackingSource = cargoTrackingConnectionStringBuilder.DataSource;
+                }
             }
 
             string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
                                         "Applying Migrations On The Following Databases:\n" +
                                         "Global Database: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
                                         "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
-                                        "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n"+
-                                        "CargoTracking Database: " + databaseNameMessage + " = " + "\"" + cargoTrackingDB + "\"" + " And Data Source = " + "\"" + cargoTrackingSource + "\"" + "\n";
+                                        "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
+
+            if (!string.IsNullOrEmpty(cargoTrackingDB))
+            {
+                appSettingsMessage = appSettingsMessage + "CargoTracking Database: " + databaseNameMessage + " = " + "\"" + cargoTrackingDB + "\"" + " And Data Source = " + "\"" + cargoTrackingSource + "\"" + "\n";
+            }
 
 
 
