@@ -1792,7 +1792,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public bool SendDeclarationPrint(GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = this._MyDeclarationPM.DeclarationNumber;
+            string decNum = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.Id : _MyDeclarationPM.Id;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
             DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
