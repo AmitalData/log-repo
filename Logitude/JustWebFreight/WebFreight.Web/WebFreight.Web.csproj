@@ -5345,7 +5345,6 @@
     </Compile>
     <Compile Include="QuickbooksOnline.aspx.cs">
       <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="QuickbooksOnline.aspx.designer.cs">
       <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
