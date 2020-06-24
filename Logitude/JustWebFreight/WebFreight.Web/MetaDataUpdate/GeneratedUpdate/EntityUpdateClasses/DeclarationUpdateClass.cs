@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "bebc050c8258b3ebcfde08a56f4b1f2c";
+		public const string HashString = "0a70f8fc4be4d21aaa78d7ec50b37813";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13102,6 +13102,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationDocumentTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
