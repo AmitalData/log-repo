@@ -34,7 +34,15 @@ namespace Logitude.Accounting.Def.EntityPMs
                 //    }
                 //}
                 var codeEnum = MyJournalActionTypeEnum.NotValid;
-                Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
+                bool dueActionTypeCodeIsNull = true;//on onsert is null !!
+                if (dueActionTypeCodeIsNull)
+                {
+                    Enum.TryParse<MyJournalActionTypeEnum>(this.ActionCode, out codeEnum);
+                }
+                else
+                {
+                    Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
+                }
                 return codeEnum;
             }
             set
