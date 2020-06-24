@@ -1003,6 +1003,7 @@
     <TypeScriptCompile Include="cypress\TeamIslam\Maintenance\Shipper.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\PrintDocOut.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
+    <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
