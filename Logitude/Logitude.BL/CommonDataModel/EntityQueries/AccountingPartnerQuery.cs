@@ -88,10 +88,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             AccountingPartner.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(AccountingPartner.Id, AccountingPartner.Tenant);
 
 
-            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(repository.context);
-            CardCurrenciesAccountingQuery cardCurrenciesAccountingQuery = new CardCurrenciesAccountingQuery(cardCurrenciesAccountingRepository);
-            AccountingPartner.CardCurrenciesAccountings = cardCurrenciesAccountingQuery.GetCardCurrenciesAccountingsForCard(AccountingPartner.Id, AccountingPartner.Tenant).ToList();
-
             if (AccountingPartner != null)
             {
                 AccountingPartner.IsExternal = false;

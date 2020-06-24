@@ -312,11 +312,8 @@ export class CardPM {
     private sATForeignRFC: string;
     public get SATForeignRFC() { return this.sATForeignRFC; }
     public set SATForeignRFC(newValue: string) { if (this.sATForeignRFC != newValue) { this.sATForeignRFC = newValue; this.MarkAsDirty("SATForeignRFC"); } }
-
-    private accountingVATSplit: boolean;
-    public get AccountingVATSplit() { return this.accountingVATSplit; }
-    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
-
+       
+	 
      
 	private contacts: ContactPM[];
     get  Contacts() {
@@ -465,6 +462,11 @@ export class CardPM {
     private storageFreeDays: number;
     public get StorageFreeDays() { return this.storageFreeDays; }
     public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
+       
+	 
+    private accountingVATSplit: boolean;
+    public get AccountingVATSplit() { return this.accountingVATSplit; }
+    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
        
 	 
 

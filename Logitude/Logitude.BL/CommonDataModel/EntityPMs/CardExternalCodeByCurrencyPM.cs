@@ -31,5 +31,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ExternalTableCode { get; set; }
          [DataMember]
         public ChangeSetOperation ChangeSetOp { get; set; }
+
+        [DataMember]
+        public string CardName { get; set; }
+
+        [DataMember]
+        public string CurrencyName { get; set; }
+
+
     }
 }

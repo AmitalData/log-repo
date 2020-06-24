@@ -631,7 +631,6 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
-    <TypeScriptCompile Include="Common\EntityPMs\CardCurrenciesAccountingPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
@@ -668,7 +667,6 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\TenantAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\TermsofUseSignatureListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
-    <TypeScriptCompile Include="Common\Services\StandardPMs\CardCurrenciesAccountingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerOpenFilesAmountPMService.ts" />
@@ -1410,6 +1408,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\WarningApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
@@ -3888,6 +3887,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\WarningApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />

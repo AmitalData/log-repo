@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardExternalCodeByCurrencyUpdateClass
    {  		
-		public const string HashString = "66933f7b668cc4378bb5dc2935945607";
+		public const string HashString = "7a99033b5d6cac19d81d2e6397b95a9b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CardExternalCodeByCurrency",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CardExternalCodeByCurrencies",
-			      				    OldDBTableName =  "CardExternalCodeByCurrencies",
 			      				    ObjectTableSingular =  "Card External Code By Currency",
 			      				    ObjectTablePlural =  "Card External Code By Currencies",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card External Code By Currency",
-			      				    Code =  "4b09",
+			      				    Code =  "97df",
 			      				    Name =  "CardExternalCodeByCurrency",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CardId",
-					  						OldFieldName =  "CardId",
 					  						ObjectTableName =  "CardExternalCodeByCurrency",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -205,7 +203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "CardExternalCodeByCurrency",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -268,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalRecievableTableId",
-					  						OldFieldName =  "ExternalRecievableTableId",
 					  						ObjectTableName =  "CardExternalCodeByCurrency",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -330,7 +326,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalPayableTableId",
-					  						OldFieldName =  "ExternalPayableTableId",
 					  						ObjectTableName =  "CardExternalCodeByCurrency",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -387,6 +382,116 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CardName",
+					  						ObjectTableName =  "CardExternalCodeByCurrency",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  70,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  70,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CardName",
+					  						ListPropertyPath =  "CardName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CardName",
+					  						DefaultText =  "Card Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CurrencyName",
+					  						ObjectTableName =  "CardExternalCodeByCurrency",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  40,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CurrencyName",
+					  						ListPropertyPath =  "CurrencyName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CurrencyName",
+					  						DefaultText =  "CurrencyName",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -394,7 +499,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CardExternalCodeByCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CardExternalCodeByCurrency" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CardExternalCodeByCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CardExternalCodeByCurrency").ToList();
+		       
+	      
+
+	         Screen CardExternalCodeByCurrencyCardExternalCodeByCurrencyHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CardExternalCodeByCurrency.HeaderScreen", Name = "CardExternalCodeByCurrencyHeaderScreen", ObjectTableId = CardExternalCodeByCurrencyObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CardExternalCodeByCurrencyObjectTable.HeaderScreenId = CardExternalCodeByCurrencyCardExternalCodeByCurrencyHeaderScreenScreen0.Id;
+		    CardExternalCodeByCurrencyObjectTable.HeaderScreenCode = CardExternalCodeByCurrencyCardExternalCodeByCurrencyHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

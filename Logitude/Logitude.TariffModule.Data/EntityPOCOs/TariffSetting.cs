@@ -33,6 +33,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string LCLDefaultStepsId { get; set; }
         [Column("ContainerDefaults")]
 	    public string ContainerDefaults { get; set; }
+        [ForeignKey("DefaultCurrency")]
+        [Column("DefaultCurrencyId")]
+	    public string DefaultCurrencyId { get; set; }
+	      
+        public virtual Currency DefaultCurrency { get; set; }
     }
 }
 	 

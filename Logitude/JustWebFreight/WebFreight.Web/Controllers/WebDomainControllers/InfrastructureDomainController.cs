@@ -1991,10 +1991,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
                 IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
                 BIReportFolderRepository repository = new BIReportFolderRepository(objectContext);
-            
                 BIReportFolder bIReportFolder = repository.GetSingle(Id, authToken.Tenant);
                 if (bIReportFolder != null)
                 {
+                    RemovePermittedUsers(Id, authToken.Tenant, objectContext);
                     repository.Remove(bIReportFolder);
                     repository.SubmitChanges();
                 }
@@ -2005,7 +2005,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-       
+
+        private static void RemovePermittedUsers(string Id, int tenant, IInfrastructureContext objectContext)
+        {
+            BIReportFolderQueryService bIReportFolderQueryService = new BIReportFolderQueryService(tenant);
+            BIReportFolderPM bIReportFolderPM = bIReportFolderQueryService.GetSingle(Id, true, false);
+            BIReportFolderUpdateService service = new BIReportFolderUpdateService(objectContext, new Dictionary<string, IContext>(), tenant);
+            if (bIReportFolderPM.PermittedBIFolders.Count > 0)
+            {
+                bIReportFolderPM.PermittedBIFolders.ForEach(permission => {
+                    permission.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                });
+                bIReportFolderPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                service.Update(bIReportFolderPM, true);
+            }
+        }
 
         public HttpResponseMessage GetFeatureToggles()
         {

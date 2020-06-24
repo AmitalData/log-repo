@@ -761,6 +761,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
         }
     }
+    DeleteTariff(item: FCLQuoteChargeItem) {
+        if (item != null) {
+            item.TariffId = null;
+            item.TariffNumber = null;
+            item.SetUIProperties();
+        }
+    }
+
 
     // Profit
     InitializeProfit() {

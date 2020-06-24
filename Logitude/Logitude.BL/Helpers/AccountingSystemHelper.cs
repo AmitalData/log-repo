@@ -28,19 +28,19 @@ namespace Logitude.BL.Helpers
 
         public string GetGenericCreditAccount(string cardId, string currencyId, int tenant, bool isPayable)
         {
-            string myResult = null; 
-            CardCurrenciesAccountingRepository cardCurrenciesAccountingRepository = new CardCurrenciesAccountingRepository(tenant);
+            string myResult = null;
+            CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(tenant);
             CardRepository cardRepository = new CardRepository(tenant);
 
             Card card = cardRepository.GetSingleCard(cardId, tenant);
 
             if (card != null && card.AccountingVATSplit)
             {
-                CardCurrenciesAccounting crdCurrenciesAccounting = cardCurrenciesAccountingRepository.GetSingleCardCurrenciesAccountingsByCurrencyId(cardId, currencyId, tenant);
+                CardExternalCodeByCurrency crdCurrenciesAccounting = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrencyAndTenant(cardId, currencyId, tenant);
 
                 if (crdCurrenciesAccounting != null)
                 {
-                    myResult = isPayable == true ? crdCurrenciesAccounting.PayableDebitAccount : crdCurrenciesAccounting.ReceivableCreditAccount;
+                    myResult = isPayable == true ? crdCurrenciesAccounting.ExternalPayableTableId : crdCurrenciesAccounting.ExternalRecievableTableId;
                 }
             }
             else

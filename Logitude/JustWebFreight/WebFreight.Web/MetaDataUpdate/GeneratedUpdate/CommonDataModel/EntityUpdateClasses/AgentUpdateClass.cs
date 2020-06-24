@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AgentUpdateClass
    {  		
-		public const string HashString = "2d85c4a0752b52c7ca17d374922b0b73";
+		public const string HashString = "44d9b0704b01fe29201883d8d4fbe34b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3345,67 +3345,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CardCurrenciesAccountings",
-					  						ObjectTableName =  "Agent",
-					  						FieldsDataType =  "List",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CardCurrenciesAccountings",
-					  						ListPropertyPath =  "CardCurrenciesAccountings",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  true,
-					  						MultiTableName =  "CardCurrenciesAccounting",
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Agent",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CardCurrenciesAccountings",
-					  						DefaultText =  "CardCurrenciesAccountings",
-					  						ListFieldLable =  "CardCurrenciesAccountingsListLable",
-					  						ListLableDefaultText =  "CardCurrenciesAccountings",
-					  						ListLocalDefaultText =  "CardCurrenciesAccountings",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "AccountingVATSplit",
 					  						ObjectTableName =  "Agent",
 					  						FieldsDataType =  "Boolean",
@@ -3426,6 +3365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AccountingVATSplit",
 					  						ListPropertyPath =  "AccountingVATSplit",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

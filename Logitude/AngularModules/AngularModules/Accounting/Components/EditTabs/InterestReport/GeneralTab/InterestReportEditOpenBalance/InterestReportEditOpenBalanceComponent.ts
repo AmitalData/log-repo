@@ -5,6 +5,7 @@ import { InterestReportPM } from 'Accounting/EntityPMs/InterestReportPM';
 import { InterestReportPMService } from 'Accounting/Services/StandardPMs/InterestReportPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { AppTool } from 'Infrastructure/Tools';
  
 
 
@@ -33,6 +34,9 @@ export class InterestReportEditOpenBalanceComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked(Val:any) {
+        if(AppTool.IsNullOrEmpty(Val)){
+           Val=0;
+        }
         this.CurrentSession.CloseCurrentWindowEmit(Val);
     }
     private openBalance:number; 

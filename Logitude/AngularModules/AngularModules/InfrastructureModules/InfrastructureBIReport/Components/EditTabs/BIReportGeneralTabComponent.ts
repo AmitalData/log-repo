@@ -6,6 +6,9 @@ import { BIReportPMService } from '../../../../Infrastructure/Services/StandardP
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { AppTool} from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BIReportFolderExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/BIReportFolderExtendedListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'BIReportGeneralTabComponent',
@@ -18,18 +21,48 @@ export class BIReportGeneralTabComponent extends BaseComponent {
     public EntityPM: BIReportPM;
     public ObjectTableName ="BIReport";
     public DataContext: BIReportGeneralTabComponent = this;
+    public BIReportFolders: string[] = [];
+    public SelectdBIReportFolder: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
+    private BIReportFolderExtendedListService: BIReportFolderExtendedListService;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("BIReport").subscribe((response: any) => { });
+        this.BIReportFolderExtendedListService = new BIReportFolderExtendedListService();
         this.EntityPM = this.entityArgs.EntityPM;
         this.SetUIProperties();
+        this.FillBIReportFolderNamesList();
     }
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("TypeCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("DWQueryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DWQueryId));
+    }
+
+
+    FillBIReportFolderNamesList() {
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this.BIReportFolderExtendedListService.GetPermittedFolders().subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+                this.BIReportFolders = myResponse.Result;
+            }
+        });
+    }
+
+    BIReportFolderSelectionChanged(selectControl: any) {
+        if (selectControl) {
+            this.SelectdBIReportFolder = selectControl;
+            this.BIReportFolderId = selectControl.Id;
+            this.UIProperties.SetRequired("BIReportFolderId", this.ObjectTableName, false);
+        }
+        else {
+            this.SelectdBIReportFolder = "";
+            this.BIReportFolderId = "";
+            this.UIProperties.SetRequired("BIReportFolderId", this.ObjectTableName, true);
+        }
     }
 
 

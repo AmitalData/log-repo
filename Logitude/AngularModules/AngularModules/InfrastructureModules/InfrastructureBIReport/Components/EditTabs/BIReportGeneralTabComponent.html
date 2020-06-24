@@ -68,12 +68,7 @@
                             <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td>
-                            <LogLov [ObjectFieldName]="'BIReportFolderId'"
-                                    [SelectedValue]="BIReportFolderId"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'BIReportFolder'" [HideColumns]="true">
-                            </LogLov>
+                            <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)" [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders" [Binding]="'Name'"></ComboBox>
                         </td>
                         <td>
                             <div></div>

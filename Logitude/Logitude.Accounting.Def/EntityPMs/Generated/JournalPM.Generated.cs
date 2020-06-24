@@ -995,6 +995,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? aPPaymentCancelDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? APPaymentCancelDate  
+	   {
+	    
+	     get
+		{
+		   return aPPaymentCancelDate;
+		 }
+		 set
+		 {
+		   if(aPPaymentCancelDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="APPaymentCancelDate",OldValue=aPPaymentCancelDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   aPPaymentCancelDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

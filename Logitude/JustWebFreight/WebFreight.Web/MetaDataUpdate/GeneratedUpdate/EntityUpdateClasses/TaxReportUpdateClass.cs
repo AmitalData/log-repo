@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "eaa8c0e7866f966d790ab726d1d83ab5";
+		public const string HashString = "2ab8ace3e6597e6a38762b64b54d0589";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -369,7 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
-					  						EnableAutoFill =  true,
+					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
@@ -2064,6 +2064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdatedByUserName",
 					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

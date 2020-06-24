@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
          private void CreateEvent(string eventCode, InterestReportPM interestReport,string Notes = null)
         {
-            Contact contact = GetLoggedContact(interestReport);
+            ContactPM contact = GetLoggedContact(interestReport.Tenant);
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = interestReport.Id,
@@ -71,13 +71,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             });
         }
 
-        private Contact GetLoggedContact(InterestReportPM interestReport)
-        {
-            ContactRepository contactRep = new ContactRepository(interestReport.Tenant);
-            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(interestReport.Tenant);
-           return  contactRep.GetSingleContactByEmail(resolveLoggingUserId, interestReport.Tenant);
-        }
-
+ 
         protected override void OnUpdating(InterestReportPM entityPM, InterestReport entityPOCO)
         {
             entityPM.UpdateDateTime = DateTime.UtcNow;
@@ -134,7 +128,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.OpenBalance != entityPOCO.OpenBalance)
                 {
                     string notes = TranslateTextsClass.Translate("InterestReport.F.OpenBalance", entityPOCO.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPOCO.Tenant, showLocals) + entityPOCO.OpenBalance  + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPOCO.Tenant, showLocals) + entityPM.OpenBalance ;
-                    CreateEvent("UPEV", entityPM);
+                    CreateEvent("UPEV", entityPM, notes);
                 }
             }
             base.Trace(entityPM, entityPOCO, changesXml);

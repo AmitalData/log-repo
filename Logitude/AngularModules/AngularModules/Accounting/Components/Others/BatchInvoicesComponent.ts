@@ -13,6 +13,9 @@ import { InterestReportArguments } from '../../DataContracts/InterestReportArgs'
 import { InterestReportEventManager } from '../../Utilities/InterestReportEventManager';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 
 
@@ -23,21 +26,23 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 })
 export class BatchInvoicesComponent extends BaseComponent {
     entityListService = new EntityListService();
-     DataContext: any = this;
+    DataContext: any = this;
     LoadGrids: boolean = false;
+    public isRTL: boolean = false;
     private ExcludedItems: ObservableCollection;
     private interestReportExtendedListService: InterestReportExtendedListService = new InterestReportExtendedListService();
     private CurrentSession = SessionLocator.SelectedSession;
-  public SelectedItemsCountText: string = null;
-  public ValidationErrorsList: string[] = [];
-  public BatchId:string;
-  public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-  public bteList: BatchTaskExecutionList;
-  public timer: any;
-  public timerInterval: number = 1000;
-  public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
-  constructor() {
+    public SelectedItemsCountText: string = null;
+    public ValidationErrorsList: string[] = [];
+    public BatchId:string;
+    public _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+    public bteList: BatchTaskExecutionList;
+    public timer: any;
+    public timerInterval: number = 1000;
+    public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
+    constructor(private CD: ChangeDetectorRef) {
     super();
+    if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     this.ExcludedItems = new ObservableCollection([]);
     this.selectedItems = new ObservableCollection([]);
    // this.Listen();
@@ -46,15 +51,18 @@ export class BatchInvoicesComponent extends BaseComponent {
   public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
   @Output() MenuHeaderchangeevent = new EventEmitter();
   //public MarkIsChecked: EventEmitter<any> = new EventEmitter();
-
+    public ColumnsReady: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
     this.BuildColumns();
     this.ReloadData();
 
   }
     ReloadData() {
+      
       this.SelectedItemsCount = 0;
-      this.selectedItems.Clear();
+        this.selectedItems.Clear();
+        this.SetCreateInvoiceButtonText();
+        this.AllSelected = false;
     this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
   }
@@ -68,19 +76,30 @@ export class BatchInvoicesComponent extends BaseComponent {
     public Columns: any[] = null;
     BuildColumns() {
         this.Columns = [];
+        if (this.ShowInProgressReports) {
+            this.Columns.push({
+                FieldName: "Select",
+                DataTypeCode: 'String',
+                Display: '',
+                IsCustomTemplate: true,
+                Styles: { width: '27px' },
+                HtmlListComponentName: 'InterestReportListTemplate',
+                HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
 
-      this.Columns.push({
-        FieldName: "Select",
-        DataTypeCode: 'String',
-        Display: '',
-        IsCustomTemplate: true,
-        Styles: { width: '27px' },
-        HtmlListComponentName: 'InterestReportListTemplate',
-       HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
-       
-       // IsCheckBox: true,
-      });
+                // IsCheckBox: true,
+            });
+        }
+        else {
 
+            this.Columns.push({
+                FieldName: "Select",
+                DataTypeCode: 'String',
+                Display: '',
+                IsCustomTemplate: true,
+                Styles: { width: '27px' },             
+                 IsCheckBox: true,
+            });
+        }
         this.Columns.push({
           FieldName: 'ReportNumber',
             DataTypeCode: 'String',
@@ -137,7 +156,7 @@ export class BatchInvoicesComponent extends BaseComponent {
           HtmlListComponentUrl: './Accounting/Components/ListTemplates/InterestReportListTemplate',
         
            
-        });
+        }); this.ColumnsReady.emit(this.Columns); 
         this.CurrentSession.InterestReportCheckBoxCheckedEvent.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 var row = $event.line;
@@ -145,18 +164,37 @@ export class BatchInvoicesComponent extends BaseComponent {
                 var RowIndex = $event.RowIndex;
                 var isChecked = $event.isChecked;
 
-                this.onCheckBoxChecked(isChecked, row, RowIndex);
+                this.onCheckBoxChecked($event);
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
                 /// this.MarkIsChecked.emit({ MyRecord: row });
             }
         });
 
     }
+
+    ValidateDate(fieldName: any) {
+        this.ValidationErrorsList = [];
+        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
+            if (fieldName == null) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+            this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            this.UIProperties.SetValidity("FromDate", null, false, TextCodeTranslator.Translate("Accounting.General.FromDateMustBeLTT"));
+            //  this.CD.detectChanges();
+
+        } else {
+
+            this.UIProperties.SetValidity("ToDate", null, true, "");
+            this.UIProperties.SetValidity("FromDate", null, true, "");
+            this.ReloadData();
+        }
+
+    }
   public DataCount: number;
   private EnabledDataCount: number;
     OnDataLoaded(result) {
         if (result) {
-          this.DataCount = result.length;
+            this.DataCount = this.DataSource.rowCount;
           this.EnabledDataCount = result.filter(d => d.InterestReportStatusCode != "8").length;
           this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
         } 
@@ -169,7 +207,8 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-          this.ReloadData();
+            this.ValidateDate("FromDate");
+         
         }
     }
 
@@ -178,7 +217,8 @@ export class BatchInvoicesComponent extends BaseComponent {
     public set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-             this.ReloadData();
+            this.ValidateDate("ToDate");
+           
 
         }
   }
@@ -186,24 +226,38 @@ export class BatchInvoicesComponent extends BaseComponent {
   public get ShowInProgressReports() { return this.showInProgressReports; }
   public set ShowInProgressReports(value: boolean) {
     if (this.showInProgressReports != value) {
-      this.showInProgressReports = value;
-      this.ReloadData();
+        this.showInProgressReports = value;
+        if (value) {
+
+            this.IsSelectAllEnabled = false;
+        }
+        else this.IsSelectAllEnabled = true;
+        this.BuildColumns();
+        this.ValidateDate(null);
 
     }
-  }
+    }
+    public IsSelectedItemsTextVisibile: boolean = false;
+    public IsSelectAllEnabled: boolean = true;
   private allSelected: boolean = false; 
   public get AllSelected() { return this.allSelected; }
   public set AllSelected(value: boolean) {
     if (this.allSelected != value) {
       this.allSelected = value;
-      InterestReportEventManager.SelectAllEvent.emit({
-        value
-      });
-      InterestReportEventManager.AllSelected = value;
-    if(value)
-      this.SelectedItemsCountText = "selected "+ this.DataCount +" of " +this.DataCount;
-      else this.SelectedItemsCountText = "selected 0 of " + this.DataCount;
-        this.SelectedItemsCount = this.DataCount;
+      //InterestReportEventManager.SelectAllEvent.emit({
+      //  value
+      //});
+      //InterestReportEventManager.AllSelected = value;
+        if (value) {
+            this.IsSelectedItemsTextVisibile = true;
+            this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;
+            this.SelectedItemsCount = this.DataSource.rowCount;
+
+        } else {
+            this.IsSelectedItemsTextVisibile = false;
+            this.SelectedItemsCount = 0;
+        }
+        this.SetCreateInvoiceButtonText();
     }
   }
   DataSource = {
@@ -242,18 +296,19 @@ export class BatchInvoicesComponent extends BaseComponent {
   }
 
 
-  Refresh() {
-    this.ReloadData();
+    Refresh() {
+        this.ValidateDate(null);
+   // this.ReloadData();
 
     }
     private selectedItems: ObservableCollection;
-  private SelectedItemsCount: number=0;
-  onCheckBoxChecked(IsChecked:boolean, row:any, rowIndex:any)
+  public SelectedItemsCount: number=0;
+    onCheckBoxChecked($event:any)
   {
-    if (IsChecked) {
+        if ($event.IsChecked) {
 
-      if (!this.selectedItems.Collection.includes(row)) {
-        this.selectedItems.Insert(row);
+            if (!this.selectedItems.Collection.includes($event.rowData)) {
+                this.selectedItems.Insert($event.rowData);
 
               this.SelectedItemsCount += 1;
               this.DataCount = this.DataSource.rowCount;
@@ -263,8 +318,8 @@ export class BatchInvoicesComponent extends BaseComponent {
               }
 
               if (this.AllSelected) {
-                  if (this.ExcludedItems.Collection.includes(row.Id)) {
-                      this.ExcludedItems.Remove(row.Id);
+                  if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                      this.ExcludedItems.Remove($event.rowData.Id);
                   }
               }
           }
@@ -272,7 +327,7 @@ export class BatchInvoicesComponent extends BaseComponent {
     
     else {
   
-        this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == row.Id));
+            this.selectedItems.Remove(this.selectedItems.Collection.find(c => c.Id == $event.rowData.Id));
       this.SelectedItemsCount -= 1;
 
       if (this.DataCount != null) {
@@ -280,26 +335,21 @@ export class BatchInvoicesComponent extends BaseComponent {
 
       }
         if (this.AllSelected) {
-          if (!this.ExcludedItems.Collection.includes(row.Id)) {
-            this.ExcludedItems.Insert(row.Id);
+            if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                this.ExcludedItems.Insert($event.rowData.Id);
           }
         }
       if (this.SelectedItemsCount == 0) {
-          this.SelectedItemsCountText = "selected 0 of " + this.DataCount.toString();
+          this.IsSelectedItemsTextVisibile = false;
         this.AllSelected = false;
       }
 
     } this.SetCreateInvoiceButtonText();
   }
   CreateInvoiceButtonClicked() {
-    this.ValidationErrorsList = [];
-    if (this.SelectedItemsCount == 0) {
-      this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
-    } else {
       var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-      this.CurrentSession.StartBusyIndicator("");
+      this.CurrentSession.StartBusyIndicatorLoading();
       this.interestReportExtendedListService.PutInterestReortStatus(interestReportArgs).subscribe((response: ServiceResponse) => {
-        // this.CurrentSession.StopBusyIndicator();
         var mm: ServiceResponse = response;
         if (!mm.HasError) {
             this.BatchId= mm.Result;
@@ -312,9 +362,58 @@ export class BatchInvoicesComponent extends BaseComponent {
         }
 
       });
+  }
+   CheckNumberOfInterestReportInvoicingWithoutInvoice(){
+    this.ValidationErrorsList = [];
+    if (this.SelectedItemsCount == 0) {
+      this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
+    } else {
+      var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
+      this.CurrentSession.StartBusyIndicatorLoading();
+      this.interestReportExtendedListService.CheckNumberOfInterestReportInvoicingWithoutInvoice(interestReportArgs).subscribe((response: ServiceResponse) => {
+      this.CurrentSession.StopBusyIndicator();
+        var mm: ServiceResponse = response;
+        if (!mm.HasError) {
+        var NumberOfReportsWithoutInvoices = mm.Result;
+        if(NumberOfReportsWithoutInvoices>0){
+          this.ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices,interestReportArgs);
+         }
+         else{
+          this.CreateInvoiceButtonClicked();
+         }
+        }
+        else {
+
+        }
+
+      });
 
     }
+
   }
+
+ 
+ShowWarninngAboutReportsWithoutInvoice(NumberOfReportsWithoutInvoices:number,interestReportArgs: InterestReportArguments) {
+      var confirmWindow = new ConfirmWindow();
+      confirmWindow.Width = 390;
+      var NumberIdsSelected:number=0;
+      if(interestReportArgs.AllSelected){
+          NumberIdsSelected = this.DataCount - interestReportArgs.ExcludedIds.length;
+      }
+      else{
+          NumberIdsSelected = interestReportArgs.SelectedIds.length;
+      }
+      confirmWindow.Show(  NumberOfReportsWithoutInvoices+" "+TextCodeTranslator.Translate("InterestReport.O.OutOf")+" " + NumberIdsSelected + " " +TextCodeTranslator.Translate("InterestReport.O.SelectedReportsWillNotHaveAnInvoice"));
+      confirmWindow.WindowClosed.subscribe((event: any) => {
+          if (confirmWindow.Yes) {
+             this.CreateInvoiceButtonClicked();
+          } else if (confirmWindow.No) {
+
+          }
+      });
+}  
+ 
+  
 SetCreateInvoiceButtonText(){
 if (this.SelectedItemsCount > 0) {
 this.CreateInvoiceText = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice") + "(" + this.SelectedItemsCount + ")";

@@ -169,7 +169,6 @@
     <Compile Include="CommonDataModel\DocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedDocument.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedManifest.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CardCurrenciesAccounting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CarrierAreasPort.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CarrierArea.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AirlineMessagingRule.cs" />
@@ -367,7 +366,6 @@
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedManifestMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CardCurrenciesAccountingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierAreasPortMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierAreaMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineMessagingRuleMap.cs" />
@@ -475,7 +473,6 @@
     <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CardCurrenciesAccountingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CarrierAreasPortRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CarrierAreaRepository.cs" />

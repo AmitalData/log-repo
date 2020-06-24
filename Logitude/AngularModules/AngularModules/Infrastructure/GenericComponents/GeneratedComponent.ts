@@ -25,11 +25,13 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
     public IsCustomerCare: boolean = false;
+    public IsCustomerCareOrDistributor: boolean = false;
+
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(private entityArgs: EntityArgs) {
         super();
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
-
+        this.IsCustomerCareOrDistributor = SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor;
     }
 
     public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false) {

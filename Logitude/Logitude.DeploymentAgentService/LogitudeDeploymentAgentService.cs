@@ -22,8 +22,10 @@ namespace Logitude.DeploymentAgentService
         protected string AgentServiceId = ConfigurationManager.AppSettings["AgentServiceId"];
         protected string InstanceName = ConfigurationManager.AppSettings["InstanceName"];
         protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
-        protected bool RunDBMigrations = (ConfigurationManager.AppSettings["RunDBMigrations"] == "true");
-
+        protected bool RunDBMigrationsEnabled = (ConfigurationManager.AppSettings["RunDBMigrations"] == "true");
+        protected bool RunUnitTestsEnabled = (ConfigurationManager.AppSettings["RunUnitTests"] == "true");
+        protected string UnitTestsFiles = ConfigurationManager.AppSettings["UnitTests"];
+        
         protected string InProgressDeploymentStatusCode = "I";
         protected string CompletedDeploymentStatusCode = "C";
         protected string ErrorDeploymentStatusCode = "E";
@@ -95,21 +97,16 @@ namespace Logitude.DeploymentAgentService
 
                     if (deploySuccess)
                     {
-                        if (RunDBMigrations)
-                        {
-                            bool runDBMigrationsTool = RunDBMigrationsTool();
-                            if (runDBMigrationsTool)
-                            {
-                                UpdateCurrentVersion();
-                                AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
-                                UpdateDeploymentStatus(CompletedDeploymentStatusCode);
-                            }
-                        }
-                        else
+                        bool runTasksAfterDeploymentResult = RunTasksAfterDeployment();
+                        if (runTasksAfterDeploymentResult)
                         {
                             UpdateCurrentVersion();
                             AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
                             UpdateDeploymentStatus(CompletedDeploymentStatusCode);
+                        }
+                        else
+                        {
+                            UpdateDeploymentStatus(ErrorDeploymentStatusCode);
                         }
                     }
                     else
@@ -177,6 +174,24 @@ namespace Logitude.DeploymentAgentService
             }
 
             return deploySuccess;
+        }
+
+        protected bool RunTasksAfterDeployment()
+        {
+            bool runDBMigrationsToolResult = true;
+            bool runUnitTestsResult = true;
+
+            if (RunDBMigrationsEnabled)
+            {
+                runDBMigrationsToolResult = RunDBMigrationsTool();
+            }
+
+            if (RunUnitTestsEnabled)
+            {
+                runUnitTestsResult = RunUnitTests();
+            }
+
+            return (runDBMigrationsToolResult && runUnitTestsResult);
         }
 
         protected void DisableAgentServiceTimer()
@@ -546,11 +561,52 @@ namespace Logitude.DeploymentAgentService
                     AddAgentLog("Database Migrations Tool Returned Output Error:\n" + processRunResult.ProcessResult.ErrorDataReceived);
                 }
 
-                result = true;
+                result = (processRunResult.ProcessResult.ExitCode == 0);
             }
             else
             {
                 AddAgentLog("Exception While Running Database Migrations Tool: " + processRunResult.ExceptionMessage, true);
+            }
+
+            return result;
+        }
+
+        protected bool RunUnitTests()
+        {
+            AddAgentLog("Running Unit Tests Started");
+
+            bool result = false;
+
+            string vsTestConsoleDirectoryPath = InstanceFolderPath + @"\vstest.console";
+            string unitTestsDirectoryPath = InstanceFolderPath + @"\UnitTests";
+            List<string> unitTestsFiles = UnitTestsFiles.Split(',').Select(u => u.ToLower()).ToList();
+            string[] unitTestsPaths = Directory.GetFiles(unitTestsDirectoryPath, "*", SearchOption.AllDirectories).Where(u => unitTestsFiles.Contains(Path.GetFileName(u).ToLower())).ToArray();
+            string unitTestsPathsArgument = string.Join(" ", unitTestsPaths);
+
+            string filePath = vsTestConsoleDirectoryPath + @"\vstest.console.exe";
+            string arguments = string.Format("{0}", unitTestsPathsArgument);
+
+            ProcessHelper processHelper = new ProcessHelper(filePath, arguments, null, Encoding.GetEncoding(866));
+            ProcessRunResult processRunResult = processHelper.RunProcess();
+            if (processRunResult.ProcessResult != null)
+            {
+                AddAgentLog("Running Unit Tests Finished " + (processRunResult.ProcessResult.ExitCode == 0 ? "Successfully" : "With Errors"));
+
+                if (!String.IsNullOrEmpty(processRunResult.ProcessResult.OutputDataReceived))
+                {
+                    AddAgentLog("Running Unit Tests Returned Output Data:\n" + processRunResult.ProcessResult.OutputDataReceived);
+                }
+
+                if (!String.IsNullOrEmpty(processRunResult.ProcessResult.ErrorDataReceived))
+                {
+                    AddAgentLog("Running Unit Tests Returned Output Error:\n" + processRunResult.ProcessResult.ErrorDataReceived);
+                }
+
+                result = (processRunResult.ProcessResult.ExitCode == 0);
+            }
+            else
+            {
+                AddAgentLog("Exception While Running Unit Tests: " + processRunResult.ExceptionMessage, true);
             }
 
             return result;

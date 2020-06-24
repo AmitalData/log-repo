@@ -95,6 +95,30 @@
                             </td>
                         </tr>
 
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'DefaultCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'DefaultCurrencyId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="DefaultCurrencyId"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Currency'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </td>
+
+                            <td style="width:50px;">
+                                <HelpIcon [Header]="'Default Currency'" [Text]="'Default currency will be used for both the price check and new tariffs'"></HelpIcon>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
                         <tr>
                             <td colspan="4">
                                 <div></div>

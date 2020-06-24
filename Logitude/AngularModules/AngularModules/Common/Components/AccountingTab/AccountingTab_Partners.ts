@@ -4,7 +4,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import { CardCurrenciesAccountingPM } from '../../EntityPMs/CardCurrenciesAccountingPM';
+import { CardExternalCodeByCurrencyPM } from '../../EntityPMs/CardExternalCodeByCurrencyPM';
 import { CurrencyList } from '../../EntityLists/CurrencyList';
 import { CurrencyListService } from '../../Services/StandardLists/CurrencyListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -49,22 +49,23 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
         myService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllCurrencies = myResponse.Result.filter(a => !a.InActive);
+                this.BuildItemsSource();
             }
-            this.BuildItemsSource();
+           
         });
     }
 
     BuildItemsSource() {
         this.ItemsSource = [];
 
-        this.EntityPM.CardCurrenciesAccountings.forEach(item => {
+        this.EntityPM.CardExternalCodeByCurrencies.forEach(item => {
             this.ItemsSource.push(new CardCurrenciesAccountingTab(item, this));
         });
 
         this.AllCurrencies.forEach(list => {
             var existingItem: CardCurrenciesAccountingTab = this.ItemsSource.filter(f => f.CurrencyId == list.Id)[0];
             if (existingItem == null) {
-                var newItemPM = new CardCurrenciesAccountingPM(null);
+                var newItemPM = new CardExternalCodeByCurrencyPM(null);
                 newItemPM.Tenant = SessionLocator.Tenant;
                 newItemPM.CurrencyId = list.Id;
                 newItemPM.CurrencyName = list.EnglishName;
@@ -174,11 +175,11 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
 }
 
 export class CardCurrenciesAccountingTab extends BaseComponent {
-    public EntityPM: CardCurrenciesAccountingPM;
+    public EntityPM: CardExternalCodeByCurrencyPM;
     public ObjectTableName: string = "CardCurrenciesAccounting";
     public DataContext = this;
 
-    constructor(entityPM: CardCurrenciesAccountingPM, private father: AccountingTab_Partners) {
+    constructor(entityPM: CardExternalCodeByCurrencyPM, private father: AccountingTab_Partners) {
         super();
         this.EntityPM = entityPM;
         this.SetUIProperties();
@@ -210,28 +211,28 @@ export class CardCurrenciesAccountingTab extends BaseComponent {
         this.UIProperties.SetEnabled("ReceivableCreditAccount", this.ObjectTableName, isReceivableFieldEnabled);
     }
 
-    get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
+    get PayableDebitAccount() { return this.EntityPM.ExternalPayableTableId; }
     set PayableDebitAccount(value: string) {
-        if (this.EntityPM.PayableDebitAccount != value) {
-            this.EntityPM.PayableDebitAccount = value;
+        if (this.EntityPM.ExternalPayableTableId != value) {
+            this.EntityPM.ExternalPayableTableId = value;
             this.OnDataInput();
         }
     }
 
-    get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
+    get ReceivableCreditAccount() { return this.EntityPM.ExternalRecievableTableId; }
     set ReceivableCreditAccount(value: string) {
-        if (this.EntityPM.ReceivableCreditAccount != value) {
-            this.EntityPM.ReceivableCreditAccount = value;
+        if (this.EntityPM.ExternalRecievableTableId != value) {
+            this.EntityPM.ExternalRecievableTableId = value;
             this.OnDataInput();
         }
     }
 
     OnDataInput() {
         if (AppTool.IsNullOrEmpty(this.PayableDebitAccount) && AppTool.IsNullOrEmpty(this.ReceivableCreditAccount)) {
-            this.father.EntityPM.RemoveCardCurrenciesAccountingPM(this.EntityPM);
+            this.father.EntityPM.RemoveCardExternalCodeByCurrencyPM(this.EntityPM);
         }
         else {
-            this.father.EntityPM.AddCardCurrenciesAccountingPM(this.EntityPM);
+            this.father.EntityPM.AddCardExternalCodeByCurrencyPM(this.EntityPM);
         }
     }
 }

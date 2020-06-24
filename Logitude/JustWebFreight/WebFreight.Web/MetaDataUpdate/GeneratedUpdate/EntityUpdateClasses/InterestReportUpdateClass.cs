@@ -76,7 +76,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "4c40be54e3e536081532c0dc9ed5f526";
+
+
+		public const string HashString = "d3c12b63d4ce763ec987966b02b6a863";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1959,6 +1962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsFirstReport",
 					  						ListPropertyPath =  "IsFirstReport",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2136,7 +2140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "Updated",
+                LocalName =  "עדכון",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -2408,7 +2412,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOReportCreationFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ReportCreationFailed", DefaultText = "Report Creation Failed",LocalDefaultText = @"בנית הדוח נכשלה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+
  		   TextCode InterestReportTextCode_InterestReportOEditOpenBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.EditOpenBalance", DefaultText = "Edit Open Balance",LocalDefaultText = @"עדכן יתרת פתיחה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOSelectedReportsWillNotHaveAnInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.SelectedReportsWillNotHaveAnInvoice", DefaultText = "selected reports will not have an invoice created for them because they do not meet the minimum billing requirements. They will be closed without invoices",LocalDefaultText = @"הדוחות שנבחרו לא תיווצר עבורם חשבונית מכיוון שהם לא עומדים בהגדרת החיוב המינמלית שבכרטיס . ", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOOutOf = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OutOf", DefaultText = "out of",LocalDefaultText = @"מתוך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    
