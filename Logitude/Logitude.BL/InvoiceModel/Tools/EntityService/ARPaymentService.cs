@@ -2182,7 +2182,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 _payment.OpenAmount = 0;
             }
 
-            if (amount2reconcile > (decimal)_payment.OpenAmount)
+            if (amount2reconcile > (decimal)_payment.OpenAmountInLocalCurrency)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
         }
 
