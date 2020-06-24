@@ -380,7 +380,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
  
 
-                    _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
+                  if(fromMehes)  _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
                   
                     var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
