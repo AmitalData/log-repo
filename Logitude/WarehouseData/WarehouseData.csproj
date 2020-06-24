@@ -92,6 +92,7 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\FeatureDataWarehouseService.cs" />
     <Compile Include="Service\WarehouseHelper.cs" />
     <Compile Include="Service\CustomFieldWarehouseService.cs" />
     <Compile Include="Service\DimensionWarehouseService.cs" />
