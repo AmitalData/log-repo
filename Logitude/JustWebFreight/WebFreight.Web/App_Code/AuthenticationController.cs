@@ -627,11 +627,6 @@ namespace WebFreight.Web
             try
             {
 
-                LogitudeLeadHelper logitudeLeadHelper = new LogitudeLeadHelper();
-
-                logitudeLeadHelper.CreateLogitudeLead(new LogitudeLeadPM() { CompanyName = "Https" });
-
-
 
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
