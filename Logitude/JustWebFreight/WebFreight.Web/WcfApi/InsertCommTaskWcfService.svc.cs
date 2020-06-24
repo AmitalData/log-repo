@@ -25,6 +25,8 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(myTenant);
 
+                
+
                 string userEmail = "system@tenant" + destinationTenant + ".com";
                 UserRepository userRepository = new UserRepository(destinationTenant);
                 User user = userRepository.GetSingleUserByEmail(userEmail, destinationTenant, true);
@@ -45,7 +47,8 @@ namespace WebFreight.Web.WcfApi
                 logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
                 var Id = Communications.AddCommunicationLog(logParams);
                 response.Result = Id;
-
+                //Communications.AddCommunicationLog(logParams);
+                //var qId = HttpContext.Current.Request.Headers["CurrentRequestOpenedQueues"];
 
                 return response;
             }

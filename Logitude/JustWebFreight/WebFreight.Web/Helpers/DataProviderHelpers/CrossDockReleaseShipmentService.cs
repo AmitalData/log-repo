@@ -56,7 +56,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     DateTime warehouseLegActualReleaseDate = (DateTime)shipmentDataView.WarehouseLegActualReleaseDate;
                     DateTime warehouseLegActualEntryDate = (DateTime)shipmentDataView.WarehouseLegActualEntryDate;
                     TimeSpan span = warehouseLegActualReleaseDate.Subtract(warehouseLegActualEntryDate);
-                    storageDays = (int)span.TotalDays;
+
+                    storageDays = (int)Math.Round(span.TotalDays);
                 }
             }
             crossDockReleaseDataProvider.StorageDays = storageDays;

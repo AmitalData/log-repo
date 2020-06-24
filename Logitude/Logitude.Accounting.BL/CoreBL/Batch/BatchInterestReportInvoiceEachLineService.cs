@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
@@ -54,11 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 UserQuery userQuery = new UserQuery(interestReportArgs.Tenant);
                 interestReport = interestReportQueryService.GetSingle(interestReportArgs.InterestReportId, false, true);
                 userPM = userQuery.GetSinglePMByEmail(interestReportArgs.Email, interestReportArgs.Tenant);
-                ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
-                IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
-                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
-                invoiceService.Create(aRInvoicePM);
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+                CreateInvoiceForInterestReport();
             }
 
             catch (Exception e)
@@ -68,6 +65,26 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
           
         }
+
+
+        private void CreateInvoiceForInterestReport()
+        {
+            if (interestReport.TotalAmount == null || interestReport.TotalAmount <= interestReport.GLAccountMinimumInterest)
+            {
+                IAccountingContext iAccountingContext = AccountingContext.GetContext(interestReportArgs.Tenant);
+                InterestReportService interestTransactionQuery = new InterestReportService();
+                interestReport = interestTransactionQuery.PutConfirmCreateInvoice(interestReport, interestReportArgs.Tenant, iAccountingContext);
+            }
+            else
+            {
+                ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
+                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant);
+                invoiceService.Create(aRInvoicePM);
+                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+            }
+        }
+
         private InterestReportArgs GetInterestReportArgs()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;

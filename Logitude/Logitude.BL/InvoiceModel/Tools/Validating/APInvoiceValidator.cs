@@ -57,6 +57,22 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                     }
                 }
+
+                if (!accountingSetting.EnableEnteringTotalVAT)
+                {
+                    if (entityPM.TotalVATOnly)
+                    {
+                        if (isNew)
+                        {
+                            throw new ApplicationException("Tenant setting doesn’t allow total VATs");
+                        }
+
+                        else if (!entityPOCO.TotalVATOnly)
+                        {
+                            throw new ApplicationException("Tenant setting doesn’t allow total VATs");
+                        }
+                    }
+                }
             }
             
            // CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
@@ -76,7 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         double? invoiceAmount = (double)MethodHelper.Round(entityPM.AmountInInvoiceCurrency, 2);
 
-                        if (invoiceAmount == 0 || invoiceAmount == null)
+                        if (entityPM.AmountInInvoiceCurrency == null)
                         {
                             throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }

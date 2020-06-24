@@ -92,7 +92,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LineCreditAccountTypeCode, 
 	         TaxReportJournalLineNumber, 
 	         DocumentDate, 
-	         DueDate,
+	         DueDate, 
+	         APPaymentCancelDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

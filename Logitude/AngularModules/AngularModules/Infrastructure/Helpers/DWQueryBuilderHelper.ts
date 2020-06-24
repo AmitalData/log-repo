@@ -66,6 +66,9 @@ export class DWQueryBuilderHelper   {
                     }
                     //view.ParentDataTypeCode = "LookUp";
                     view.ParentDimTabelName = field.DWObjectTableCode;
+
+                    if (view.DataTypeCode == "Boolean") view.ParentDataTypeCode = "Boolean";
+
                 }
                 else {
                     view.ParentDataTypeCode = field.DataTypeCode;
@@ -658,6 +661,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
             this.ParentDataTypeCode = "LookUp";
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
+
+            if (this.DataTypeCode == "Boolean") this.ParentDataTypeCode = "Boolean";
+
+
         }
         else {
             this.ParentDataTypeCode = DWObjectField.DataTypeCode;

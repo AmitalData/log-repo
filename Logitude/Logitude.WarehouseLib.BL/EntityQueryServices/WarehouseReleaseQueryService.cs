@@ -325,6 +325,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                      ShipmentId = a.ShipmentId,
                                                      References = a.CustomerRef1 + (!string.IsNullOrEmpty(a.CustomerRef1) && !string.IsNullOrEmpty(a.CustomerRef1) ? "," : "") + a.CustomerRef2,
                                                      Destination = a.ToTypeCode == "PORT" ? a.ToPort!=null? a.ToPort.Code:"" : a.ToTypeCode == "PART" ? (a.ToAddress!=null?a.ToAddress.City + " " :"") +  (a.ToAddress != null && a.ToAddress.Country!=null ? a.ToAddress.Country.EnglishName : "") : a.ToTypeCode == "CASL" ? (a.ToAddressCity) + " " + (a.ToAddressCountry != null ? a.ToAddressCountry.EnglishName : "") : "",
+                                                     ReleaseDate = a.ActualReleaseDate == null ? a.ExpectedReleaseDate : a.ActualReleaseDate
                                                  }).ToList();
             WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(tenant);
             foreach (WarehouseReleasePM item in myResult)

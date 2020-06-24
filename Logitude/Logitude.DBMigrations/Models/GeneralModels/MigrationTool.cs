@@ -39,17 +39,12 @@ namespace Logitude.DBMigrations.Models
 
         public void RunTool()
         {
-            if (IsArgumentProvided("-root") || RunSettings.DebugMode)
+            if (IsArgumentProvided(ToolArguments.ROOT) || RunSettings.DebugMode)
             {
                 string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
 
                 if (!String.IsNullOrEmpty(root))
                 {
-                    GeneratedScript toolTablesScript = null;
-                    GeneratedScript preGeneralScript = null;
-                    GeneratedScript migrationsScript = null;
-                    GeneratedScript postGeneralScript = null;
-
                     string[] dxmlFiles = GetDXMLFilesFromRoot(root);
                     string[] sxmlFiles = GetSXMLFilesFromRoot(root);
 
@@ -65,55 +60,15 @@ namespace Logitude.DBMigrations.Models
                     string[] toolDxmlFiles = dxmlFiles?.Where(d => toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
                     string[] migrationDxmlFiles = dxmlFiles?.Where(d => !toolDxmlFilesNames.Contains(Path.GetFileName(d).ToLower())).ToArray();
 
-                    bool isExecuteArgumentProvided = IsArgumentProvided("-exe") || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
+                    bool isExecuteArgumentProvided = IsArgumentProvided(ToolArguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
-                    if (toolDxmlFiles != null)
-                    {
-                        toolTablesScript = GenerateScriptsFromDXMLFiles(toolDxmlFiles);
-
-                        if (isExecuteArgumentProvided)
-                        {
-                            ExecuteScript(toolTablesScript);
-
-                            SaveDXMLHashesOnDB(toolDxmlFiles);
-                        }
-                    }
-
-                    if (sxmlFiles != null)
-                    {
-                        preGeneralScript = GetGeneralScripts(sxmlFiles, true);
-
-                        if (isExecuteArgumentProvided)
-                        {
-                            ExecuteGeneralScripts(sxmlFiles, true);
-                        }
-                    }
-
-                    if (migrationDxmlFiles != null)
-                    {
-                        migrationsScript = GenerateScriptsFromDXMLFiles(migrationDxmlFiles);
-
-                        if (isExecuteArgumentProvided)
-                        {
-                            ExecuteScript(migrationsScript);
-
-                            SaveDXMLHashesOnDB(migrationDxmlFiles);
-                        }
-                    }
-
-                    if (sxmlFiles != null)
-                    {
-                        postGeneralScript = GetGeneralScripts(sxmlFiles, false);
-
-                        if (isExecuteArgumentProvided)
-                        {
-                            ExecuteGeneralScripts(sxmlFiles, false);
-                        }
-                    }
-
+                    GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
+                    GeneratedScript preGeneralScript = HandleSXMLFiles(sxmlFiles, isExecuteArgumentProvided, true);
+                    GeneratedScript migrationsScript = HandleDXMLFiles(migrationDxmlFiles, isExecuteArgumentProvided);
+                    GeneratedScript postGeneralScript = HandleSXMLFiles(sxmlFiles, isExecuteArgumentProvided, false);
                     GeneratedScript scriptsToSave = GetScriptsToSave(toolTablesScript, preGeneralScript, migrationsScript, postGeneralScript);
-                    SaveScript(scriptsToSave);
 
+                    SaveScript(scriptsToSave);
                     ExportMissingIndexesWarnings();
                 }
                 else
@@ -125,6 +80,39 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("There Is No Root Found For Looking About Files");
             }
+        }
+
+        private GeneratedScript HandleDXMLFiles(string[] dxmlFiles, bool execute)
+        {
+            GeneratedScript generatedScript = null;
+
+            if (dxmlFiles != null)
+            {
+                generatedScript = GenerateScriptsFromDXMLFiles(dxmlFiles);
+                if (execute)
+                {
+                    ExecuteGeneratedScript(generatedScript);
+                    SaveDXMLHashesOnDB(dxmlFiles);
+                }
+            }
+
+            return generatedScript;
+        }
+
+        private GeneratedScript HandleSXMLFiles(string[] sxmlFiles, bool execute, bool pre)
+        {
+            GeneratedScript generatedScript = null;
+
+            if (sxmlFiles != null)
+            {
+                generatedScript = GetGeneralScripts(sxmlFiles, pre);
+                if (execute)
+                {
+                    ExecuteGeneralScripts(sxmlFiles, pre);
+                }
+            }
+
+            return generatedScript;
         }
 
         private void PrepareRequiredData()
@@ -264,7 +252,7 @@ namespace Logitude.DBMigrations.Models
         {
             GeneratedScript generatedScript = new GeneratedScript();
             GeneratedScript relationsScript = new GeneratedScript();
-
+            
             foreach (var dxmlTable in dxmlTables)
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
@@ -276,45 +264,26 @@ namespace Logitude.DBMigrations.Models
                     foreach (var dbType in dbTypes)
                     {
                         dxmlTable.TableDefinition.DBType = dbType;
-
                         DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
+                        DatabaseMigrationsResult databaseMigrationsResult = GetDatabaseMigrationsResult(databaseMigrations);
 
-                        string tableScript = databaseMigrations.GetScript();
-                        string tableRelationsScript = databaseMigrations.GetRelationsScript();
-                        string tableIndexesScript = databaseMigrations.GetIndexesScript();
-                        string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
-                        string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
-
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
-
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
-
-                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
-
-                        relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
-
-                        MissingIndexesWarnings += tableMissingIndexesWarnings;
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.MigrationsScript);
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.IndexesScript);
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.UniqueConstraintsScript);
+                        relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.RelationsScript);
+                        MissingIndexesWarnings += databaseMigrationsResult.MissingIndexesWarnings;
                     }
                 }
                 else
                 {
                     DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable.TableDefinition, dxmlTable.DXMLFileName);
-
-                    string tableScript = databaseMigrations.GetScript();
-                    string tableRelationsScript = databaseMigrations.GetRelationsScript();
-                    string tableIndexesScript = databaseMigrations.GetIndexesScript();
-                    string tableMissingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
-                    string tableUniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
-
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableScript);
-
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableIndexesScript);
-
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, tableUniqueConstraintsScript);
-
-                    relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, tableRelationsScript);
-
-                    MissingIndexesWarnings += tableMissingIndexesWarnings;
+                    DatabaseMigrationsResult databaseMigrationsResult = GetDatabaseMigrationsResult(databaseMigrations);
+                    
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.MigrationsScript);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.IndexesScript);
+                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.UniqueConstraintsScript);
+                    relationsScript = AppendToGeneratedScript(relationsScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.RelationsScript);
+                    MissingIndexesWarnings += databaseMigrationsResult.MissingIndexesWarnings;
                 }
             }
 
@@ -322,6 +291,24 @@ namespace Logitude.DBMigrations.Models
             {
                 GeneratedScript = generatedScript,
                 RelationsScript = relationsScript
+            };
+        }
+
+        private DatabaseMigrationsResult GetDatabaseMigrationsResult(DatabaseMigrations databaseMigrations)
+        {
+            string migrationsScript = databaseMigrations.GetScript();
+            string relationsScript = databaseMigrations.GetRelationsScript();
+            string indexesScript = databaseMigrations.GetIndexesScript();
+            string missingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
+            string uniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
+            
+            return new DatabaseMigrationsResult
+            {
+                MigrationsScript = migrationsScript,
+                RelationsScript = relationsScript,
+                IndexesScript = indexesScript,
+                MissingIndexesWarnings = missingIndexesWarnings,
+                UniqueConstraintsScript = uniqueConstraintsScript
             };
         }
 
@@ -383,7 +370,7 @@ namespace Logitude.DBMigrations.Models
             string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if (IsArgumentProvided("-deployment"))
+            if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
             {
                 projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             }
@@ -414,50 +401,29 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        private void ExecuteScript(GeneratedScript generatedScript)
+        private void ExecuteGeneratedScript(GeneratedScript generatedScript)
         {
             if (!IsGeneratedScriptsEmpty(generatedScript))
             {
-                if (!String.IsNullOrEmpty(generatedScript.GlobalScript))
+                ExecuteScript(generatedScript.GlobalScript, "Global");
+                ExecuteScript(generatedScript.MainScript, "Main");
+                ExecuteScript(generatedScript.SystemLogsScript, "SystemLogs");
+            }
+        }
+        
+        private void ExecuteScript(string script, string dbType)
+        {
+            if (!String.IsNullOrEmpty(script))
+            {
+                Console.WriteLine("Executing Script On " + dbType + " Database ...");
+                string result = ExecuteScriptOnDatabase(script, dbType);
+                if (!String.IsNullOrEmpty(result))
                 {
-                    Console.WriteLine("Executing Script On Global Database ...");
-                    string result = ExecuteScript(generatedScript.GlobalScript, "Global");
-                    if (!String.IsNullOrEmpty(result))
-                    {
-                        ExitTool(result);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Scripts Executed Successfully On Global Database");
-                    }
+                    ExitTool(result);
                 }
-
-                if (!String.IsNullOrEmpty(generatedScript.MainScript))
+                else
                 {
-                    Console.WriteLine("Executing Script On Main Database ...");
-                    string result = ExecuteScript(generatedScript.MainScript, "Main");
-                    if (!String.IsNullOrEmpty(result))
-                    {
-                        ExitTool(result);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Scripts Executed Successfully On Main Database");
-                    }
-                }
-
-                if (!String.IsNullOrEmpty(generatedScript.SystemLogsScript))
-                {
-                    Console.WriteLine("Executing Script On SystemLogs Database ...");
-                    string result = ExecuteScript(generatedScript.SystemLogsScript, "SystemLogs");
-                    if (!String.IsNullOrEmpty(result))
-                    {
-                        ExitTool(result);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Scripts Executed Successfully On SystemLogs Database");
-                    }
+                    Console.WriteLine("Scripts Executed Successfully On " + dbType + " Database");
                 }
 
                 if (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript))
@@ -539,7 +505,7 @@ namespace Logitude.DBMigrations.Models
         {
             string missingIndexesWarningsToExport = !String.IsNullOrEmpty(MissingIndexesWarnings) ? MissingIndexesWarnings.TrimEnd('\n') : "";
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if (IsArgumentProvided("-deployment"))
+            if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
             {
                 projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             }
@@ -632,7 +598,7 @@ namespace Logitude.DBMigrations.Models
         private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)
         {
             string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
-            bool isBasicArgumentProvided = IsArgumentProvided("-basic");
+            bool isBasicArgumentProvided = IsArgumentProvided(ToolArguments.BASIC);
 
             if (DatabaseType.ToLower() == "oracle")
             {
@@ -644,7 +610,7 @@ namespace Logitude.DBMigrations.Models
             return sqlDatabaseMigrations;
         }
 
-        private string ExecuteScript(string script, string dbType)
+        private string ExecuteScriptOnDatabase(string script, string dbType)
         {
             string connectionString = GetConnectionString(dbType);
 
@@ -725,7 +691,7 @@ namespace Logitude.DBMigrations.Models
             List<DXMLView> dxmlViews = new List<DXMLView>();
             List<DXMLProcedure> dxmlProcedures = new List<DXMLProcedure>();
             List<DXMLTrigger> dxmlTriggers = new List<DXMLTrigger>();
-            bool checkDxmlHash = !RunSettings.DebugMode ? !IsArgumentProvided("-ignorehash") : !RunSettings.IgnoreHash;
+            bool checkDxmlHash = !RunSettings.DebugMode ? !IsArgumentProvided(ToolArguments.IGNOREHASH) : !RunSettings.IgnoreHash;
 
             foreach (var dxmlFile in dxmlFiles)
             {
@@ -1895,7 +1861,7 @@ namespace Logitude.DBMigrations.Models
         {
             string versionInfoFilePath;
 
-            if (IsArgumentProvided("-deployment"))
+            if (IsArgumentProvided(ToolArguments.DEPLOYMENT))
             {
                 string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 versionInfoFilePath = Path.Combine(projectDirectory, @"VersionInfo.xml");
@@ -2011,7 +1977,7 @@ namespace Logitude.DBMigrations.Models
 
             Console.WriteLine(appSettingsMessage);
 
-            if (!IsArgumentProvided("-ignoresettingscheck"))
+            if (!IsArgumentProvided(ToolArguments.IGNORESETTINGSCHECK))
             {
                 Console.WriteLine("Are You Sure To Continue ? y/n");
                 string userInput = Console.ReadLine().Trim().ToLower();

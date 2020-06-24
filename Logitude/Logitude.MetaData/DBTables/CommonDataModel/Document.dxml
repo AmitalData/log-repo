@@ -81,7 +81,7 @@
     Name="MarkForDelete"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="SmallDocumentId"

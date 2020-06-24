@@ -191,6 +191,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 if(this.accountCardlist != null && this.accountCardlist.length > 0){
                     var IsAllCardHasCriedtLimitNull:boolean=true;
                     var IsAllCardHasOpenShipmentNull:boolean=true;
+                    this.CreditLimitAmount=0;
+                    this.OpenShipments=0;
                     this.accountCardlist.forEach(s=>{
                         if(s.OpenShipments!=null){
                             this.OpenShipments+=s.OpenShipments;
@@ -259,38 +261,45 @@ export class GLAccountOverviewComponent extends BaseComponent {
     private isMouseIn: boolean = false;
     OnMouseOver(HeadId:string,ElementId:string) {
         this.isMouseIn = true;
-        
+        var HeadClassString = "."+HeadId;
+        var ElementClassString = "."+ElementId;
+        var AllHeaditems :NodeListOf<HTMLElement> = document.querySelectorAll(HeadClassString);
+        var MainHeadIndex:number=0;
+        for(let i =0 ; i < AllHeaditems.length ; i++){
+         if(AllHeaditems[i].clientLeft!=0 ||   AllHeaditems[i].clientTop!=0 || AllHeaditems[i].clientWidth!=0 || AllHeaditems[i].clientHeight!=0){
+            MainHeadIndex = i ;
+            break;
+         }
+        }
             this.timerToken = setTimeout(() => {
-                var item = document.getElementById(HeadId);
-                if (AppTool.IsNullOrEmpty(item))
+                if (AppTool.IsNullOrEmpty(AllHeaditems))
                     return;
-                var itemRect = item.getBoundingClientRect();
-
+                var itemRect = AllHeaditems[MainHeadIndex].getBoundingClientRect();
                 if (this.isMouseIn) {
-                    document.getElementById(ElementId).style.position = "fixed";
-                    document.getElementById(ElementId).style.top = (itemRect.top - 35) + 'px';
-                    document.getElementById(ElementId).style.left = (itemRect.left + 145) + 'px';
-                    document.getElementById(ElementId).style.visibility = "visible";
-                    document.getElementById(ElementId).style.display = "initial";
-
-                    // this.timerToken = setTimeout(() => {
-                    //     document.getElementById(ElementId).style.visibility = "hidden";
-                    //     document.getElementById(ElementId).style.display = "none";
-
-                    // }, 500);
+                    var AllSessionElements :NodeListOf<HTMLElement> = document.querySelectorAll(ElementClassString);
+                    AllSessionElements.forEach(s=>{
+                        s.style.position = "fixed";
+                        s.style.top = (itemRect.top - 35) + 'px';
+                        s.style.left = (itemRect.left + 145) + 'px';
+                        s.style.visibility = "visible";
+                        s. style.display = "initial";
+                    });
                 }
 
             }, 100);
     
     }
     OnMouseLeave(ElementId:string) {
-        this.isMouseIn = false;
-    
-            this.timerToken = setTimeout(() => {
-                document.getElementById(ElementId).style.visibility = "hidden";
-                document.getElementById(ElementId).style.display = "none";
+          this.isMouseIn = false;
+          var ElementClassString = "."+ElementId;
+          var AllSessionElements :NodeListOf<HTMLElement> = document.querySelectorAll(ElementClassString);
+             this.timerToken = setTimeout(() => {
+                        AllSessionElements.forEach(s=>{
+                            s.style.visibility = "hidden";
+                            s.style.display = "none";
+                        });
 
-            }, 400);
+                    }, 500);
 
     }
 

@@ -52,8 +52,7 @@ namespace WarehouseData.Service
             {
                 sqlsc += "\n [" + table.Columns[i].ColumnName + "] ";
                 string columnType = table.Columns[i].DataType.ToString();
-                if (table.Columns[i].MaxLength > 8000) table.Columns[i].MaxLength = 8000;
-
+                if (table.Columns[i].MaxLength > 4000) table.Columns[i].MaxLength = -1;
                 switch (columnType)
                 {
                     case "System.Int32":
@@ -228,7 +227,9 @@ namespace WarehouseData.Service
                 case "ShipmentComputedFields":
 
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryToPortId DEFAULT '-1' FOR DeliveryToPortId;"
-                   + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OperationallyClosedByUserId DEFAULT '-1' FOR OperationallyClosedByUserId;";
+                   + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OperationallyClosedByUserId DEFAULT '-1' FOR OperationallyClosedByUserId;"
+                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PickupTruckerId DEFAULT '-1' FOR PickupTruckerId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DeliveryTruckerId DEFAULT '-1' FOR DeliveryTruckerId;";
 
                     break;
 

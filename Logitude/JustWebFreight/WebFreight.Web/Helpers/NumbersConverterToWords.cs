@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                   // text = text + " בלבד";
                     text = Trim(text);
                     text = FixSpaces(text);
                     return (text);
@@ -1054,7 +1054,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                  //  text = text + " בלבד";
                     text = Trim(text);
                     text = FixSpaces(text);
                     return (text);
@@ -1070,7 +1070,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                  //  text = text + " בלבד";
                 }
                 else
                 {
@@ -1177,7 +1177,7 @@ namespace WebFreight.Web.Helpers
             {
                 if (dcents == 0)
                 {
-                    text = text + " בלבד";
+                   // text = text + " בלבד";
                 }
                 else if (dcents == 1)
                 {
@@ -1203,7 +1203,7 @@ namespace WebFreight.Web.Helpers
 
             text = Trim(text);
             text = FixSpaces(text);
-            return (text);
+            return (text+ " בלבד");
         }
 
         private string FixSpaces(string s)
@@ -1229,6 +1229,7 @@ namespace WebFreight.Web.Helpers
         }
         private string LTrim(string s)
         {
+            s = s.Trim();
             var i = 0;
             var j = 0;
             for (i = 0; i <= s.Length - 1; i++)
@@ -1238,7 +1239,7 @@ namespace WebFreight.Web.Helpers
                    
                    break;
                 }
-            return s.Substring(j, s.Length);
+            return  s.Substring(j, s.Length);
         }
         private string RTrim(string s)
         {

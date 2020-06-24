@@ -257,12 +257,10 @@ namespace CommunicationWorkerRole
             //try
             //{
 
-            XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
-            var nameElement = workerRoleNameElement.Element("WorkerName");
-            LogitudeSettings.WorkerRoleName = nameElement.Value;
+            SetWorkerRoleName();
 
 
-                //HttpContext.Current.Items.Add("workerrolename", xmlnode.v);
+            //HttpContext.Current.Items.Add("workerrolename", xmlnode.v);
 
             //} 
             //catch(Exception ex)
@@ -275,6 +273,16 @@ namespace CommunicationWorkerRole
 
             //throw (new InvalidOperationException());
         }
+
+        private static void SetWorkerRoleName()
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            string filePath = Path.Combine(directoryInfo.FullName, "WorkerRoleName.xml");
+            XElement workerRoleNameElement = XElement.Load(filePath);
+            var nameElement = workerRoleNameElement.Element("WorkerName");
+            LogitudeSettings.WorkerRoleName = nameElement.Value;
+        }
+
         private void TestBatch()
         {
 
@@ -690,9 +698,7 @@ namespace CommunicationWorkerRole
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
 
-            XElement workerRoleNameElement = XElement.Load("WorkerRoleName.xml");
-            var nameElement = workerRoleNameElement.Element("WorkerName");
-            LogitudeSettings.WorkerRoleName = nameElement.Value;
+            SetWorkerRoleName();
 
             CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);//Where is the cache (Why as usuall i neeed to do averything ?!?)
         }

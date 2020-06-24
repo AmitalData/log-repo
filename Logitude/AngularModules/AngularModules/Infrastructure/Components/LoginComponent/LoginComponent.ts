@@ -135,6 +135,7 @@ export class LoginComponent implements OnInit {
         window.Tips = [];
         window.TipsVisibilities = [];
         window.DWObjectFields = [];
+        window.DWObjectFields_Charges = [];
         window.ObjectFieldModifications = [];
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
@@ -864,7 +865,7 @@ export class LoginComponent implements OnInit {
 
         this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
-                window.DWObjectFields.concat(Result.Result);
+                window.DWObjectFields_Charges = Result.Result;
                 this.IncreaseProgressBar();
             }
         });

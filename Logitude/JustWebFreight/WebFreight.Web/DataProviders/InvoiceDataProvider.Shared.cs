@@ -536,6 +536,7 @@ namespace WebFreight.Web.DataProviders
         public string MainCarriageLastdestinationPortCode { get; set; }
         public string BillToBillingAddress { get; set; }
         public string ShipmentSubTypeName { get; set; }
+        public string TrailerNumber { get; set; }
     }
 
     public class SAT

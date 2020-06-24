@@ -509,6 +509,14 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    DeleteTariff(item: QuoteChargeItem) {
+        if (item != null) {
+            item.TariffId = null;
+            item.TariffNumber = null;
+            item.SetUIProperties();
+        }
+    }
+
     // Profit
     InitializeProfit() {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;

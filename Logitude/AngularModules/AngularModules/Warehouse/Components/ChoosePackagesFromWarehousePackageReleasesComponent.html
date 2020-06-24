@@ -1,4 +1,4 @@
-﻿<table>
+<table>
 
     <tr style="height: 34px;">
         <td>
@@ -195,9 +195,11 @@
                                                                                                                     <td style="width:200px">
                                                                                                                         <div style="width:200px">
                                                                                                                             <span style="font-size:13px;">Release</span>
-                                                                                                                            <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>
-                                                                                                                        </div>
+                                                                                                                            <span class="hyperlink" (click)="ViewReleaseClicked(warehouseReleaseItem)">{{warehouseReleaseItem.ReleaseNumber}}</span>                                                                                                                        </div>
 
+                                                                                                                    </td>
+                                                                                                                    <td style="width:280px">
+                                                                                                                        <div style="font-size:13px;width:280px">Release Date: {{warehouseReleaseItem.ReleaseDate | DateTimeToDatePipe}} <span *ngIf="warehouseReleaseItem.ExpectedReleaseDate" style="color:red">(expected)</span>   </div>
                                                                                                                     </td>
                                                                                                                     <td style="width:200px">
                                                                                                                         <div style="font-size:13px;width:200px">References: {{warehouseReleaseItem.References}}    </div>

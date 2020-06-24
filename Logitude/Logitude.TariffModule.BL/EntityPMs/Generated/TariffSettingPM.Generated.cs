@@ -227,6 +227,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string defaultCurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DefaultCurrencyId  
+	   {
+	    
+	     get
+		{
+		   return defaultCurrencyId;
+		 }
+		 set
+		 {
+		   if(defaultCurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultCurrencyId",OldValue=defaultCurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   defaultCurrencyId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

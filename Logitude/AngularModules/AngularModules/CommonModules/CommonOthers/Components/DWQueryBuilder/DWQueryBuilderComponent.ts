@@ -158,7 +158,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult: any) => {
                 if (!myResult.HasError) {
-                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
+                    var factTableCode: string = myResult.Result.Code;
+                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(factTableCode).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
                             var MyGroups = [];
                             var MyAllGroups = [];
@@ -232,26 +233,35 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
                     //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
-                    var TempObsList = [];
-                    if (window.DWObjectFields) {
-                        window.DWObjectFields.forEach((field) => {
-                            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
-                                var view = new DWObjectFieldsDetails(field, this);
-                                view.ParentDataTypeCode = field.DataTypeCode;
-                                this.AllFieldsObsList.push(field);
-                                TempObsList.push(view);
-                                //this.ObsListAll.push(view);
-                            }
-                        });
-                        //this.DataSource = this.ObsList;
-                        this.AllFieldsWithChildrenDataSource = TempObsList;//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
+                    if (factTableCode == "Fact_Shipments" && window.DWObjectFields) {
+                        this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields);//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
                         //this.StopFiltersBusyIndicator();
+                    }
+                    else if (factTableCode == "Fact_Charges" && window.DWObjectFields_Charges) {
+                        this.FillAllFieldsWithChildrenDataSource(window.DWObjectFields_Charges);
                     }
 
                     //});
                 }
             });
         });
+
+
+    }
+
+    FillAllFieldsWithChildrenDataSource(objectFieldList: any) {
+        var TempObsList = [];
+        objectFieldList.forEach((field) => {
+            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+                var view = new DWObjectFieldsDetails(field, this);
+                view.ParentDataTypeCode = field.DataTypeCode;
+                this.AllFieldsObsList.push(field);
+                TempObsList.push(view);
+                //this.ObsListAll.push(view);
+            }
+        });
+        //this.DataSource = this.ObsList;
+        this.AllFieldsWithChildrenDataSource = TempObsList;
     }
 
 
@@ -628,12 +638,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
             if (view.Name == 'Full Date') {
                 view.HasTree = false;
             }
+            if (view.DataTypeCode == "Boolean") view.ParentDataTypeCode = "Boolean";
+
             if (item.BaseDWObjectField.DataTypeCode == "LookUp" || item.BaseDWObjectField.DataTypeCode == "Dimension") {
                 view.ParentDimTabelName = item.BaseDWObjectField.DimensionTableCode;
             }
             else {
                 view.ParentDimTabelName = item.BaseDWObjectField.DWObjectTableCode;
             }
+
+
+
+        
         }
         else {
             view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode;
@@ -1290,6 +1306,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         view.ParentDataTypeCode = "LookUp";
                     }
                     view.ParentDimTabelName = field.DWObjectTableCode;
+
+                    if (view.DataTypeCode == "Boolean") view.ParentDataTypeCode = "Boolean";
+
+
+
                 }
                 else {
                     view.ParentDataTypeCode = field.DataTypeCode;
@@ -2093,6 +2114,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
             } else this.ParentDataTypeCode = "LookUp";
 
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
+
+            if (this.DataTypeCode == "Boolean") this.ParentDataTypeCode = "Boolean";
+
+
+
         }
         else {
             this.ParentDataTypeCode = DWObjectField.DataTypeCode;

@@ -835,7 +835,7 @@
                                                                                                 </td>
 
                                                                                                 <td>
-                                                                                                    <CheckBox [IsChecked]="RegulatedAgentRegimeActivated" (Checked)="RegulatedAgentRegimeActivated = $event"></CheckBox>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'RegulatedAgentRegimeActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

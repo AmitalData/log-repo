@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DefinitionModels\ColumnDefinition.cs" />
+    <Compile Include="Models\GeneralModels\DatabaseMigrationsResult.cs" />
+    <Compile Include="Models\GeneralModels\ToolArguments.cs" />
     <Compile Include="Models\GeneralModels\TablesGeneratedScript.cs" />
     <Compile Include="Models\GeneralModels\ColumnMigration.cs" />
     <Compile Include="Models\DefinitionModels\ColumnMigrationDefinition.cs" />
@@ -75,12 +77,12 @@
     <Compile Include="Models\SQLModels\SQLDatabaseMigrations.cs" />
     <Compile Include="Models\GeneralModels\DatabaseMigrations.cs" />
     <Compile Include="Models\GeneralModels\MigrationTypes.cs" />
-    <Compile Include="Models\OracleModels\OracleScriptDefinition.cs" />
+    <Compile Include="Models\DefinitionModels\OracleScriptDefinition.cs" />
     <Compile Include="Models\DefinitionModels\TableDefinition.cs" />
     <Compile Include="Models\GeneralModels\TableMigrations.cs" />
     <Compile Include="Models\DefinitionModels\UniqueConstraintDefinition.cs" />
     <Compile Include="Models\DefinitionModels\ScriptDefinition.cs" />
-    <Compile Include="Models\SQLModels\SqlScriptDefinition.cs" />
+    <Compile Include="Models\DefinitionModels\SqlScriptDefinition.cs" />
     <Compile Include="Models\GeneralModels\VersionInfo.cs" />
     <Compile Include="Models\DefinitionModels\ViewDefinition.cs" />
     <Compile Include="Program.cs" />
@@ -92,13 +94,11 @@
     <None Include="Reports\DBMigrationsPerformance.csv" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GeneratedScript\CargoTrackingScript.sql" />
-    <Content Include="GeneratedScript\SystemLogsScript.sql" />
-    <Content Include="GeneratedScript\MainScript.sql" />
-    <Content Include="GeneratedScript\GlobalScript.sql" />
     <Content Include="Settings\VersionInfo.xml" />
-    <Content Include="Warnings\MissingIndexesWarnings.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GeneratedScript\" />
+    <Folder Include="Warnings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
